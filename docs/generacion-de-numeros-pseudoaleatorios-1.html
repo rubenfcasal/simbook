@@ -25,7 +25,7 @@
 <meta name="author" content="Rubén F. Casal (ruben.fcasal@udc.es)">
 
 
-<meta name="date" content="2017-09-30">
+<meta name="date" content="2017-10-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -279,7 +279,7 @@ xyz &lt;-<span class="st"> </span><span class="kw">matrix</span>(u, <span class=
 
 <span class="kw">plot3d</span>(xyz) 
 <span class="co"># rglwidget()</span></code></pre></div>
-<p><img src="images/randu2.png" style="display: block; margin: auto;" /></p>
+<p><img src="images/randu2.png" width="622" style="display: block; margin: auto;" /></p>
 <p>Se han propuesto diversas pruebas (ver sección siguiente) para determinar si un generador tiene problemas de este tipo y se han realizado numerosos estudios para determinadas familias (e.g. Park y Miller, 1988, <span class="math inline">\(m=2^{31}-1\)</span>).</p>
 <ul>
 <li><p>En cualquier caso, se recomienda considerar un “periodo de seguridad” <span class="math inline">\(\approx \sqrt{p}\)</span> para evitar este tipo de problemas.</p></li>
@@ -291,8 +291,8 @@ xyz &lt;-<span class="st"> </span><span class="kw">matrix</span>(u, <span class=
 <p>Generalizaciones del generador congruencial lineal simple: <span class="math display">\[x_{i}=f\left(  x_{i-1},x_{i-2},\cdots,x_{i-k}\right)  \operatorname{mod}m\]</span></p>
 <ul>
 <li><p>no lineal: e.g. <span class="math inline">\(\ x_{i}=a_{1}x_{i-1}+a_{2}x_{i-1}^{2}\operatorname{mod}m\)</span></p></li>
-<li><p>lineal múltiple: <span class="math inline">\(x_{i}=a_{1}x_{i-1}+a_{2}x_{i-2}+\cdots +a_{k}x_{i-k}\operatorname{mod}m\)</span><span class="math inline">\(p\leq m^{k}-1\)</span>)</p></li>
-<li><p>matricial: <span class="math inline">\(\boldsymbol{x}_{i} = A_{1}\boldsymbol{x}_{i-1} + A_{2}\boldsymbol{x}_{i-2} + \cdots + A_{k}\boldsymbol{x}_{i-k} \operatorname{mod}m\)</span></p></li>
+<li><p>lineal múltiple: <span class="math inline">\(x_{i}=a_{1}x_{i-1}+a_{2}x_{i-2}+\cdots+a_{k}x_{i-k}\operatorname{mod}m\)</span>, con <span class="math inline">\(p\leq m^{k}-1\)</span>)</p></li>
+<li><p>matricial: <span class="math inline">\(\boldsymbol{x}_{i} = A_{1}\boldsymbol{x}_{i-1} + A_{2}\boldsymbol{x}_{i-2} + \cdots + A_{k}\boldsymbol{x}_{i-k} \operatorname{mod}m\)</span> (por ejemplo el generador por defecto de <code>R</code>).</p></li>
 <li><p>Generadores de registros desfasados: generadores de bits basados en el lineal múltiple <span class="math inline">\(m=2\)</span>; <span class="math inline">\(a_{i},x_{i}\in \left \{ 0,1\right \}\)</span> (cálculos mediante operaciones lógicas).</p></li>
 <li><p>Combinación de generadores:</p>
 <ul>
@@ -316,7 +316,7 @@ u_{n+1}  &amp; =\frac{x_{n+1}}{512},\ n=0,1,\dots\nonumber\end{aligned}\]</span>
 nsim &lt;-<span class="st"> </span><span class="dv">500</span>
 <span class="kw">system.time</span>(u &lt;-<span class="st"> </span><span class="kw">RANDCN</span>(nsim))  <span class="co"># Generar</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##       0       0       0</code></pre>
+##    0.01    0.00    0.02</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(u, <span class="dt">freq =</span> <span class="ot">FALSE</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">1</span>)                   <span class="co"># curve(dunif(x, 0, 1), add = TRUE)</span></code></pre></div>
 <p><img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p></li>

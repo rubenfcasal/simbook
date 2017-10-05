@@ -4,9 +4,8 @@ Números aleatorios en R
 
 
 La generación de números pseudoaleatorios en R es una de las mejores
-disponibles en paquetes estadísticos.
-
-Funciones básicas:
+disponibles en paquetes estadísticos. 
+Entre las herramientas en el paquete base de `R` estarían:
 
 -   `set.seed(entero)`: permite establecer la semilla (y el
     generador).
@@ -102,8 +101,6 @@ a)  Aproximar mediante simulación $P\left(X + Y \leq 0 \right)$ y
     n <- 10000
     x <- runif(n, -1, 1)
     y <- runif(n, -1, 1)
-    
-    
     indice <- (x+y < 0)
     # Aproximación por simulación
     sum(indice)/n
@@ -165,7 +162,6 @@ b)  Aproximar el valor de $\pi$ mediante simulación a partir de
     # Colores y símbolos depediendo de si el índice correspondiente es verdadero:
     color <- ifelse(indice, "black", "red") 
     simbolo <- ifelse(indice, 1, 4)
-    
     plot(x, y, pch = simbolo, col = color, 
          xlim = c(-1, 1), ylim = c(-1, 1), xlab="X", ylab="Y", asp = 1) 
          # asp = 1 para dibujar circulo
@@ -190,7 +186,6 @@ a)  Empleando la función `sample`, obtener 1000 simulaciones del
     set.seed(1)
     nsim <- 10000
     x <- sample(c(cara = 1, cruz = 0), nsim, replace = TRUE, prob = c(0.5,0.5))
-    
     mean(x)
     ```
     
@@ -218,7 +213,6 @@ b)  En R pueden generarse valores de la distribución de Bernoulli
     p <- 0.4
     x <- rbinom(nsim, size = 1, prob = p) # Simulamos una Bernouilli
     n <- 1:nsim
-    
     # Alternativa programación: x <- runif(nsim) < p
     mean(x)
     ```
@@ -241,7 +235,7 @@ Simular el paso de corriente a través del siguiente circuito, donde
 figuran las probabilidades de que pase corriente por cada uno de los
 interruptores:
 
-<img src="images/circuito2.png" style="display: block; margin: auto;" />
+<img src="images/circuito2.png" width="214" style="display: block; margin: auto;" />
 
 Considerar que cada interruptor es una v.a. de Bernoulli independiente
 para simular 1000 valores de cada una de ellas.
@@ -254,18 +248,14 @@ El entero 0 es equivalente a `FALSE` y cualquier entero distinto de 0 a `TRUE`.<
 ```r
 set.seed(1)
 nsim <- 10000
-
 x1 <- rbinom(nsim, size=1, prob=0.9)
 x2 <- rbinom(nsim, size=1, prob=0.8)
 z1 <- x1 | x2   # Operador lógico "O"
-
 x3 <- rbinom(nsim, size=1, prob=0.6)
 x4 <- rbinom(nsim, size=1, prob=0.5)
 z2 <- x3 | x4
-
 z3 <- z1 | z2
 x5 <- rbinom(nsim, size=1, prob=0.7)
-
 fin <- z3 & x5  # Operador lógico "Y"
 mean(fin)
 ```
@@ -392,9 +382,7 @@ Ejemplo:
 
 
 ```r
-# Función de prueba
-funtest <- function(n) median(runif(n))
-
+funtest <- function(n) median(runif(n)) # Función de prueba...
 CPUtimeini()
 funtest(1000000)
 ```
@@ -411,10 +399,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.21    0.00    0.20 
+##    0.11    0.01    0.13 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.21    0.00    0.20
+##    0.11    0.01    0.13
 ```
 
 ```r
@@ -433,10 +421,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.01    0.00    0.02 
+##       0       0       0 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.22    0.00    0.22
+##    0.11    0.01    0.13
 ```
 
 ### Paquetes de R
@@ -527,7 +515,7 @@ cpu.time('\nSample median of', 1000000, 'values =', res, total = FALSE)
 ## Time of last operation: 
 ## Sample median of 1e+06 values = 0.4993793 
 ##    user  system elapsed 
-##    0.11    0.00    0.11
+##    0.06    0.02    0.08
 ```
 
 ```r
@@ -539,10 +527,10 @@ cpu.time('\nSample median of', 1000, 'values =', res)
 ## Time of last operation: 
 ## Sample median of 1000 values = 0.4936829 
 ##    user  system elapsed 
-##    0.01    0.00    0.02 
+##    0.02    0.00    0.02 
 ## Total time:
 ##    user  system elapsed 
-##    0.12    0.00    0.13
+##    0.08    0.02    0.10
 ```
 
 Otro paquete que puede ser de utilidad es

@@ -144,7 +144,7 @@ plot3d(xyz)
 ```
 
 
-<img src="images/randu2.png" style="display: block; margin: auto;" />
+<img src="images/randu2.png" width="622" style="display: block; margin: auto;" />
 
 
 Se han propuesto diversas pruebas (ver sección siguiente) para
@@ -167,12 +167,14 @@ $$x_{i}=f\left(  x_{i-1},x_{i-2},\cdots,x_{i-k}\right)  \operatorname{mod}m$$
 -   no lineal: e.g.
     $\ x_{i}=a_{1}x_{i-1}+a_{2}x_{i-1}^{2}\operatorname{mod}m$
 
--   lineal múltiple: $x_{i}=a_{1}x_{i-1}+a_{2}x_{i-2}+\cdots
-    +a_{k}x_{i-k}\operatorname{mod}m$$p\leq m^{k}-1$)
+-   lineal múltiple: 
+    $x_{i}=a_{1}x_{i-1}+a_{2}x_{i-2}+\cdots+a_{k}x_{i-k}\operatorname{mod}m$,
+    con $p\leq m^{k}-1$)
 
 -   matricial: $\boldsymbol{x}_{i} = A_{1}\boldsymbol{x}_{i-1} 
     + A_{2}\boldsymbol{x}_{i-2} + \cdots 
     + A_{k}\boldsymbol{x}_{i-k} \operatorname{mod}m$
+    (por ejemplo el generador por defecto de `R`).
 
 -   Generadores de registros desfasados: generadores de bits basados en
     el lineal múltiple $m=2$; $a_{i},x_{i}\in \left \{
@@ -211,7 +213,7 @@ a)  Generar 500 valores de este generador, obtener el tiempo de CPU,
     
     ```
     ##    user  system elapsed 
-    ##       0       0       0
+    ##    0.01    0.00    0.02
     ```
     
     ```r

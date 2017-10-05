@@ -129,7 +129,7 @@ Se almacena(ban) en *tablas de dígitos aleatorios* (*true random*)
 y normalmente son obtenidos por procesos físicos
 (loterías, ruletas, ruidos,...)
 
-<img src="images/RAND.png" style="display: block; margin: auto;" />
+<img src="images/RAND.png" width="128" style="display: block; margin: auto;" />
 
 Se emplean para seleccionar números aleatorios 
 en un rango de 1 a *m*:
@@ -214,7 +214,7 @@ sucesión de números verdaderamente aleatoria** (utilizando
                                                 recursos computacionales razonables).
 
 -   En caso contrario esta predecibilidad puede dar lugar a serios
-problemas (e.g. *http://eprint.iacr.org/2007/419*).
+problemas (e.g. [http://eprint.iacr.org/2007/419](http://eprint.iacr.org/2007/419)).
 
 Como regla general, por lo menos mientras se está desarrollando un
 programa, interesa **fijar la semilla de aleatorización**.
