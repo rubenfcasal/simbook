@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Prácticas de Simulación</title>
+  <meta name="description" content="Prácticas de la asignatura de Simulación Estadística del Máster en Técnicas Estadísticas.">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Prácticas de Simulación" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Prácticas de la asignatura de Simulación Estadística del Máster en Técnicas Estadísticas." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Prácticas de Simulación" />
+  
+  <meta name="twitter:description" content="Prácticas de la asignatura de Simulación Estadística del Máster en Técnicas Estadísticas." />
+  
+
+<meta name="author" content="Rubén F. Casal (ruben.fcasal@udc.es)">
+
+
+<meta name="date" content="2017-09-30">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="introduccion-a-la-simulacion.html">
+<link rel="next" href="generacion-de-numeros-pseudoaleatorios-1.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./index.html">Prácticas de Simulación</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
+<li class="chapter" data-level="1" data-path="introduccion-a-la-simulacion.html"><a href="introduccion-a-la-simulacion.html"><i class="fa fa-check"></i><b>1</b> Introducción a la simulación</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduccion-a-la-simulacion.html"><a href="introduccion-a-la-simulacion.html#introduccion"><i class="fa fa-check"></i><b>1.1</b> Introducción</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="introduccion-a-la-simulacion.html"><a href="introduccion-a-la-simulacion.html#ventajas-de-la-simulacion-shannon-1975"><i class="fa fa-check"></i><b>1.1.1</b> Ventajas de la simulación (Shannon, 1975):</a></li>
+<li class="chapter" data-level="1.1.2" data-path="introduccion-a-la-simulacion.html"><a href="introduccion-a-la-simulacion.html#inconvenientes-de-la-simulacion"><i class="fa fa-check"></i><b>1.1.2</b> Inconvenientes de la simulación:</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introduccion-a-la-simulacion.html"><a href="introduccion-a-la-simulacion.html#generacion-de-numeros-pseudoaleatorios"><i class="fa fa-check"></i><b>1.2</b> Generación de números (pseudo)aleatorios</a></li>
+<li class="chapter" data-level="1.3" data-path="introduccion-a-la-simulacion.html"><a href="introduccion-a-la-simulacion.html#numeros-aleatorios-puros"><i class="fa fa-check"></i><b>1.3</b> Números aleatorios puros</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="introduccion-a-la-simulacion.html"><a href="introduccion-a-la-simulacion.html#inconvenientes"><i class="fa fa-check"></i><b>1.3.1</b> Inconvenientes:</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduccion-a-la-simulacion.html"><a href="introduccion-a-la-simulacion.html#alternativas"><i class="fa fa-check"></i><b>1.3.2</b> Alternativas:</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduccion-a-la-simulacion.html"><a href="introduccion-a-la-simulacion.html#numeros-pseudoaleatorios"><i class="fa fa-check"></i><b>1.4</b> Números pseudoaleatorios</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduccion-a-la-simulacion.html"><a href="introduccion-a-la-simulacion.html#generacion-de-numeros-pseudoaleatorios-mediante-software"><i class="fa fa-check"></i><b>1.4.1</b> Generación de números pseudoaleatorios mediante software</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="numeros-aleatorios-en-r.html"><a href="numeros-aleatorios-en-r.html"><i class="fa fa-check"></i><b>2</b> Números aleatorios en R</a><ul>
+<li class="chapter" data-level="2.1" data-path="numeros-aleatorios-en-r.html"><a href="numeros-aleatorios-en-r.html#opciones"><i class="fa fa-check"></i><b>2.1</b> Opciones</a></li>
+<li class="chapter" data-level="2.2" data-path="numeros-aleatorios-en-r.html"><a href="numeros-aleatorios-en-r.html#paquetes-de-r"><i class="fa fa-check"></i><b>2.2</b> Paquetes de R</a></li>
+<li class="chapter" data-level="2.3" data-path="numeros-aleatorios-en-r.html"><a href="numeros-aleatorios-en-r.html#ejercicios"><i class="fa fa-check"></i><b>2.3</b> Ejercicios</a></li>
+<li class="chapter" data-level="2.4" data-path="numeros-aleatorios-en-r.html"><a href="numeros-aleatorios-en-r.html#tiempo-de-cpu"><i class="fa fa-check"></i><b>2.4</b> Tiempo de CPU</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="numeros-aleatorios-en-r.html"><a href="numeros-aleatorios-en-r.html#utilidades-tiempo-de-cpu"><i class="fa fa-check"></i><b>2.4.1</b> Utilidades tiempo de CPU</a></li>
+<li class="chapter" data-level="2.4.2" data-path="numeros-aleatorios-en-r.html"><a href="numeros-aleatorios-en-r.html#paquetes-de-r-1"><i class="fa fa-check"></i><b>2.4.2</b> Paquetes de R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="generacion-de-numeros-pseudoaleatorios-1.html"><a href="generacion-de-numeros-pseudoaleatorios-1.html"><i class="fa fa-check"></i><b>3</b> Generación de números pseudoaleatorios</a><ul>
+<li class="chapter" data-level="3.1" data-path="generacion-de-numeros-pseudoaleatorios-1.html"><a href="generacion-de-numeros-pseudoaleatorios-1.html#generadores-congruenciales"><i class="fa fa-check"></i><b>3.1</b> Generadores congruenciales</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="generacion-de-numeros-pseudoaleatorios-1.html"><a href="generacion-de-numeros-pseudoaleatorios-1.html#generador-congruencial-lineal-simple"><i class="fa fa-check"></i><b>3.1.1</b> Generador congruencial lineal (simple)</a></li>
+<li class="chapter" data-level="3.1.2" data-path="generacion-de-numeros-pseudoaleatorios-1.html"><a href="generacion-de-numeros-pseudoaleatorios-1.html#periodo"><i class="fa fa-check"></i><b>3.1.2</b> Periodo</a></li>
+<li class="chapter" data-level="3.1.3" data-path="generacion-de-numeros-pseudoaleatorios-1.html"><a href="generacion-de-numeros-pseudoaleatorios-1.html#otros-generadores"><i class="fa fa-check"></i><b>3.1.3</b> Otros generadores</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="generacion-de-numeros-pseudoaleatorios-1.html"><a href="generacion-de-numeros-pseudoaleatorios-1.html#analisis-de-la-calidad-de-un-generador"><i class="fa fa-check"></i><b>3.2</b> Análisis de la calidad de un generador</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="generacion-de-numeros-pseudoaleatorios-1.html"><a href="generacion-de-numeros-pseudoaleatorios-1.html#repeticion-de-contrastes"><i class="fa fa-check"></i><b>3.2.1</b> Repetición de contrastes</a></li>
+<li class="chapter" data-level="3.2.2" data-path="generacion-de-numeros-pseudoaleatorios-1.html"><a href="generacion-de-numeros-pseudoaleatorios-1.html#baterias-de-contrastes"><i class="fa fa-check"></i><b>3.2.2</b> Baterías de contrastes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="generacion-de-numeros-pseudoaleatorios-1.html"><a href="generacion-de-numeros-pseudoaleatorios-1.html#ejercicios-de-fin-de-practica"><i class="fa fa-check"></i><b>3.3</b> Ejercicios de fin de práctica</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="tecnicas-de-reduccion-de-la-varianza.html"><a href="tecnicas-de-reduccion-de-la-varianza.html"><i class="fa fa-check"></i><b>4</b> Técnicas de reducción de la varianza</a><ul>
+<li class="chapter" data-level="4.1" data-path="tecnicas-de-reduccion-de-la-varianza.html"><a href="tecnicas-de-reduccion-de-la-varianza.html#reduccion-de-la-varianza"><i class="fa fa-check"></i><b>4.1</b> Reducción de la varianza</a></li>
+<li class="chapter" data-level="4.2" data-path="tecnicas-de-reduccion-de-la-varianza.html"><a href="tecnicas-de-reduccion-de-la-varianza.html#variables-antiteticas"><i class="fa fa-check"></i><b>4.2</b> Variables antitéticas</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="tecnicas-de-reduccion-de-la-varianza.html"><a href="tecnicas-de-reduccion-de-la-varianza.html#ejemplo-integracion-monte-carlo"><i class="fa fa-check"></i><b>4.2.1</b> Ejemplo: Integración Monte Carlo</a></li>
+<li class="chapter" data-level="4.2.2" data-path="tecnicas-de-reduccion-de-la-varianza.html"><a href="tecnicas-de-reduccion-de-la-varianza.html#generacion-de-variables-antiteticas"><i class="fa fa-check"></i><b>4.2.2</b> Generación de variables antitéticas</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="tecnicas-de-reduccion-de-la-varianza.html"><a href="tecnicas-de-reduccion-de-la-varianza.html#estratificacion"><i class="fa fa-check"></i><b>4.3</b> Estratificación</a></li>
+<li class="chapter" data-level="4.4" data-path="tecnicas-de-reduccion-de-la-varianza.html"><a href="tecnicas-de-reduccion-de-la-varianza.html#variables-de-control"><i class="fa fa-check"></i><b>4.4</b> Variables de control</a></li>
+<li class="chapter" data-level="4.5" data-path="tecnicas-de-reduccion-de-la-varianza.html"><a href="tecnicas-de-reduccion-de-la-varianza.html#numeros-aleatorios-comunes"><i class="fa fa-check"></i><b>4.5</b> Números aleatorios comunes</a></li>
+<li class="chapter" data-level="4.6" data-path="tecnicas-de-reduccion-de-la-varianza.html"><a href="tecnicas-de-reduccion-de-la-varianza.html#ejercicios-fin-de-practica"><i class="fa fa-check"></i><b>4.6</b> Ejercicios fin de práctica</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Prácticas de Simulación</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="numeros-aleatorios-en-r" class="section level1">
+<h1><span class="header-section-number">Capítulo 2</span> Números aleatorios en R</h1>
+<p>La generación de números pseudoaleatorios en R es una de las mejores disponibles en paquetes estadísticos.</p>
+<p>Funciones básicas:</p>
+<ul>
+<li><p><code>set.seed(entero)</code>: permite establecer la semilla (y el generador).</p></li>
+<li><p><code>RNGkind</code>: selecciona el generador.</p></li>
+<li><p><code>rdistribución(n,...):</code> genera valores aleatorios de la correspondiente distribución. Por ejemplo: <code>runif(n, min = 0, max = 1)</code>, generaría <code>n</code> valores de una uniforme.</p></li>
+<li><p><code>sample</code>: genera muestras aleatorias (v.a. discretas) y permutaciones.</p></li>
+</ul>
+<p>La semilla se almacena (en <code>globalenv</code>) en <code>.Random.seed</code>; es un vector de enteros cuya dimensión depende del tipo de generador:</p>
+<ul>
+<li><p>No debe ser modificado manualmente; se guarda con el entorno de trabajo.</p></li>
+<li><p>Si no se especifica con <code>set.seed</code> (o no existe) se genera a partir del reloj del sistema.</p></li>
+</ul>
+
+<div class="remark">
+ <span class="remark"><em>Nota: </em></span> Puede ser recomendable (para depurar) almacenarla antes de generar simulaciones, e.g. <code>semilla &lt;- .Random.seed</code>.
+</div>
+<p></p>
+<div id="opciones" class="section level2">
+<h2><span class="header-section-number">2.1</span> Opciones</h2>
+<p>La función <code>RNGkind(kind = NULL, normal.kind = NULL)</code> permite seleccionar el tipo de generador (en negrita los valores por defecto):</p>
+<ul>
+<li><p><code>kind</code>especifica el generador aleatorio:</p>
+<ul>
+<li><p>“Wichmann-Hill”: Ciclo <span class="math inline">\(6.9536\times10^{12}\)</span></p></li>
+<li><p>“Marsaglia-Multicarry”: Ciclo mayor de <span class="math inline">\(2^{60}\)</span></p></li>
+<li><p>“Super-Duper”: Ciclo aprox. <span class="math inline">\(4.6\times10^{18}\)</span> (S-PLUS)</p></li>
+<li><p><strong>“Mersenne-Twister”</strong>: Ciclo <span class="math inline">\(2^{19937}-1\)</span> y equidistribution en 623 dim.</p></li>
+<li><p>“Knuth-TAOCP-2002”: Ciclo aprox. <span class="math inline">\(2^{129}\)</span>.</p></li>
+<li><p>“Knuth-TAOCP”</p></li>
+<li><p>“user-supplied”</p></li>
+</ul></li>
+<li><p><code>normal.kind</code>selecciona el método de generación de normales (se tratará más adelante). “Kinderman-Ramage”, “Buggy Kinderman-Ramage”, “Ahrens-Dieter”, “Box-Muller”, <strong>“Inversion”</strong> , o “user-supplied”</p></li>
+</ul>
+</div>
+<div id="paquetes-de-r" class="section level2">
+<h2><span class="header-section-number">2.2</span> Paquetes de R</h2>
+<p>Otros paquetes de R que pueden ser de interés:</p>
+<ul>
+<li><p><code>setRNG</code> contiene herramientas que facilitan operar con la semilla (dentro de funciones,…).</p></li>
+<li><p><code>random</code> generación de numeros “true random”.</p></li>
+<li><p><code>randtoolbox</code> implementa generadores más recientes (<code>rngWELL</code>) y generación de secuencias cuasi-aleatorias.</p></li>
+<li><p><code>RDieHarder</code> implementa diversos contrastes para el análisis de la calidad de un generador y varios generadores.</p></li>
+<li><p><code>Runuran</code> interfaz para la librería UNU.RAN para la generación (automática) de variables aleatorias no uniformes.</p></li>
+<li><p><code>rsprng</code> y <code>rstream</code> implementan la generación de múltiples secuencias (e.g. para programación paralela).</p></li>
+<li><p><code>gls</code>, <code>rngwell19937</code>, <code>randaes</code>, <code>SuppDists</code>, <code>lhs</code>, <code>mc2d</code>, <code>fOptions</code>, …</p></li>
+</ul>
+</div>
+<div id="ejercicios" class="section level2">
+<h2><span class="header-section-number">2.3</span> Ejercicios</h2>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-2" class="exercise"><strong>Ejercicio 2.1  </strong></span>
+</div>
+<p></p>
+<p>Sea <span class="math inline">\((X,Y)\)</span> es un vector aleatorio con distribución uniforme en el cuadrado <span class="math inline">\([-1,1]\times\lbrack-1,1]\)</span> de área 4.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Aproximar mediante simulación <span class="math inline">\(P\left(X + Y \leq 0 \right)\)</span> y compararla con la probabilidad teórica (obtenida aplicando la regla de Laplace <span class="math inline">\(\frac{\text{área favorable}}{\text{área posible}}\)</span>).</p>
+<p>Probabilidad teórica 1/2 (area favorable / área total)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+n &lt;-<span class="st"> </span><span class="dv">10000</span>
+x &lt;-<span class="st"> </span><span class="kw">runif</span>(n, -<span class="dv">1</span>, <span class="dv">1</span>)
+y &lt;-<span class="st"> </span><span class="kw">runif</span>(n, -<span class="dv">1</span>, <span class="dv">1</span>)
+
+
+indice &lt;-<span class="st"> </span>(x+y &lt;<span class="st"> </span><span class="dv">0</span>)
+<span class="co"># Aproximación por simulación</span>
+<span class="kw">sum</span>(indice)/n</code></pre></div>
+<pre><code>## [1] 0.4996</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(indice) <span class="co"># Alternativa </span></code></pre></div>
+<pre><code>## [1] 0.4996</code></pre>
+
+<div class="remark">
+ <span class="remark"><em>Nota: </em></span> R maneja internamente los valores lógicos como 1 (<code>TRUE</code>) y 0 (<code>FALSE</code>).
+</div>
+<p></p></li>
+<li><p>Aproximar el valor de <span class="math inline">\(\pi\)</span> mediante simulación a partir de <span class="math inline">\(P\left( X^2 +Y^2 \leq 1 \right)\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+n &lt;-<span class="st"> </span><span class="dv">10000</span>
+x &lt;-<span class="st"> </span><span class="kw">runif</span>(n, -<span class="dv">1</span>, <span class="dv">1</span>)
+y &lt;-<span class="st"> </span><span class="kw">runif</span>(n, -<span class="dv">1</span>, <span class="dv">1</span>)
+indice &lt;-<span class="st"> </span>(x^<span class="dv">2</span>+y^<span class="dv">2</span> &lt;<span class="st"> </span><span class="dv">1</span>)
+<span class="kw">mean</span>(indice)</code></pre></div>
+<pre><code>## [1] 0.7806</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pi/<span class="dv">4</span></code></pre></div>
+<pre><code>## [1] 0.7853982</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pi_aprox &lt;-<span class="st"> </span><span class="dv">4</span>*<span class="kw">mean</span>(indice)
+pi_aprox</code></pre></div>
+<pre><code>## [1] 3.1224</code></pre>
+<p>Gráfico</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Colores y símbolos depediendo de si el índice correspondiente es verdadero:</span>
+color &lt;-<span class="st"> </span><span class="kw">ifelse</span>(indice, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>) 
+simbolo &lt;-<span class="st"> </span><span class="kw">ifelse</span>(indice, <span class="dv">1</span>, <span class="dv">4</span>)
+
+<span class="kw">plot</span>(x, y, <span class="dt">pch =</span> simbolo, <span class="dt">col =</span> color, 
+     <span class="dt">xlim =</span> <span class="kw">c</span>(-<span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(-<span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">xlab=</span><span class="st">&quot;X&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Y&quot;</span>, <span class="dt">asp =</span> <span class="dv">1</span>) 
+     <span class="co"># asp = 1 para dibujar circulo</span>
+<span class="kw">symbols</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dt">circles =</span> <span class="dv">1</span>, <span class="dt">inches =</span> <span class="ot">FALSE</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)
+<span class="kw">symbols</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dt">squares =</span> <span class="dv">2</span>, <span class="dt">inches =</span> <span class="ot">FALSE</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="02-Numeros_aleatorios_R_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p></li>
+</ol>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-7" class="exercise"><strong>Ejercicio 2.2  </strong></span>
+</div>
+<p> Consideramos el experimento de Bernoulli consistente en el lanzamiento de una moneda.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Empleando la función <code>sample</code>, obtener 1000 simulaciones del lanzamiento de una moneda <code>(0 = cruz, 1 = cara)</code>, suponiendo que no está trucada. Aproximar la probabilidad de cara a partir de las simulaciones.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+nsim &lt;-<span class="st"> </span><span class="dv">10000</span>
+x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dt">cara =</span> <span class="dv">1</span>, <span class="dt">cruz =</span> <span class="dv">0</span>), nsim, <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">prob =</span> <span class="kw">c</span>(<span class="fl">0.5</span>,<span class="fl">0.5</span>))
+
+<span class="kw">mean</span>(x)</code></pre></div>
+<pre><code>## [1] 0.4953</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(<span class="dv">100</span>*<span class="kw">table</span>(x)/nsim) <span class="co"># Representar porcentajes </span></code></pre></div>
+<p><img src="02-Numeros_aleatorios_R_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p></li>
+<li><p>En R pueden generarse valores de la distribución de Bernoulli mediante la función <code>rbinom(nsim, size=1, prob)</code>. Generar un gráfico de lineas considerando en el eje <span class="math inline">\(X\)</span> el número de lanzamientos (de 1 a 10000) y en el eje <span class="math inline">\(Y\)</span> la frecuencia relativa del suceso cara (puede ser recomendable emplear la función <code>cumsum</code>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+nsim &lt;-<span class="st"> </span><span class="dv">1000</span>
+p &lt;-<span class="st"> </span><span class="fl">0.4</span>
+x &lt;-<span class="st"> </span><span class="kw">rbinom</span>(nsim, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">prob =</span> p) <span class="co"># Simulamos una Bernouilli</span>
+n &lt;-<span class="st"> </span><span class="dv">1</span>:nsim
+
+<span class="co"># Alternativa programación: x &lt;- runif(nsim) &lt; p</span>
+<span class="kw">mean</span>(x)</code></pre></div>
+<pre><code>## [1] 0.394</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(n, <span class="kw">cumsum</span>(x)/n, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Proporción de caras&quot;</span>, 
+     <span class="dt">xlab=</span><span class="st">&quot;Número de lanzamientos&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))
+<span class="kw">abline</span>(<span class="dt">h=</span>p, <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="02-Numeros_aleatorios_R_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p></li>
+</ol>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-10" class="exercise"><strong>Ejercicio 2.3  </strong></span>
+</div>
+<p> Simular el paso de corriente a través del siguiente circuito, donde figuran las probabilidades de que pase corriente por cada uno de los interruptores:</p>
+<p><img src="images/circuito2.png" style="display: block; margin: auto;" /></p>
+<p>Considerar que cada interruptor es una v.a. de Bernoulli independiente para simular 1000 valores de cada una de ellas.</p>
+
+<div class="remark">
+ <span class="remark"><em>Nota: </em></span> R maneja internamente los valores lógicos como 1 (<code>TRUE</code>) y 0 (<code>FALSE</code>). Recíprocamente, cualquier nº puede ser tratado como lógico (al estilo de C). El entero 0 es equivalente a <code>FALSE</code> y cualquier entero distinto de 0 a <code>TRUE</code>.
+</div>
+<p></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+nsim &lt;-<span class="st"> </span><span class="dv">10000</span>
+
+x1 &lt;-<span class="st"> </span><span class="kw">rbinom</span>(nsim, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">prob=</span><span class="fl">0.9</span>)
+x2 &lt;-<span class="st"> </span><span class="kw">rbinom</span>(nsim, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">prob=</span><span class="fl">0.8</span>)
+z1 &lt;-<span class="st"> </span>x1 |<span class="st"> </span>x2   <span class="co"># Operador lógico &quot;O&quot;</span>
+
+x3 &lt;-<span class="st"> </span><span class="kw">rbinom</span>(nsim, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">prob=</span><span class="fl">0.6</span>)
+x4 &lt;-<span class="st"> </span><span class="kw">rbinom</span>(nsim, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">prob=</span><span class="fl">0.5</span>)
+z2 &lt;-<span class="st"> </span>x3 |<span class="st"> </span>x4
+
+z3 &lt;-<span class="st"> </span>z1 |<span class="st"> </span>z2
+x5 &lt;-<span class="st"> </span><span class="kw">rbinom</span>(nsim, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">prob=</span><span class="fl">0.7</span>)
+
+fin &lt;-<span class="st"> </span>z3 &amp;<span class="st"> </span>x5  <span class="co"># Operador lógico &quot;Y&quot;</span>
+<span class="kw">mean</span>(fin)</code></pre></div>
+<pre><code>## [1] 0.6918</code></pre>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-14" class="exercise"><strong>Ejercicio 2.4  </strong></span>
+</div>
+<p> En 1651, el Caballero de Méré le planteó a Pascal una pregunta relacionada con las apuestas y los juegos de azar: ¿es ventajoso apostar a que en cuatro lanzamientos de un dado se obtiene al menos un seis? Este problema generó una fructífera correspondencia entre Pascal y Fermat que se considera, simbólicamente, como el nacimiento del Cálculo de Probabilidades.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Escribir una función que simule el lanzamiento de <span class="math inline">\(n\)</span> dados. El parámetro de entrada es el número de lanzamientos <span class="math inline">\(n\)</span>, que toma el valor 4 por defecto, y la salida debe ser <code>TRUE</code> si se obtiene al menos un 6 y <code>FALSE</code> en caso contrario.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">deMere &lt;-<span class="st"> </span>function(<span class="dt">n =</span> <span class="dv">4</span>){
+  lanz &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">6</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">size=</span>n)
+  <span class="kw">return</span>(<span class="dv">6</span> %in%<span class="st"> </span>lanz)
+}
+
+n &lt;-<span class="st"> </span><span class="dv">4</span>
+lanz &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">6</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">size=</span>n)
+lanz</code></pre></div>
+<pre><code>## [1] 4 5 3 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">6</span> %in%<span class="st"> </span>lanz</code></pre></div>
+<pre><code>## [1] FALSE</code></pre></li>
+<li><p>Utilizar la función anterior para simular <span class="math inline">\(nsim=10000\)</span> jugadas de este juego y calcular la proporción de veces que se gana la apuesta (obtener al menos un 6 en <span class="math inline">\(n\)</span> lanzamientos), usando <span class="math inline">\(n=4\)</span>. Comparar el resultado con la probabilidad teórica <span class="math inline">\(1-(5/6)^{n}\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+n &lt;-<span class="st"> </span><span class="dv">4</span>
+nsim &lt;-<span class="st"> </span><span class="dv">10000</span>
+<span class="kw">mean</span>(<span class="kw">replicate</span>(nsim, <span class="kw">deMere</span>(n)))</code></pre></div>
+<pre><code>## [1] 0.5195</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span>-(<span class="dv">5</span>/<span class="dv">6</span>)^n</code></pre></div>
+<pre><code>## [1] 0.5177469</code></pre></li>
+</ol>
+</div>
+<div id="tiempo-de-cpu" class="section level2">
+<h2><span class="header-section-number">2.4</span> Tiempo de CPU</h2>
+<p>La velocidad del generador suele ser una característica importante. Para evaluar el rendimiento están disponibles en <code>R</code> distintas herramientas:</p>
+<ul>
+<li><p><code>proc.time()</code>: permite obtener tiempo de computación real y de CPU.</p>
+<pre><code>tini &lt;- proc.time()
+# Código a evaluar
+tiempo &lt;- proc.time() - tini</code></pre></li>
+<li><p><code>system.time(expresión)</code>: muestra el tiempo de computación (real y de CPU) de expresión.</p></li>
+<li><p><code>Rprof(fichero)</code>: permite evaluar el rendimiento muestreando la pila en intervalos para determinar en que funciones se emplea el tiempo de computación (de utilidad para optimizar la velocidad).<code>Rprof(NULL)</code>: desactiva el muestreo.<code>summaryRprof(fichero)</code>: muestra los resultados.</p></li>
+</ul>
+<div id="utilidades-tiempo-de-cpu" class="section level3">
+<h3><span class="header-section-number">2.4.1</span> Utilidades tiempo de CPU</h3>
+<p>Por ejemplo, podríamos emplear las siguientes funciones para ir midiendo los tiempos de CPU durante una simulación:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">CPUtimeini &lt;-<span class="st"> </span>function() {
+  .tiempo.ini &lt;&lt;-<span class="st"> </span><span class="kw">proc.time</span>()
+  .tiempo.last &lt;&lt;-<span class="st"> </span>.tiempo.ini
+}
+
+CPUtimeprint &lt;-<span class="st"> </span>function() {
+  tmp &lt;-<span class="st"> </span><span class="kw">proc.time</span>()
+  <span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Tiempo última operación:</span><span class="ch">\n</span><span class="st">&quot;</span>)
+  <span class="kw">print</span>(tmp-.tiempo.last)
+  <span class="kw">cat</span>(<span class="st">&quot;Tiempo total operación:</span><span class="ch">\n</span><span class="st">&quot;</span>)
+  <span class="kw">print</span>(tmp-.tiempo.ini)
+  .tiempo.last &lt;&lt;-<span class="st"> </span>tmp
+}</code></pre></div>
+<p>Llamando a <code>CPUtimeini()</code> donde se quiere empezar a contar, y a <code>CPUtimeprint()</code> para imprimir el tiempo total y el tiempo desde la última llamada a una de estas funciones. Ejemplo:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Función de prueba</span>
+funtest &lt;-<span class="st"> </span>function(n) <span class="kw">median</span>(<span class="kw">runif</span>(n))
+
+<span class="kw">CPUtimeini</span>()
+<span class="kw">funtest</span>(<span class="dv">1000000</span>)</code></pre></div>
+<pre><code>## [1] 0.5004536</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">CPUtimeprint</span>()</code></pre></div>
+<pre><code>## 
+## Tiempo última operación:
+##    user  system elapsed 
+##    0.21    0.00    0.20 
+## Tiempo total operación:
+##    user  system elapsed 
+##    0.21    0.00    0.20</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">funtest</span>(<span class="dv">1000</span>)</code></pre></div>
+<pre><code>## [1] 0.4954613</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">CPUtimeprint</span>()</code></pre></div>
+<pre><code>## 
+## Tiempo última operación:
+##    user  system elapsed 
+##    0.01    0.00    0.02 
+## Tiempo total operación:
+##    user  system elapsed 
+##    0.22    0.00    0.22</code></pre>
+</div>
+<div id="paquetes-de-r-1" class="section level3">
+<h3><span class="header-section-number">2.4.2</span> Paquetes de R</h3>
+<p>Por ejemplo, se puede emplear el paquete <code>npsp</code> (fichero <em>cpu.time.R</em>):</p>
+<ul>
+<li><p>Call <code>cpu.time(restart = TRUE)</code> where you want to start counting.</p></li>
+<li><p>Call <code>cpu.time()</code> to print/get total and/or partial (since the last call to this function) real and CPU times.</p></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># CPU time utilities</span>
+<span class="co"># ------------------</span>
+
+<span class="co">#&#39; @rdname npsp-internals</span>
+<span class="co">#&#39; @keywords internal</span>
+<span class="co">#&#39; @export</span>
+.cpu.time.ini &lt;-<span class="st"> </span>function() {
+    time.ini &lt;-<span class="st"> </span><span class="kw">structure</span>(<span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="dt">.Names =</span> <span class="kw">c</span>(<span class="st">&quot;user.self&quot;</span>, <span class="st">&quot;sys.self&quot;</span>, <span class="st">&quot;elapsed&quot;</span>,  
+        <span class="st">&quot;user.child&quot;</span>, <span class="st">&quot;sys.child&quot;</span>), <span class="dt">class =</span> <span class="st">&quot;proc_time&quot;</span>)<span class="co"># proc.time()</span>
+    time.last &lt;-<span class="st"> </span>time.ini
+    function(..., <span class="dt">reset =</span> <span class="ot">FALSE</span>, <span class="dt">total =</span> <span class="ot">TRUE</span>, <span class="dt">last =</span> <span class="ot">TRUE</span>, <span class="dt">flush =</span> <span class="ot">FALSE</span>) {
+        res &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">time =</span> <span class="kw">proc.time</span>())
+        if (reset) {
+            time.ini &lt;&lt;-<span class="st"> </span>res$time
+            time.last &lt;&lt;-<span class="st"> </span>time.ini        
+            res$last &lt;-<span class="st"> </span>res$total &lt;-<span class="st"> </span><span class="dv">0</span>
+            if (total |<span class="st"> </span>last) <span class="kw">cat</span>(<span class="st">&quot;CPU time has been initialized.</span><span class="ch">\n</span><span class="st">&quot;</span>)
+        } else {        
+            res$last &lt;-<span class="st"> </span>res$time -<span class="st"> </span>time.last
+            res$total &lt;-<span class="st"> </span>res$time -<span class="st"> </span>time.ini
+            if (last) {
+                <span class="kw">cat</span>(<span class="st">&quot;Time of last operation:&quot;</span>, ..., <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+                <span class="kw">print</span>(res$last)
+            }    
+            if (total) {
+                <span class="kw">cat</span>(<span class="st">&quot;Total time:</span><span class="ch">\n</span><span class="st">&quot;</span>)
+                <span class="kw">print</span>(res$total)
+            }
+            if (flush) <span class="kw">flush.console</span>()
+            time.last &lt;&lt;-<span class="st"> </span>res$time
+        }    
+        <span class="kw">return</span>(<span class="kw">invisible</span>(res))
+    }
+}
+
+<span class="co">#&#39; Total and partial CPU time used</span>
+<span class="co">#&#39; </span>
+<span class="co">#&#39; Returns and (optionally) prints the total and/or partial </span>
+<span class="co">#&#39; (since the last call to this function) </span>
+<span class="co">#&#39; real and CPU times.</span>
+<span class="co">#&#39; @param ... objects (describing the last operation) to be printed  </span>
+<span class="co">#&#39; (using \code{\link{cat}}), </span>
+<span class="co">#&#39; if \code{last == TRUE}.</span>
+<span class="co">#&#39; @param reset logical; if \code{TRUE}, time counters are initialized. </span>
+<span class="co">#&#39; @param total logical; if \code{TRUE}, the total time used is printed. </span>
+<span class="co">#&#39; @param last logical; if \code{TRUE}, the partial time used is printed. </span>
+<span class="co">#&#39; @param flush logical; if \code{TRUE}, \code{\link{flush.console}} is called.</span>
+<span class="co">#&#39; @return Invisibly returns a list with  the following 3 components </span>
+<span class="co">#&#39; (objects of class \code{&quot;proc_time&quot;}):</span>
+<span class="co">#&#39; \item{time}{user, system, and total elapsed times for the currently running R process </span>
+<span class="co">#&#39; (result of a call to \code{\link{proc.time}}). }</span>
+<span class="co">#&#39; \item{last, total}{differences between the corresponding \code{\link{proc.time}} calls.}</span>
+<span class="co">#&#39; @seealso</span>
+<span class="co">#&#39; \code{\link{proc.time}}, \code{\link{system.time}}, \code{\link{flush.console}}.</span>
+<span class="co">#&#39; @export</span>
+cpu.time &lt;-<span class="st"> </span><span class="kw">.cpu.time.ini</span>()</code></pre></div>
+<p>Ejemplo:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cpu.time</span>(<span class="dt">reset =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## CPU time has been initialized.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">funtest</span>(<span class="dv">1000000</span>)
+<span class="kw">cpu.time</span>(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">Sample median of&#39;</span>, <span class="dv">1000000</span>, <span class="st">&#39;values =&#39;</span>, res, <span class="dt">total =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<pre><code>## Time of last operation: 
+## Sample median of 1e+06 values = 0.4993793 
+##    user  system elapsed 
+##    0.11    0.00    0.11</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">funtest</span>(<span class="dv">1000</span>)
+<span class="kw">cpu.time</span>(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">Sample median of&#39;</span>, <span class="dv">1000</span>, <span class="st">&#39;values =&#39;</span>, res)</code></pre></div>
+<pre><code>## Time of last operation: 
+## Sample median of 1000 values = 0.4936829 
+##    user  system elapsed 
+##    0.01    0.00    0.02 
+## Total time:
+##    user  system elapsed 
+##    0.12    0.00    0.13</code></pre>
+<p>Otro paquete que puede ser de utilidad es <a href="https://CRAN.R-project.org/package=microbenchmark"><code>microbenchmark</code></a> (si se quieren estudiar con más detalle los tiempos de computación; aunque en este libro no será el caso…). Hay que tener en cuenta que, por construcción, aunque se realicen en la mismas condiciones (en el mismo equipo), los tiempos de CPU en <code>R</code> pueden variar “ligeramente” entre ejecuciones.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduccion-a-la-simulacion.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="generacion-de-numeros-pseudoaleatorios-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/02-Numeros_aleatorios_R.Rmd",
+"text": "Edit"
+},
+"download": ["Practicas_de_Simulacion.pdf", "Practicas_de_Simulacion.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
