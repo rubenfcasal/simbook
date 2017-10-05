@@ -1,6 +1,9 @@
-Este libro contiene algunas de las prácticas de la asignatura de [Simulación Estadística](http://eio.usc.es/pub/mte/index.php?option=com_content&view=article&id=19&Itemid=51&idm=13&a%C3%B1o=2017) del Máster interuniversitario en Técnicas Estadísticas ([MTE](http://eio.usc.es/pub/mte)).
+# Prácticas de Simulación
+## Rubén F. Casal
 
-Este libro ha sido escrito en **R-Markdown** empleando el paquete `bookdown` y está disponible en el repositorio Github: [PENDIENTE]. Para generar el libro (compilar) puede ser recomendable instalar la última versión de [RStudio](https://www.rstudio.com/products/rstudio/download/) y la versión de desarrollo de `bookdown` disponible en Github:
+Este libro contiene algunas de las prácticas de la asignatura de [Simulación Estadística](http://eio.usc.es/pub/mte/index.php?option=com_content&view=article&id=19&Itemid=51&idm=13&a%C3%B1o=2017) del [Máster interuniversitario en Técnicas Estadísticas](http://eio.usc.es/pub/mte)).
+
+Este libro ha sido escrito en [R-Markdown](http://rmarkdown.rstudio.com) empleando el paquete [`bookdown`](https://bookdown.org/yihui/bookdown/) y está disponible en el repositorio Github: [rubenfcasal/simbook](https://github.com/rubenfcasal/simbook). Para generar el libro (compilar) puede ser recomendable instalar la última versión de [RStudio]((https://www.rstudio.com/products/rstudio/download/)) y la versión de desarrollo de `bookdown` disponible en [Github](https://github.com/rstudio/bookdown):
 
 ```
 devtools::install_github("rstudio/bookdown")
