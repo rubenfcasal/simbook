@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Prácticas de Simulación</title>
+  <meta name="description" content="Prácticas de la asignatura de Simulación Estadística del Máster en Técnicas Estadísticas.">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Prácticas de Simulación" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Prácticas de la asignatura de Simulación Estadística del Máster en Técnicas Estadísticas." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Prácticas de Simulación" />
+  
+  <meta name="twitter:description" content="Prácticas de la asignatura de Simulación Estadística del Máster en Técnicas Estadísticas." />
+  
+
+<meta name="author" content="Rubén F. Casal (ruben.fcasal@udc.es)">
+
+
+<meta name="date" content="2017-10-09">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="analisis-de-los-resultados.html">
+<link rel="next" href="integracion-y-optimizacion-montecarlo.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./index.html">Prácticas de Simulación</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
+<li class="chapter" data-level="1" data-path="introduccion-a-la-simulacion.html"><a href="introduccion-a-la-simulacion.html"><i class="fa fa-check"></i><b>1</b> Introducción a la simulación</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduccion-a-la-simulacion.html"><a href="introduccion-a-la-simulacion.html#introduccion"><i class="fa fa-check"></i><b>1.1</b> Introducción</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="introduccion-a-la-simulacion.html"><a href="introduccion-a-la-simulacion.html#ventajas-de-la-simulacion-shannon-1975"><i class="fa fa-check"></i><b>1.1.1</b> Ventajas de la simulación (Shannon, 1975):</a></li>
+<li class="chapter" data-level="1.1.2" data-path="introduccion-a-la-simulacion.html"><a href="introduccion-a-la-simulacion.html#inconvenientes-de-la-simulacion"><i class="fa fa-check"></i><b>1.1.2</b> Inconvenientes de la simulación:</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introduccion-a-la-simulacion.html"><a href="introduccion-a-la-simulacion.html#generacion-de-numeros-pseudoaleatorios"><i class="fa fa-check"></i><b>1.2</b> Generación de números (pseudo)aleatorios</a></li>
+<li class="chapter" data-level="1.3" data-path="introduccion-a-la-simulacion.html"><a href="introduccion-a-la-simulacion.html#numeros-aleatorios-puros"><i class="fa fa-check"></i><b>1.3</b> Números aleatorios puros</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="introduccion-a-la-simulacion.html"><a href="introduccion-a-la-simulacion.html#inconvenientes"><i class="fa fa-check"></i><b>1.3.1</b> Inconvenientes:</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduccion-a-la-simulacion.html"><a href="introduccion-a-la-simulacion.html#alternativas"><i class="fa fa-check"></i><b>1.3.2</b> Alternativas:</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduccion-a-la-simulacion.html"><a href="introduccion-a-la-simulacion.html#numeros-pseudoaleatorios"><i class="fa fa-check"></i><b>1.4</b> Números pseudoaleatorios</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduccion-a-la-simulacion.html"><a href="introduccion-a-la-simulacion.html#generacion-de-numeros-pseudoaleatorios-mediante-software"><i class="fa fa-check"></i><b>1.4.1</b> Generación de números pseudoaleatorios mediante software</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="numeros-aleatorios-en-r.html"><a href="numeros-aleatorios-en-r.html"><i class="fa fa-check"></i><b>2</b> Números aleatorios en R</a><ul>
+<li class="chapter" data-level="2.1" data-path="numeros-aleatorios-en-r.html"><a href="numeros-aleatorios-en-r.html#opciones"><i class="fa fa-check"></i><b>2.1</b> Opciones</a></li>
+<li class="chapter" data-level="2.2" data-path="numeros-aleatorios-en-r.html"><a href="numeros-aleatorios-en-r.html#paquetes-de-r"><i class="fa fa-check"></i><b>2.2</b> Paquetes de R</a></li>
+<li class="chapter" data-level="2.3" data-path="numeros-aleatorios-en-r.html"><a href="numeros-aleatorios-en-r.html#ejercicios"><i class="fa fa-check"></i><b>2.3</b> Ejercicios</a></li>
+<li class="chapter" data-level="2.4" data-path="numeros-aleatorios-en-r.html"><a href="numeros-aleatorios-en-r.html#tiempo-de-cpu"><i class="fa fa-check"></i><b>2.4</b> Tiempo de CPU</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="numeros-aleatorios-en-r.html"><a href="numeros-aleatorios-en-r.html#utilidades-tiempo-de-cpu"><i class="fa fa-check"></i><b>2.4.1</b> Utilidades tiempo de CPU</a></li>
+<li class="chapter" data-level="2.4.2" data-path="numeros-aleatorios-en-r.html"><a href="numeros-aleatorios-en-r.html#paquetes-de-r-1"><i class="fa fa-check"></i><b>2.4.2</b> Paquetes de R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="generacion-de-numeros-pseudoaleatorios-1.html"><a href="generacion-de-numeros-pseudoaleatorios-1.html"><i class="fa fa-check"></i><b>3</b> Generación de números pseudoaleatorios</a><ul>
+<li class="chapter" data-level="3.1" data-path="generacion-de-numeros-pseudoaleatorios-1.html"><a href="generacion-de-numeros-pseudoaleatorios-1.html#generadores-congruenciales"><i class="fa fa-check"></i><b>3.1</b> Generadores congruenciales</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="generacion-de-numeros-pseudoaleatorios-1.html"><a href="generacion-de-numeros-pseudoaleatorios-1.html#generador-congruencial-lineal-simple"><i class="fa fa-check"></i><b>3.1.1</b> Generador congruencial lineal (simple)</a></li>
+<li class="chapter" data-level="3.1.2" data-path="generacion-de-numeros-pseudoaleatorios-1.html"><a href="generacion-de-numeros-pseudoaleatorios-1.html#periodo"><i class="fa fa-check"></i><b>3.1.2</b> Periodo</a></li>
+<li class="chapter" data-level="3.1.3" data-path="generacion-de-numeros-pseudoaleatorios-1.html"><a href="generacion-de-numeros-pseudoaleatorios-1.html#otros-generadores"><i class="fa fa-check"></i><b>3.1.3</b> Otros generadores</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="generacion-de-numeros-pseudoaleatorios-1.html"><a href="generacion-de-numeros-pseudoaleatorios-1.html#analisis-de-la-calidad-de-un-generador"><i class="fa fa-check"></i><b>3.2</b> Análisis de la calidad de un generador</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="generacion-de-numeros-pseudoaleatorios-1.html"><a href="generacion-de-numeros-pseudoaleatorios-1.html#repeticion-de-contrastes"><i class="fa fa-check"></i><b>3.2.1</b> Repetición de contrastes</a></li>
+<li class="chapter" data-level="3.2.2" data-path="generacion-de-numeros-pseudoaleatorios-1.html"><a href="generacion-de-numeros-pseudoaleatorios-1.html#baterias-de-contrastes"><i class="fa fa-check"></i><b>3.2.2</b> Baterías de contrastes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="generacion-de-numeros-pseudoaleatorios-1.html"><a href="generacion-de-numeros-pseudoaleatorios-1.html#ejercicios-de-fin-de-practica"><i class="fa fa-check"></i><b>3.3</b> Ejercicios de fin de práctica</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="analisis-de-los-resultados.html"><a href="analisis-de-los-resultados.html"><i class="fa fa-check"></i><b>4</b> Análisis de los resultados</a><ul>
+<li class="chapter" data-level="4.1" data-path="analisis-de-los-resultados.html"><a href="analisis-de-los-resultados.html#convergencia"><i class="fa fa-check"></i><b>4.1</b> Convergencia</a></li>
+<li class="chapter" data-level="4.2" data-path="analisis-de-los-resultados.html"><a href="analisis-de-los-resultados.html#estimacion-de-la-precision"><i class="fa fa-check"></i><b>4.2</b> Estimación de la precisión</a></li>
+<li class="chapter" data-level="4.3" data-path="analisis-de-los-resultados.html"><a href="analisis-de-los-resultados.html#teorema-central-del-limite"><i class="fa fa-check"></i><b>4.3</b> Teorema central del límite</a></li>
+<li class="chapter" data-level="4.4" data-path="analisis-de-los-resultados.html"><a href="analisis-de-los-resultados.html#determinacion-del-numero-de-generaciones"><i class="fa fa-check"></i><b>4.4</b> Determinación del número de generaciones</a></li>
+<li class="chapter" data-level="4.5" data-path="analisis-de-los-resultados.html"><a href="analisis-de-los-resultados.html#el-problema-de-la-dependencia"><i class="fa fa-check"></i><b>4.5</b> El problema de la dependencia:</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="analisis-de-los-resultados.html"><a href="analisis-de-los-resultados.html#periodo-de-calentamiento"><i class="fa fa-check"></i><b>4.5.1</b> Periodo de calentamiento</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="analisis-de-los-resultados.html"><a href="analisis-de-los-resultados.html#observaciones"><i class="fa fa-check"></i><b>4.6</b> Observaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html"><a href="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html"><i class="fa fa-check"></i><b>5</b> Aplicaciones de la simulación en Inferencia Estadística</a><ul>
+<li class="chapter" data-level="5.1" data-path="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html"><a href="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html#aplicaciones-de-la-simulacion"><i class="fa fa-check"></i><b>5.1</b> Aplicaciones de la simulación</a></li>
+<li class="chapter" data-level="5.2" data-path="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html"><a href="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html#distribucion-en-el-muestreo"><i class="fa fa-check"></i><b>5.2</b> Distribución en el muestreo</a></li>
+<li class="chapter" data-level="5.3" data-path="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html"><a href="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html#intervalos-de-confianza"><i class="fa fa-check"></i><b>5.3</b> Intervalos de confianza</a></li>
+<li class="chapter" data-level="5.4" data-path="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html"><a href="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html#contrastes-de-hipotesis"><i class="fa fa-check"></i><b>5.4</b> Contrastes de hipótesis</a></li>
+<li class="chapter" data-level="5.5" data-path="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html"><a href="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html#comparacion-de-estimadores"><i class="fa fa-check"></i><b>5.5</b> Comparación de estimadores</a></li>
+<li class="chapter" data-level="5.6" data-path="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html"><a href="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html#remuestreo-bootstrap"><i class="fa fa-check"></i><b>5.6</b> Remuestreo Bootstrap</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html"><a href="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html#idea"><i class="fa fa-check"></i><b>5.6.1</b> Idea:</a></li>
+<li class="chapter" data-level="5.6.2" data-path="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html"><a href="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html#metodos-de-remuestreo-bootstrap"><i class="fa fa-check"></i><b>5.6.2</b> Métodos de remuestreo Bootstrap</a></li>
+<li class="chapter" data-level="5.6.3" data-path="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html"><a href="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html#ejemplo"><i class="fa fa-check"></i><b>5.6.3</b> Ejemplo</a></li>
+<li class="chapter" data-level="5.6.4" data-path="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html"><a href="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html#paquetes-r-bootstrap-boot"><i class="fa fa-check"></i><b>5.6.4</b> Paquetes R: bootstrap, boot</a></li>
+<li class="chapter" data-level="5.6.5" data-path="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html"><a href="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html#graficos"><i class="fa fa-check"></i><b>5.6.5</b> Gráficos</a></li>
+<li class="chapter" data-level="5.6.6" data-path="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html"><a href="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html#intervalos-de-confianza-bootstrap"><i class="fa fa-check"></i><b>5.6.6</b> Intervalos de confianza bootstrap</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="integracion-y-optimizacion-montecarlo.html"><a href="integracion-y-optimizacion-montecarlo.html"><i class="fa fa-check"></i><b>6</b> Integración y Optimización Montecarlo</a><ul>
+<li class="chapter" data-level="6.1" data-path="integracion-y-optimizacion-montecarlo.html"><a href="integracion-y-optimizacion-montecarlo.html#integracion-monte-carlo-clasica"><i class="fa fa-check"></i><b>6.1</b> Integración Monte Carlo (clásica)</a></li>
+<li class="chapter" data-level="6.2" data-path="integracion-y-optimizacion-montecarlo.html"><a href="integracion-y-optimizacion-montecarlo.html#muestreo-por-importancia"><i class="fa fa-check"></i><b>6.2</b> Muestreo por importancia</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="integracion-y-optimizacion-montecarlo.html"><a href="integracion-y-optimizacion-montecarlo.html#remuestreo-del-muestreo-por-importancia"><i class="fa fa-check"></i><b>6.2.1</b> Remuestreo (del muestreo) por importancia</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="integracion-y-optimizacion-montecarlo.html"><a href="integracion-y-optimizacion-montecarlo.html#optimizacion-monte-carlo"><i class="fa fa-check"></i><b>6.3</b> Optimización Monte Carlo</a></li>
+<li class="chapter" data-level="6.4" data-path="integracion-y-optimizacion-montecarlo.html"><a href="integracion-y-optimizacion-montecarlo.html#temple-simulado"><i class="fa fa-check"></i><b>6.4</b> Temple simulado</a></li>
+<li class="chapter" data-level="6.5" data-path="integracion-y-optimizacion-montecarlo.html"><a href="integracion-y-optimizacion-montecarlo.html#algoritmos-geneticos"><i class="fa fa-check"></i><b>6.5</b> Algoritmos genéticos</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="simulacion-de-variables-continuas.html"><a href="simulacion-de-variables-continuas.html"><i class="fa fa-check"></i><b>7</b> Simulación de variables continuas</a><ul>
+<li class="chapter" data-level="7.1" data-path="simulacion-de-variables-continuas.html"><a href="simulacion-de-variables-continuas.html#metodo-de-inversion"><i class="fa fa-check"></i><b>7.1</b> Método de inversión</a></li>
+<li class="chapter" data-level="7.2" data-path="simulacion-de-variables-continuas.html"><a href="simulacion-de-variables-continuas.html#metodo-de-aceptacion-rechazo"><i class="fa fa-check"></i><b>7.2</b> Método de aceptación-rechazo</a></li>
+<li class="chapter" data-level="7.3" data-path="simulacion-de-variables-continuas.html"><a href="simulacion-de-variables-continuas.html#ejercicios-1"><i class="fa fa-check"></i><b>7.3</b> Ejercicios</a></li>
+<li class="chapter" data-level="7.4" data-path="simulacion-de-variables-continuas.html"><a href="simulacion-de-variables-continuas.html#metodos-especificos-para-generacion-de-distribuciones-notables"><i class="fa fa-check"></i><b>7.4</b> Métodos específicos para generación de distribuciones notables</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="simulacion-de-variables-discretas.html"><a href="simulacion-de-variables-discretas.html"><i class="fa fa-check"></i><b>8</b> Simulación de variables discretas</a><ul>
+<li class="chapter" data-level="8.1" data-path="simulacion-de-variables-discretas.html"><a href="simulacion-de-variables-discretas.html#ejercicios-2"><i class="fa fa-check"></i><b>8.1</b> Ejercicios</a></li>
+<li class="chapter" data-level="8.2" data-path="simulacion-de-variables-discretas.html"><a href="simulacion-de-variables-discretas.html#metodos-especificos-para-generacion-de-distribuciones-notables-1"><i class="fa fa-check"></i><b>8.2</b> Métodos específicos para generación de distribuciones notables</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="simulacion-de-distribuciones-multidimensionales.html"><a href="simulacion-de-distribuciones-multidimensionales.html"><i class="fa fa-check"></i><b>9</b> Simulación de Distribuciones Multidimensionales</a><ul>
+<li class="chapter" data-level="9.1" data-path="simulacion-de-distribuciones-multidimensionales.html"><a href="simulacion-de-distribuciones-multidimensionales.html#introduccion-1"><i class="fa fa-check"></i><b>9.1</b> Introducción</a></li>
+<li class="chapter" data-level="9.2" data-path="simulacion-de-distribuciones-multidimensionales.html"><a href="simulacion-de-distribuciones-multidimensionales.html#factorizacion-de-la-matriz-de-covarianzas"><i class="fa fa-check"></i><b>9.2</b> Factorización de la matriz de covarianzas</a></li>
+<li class="chapter" data-level="9.3" data-path="simulacion-de-distribuciones-multidimensionales.html"><a href="simulacion-de-distribuciones-multidimensionales.html#simulacion-condicional-e-incondicional"><i class="fa fa-check"></i><b>9.3</b> Simulación condicional e incondicional</a></li>
+<li class="chapter" data-level="9.4" data-path="simulacion-de-distribuciones-multidimensionales.html"><a href="simulacion-de-distribuciones-multidimensionales.html#simulacion-basada-en-copulas"><i class="fa fa-check"></i><b>9.4</b> Simulación basada en cópulas</a></li>
+<li class="chapter" data-level="9.5" data-path="simulacion-de-distribuciones-multidimensionales.html"><a href="simulacion-de-distribuciones-multidimensionales.html#simulacion-de-distribuciones-multidimensionales-discretas"><i class="fa fa-check"></i><b>9.5</b> Simulación de distribuciones multidimensionales discretas</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="simulacion-de-distribuciones-multidimensionales.html"><a href="simulacion-de-distribuciones-multidimensionales.html#simulacion-de-una-variable-discreta-bidimensional"><i class="fa fa-check"></i><b>9.5.1</b> Simulación de una variable discreta bidimensional</a></li>
+<li class="chapter" data-level="9.5.2" data-path="simulacion-de-distribuciones-multidimensionales.html"><a href="simulacion-de-distribuciones-multidimensionales.html#simulacion-de-tablas-de-contingencia"><i class="fa fa-check"></i><b>9.5.2</b> Simulación de tablas de contingencia</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="tecnicas-de-reduccion-de-la-varianza.html"><a href="tecnicas-de-reduccion-de-la-varianza.html"><i class="fa fa-check"></i><b>10</b> Técnicas de reducción de la varianza</a><ul>
+<li class="chapter" data-level="10.1" data-path="tecnicas-de-reduccion-de-la-varianza.html"><a href="tecnicas-de-reduccion-de-la-varianza.html#reduccion-de-la-varianza"><i class="fa fa-check"></i><b>10.1</b> Reducción de la varianza</a></li>
+<li class="chapter" data-level="10.2" data-path="tecnicas-de-reduccion-de-la-varianza.html"><a href="tecnicas-de-reduccion-de-la-varianza.html#variables-antiteticas"><i class="fa fa-check"></i><b>10.2</b> Variables antitéticas</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="tecnicas-de-reduccion-de-la-varianza.html"><a href="tecnicas-de-reduccion-de-la-varianza.html#ejemplo-integracion-monte-carlo"><i class="fa fa-check"></i><b>10.2.1</b> Ejemplo: Integración Monte Carlo</a></li>
+<li class="chapter" data-level="10.2.2" data-path="tecnicas-de-reduccion-de-la-varianza.html"><a href="tecnicas-de-reduccion-de-la-varianza.html#generacion-de-variables-antiteticas"><i class="fa fa-check"></i><b>10.2.2</b> Generación de variables antitéticas</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="tecnicas-de-reduccion-de-la-varianza.html"><a href="tecnicas-de-reduccion-de-la-varianza.html#estratificacion"><i class="fa fa-check"></i><b>10.3</b> Estratificación</a></li>
+<li class="chapter" data-level="10.4" data-path="tecnicas-de-reduccion-de-la-varianza.html"><a href="tecnicas-de-reduccion-de-la-varianza.html#variables-de-control"><i class="fa fa-check"></i><b>10.4</b> Variables de control</a></li>
+<li class="chapter" data-level="10.5" data-path="tecnicas-de-reduccion-de-la-varianza.html"><a href="tecnicas-de-reduccion-de-la-varianza.html#numeros-aleatorios-comunes"><i class="fa fa-check"></i><b>10.5</b> Números aleatorios comunes</a></li>
+<li class="chapter" data-level="10.6" data-path="tecnicas-de-reduccion-de-la-varianza.html"><a href="tecnicas-de-reduccion-de-la-varianza.html#ejercicios-fin-de-practica"><i class="fa fa-check"></i><b>10.6</b> Ejercicios fin de práctica</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="pendiente-ejercicios-bookdown.html"><a href="pendiente-ejercicios-bookdown.html"><i class="fa fa-check"></i><b>11</b> Pendiente (ejercicios bookdown)</a></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html#bibliografia-basica"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html#bibliografia-complementaria"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
+</ul></li>
+<li class="appendix"><span><b>Apendices</b></span></li>
+<li class="chapter" data-level="A" data-path="recursos-para-el-aprendizaje-de-r.html"><a href="recursos-para-el-aprendizaje-de-r.html"><i class="fa fa-check"></i><b>A</b> Recursos para el aprendizaje de R</a><ul>
+<li class="chapter" data-level="A.1" data-path="recursos-para-el-aprendizaje-de-r.html"><a href="recursos-para-el-aprendizaje-de-r.html#cursos"><i class="fa fa-check"></i><b>A.1</b> Cursos</a></li>
+<li class="chapter" data-level="A.2" data-path="recursos-para-el-aprendizaje-de-r.html"><a href="recursos-para-el-aprendizaje-de-r.html#libros"><i class="fa fa-check"></i><b>A.2</b> Libros</a><ul>
+<li class="chapter" data-level="A.2.1" data-path="recursos-para-el-aprendizaje-de-r.html"><a href="recursos-para-el-aprendizaje-de-r.html#iniciacion"><i class="fa fa-check"></i><b>A.2.1</b> Iniciación</a></li>
+<li class="chapter" data-level="A.2.2" data-path="recursos-para-el-aprendizaje-de-r.html"><a href="recursos-para-el-aprendizaje-de-r.html#avanzados"><i class="fa fa-check"></i><b>A.2.2</b> Avanzados</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="recursos-para-el-aprendizaje-de-r.html"><a href="recursos-para-el-aprendizaje-de-r.html#material"><i class="fa fa-check"></i><b>A.3</b> Material</a></li>
+<li class="chapter" data-level="A.4" data-path="recursos-para-el-aprendizaje-de-r.html"><a href="recursos-para-el-aprendizaje-de-r.html#ayuda"><i class="fa fa-check"></i><b>A.4</b> Ayuda</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="integracion-numerica.html"><a href="integracion-numerica.html"><i class="fa fa-check"></i><b>B</b> Integración numérica</a><ul>
+<li class="chapter" data-level="B.1" data-path="integracion-numerica.html"><a href="integracion-numerica.html#introduccion-2"><i class="fa fa-check"></i><b>B.1</b> Introducción</a></li>
+<li class="chapter" data-level="B.2" data-path="integracion-numerica.html"><a href="integracion-numerica.html#integracion-numerica-unidimensional"><i class="fa fa-check"></i><b>B.2</b> Integración numérica unidimensional</a><ul>
+<li class="chapter" data-level="B.2.1" data-path="integracion-numerica.html"><a href="integracion-numerica.html#metodo-del-trapezoide"><i class="fa fa-check"></i><b>B.2.1</b> Método del trapezoide</a></li>
+<li class="chapter" data-level="B.2.2" data-path="integracion-numerica.html"><a href="integracion-numerica.html#regla-de-simpson"><i class="fa fa-check"></i><b>B.2.2</b> Regla de Simpson</a></li>
+<li class="chapter" data-level="B.2.3" data-path="integracion-numerica.html"><a href="integracion-numerica.html#cuadratura-adaptativa"><i class="fa fa-check"></i><b>B.2.3</b> Cuadratura adaptativa</a></li>
+<li class="chapter" data-level="B.2.4" data-path="integracion-numerica.html"><a href="integracion-numerica.html#comandos-de-r"><i class="fa fa-check"></i><b>B.2.4</b> Comandos de <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="B.3" data-path="integracion-numerica.html"><a href="integracion-numerica.html#integracion-numerica-bidimensional"><i class="fa fa-check"></i><b>B.3</b> Integración numérica bidimensional</a><ul>
+<li class="chapter" data-level="B.3.1" data-path="integracion-numerica.html"><a href="integracion-numerica.html#representacion-grafica"><i class="fa fa-check"></i><b>B.3.1</b> Representación gráfica</a></li>
+<li class="chapter" data-level="B.3.2" data-path="integracion-numerica.html"><a href="integracion-numerica.html#metodo-del-trapezoide-1"><i class="fa fa-check"></i><b>B.3.2</b> Método del trapezoide</a></li>
+<li class="chapter" data-level="B.3.3" data-path="integracion-numerica.html"><a href="integracion-numerica.html#comandos-r"><i class="fa fa-check"></i><b>B.3.3</b> Comandos R</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Prácticas de Simulación</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="aplicaciones-de-la-simulacion-en-inferencia-estadistica" class="section level1">
+<h1><span class="header-section-number">Capítulo 5</span> Aplicaciones de la simulación en Inferencia Estadística</h1>
+<div id="aplicaciones-de-la-simulacion" class="section level2">
+<h2><span class="header-section-number">5.1</span> Aplicaciones de la simulación</h2>
+<p>Aplicaciones:</p>
+<ul>
+<li><p>Estadística: Muestreo, aproximación de distribuciones, remuestreo,…</p></li>
+<li><p>Optimización: Algoritmos genéticos, …</p></li>
+<li><p>Análisis numérico: Evaluación de expresiones, …</p></li>
+<li><p>…</p></li>
+</ul>
+<p>En este capítulo nos centraremos en algunas de las aplicaciones en inferencia estadística, aunque habría muchas:</p>
+<ul>
+<li><p>Distribución de estimadores puntuales/estadísticos:</p>
+<ul>
+<li><p>Aproximación de la distribución.</p>
+<ul>
+<li><p>Aproximación de características de la distribución.</p></li>
+<li><p>Valided de la distribución asintótica.</p></li>
+</ul></li>
+<li><p>Comparación de estimadores.</p></li>
+</ul></li>
+<li><p>Estimación por intervalo de confianza:</p>
+<ul>
+<li><p>Obtención de intervalos/bandas de confianza (probabilidad).</p></li>
+<li><p>Análisis de un estimador por intervalo de confianza.</p></li>
+</ul></li>
+<li><p>Contrastes de hipótesis:</p>
+<ul>
+<li><p>Aproximación del <span class="math inline">\(p\)</span>-valor.</p></li>
+<li><p>Análisis de un contraste de hipótesis.</p></li>
+<li><p>Validación teoría.</p></li>
+</ul></li>
+<li><p>Métodos de remuestro bootstrap.</p></li>
+<li><p>Inferencia Bayesiana</p></li>
+<li><p>…</p></li>
+</ul>
+<p>En el siguiente capítulo trararemos la Integración y Optimización Monte Carlo…</p>
+</div>
+<div id="distribucion-en-el-muestreo" class="section level2">
+<h2><span class="header-section-number">5.2</span> Distribución en el muestreo</h2>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-1" class="exercise"><strong>Ejercicio 5.1  </strong></span>
+</div>
+<p></p>
+<p>Si <span class="math inline">\(X_{1},\ldots,X_{n}\)</span> es una muestra aleatoria simple de una variable aleatoria <span class="math inline">\(X\)</span> <span class="math inline">\(\in\)</span> <span class="math inline">\(N\left( \mu, \sigma \right),\)</span> la distribución en el muestreo de: <span class="math display">\[\hat{\mu}=\overline{X}=\dfrac{1}{n}\sum_{i=1}^{n}X_{i}\]</span> es: <span class="math display">\[\overline{X}\in N\left(  \mu,\dfrac{\sigma}{\sqrt{n}}\right)\]</span> Confirmar este resultado mediante simulación, para ello:</p>
+<ol style="list-style-type: lower-alpha">
+<li>Crear un conjunto de datos <code>muestras</code> con 500 muestras de tamaño <span class="math inline">\(n=10\)</span> de una <span class="math inline">\(N(1,2)\)</span>. Añadir al conjunto de datos las estimaciones de la media y desviación típica obtenidas con cada una de las muestras.</li>
+</ol>
+<p>Valores iniciales:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">54321</span>) <span class="co"># Fijar semilla para reproductibilidad</span>
+nsim &lt;-<span class="st"> </span><span class="dv">500</span>
+nx &lt;-<span class="st"> </span><span class="dv">10</span></code></pre></div>
+<p>Valores teóricos:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mux &lt;-<span class="st"> </span><span class="dv">1</span>
+sdx &lt;-<span class="st"> </span><span class="dv">2</span></code></pre></div>
+<p>Simulación de las muestras (al estilo <code>Rcmdr</code>):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">muestras &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">matrix</span>(<span class="kw">rnorm</span>(nsim*nx, <span class="dt">mean=</span>mux, <span class="dt">sd=</span>sdx), <span class="dt">ncol=</span>nx))
+<span class="kw">rownames</span>(muestras) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;muestra&quot;</span>, <span class="dv">1</span>:nsim, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)
+<span class="kw">colnames</span>(muestras) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;obs&quot;</span>, <span class="dv">1</span>:nx, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)
+<span class="kw">str</span>(muestras)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    500 obs. of  10 variables:
+##  $ obs1 : num  0.642 -0.856 -0.568 -2.301 0.184 ...
+##  $ obs2 : num  3.483 2.216 1.1 4.305 0.677 ...
+##  $ obs3 : num  1.24 -1.51 -3.98 2.29 2.46 ...
+##  $ obs4 : num  3.286 0.947 0.953 -1.663 2.623 ...
+##  $ obs5 : num  3.77 -1.34 1.61 -2.46 1.11 ...
+##  $ obs6 : num  -2.044 0.32 3.046 0.136 3.555 ...
+##  $ obs7 : num  0.6186 -1.8614 4.3386 0.0996 0.8334 ...
+##  $ obs8 : num  -0.829 2.202 -1.688 1.534 -0.114 ...
+##  $ obs9 : num  0.4904 -0.6713 0.5451 -0.6517 0.0168 ...
+##  $ obs10: num  2.79 2.84 1.27 3.93 2.17 ...</code></pre>
+<p>Estimaciones</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">muestras$mean &lt;-<span class="st"> </span><span class="kw">rowMeans</span>(muestras[,<span class="dv">1</span>:nx])
+muestras$sd &lt;-<span class="st"> </span><span class="kw">apply</span>(muestras[,<span class="dv">1</span>:nx], <span class="dv">1</span>, sd)</code></pre></div>
+
+<div class="remark">
+ <span class="remark"><em>Nota: </em></span> La fila <code>muestras[i,]</code> contiene las observaciones de la i-ésima muestra y la correspondiente media y desv. tip.
+</div>
+<p></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">muestras[<span class="dv">1</span>,]</code></pre></div>
+<pre><code>##               obs1     obs2     obs3    obs4     obs5     obs6      obs7
+## muestra1 0.6421985 3.482661 1.242483 3.28559 3.766896 -2.04443 0.6186323
+##                obs8      obs9    obs10     mean       sd
+## muestra1 -0.8293636 0.4903819 2.790091 1.344514 1.951292</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Generar el histograma (en escala de densidades) de las medias muestrales y compararlo con la densidad teórica.</li>
+</ol>
+<p>Distribución de la media muestral:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(muestras$mean, <span class="dt">freq=</span><span class="ot">FALSE</span>, <span class="dt">breaks=</span><span class="st">&quot;FD&quot;</span>, 
+     <span class="dt">main=</span><span class="st">&quot;Distribución de la media muestral&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Medias&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Densidad&quot;</span>)
+<span class="co"># Densidad observada (estimación)</span>
+<span class="kw">lines</span>(<span class="kw">density</span>(muestras$mean)) 
+<span class="co"># Densidad teórica (bajo normalidad)</span>
+<span class="kw">curve</span>(<span class="kw">dnorm</span>(x,mux,sdx/<span class="kw">sqrt</span>(nx)), <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">add=</span><span class="ot">TRUE</span>) 
+<span class="co"># Aproximación del valor esperado de la media muestral mediante simulación</span>
+<span class="kw">abline</span>(<span class="dt">v=</span><span class="kw">mean</span>(muestras$mean),<span class="dt">lty=</span><span class="dv">2</span>)  
+<span class="co"># Valor esperado de la media muestral (teórico)</span>
+<span class="kw">abline</span>(<span class="dt">v=</span>mux, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-8" class="exercise"><strong>Ejercicio 5.2  </strong></span>
+</div>
+<p></p>
+<p>Si <span class="math inline">\(X_{1},\ldots,X_{n}\)</span> es una m.a.s. de una variable aleatoria <span class="math inline">\(X\)</span> (cualquiera) con <span class="math inline">\(E\left( X \right) = \mu\)</span> y <span class="math inline">\(Var\left( X \right) = \sigma^{2}\)</span>, por el Teorema Central del Límite, la distribución en el muestreo de <span class="math inline">\(\hat{\mu}=\overline{X}\)</span> se aproxima a la normalidad: <span class="math display">\[\overline{X}\underset{n\rightarrow\infty}{\longrightarrow}
+N\left( \mu, \dfrac{\sigma}{\sqrt{n}}\right)\]</span> Típicamente se suele considerar que esta aproximación es buena para tamaños muestrales <span class="math inline">\(n&gt;30\)</span>, aunque dependerá de las características de la distribución de <span class="math inline">\(X\)</span>.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Repetir el ejercicio anterior considerando muestras de una <span class="math inline">\(Exp(1)\)</span> (tener en cuenta que <span class="math inline">\(X\in Exp(\lambda)\Rightarrow\mu_{X}=\sigma_{X}=1/\lambda\)</span>). ¿Qué ocurre con la distribución de la media muestral?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">54321</span>) <span class="co"># Fijar semilla para reproductibilidad</span>
+nsim &lt;-<span class="st"> </span><span class="dv">500</span>
+nx &lt;-<span class="st"> </span><span class="dv">10</span>    
+<span class="co"># nx &lt;- 50</span></code></pre></div>
+<p>Valores teóricos:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lambda &lt;-<span class="st"> </span><span class="dv">1</span>
+muexp &lt;-<span class="st"> </span><span class="dv">1</span>/lambda
+sdexp &lt;-<span class="st"> </span>muexp</code></pre></div>
+<p>Simulación de las muestras:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">muestras2 &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">matrix</span>(<span class="kw">rexp</span>(nsim*nx, <span class="dt">rate=</span>lambda), <span class="dt">ncol=</span>nx))
+<span class="kw">rownames</span>(muestras2) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;muestra&quot;</span>, <span class="dv">1</span>:nsim, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)
+<span class="kw">colnames</span>(muestras2) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;obs&quot;</span>, <span class="dv">1</span>:nx, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</code></pre></div>
+<p>Estimaciones:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">muestras2$mean &lt;-<span class="st"> </span><span class="kw">rowMeans</span>(muestras2[,<span class="dv">1</span>:nx])
+muestras2$sd &lt;-<span class="st"> </span><span class="kw">apply</span>(muestras2[,<span class="dv">1</span>:nx], <span class="dv">1</span>, sd)</code></pre></div>
+<p>Distribución de la media muestral:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(muestras2$mean, <span class="dt">xlim =</span> <span class="kw">c</span>(-<span class="fl">0.1</span>, <span class="fl">2.5</span>), <span class="dt">freq=</span><span class="ot">FALSE</span>, <span class="dt">breaks=</span><span class="st">&quot;FD&quot;</span>, 
+     <span class="dt">main=</span><span class="st">&quot;Distribución de la media muestral&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Medias&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Densidad&quot;</span>)
+<span class="co"># Densidad observada (estimación)</span>
+<span class="kw">lines</span>(<span class="kw">density</span>(muestras2$mean)) 
+<span class="co"># Distribución asintótica (TCL)</span>
+<span class="kw">curve</span>(<span class="kw">dnorm</span>(x,muexp,sdexp/<span class="kw">sqrt</span>(nx)), <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">add=</span><span class="ot">TRUE</span>) 
+<span class="co"># Aproximación del valor esperado de la media muestral mediante simulación</span>
+<span class="kw">abline</span>(<span class="dt">v=</span><span class="kw">mean</span>(muestras2$mean),<span class="dt">lty=</span><span class="dv">2</span>)  
+<span class="co"># Valor esperado de la media muestral (teórico)</span>
+<span class="kw">abline</span>(<span class="dt">v=</span>muexp, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Aumentar el tamaño muestral a 50. ¿Se aproxima más la distribución de las medias muestrales a la teórica bajo normalidad?</li>
+</ol>
+<p>Ejecutar el código del apartado anterior fijando <code>nx &lt;- 50</code>.</p>
+</div>
+<div id="intervalos-de-confianza" class="section level2">
+<h2><span class="header-section-number">5.3</span> Intervalos de confianza</h2>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-14" class="exercise"><strong>Ejercicio 2.4  </strong></span>
+</div>
+<p></p>
+<p>Siguiendo el enunciado del ejercicio 1, se deduce que el intervalo de confianza (de nivel <span class="math inline">\(1-\alpha\)</span>) para la media <span class="math inline">\(\mu\)</span> de una población normal con varianza conocida es: <span class="math display">\[IC_{1-\alpha}\left(  \mu\right)  = 
+\left(  \overline{X}-z_{1-\alpha/2}\dfrac{\sigma}{\sqrt{n}},\ \overline{X} 
++ z_{1-\alpha/2}\dfrac{\sigma}{\sqrt{n}} \right).\]</span> La idea es que el <span class="math inline">\(100(1-\alpha)\%\)</span> de los intervalos así construidos contentrán el verdadero valor del parámetro.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Utilizando el conjunto de datos <code>muestras</code> del ejercicio 1 (500 muestras de tamaño <span class="math inline">\(n=10\)</span> de una <span class="math inline">\(N(1,2)\)</span>), añadir en dos nuevas variables los extremos del intervalo de confianza para la media con varianza conocida al conjunto de datos. Analizar la cobertura de estas estimaciones por IC.</li>
+</ol>
+<p>IC para la media con varianza conocida (bajo normalidad)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">alfa &lt;-<span class="st"> </span><span class="fl">0.05</span>
+z &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="dv">1</span> -<span class="st"> </span>alfa/<span class="dv">2</span>)
+muestras$ici &lt;-<span class="st"> </span>muestras$mean -<span class="st"> </span>z*sdx/<span class="kw">sqrt</span>(nx)
+muestras$ics &lt;-<span class="st"> </span>muestras$mean +<span class="st"> </span>z*sdx/<span class="kw">sqrt</span>(nx)</code></pre></div>
+<p>Cobertura de las estimaciones por IC:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">muestras$cob &lt;-<span class="st"> </span>(muestras$ici &lt;<span class="st"> </span>mux) &amp;<span class="st"> </span>(mux &lt;<span class="st"> </span>muestras$ics) 
+ncob &lt;-<span class="st"> </span><span class="kw">sum</span>(muestras$cob) <span class="co"># Nº de intervalos que contienen la verdadera media</span>
+ncob</code></pre></div>
+<pre><code>## [1] 480</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">100</span>*ncob/nsim     <span class="co"># Proporción de intervalos</span></code></pre></div>
+<pre><code>## [1] 96</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">100</span>*(<span class="dv">1</span> -<span class="st"> </span>alfa)    <span class="co"># Proporción teórica bajo normalidad</span></code></pre></div>
+<pre><code>## [1] 95</code></pre>
+<p>Solo como ejemplo ilustrativo: Gráfico de los primeros 50 intervalos:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m &lt;-<span class="st"> </span><span class="dv">50</span>
+tmp &lt;-<span class="st"> </span>muestras[<span class="dv">1</span>:m,]
+<span class="kw">attach</span>(tmp)
+color &lt;-<span class="st"> </span><span class="kw">ifelse</span>(cob,<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;red&quot;</span>)
+<span class="kw">plot</span>(<span class="dv">1</span>:m, mean, <span class="dt">col =</span> color, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="kw">min</span>(ici),<span class="kw">max</span>(ics)), 
+     <span class="dt">main =</span> <span class="st">&quot;Cobertura de las estimaciones por IC&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Muestra&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;IC&quot;</span>)
+<span class="kw">arrows</span>(<span class="dv">1</span>:m, ici, <span class="dv">1</span>:m, ics, <span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">length =</span> <span class="fl">0.05</span>, <span class="dt">code =</span> <span class="dv">3</span>, <span class="dt">col =</span> color)
+<span class="kw">abline</span>(<span class="dt">h =</span> mux, <span class="dt">lty =</span> <span class="dv">3</span>)</code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">detach</span>(tmp)</code></pre></div>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Repetir el apartado anterior considerando muestras de una <span class="math inline">\(Exp(1)\)</span>. ¿Qué ocurre con la cobertura del intervalo de confianza obtenido bajo normalidad?</li>
+</ol>
+<p>Ejecutar el código del apartado a) del ejercicio 2.</p>
+<p>IC para la media con varianza conocida (bajo normalidad)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">alfa &lt;-<span class="st"> </span><span class="fl">0.05</span>
+z &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="dv">1</span> -<span class="st"> </span>alfa/<span class="dv">2</span>)
+muestras2$ici &lt;-<span class="st"> </span>muestras2$mean -<span class="st"> </span>z*sdexp/<span class="kw">sqrt</span>(nx)
+muestras2$ics &lt;-<span class="st"> </span>muestras2$mean +<span class="st"> </span>z*sdexp/<span class="kw">sqrt</span>(nx)</code></pre></div>
+<p>Cobertura de las estimaciones por IC:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">muestras2$cob &lt;-<span class="st"> </span>(muestras2$ici &lt;<span class="st"> </span>muexp) &amp;<span class="st"> </span>(muexp &lt;<span class="st"> </span>muestras2$ics) 
+ncob &lt;-<span class="st"> </span><span class="kw">sum</span>(muestras2$cob) <span class="co"># Nº de intervalos que contienen la verdadera media</span>
+ncob</code></pre></div>
+<pre><code>## [1] 469</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">100</span>*ncob/nsim     <span class="co"># Proporción de intervalos</span></code></pre></div>
+<pre><code>## [1] 93.8</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">100</span>*(<span class="dv">1</span> -<span class="st"> </span>alfa)    <span class="co"># Proporción teórica bajo normalidad</span></code></pre></div>
+<pre><code>## [1] 95</code></pre>
+<p>Solo como ejemplo ilustrativo: Gráfico de los primeros 100 intervalos:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m &lt;-<span class="st"> </span><span class="dv">100</span>
+tmp &lt;-<span class="st"> </span>muestras2[<span class="dv">1</span>:m,]
+<span class="kw">attach</span>(tmp)
+color &lt;-<span class="st"> </span><span class="kw">ifelse</span>(cob,<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;red&quot;</span>)
+<span class="kw">plot</span>(<span class="dv">1</span>:m, mean, <span class="dt">col =</span> color, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="kw">min</span>(ici),<span class="kw">max</span>(ics)), 
+     <span class="dt">main =</span> <span class="st">&quot;Cobertura de las estimaciones por IC&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Muestra&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;IC&quot;</span>)
+<span class="kw">arrows</span>(<span class="dv">1</span>:m, ici, <span class="dv">1</span>:m, ics, <span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">length =</span> <span class="fl">0.05</span>, <span class="dt">code =</span> <span class="dv">3</span>, <span class="dt">col =</span> color)
+<span class="kw">abline</span>(<span class="dt">h =</span> muexp, <span class="dt">lty =</span> <span class="dv">3</span>)</code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">detach</span>(tmp)</code></pre></div>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>¿Qué ocurre si aumentamos el tamaño muestral a 50?</li>
+</ol>
+<p>Ejecutar el código del ejercicio anterior fijando <code>nx &lt;- 50</code> y el del apartado anterior.</p>
+<p>En los apartadps b) y c) podíamos considerar bootstrap descrito al final de este capítulo.</p>
+<p>Podemos aproximar por simulación los intervalos de probabilidad de la media muestral (tendríamos una idea del valor esperado de lo que obtendríamos con el bootstrap percentil; en este caso el estimador es insesgado…):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Distribución de la media muestral</span>
+<span class="kw">hist</span>(muestras2$mean, <span class="dt">freq=</span><span class="ot">FALSE</span>, <span class="dt">breaks=</span><span class="st">&quot;FD&quot;</span>, 
+     <span class="dt">main=</span><span class="st">&quot;Distribución de la media muestral&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Medias&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Densidad&quot;</span>)
+<span class="co"># Densidad observada (estimación)</span>
+<span class="kw">lines</span>(<span class="kw">density</span>(muestras2$mean), <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&#39;red&#39;</span>) 
+<span class="co"># Densidad teórica (bajo normalidad)</span>
+<span class="kw">curve</span>(<span class="kw">dnorm</span>(x,muexp,sdexp/<span class="kw">sqrt</span>(nx)), <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">add=</span><span class="ot">TRUE</span>) 
+<span class="co"># Aproximación por simulación del valor esperado de la media muestral</span>
+<span class="kw">abline</span>(<span class="dt">v=</span><span class="kw">mean</span>(muestras2$mean), <span class="dt">lty=</span><span class="dv">2</span>)
+<span class="co"># Valor esperado de la media muestral (teórico)</span>
+<span class="kw">abline</span>(<span class="dt">v=</span>muexp, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>) 
+<span class="co"># IP bajo normalidad</span>
+ic.aprox &lt;-<span class="st"> </span><span class="kw">apply</span>(muestras2[ ,<span class="kw">c</span>(<span class="st">&#39;ici&#39;</span>,<span class="st">&#39;ics&#39;</span>)], <span class="dv">2</span>, mean)
+## ic.aprox 
+##       ici       ics 
+## 0.3865199 1.6261099
+<span class="co"># Intervalo de probabilidad para la media muestral aproximado bajo normalidad</span>
+<span class="kw">abline</span>(<span class="dt">v =</span> ic.aprox, <span class="dt">col=</span><span class="st">&#39;blue&#39;</span>)
+
+<span class="co"># Intervalo de probabilidad para la media muestral (aproximado por simulación)</span>
+ic.sim &lt;-<span class="st"> </span><span class="kw">quantile</span>(muestras2$mean, <span class="kw">c</span>(alfa/<span class="dv">2</span>, <span class="dv">1</span> -<span class="st"> </span>alfa/<span class="dv">2</span>))
+## ic.sim
+##      2.5%     97.5% 
+## 0.4714233 1.8059094
+<span class="co"># IP (aprox.) </span>
+<span class="kw">abline</span>(<span class="dt">v=</span>ic.sim, <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&#39;red&#39;</span>) </code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+
+<div class="remark">
+ <span class="remark"><em>Nota: </em></span> Estimaciones puntuales, por intervalo de confianza y contrastes de hipótesis para la media con varianza desconocida bajo normalidad se pueden obtener con la función <code>t.test</code>.
+</div>
+<p></p>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-22" class="exercise"><strong>Ejercicio 5.3  </strong></span>
+</div>
+<p></p>
+<p>El Intervalo de confianza para una proporción construido usando la aproximación normal tiene un mal comportamiento cuando el tamaño de la muestra es pequeño. Una simple y efectiva mejora consiste en añadir a la muestra <span class="math inline">\(2a\)</span> elementos, <span class="math inline">\(a\)</span> exitos y <span class="math inline">\(a\)</span> fracasos. Así el intervalo de confianza al <span class="math inline">\(\left( 1-\alpha\right) 100\%\)</span> para una proporción mejorado es: <span class="math display">\[\begin{aligned}
+IC_{1-\alpha}^{a}\left(  p\right)   
+&amp; =\left(  \tilde{p}-z_{1-\alpha/2}\sqrt{\frac{\tilde{p}(1-\tilde{p})}{\tilde{n}}} \text{ , }
+\tilde{p}+z_{1-\alpha/2}\sqrt{\frac{\tilde{p}(1-\tilde{p})}{\tilde{n}}}\right)  ,\\
+\text{siendo }\tilde{n} &amp; = n+2a \text{, } \tilde{p} = \frac{np+a}{\tilde{n}}.
+\end{aligned}\]</span> En el caso de <span class="math inline">\(a=2\)</span> se denomina IC Agresti-Coull.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Teniendo en cuenta que la v.a. <span class="math inline">\(X=n\hat{p}\sim\mathcal{B}(n,p)\)</span>, obtener y representar gráficamente la cobertura teórica del intervalo de confianza estándar (<span class="math inline">\(a=0\)</span>) de una proporción para una muestra de tamaño <span class="math inline">\(n=30\)</span>, <span class="math inline">\(\alpha=0.05\)</span> y distintos valores de <span class="math inline">\(p\)</span> (<code>p.teor &lt;- seq(1/n, 1 - 1/n, length = 1000)</code>).</li>
+</ol>
+<p>Parámetros:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="dv">30</span>
+alpha &lt;-<span class="st"> </span><span class="fl">0.05</span>
+adj &lt;-<span class="st"> </span><span class="dv">0</span>  <span class="co"># (adj &lt;- 2 para Agresti-Coull)</span></code></pre></div>
+<p>Probabilidades teóricas:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m &lt;-<span class="st"> </span><span class="dv">1000</span>
+p.teor &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>/n, <span class="dv">1</span> -<span class="st"> </span><span class="dv">1</span>/n, <span class="dt">length =</span> m) </code></pre></div>
+<p>Posibles resultados:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">0</span>:n
+p.est &lt;-<span class="st"> </span>(x +<span class="st"> </span>adj)/(n +<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span>adj) 
+ic.err &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="dv">1</span> -<span class="st"> </span>alpha/<span class="dv">2</span>) *<span class="st"> </span><span class="kw">sqrt</span>(p.est *<span class="st"> </span>(<span class="dv">1</span> -<span class="st"> </span>p.est)/(n +<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span>adj))  
+lcl &lt;-<span class="st"> </span>p.est -<span class="st"> </span>ic.err 
+ucl &lt;-<span class="st"> </span>p.est +<span class="st"> </span>ic.err </code></pre></div>
+<p>Recorrer prob. teóricas:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.cov &lt;-<span class="st"> </span><span class="kw">numeric</span>(m)
+for (i in <span class="dv">1</span>:m) {
+  <span class="co"># cobertura de los posibles intervalos</span>
+  cover &lt;-<span class="st"> </span>(p.teor[i] &gt;=<span class="st"> </span>lcl) &amp;<span class="st"> </span>(p.teor[i] &lt;=<span class="st"> </span>ucl)  
+  <span class="co"># prob. de los posibles intervalos</span>
+  p.rel &lt;-<span class="st"> </span><span class="kw">dbinom</span>(x[cover], n, p.teor[i])           
+  <span class="co"># prob. total de cobertura</span>
+  p.cov[i] &lt;-<span class="st"> </span><span class="kw">sum</span>(p.rel)                            
+}</code></pre></div>
+<p>Gráfico coberturas:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(p.teor, p.cov, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">1</span> -<span class="st"> </span><span class="dv">4</span> *<span class="st"> </span>alpha, <span class="dv">1</span>))
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">1</span> -<span class="st"> </span>alpha, <span class="dt">lty =</span> <span class="dv">2</span>) </code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Repetir el apartado anterior considerando intervalos de confianza Agresti-Coull (<span class="math inline">\(a=2\)</span>).</li>
+</ol>
+<p>Parámetros:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="dv">30</span>
+alpha &lt;-<span class="st"> </span><span class="fl">0.05</span>
+adj &lt;-<span class="st"> </span><span class="dv">2</span>  <span class="co"># Agresti-Coull</span>
+
+<span class="co"># Probabilidades teóricas:</span>
+m &lt;-<span class="st"> </span><span class="dv">1000</span>
+p.teor &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>/n, <span class="dv">1</span> -<span class="st"> </span><span class="dv">1</span>/n, <span class="dt">length =</span> m) 
+<span class="co"># Posibles resultados:</span>
+x &lt;-<span class="st"> </span><span class="dv">0</span>:n
+p.est &lt;-<span class="st"> </span>(x +<span class="st"> </span>adj)/(n +<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span>adj) 
+ic.err &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="dv">1</span> -<span class="st"> </span>alpha/<span class="dv">2</span>) *<span class="st"> </span><span class="kw">sqrt</span>(p.est *<span class="st"> </span>(<span class="dv">1</span> -<span class="st"> </span>p.est)/(n +<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span>adj))  
+lcl &lt;-<span class="st"> </span>p.est -<span class="st"> </span>ic.err 
+ucl &lt;-<span class="st"> </span>p.est +<span class="st"> </span>ic.err 
+<span class="co"># Recorrer prob. teóricas:</span>
+p.cov &lt;-<span class="st"> </span><span class="kw">numeric</span>(m)
+for (i in <span class="dv">1</span>:m) {
+  <span class="co"># cobertura de los posibles intervalos</span>
+  cover &lt;-<span class="st"> </span>(p.teor[i] &gt;=<span class="st"> </span>lcl) &amp;<span class="st"> </span>(p.teor[i] &lt;=<span class="st"> </span>ucl)  
+  <span class="co"># prob. de los posibles intervalos</span>
+  p.rel &lt;-<span class="st"> </span><span class="kw">dbinom</span>(x[cover], n, p.teor[i])           
+  <span class="co"># prob. total de cobertura</span>
+  p.cov[i] &lt;-<span class="st"> </span><span class="kw">sum</span>(p.rel)                            
+}
+<span class="co"># Gráfico coberturas:</span>
+<span class="kw">plot</span>(p.teor, p.cov, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">1</span> -<span class="st"> </span><span class="dv">4</span> *<span class="st"> </span>alpha, <span class="dv">1</span>))
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">1</span> -<span class="st"> </span>alpha, <span class="dt">lty =</span> <span class="dv">2</span>) </code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Repetir el apartado anterior empleando simulación para aproximar la cobertura.</li>
+</ol>
+<p>Parámetros:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="dv">30</span>
+alpha &lt;-<span class="st"> </span><span class="fl">0.05</span>
+adj &lt;-<span class="st"> </span><span class="dv">2</span>  <span class="co">#&#39; (2 para Agresti-Coull)</span>
+
+<span class="kw">set.seed</span>(<span class="dv">54321</span>)
+nsim &lt;-<span class="st"> </span><span class="dv">500</span> 
+<span class="co"># Probabilidades teóricas:</span>
+m &lt;-<span class="st"> </span><span class="dv">1000</span>
+p.teor &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>/n, <span class="dv">1</span> -<span class="st"> </span><span class="dv">1</span>/n, <span class="dt">length =</span> m) </code></pre></div>
+<p>Recorrer prob. teóricas:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># m &lt;- length(p.teor)</span>
+p.cov &lt;-<span class="st"> </span><span class="kw">numeric</span>(m)
+for (i in <span class="dv">1</span>:m) {
+  <span class="co"># Equivalente a simular nsim muestras de tamaño n</span>
+  <span class="co"># ry &lt;- matrix(rbinom(n*nsim, 1, p.teor[i]), ncol=n)</span>
+  <span class="co"># rx &lt;- apply(ry, 1, sum)</span>
+  rx &lt;-<span class="st"> </span><span class="kw">rbinom</span>(nsim, n, p.teor[i])
+  p.est &lt;-<span class="st"> </span>(rx +<span class="st"> </span>adj)/(n +<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span>adj)  
+  ic.err &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="dv">1</span> -<span class="st"> </span>alpha/<span class="dv">2</span>) *<span class="st"> </span><span class="kw">sqrt</span>(p.est *<span class="st"> </span>(<span class="dv">1</span> -<span class="st"> </span>p.est)/(n +<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span>adj))
+  p.cov[i] &lt;-<span class="st"> </span><span class="kw">mean</span>( <span class="kw">abs</span>(p.est -<span class="st"> </span>p.teor[i]) &lt;<span class="st"> </span>ic.err )
+}</code></pre></div>
+<p>Representar:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(p.teor, p.cov, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">1</span> -<span class="st"> </span><span class="dv">4</span> *<span class="st"> </span>alpha, <span class="dv">1</span>))
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">1</span> -<span class="st"> </span>alpha, <span class="dt">lty =</span> <span class="dv">2</span>) </code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+</div>
+<div id="contrastes-de-hipotesis" class="section level2">
+<h2><span class="header-section-number">5.4</span> Contrastes de hipótesis</h2>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-32" class="exercise"><strong>Ejercicio 5.4  </strong></span>
+</div>
+<p></p>
+<p>En el tema 2 se propuso el análisis de la bondad de ajuste de un generador de números pseudo-aleatorios mediante el test de Kolmogorov-Smirnov. Sin embargo, si <span class="math inline">\(H_{0}\)</span> es compuesta (los parámetros desconocidos se estiman por máxima verosimilitud y se trabaja con <span class="math inline">\(\hat{F}_{0}\)</span>) los cuantiles de la distribución (asintótica) de <span class="math inline">\(D_{n}\)</span> pueden ser demasiado conservativos y sería preferible utilizar la distribución exacta.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Analizar el comportamiento del contraste de Kolmogorov-Smirnov para contrastar normalidad empleando repetidamente este test, considerando 1000 pruebas con muestras de tamaño 30 de una <span class="math inline">\(\mathcal{N}(0,1)\)</span>. Comparar gráficamente el ajuste de la distribución del <span class="math inline">\(p\)</span>-valor a la de referencia (estudiar el tamaño del contraste).</li>
+</ol>
+<p>Valores iniciales:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">54321</span>)
+nx &lt;-<span class="st"> </span><span class="dv">30</span>
+mx &lt;-<span class="st"> </span><span class="dv">0</span>
+sx &lt;-<span class="st"> </span><span class="dv">1</span>
+nsim &lt;-<span class="st"> </span><span class="dv">1000</span>
+estadistico &lt;-<span class="st"> </span><span class="kw">numeric</span>(nsim)
+pvalor &lt;-<span class="st"> </span><span class="kw">numeric</span>(nsim)</code></pre></div>
+<p>Realizar contrastes</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">for(isim in <span class="dv">1</span>:nsim) {
+  rx &lt;-<span class="st"> </span><span class="kw">rnorm</span>(nx, mx, sx)
+  tmp &lt;-<span class="st"> </span><span class="kw">ks.test</span>(rx, <span class="st">&quot;pnorm&quot;</span>, <span class="kw">mean</span>(rx), <span class="kw">sd</span>(rx))
+  estadistico[isim] &lt;-<span class="st"> </span>tmp$statistic
+  pvalor[isim] &lt;-<span class="st"> </span>tmp$p.value
+}</code></pre></div>
+<p>Proporción de rechazos:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">{
+  <span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Proporción de rechazos al 1% =&quot;</span>, <span class="kw">mean</span>(pvalor &lt;<span class="st"> </span><span class="fl">0.01</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+  <span class="kw">cat</span>(<span class="st">&quot;Proporción de rechazos al 5% =&quot;</span>, <span class="kw">mean</span>(pvalor &lt;<span class="st"> </span><span class="fl">0.05</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+  <span class="kw">cat</span>(<span class="st">&quot;Proporción de rechazos al 10% =&quot;</span>, <span class="kw">mean</span>(pvalor &lt;<span class="st"> </span><span class="fl">0.1</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+}</code></pre></div>
+<pre><code>## 
+## Proporción de rechazos al 1% = 0 
+## Proporción de rechazos al 5% = 0 
+## Proporción de rechazos al 10% = 0.001</code></pre>
+<p>Análisis de los p-valores:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(pvalor, <span class="dt">freq=</span><span class="ot">FALSE</span>)
+<span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">1</span>, <span class="dt">lty=</span><span class="dv">2</span>)   <span class="co"># curve(dunif(x,0,1), add=TRUE)</span></code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Distribución empírica</span>
+<span class="kw">curve</span>(<span class="kw">ecdf</span>(pvalor)(x), <span class="dt">type =</span> <span class="st">&quot;s&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, 
+      <span class="dt">main =</span> <span class="st">&#39;Tamaño del contraste&#39;</span>, <span class="dt">ylab =</span> <span class="st">&#39;Proporción de rechazos&#39;</span>, 
+      <span class="dt">xlab =</span> <span class="st">&#39;Nivel de significación&#39;</span>)
+<span class="kw">abline</span>(<span class="dt">a=</span><span class="dv">0</span>, <span class="dt">b=</span><span class="dv">1</span>, <span class="dt">lty=</span><span class="dv">2</span>)   <span class="co"># curve(punif(x, 0, 1), add = TRUE)</span></code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-35-2.png" width="672" /></p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Repetir el apartado anterior considerando el test de Lilliefors (rutina <code>lillie.test</code> del paquete <code>nortest</code>).</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(nortest, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>Valores iniciales:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">54321</span>)
+nx &lt;-<span class="st"> </span><span class="dv">30</span>
+mx &lt;-<span class="st"> </span><span class="dv">0</span>
+sx &lt;-<span class="st"> </span><span class="dv">1</span>
+nsim &lt;-<span class="st"> </span><span class="dv">1000</span>
+estadistico &lt;-<span class="st"> </span><span class="kw">numeric</span>(nsim)
+pvalor &lt;-<span class="st"> </span><span class="kw">numeric</span>(nsim)</code></pre></div>
+<p>Realizar contrastes</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">for(isim in <span class="dv">1</span>:nsim) {
+  rx &lt;-<span class="st"> </span><span class="kw">rnorm</span>(nx, mx, sx)
+  <span class="co"># tmp &lt;- ks.test(rx, &quot;pnorm&quot;, mean(rx), sd(rx))</span>
+  tmp &lt;-<span class="st"> </span><span class="kw">lillie.test</span>(rx)
+  estadistico[isim] &lt;-<span class="st"> </span>tmp$statistic
+  pvalor[isim] &lt;-<span class="st"> </span>tmp$p.value
+}</code></pre></div>
+<p>Proporción de rechazos:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">{
+  <span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Proporción de rechazos al 1% =&quot;</span>, <span class="kw">mean</span>(pvalor &lt;<span class="st"> </span><span class="fl">0.01</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+  <span class="kw">cat</span>(<span class="st">&quot;Proporción de rechazos al 5% =&quot;</span>, <span class="kw">mean</span>(pvalor &lt;<span class="st"> </span><span class="fl">0.05</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+  <span class="kw">cat</span>(<span class="st">&quot;Proporción de rechazos al 10% =&quot;</span>, <span class="kw">mean</span>(pvalor &lt;<span class="st"> </span><span class="fl">0.1</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+}</code></pre></div>
+<pre><code>## 
+## Proporción de rechazos al 1% = 0.01 
+## Proporción de rechazos al 5% = 0.044 
+## Proporción de rechazos al 10% = 0.089</code></pre>
+<p>Análisis de los p-valores:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(pvalor, <span class="dt">freq=</span><span class="ot">FALSE</span>)
+<span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">1</span>, <span class="dt">lty=</span><span class="dv">2</span>)   <span class="co"># curve(dunif(x,0,1), add=TRUE)</span></code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Distribución empírica</span>
+<span class="kw">curve</span>(<span class="kw">ecdf</span>(pvalor)(x), <span class="dt">type =</span> <span class="st">&quot;s&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, 
+      <span class="dt">main =</span> <span class="st">&#39;Tamaño del contraste&#39;</span>, <span class="dt">ylab =</span> <span class="st">&#39;Proporción de rechazos&#39;</span>, <span class="dt">xlab =</span> <span class="st">&#39;Nivel de significación&#39;</span>)
+<span class="kw">abline</span>(<span class="dt">a=</span><span class="dv">0</span>, <span class="dt">b=</span><span class="dv">1</span>, <span class="dt">lty=</span><span class="dv">2</span>)   <span class="co"># curve(punif(x, 0, 1), add = TRUE)</span></code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-40-2.png" width="672" /></p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Repetir el apartado a) contrastando una distribución exponencial y considerando 500 pruebas con muestras de tamaño 30 de una <span class="math inline">\(Exp(1)\)</span>.</li>
+</ol>
+<p>Valores iniciales:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">54321</span>)
+nx &lt;-<span class="st"> </span><span class="dv">30</span>
+ratex &lt;-<span class="st"> </span><span class="dv">1</span>
+nsim &lt;-<span class="st"> </span><span class="dv">500</span>
+estadistico &lt;-<span class="st"> </span><span class="kw">numeric</span>(nsim)
+pvalor &lt;-<span class="st"> </span><span class="kw">numeric</span>(nsim)</code></pre></div>
+<p>Realizar contrastes</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">for(isim in <span class="dv">1</span>:nsim) {
+  rx &lt;-<span class="st"> </span><span class="kw">rexp</span>(nx, ratex)
+  tmp &lt;-<span class="st"> </span><span class="kw">ks.test</span>(rx, <span class="st">&quot;pexp&quot;</span>, <span class="dv">1</span>/<span class="kw">mean</span>(rx))
+  estadistico[isim] &lt;-<span class="st"> </span>tmp$statistic
+  pvalor[isim] &lt;-<span class="st"> </span>tmp$p.value
+}</code></pre></div>
+<p>Proporción de rechazos:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">{
+  <span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Proporción de rechazos al 1% =&quot;</span>, <span class="kw">mean</span>(pvalor &lt;<span class="st"> </span><span class="fl">0.01</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+  <span class="kw">cat</span>(<span class="st">&quot;Proporción de rechazos al 5% =&quot;</span>, <span class="kw">mean</span>(pvalor &lt;<span class="st"> </span><span class="fl">0.05</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+  <span class="kw">cat</span>(<span class="st">&quot;Proporción de rechazos al 10% =&quot;</span>, <span class="kw">mean</span>(pvalor &lt;<span class="st"> </span><span class="fl">0.1</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+}</code></pre></div>
+<pre><code>## 
+## Proporción de rechazos al 1% = 0 
+## Proporción de rechazos al 5% = 0.004 
+## Proporción de rechazos al 10% = 0.008</code></pre>
+<p>Análisis de los p-valores:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(pvalor, <span class="dt">freq=</span><span class="ot">FALSE</span>)
+<span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">1</span>, <span class="dt">lty=</span><span class="dv">2</span>)   <span class="co"># curve(dunif(x,0,1), add=TRUE)</span></code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Distribución empírica</span>
+<span class="kw">curve</span>(<span class="kw">ecdf</span>(pvalor)(x), <span class="dt">type =</span> <span class="st">&quot;s&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, 
+      <span class="dt">main =</span> <span class="st">&#39;Tamaño del contraste&#39;</span>, <span class="dt">ylab =</span> <span class="st">&#39;Proporción de rechazos&#39;</span>, 
+      <span class="dt">xlab =</span> <span class="st">&#39;Nivel de significación&#39;</span>)
+<span class="kw">abline</span>(<span class="dt">a=</span><span class="dv">0</span>, <span class="dt">b=</span><span class="dv">1</span>, <span class="dt">lty=</span><span class="dv">2</span>)   <span class="co"># curve(punif(x, 0, 1), add = TRUE) </span></code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-44-2.png" width="672" /></p>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Diseñar una rutina que permita realizar el contraste KS de bondad de ajuste de una variable exponencial aproximando el <span class="math inline">\(p\)</span>-valor por simulación y repetir el apartado anterior empleando esta rutina.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ks.exp.sim &lt;-<span class="st"> </span>function(x, <span class="dt">nsim =</span> <span class="dv">10</span>^<span class="dv">3</span>) {
+  DNAME &lt;-<span class="st"> </span><span class="kw">deparse</span>(<span class="kw">substitute</span>(x))
+  METHOD &lt;-<span class="st"> &quot;Kolmogorov-Smirnov Test of pexp by simulation&quot;</span> 
+  n &lt;-<span class="st"> </span><span class="kw">length</span>(x)
+  RATE &lt;-<span class="st"> </span><span class="dv">1</span>/<span class="kw">mean</span>(x)
+  ks.exp.stat &lt;-<span class="st"> </span>function(x, <span class="dt">rate=</span><span class="dv">1</span>/<span class="kw">mean</span>(x)) {
+    DMinus &lt;-<span class="st"> </span><span class="kw">pexp</span>(<span class="kw">sort</span>(x), <span class="dt">rate=</span>rate) -<span class="st"> </span>(<span class="dv">0</span>:(n -<span class="st"> </span><span class="dv">1</span>))/n
+    DPlus &lt;-<span class="st"> </span><span class="dv">1</span>/n -<span class="st"> </span>DMinus
+    Dn =<span class="st"> </span><span class="kw">max</span>(<span class="kw">c</span>(DMinus, DPlus))
+  }  
+  STATISTIC &lt;-<span class="st"> </span><span class="kw">ks.exp.stat</span>(x, <span class="dt">rate =</span> RATE) 
+  <span class="kw">names</span>(STATISTIC) &lt;-<span class="st"> &quot;Dn&quot;</span>
+  <span class="co"># PVAL &lt;- 0</span>
+  <span class="co"># for(i in 1:nsim) {</span>
+  <span class="co">#   rx &lt;- rexp(n, rate = RATE)</span>
+  <span class="co">#   if (STATISTIC &lt;= ks.exp.stat(rx)) PVAL &lt;- PVAL+1</span>
+  <span class="co"># }</span>
+  <span class="co"># PVAL &lt;- PVAL/nsim</span>
+  <span class="co"># PVAL &lt;- PVAL/(nsim + 1)</span>
+  <span class="co"># PVAL &lt;- (PVAL + 1)/(nsim + 2)</span>
+  rx &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rexp</span>(n*nsim, <span class="dt">rate =</span> RATE), <span class="dt">ncol=</span>n)
+  PVAL &lt;-<span class="st"> </span><span class="kw">mean</span>(STATISTIC &lt;=<span class="st"> </span><span class="kw">apply</span>(rx, <span class="dv">1</span>, ks.exp.stat))
+  <span class="kw">return</span>(<span class="kw">structure</span>(<span class="kw">list</span>(<span class="dt">statistic =</span> STATISTIC, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, 
+                   <span class="dt">p.value =</span> PVAL, <span class="dt">method =</span> METHOD, <span class="dt">data.name =</span> DNAME), 
+                   <span class="dt">class =</span> <span class="st">&quot;htest&quot;</span>))
+}</code></pre></div>
+<p>Simulación:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">54321</span>)
+nx &lt;-<span class="st"> </span><span class="dv">30</span>
+ratex &lt;-<span class="st"> </span><span class="dv">1</span>
+nsim &lt;-<span class="st"> </span><span class="dv">500</span>
+estadistico &lt;-<span class="st"> </span><span class="kw">numeric</span>(nsim)
+pvalor &lt;-<span class="st"> </span><span class="kw">numeric</span>(nsim)</code></pre></div>
+<p>Realizar contrastes</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">for(isim in <span class="dv">1</span>:nsim) {
+  rx &lt;-<span class="st"> </span><span class="kw">rexp</span>(nx, ratex)
+  <span class="co"># tmp &lt;- ks.test(rx, &quot;pexp&quot;, 1/mean(rx))</span>
+  tmp &lt;-<span class="st"> </span><span class="kw">ks.exp.sim</span>(rx, <span class="dt">nsim =</span> <span class="dv">200</span>)
+  estadistico[isim] &lt;-<span class="st"> </span>tmp$statistic
+  pvalor[isim] &lt;-<span class="st"> </span>tmp$p.value
+}</code></pre></div>
+<p>Proporción de rechazos:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">{
+  <span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Proporción de rechazos al 1% =&quot;</span>, <span class="kw">mean</span>(pvalor &lt;<span class="st"> </span><span class="fl">0.01</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+  <span class="kw">cat</span>(<span class="st">&quot;Proporción de rechazos al 5% =&quot;</span>, <span class="kw">mean</span>(pvalor &lt;<span class="st"> </span><span class="fl">0.05</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+  <span class="kw">cat</span>(<span class="st">&quot;Proporción de rechazos al 10% =&quot;</span>, <span class="kw">mean</span>(pvalor &lt;<span class="st"> </span><span class="fl">0.1</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+}</code></pre></div>
+<pre><code>## 
+## Proporción de rechazos al 1% = 0.008 
+## Proporción de rechazos al 5% = 0.058 
+## Proporción de rechazos al 10% = 0.106</code></pre>
+<p>Análisis de los p-valores:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(pvalor, <span class="dt">freq=</span><span class="ot">FALSE</span>)
+<span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">1</span>, <span class="dt">lty=</span><span class="dv">2</span>)   <span class="co"># curve(dunif(x,0,1), add=TRUE)</span></code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Distribución empírica</span>
+<span class="kw">curve</span>(<span class="kw">ecdf</span>(pvalor)(x), <span class="dt">type =</span> <span class="st">&quot;s&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, 
+      <span class="dt">main =</span> <span class="st">&#39;Tamaño del contraste&#39;</span>, <span class="dt">ylab =</span> <span class="st">&#39;Proporción de rechazos&#39;</span>, 
+      <span class="dt">xlab =</span> <span class="st">&#39;Nivel de significación&#39;</span>)
+<span class="kw">abline</span>(<span class="dt">a=</span><span class="dv">0</span>, <span class="dt">b=</span><span class="dv">1</span>, <span class="dt">lty=</span><span class="dv">2</span>)   <span class="co"># curve(punif(x, 0, 1), add = TRUE) </span></code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-48-2.png" width="672" /></p>
+<ol start="5" style="list-style-type: lower-alpha">
+<li>Estudiar la potencia de los contrastes de los apartados c) y d), considerando como alternativa una distribución Weibull.</li>
+</ol>
+<p>La distribución exponencial es un caso particular de la Weibull: <code>dexp(x, ratex) == dweibull(x, 1, 1/ratex)</code>. Estudiamos lo que ocurre al desplazar <code>dweibull(x, shape, 1/ratex)</code> con <code>0 &lt; shape &lt; 2</code>.</p>
+<p>CUIDADO: las simulaciones pueden requerir de mucho tiempo de computación (consideramos valores pequeños de <code>nx</code> y <code>nsim</code> en datos y en <code>ks.exp.sim</code>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">54321</span>)
+nx &lt;-<span class="st"> </span><span class="dv">20</span>
+ratex &lt;-<span class="st"> </span><span class="dv">1</span>    <span class="co"># Puede ser interesante representarlo variando rate</span>
+nsim &lt;-<span class="st"> </span><span class="dv">200</span>
+alfa &lt;-<span class="st"> </span><span class="fl">0.1</span>   <span class="co"># Puede ser interesante representarlo variando alfa</span>
+
+
+shapex &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="fl">0.25</span>, <span class="fl">1.75</span>, <span class="dt">len=</span><span class="dv">21</span>)
+preject &lt;-<span class="st"> </span><span class="kw">numeric</span>(<span class="kw">length</span>(shapex)) <span class="co"># Porporciones de rechazos con ks.test</span>
+ks.test.p &lt;-<span class="st"> </span>function(x) <span class="kw">ks.test</span>(x, <span class="st">&quot;pexp&quot;</span>, <span class="dv">1</span>/<span class="kw">mean</span>(x))$p.value
+preject2 &lt;-<span class="st"> </span>preject <span class="co"># Porporciones de rechazos con ks.exp.sim</span>
+ks.exp.sim.p &lt;-<span class="st"> </span>function(x) <span class="kw">ks.exp.sim</span>(x, <span class="dv">200</span>)$p.value
+
+for (i in <span class="kw">seq_along</span>(shapex)) { 
+  rx &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rweibull</span>(nx*nsim, <span class="dt">shape =</span> shapex[i], <span class="dt">scale =</span> <span class="dv">1</span>/ratex), <span class="dt">ncol=</span>nx)
+  preject[i] &lt;-<span class="st"> </span><span class="kw">mean</span>( <span class="kw">apply</span>(rx, <span class="dv">1</span>, ks.test.p) &lt;=<span class="st"> </span>alfa )
+  preject2[i] &lt;-<span class="st"> </span><span class="kw">mean</span>( <span class="kw">apply</span>(rx, <span class="dv">1</span>, ks.exp.sim.p) &lt;=<span class="st"> </span>alfa )
+}
+
+<span class="kw">plot</span>(shapex, preject, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">main =</span> <span class="kw">paste</span>(<span class="st">&quot;Potencia del contraste ( alfa =&quot;</span>, alfa, <span class="st">&quot;)&quot;</span>), 
+     <span class="dt">xlab =</span> <span class="st">&quot;shape&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Proporción de rechazos&quot;</span>)
+<span class="kw">lines</span>(shapex, preject2, <span class="dt">lty =</span> <span class="dv">2</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> alfa, <span class="dt">v =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">3</span>)</code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/potencia-1.png" width="672" /></p>
+</div>
+<div id="comparacion-de-estimadores" class="section level2">
+<h2><span class="header-section-number">5.5</span> Comparación de estimadores</h2>
+<p>Supongamos que estamos interesados en estudiar el efecto de datos atípicos en la estimación de la media y de la mediana. Consideramos una v.a. con distribución normal contaminada, en la que una observación procede de una <span class="math inline">\(N(0,1)\)</span> con probabilidad 0.95 y de una <span class="math inline">\(N(3,3^2)\)</span> con probabilidad 0.05 (mixtura). Se puede generar una muestra de esta variable mediante los comandos:</p>
+<pre><code>p.sim &lt;- rbinom(n, 1, 0.05)
+dat.sim &lt;- rnorm(n, 3*p.sim, 1+2*p.sim)</code></pre>
+<p>Función de densidad:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">   <span class="kw">curve</span>(<span class="fl">0.95</span>*<span class="kw">dnorm</span>(x, <span class="dv">0</span>, <span class="dv">1</span>) +<span class="st"> </span><span class="fl">0.05</span>*<span class="kw">dnorm</span>(x, <span class="dv">3</span>, <span class="dv">3</span>), -<span class="dv">3</span>, <span class="dv">13</span>, <span class="dt">ylab =</span> <span class="st">&#39;f(x)&#39;</span>)
+   <span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lty =</span> <span class="dv">3</span>)</code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/estimadores-1.png" width="672" /></p>
+
+<div class="remark">
+ <span class="remark"><em>Nota: </em></span> También es habitual simular este tipo de datos generando un porcentaje alto de valores (95%) de la distribución base (<span class="math inline">\(N(0,1)\)</span>) y el resto (5%) de la distibución “contaminadora” (<span class="math inline">\(N(3,3^2)\)</span>), aunque se suele considerar un porcentaje de contaminación del 1% o inferior.
+</div>
+<p></p>
+<ol style="list-style-type: lower-alpha">
+<li>Aproximar mediante simulación (500 generaciones) el sesgo y error estandar de la media y la mediana en el caso de una muestra de tamaño <span class="math inline">\(n=100\)</span> (suponiendo que se pretende estimar la media no contaminada 0).</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># media y mediana</span>
+xsd &lt;-<span class="st"> </span><span class="dv">1</span>
+xmed &lt;-<span class="st"> </span><span class="dv">0</span>
+ndat &lt;-<span class="st"> </span><span class="dv">100</span>
+nsim &lt;-<span class="st"> </span><span class="dv">500</span>
+
+<span class="co"># for (isim in 1:nsim) # evitar matrix y apply</span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+ntsim &lt;-<span class="st"> </span>ndat*nsim
+p.sim &lt;-<span class="st"> </span><span class="kw">rbinom</span>(ntsim, <span class="dv">1</span>, <span class="fl">0.05</span>)
+dat.sim &lt;-<span class="st"> </span><span class="kw">rnorm</span>(ntsim, <span class="dv">3</span>*p.sim, <span class="dv">1+2</span>*p.sim)
+dat.sim &lt;-<span class="st"> </span><span class="kw">matrix</span>(dat.sim, <span class="dt">ncol=</span>nsim)</code></pre></div>
+<p>Cada columna es una muestra</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat.sim[,<span class="dv">1</span>]</code></pre></div>
+<pre><code>##   [1]  0.196562061 -0.419942692  1.163269540 -0.405755971  0.744098701
+##   [6]  0.476610571  0.541320049  0.610621794  0.058199506  0.778196530
+##  [11]  1.845466311  0.762380157  0.235252872 -0.153094268 -2.303784221
+##  [16]  0.305694818 -0.161943516  4.308629104  0.149177256  1.029315503
+##  [21]  1.170858694  0.950419709  0.069506571  0.240735091  0.859410656
+##  [26]  0.712231511 -1.422835468 -1.384827145  0.234677147 -0.080716383
+##  [31] -0.547488673  0.146213387 -0.068111798  0.848256028  0.750380551
+##  [36] -1.081404512  0.369325420  0.354818278 -0.009652750 -0.876200879
+##  [41] -0.028408218 -0.762112440  1.164225248  0.475244888  0.603328627
+##  [46]  1.675016050 -1.658518333  0.743926076  0.485889672 -1.188672379
+##  [51]  0.352357443 -0.007039027 -0.350304817 -0.881873963  1.198211993
+##  [56] -0.124834042  1.834799620 -0.798907092  0.559121337  1.474703088
+##  [61]  1.292524060  1.770138751 -1.112064572  0.692627114  0.363946337
+##  [66] -0.804760157  1.067903455  1.182083664  0.106025622 -1.007755068
+##  [71]  0.011728132  1.226832332 -0.001422142 -1.272307652  0.430236753
+##  [76] -0.244613030 -0.093350580 -0.819546535 -2.016538552  5.323444676
+##  [81] -0.200906391 -0.634235786  0.304042106  0.095836718  0.937605624
+##  [86]  0.458534075  1.141302604  1.274959366 -0.856441475 -2.042713860
+##  [91]  0.432273740  0.395935345  0.590817675  1.310925310  0.243082252
+##  [96] -0.743848789 -2.443538927  1.107184477  0.863190914  1.080970461</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(dat.sim[,<span class="dv">1</span>])</code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<p>Calculo los estimadores</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean.sim &lt;-<span class="st"> </span><span class="kw">apply</span>(dat.sim, <span class="dv">2</span>, mean)
+median.sim &lt;-<span class="st"> </span><span class="kw">apply</span>(dat.sim, <span class="dv">2</span>, median)</code></pre></div>
+<p>Estimo sus características:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(mean.sim) <span class="co"># Coincide con el sesgo (media teórica es 0)</span></code></pre></div>
+<pre><code>## [1] 0.1459986</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(mean.sim)</code></pre></div>
+<pre><code>## [1] 0.1349537</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(median.sim) <span class="co"># Coincide con el sesgo (media teórica es 0)</span></code></pre></div>
+<pre><code>## [1] 0.04453509</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(median.sim)</code></pre></div>
+<pre><code>## [1] 0.1300611</code></pre>
+<p>Sesgo</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(mean.sim-xmed, median.sim-xmed, 
+        <span class="dt">names=</span><span class="kw">c</span>(<span class="st">&quot;Media&quot;</span>,<span class="st">&quot;Mediana&quot;</span>), <span class="dt">ylab=</span><span class="st">&quot;Sesgo&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
+<p>Error cuadrático</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>((mean.sim-xmed)^<span class="dv">2</span>, (median.sim-xmed)^<span class="dv">2</span>, 
+        <span class="dt">names=</span><span class="kw">c</span>(<span class="st">&quot;Media&quot;</span>,<span class="st">&quot;Mediana&quot;</span>), <span class="dt">ylab=</span><span class="st">&quot;Error cuadrático&quot;</span>)</code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p>Estadísticos error cuadrático:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># SE media</span>
+<span class="kw">summary</span>((mean.sim-xmed)^<span class="dv">2</span>) </code></pre></div>
+<pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+## 0.0000005 0.0045072 0.0206272 0.0394917 0.0591531 0.3619587</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># SE mediana</span>
+<span class="kw">summary</span>((median.sim-xmed)^<span class="dv">2</span>) </code></pre></div>
+<pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+## 0.0000001 0.0016481 0.0070625 0.0188654 0.0243903 0.2618368</code></pre>
+</div>
+<div id="remuestreo-bootstrap" class="section level2">
+<h2><span class="header-section-number">5.6</span> Remuestreo Bootstrap</h2>
+<div id="idea" class="section level3">
+<h3><span class="header-section-number">5.6.1</span> Idea:</h3>
+<p>Consideramos un conjunto de datos simulado:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+data &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">50</span>)</code></pre></div>
+<p>La idea es aproximar características poblacionales por las correspondientes de la distribución empírica de los datos observados:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="co"># Distribución bootstrap</span>
+<span class="kw">curve</span>(<span class="kw">ecdf</span>(data)(x), <span class="dt">ylab =</span> <span class="st">&quot;FD&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;s&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="co"># Distribución teórica</span>
+<span class="kw">abline</span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">2</span>) </code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+<p>Las características de la distribución empírica se pueden aproximar mediante simulación. En el caso i.i.d. esto puede ser implementado mediante remuestreo, realizando repetidamente muestreo aleatorio con reemplazamiento del conjunto de datos original (manteniendo el tamaño muestral):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="co"># Muestra bootstrap</span>
+xboot &lt;-<span class="st"> </span><span class="kw">sample</span>(data, <span class="dt">replace=</span><span class="ot">TRUE</span>)</code></pre></div>
+</div>
+<div id="metodos-de-remuestreo-bootstrap" class="section level3">
+<h3><span class="header-section-number">5.6.2</span> Métodos de remuestreo Bootstrap</h3>
+<p>Método de remuestreo (Efron, 1979) utilizado para aproximar características de la distribución en el muestreo de un estadístico:</p>
+<ul>
+<li><p>Aproximación del sesgo y de la varianza.</p></li>
+<li><p>Construcción de intervalos de confianza</p></li>
+<li><p>Realizar contrastes de hipótesis.</p></li>
+</ul>
+<p>De utilidad cuando no se dispone la distribución exacta, no es adecuado emplear la distribución asintótica, etc. La idea es aproximar características poblacionales por las correspondientes de la distribución empírica de los datos observados. En el caso i.i.d. esto puede ser implementado mediante remuestreo, realizando repetidamente <strong>muestreo aleatorio con reemplazamiento del conjunto de datos original</strong> (manteniendo el tamaño muestral).</p>
+<p>Si <span class="math inline">\(\mathbf{x} = \left( x_{1},x_{2},\cdots ,x_{n}\right) ^{t}\)</span> es una muestra i.i.d. <span class="math inline">\(F_{\theta }\)</span> y <span class="math inline">\(\hat{\theta} = T\left( \mathbf{x} \right)\)</span> es un estimador de <span class="math inline">\(\theta\)</span>. Para <span class="math inline">\(b = 1,\ldots ,B:\)</span></p>
+<ul>
+<li><p><span class="math inline">\(\mathbf{x}_{b}^{\ast } = \left( x_{b1}^{\ast },x_{b2}^{\ast },\cdots ,x_{bn}^{\ast }\right) ^{t}\)</span> muestra bootstrap obtenida mediante muestreo con reemplazamiento de <span class="math inline">\(\left\{ x_{1},x_{2},\cdots ,x_{n}\right\}\)</span>.</p></li>
+<li><p><span class="math inline">\(\hat{\theta}_{b}^{\ast } = T\left( \mathbf{x}_{b}^{\ast }\right)\)</span> valor del estadístico en la muestra bootstrap.</p></li>
+</ul>
+<p>La idea original (bootstrap natural, Efron) es que la variabilidad de <span class="math inline">\(\hat{\theta}_{b}^{\ast }\)</span> en torno a <span class="math inline">\(\hat{\theta}\)</span> aproxima la variabilidad de <span class="math inline">\(\hat{\theta}\)</span> en torno a <span class="math inline">\(\theta\)</span>:</p>
+<ul>
+<li><strong>La distribución de</strong> <span class="math inline">\(\hat{\theta}_{b}^{\ast }-\hat{\theta}\)</span> <strong>aproxima la distribución de</strong> <span class="math inline">\(\hat{\theta}-\theta\)</span>.</li>
+</ul>
+<p>En general podríamos decir que:</p>
+<ul>
+<li><strong>la muestra es a la población</strong> <strong>lo que la muestra bootstrap es a la muestra</strong>.</li>
+</ul>
+<p>Para información adicional sobre bootstrap ver p.e.: Davison, A.C. and Hinkley, D.V. (1997). <em>Bootstrap Methods and Their Application</em>. Cambridge University Press</p>
+</div>
+<div id="ejemplo" class="section level3">
+<h3><span class="header-section-number">5.6.3</span> Ejemplo</h3>
+<p>Como ejemplo consideraremos una muestra de tamaño <span class="math inline">\(n=100\)</span> de una normal estandar para tratar de aproximar el sesgo y error estandar de la media y la mediana mediante bootstrap.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># dat &lt;- dat.sim[, 1]</span>
+<span class="kw">set.seed</span>(<span class="dv">54321</span>)
+ndat &lt;-<span class="st"> </span><span class="dv">100</span>
+datmed &lt;-<span class="st"> </span><span class="dv">0</span>
+datsd &lt;-<span class="st"> </span><span class="dv">1</span>
+dat &lt;-<span class="st"> </span><span class="kw">rnorm</span>(ndat, <span class="dt">mean=</span>datmed, <span class="dt">sd=</span>datsd)</code></pre></div>
+<p>Consideramos 1000 réplicas bootstrap</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nboot &lt;-<span class="st"> </span><span class="dv">1000</span>  </code></pre></div>
+<p>Es habitual tomar <code>nboot+1</code> entero múltiplo de 100 e.g. <code>nboot=999</code> ó <code>1999</code> (facilita el cálculo de percentiles, orden (nboot+1)*p)</p>
+<p>Valor del estadístico en la muestra:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stat.dat &lt;-<span class="st"> </span><span class="kw">mean</span>(dat)</code></pre></div>
+<p>Generación de las réplicas bootstrap:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+stat.boot &lt;-<span class="st"> </span><span class="kw">numeric</span>(nboot)
+for (i in <span class="dv">1</span>:nboot) {
+  dat.boot &lt;-<span class="st"> </span><span class="kw">sample</span>(dat, <span class="dt">replace=</span><span class="ot">TRUE</span>)
+  stat.boot[i] &lt;-<span class="st"> </span><span class="kw">mean</span>(dat.boot)
+}
+<span class="co"># Valor esperado bootstrap del estadístico</span>
+mean.boot &lt;-<span class="st"> </span><span class="kw">mean</span>(stat.boot)  
+mean.boot</code></pre></div>
+<pre><code>## [1] -0.09202607</code></pre>
+<p>Bootstrap percentil:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(stat.boot, <span class="dt">freq=</span><span class="ot">FALSE</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">4</span>))
+<span class="kw">abline</span>(<span class="dt">v=</span>mean.boot, <span class="dt">lwd=</span><span class="dv">2</span>)
+<span class="co"># abline(v=stat.dat)</span>
+
+<span class="co"># Distribución poblacional</span>
+<span class="kw">curve</span>(<span class="kw">dnorm</span>(x, datmed, datsd/<span class="kw">sqrt</span>(ndat)), <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">add=</span><span class="ot">TRUE</span>)
+<span class="kw">abline</span>(<span class="dt">v=</span>datmed, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
+<p>Bootstrap natural/básico:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(stat.boot-stat.dat, <span class="dt">freq=</span><span class="ot">FALSE</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">4</span>))
+<span class="kw">abline</span>(<span class="dt">v=</span>mean.boot-stat.dat, <span class="dt">lwd=</span><span class="dv">2</span>)
+
+<span class="co"># Distribución poblacional</span>
+<span class="co"># Distribución teórica de stat.dat - stat.teor</span>
+<span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dv">0</span>, datsd/<span class="kw">sqrt</span>(ndat)), <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">add=</span><span class="ot">TRUE</span>)   
+<span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">0</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
+<p>Sesgo y error estandar bootstrap:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># sesgo (teor=0)</span>
+mean.boot -<span class="st"> </span>stat.dat </code></pre></div>
+<pre><code>## [1] 0.00135433</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># error estandar</span>
+<span class="kw">sd</span>(stat.boot) </code></pre></div>
+<pre><code>## [1] 0.1027024</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># error estandar teórico</span>
+datsd/<span class="kw">sqrt</span>(ndat) </code></pre></div>
+<pre><code>## [1] 0.1</code></pre>
+<p>Versión “optimizada” para R:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">boot.strap &lt;-<span class="st"> </span>function(dat, <span class="dt">nboot=</span><span class="dv">1000</span>, <span class="dt">statistic=</span>mean)
+{
+  ndat &lt;-<span class="st"> </span><span class="kw">length</span>(dat)
+  dat.boot &lt;-<span class="st"> </span><span class="kw">sample</span>(dat, ndat*nboot, <span class="dt">replace=</span>T)
+  dat.boot &lt;-<span class="st"> </span><span class="kw">matrix</span>(dat.boot, <span class="dt">ncol=</span>nboot, <span class="dt">nrow=</span>ndat)
+  stat.boot &lt;-<span class="st"> </span><span class="kw">apply</span>(dat.boot, <span class="dv">2</span>, statistic)
+}
+
+fstatistic &lt;-<span class="st"> </span>function(dat){
+  <span class="co">#  mean(dat)</span>
+  <span class="kw">mean</span>(dat, <span class="dt">trim=</span><span class="fl">0.2</span>)
+  <span class="co">#  median(dat)</span>
+  <span class="co">#  max(dat)</span>
+}
+
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+stat.dat &lt;-<span class="st"> </span><span class="kw">fstatistic</span>(dat)
+stat.boot &lt;-<span class="st"> </span><span class="kw">boot.strap</span>(dat, nboot, fstatistic)
+
+res.boot &lt;-<span class="st"> </span><span class="kw">c</span>(stat.dat, <span class="kw">mean</span>(stat.boot)-stat.dat, <span class="kw">sd</span>(stat.boot))
+<span class="kw">names</span>(res.boot) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Estadístico&quot;</span>, <span class="st">&quot;Sesgo&quot;</span>, <span class="st">&quot;Err.Std&quot;</span>)
+res.boot</code></pre></div>
+<pre><code>##  Estadístico        Sesgo      Err.Std 
+## -0.144801929  0.006044904  0.117978183</code></pre>
+</div>
+<div id="paquetes-r-bootstrap-boot" class="section level3">
+<h3><span class="header-section-number">5.6.4</span> Paquetes R: bootstrap, boot</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(boot)
+<span class="co"># ?boot</span></code></pre></div>
+<p>Función estadístico:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">boot.f &lt;-<span class="st"> </span>function(data, indices){
+  <span class="co"># data[indices] va a ser las muestras bootstrap</span>
+  <span class="kw">mean</span>(data[indices])
+}</code></pre></div>
+<p>Generación de las muestras</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+stat.boot &lt;-<span class="st"> </span><span class="kw">boot</span>(dat, boot.f, nboot)
+stat.boot</code></pre></div>
+<pre><code>## 
+## ORDINARY NONPARAMETRIC BOOTSTRAP
+## 
+## 
+## Call:
+## boot(data = dat, statistic = boot.f, R = nboot)
+## 
+## 
+## Bootstrap Statistics :
+##       original     bias    std. error
+## t1* -0.0933804 0.00135433    0.105385</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(stat.boot)</code></pre></div>
+<pre><code>##  [1] &quot;t0&quot;        &quot;t&quot;         &quot;R&quot;         &quot;data&quot;      &quot;seed&quot;     
+##  [6] &quot;statistic&quot; &quot;sim&quot;       &quot;call&quot;      &quot;stype&quot;     &quot;strata&quot;   
+## [11] &quot;weights&quot;</code></pre>
+</div>
+<div id="graficos" class="section level3">
+<h3><span class="header-section-number">5.6.5</span> Gráficos</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(stat.boot$t, <span class="dt">freq=</span><span class="ot">FALSE</span>)</code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(stat.boot)</code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-68-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jack.after.boot</span>(stat.boot)</code></pre></div>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-68-3.png" width="672" /></p>
+</div>
+<div id="intervalos-de-confianza-bootstrap" class="section level3">
+<h3><span class="header-section-number">5.6.6</span> Intervalos de confianza bootstrap</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boot.ci</span>(stat.boot, <span class="dt">type=</span><span class="kw">c</span>(<span class="st">&quot;norm&quot;</span>, <span class="st">&quot;basic&quot;</span>, <span class="st">&quot;perc&quot;</span>, <span class="st">&quot;bca&quot;</span>))</code></pre></div>
+<pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+## Based on 1000 bootstrap replicates
+## 
+## CALL : 
+## boot.ci(boot.out = stat.boot, type = c(&quot;norm&quot;, &quot;basic&quot;, &quot;perc&quot;, 
+##     &quot;bca&quot;))
+## 
+## Intervals : 
+## Level      Normal              Basic         
+## 95%   (-0.3013,  0.1118 )   (-0.2900,  0.1212 )  
+## 
+## Level     Percentile            BCa          
+## 95%   (-0.3079,  0.1032 )   (-0.3258,  0.0973 )  
+## Calculations and Intervals on Original Scale</code></pre>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-70" class="exercise"><strong>Ejercicio 5.5  </strong></span>
+</div>
+<p></p>
+<p>Repetir el ejemplo anterior considerando la media recortada al 10% (ejemplo con parámetros adicionales).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">boot.f &lt;-<span class="st"> </span>function(data, indices, <span class="dt">trim=</span><span class="fl">0.1</span>){
+  <span class="kw">mean</span>(data[indices], trim)
+}
+
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">boot</span>(dat, boot.f, nboot, <span class="dt">trim=</span><span class="fl">0.2</span>)</code></pre></div>
+<pre><code>## 
+## ORDINARY NONPARAMETRIC BOOTSTRAP
+## 
+## 
+## Call:
+## boot(data = dat, statistic = boot.f, R = nboot, trim = 0.2)
+## 
+## 
+## Bootstrap Statistics :
+##       original      bias    std. error
+## t1* -0.1448019 0.005146914   0.1226472</code></pre>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-72" class="exercise"><strong>Ejercicio 5.6  </strong></span>fin de práctica
+</div>
+<p></p>
+<p>En el tema 2 se propuso el análisis de la aleatoriedad de un generador de números pseudo-aleatorios mediante el test de rachas, que se podría implementar repetidamente. Sin embargo, la aproximación asintótica empleada por la rutina <code>runs.test</code> de la librería <code>tseries</code> no es adecuada para tamaños muéstrales pequeños (<span class="math inline">\(n&lt;40\)</span>) y sería preferible utilizar la distribución exacta (o por lo menos utilizar una corrección por continuidad).</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Analizar el comportamiento del contraste empleando repetidamente el test de rachas, considerando 500 pruebas con muestras de tamaño 10 de una <span class="math inline">\(Bernoulli(0.5)\)</span>. ¿Se observa algo extraño?</p></li>
+<li><p>Realiza un programa que permita aproximar por simulación la función de masa de probabilidad del estadístico número de rachas (a partir de valores de una <span class="math inline">\(Bernoulli(0.5)\)</span>). Representarla gráficamente y compararla con la densidad normal. Obtener los puntos críticos para contrastar la hipótesis nula de aleatoriedad para <span class="math inline">\(\alpha=0.01,0.05\)</span> y <span class="math inline">\(0.1\)</span>. ¿Es esta dístribución adecuada para el contraste de aleatoriedad de variables continuas?¿Cual debería ser la probabilidad de obtener una única racha al aplicar el test a una variable continua?</p></li>
+<li><p>Diseñar una rutina que permita realizar el contraste de aleatoriedad de una variable continua aproximando el <span class="math inline">\(p\)</span>-valor por simulación. Asumir que la distribución del estadístico puede ser asimétrica, en cuyo caso el <span class="math inline">\(p\)</span>-valor <span class="math inline">\(p=2\min\left\{ P\left( R\leq\hat{R}\mid H_{0}\right) , P\left( R\geq \hat{R}\mid H_{0}\right) \right\}\)</span>.</p></li>
+<li><p>Diseñar una rutina que permita realizar el contraste de aleatoriedad de una variable continua aproximando el <span class="math inline">\(p\)</span>-valor mediante bootstrap.</p></li>
+</ol>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="analisis-de-los-resultados.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="integracion-y-optimizacion-montecarlo.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/05-Aplicaciones.Rmd",
+"text": "Edit"
+},
+"download": ["Practicas_de_Simulacion.pdf", "Practicas_de_Simulacion.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

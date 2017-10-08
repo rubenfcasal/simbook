@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
-<link rel="next" href="numeros-aleatorios-en-r.html">
+<link rel="prev" href="generacion-de-numeros-pseudoaleatorios-1.html">
+<link rel="next" href="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -253,172 +253,186 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduccion-a-la-simulacion" class="section level1">
-<h1><span class="header-section-number">Capítulo 1</span> Introducción a la simulación</h1>
-<div id="introduccion" class="section level2">
-<h2><span class="header-section-number">1.1</span> Introducción</h2>
-<p>Problemas de la experimentación directa sobre la realidad:</p>
+<div id="analisis-de-los-resultados" class="section level1">
+<h1><span class="header-section-number">Capítulo 4</span> Análisis de los resultados</h1>
+<div id="convergencia" class="section level2">
+<h2><span class="header-section-number">4.1</span> Convergencia</h2>
+<p>Supongamos que estamos interesados en aproximar la media teórica <span class="math inline">\(E\left( X\right)\)</span> a partir de una secuencia i.i.d. <span class="math inline">\(X_{1}\)</span>, <span class="math inline">\(X_{2}\)</span>, <span class="math inline">\(\cdots\)</span>, <span class="math inline">\(X_{n}\)</span> mediante la media muestral <span class="math inline">\(\bar{X}_{n}\)</span> (probabilidad caso particular). Una justificación teórica de la validez de la aproximación obtenida mediante simulación es <em>la ley (débil) de los grandes números</em>:</p>
 <ul>
-<li><p>Coste elevado.</p></li>
-<li><p>En ocasiones las pruebas son destructivas.</p></li>
-<li><p>Lentitud.</p></li>
-<li><p>Puede no ser ética.</p></li>
-<li><p>experimentación sobre seres humanos.</p></li>
-<li><p>Puede resultar imposible.</p></li>
-<li><p>Acontecimientos futuros, …</p></li>
-<li><p>…</p></li>
+<li><p>Si <span class="math inline">\(X_{1}\)</span>, <span class="math inline">\(X_{2}\)</span>, <span class="math inline">\(\cdots\)</span> es una secuencia de v.a.’s independientes con: <span class="math display">\[E\left( X_{i}\right) =\mu \text{ y }Var\left( X_{i}\right) 
+=\sigma^{2}&lt;\infty,\]</span> entonces <span class="math inline">\(\overline{X}_{n}=\left( X_{1}+\cdots +X_{n}\right) /n\)</span> converge en probabilidad a <span class="math inline">\(\mu\)</span>. i.e. para cualquier <span class="math inline">\(\varepsilon &gt;0\)</span>: <span class="math display">\[\lim\limits_{n\rightarrow \infty }P\left( \left\vert \overline{X}_{n}-\mu
+\right\vert &lt;\varepsilon \right) = 1.\]</span></p></li>
+<li><p><em>La ley fuerte</em> establece la convergencia casi segura.</p></li>
 </ul>
-<p>Puede ser preferible trabajar con un modelo del sistema real. La realidad puede ser muy compleja por lo que es habitual emplear un modelo para tratar de explicarla:</p>
-<ul>
-<li><p>Modelos deterministas.</p></li>
-<li><p>Modelos estocásticos (con componente aleatoria).</p>
-<ul>
-<li><p>Cuando no se dispone de la suficiente información sobre las variables que influyen en el fenómeno en estudio.</p></li>
-<li><p>Se tienen en cuenta esta incertidumbre.</p></li>
-</ul></li>
-</ul>
-<p>La inferencia estadística proporciona herramientas para estimar los parámetros y contrastar la validez de un modelo estocástico a partir de los datos observados.</p>
-<p>La idea es emplear el modelo para resolver el problema de interés. Cuando la solución no se puede obtener de modo analítico (teórico) se puede recurrir a la simulación.</p>
-<p><strong>Simulación</strong>: realizar experimentos con un modelo con el objetivo de recopilar información bajo determinadas condiciones. Nos centraremos en el caso de la <strong>simulación estocástica</strong>:</p>
-<ul>
-<li>Las conclusiones se obtienen habitualmente generando repetidamente simulaciones del modelo aleatorio.</li>
-</ul>
-<div id="ventajas-de-la-simulacion-shannon-1975" class="section level3">
-<h3><span class="header-section-number">1.1.1</span> Ventajas de la simulación (Shannon, 1975):</h3>
-<ul>
-<li><p>Cuando la resolución analítica no puede llevarse a cabo.</p></li>
-<li><p>Cuando existen medios de resolver analíticamente el problema pero dicha resolución es complicada y costosa (o solo proporciona una solución aproximada).</p></li>
-<li><p>Si se desea experimentar antes de que exista el sistema (pruebas para la construcción de un sistema).</p></li>
-<li><p>Cuando es imposible experimentar sobre el sistema real por ser dicha experimentación destructiva.</p></li>
-<li><p>En ocasiones en las que la experimentación sobre el sistema es posible pero no ética.</p></li>
-<li><p>En sistemas que evolucionan muy lentamente en el tiempo.</p></li>
-</ul>
+<p><strong><em>Ejemplo</em></strong>: Aproximación de una probabilidad</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="fl">0.5</span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+nsim &lt;-<span class="st"> </span><span class="dv">10000</span>
+rx &lt;-<span class="st"> </span><span class="kw">runif</span>(nsim) &lt;=<span class="st"> </span>p
+<span class="co"># Aproximación por simulación de p</span>
+<span class="kw">mean</span>(rx) </code></pre></div>
+<pre><code>## [1] 0.5047</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Evolución de la aproximación</span>
+<span class="kw">plot</span>(<span class="kw">cumsum</span>(rx)/<span class="dv">1</span>:nsim, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">xlab=</span><span class="st">&quot;Número de generaciones&quot;</span>, 
+     <span class="dt">ylab=</span><span class="st">&quot;Proporción muestral&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="kw">mean</span>(rx), <span class="dt">lty =</span> <span class="dv">2</span>)
+<span class="co"># valor teórico</span>
+<span class="kw">abline</span>(<span class="dt">h =</span> p) </code></pre></div>
+<p><img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>Una suposición crucial es que las variables <span class="math inline">\(X_{i}\)</span> deben tener varianza finita (realmente esta suposición puede relajarse: <span class="math inline">\(E\left( \left\vert X_{i} \right\vert \right) &lt; \infty\)</span>). En caso contrario la media muestral puede no converger a una constante. Un ejemplo conocido es la distribución de Cauchy:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Problemas convergencia</span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+nsim &lt;-<span class="st"> </span><span class="dv">10000</span>
+rx &lt;-<span class="st"> </span><span class="kw">rcauchy</span>(nsim)
+<span class="kw">plot</span>(<span class="kw">cumsum</span>(rx)/<span class="dv">1</span>:nsim, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>, 
+     <span class="dt">xlab=</span><span class="st">&quot;Número de generaciones&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Media muestral&quot;</span>)</code></pre></div>
+<p><img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Es recomendable representar la evolución de la aproximación de la característica de interés (sobre el n<span class="math inline">\({{}^o}\)</span> de generaciones) para detectar problemas de convergencia. Además del análisis dewscriptivo de las simulaciones:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(rx)</code></pre></div>
+<p><img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 </div>
-<div id="inconvenientes-de-la-simulacion" class="section level3">
-<h3><span class="header-section-number">1.1.2</span> Inconvenientes de la simulación:</h3>
-<ul>
-<li><p>La construcción de un buen modelo puede ser una tarea muy costosa (compleja, laboriosa y requerir mucho tiempo; e.g. modelos climáticos).</p></li>
-<li><p>Frecuentemente el modelo omite variables o relaciones importantes entre ellas (los resultados pueden no ser válidos para el sistema real).</p></li>
-<li><p>Resulta difícil conocer la precisión de la simulación (especialmente en lo relativo a la precisión del modelo formulado).</p></li>
-<li><p>Problemas de extrapolación de las conclusiones.</p></li>
-<li><p>Tiempo de computación.</p></li>
-</ul>
+<div id="estimacion-de-la-precision" class="section level2">
+<h2><span class="header-section-number">4.2</span> Estimación de la precisión</h2>
+<p>En el caso de la media muestral <span class="math inline">\(\overline{X}_{n}\)</span>, un estimador insesgado de <span class="math inline">\(Var\left( \overline{X}_{n}\right) =\sigma ^{2}/n\)</span> es: <span class="math display">\[\widehat{Var}\left( \overline{X}_{n}\right) =\frac{\widehat{S}^{2}}{n}\]</span> con: <span class="math display">\[\widehat{S}_{n}^{2}=\dfrac{1}{n-1}\sum\limits_{i=1}^{n}\left( X_{i}-
+\overline{X}\right) ^{2}.\]</span></p>
+<p>En el caso de una proporción <span class="math inline">\(\hat{p}_{n}\)</span>: <span class="math display">\[\widehat{Var}\left( \hat{p}_{n}\right) 
+=\frac{\hat{p}_{n}(1-\hat{p}_{n})}{n-1}.\]</span></p>
+<p>Los valores obtenidos servirían como medidas básicas de la precisión de la aproximación, aunque su principal aplicación es la construcción de intervalos de confianza.</p>
 </div>
+<div id="teorema-central-del-limite" class="section level2">
+<h2><span class="header-section-number">4.3</span> Teorema central del límite</h2>
+<p>Si <span class="math inline">\(X_{1}\)</span>, <span class="math inline">\(X_{2}\)</span>, <span class="math inline">\(\cdots\)</span> es una secuencia de v.a.’s independientes con <span class="math inline">\(E\left( X_{i}\right) =\mu\)</span> y <span class="math inline">\(Var\left( X_{i}\right) = \sigma ^{2}&lt;\infty\)</span>, entonces: <span class="math display">\[Z_{n}=\frac{\overline{X}_{n}-\mu }{\frac{\sigma }{\sqrt{n}}}
+\overset{d}{ \rightarrow } N(0,1)\]</span> i.e. <span class="math inline">\(\lim\limits_{n\rightarrow \infty }F_{Z_{n}}(z)=\Phi (z)\)</span>. Por tanto, un intervalo de confianza asintótico para <span class="math inline">\(\mu\)</span> es: <span class="math display">\[IC_{1-\alpha }(\mu ) = \left( \overline{X}_{n}
+- z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}},\ 
+\overline{X}+z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}} \right).\]</span></p>
+<p>Podemos considerar que <span class="math inline">\(z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}}\)</span> es la precisión obtenida (con nivel de confianza <span class="math inline">\(1-\alpha\)</span>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Teorema central del límite</span>
+xsd &lt;-<span class="st"> </span><span class="dv">1</span>
+xmed &lt;-<span class="st"> </span><span class="dv">0</span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+nsim &lt;-<span class="st"> </span><span class="dv">1000</span>
+rx &lt;-<span class="st"> </span><span class="kw">rnorm</span>(nsim, xmed, xsd)
+<span class="co"># Aproximación por simulación de la media</span>
+<span class="kw">mean</span>(rx)</code></pre></div>
+<pre><code>## [1] -0.01164814</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &quot;Error&quot; de la aproximación</span>
+<span class="dv">2</span>*<span class="kw">sd</span>(rx)/<span class="kw">sqrt</span>(nsim)</code></pre></div>
+<pre><code>## [1] 0.06545382</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Evolución de la aproximación</span>
+n &lt;-<span class="st"> </span><span class="dv">1</span>:nsim
+est &lt;-<span class="st"> </span><span class="kw">cumsum</span>(rx)/n
+esterr &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">cumsum</span>((rx-est)^<span class="dv">2</span>))/(n -<span class="st"> </span><span class="dv">1</span>)  <span class="co"># Error estandar</span>
+<span class="kw">plot</span>(est, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">xlab=</span><span class="st">&quot;Número de generaciones&quot;</span>, 
+     <span class="dt">ylab=</span><span class="st">&quot;Media y rango de error&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(-<span class="dv">1</span>,<span class="dv">1</span>))
+<span class="kw">abline</span>(<span class="dt">h =</span> est[nsim], <span class="dt">lty=</span><span class="dv">2</span>)
+<span class="kw">lines</span>(est +<span class="st"> </span><span class="dv">2</span>*esterr, <span class="dt">lty=</span><span class="dv">3</span>)
+<span class="kw">lines</span>(est -<span class="st"> </span><span class="dv">2</span>*esterr, <span class="dt">lty=</span><span class="dv">3</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> xmed)</code></pre></div>
+<p><img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
-<div id="generacion-de-numeros-pseudoaleatorios" class="section level2">
-<h2><span class="header-section-number">1.2</span> Generación de números (pseudo)aleatorios</h2>
-<p>Aplicaciones:</p>
-<ul>
-<li><p>Estadística:</p></li>
-<li><p>Muestreo, remuestreo, …</p></li>
-<li><p>Aproximación de distribuciones (de estadísticos, estimadores, …)</p></li>
-<li><p>Realización de contrastes, intervalos de confianza, …</p></li>
-<li><p>Comparación de estimadores, contrastes, …</p></li>
-<li><p>Validación teoría (distribución asintótica,…)</p></li>
-<li><p>Inferencia Bayesiana</p></li>
-<li><p>Optimización: Algoritmos genéticos, …</p></li>
-<li><p>Computación: Diseño, verificación y validación de algoritmos,…</p></li>
-<li><p>Criptografía: Protocolos de comunicación segura, …</p></li>
-<li><p>Física: Simulación de fenómenos naturales, …</p></li>
-<li><p>Análisis numérico: Evaluación de expresiones, …</p></li>
-<li><p>…</p></li>
-</ul>
-<p>En el Capítulo XX nos centraremos en algunas de las aplicaciones de utilidad en Estadística.</p>
+<div id="determinacion-del-numero-de-generaciones" class="section level2">
+<h2><span class="header-section-number">4.4</span> Determinación del número de generaciones</h2>
+<p>En muchas ocasiones puede interesar obtener una aproximación con un nivel de precisión fijado.</p>
+<p>Para una precisión absoluta <span class="math inline">\(\varepsilon\)</span>, se trata de determinar <span class="math inline">\(n\)</span> de forma que: <span class="math display">\[z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}}&lt;\varepsilon\]</span></p>
+<p>Un algoritmo podría ser el siguiente:</p>
+<ol style="list-style-type: decimal">
+<li><p>Hacer <span class="math inline">\(j=0\)</span> y fijar un tamaño inicial <span class="math inline">\(n_{0}\)</span> (e.g. 30 ó 60).</p></li>
+<li><p>Generar <span class="math inline">\(\left\{ X_{i}\right\} _{i=1}^{n_{0}}\)</span> y calcular <span class="math inline">\(\widehat{S}_{n_{0}}\)</span>.</p></li>
+<li><p>Mientras <span class="math inline">\(\left. z_{1-\alpha /2}\widehat{S}_{n_{j-1}}\right/ \sqrt{n_{j}}&gt;\varepsilon\)</span> hacer:</p></li>
+<li><p><span class="math inline">\(\qquad j=j+1\)</span>.</p></li>
+<li><p><span class="math inline">\(\qquad n_{j}=\left\lceil \left( \left. z_{1-\alpha /2}\widehat{S}  _{n_{j-1}}\right/ \varepsilon \right)^{2}\right\rceil\)</span>.</p></li>
+<li><p><span class="math inline">\(\qquad\)</span> Generar <span class="math inline">\(\left\{ X_{i}\right\}  _{i=n_{j-1}+1}^{n_{j}}\)</span> y calcular <span class="math inline">\(\widehat{S}_{n_{j}}\)</span>.</p></li>
+</ol>
+<p>Para una precisión relativa <span class="math inline">\(\varepsilon \left\vert \mu \right\vert\)</span> se procede análogamente de forma que:<span class="math display">\[z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}}&lt;\varepsilon \left\vert 
+\overline{X}_{n}\right\vert .\]</span></p>
 </div>
-<div id="numeros-aleatorios-puros" class="section level2">
-<h2><span class="header-section-number">1.3</span> Números aleatorios puros</h2>
-<p>Una sucesión de números aleatorios puros (true random), se caracteriza por que no existe ninguna regla o plan que nos permita conocer sus valores.</p>
-<p>Se almacena(ban) en <em>tablas de dígitos aleatorios</em> (<em>true random</em>) y normalmente son obtenidos por procesos físicos (loterías, ruletas, ruidos,…)</p>
-<p><img src="images/RAND.png" style="display: block; margin: auto;" /></p>
-<p>Se emplean para seleccionar números aleatorios en un rango de 1 a <em>m</em>:</p>
-<ul>
-<li><p>Se selecciona al azar un pto de inicio en la tabla y una dirección.</p></li>
-<li><p>Se agrupan los dígitos de forma que “cubran” el valor de <em>m</em>.</p></li>
-<li><p>Se seleccionan los valores menores o iguales que <em>m</em> (se descarta el resto).</p></li>
-</ul>
-<p>Algunos enlaces:</p>
-<ul>
-<li><p><a href="https://en.wikipedia.org/wiki/A_Million_Random_Digits_with_100,000_Normal_Deviates">A Million Random Digits with 100,000 Normal Deviates</a> . RAND Corporation. 1955.</p></li>
-<li><p>Generadores de números aleatorios “online”:</p>
-<ul>
-<li><p><a href="http://www.random.org/integers" class="uri">http://www.random.org/integers</a> (ver paquete <strong>random</strong> en R).</p></li>
-<li><p><a href="http://www.fourmilab.ch/hotbits" class="uri">http://www.fourmilab.ch/hotbits</a></p></li>
-</ul></li>
-<li><p>Generadores mediante hardware:</p>
-<ul>
-<li><p><a href="http://software.intel.com/en-us/articles/intel-digital-random-number-generator-drng-software-implementation-guide">http://software.intel.com</a>.</p></li>
-<li><p><a href="http://spectrum.ieee.org/semiconductors/devices/a-memristor-true-randomnumber-generator">http://spectrum.ieee.org</a></p></li>
-</ul></li>
-</ul>
-<p>Sus principales aplicaciones hoy en día son en criptografía (impredictibilidad).</p>
-<div id="inconvenientes" class="section level3">
-<h3><span class="header-section-number">1.3.1</span> Inconvenientes:</h3>
-<ul>
-<li><p>Es necesario/recomendable conocer su distribución.</p></li>
-<li><p>Los datos generados deberían ser i.i.d.</p></li>
-<li><p>Reproductivilidad.</p></li>
-<li><p>Pueden requerir del almacenamiento en tablas.</p></li>
-</ul>
-</div>
-<div id="alternativas" class="section level3">
-<h3><span class="header-section-number">1.3.2</span> Alternativas:</h3>
-<ul>
-<li><p><strong>números pseudo-aleatorios</strong>: simulan realizaciones de una variable aleatoria (uniforme).</p></li>
-<li><p>números cuasi-aleatorios: secuencias determinísticas con una distribución más uniforme en el rango considerado (se podría pensar que son una única generación de una variable aleatoria).</p></li>
-</ul>
-</div>
-</div>
-<div id="numeros-pseudoaleatorios" class="section level2">
-<h2><span class="header-section-number">1.4</span> Números pseudoaleatorios</h2>
-<div id="generacion-de-numeros-pseudoaleatorios-mediante-software" class="section level3">
-<h3><span class="header-section-number">1.4.1</span> Generación de números pseudoaleatorios mediante software</h3>
-<p>La mayoría de los métodos de simulación se basan en la posibilidad de generar números pseudoaleatorios con distribución <span class="math inline">\(\mathcal{U}(0,1)\)</span>. Se obtienen mediante un algoritmo recursivo denominado <strong>generador</strong>:</p>
-<p><span class="math display">\[x_{i}=f\left(  x_{i-1},x_{i-2},\cdots,x_{i-k}\right)\]</span></p>
-<ul>
-<li><p><span class="math inline">\(k\)</span> orden del generador.</p></li>
-<li><p><span class="math inline">\(\left( x_{0},x_{1},\cdots,x_{k-1}\right)\)</span> <strong>semilla</strong> (estado inicial).</p></li>
-</ul>
-<p>El <strong>periodo</strong> o <em>longitud del ciclo</em> es la longitud de la secuencia antes de que vuelva a repetirse. Lo denotaremos por <span class="math inline">\(p\)</span>.</p>
-<p>Los números de la sucesión serán predecibles, conociendo el algoritmo y la semilla.</p>
-<ul>
-<li><p>Sin embargo, si no se conociesen, <strong>no se debería poder distinguir</strong> una serie de números pseudoaleatorios <strong>de una sucesión de números verdaderamente aleatoria</strong> (utilizando recursos computacionales razonables).</p></li>
-<li><p>En caso contrario esta predecibilidad puede dar lugar a serios problemas (e.g. <a href="http://eprint.iacr.org/2007/419" class="uri">http://eprint.iacr.org/2007/419</a>).</p></li>
-</ul>
-<p>Como regla general, por lo menos mientras se está desarrollando un programa, interesa <strong>fijar la semilla de aleatorización</strong>.</p>
-<ul>
-<li><p>Permite la reproductibilidad de los resultados.</p></li>
-<li><p>Facilita la depuración del código.</p></li>
-</ul>
-<p>Todo generador de números pseudoaleatorios mínimamente aceptable debe comportarse como si se tratase de una muestra genuina de datos independientes de una <span class="math inline">\(\mathcal{U}(0,1)\)</span>. Otras propiedades de interés serían:</p>
-<ul>
-<li><p>Reproducibilidad a partir de la semilla.</p></li>
-<li><p>Periodo suficientemente largo.</p></li>
-<li><p>Eficiencia (rapidez y requerimientos de memoria).</p></li>
-<li><p>Portabilidad.</p></li>
-<li><p>Generación de sub-secuencias (computación en paralelo).</p></li>
-<li><p>Parsimonia, …</p></li>
-</ul>
-<p>Gran cantidad de algoritmos:</p>
-<ul>
-<li><p>Cuadrados medios, Lehmer,…</p></li>
-<li><p>Congruenciales</p></li>
-<li><p>Registros desfasados</p></li>
-<li><p>Combinaciones</p></li>
-<li><p>…</p></li>
-</ul>
-<p>Código fuente disponible en múltiples librerias:</p>
-<ul>
-<li><p>GNU Scientific Library (GSL): <a href="http://www.gnu.org/software/gsl/manual/html_node/Random-Number-Generation.html">http://www.gnu.org/software/gsl/manual</a></p></li>
-<li><p>StatLib: <a href="http://lib.stat.cmu.edu" class="uri">http://lib.stat.cmu.edu</a></p></li>
-<li><p>Numerical recipes: <a href="http://www.nrbook.com/nr3" class="uri">http://www.nrbook.com/nr3</a></p></li>
-<li><p><a href="http://random.mat.sbg.ac.at/software" class="uri">http://random.mat.sbg.ac.at/software</a></p></li>
-<li><p>KISS (Keep It Simple Stupid / Small and Simple): <a href="http://www.fortran.com/kiss.f90" class="uri">http://www.fortran.com/kiss.f90</a></p></li>
-<li><p>UNU.RAN (paquete <code>Runuran</code>): <a href="http://statmath.wu.ac.at/unuran" class="uri">http://statmath.wu.ac.at/unuran</a></p></li>
-<li><p>…</p></li>
-</ul>
-<p>Nos centraremos en los generadores congruenciales, descritos en la <a href="generacion-de-numeros-pseudoaleatorios-1.html#generadores-congruenciales">Sección 3.1</a>.</p>
+<div id="el-problema-de-la-dependencia" class="section level2">
+<h2><span class="header-section-number">4.5</span> El problema de la dependencia:</h2>
+<p>En el caso de dependencia, la estimación de la precisión se complica: <span class="math display">\[Var\left( \overline{X}\right) =\frac{1}{n^{2}}\left( 
+\sum_{i=1}^{n}Var\left( X_{i} \right) + 2\sum_{i&lt;j}Cov\left( X_{i},X_{j}\right) \right).\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Variable dicotómica 0/1 (FALSE/TRUE)  </span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+nsim &lt;-<span class="st"> </span><span class="dv">10000</span>
+<span class="co"># Tomamos como idea que en A Coruña llueve de media 1/3 días al año,</span>
+<span class="co"># y suponemos que 0.656 es la prob de que llueva si el día </span>
+<span class="co"># anterio llovió y 0.056 si no.</span>
+<span class="co"># x == &quot;llueve&quot;</span>
 
+alpha &lt;-<span class="st"> </span><span class="fl">0.03</span> <span class="co"># prob de lluvia si FALSE/0 (prob. de cambio)</span>
+beta &lt;-<span class="st"> </span><span class="fl">0.94</span>  <span class="co"># prob de lluvia si TRUE/1 (prob. de cambio 0.06)</span>
+rx &lt;-<span class="st"> </span><span class="kw">logical</span>(nsim)
+rx[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="ot">FALSE</span> <span class="co"># El primer día no llueve</span>
+for (i in <span class="dv">2</span>:nsim)
+  rx[i] &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1</span>) &lt;<span class="st"> </span>(if (rx[i<span class="dv">-1</span>]) beta else alpha)
+
+n &lt;-<span class="st"> </span><span class="dv">1</span>:nsim
+est &lt;-<span class="st"> </span><span class="kw">cumsum</span>(rx)/n
+esterr &lt;-<span class="st"> </span><span class="kw">sqrt</span>(est*(<span class="dv">1</span>-est)/(n<span class="dv">-1</span>))</code></pre></div>
+<p><strong>IMPORTANTE</strong>: Al ser datos dependientes esta estimación del error estandar no es adecuada.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">acf</span>(<span class="kw">as.numeric</span>(rx))</code></pre></div>
+<p><img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>En este caso al haber dependencia positiva se produce una subestimación del verdadero error estandar.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(est, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">ylab=</span><span class="st">&quot;Probabilidad&quot;</span>, 
+     <span class="dt">xlab=</span><span class="st">&quot;Número de simulaciones&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.6</span>))
+<span class="kw">abline</span>(<span class="dt">h =</span> est[nsim], <span class="dt">lty=</span><span class="dv">2</span>)
+<span class="kw">lines</span>(est +<span class="st"> </span><span class="dv">2</span>*esterr, <span class="dt">lty=</span><span class="dv">2</span>) <span class="co"># OJO! Supone independencia</span>
+<span class="kw">lines</span>(est -<span class="st"> </span><span class="dv">2</span>*esterr, <span class="dt">lty=</span><span class="dv">2</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">1</span>/<span class="dv">3</span>, <span class="dt">col=</span><span class="st">&quot;darkgray&quot;</span>)     <span class="co"># Prob. teor. cadenas Markov</span></code></pre></div>
+<p><img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>El gráfico de autocorrelaciones sugiere que si tomamos 1 de cada 25 podemos suponer independencia.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lag &lt;-<span class="st"> </span><span class="dv">24</span>
+xlag &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="ot">FALSE</span>, lag), <span class="ot">TRUE</span>)
+rxi &lt;-<span class="st"> </span>rx[xlag]
+<span class="kw">acf</span>(<span class="kw">as.numeric</span>(rxi))</code></pre></div>
+<p><img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="kw">length</span>(rxi)
+est &lt;-<span class="st"> </span><span class="kw">cumsum</span>(rxi)/n
+esterr &lt;-<span class="st"> </span><span class="kw">sqrt</span>(est*(<span class="dv">1</span>-est)/(n<span class="dv">-1</span>))
+<span class="kw">plot</span>(est, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">ylab=</span><span class="st">&quot;Probabilidad&quot;</span>, 
+     <span class="dt">xlab=</span><span class="kw">paste</span>(<span class="st">&quot;Número de simulaciones /&quot;</span>, lag), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.6</span>))
+<span class="kw">abline</span>(<span class="dt">h =</span> est[<span class="kw">length</span>(rxi)], <span class="dt">lty=</span><span class="dv">2</span>)
+<span class="kw">lines</span>(est +<span class="st"> </span><span class="dv">2</span>*esterr, <span class="dt">lty=</span><span class="dv">2</span>) <span class="co"># Supone independencia</span>
+<span class="kw">lines</span>(est -<span class="st"> </span><span class="dv">2</span>*esterr, <span class="dt">lty=</span><span class="dv">2</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">1</span>/<span class="dv">3</span>, <span class="dt">col=</span><span class="st">&quot;darkgray&quot;</span>)     <span class="co"># Prob. teor. cadenas Markov</span></code></pre></div>
+<p><img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
+<p>No será la proximación más eficiente…</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rxi &lt;-<span class="st"> </span><span class="kw">matrix</span>(rx, <span class="dt">ncol =</span> lag -<span class="st"> </span><span class="dv">1</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## Warning in matrix(rx, ncol = lag - 1, byrow = TRUE): la longitud de los
+## datos [10000] no es un submúltiplo o múltiplo del número de filas [435] en
+## la matriz</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="kw">nrow</span>(rxi)
+for(i in <span class="dv">1</span>:<span class="kw">ncol</span>(rxi)) {
+  est &lt;-<span class="st"> </span><span class="kw">cumsum</span>(rxi[,i])/n
+  esterr &lt;-<span class="st"> </span><span class="kw">sqrt</span>(est*(<span class="dv">1</span>-est)/(n<span class="dv">-1</span>))
+  if (i ==<span class="st"> </span><span class="dv">1</span>) 
+    <span class="kw">plot</span>(est, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Probabilidad&quot;</span>, 
+         <span class="dt">xlab =</span> <span class="kw">paste</span>(<span class="st">&quot;Número de simulaciones /&quot;</span>, lag), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.6</span>))
+  else <span class="kw">lines</span>(est)
+  <span class="kw">lines</span>(est +<span class="st"> </span><span class="dv">2</span>*esterr, <span class="dt">col =</span> <span class="st">&quot;lightgray&quot;</span>, <span class="dt">lty=</span><span class="dv">3</span>) <span class="co"># Supone independencia...</span>
+  <span class="kw">lines</span>(est -<span class="st"> </span><span class="dv">2</span>*esterr, <span class="dt">col =</span> <span class="st">&quot;lightgray&quot;</span>, <span class="dt">lty=</span><span class="dv">3</span>)
+}
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="kw">mean</span>(rx), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty=</span><span class="dv">2</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">1</span>/<span class="dv">3</span>, <span class="dt">col=</span><span class="st">&quot;darkgray&quot;</span>)     <span class="co"># Prob. teor. cadenas Markov</span></code></pre></div>
+<p><img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Trataremos este tipo de problemas en la diagnosis de algoritmos de simulación Monte Carlo de Cadenas de Markov (MCMC). Aparecen también en la simulación dinámica (por eventos o cuantos).</p>
+<div id="periodo-de-calentamiento" class="section level3">
+<h3><span class="header-section-number">4.5.1</span> Periodo de calentamiento</h3>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-10" class="exercise"><strong>Ejercicio 2.3  </strong></span>
 </div>
+<p> Repetir el ejemplo anterior considerando como punto de partida un día lluvioso.</p>
+</div>
+</div>
+<div id="observaciones" class="section level2">
+<h2><span class="header-section-number">4.6</span> Observaciones</h2>
+<ul>
+<li><p>En el caso de que la característica de interés de la distribución de <span class="math inline">\(X\)</span> no sea la media, los resultados anteriores no serían en principio aplicables.</p></li>
+<li><p>Incluso en el caso de la media, las bandas de confianza obtenidas con el TCL son puntuales (si generamos nuevas secuencias de simulación es muy probable que no estén contenidas).</p></li>
+<li><p>Se podría recurrir a la generación de múltiples secuencias (equivalentemente emplear un método de <em>macro-micro replicaciones</em> para la estimación de la varianza - <em>bach means</em>: medias por lotes).</p></li>
+<li><p>En muchos casos la generación de múltiples secuencias de simulación puede suponer un coste computacional importante, por lo que puede ser preferible emplear un método de remuestreo.</p></li>
+</ul>
+
 </div>
 </div>
             </section>
@@ -426,8 +440,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="numeros-aleatorios-en-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="generacion-de-numeros-pseudoaleatorios-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="aplicaciones-de-la-simulacion-en-inferencia-estadistica.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -456,7 +470,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/01-Introduccion.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/04-Analisis_resultados.Rmd",
 "text": "Edit"
 },
 "download": ["Practicas_de_Simulacion.pdf", "Practicas_de_Simulacion.epub"],

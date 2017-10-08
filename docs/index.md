@@ -1,7 +1,7 @@
 --- 
 title: "Prácticas de Simulación"
 author: "Rubén F. Casal (ruben.fcasal@udc.es)"
-date: "2017-10-05"
+date: "2017-10-09"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
@@ -24,7 +24,7 @@ devtools::install_github("rstudio/bookdown")
 ```
 
 
-<img src="images/by-nc-nd-88x31.png" width="44" />
+![](images/by-nc-nd-88x31.png)<!-- -->
 
 Este obra está bajo una licencia de [Creative Commons Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es_ES) 
 (espero poder liberarlo bajo una licencia menos restrictiva más adelante...).

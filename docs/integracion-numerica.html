@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
-<link rel="next" href="numeros-aleatorios-en-r.html">
+<link rel="prev" href="recursos-para-el-aprendizaje-de-r.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -253,170 +253,202 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduccion-a-la-simulacion" class="section level1">
-<h1><span class="header-section-number">Capítulo 1</span> Introducción a la simulación</h1>
-<div id="introduccion" class="section level2">
-<h2><span class="header-section-number">1.1</span> Introducción</h2>
-<p>Problemas de la experimentación directa sobre la realidad:</p>
-<ul>
-<li><p>Coste elevado.</p></li>
-<li><p>En ocasiones las pruebas son destructivas.</p></li>
-<li><p>Lentitud.</p></li>
-<li><p>Puede no ser ética.</p></li>
-<li><p>experimentación sobre seres humanos.</p></li>
-<li><p>Puede resultar imposible.</p></li>
-<li><p>Acontecimientos futuros, …</p></li>
-<li><p>…</p></li>
-</ul>
-<p>Puede ser preferible trabajar con un modelo del sistema real. La realidad puede ser muy compleja por lo que es habitual emplear un modelo para tratar de explicarla:</p>
-<ul>
-<li><p>Modelos deterministas.</p></li>
-<li><p>Modelos estocásticos (con componente aleatoria).</p>
-<ul>
-<li><p>Cuando no se dispone de la suficiente información sobre las variables que influyen en el fenómeno en estudio.</p></li>
-<li><p>Se tienen en cuenta esta incertidumbre.</p></li>
-</ul></li>
-</ul>
-<p>La inferencia estadística proporciona herramientas para estimar los parámetros y contrastar la validez de un modelo estocástico a partir de los datos observados.</p>
-<p>La idea es emplear el modelo para resolver el problema de interés. Cuando la solución no se puede obtener de modo analítico (teórico) se puede recurrir a la simulación.</p>
-<p><strong>Simulación</strong>: realizar experimentos con un modelo con el objetivo de recopilar información bajo determinadas condiciones. Nos centraremos en el caso de la <strong>simulación estocástica</strong>:</p>
-<ul>
-<li>Las conclusiones se obtienen habitualmente generando repetidamente simulaciones del modelo aleatorio.</li>
-</ul>
-<div id="ventajas-de-la-simulacion-shannon-1975" class="section level3">
-<h3><span class="header-section-number">1.1.1</span> Ventajas de la simulación (Shannon, 1975):</h3>
-<ul>
-<li><p>Cuando la resolución analítica no puede llevarse a cabo.</p></li>
-<li><p>Cuando existen medios de resolver analíticamente el problema pero dicha resolución es complicada y costosa (o solo proporciona una solución aproximada).</p></li>
-<li><p>Si se desea experimentar antes de que exista el sistema (pruebas para la construcción de un sistema).</p></li>
-<li><p>Cuando es imposible experimentar sobre el sistema real por ser dicha experimentación destructiva.</p></li>
-<li><p>En ocasiones en las que la experimentación sobre el sistema es posible pero no ética.</p></li>
-<li><p>En sistemas que evolucionan muy lentamente en el tiempo.</p></li>
-</ul>
+<div id="integracion-numerica" class="section level1">
+<h1><span class="header-section-number">B</span> Integración numérica</h1>
+<div id="introduccion-2" class="section level2">
+<h2><span class="header-section-number">B.1</span> Introducción</h2>
+<p>En muchos casos nos puede interesar la aproximación de una integral definida. En estadística, además del caso de Inferencia Bayesiana (que trataremos más adelante empleando Integración Montecarlo), nos puede interesar por ejemplo aproximar mediante simulación el error cuadrático integrado medio (MISE) de un estimador. En el caso de una densidad univariante sería de la forma: <span class="math display">\[MISE \left\{ \hat{f} \right\} = \operatorname{E}\int (\hat{f}(x)-f(x))^2 \, dx\]</span></p>
+<p>Cuendo el numero de dimensiones es pequeño, nos puede ineteresar emplear un método numérico para aproximar este tipo de integrales.</p>
 </div>
-<div id="inconvenientes-de-la-simulacion" class="section level3">
-<h3><span class="header-section-number">1.1.2</span> Inconvenientes de la simulación:</h3>
-<ul>
-<li><p>La construcción de un buen modelo puede ser una tarea muy costosa (compleja, laboriosa y requerir mucho tiempo; e.g. modelos climáticos).</p></li>
-<li><p>Frecuentemente el modelo omite variables o relaciones importantes entre ellas (los resultados pueden no ser válidos para el sistema real).</p></li>
-<li><p>Resulta difícil conocer la precisión de la simulación (especialmente en lo relativo a la precisión del modelo formulado).</p></li>
-<li><p>Problemas de extrapolación de las conclusiones.</p></li>
-<li><p>Tiempo de computación.</p></li>
-</ul>
+<div id="integracion-numerica-unidimensional" class="section level2">
+<h2><span class="header-section-number">B.2</span> Integración numérica unidimensional</h2>
+<p>Supongamos que nos interesa aproximar una integral de la forma: <span class="math display">\[I=\int_{a}^{b}h\left(  x\right)dx\]</span>.</p>
+<p>Consideraremos como ejemplo: <span class="math display">\[\int_{0}^{1}4x^{3}dx=1\]</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fun &lt;-<span class="st"> </span>function(x) <span class="kw">return</span>(<span class="dv">4</span> *<span class="st"> </span>x^<span class="dv">3</span>)
+<span class="kw">curve</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)
+<span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>,<span class="dt">lty=</span><span class="dv">2</span>)
+<span class="kw">abline</span>(<span class="dt">v=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="15-Integracion_numerica_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<div id="metodo-del-trapezoide" class="section level3">
+<h3><span class="header-section-number">B.2.1</span> Método del trapezoide</h3>
+<p>La regla de los trapecios es una forma de aproximar la integral utilizando <span class="math inline">\(n\)</span> trapecios. Si se consideran <span class="math inline">\(n\)</span> subintervalos en <span class="math inline">\([a,b]\)</span> de longitud <span class="math inline">\(h= \frac{b-a}{n}\)</span> (i.e. <span class="math inline">\(n + 1\)</span> puntos regularmente espaciados cubriendo el dominio), y se aproxima linealmente la función en cada subintervalo, se obtiene que: <span class="math display">\[\int_a^b f(x)\, dx \approx \frac{h}{2} [f(a)+2f(a+h)+2f(a+2h)+...+f(b)]\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trapezoid.vec &lt;-<span class="st"> </span>function(f.vec, <span class="dt">h =</span> <span class="fl">0.01</span>) {
+<span class="co"># Integración numérica unidimensional entre a y b</span>
+<span class="co"># utilizando el método del trapezoide </span>
+<span class="co"># (se aproxima f linealmente en cada intervalo)</span>
+  n &lt;-<span class="st"> </span><span class="kw">length</span>(f.vec) 
+  <span class="kw">return</span>(h*(f.vec[<span class="dv">1</span>]/<span class="dv">2</span> +<span class="st"> </span><span class="kw">sum</span>(f.vec[<span class="dv">2</span>:(n<span class="dv">-1</span>)]) +<span class="st"> </span>f.vec[n]/<span class="dv">2</span>))
+}
+
+trapezoid &lt;-<span class="st"> </span>function(fun, <span class="dt">a=</span><span class="dv">0</span>, <span class="dt">b=</span><span class="dv">1</span>, <span class="dt">n=</span><span class="dv">100</span>) {
+<span class="co"># Integración numérica de fun (función unidimensional) entre a y b</span>
+<span class="co"># utilizando el método del trapezoide con n subdivisiones</span>
+<span class="co"># (se aproxima f linealmente en cada intervalo)</span>
+<span class="co"># Se asume a &lt; b y n entero positivo </span>
+  h &lt;-<span class="st"> </span>(b-a)/n
+  x.vec &lt;-<span class="st"> </span><span class="kw">seq</span>(a, b, <span class="dt">by =</span> h)
+  f.vec &lt;-<span class="st"> </span><span class="kw">sapply</span>(x.vec, fun)
+  <span class="kw">return</span>(<span class="kw">trapezoid.vec</span>(f.vec, h))
+}
+
+<span class="kw">trapezoid</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">20</span>)</code></pre></div>
+<pre><code>## [1] 1.0025</code></pre>
+<p>El error en esta aproximación se corresponde con: <span class="math display">\[ \frac{(b-a)^3}{12n^2}\,f&#39;&#39;(\xi), \]</span> para algún <span class="math inline">\(a\leq \xi \leq b\)</span> (dependiendo del signo de la segunda derivada, i.e. de si la función es cóncava o convexa, el error será negativo ó positivo). El error máximo absoluto es <span class="math inline">\(\frac{(b-a)^3}{12n^2}\max_{a\leq \xi \leq b}\left|f&#39;&#39;(\xi)\right|\)</span>. En el caso general multidimensional sería <span class="math inline">\(O(n^{-\frac{2}{d}})\)</span>.</p>
+</div>
+<div id="regla-de-simpson" class="section level3">
+<h3><span class="header-section-number">B.2.2</span> Regla de Simpson</h3>
+<p>Se divide el intervalo <span class="math inline">\(n\)</span> subintervalos de longitud <span class="math inline">\(h= \frac{b-a}{n}\)</span> (con <span class="math inline">\(n\)</span> par), considerando <span class="math inline">\(n + 1\)</span> puntos regularmente espaciados <span class="math inline">\(x_i = a + ih\)</span>, para <span class="math inline">\(i = 0, 1, ..., n\)</span>. Aproximando de forma cuadrática la función en cada subintervalo <span class="math inline">\([x_{j-1},x_{j+1}]\)</span> (considerando 3 puntos), se obtiene que: <span class="math display">\[ \int_a^b f(x) \, dx \approx \frac{h}{3} \bigg[ 
+f(x_0)+2\sum_{j=1}^{(n/2)-1}f(x_{2j})+ 4\sum_{j=1}^{n/2}f(x_{2j-1})+f(x_n) \bigg],\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simpson &lt;-<span class="st"> </span>function(fun, a, b, <span class="dt">n =</span> <span class="dv">100</span>) { 
+<span class="co"># Integración numérica de fnt entre a y b</span>
+<span class="co"># utilizando la regla de Simpson con n subdivisiones</span>
+<span class="co"># (se aproxima fun de forma cuadrática en cada par de intervalos)  </span>
+<span class="co"># fnt es una función de una sola variable</span>
+<span class="co"># Se asume a &lt; b y n entero positivo par </span>
+  n &lt;-<span class="st"> </span><span class="kw">max</span>(<span class="kw">c</span>(<span class="dv">2</span>*(n %/%<span class="st"> </span><span class="dv">2</span>), <span class="dv">4</span>))
+  h &lt;-<span class="st"> </span>(b-a)/n
+  x.vec1 &lt;-<span class="st"> </span><span class="kw">seq</span>(a+h, b-h, <span class="dt">by =</span> <span class="dv">2</span>*h)
+  x.vec2 &lt;-<span class="st"> </span><span class="kw">seq</span>(a<span class="dv">+2</span>*h, b<span class="dv">-2</span>*h, <span class="dt">by =</span> <span class="dv">2</span>*h)
+  f.vec1 &lt;-<span class="st"> </span><span class="kw">sapply</span>(x.vec1, fun)
+  f.vec2 &lt;-<span class="st"> </span><span class="kw">sapply</span>(x.vec2, fun)
+  <span class="kw">return</span>(h/<span class="dv">3</span>*(<span class="kw">fun</span>(a) +<span class="st"> </span><span class="kw">fun</span>(b) +<span class="st"> </span><span class="dv">4</span>*<span class="kw">sum</span>(f.vec1) +<span class="st"> </span><span class="dv">2</span>*<span class="kw">sum</span>(f.vec2)))
+  <span class="co"># Una cota del error en valor absoluto es:</span>
+  <span class="co"># h^4*(b-a)*max(c(f.vec1, fvec.2))^4/180.</span>
+}
+
+<span class="kw">simpson</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">20</span>)</code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<p>El máximo error (en el caso unidimensional) viene dado por la expresión: <span class="math display">\[\frac{(b-a)^5}{180n^4}\,\max_{a\leq \xi \leq b}\left| f^{(4)}(\xi) \right|.\]</span> En el caso general multidimensional sería <span class="math inline">\(O(n^{-\frac{4}{d}})\)</span>.</p>
+</div>
+<div id="cuadratura-adaptativa" class="section level3">
+<h3><span class="header-section-number">B.2.3</span> Cuadratura adaptativa</h3>
+<p>En lugar de evaluar la función en una rejilla regular (muestrear por igual el dominio), puede interesar ir añadiendo puntos sólo en los lugares “necesarios”.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">quadrature &lt;-<span class="st"> </span>function(fun, a, b, <span class="dt">tol=</span><span class="fl">1e-8</span>) {
+    <span class="co"># numerical integration using adaptive quadrature</span>
+
+  simpson2 &lt;-<span class="st"> </span>function(fun, a, b) {
+    <span class="co"># numerical integral using Simpson&#39;s rule</span>
+    <span class="co"># assume a &lt; b and n = 2</span>
+    <span class="kw">return</span>((b-a)/<span class="dv">6</span> *<span class="st"> </span>(<span class="kw">fun</span>(a) +<span class="st"> </span><span class="dv">4</span>*<span class="kw">fun</span>((a+b)/<span class="dv">2</span>) +<span class="st"> </span><span class="kw">fun</span>(b)))
+  }
+ 
+    quadrature_internal &lt;-<span class="st"> </span>function(S.old, fun, a, m, b, tol, level) {
+        level.max &lt;-<span class="st"> </span><span class="dv">100</span>
+        if (level &gt;<span class="st"> </span>level.max) {
+            <span class="kw">cat</span> (<span class="st">&quot;recursion limit reached: singularity likely</span><span class="ch">\n</span><span class="st">&quot;</span>)
+            <span class="kw">return</span> (<span class="ot">NULL</span>)
+        }
+        S.left &lt;-<span class="st"> </span><span class="kw">simpson2</span>(fun, a, m) 
+        S.right &lt;-<span class="st"> </span><span class="kw">simpson2</span>(fun, m, b)
+        S.new &lt;-<span class="st"> </span>S.left +<span class="st"> </span>S.right
+        if (<span class="kw">abs</span>(S.new-S.old) &gt;<span class="st"> </span>tol) {
+            S.left &lt;-<span class="st"> </span><span class="kw">quadrature_internal</span>(S.left, fun, 
+                                          a, (a+m)/<span class="dv">2</span>, m, tol/<span class="dv">2</span>, level<span class="dv">+1</span>)
+            S.right &lt;-<span class="st"> </span><span class="kw">quadrature_internal</span>(S.right, fun, 
+                                           m, (m+b)/<span class="dv">2</span>, b, tol/<span class="dv">2</span>, level<span class="dv">+1</span>)
+            S.new &lt;-<span class="st"> </span>S.left +<span class="st"> </span>S.right
+        }
+        <span class="kw">return</span>(S.new)
+    }
+ 
+    level =<span class="st"> </span><span class="dv">1</span>
+    S.old &lt;-<span class="st"> </span>(b-a) *<span class="st"> </span>(<span class="kw">fun</span>(a) +<span class="st"> </span><span class="kw">fun</span>(b))/<span class="dv">2</span>
+    S.new &lt;-<span class="st"> </span><span class="kw">quadrature_internal</span>(S.old, fun, 
+                                 a, (a+b)/<span class="dv">2</span>, b, tol, level<span class="dv">+1</span>)
+    <span class="kw">return</span>(S.new)
+}
+
+<span class="kw">quadrature</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)</code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<p>Fuente <a href="https://www.r-bloggers.com/one-dimensional-integrals">r-blogger Guangchuang Yu</a>?</p>
+</div>
+<div id="comandos-de-r" class="section level3">
+<h3><span class="header-section-number">B.2.4</span> Comandos de <code>R</code></h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">integrate</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)   <span class="co"># Permite límites infinitos  </span></code></pre></div>
+<pre><code>## 1 with absolute error &lt; 1.1e-14</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Cuidado: fun debe ser vectorial...
+<span class="kw">require</span>(MASS)
+<span class="kw">area</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)</code></pre></div>
+<pre><code>## [1] 1</code></pre>
 </div>
 </div>
-<div id="generacion-de-numeros-pseudoaleatorios" class="section level2">
-<h2><span class="header-section-number">1.2</span> Generación de números (pseudo)aleatorios</h2>
-<p>Aplicaciones:</p>
-<ul>
-<li><p>Estadística:</p></li>
-<li><p>Muestreo, remuestreo, …</p></li>
-<li><p>Aproximación de distribuciones (de estadísticos, estimadores, …)</p></li>
-<li><p>Realización de contrastes, intervalos de confianza, …</p></li>
-<li><p>Comparación de estimadores, contrastes, …</p></li>
-<li><p>Validación teoría (distribución asintótica,…)</p></li>
-<li><p>Inferencia Bayesiana</p></li>
-<li><p>Optimización: Algoritmos genéticos, …</p></li>
-<li><p>Computación: Diseño, verificación y validación de algoritmos,…</p></li>
-<li><p>Criptografía: Protocolos de comunicación segura, …</p></li>
-<li><p>Física: Simulación de fenómenos naturales, …</p></li>
-<li><p>Análisis numérico: Evaluación de expresiones, …</p></li>
-<li><p>…</p></li>
-</ul>
-<p>En el Capítulo XX nos centraremos en algunas de las aplicaciones de utilidad en Estadística.</p>
+<div id="integracion-numerica-bidimensional" class="section level2">
+<h2><span class="header-section-number">B.3</span> Integración numérica bidimensional</h2>
+<p>Supongamos que nos interesa aproximar una integral de la forma: <span class="math display">\[I=\int_{a_x}^{b_x}\int_{a_y}^{b_y}f(x, y)dy dx\]</span>.</p>
+<p>Consideraremos como ejemplo: <span class="math display">\[\int_{-1}^{1} \int_{-1}^{1} \left( x^2 - y^2 \right) dx dy = 0\]</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f2d &lt;-<span class="st"> </span>function(x,y) x^<span class="dv">2</span> -<span class="st"> </span>y^<span class="dv">2</span></code></pre></div>
+<p>Es habitual (especialmente en simulación) que la función se evalúe en una rejilla:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ax =<span class="st"> </span>-<span class="dv">1</span>
+ay =<span class="st"> </span>-<span class="dv">1</span>
+bx =<span class="st"> </span><span class="dv">1</span>
+by =<span class="st"> </span><span class="dv">1</span>
+nx =<span class="st"> </span><span class="dv">21</span>
+ny =<span class="st"> </span><span class="dv">21</span>
+x &lt;-<span class="st"> </span><span class="kw">seq</span>(ax, bx, <span class="dt">length =</span> nx)
+y &lt;-<span class="st"> </span><span class="kw">seq</span>(ay, by, <span class="dt">length =</span> ny)
+z &lt;-<span class="st"> </span><span class="kw">outer</span>(x, y, f2d)
+
+hx &lt;-<span class="st"> </span>x[<span class="dv">2</span>]-x[<span class="dv">1</span>]
+hy &lt;-<span class="st"> </span>y[<span class="dv">2</span>]-y[<span class="dv">1</span>]</code></pre></div>
+<div id="representacion-grafica" class="section level3">
+<h3><span class="header-section-number">B.3.1</span> Representación gráfica</h3>
+<p>Puede ser de utilidad las herramientas de los paquetes <code>plot3D</code> y <code>plot3Drgl</code> (también se pueden utilizar las funciones <code>spersp</code>, <code>simage</code>, <code>spoints</code> y <code>splot</code> del paquete <code>npsp</code>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">if(!<span class="kw">require</span>(plot3D)) <span class="kw">stop</span>(<span class="st">&#39;Required pakage `plot3D` not installed.&#39;</span>)
+
+<span class="co"># persp3D(z = z, x = x, y = y)</span>
+
+persp3D.f2d &lt;-<span class="st"> </span>function(f2d, <span class="dt">ax=</span>-<span class="dv">1</span>, <span class="dt">bx=</span><span class="dv">1</span>, <span class="dt">ay=</span>-<span class="dv">1</span>, <span class="dt">by=</span><span class="dv">1</span>, <span class="dt">nx=</span><span class="dv">21</span>, <span class="dt">ny=</span><span class="dv">21</span>, ...) { 
+  x &lt;-<span class="st"> </span><span class="kw">seq</span>(ax, bx, <span class="dt">length =</span> nx)
+  y &lt;-<span class="st"> </span><span class="kw">seq</span>(ay, by, <span class="dt">length =</span> ny)
+  hx &lt;-<span class="st"> </span>x[<span class="dv">2</span>]-x[<span class="dv">1</span>]
+  hy &lt;-<span class="st"> </span>y[<span class="dv">2</span>]-y[<span class="dv">1</span>]
+  z &lt;-<span class="st"> </span><span class="kw">outer</span>(x, y, f2d)
+  <span class="kw">persp3D</span>(x, y, z, ...)
+}
+
+<span class="kw">persp3D.f2d</span>(f2d, -<span class="dv">1</span>, <span class="dv">1</span>, -<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">1</span>, <span class="dt">ticktype =</span> <span class="st">&quot;detailed&quot;</span>) </code></pre></div>
+<p><img src="15-Integracion_numerica_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
-<div id="numeros-aleatorios-puros" class="section level2">
-<h2><span class="header-section-number">1.3</span> Números aleatorios puros</h2>
-<p>Una sucesión de números aleatorios puros (true random), se caracteriza por que no existe ninguna regla o plan que nos permita conocer sus valores.</p>
-<p>Se almacena(ban) en <em>tablas de dígitos aleatorios</em> (<em>true random</em>) y normalmente son obtenidos por procesos físicos (loterías, ruletas, ruidos,…)</p>
-<p><img src="images/RAND.png" style="display: block; margin: auto;" /></p>
-<p>Se emplean para seleccionar números aleatorios en un rango de 1 a <em>m</em>:</p>
-<ul>
-<li><p>Se selecciona al azar un pto de inicio en la tabla y una dirección.</p></li>
-<li><p>Se agrupan los dígitos de forma que “cubran” el valor de <em>m</em>.</p></li>
-<li><p>Se seleccionan los valores menores o iguales que <em>m</em> (se descarta el resto).</p></li>
-</ul>
-<p>Algunos enlaces:</p>
-<ul>
-<li><p><a href="https://en.wikipedia.org/wiki/A_Million_Random_Digits_with_100,000_Normal_Deviates">A Million Random Digits with 100,000 Normal Deviates</a> . RAND Corporation. 1955.</p></li>
-<li><p>Generadores de números aleatorios “online”:</p>
-<ul>
-<li><p><a href="http://www.random.org/integers" class="uri">http://www.random.org/integers</a> (ver paquete <strong>random</strong> en R).</p></li>
-<li><p><a href="http://www.fourmilab.ch/hotbits" class="uri">http://www.fourmilab.ch/hotbits</a></p></li>
-</ul></li>
-<li><p>Generadores mediante hardware:</p>
-<ul>
-<li><p><a href="http://software.intel.com/en-us/articles/intel-digital-random-number-generator-drng-software-implementation-guide">http://software.intel.com</a>.</p></li>
-<li><p><a href="http://spectrum.ieee.org/semiconductors/devices/a-memristor-true-randomnumber-generator">http://spectrum.ieee.org</a></p></li>
-</ul></li>
-</ul>
-<p>Sus principales aplicaciones hoy en día son en criptografía (impredictibilidad).</p>
-<div id="inconvenientes" class="section level3">
-<h3><span class="header-section-number">1.3.1</span> Inconvenientes:</h3>
-<ul>
-<li><p>Es necesario/recomendable conocer su distribución.</p></li>
-<li><p>Los datos generados deberían ser i.i.d.</p></li>
-<li><p>Reproductivilidad.</p></li>
-<li><p>Pueden requerir del almacenamiento en tablas.</p></li>
-</ul>
+<div id="metodo-del-trapezoide-1" class="section level3">
+<h3><span class="header-section-number">B.3.2</span> Método del trapezoide</h3>
+<p>Error <span class="math inline">\(O(n^{-\frac{2}{d}})\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trapezoid.mat &lt;-<span class="st"> </span>function(z, hx, hy) { 
+<span class="co"># Integración numérica bidimensional</span>
+<span class="co"># utilizando el método del trapezoide (se aproxima f linealmente)</span>
+  f.vec &lt;-<span class="st"> </span><span class="kw">apply</span>(z, <span class="dv">1</span>, function(x) <span class="kw">trapezoid.vec</span>(x, hx))
+  <span class="kw">return</span>(<span class="kw">trapezoid.vec</span>(f.vec, hy)) 
+}
+
+<span class="co"># trapezoid.mat(z, hx, hy) </span>
+
+trapezoid.f2d &lt;-<span class="st"> </span>function(f2d, <span class="dt">ax=</span>-<span class="dv">1</span>, <span class="dt">bx=</span><span class="dv">1</span>, <span class="dt">ay=</span>-<span class="dv">1</span>, <span class="dt">by=</span><span class="dv">1</span>, <span class="dt">nx=</span><span class="dv">21</span>, <span class="dt">ny=</span><span class="dv">21</span>) { 
+  x &lt;-<span class="st"> </span><span class="kw">seq</span>(ax, bx, <span class="dt">length =</span> nx)
+  y &lt;-<span class="st"> </span><span class="kw">seq</span>(ay, by, <span class="dt">length =</span> ny)
+  hx &lt;-<span class="st"> </span>x[<span class="dv">2</span>]-x[<span class="dv">1</span>]
+  hy &lt;-<span class="st"> </span>y[<span class="dv">2</span>]-y[<span class="dv">1</span>]
+  z &lt;-<span class="st"> </span><span class="kw">outer</span>(x, y, f2d)
+  <span class="kw">trapezoid.mat</span>(z, hx, hy)
+}
+
+<span class="kw">trapezoid.f2d</span>(f2d, -<span class="dv">1</span>, <span class="dv">1</span>, -<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">101</span>, <span class="dv">101</span>) </code></pre></div>
+<pre><code>## [1] -8.881784e-18</code></pre>
 </div>
-<div id="alternativas" class="section level3">
-<h3><span class="header-section-number">1.3.2</span> Alternativas:</h3>
-<ul>
-<li><p><strong>números pseudo-aleatorios</strong>: simulan realizaciones de una variable aleatoria (uniforme).</p></li>
-<li><p>números cuasi-aleatorios: secuencias determinísticas con una distribución más uniforme en el rango considerado (se podría pensar que son una única generación de una variable aleatoria).</p></li>
-</ul>
-</div>
-</div>
-<div id="numeros-pseudoaleatorios" class="section level2">
-<h2><span class="header-section-number">1.4</span> Números pseudoaleatorios</h2>
-<div id="generacion-de-numeros-pseudoaleatorios-mediante-software" class="section level3">
-<h3><span class="header-section-number">1.4.1</span> Generación de números pseudoaleatorios mediante software</h3>
-<p>La mayoría de los métodos de simulación se basan en la posibilidad de generar números pseudoaleatorios con distribución <span class="math inline">\(\mathcal{U}(0,1)\)</span>. Se obtienen mediante un algoritmo recursivo denominado <strong>generador</strong>:</p>
-<p><span class="math display">\[x_{i}=f\left(  x_{i-1},x_{i-2},\cdots,x_{i-k}\right)\]</span></p>
-<ul>
-<li><p><span class="math inline">\(k\)</span> orden del generador.</p></li>
-<li><p><span class="math inline">\(\left( x_{0},x_{1},\cdots,x_{k-1}\right)\)</span> <strong>semilla</strong> (estado inicial).</p></li>
-</ul>
-<p>El <strong>periodo</strong> o <em>longitud del ciclo</em> es la longitud de la secuencia antes de que vuelva a repetirse. Lo denotaremos por <span class="math inline">\(p\)</span>.</p>
-<p>Los números de la sucesión serán predecibles, conociendo el algoritmo y la semilla.</p>
-<ul>
-<li><p>Sin embargo, si no se conociesen, <strong>no se debería poder distinguir</strong> una serie de números pseudoaleatorios <strong>de una sucesión de números verdaderamente aleatoria</strong> (utilizando recursos computacionales razonables).</p></li>
-<li><p>En caso contrario esta predecibilidad puede dar lugar a serios problemas (e.g. <a href="http://eprint.iacr.org/2007/419" class="uri">http://eprint.iacr.org/2007/419</a>).</p></li>
-</ul>
-<p>Como regla general, por lo menos mientras se está desarrollando un programa, interesa <strong>fijar la semilla de aleatorización</strong>.</p>
-<ul>
-<li><p>Permite la reproductibilidad de los resultados.</p></li>
-<li><p>Facilita la depuración del código.</p></li>
-</ul>
-<p>Todo generador de números pseudoaleatorios mínimamente aceptable debe comportarse como si se tratase de una muestra genuina de datos independientes de una <span class="math inline">\(\mathcal{U}(0,1)\)</span>. Otras propiedades de interés serían:</p>
-<ul>
-<li><p>Reproducibilidad a partir de la semilla.</p></li>
-<li><p>Periodo suficientemente largo.</p></li>
-<li><p>Eficiencia (rapidez y requerimientos de memoria).</p></li>
-<li><p>Portabilidad.</p></li>
-<li><p>Generación de sub-secuencias (computación en paralelo).</p></li>
-<li><p>Parsimonia, …</p></li>
-</ul>
-<p>Gran cantidad de algoritmos:</p>
-<ul>
-<li><p>Cuadrados medios, Lehmer,…</p></li>
-<li><p>Congruenciales</p></li>
-<li><p>Registros desfasados</p></li>
-<li><p>Combinaciones</p></li>
-<li><p>…</p></li>
-</ul>
-<p>Código fuente disponible en múltiples librerias:</p>
-<ul>
-<li><p>GNU Scientific Library (GSL): <a href="http://www.gnu.org/software/gsl/manual/html_node/Random-Number-Generation.html">http://www.gnu.org/software/gsl/manual</a></p></li>
-<li><p>StatLib: <a href="http://lib.stat.cmu.edu" class="uri">http://lib.stat.cmu.edu</a></p></li>
-<li><p>Numerical recipes: <a href="http://www.nrbook.com/nr3" class="uri">http://www.nrbook.com/nr3</a></p></li>
-<li><p><a href="http://random.mat.sbg.ac.at/software" class="uri">http://random.mat.sbg.ac.at/software</a></p></li>
-<li><p>KISS (Keep It Simple Stupid / Small and Simple): <a href="http://www.fortran.com/kiss.f90" class="uri">http://www.fortran.com/kiss.f90</a></p></li>
-<li><p>UNU.RAN (paquete <code>Runuran</code>): <a href="http://statmath.wu.ac.at/unuran" class="uri">http://statmath.wu.ac.at/unuran</a></p></li>
-<li><p>…</p></li>
-</ul>
-<p>Nos centraremos en los generadores congruenciales, descritos en la <a href="generacion-de-numeros-pseudoaleatorios-1.html#generadores-congruenciales">Sección 3.1</a>.</p>
+<div id="comandos-r" class="section level3">
+<h3><span class="header-section-number">B.3.3</span> Comandos R</h3>
+<p>Suponiendo que la función es vectorial, podemos emplear:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">integrate</span>( function(y) {
+    <span class="kw">sapply</span>(y, function(y) {
+      <span class="kw">integrate</span>(function(x) <span class="kw">f2d</span>(x,y), ax, bx)$value }) }, 
+    ay, by)</code></pre></div>
+<pre><code>## -2.775558e-17 with absolute error &lt; 1.1e-14</code></pre>
+<p>Si la función no es vectorial y solo admite parámetros escalares:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">integrate</span>(function(y) {
+    <span class="kw">sapply</span>(y, function(y) {
+      <span class="kw">integrate</span>(function(x) {
+        <span class="kw">sapply</span>(x, function(x) <span class="kw">f2d</span>(x,y)) }, ax, bx)$value }) }, 
+    ay, by)</code></pre></div>
+<p>Fuente <a href="http://tolstoy.newcastle.edu.au/R/help/04/10/5951.html">tolstoy.newcastle.edu.au</a>.</p>
+<p>Alternativamente se podría emplear la función <code>adaptIntegrate</code> del paquete <code>cubature</code>.</p>
 
 </div>
 </div>
@@ -426,8 +458,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="numeros-aleatorios-en-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="recursos-para-el-aprendizaje-de-r.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -456,7 +488,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/01-Introduccion.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/15-Integracion_numerica.Rmd",
 "text": "Edit"
 },
 "download": ["Practicas_de_Simulacion.pdf", "Practicas_de_Simulacion.epub"],

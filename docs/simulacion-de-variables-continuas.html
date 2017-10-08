@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
-<link rel="next" href="numeros-aleatorios-en-r.html">
+<link rel="prev" href="integracion-y-optimizacion-montecarlo.html">
+<link rel="next" href="simulacion-de-variables-discretas.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -253,172 +253,256 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduccion-a-la-simulacion" class="section level1">
-<h1><span class="header-section-number">Capítulo 1</span> Introducción a la simulación</h1>
-<div id="introduccion" class="section level2">
-<h2><span class="header-section-number">1.1</span> Introducción</h2>
-<p>Problemas de la experimentación directa sobre la realidad:</p>
-<ul>
-<li><p>Coste elevado.</p></li>
-<li><p>En ocasiones las pruebas son destructivas.</p></li>
-<li><p>Lentitud.</p></li>
-<li><p>Puede no ser ética.</p></li>
-<li><p>experimentación sobre seres humanos.</p></li>
-<li><p>Puede resultar imposible.</p></li>
-<li><p>Acontecimientos futuros, …</p></li>
-<li><p>…</p></li>
-</ul>
-<p>Puede ser preferible trabajar con un modelo del sistema real. La realidad puede ser muy compleja por lo que es habitual emplear un modelo para tratar de explicarla:</p>
-<ul>
-<li><p>Modelos deterministas.</p></li>
-<li><p>Modelos estocásticos (con componente aleatoria).</p>
-<ul>
-<li><p>Cuando no se dispone de la suficiente información sobre las variables que influyen en el fenómeno en estudio.</p></li>
-<li><p>Se tienen en cuenta esta incertidumbre.</p></li>
-</ul></li>
-</ul>
-<p>La inferencia estadística proporciona herramientas para estimar los parámetros y contrastar la validez de un modelo estocástico a partir de los datos observados.</p>
-<p>La idea es emplear el modelo para resolver el problema de interés. Cuando la solución no se puede obtener de modo analítico (teórico) se puede recurrir a la simulación.</p>
-<p><strong>Simulación</strong>: realizar experimentos con un modelo con el objetivo de recopilar información bajo determinadas condiciones. Nos centraremos en el caso de la <strong>simulación estocástica</strong>:</p>
-<ul>
-<li>Las conclusiones se obtienen habitualmente generando repetidamente simulaciones del modelo aleatorio.</li>
-</ul>
-<div id="ventajas-de-la-simulacion-shannon-1975" class="section level3">
-<h3><span class="header-section-number">1.1.1</span> Ventajas de la simulación (Shannon, 1975):</h3>
-<ul>
-<li><p>Cuando la resolución analítica no puede llevarse a cabo.</p></li>
-<li><p>Cuando existen medios de resolver analíticamente el problema pero dicha resolución es complicada y costosa (o solo proporciona una solución aproximada).</p></li>
-<li><p>Si se desea experimentar antes de que exista el sistema (pruebas para la construcción de un sistema).</p></li>
-<li><p>Cuando es imposible experimentar sobre el sistema real por ser dicha experimentación destructiva.</p></li>
-<li><p>En ocasiones en las que la experimentación sobre el sistema es posible pero no ética.</p></li>
-<li><p>En sistemas que evolucionan muy lentamente en el tiempo.</p></li>
-</ul>
-</div>
-<div id="inconvenientes-de-la-simulacion" class="section level3">
-<h3><span class="header-section-number">1.1.2</span> Inconvenientes de la simulación:</h3>
-<ul>
-<li><p>La construcción de un buen modelo puede ser una tarea muy costosa (compleja, laboriosa y requerir mucho tiempo; e.g. modelos climáticos).</p></li>
-<li><p>Frecuentemente el modelo omite variables o relaciones importantes entre ellas (los resultados pueden no ser válidos para el sistema real).</p></li>
-<li><p>Resulta difícil conocer la precisión de la simulación (especialmente en lo relativo a la precisión del modelo formulado).</p></li>
-<li><p>Problemas de extrapolación de las conclusiones.</p></li>
-<li><p>Tiempo de computación.</p></li>
-</ul>
-</div>
-</div>
-<div id="generacion-de-numeros-pseudoaleatorios" class="section level2">
-<h2><span class="header-section-number">1.2</span> Generación de números (pseudo)aleatorios</h2>
-<p>Aplicaciones:</p>
-<ul>
-<li><p>Estadística:</p></li>
-<li><p>Muestreo, remuestreo, …</p></li>
-<li><p>Aproximación de distribuciones (de estadísticos, estimadores, …)</p></li>
-<li><p>Realización de contrastes, intervalos de confianza, …</p></li>
-<li><p>Comparación de estimadores, contrastes, …</p></li>
-<li><p>Validación teoría (distribución asintótica,…)</p></li>
-<li><p>Inferencia Bayesiana</p></li>
-<li><p>Optimización: Algoritmos genéticos, …</p></li>
-<li><p>Computación: Diseño, verificación y validación de algoritmos,…</p></li>
-<li><p>Criptografía: Protocolos de comunicación segura, …</p></li>
-<li><p>Física: Simulación de fenómenos naturales, …</p></li>
-<li><p>Análisis numérico: Evaluación de expresiones, …</p></li>
-<li><p>…</p></li>
-</ul>
-<p>En el Capítulo XX nos centraremos en algunas de las aplicaciones de utilidad en Estadística.</p>
-</div>
-<div id="numeros-aleatorios-puros" class="section level2">
-<h2><span class="header-section-number">1.3</span> Números aleatorios puros</h2>
-<p>Una sucesión de números aleatorios puros (true random), se caracteriza por que no existe ninguna regla o plan que nos permita conocer sus valores.</p>
-<p>Se almacena(ban) en <em>tablas de dígitos aleatorios</em> (<em>true random</em>) y normalmente son obtenidos por procesos físicos (loterías, ruletas, ruidos,…)</p>
-<p><img src="images/RAND.png" style="display: block; margin: auto;" /></p>
-<p>Se emplean para seleccionar números aleatorios en un rango de 1 a <em>m</em>:</p>
-<ul>
-<li><p>Se selecciona al azar un pto de inicio en la tabla y una dirección.</p></li>
-<li><p>Se agrupan los dígitos de forma que “cubran” el valor de <em>m</em>.</p></li>
-<li><p>Se seleccionan los valores menores o iguales que <em>m</em> (se descarta el resto).</p></li>
-</ul>
-<p>Algunos enlaces:</p>
-<ul>
-<li><p><a href="https://en.wikipedia.org/wiki/A_Million_Random_Digits_with_100,000_Normal_Deviates">A Million Random Digits with 100,000 Normal Deviates</a> . RAND Corporation. 1955.</p></li>
-<li><p>Generadores de números aleatorios “online”:</p>
-<ul>
-<li><p><a href="http://www.random.org/integers" class="uri">http://www.random.org/integers</a> (ver paquete <strong>random</strong> en R).</p></li>
-<li><p><a href="http://www.fourmilab.ch/hotbits" class="uri">http://www.fourmilab.ch/hotbits</a></p></li>
-</ul></li>
-<li><p>Generadores mediante hardware:</p>
-<ul>
-<li><p><a href="http://software.intel.com/en-us/articles/intel-digital-random-number-generator-drng-software-implementation-guide">http://software.intel.com</a>.</p></li>
-<li><p><a href="http://spectrum.ieee.org/semiconductors/devices/a-memristor-true-randomnumber-generator">http://spectrum.ieee.org</a></p></li>
-</ul></li>
-</ul>
-<p>Sus principales aplicaciones hoy en día son en criptografía (impredictibilidad).</p>
-<div id="inconvenientes" class="section level3">
-<h3><span class="header-section-number">1.3.1</span> Inconvenientes:</h3>
-<ul>
-<li><p>Es necesario/recomendable conocer su distribución.</p></li>
-<li><p>Los datos generados deberían ser i.i.d.</p></li>
-<li><p>Reproductivilidad.</p></li>
-<li><p>Pueden requerir del almacenamiento en tablas.</p></li>
-</ul>
-</div>
-<div id="alternativas" class="section level3">
-<h3><span class="header-section-number">1.3.2</span> Alternativas:</h3>
-<ul>
-<li><p><strong>números pseudo-aleatorios</strong>: simulan realizaciones de una variable aleatoria (uniforme).</p></li>
-<li><p>números cuasi-aleatorios: secuencias determinísticas con una distribución más uniforme en el rango considerado (se podría pensar que son una única generación de una variable aleatoria).</p></li>
-</ul>
-</div>
-</div>
-<div id="numeros-pseudoaleatorios" class="section level2">
-<h2><span class="header-section-number">1.4</span> Números pseudoaleatorios</h2>
-<div id="generacion-de-numeros-pseudoaleatorios-mediante-software" class="section level3">
-<h3><span class="header-section-number">1.4.1</span> Generación de números pseudoaleatorios mediante software</h3>
-<p>La mayoría de los métodos de simulación se basan en la posibilidad de generar números pseudoaleatorios con distribución <span class="math inline">\(\mathcal{U}(0,1)\)</span>. Se obtienen mediante un algoritmo recursivo denominado <strong>generador</strong>:</p>
-<p><span class="math display">\[x_{i}=f\left(  x_{i-1},x_{i-2},\cdots,x_{i-k}\right)\]</span></p>
-<ul>
-<li><p><span class="math inline">\(k\)</span> orden del generador.</p></li>
-<li><p><span class="math inline">\(\left( x_{0},x_{1},\cdots,x_{k-1}\right)\)</span> <strong>semilla</strong> (estado inicial).</p></li>
-</ul>
-<p>El <strong>periodo</strong> o <em>longitud del ciclo</em> es la longitud de la secuencia antes de que vuelva a repetirse. Lo denotaremos por <span class="math inline">\(p\)</span>.</p>
-<p>Los números de la sucesión serán predecibles, conociendo el algoritmo y la semilla.</p>
-<ul>
-<li><p>Sin embargo, si no se conociesen, <strong>no se debería poder distinguir</strong> una serie de números pseudoaleatorios <strong>de una sucesión de números verdaderamente aleatoria</strong> (utilizando recursos computacionales razonables).</p></li>
-<li><p>En caso contrario esta predecibilidad puede dar lugar a serios problemas (e.g. <a href="http://eprint.iacr.org/2007/419" class="uri">http://eprint.iacr.org/2007/419</a>).</p></li>
-</ul>
-<p>Como regla general, por lo menos mientras se está desarrollando un programa, interesa <strong>fijar la semilla de aleatorización</strong>.</p>
-<ul>
-<li><p>Permite la reproductibilidad de los resultados.</p></li>
-<li><p>Facilita la depuración del código.</p></li>
-</ul>
-<p>Todo generador de números pseudoaleatorios mínimamente aceptable debe comportarse como si se tratase de una muestra genuina de datos independientes de una <span class="math inline">\(\mathcal{U}(0,1)\)</span>. Otras propiedades de interés serían:</p>
-<ul>
-<li><p>Reproducibilidad a partir de la semilla.</p></li>
-<li><p>Periodo suficientemente largo.</p></li>
-<li><p>Eficiencia (rapidez y requerimientos de memoria).</p></li>
-<li><p>Portabilidad.</p></li>
-<li><p>Generación de sub-secuencias (computación en paralelo).</p></li>
-<li><p>Parsimonia, …</p></li>
-</ul>
-<p>Gran cantidad de algoritmos:</p>
-<ul>
-<li><p>Cuadrados medios, Lehmer,…</p></li>
-<li><p>Congruenciales</p></li>
-<li><p>Registros desfasados</p></li>
-<li><p>Combinaciones</p></li>
-<li><p>…</p></li>
-</ul>
-<p>Código fuente disponible en múltiples librerias:</p>
-<ul>
-<li><p>GNU Scientific Library (GSL): <a href="http://www.gnu.org/software/gsl/manual/html_node/Random-Number-Generation.html">http://www.gnu.org/software/gsl/manual</a></p></li>
-<li><p>StatLib: <a href="http://lib.stat.cmu.edu" class="uri">http://lib.stat.cmu.edu</a></p></li>
-<li><p>Numerical recipes: <a href="http://www.nrbook.com/nr3" class="uri">http://www.nrbook.com/nr3</a></p></li>
-<li><p><a href="http://random.mat.sbg.ac.at/software" class="uri">http://random.mat.sbg.ac.at/software</a></p></li>
-<li><p>KISS (Keep It Simple Stupid / Small and Simple): <a href="http://www.fortran.com/kiss.f90" class="uri">http://www.fortran.com/kiss.f90</a></p></li>
-<li><p>UNU.RAN (paquete <code>Runuran</code>): <a href="http://statmath.wu.ac.at/unuran" class="uri">http://statmath.wu.ac.at/unuran</a></p></li>
-<li><p>…</p></li>
-</ul>
-<p>Nos centraremos en los generadores congruenciales, descritos en la <a href="generacion-de-numeros-pseudoaleatorios-1.html#generadores-congruenciales">Sección 3.1</a>.</p>
+<div id="simulacion-de-variables-continuas" class="section level1">
+<h1><span class="header-section-number">Capítulo 7</span> Simulación de variables continuas</h1>
+<p><strong><em>Pendiente: ejemplos y teoría</em></strong></p>
+<div id="metodo-de-inversion" class="section level2">
+<h2><span class="header-section-number">7.1</span> Método de inversión</h2>
 
+<div class="exercise">
+<span id="exr:unnamed-chunk-1" class="exercise"><strong>Ejercicio 5.1  </strong></span>
 </div>
+<p> La distribución doble exponencial (o distribución de Laplace) de parámetro <span class="math inline">\(\lambda\)</span> tiene función de densidad: <span class="math display">\[f\left(  x\right)  =\frac{\lambda}{2}e^{-\lambda\left\vert x\right\vert
+}\text{, }x\in\mathbb{R}\]</span> y función de distribución: <span class="math display">\[F\left(  x\right)  =\int_{-\infty}^{x}f\left(  t\right)  dt=\left\{
+\begin{array}{ll}
+\frac{1}{2}e^{\lambda x} &amp; x&lt;0\\
+1-\frac{1}{2}e^{-\lambda x} &amp; x\geq0
+\end{array}
+\ \right.\]</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Escribir una función que permita generar, por el método de inversión, una muestra de <span class="math inline">\(n\)</span> observaciones de esta distribución (NOTA: esta distribución puede generarse fácilmente simulando una distribución exponencial y otorgarle un signo positivo o negativo con equiprobabilidad; ver método de composición).</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ddexp &lt;-<span class="st"> </span>function(x, <span class="dt">lambda =</span> <span class="dv">1</span>){
+<span class="co"># Densidad doble exponencial</span>
+  lambda*<span class="kw">exp</span>(-lambda*<span class="kw">abs</span>(x))/<span class="dv">2</span>
+}
+
+rdexp &lt;-<span class="st"> </span>function(<span class="dt">lambda =</span> <span class="dv">1</span>){
+<span class="co"># Simulación por inversión</span>
+<span class="co"># Doble exponencial</span>
+  U &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1</span>)
+  if (U&lt;<span class="fl">0.5</span>) {
+    <span class="kw">return</span>(<span class="kw">log</span>(<span class="dv">2</span>*U)/lambda)
+  } else {
+    <span class="kw">return</span>(-<span class="kw">log</span>(<span class="dv">2</span>*(<span class="dv">1</span>-U))/lambda)
+  }
+}
+
+rdexpn &lt;-<span class="st"> </span>function(<span class="dt">n =</span> <span class="dv">1000</span>, <span class="dt">lambda =</span> <span class="dv">1</span>) {
+<span class="co"># Simulación n valores de doble exponencial</span>
+    x &lt;-<span class="st"> </span><span class="kw">numeric</span>(n)
+    for(i in <span class="dv">1</span>:n) x[i]&lt;-<span class="kw">rdexp</span>(lambda)
+    <span class="kw">return</span>(x)
+}</code></pre></div>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Generar <span class="math inline">\(10^{4}\)</span> valores de la distribución doble exponencial de parámetro <span class="math inline">\(\lambda=2\)</span> y obtener el tiempo de CPU que tarda en generar la secuencia.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">54321</span>)
+<span class="kw">system.time</span>(x &lt;-<span class="st"> </span><span class="kw">rdexpn</span>(<span class="dv">10</span>^<span class="dv">4</span>, <span class="dv">2</span>))</code></pre></div>
+<pre><code>##    user  system elapsed 
+##    0.04    0.01    0.06</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Representar el histograma y compararlo con la densidad teórica.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(x, <span class="dt">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="dt">freq =</span> <span class="ot">FALSE</span>)
+<span class="co"># lines(density(x), col = &#39;blue&#39;)</span>
+<span class="kw">curve</span>(<span class="kw">ddexp</span>(x, <span class="dv">2</span>), <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="07-Continuas_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="metodo-de-aceptacion-rechazo" class="section level2">
+<h2><span class="header-section-number">7.2</span> Método de aceptación-rechazo</h2>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-5" class="exercise"><strong>Ejercicio 7.1  </strong></span>
+</div>
+<p> Desarrollar el código necesario para generar, por el método de aceptación-rechazo, una muestra de <span class="math inline">\(n\)</span> observaciones de una distribución normal estándar: <span class="math display">\[f\left(  x\right)  =\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}}\text{, }x\in\mathbb{R}\text{, }\]</span> empleando como distribución auxiliar una doble exponencial. Puede verse que la elección de la densidad auxiliar óptima se corresponde con <span class="math inline">\(\lambda=1\)</span> y que la cota optima es:<span class="math display">\[c_{\text{opt}}=\sqrt{\frac{2e}{\pi}}\simeq1.\,3155.\]</span> Para esteblecer la condición de aceptación o rechazo se puede tener en cuenta que: <span class="math display">\[c\cdot U\cdot\frac{g\left(  T\right)  }{f\left(  T\right)  }=\sqrt{\frac
+{2e}{\pi}}U\sqrt{\frac{\pi}{2}}\exp\left(  \frac{T^{2}}{2}-\left\vert
+T\right\vert \right)  =U\cdot\exp\left(  \frac{T^{2}}{2}-\left\vert
+T\right\vert +\frac{1}{2}\right)  ,\]</span> aunque en general puede ser recomendable emplear <span class="math inline">\(c\cdot U\cdot g\left( T\right) \leq f\left( T\right)\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># densidad objetivo: dnorm</span>
+<span class="co"># densidad auxiliar: ddexp</span>
+
+<span class="co"># EJECUTAR CÓDIGO DEL APARTADO A DEL EJERCICIO 1</span>
+c.opt &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">2</span>*<span class="kw">exp</span>(<span class="dv">1</span>)/pi)
+lambda.opt &lt;-<span class="st"> </span><span class="dv">1</span>
+ngen &lt;-<span class="st"> </span><span class="dv">0</span>
+
+rnormAR &lt;-<span class="st"> </span>function() {
+<span class="co"># Simulación por aceptación-rechazo</span>
+<span class="co"># Normal estandar a partir de doble exponencial</span>
+  while (<span class="ot">TRUE</span>) {
+    U &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1</span>)
+    X &lt;-<span class="st"> </span><span class="kw">rdexp</span>(<span class="dv">1</span>)
+    ngen &lt;&lt;-<span class="st"> </span>ngen<span class="dv">+1</span> <span class="co"># Comentar esta línea para uso normal</span>
+    <span class="co"># if (U*exp((X^2+1)*0.5-abs(X)) &lt;= 1) return(X)</span>
+    if (c.opt *<span class="st"> </span>U *<span class="st"> </span><span class="kw">ddexp</span>(X, lambda.opt) &lt;=<span class="st"> </span><span class="kw">dnorm</span>(X)) <span class="kw">return</span>(X)
+  }
+}
+
+rnormARn &lt;-<span class="st"> </span>function(<span class="dt">n=</span><span class="dv">1000</span>) {
+<span class="co"># Simulación n valores N(0,1)</span>
+    x &lt;-<span class="st"> </span><span class="kw">numeric</span>(n)
+    for(i in <span class="dv">1</span>:n) x[i]&lt;-<span class="kw">rnormAR</span>()
+    <span class="kw">return</span>(x)
+}
+
+<span class="co"># Grafico</span>
+<span class="kw">curve</span>(c.opt *<span class="st"> </span><span class="kw">ddexp</span>(x), <span class="dt">xlim =</span> <span class="kw">c</span>(-<span class="dv">4</span>, <span class="dv">4</span>), <span class="dt">lty =</span> <span class="dv">2</span>)
+<span class="kw">curve</span>(<span class="kw">dnorm</span>(x), <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="07-Continuas_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<ol style="list-style-type: lower-alpha">
+<li>Generar una muestra de <span class="math inline">\(10^{4}\)</span> observaciones empleando este algoritmo. Obtener el tiempo de CPU y calcular el número medio de generaciones de la distribución auxiliar.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">54321</span>)
+nsim &lt;-<span class="st"> </span><span class="dv">10</span>^<span class="dv">4</span>
+
+ngen &lt;-<span class="st"> </span><span class="dv">0</span>
+<span class="kw">system.time</span>(x &lt;-<span class="st"> </span><span class="kw">rnormARn</span>(nsim))</code></pre></div>
+<pre><code>##    user  system elapsed 
+##    0.35    0.00    0.34</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Nº generaciones</span>
+{
+<span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Nº de generaciones = &quot;</span>, ngen)
+<span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Nº medio de generaciones = &quot;</span>, ngen/nsim)
+<span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Proporción de rechazos = &quot;</span>, <span class="dv">1</span>-nsim/ngen, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+}</code></pre></div>
+<pre><code>## 
+## Nº de generaciones =  13163
+## Nº medio de generaciones =  1.3163
+## Proporción de rechazos =  0.2402948</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Representar el histograma y compararlo con la densidad teórica.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(x, <span class="dt">breaks=</span><span class="st">&quot;FD&quot;</span>, <span class="dt">freq=</span><span class="ot">FALSE</span>)
+<span class="kw">curve</span>(<span class="kw">dnorm</span>(x), <span class="dt">add=</span><span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="07-Continuas_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Aproximar la cota óptima numéricamente.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Obtención de un valor c óptimo aproximado</span>
+<span class="kw">optimize</span>(<span class="dt">f=</span>function(x){<span class="kw">dnorm</span>(x)/<span class="kw">ddexp</span>(x)}, <span class="dt">maximum=</span><span class="ot">TRUE</span>, <span class="dt">interval=</span><span class="kw">c</span>(-<span class="dv">1</span>,<span class="dv">1</span>))</code></pre></div>
+<pre><code>## $maximum
+## [1] -0.999959
+## 
+## $objective
+## [1] 1.315489</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># NOTA: Cuidado con los límites</span>
+<span class="co"># optimize(f=function(x){dnorm(x)/ddexp(x)}, maximum=TRUE, interval=c(0,2))</span>
+
+<span class="co"># Valor óptimo real</span>
+<span class="co"># sqrt(2*exp(1)/pi)</span>
+c.opt</code></pre></div>
+<pre><code>## [1] 1.315489</code></pre>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Aproximar el parámetro óptimo de la densidad auxiliar numéricamente (normalmente comenzaríamos por este paso).</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Obtención de valores c y lambda óptimos aproximados</span>
+fopt &lt;-<span class="st"> </span>function(lambda) {
+  <span class="co"># Obtiene c fijado lambda</span>
+  <span class="kw">optimize</span>(<span class="dt">f =</span> function(x){<span class="kw">dnorm</span>(x)/<span class="kw">ddexp</span>(x,lambda)},
+           <span class="dt">maximum=</span><span class="ot">TRUE</span>, <span class="dt">interval=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">2</span>))$objective
+}
+
+<span class="co"># Encontar lambda que minimiza</span>
+res &lt;-<span class="st"> </span><span class="kw">optimize</span>(<span class="dt">f=</span>function(x){<span class="kw">fopt</span>(x)}, <span class="dt">interval=</span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="dv">2</span>))
+lambda.opt2 &lt;-<span class="st"> </span>res$minimum
+c.opt2 &lt;-<span class="st"> </span>res$objective</code></pre></div>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-11" class="exercise"><strong>Ejercicio 7.2  </strong></span>
+</div>
+<p> Para la estimación Bayes de la media de una normal se suele utilizar como distribución a priori una Cauchy.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Generar una muestra i.i.d. <span class="math inline">\(X_{i}\sim N(\theta_{0},1)\)</span> de tamaño <span class="math inline">\(n=10\)</span> con <span class="math inline">\(\theta_{0}=1\)</span>. Utilizar una <span class="math inline">\(Cauchy(0,1)\)</span> (<code>rcauchy</code>) como distribución a priori y como densidad auxiliar para simular por aceptación-rechazo una muestra de la densidad a posteriori (emplear <code>dnorm</code> para construir la verosimilitud). Obtener el intervalo de probabilidad al 95%.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mu0 &lt;-<span class="st"> </span><span class="dv">1</span>
+n &lt;-<span class="st"> </span><span class="dv">10</span>
+nsim &lt;-<span class="st"> </span><span class="dv">10</span>^<span class="dv">3</span>
+<span class="kw">set.seed</span>(<span class="dv">54321</span>)
+x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean =</span> mu0)
+
+<span class="co"># Función de verosimilitud</span>
+lik &lt;-<span class="st"> </span>function(mu){<span class="kw">prod</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> mu))}
+
+<span class="co"># Cota óptima</span>
+<span class="co"># Estimación por máxima verosimilitud</span>
+emv &lt;-<span class="st"> </span><span class="kw">optimize</span>(<span class="dt">f =</span> lik, <span class="dt">int =</span> <span class="kw">range</span>(x), <span class="dt">maximum =</span> <span class="ot">TRUE</span>)
+emv</code></pre></div>
+<pre><code>## $maximum
+## [1] 0.7353805
+## 
+## $objective
+## [1] 3.303574e-08</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">c &lt;-<span class="st"> </span>emv$objective
+
+<span class="kw">mean</span>(x)</code></pre></div>
+<pre><code>## [1] 0.7353958</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">c &lt;-<span class="st"> </span><span class="kw">lik</span>(<span class="kw">mean</span>(x))
+c</code></pre></div>
+<pre><code>## [1] 3.303574e-08</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simulación distribución a posteriori</span>
+<span class="co"># Simulación por aceptación-rechazo a partir de Cauchy(0,1)</span>
+ngen &lt;-<span class="st"> </span>nsim
+Y &lt;-<span class="st"> </span><span class="kw">rcauchy</span>(nsim)
+ind &lt;-<span class="st"> </span>(c*<span class="kw">runif</span>(nsim) &gt;<span class="st"> </span><span class="kw">sapply</span>(Y, lik)) <span class="co"># TRUE si no verifica condición</span>
+<span class="co"># Volver a generar si no verifica condición</span>
+while (<span class="kw">sum</span>(ind)&gt;<span class="dv">0</span>){
+  le &lt;-<span class="st"> </span><span class="kw">sum</span>(ind)
+  ngen &lt;-<span class="st"> </span>ngen +<span class="st"> </span>le
+  Y[ind] &lt;-<span class="st"> </span><span class="kw">rcauchy</span>(le)
+  ind[ind] &lt;-<span class="st"> </span>(c*<span class="kw">runif</span>(le) &gt;<span class="st"> </span><span class="kw">sapply</span>(Y[ind], lik)) <span class="co"># TRUE si no verifica condición</span>
+}
+
+
+{ <span class="co"># Nº generaciones</span>
+  <span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Nº de generaciones = &quot;</span>, ngen)
+  <span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Nº medio de generaciones = &quot;</span>, ngen/nsim)
+  <span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Proporción de rechazos = &quot;</span>, <span class="dv">1</span>-nsim/ngen,<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+}</code></pre></div>
+<pre><code>## 
+## Nº de generaciones =  5898
+## Nº medio de generaciones =  5.898
+## Proporción de rechazos =  0.830451</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Intervalo de probabilidad al 95% (IC Bayes)</span>
+q &lt;-<span class="st"> </span><span class="kw">quantile</span>(Y, <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))
+
+<span class="co"># Representar estimador e IC Bayes</span>
+<span class="kw">hist</span>(Y, <span class="dt">freq=</span><span class="ot">FALSE</span>, <span class="dt">main=</span><span class="st">&quot;Distribución a posteriori&quot;</span>)
+<span class="co"># abline(v = mean(x), lty = 3) # Estimación frecuentista</span>
+<span class="kw">abline</span>(<span class="dt">v =</span> <span class="kw">mean</span>(Y), <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)  <span class="co"># Estimación Bayesiana</span>
+<span class="kw">abline</span>(<span class="dt">v =</span> q, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="07-Continuas_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Repetir el apartado anterior con <span class="math inline">\(n=100\)</span>.</li>
+</ol>
+</div>
+<div id="ejercicios-1" class="section level2">
+<h2><span class="header-section-number">7.3</span> Ejercicios</h2>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-13" class="exercise"><strong>Ejercicio 7.3  </strong></span>para entregar
+</div>
+<p> Escribir el código necesario para generar, por el método de inversión, una muestra de <span class="math inline">\(n\)</span> observaciones de una distribución de Cauchy.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Generar una muestra de <span class="math inline">\(10^{4}\)</span> observaciones y obtener el tiempo de CPU.</p></li>
+<li><p>Representar el histograma (limitar el rango, e.g. <code>xlim = c(-10, 10)</code>) y compararlo con la densidad teórica (<code>dcauchy</code>).</p></li>
+<li><p>Obtener conclusiones sobre la existencia de una media teórica a partir de la media muestral aproximada por simulación (estudiar la convergencia de la media muestral). Suponiendo que el vector <code>x</code> contiene las simulaciones, estudiar la convergencia de la media muestral mediante el gráfico:<code>plot(1:nsim, cumsum(x)/(1:nsim), type=&quot;l&quot;, ylab=&quot;Media muestral&quot;, xlab=&quot;Nº de simulaciones&quot;)</code></p></li>
+</ol>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-14" class="exercise"><strong>Ejercicio 2.4  </strong></span>para entregar
+</div>
+<p> El tiempo de respuesta (en centésimas de segundo) de un servidor de bases de datos es una variable con función de densidad:<span class="math display">\[f(x)=xe^{-x}\text{ si }x\geq0.\]</span> Escribir el código necesario para generar, por el método de aceptación-rechazo, una muestra de <span class="math inline">\(n\)</span> observaciones de esta distribución empleando como densidad auxiliar una exponencial:<span class="math display">\[g(x)=\lambda e^{-\lambda x}\text{ si }x\geq0.\]</span></p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Aproximar numéricamente el parámetro óptimo (<span class="math inline">\(\lambda_{opt}&lt;1\)</span>) y la cota óptima (<span class="math inline">\(c_{opt}\)</span>) de la densidad auxiliar y compararlos con los valores teóricos: <span class="math inline">\(\lambda_{opt}=1/2\)</span> y <span class="math inline">\(c_{opt}=4/e\)</span>.</p></li>
+<li><p>Generar una muestra de 1000 observaciones de la distribución de interés (tomando como semilla inicial el nº de grupo multiplicado por 100). Obtener el tiempo de CPU que tarda en generar la secuencia y calcular el número medio de generaciones de la distribución auxiliar.</p></li>
+<li><p>Representar el histograma y compararlo con la densidad teórica.</p></li>
+</ol>
+</div>
+<div id="metodos-especificos-para-generacion-de-distribuciones-notables" class="section level2">
+<h2><span class="header-section-number">7.4</span> Métodos específicos para generación de distribuciones notables</h2>
+<p><strong><em>Pendiente: algunos ejemplos del libro de Ricardo y de las funciones implementadas en R</em></strong></p>
+
 </div>
 </div>
             </section>
@@ -426,8 +510,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="numeros-aleatorios-en-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="integracion-y-optimizacion-montecarlo.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="simulacion-de-variables-discretas.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -456,7 +540,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/01-Introduccion.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/07-Continuas.Rmd",
 "text": "Edit"
 },
 "download": ["Practicas_de_Simulacion.pdf", "Practicas_de_Simulacion.epub"],

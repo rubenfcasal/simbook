@@ -144,7 +144,7 @@ plot3d(xyz)
 ```
 
 
-<img src="images/randu2.png" width="622" style="display: block; margin: auto;" />
+<img src="images/randu2.png" style="display: block; margin: auto;" />
 
 
 Se han propuesto diversas pruebas (ver sección siguiente) para
@@ -213,7 +213,7 @@ a)  Generar 500 valores de este generador, obtener el tiempo de CPU,
     
     ```
     ##    user  system elapsed 
-    ##    0.01    0.00    0.02
+    ##    0.02    0.00    0.02
     ```
     
     ```r

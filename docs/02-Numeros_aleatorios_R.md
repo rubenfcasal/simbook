@@ -235,7 +235,7 @@ Simular el paso de corriente a través del siguiente circuito, donde
 figuran las probabilidades de que pase corriente por cada uno de los
 interruptores:
 
-<img src="images/circuito2.png" width="214" style="display: block; margin: auto;" />
+<img src="images/circuito2.png" style="display: block; margin: auto;" />
 
 Considerar que cada interruptor es una v.a. de Bernoulli independiente
 para simular 1000 valores de cada una de ellas.
@@ -399,10 +399,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.11    0.01    0.13 
+##    0.28    0.00    0.29 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.11    0.01    0.13
+##    0.28    0.00    0.29
 ```
 
 ```r
@@ -424,7 +424,7 @@ CPUtimeprint()
 ##       0       0       0 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.11    0.01    0.13
+##    0.28    0.00    0.29
 ```
 
 ### Paquetes de R
@@ -515,7 +515,7 @@ cpu.time('\nSample median of', 1000000, 'values =', res, total = FALSE)
 ## Time of last operation: 
 ## Sample median of 1e+06 values = 0.4993793 
 ##    user  system elapsed 
-##    0.06    0.02    0.08
+##    0.27    0.00    0.28
 ```
 
 ```r
@@ -527,10 +527,10 @@ cpu.time('\nSample median of', 1000, 'values =', res)
 ## Time of last operation: 
 ## Sample median of 1000 values = 0.4936829 
 ##    user  system elapsed 
-##    0.02    0.00    0.02 
+##       0       0       0 
 ## Total time:
 ##    user  system elapsed 
-##    0.08    0.02    0.10
+##    0.27    0.00    0.28
 ```
 
 Otro paquete que puede ser de utilidad es
