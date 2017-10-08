@@ -1,0 +1,404 @@
+Simulación de Distribuciones Multidimensionales
+===============================================
+
+```{r setup, include=FALSE}
+# Este trozo de código se evalúa pero no se muestra...
+knitr::opts_chunk$set(cache = TRUE, cache.path='cache/')
+# Pendiente: incluir código práctica...
+```
+
+***Pendiente: ejemplos y teoría***
+
+Introducción
+------------
+
+Las funciones implementadas en el paquete base de `R` 
+permiten simular fácilmente en el caso independiente:
+
+```{r }
+f1 <- function(x) dnorm(x)
+                  # 2/pi*sqrt(1-x^2)   
+                  # ifelse(abs(x) < 1, 2/pi*sqrt(1-x^2), 0)
+f2 <- function(x) dnorm(x, -0.5, 0.5)
+curve(f1, -3, 3, ylim = c(0, f2(-0.5)), ylab = "f_i(x)")
+curve(f2, add = TRUE, lty = 2)
+
+rnorm(2, c(0, -0.5), c(1, 0.5))
+```
+
+Factorización de la matriz de covarianzas
+------------------------------------------
+
+```{exercise}
+``` 
+Considerar la variable funcional:
+$$Y(x)=\sin\left(  2\pi x\right)  +\varepsilon\left(  x\right)$$
+con $0\leq x\leq1$ y
+$Cov(\varepsilon\left(  x\right)  ,\varepsilon\left(
+y\right)  )=e^{-\left\Vert x-y\right\Vert }$. Obtener una muestra de
+tamaño 100 de esta variable considerando 50 puntos
+de discretización.
+
+```{r }
+# Datos funcionales (proceso temporal)
+n <- 100
+p <- 50
+x <- seq(0, 1, length = p)
+# Media
+mu <- sin(2*pi*x)
+# Covarianzas
+x.dist <- as.matrix(dist(x))
+x.cov <- exp(-x.dist)
+# Factorización de la matriz de covarianzas
+U <- chol(x.cov)
+L <- t(U)
+# Simulación:
+# mu + t(U) %*% rnorm(p)
+mu + L %*% rnorm(p)
+
+# Simulación
+set.seed(54321)
+z <- matrix(rnorm(n * p), nrow = p)
+# y <- mu + t(U) %*% z
+y <- mu + L %*% z
+
+matplot(x, y, type = "l")
+lines(x, mu, lwd=2)
+```
+
+Alternativamente se podría emplear, por ejemplo, la funcion `mvrnorm`
+del paquete `MASS` que emplea la factorización espectral (`eigen`)
+
+```{r }
+library(MASS)
+y <- mvrnorm(100, mu, x.cov)
+
+matplot(x, t(y), type = "l")
+lines(x, mu, lwd=2)
+```
+
+
+Simulación condicional e incondicional
+---------------------------------------
+
+```{exercise}
+``` 
+Considerando un proceso espacial bidimensional normal
+$Z(\mathbf{s})\equiv Z(x,y)$ de media 0 y covariograma
+exponencial:
+$$Cov(Z(\mathbf{s}_{1}),Z(\mathbf{s}_{2})) 
+= C(\left\Vert \mathbf{s}_{1}-\mathbf{s}_{2}\right\Vert )
+= e^{-\left\Vert \mathbf{s}_{1}-\mathbf{s}_{2}\right\Vert }.$$
+
+```{remark}
+Puede ser de utilidad emplear herramientas del paquete `geoR`.
+``` 
+
+```{r }
+library(geoR)
+```
+
+a)  Obtener una simulación del proceso en las posiciones 
+    $\left\{(0,0),(0,1),(1,0),(1,1)\right\}.$
+
+```{r }
+# SIMULACIÓN INCONDICIONAL
+# Posiciones datos
+nx <- c(2,2)
+n <- prod(nx)
+data.s <- expand.grid(x = seq(0, 1, l=nx[1]), y = seq(0, 1, l=nx[2]))
+plot(data.s, type = "p", pch = 20) # Representar posiciones
+
+# Modelo de dependencia
+curve(cov.spatial(x, cov.pars=c(1,1)), from = 0, to = 3,
+      xlab = "distancia", ylab = "covarianza", ylim = c(0,1), 
+      main = "modelo de dependencia")
+abline(h = 0, lty = 3)
+abline(v = 1, lty = 3)
+
+# Matriz de varianzas covarianzas
+cov.matrix <- varcov.spatial(coords=data.s, cov.pars=c(1,1))$varcov
+cov.matrix
+
+# Simular valores
+set.seed(54321)
+L <- t(chol(cov.matrix))
+
+# Bucle simulación
+nsim <- 1 # 1000
+for (i in 1:nsim) {
+  z <- L %*% rnorm(n)
+  # calcular estadísticos, errores,...
+}
+z
+
+# Simular utilizando geoR
+z <- grf(n, grid="reg", cov.pars=c(1,1))
+names(z)
+z$coords
+z$data
+```
+
+b)  Generar simulaciones en una rejilla regular $10\times10$ en el
+    cuadrado unidad $[0,1] \times [0,1]$ condicionadas a los
+    valores generados en el apartado anterior.
+
+```{r }
+# SIMULACIÓN CONDICIONAL
+nnx <- c(10,10)
+nn <- prod(nnx)
+ndata.s <- expand.grid(x=seq(0, 1, l = nnx[1]), y = seq(0, 1, l = nnx[2]))
+plot(data.s, type = "p", pch = 20) # Representar posiciones
+points(ndata.s)
+
+set.seed(54321)
+s.out <- output.control(n.predictive = 100)
+kc <- krige.conv(z, loc = ndata.s,
+                 krige = krige.control(cov.pars = c(1,1)),output = s.out)
+
+# Generar gráficos
+par.old <- par(mfrow=c(2,2), mar=c(3.5,3.5,1,0), mgp=c(1.5,.5,0))
+zlim <- range(kc$simul[,1:4])     # Escala común
+image(kc, val=kc$simul[,1], main="simul. cond. 1", zlim=zlim)
+image(kc, val=kc$simul[,2], main="simul. cond. 2", zlim=zlim)
+image(kc, val=kc$simul[,3], main="simul. cond. 3", zlim=zlim)
+image(kc, val=kc$simul[,4], main="simul. cond. 3", zlim=zlim)
+par(par.old)
+```
+
+Los valores en las posiciones $\left\{(0,0),(0,1),(1,0),(1,1)\right\}$
+coinciden con los generados en el apartado anterior.
+
+
+Simulación basada en cópulas
+----------------------------
+
+```{exercise}
+``` 
+Consideramos una v.a. bidimensional con distribuciónes marginales
+uniformes y distribución bidimensional determinada por la cópula
+de Clayton.
+
+a)  Teniendo en cuenta que en este caso:
+    $$C_{u}^{-1}(w)\equiv\left(  u^{-\alpha}\left(  
+    w^{-\frac{\alpha}{\alpha+1}}-1\right) + 1 \right)^{-\frac{1}{\alpha}},$$
+    diseñar una rutina que permita generar una muestra de tamaño $n$
+    de esta distribución.
+
+```{r }
+rcclayton <- function(alpha, n) {
+  val <- cbind(runif(n), runif(n))
+  val[, 2] <- (val[, 1]^(-alpha) * 
+              (val[, 2]^(-alpha/(alpha + 1)) - 1) + 1)^(-1/alpha)
+  return(val)
+}
+```
+
+
+b)  Utilizando la rutina anterior generar una muestra de tamaño
+    10000 y representar gráficamente los valores obtenidos y sus
+    distribuciones marginales.
+
+```{r }
+set.seed(54321)
+rcunif <- rcclayton(2,10000)
+plot(rcunif, xlab = "u", ylab = "v")
+```
+
+Representar la densidad conjunta (con `sm::sm.density()`) y las marginales:
+```{r , message=FALSE, warning=FALSE}
+# Densidad conjunta
+# if(!require(sm)) stop('Required pakage `sm` not installed.')
+sm::sm.density(rcunif)
+# Distribuciones marginales
+hist(rcunif[,1], freq = FALSE)
+abline(h = 1)
+hist(rcunif[,2], freq = FALSE)
+abline(h = 1)
+
+```
+
+Empleando el paquete `copula`:
+```{r }
+if(!require(copula)) stop('Required pakage `copula` not installed.')
+clayton.cop <- claytonCopula(2, dim = 2) # caso bidimensional
+y <- rCopula(10000, clayton.cop)
+plot(y)
+clayton.cop <- claytonCopula(2, dim = 3) # caso tridimensional
+y <- rCopula(10000, clayton.cop)
+scatterplot3d::scatterplot3d(y)
+```
+
+
+c)  A partir de la muestra anterior generar una muestra de una v.a.
+    bidimensional con distribuciones marginales exponenciales de
+    parámetros 1 y 2 respectivamente (y distribución bidimensional
+    determinada por la cópula de Clayton).
+
+```{r }
+rcexp <- cbind(qexp(rcunif[,1], 1), qexp(rcunif[,2], 2))
+plot(rcexp, xlab = "exp1", ylab = "exp2")
+# Distribuciones marginales
+hist(rcexp[,1], freq = FALSE)
+curve(dexp(x,1), add = TRUE)
+hist(rcexp[,2], freq = FALSE)
+curve(dexp(x,2), add = TRUE)
+# ...
+z <- 1:10
+xy <- matrix(z, ncol = 2)
+xy
+as.vector(xy)
+# ...
+```
+
+
+Simulación de distribuciones multidimensionales discretas
+---------------------------------------------------------
+
+### Simulación de una variable discreta bidimensional
+
+```{example}
+``` 
+Consideramos datos recogidos en un estudio de mejora de calidad en una fábrica de semiconductores. 
+Se obtuvo una muestra de obleas que se clasificaron dependiendo de si se encontraron partículas 
+en la matriz que producía la oblea y de si la calidad de oblea era buena
+(Para más detalles Hall, 1994. Analysis of defectivity of semiconductor wafers by contigency table. 
+Proceedings of the Institute of Environmental Sciences 1, 177-183).
+
+```{r }
+n <- c(320, 14, 80, 36)
+particulas <- gl(2, 1, 4, labels = c("no","si"))
+calidad <- gl(2, 2, labels = c("buena", "mala"))
+df <- data.frame(n, particulas, calidad)
+df
+```
+
+En lugar de estar en el formato de un conjunto de datos (`data.frame`)
+puede que los datos estén en formato de tabla (`table`, `matrix`):
+
+```{r }
+tabla <- xtabs(n ~ calidad + particulas)
+tabla
+```
+
+Lo podemos convertir directamente a `data.frame`:
+
+```{r }
+as.data.frame(tabla)
+```
+
+En este caso definimos las probabilidades a partir de las frecuencias:
+
+```{r }
+df$p <- df$n/sum(df$n)
+df
+```
+
+En formato tabla:
+
+```{r }
+pij <- tabla/sum(tabla)
+pij
+```
+
+Para simular la variable bidimensional consideramos una variable 
+unidimensional de índices:
+
+```{r }
+z <- 1:nrow(df)
+z
+```
+
+Con probabilidades:
+
+```{r }
+pz <- df$p
+pz
+```
+
+Si las probabilidades estuviesen en una matriz, las convertiríamos a un 
+vector con:
+
+```{r }
+as.vector(pij)
+```
+
+
+Si simulamos la variable unidimenional:
+
+```{r }
+set.seed(1)
+nsim <- 20
+rz <- sample(z, nsim, replace = TRUE, prob = pz)
+```
+
+Podríamos obtener simulaciones bidimensionales, por ejemplo:
+
+```{r }
+etiquetas <- as.matrix(df[c('particulas', 'calidad')])
+rxy <- data.frame(etiquetas[rz, ])
+head(rxy)
+# Alternativa:
+etiquetas <- df[c('particulas', 'calidad')]
+rxy <- df[rz, ]
+head(rxy)
+```
+
+
+### Simulación de tablas de contingencia
+
+El código anterior puede ser empleado para simular tablas de contingencia. 
+Aunque en estos casos se suele fijar el total de la tabla (o incluso las frecuencias marginales). 
+En este caso, sólo habría que fijar el nº de simulaciones al total de la tabla:
+
+```{r }
+nsim <- sum(n)
+set.seed(1)
+rz <- sample(z, nsim, replace = TRUE, prob = pz)
+rtable <- table(rz) # Tabla de frecuencias unidimensional
+matrix(rtable, ncol = 2) # Tabla de frecuencias bidimensional
+```
+
+Aunque puede ser preferible emplear directamente `rmultinom`
+si se van a generar muchas:
+
+```{r }
+ntsim <- 1000
+rtablas <- rmultinom(ntsim, sum(n), pz)
+rtablas[ , 1:5] # Las cinco primeras simulaciones
+```
+
+Por ejemplo, si se quiere simular bajo independencia, 
+estimando las probabilidades a partir de la tabla:
+
+```{r }
+tabla
+```
+
+Consideraríamos como probabilidades:
+
+```{r }
+pind <- (rowSums(tabla) %o% colSums(tabla))/(sum(tabla)^2)
+matrix(pind, nrow = nrow(tabla))
+rtablas <- rmultinom(ntsim, sum(n), pind)
+rtablas[ , 1:5] # Las cinco primeras simulaciones
+```
+
+Para realizar el contraste de independencia:
+
+```{r }
+res <- chisq.test(tabla)
+res
+```
+
+```{exercise}
+``` 
+Aproximar por simulación la distribución (exacta) 
+del estadístico ji-cuadrado bajo independencia.
+
+```{r }
+simstat <- apply(rtablas, 2, function(x){chisq.test(matrix(x,nrow=nrow(tabla)))$statistic})
+hist(simstat, freq = FALSE, breaks = 'FD')
+# Distribución asintótica (aproximación ji-cuadrado)
+curve(dchisq(x, res$parameter), add = TRUE) 
+```
