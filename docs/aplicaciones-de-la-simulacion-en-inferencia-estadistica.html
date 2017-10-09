@@ -541,7 +541,7 @@ for (i in <span class="dv">1</span>:m) {
 <p>Gráfico coberturas:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(p.teor, p.cov, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">1</span> -<span class="st"> </span><span class="dv">4</span> *<span class="st"> </span>alpha, <span class="dv">1</span>))
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">1</span> -<span class="st"> </span>alpha, <span class="dt">lty =</span> <span class="dv">2</span>) </code></pre></div>
-<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-27-1.png" width="672" /> Fuente <a href="http://www.springer.com/gp/book/9780387402734">Suess y Trumbo (2010)</a>.</p>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Repetir el apartado anterior considerando intervalos de confianza Agresti-Coull (<span class="math inline">\(a=2\)</span>).</li>
 </ol>
@@ -942,6 +942,7 @@ xboot &lt;-<span class="st"> </span><span class="kw">sample</span>(data, <span c
 <ul>
 <li><strong>la muestra es a la población</strong> <strong>lo que la muestra bootstrap es a la muestra</strong>.</li>
 </ul>
+<p><img src="images/bootstrap.png" width="484" style="display: block; margin: auto;" /></p>
 <p>Para información adicional sobre bootstrap ver p.e.: Davison, A.C. and Hinkley, D.V. (1997). <em>Bootstrap Methods and Their Application</em>. Cambridge University Press</p>
 </div>
 <div id="ejemplo" class="section level3">
@@ -977,7 +978,7 @@ mean.boot</code></pre></div>
 <span class="co"># Distribución poblacional</span>
 <span class="kw">curve</span>(<span class="kw">dnorm</span>(x, datmed, datsd/<span class="kw">sqrt</span>(ndat)), <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">add=</span><span class="ot">TRUE</span>)
 <span class="kw">abline</span>(<span class="dt">v=</span>datmed, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
-<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
 <p>Bootstrap natural/básico:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(stat.boot-stat.dat, <span class="dt">freq=</span><span class="ot">FALSE</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">4</span>))
 <span class="kw">abline</span>(<span class="dt">v=</span>mean.boot-stat.dat, <span class="dt">lwd=</span><span class="dv">2</span>)
@@ -986,7 +987,7 @@ mean.boot</code></pre></div>
 <span class="co"># Distribución teórica de stat.dat - stat.teor</span>
 <span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dv">0</span>, datsd/<span class="kw">sqrt</span>(ndat)), <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">add=</span><span class="ot">TRUE</span>)   
 <span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">0</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
-<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-64-1.png" width="672" /></p>
 <p>Sesgo y error estandar bootstrap:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># sesgo (teor=0)</span>
 mean.boot -<span class="st"> </span>stat.dat </code></pre></div>
@@ -1055,11 +1056,11 @@ stat.boot</code></pre></div>
 <div id="graficos" class="section level3">
 <h3><span class="header-section-number">5.6.5</span> Gráficos</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(stat.boot$t, <span class="dt">freq=</span><span class="ot">FALSE</span>)</code></pre></div>
-<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(stat.boot)</code></pre></div>
-<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-68-2.png" width="672" /></p>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-69-2.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">jack.after.boot</span>(stat.boot)</code></pre></div>
-<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-68-3.png" width="672" /></p>
+<p><img src="05-Aplicaciones_files/figure-html/unnamed-chunk-69-3.png" width="672" /></p>
 </div>
 <div id="intervalos-de-confianza-bootstrap" class="section level3">
 <h3><span class="header-section-number">5.6.6</span> Intervalos de confianza bootstrap</h3>
@@ -1080,7 +1081,7 @@ stat.boot</code></pre></div>
 ## Calculations and Intervals on Original Scale</code></pre>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-70" class="exercise"><strong>Ejercicio 5.5  </strong></span>
+<span id="exr:unnamed-chunk-71" class="exercise"><strong>Ejercicio 5.5  </strong></span>
 </div>
 <p></p>
 <p>Repetir el ejemplo anterior considerando la media recortada al 10% (ejemplo con parámetros adicionales).</p>
@@ -1103,7 +1104,7 @@ stat.boot</code></pre></div>
 ## t1* -0.1448019 0.005146914   0.1226472</code></pre>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-72" class="exercise"><strong>Ejercicio 5.6  </strong></span>fin de práctica
+<span id="exr:unnamed-chunk-73" class="exercise"><strong>Ejercicio 5.6  </strong></span>fin de práctica
 </div>
 <p></p>
 <p>En el tema 2 se propuso el análisis de la aleatoriedad de un generador de números pseudo-aleatorios mediante el test de rachas, que se podría implementar repetidamente. Sin embargo, la aproximación asintótica empleada por la rutina <code>runs.test</code> de la librería <code>tseries</code> no es adecuada para tamaños muéstrales pequeños (<span class="math inline">\(n&lt;40\)</span>) y sería preferible utilizar la distribución exacta (o por lo menos utilizar una corrección por continuidad).</p>

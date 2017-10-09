@@ -506,6 +506,7 @@ abline(h = 1 - alpha, lty = 2)
 ```
 
 <img src="05-Aplicaciones_files/figure-html/unnamed-chunk-27-1.png" width="672" />
+Fuente [Suess y Trumbo (2010)](http://www.springer.com/gp/book/9780387402734).
 
 b)  Repetir el apartado anterior considerando intervalos de
     confianza Agresti-Coull ($a=2$).
@@ -1205,6 +1206,7 @@ En general podríamos decir que:
 * **la muestra es a la población**
 **lo que la muestra bootstrap es a la muestra**.
 
+<img src="images/bootstrap.png" width="484" style="display: block; margin: auto;" />
 
 Para información adicional sobre bootstrap ver p.e.:
 Davison, A.C. and Hinkley, D.V. (1997). *Bootstrap Methods and Their Application*. Cambridge University Press
@@ -1275,7 +1277,7 @@ curve(dnorm(x, datmed, datsd/sqrt(ndat)), lty=2, add=TRUE)
 abline(v=datmed, lwd=2, lty=2)
 ```
 
-<img src="05-Aplicaciones_files/figure-html/unnamed-chunk-62-1.png" width="672" />
+<img src="05-Aplicaciones_files/figure-html/unnamed-chunk-63-1.png" width="672" />
 
 Bootstrap natural/básico:
 
@@ -1290,7 +1292,7 @@ curve(dnorm(x, 0, datsd/sqrt(ndat)), lty=2, add=TRUE)
 abline(v=0, lwd=2, lty=2)
 ```
 
-<img src="05-Aplicaciones_files/figure-html/unnamed-chunk-63-1.png" width="672" />
+<img src="05-Aplicaciones_files/figure-html/unnamed-chunk-64-1.png" width="672" />
 
 Sesgo y error estandar bootstrap:
 
@@ -1413,19 +1415,19 @@ names(stat.boot)
 hist(stat.boot$t, freq=FALSE)
 ```
 
-<img src="05-Aplicaciones_files/figure-html/unnamed-chunk-68-1.png" width="672" />
+<img src="05-Aplicaciones_files/figure-html/unnamed-chunk-69-1.png" width="672" />
 
 ```r
 plot(stat.boot)
 ```
 
-<img src="05-Aplicaciones_files/figure-html/unnamed-chunk-68-2.png" width="672" />
+<img src="05-Aplicaciones_files/figure-html/unnamed-chunk-69-2.png" width="672" />
 
 ```r
 jack.after.boot(stat.boot)
 ```
 
-<img src="05-Aplicaciones_files/figure-html/unnamed-chunk-68-3.png" width="672" />
+<img src="05-Aplicaciones_files/figure-html/unnamed-chunk-69-3.png" width="672" />
 
 ### Intervalos de confianza bootstrap
 
@@ -1452,7 +1454,7 @@ boot.ci(stat.boot, type=c("norm", "basic", "perc", "bca"))
 ```
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-70"><strong>(\#exr:unnamed-chunk-70) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-71"><strong>(\#exr:unnamed-chunk-71) </strong></span></div>\EndKnitrBlock{exercise}
 
 Repetir el ejemplo anterior considerando la media recortada al 10\%
 (ejemplo con parámetros adicionales).
@@ -1484,7 +1486,7 @@ boot(dat, boot.f, nboot, trim=0.2)
 
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-72"><strong>(\#exr:unnamed-chunk-72) </strong></span>fin de práctica</div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-73"><strong>(\#exr:unnamed-chunk-73) </strong></span>fin de práctica</div>\EndKnitrBlock{exercise}
 
 En el tema 2 se propuso el análisis de la aleatoriedad de un
 generador de números pseudo-aleatorios mediante el test de rachas,

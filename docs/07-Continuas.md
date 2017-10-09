@@ -68,7 +68,7 @@ system.time(x <- rdexpn(10^4, 2))
 
 ```
 ##    user  system elapsed 
-##    0.18    0.03    0.14
+##    0.15    0.06    0.16
 ```
 
 
@@ -156,7 +156,7 @@ system.time(x <- rnormARn(nsim))
 
 ```
 ##    user  system elapsed 
-##    0.08    0.04    0.07
+##    0.08    0.00    0.08
 ```
 
 ```r
