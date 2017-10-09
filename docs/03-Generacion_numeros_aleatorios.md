@@ -144,7 +144,7 @@ plot3d(xyz)
 ```
 
 
-<img src="images/randu2.png" style="display: block; margin: auto;" />
+<img src="images/randu2.png" width="622" style="display: block; margin: auto;" />
 
 
 Se han propuesto diversas pruebas (ver sección siguiente) para

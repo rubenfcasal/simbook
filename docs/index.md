@@ -24,7 +24,7 @@ devtools::install_github("rstudio/bookdown")
 ```
 
 
-![](images/by-nc-nd-88x31.png)<!-- -->
+<img src="images/by-nc-nd-88x31.png" width="44" />
 
 Este obra está bajo una licencia de [Creative Commons Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es_ES) 
 (espero poder liberarlo bajo una licencia menos restrictiva más adelante...).

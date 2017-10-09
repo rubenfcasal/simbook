@@ -228,7 +228,17 @@ del paquete `npsp`).
 
 ```r
 if(!require(plot3D)) stop('Required pakage `plot3D` not installed.')
+```
 
+```
+## Loading required package: plot3D
+```
+
+```
+## Warning: package 'plot3D' was built under R version 3.4.2
+```
+
+```r
 # persp3D(z = z, x = x, y = y)
 
 persp3D.f2d <- function(f2d, ax=-1, bx=1, ay=-1, by=1, nx=21, ny=21, ...) { 

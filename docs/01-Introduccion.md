@@ -129,7 +129,7 @@ Se almacena(ban) en *tablas de dígitos aleatorios* (*true random*)
 y normalmente son obtenidos por procesos físicos
 (loterías, ruletas, ruidos,...)
 
-<img src="images/RAND.png" style="display: block; margin: auto;" />
+<img src="images/RAND.png" width="128" style="display: block; margin: auto;" />
 
 Se emplean para seleccionar números aleatorios 
 en un rango de 1 a *m*:
