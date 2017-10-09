@@ -14,6 +14,8 @@ Robert, C.P. y G. Casella (2010). *Introducing Monte Carlo Methods with R*. Spri
 
 Ross, S.M. (1999).*Simulación*. Prentice Hall.
 
+Suess, E.A. y Trumbo, B.E. (2010). *Introduction to probability simulation and Gibbs sampling with R*. Springer.
+
 ## Bibliografía complementaria {-}
 
 Azarang, M. R. y García Dunna, E. (1996). *Simulación y análisis de
