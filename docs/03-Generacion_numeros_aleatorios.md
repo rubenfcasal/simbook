@@ -213,7 +213,7 @@ a)  Generar 500 valores de este generador, obtener el tiempo de CPU,
     
     ```
     ##    user  system elapsed 
-    ##    0.02    0.00    0.02
+    ##       0       0       0
     ```
     
     ```r

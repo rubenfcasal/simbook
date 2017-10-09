@@ -57,7 +57,7 @@ system.time( rx <- rfmp(x, fmp, nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.07    0.03    0.10
+##    0.08    0.03    0.06
 ```
 
 ```r
@@ -173,7 +173,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##    0.05    0.01    0.05
+##    0.04    0.04    0.04
 ```
 
 ```r
@@ -206,7 +206,7 @@ system.time( rx <- sample(x, nsim, replace = TRUE, prob = fmp) )
 
 ```
 ##    user  system elapsed 
-##       0       0       0
+##    0.02    0.00    0.02
 ```
 
 ```r
@@ -257,7 +257,7 @@ system.time( rx <- pmax(0, pmin(n, round( rnorm(nsim, mean, sd) ))) )
 
 ```
 ##    user  system elapsed 
-##    0.02    0.00    0.02
+##       0       0       0
 ```
 
 ```r
@@ -312,7 +312,7 @@ system.time( rx <- rfmp.tabla(x, fmp, n-1, nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.06    0.01    0.07
+##    0.04    0.03    0.04
 ```
 
 ```r
@@ -365,7 +365,7 @@ system.time( rx <- rfmp.alias(x,fmp,nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.04    0.04    0.05
+##    0.04    0.00    0.01
 ```
 
 ```r

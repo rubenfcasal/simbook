@@ -69,7 +69,7 @@ plot(cumsum(rx)/1:nsim, type="l", lwd=2,
 <img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
 Es recomendable representar la evolución de la aproximación de la
-característica de interés (sobre el n${{}^o}$ de generaciones) para
+característica de interés (sobre el número de generaciones) para
 detectar problemas de convergencia. 
 Además del análisis dewscriptivo de las simulaciones:
 
