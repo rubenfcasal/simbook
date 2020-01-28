@@ -1,18 +1,31 @@
-# Prácticas de Simulación
-## Rubén F. Casal
+# Simulación Estadística
 
-Este libro contiene algunas de las prácticas de la asignatura de [Simulación Estadística](http://eio.usc.es/pub/mte/index.php?option=com_content&view=article&id=19&Itemid=51&idm=13&a%C3%B1o=2017) del [Máster interuniversitario en Técnicas Estadísticas](http://eio.usc.es/pub/mte)).
+## Fernández-Casal, R. (rfcasal@udc.es) y Cao, R. (rcao@udc.es)
 
-Este libro ha sido escrito en [R-Markdown](http://rmarkdown.rstudio.com) empleando el paquete [`bookdown`](https://bookdown.org/yihui/bookdown/) y está disponible en el repositorio Github: [rubenfcasal/simbook](https://github.com/rubenfcasal/simbook). 
+
+Este libro contiene los apuntes de la asignatura de [Simulación Estadística](http://eamo.usc.es/pub/mte/index.php/es/?option=com_content&view=article&id=2201&idm=13&a%C3%B1o=2019) del [Máster en Técnicas Estadísticas](http://eio.usc.es/pub/mte). 
+
+El libro ha sido escrito en [R-Markdown](http://rmarkdown.rstudio.com) empleando el paquete [`bookdown`](https://bookdown.org/yihui/bookdown/) y está disponible en el repositorio Github: [rubenfcasal/simbook](https://github.com/rubenfcasal/simbook). 
 El libro (compilado) está disponible online en [rubenfcasal.github.io/simbook](https://rubenfcasal.github.io/simbook).
 
-Para generar el libro (compilar) puede ser recomendable instalar la última versión de [RStudio]((https://www.rstudio.com/products/rstudio/download/)) y la versión de desarrollo de `bookdown` disponible en [Github](https://github.com/rstudio/bookdown):
+Para instalar los paquetes necesarios para poder ejecutar los ejemplos mostrados en el libro se puede emplear el siguiente comando:
+```{r eval=FALSE}
+pkgs <- c('boot', 'MASS', 'DEoptim', 'nortest', 'geoR', 'copula', 'sm',
+          'tseries', 'forecast', 'plot3D', 'rgl')
+# install.packages(pkgs, dependencies=TRUE)
+install.packages(setdiff(pkgs, installed.packages()[,"Package"]), 
+                 dependencies = TRUE)
 
+# Si aparecen errores debidos a incompatibilidades entre las versiones de los paquetes, 
+# probar a ejecutar en lugar de lo anterior:
+# install.packages(pkgs, dependencies = TRUE) # Instala todos...
 ```
-devtools::install_github("rstudio/bookdown")
-```
 
-![](https://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png)
+Para generar el libro (compilar) serán necesarios paquetes adicionales, 
+para lo que se recomendaría consultar el libro de ["Escritura de libros con bookdown" ](https://rubenfcasal.github.io/bookdown_intro) en castellano.
 
-Este obra está bajo una licencia de [Creative Commons Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es_ES) 
-(espero poder liberarlo bajo una licencia menos restrictiva más adelante...).
+
+Este obra está bajo una licencia de [Creative Commons Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional ](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es_ES) 
+(esperamos poder liberarlo bajo una licencia menos restrictiva más adelante...).
+
+![](https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png)

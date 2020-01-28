@@ -3,6 +3,7 @@ Técnicas de reducción de la varianza
 
 
 
+
 Reducción de la varianza
 ------------------------
 
@@ -88,7 +89,7 @@ simétrica repecto a un parámetro $\mu$.
 (e.g. $X\sim \mathcal{U}(a,b)$ e $Y=a+b-X$).
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-1"><strong>(\#exr:unnamed-chunk-1) </strong></span>Variables antitéticas en integración Monte Carlo </div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-2"><strong>(\#exr:unnamed-chunk-2) </strong></span>Variables antitéticas en integración Monte Carlo </div>\EndKnitrBlock{exercise}
 
 Crear una función que implemente la técnica de variables antitéticas
 para aproximar integrales del
@@ -107,7 +108,9 @@ abline(h=0,lty=2)
 abline(v=c(a,b),lty=2)
 ```
 
-<img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{10-Reduccion_varianza_files/figure-latex/unnamed-chunk-3-1} \end{center}
 
 Se trata de calcular la media de $e^{\mathcal{U}(0,2)}$:
 
@@ -144,7 +147,9 @@ res <- mc.integral(ftn, a, b, 500)
 abline(h = teor)
 ```
 
-<img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{10-Reduccion_varianza_files/figure-latex/unnamed-chunk-5-1} \end{center}
 
 ```r
 res
@@ -186,7 +191,9 @@ set.seed(54321)
 res <- mc.integrala(ftn, a, b, 500)
 ```
 
-<img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{10-Reduccion_varianza_files/figure-latex/unnamed-chunk-6-1} \end{center}
 
 ```r
 res
@@ -278,7 +285,7 @@ variabilidad en el estrato se puede obtener una reducción
 significativa de la varianza.
 
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-9"><strong>(\#exm:unnamed-chunk-9) </strong></span>Muestreo estratificado de una exponencial (libro Ricardo)</div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-10"><strong>(\#exm:unnamed-chunk-10) </strong></span>Muestreo estratificado de una exponencial (libro Ricardo)</div>\EndKnitrBlock{example}
 
 Supóngase el siguiente
 problema (absolutamente artificial pero ilustrativo para comprender esta
@@ -354,7 +361,7 @@ que es bastante menor que 1
 (la varianza en el caso de muestreo aleatorio simple no estratificado).
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-10"><strong>(\#exr:unnamed-chunk-10) </strong></span>Integración Monte Carlo con estratificación</div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-11"><strong>(\#exr:unnamed-chunk-11) </strong></span>Integración Monte Carlo con estratificación</div>\EndKnitrBlock{exercise}
 
 Aproximar la integral anterior empleando la técnica de
 estratificación, considerando $k$ subintervalos regularmente
@@ -379,7 +386,9 @@ res <- mc.integral(ftn, a, b, 500)
 abline(h = teor)
 ```
 
-<img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{10-Reduccion_varianza_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
 ```r
 res
@@ -422,7 +431,7 @@ mc.integrale(ftn, a, b, 500, 100)
 De esta forma no se tiene en cuenta la variabilidad en el estrato.
 El tamaño de las submuestras debería incrementarse hacia el extremo superior.
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-12"><strong>(\#exr:unnamed-chunk-12) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-13"><strong>(\#exr:unnamed-chunk-13) </strong></span></div>\EndKnitrBlock{exercise}
 Repetir el ejemplo anterior considerando intervalos regularmente espaciados en escala exponencial.
 
 
@@ -464,7 +473,7 @@ Para estimarlo se puede realizar ajuste lineal de $X$ sobre $Y$
 
           
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-13"><strong>(\#exr:unnamed-chunk-13) </strong></span>Integración Monte Carlo con variables de control </div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-14"><strong>(\#exr:unnamed-chunk-14) </strong></span>Integración Monte Carlo con variables de control </div>\EndKnitrBlock{exercise}
 
 Aproximar la integral anterior empleando la variable
 $U\sim\mathcal{U}(0,2)$ para controlar la variable $e^{U}$.
@@ -507,7 +516,9 @@ reg <- lm(expu ~ u)$coef
 abline(reg, col='blue')
 ```
 
-<img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{10-Reduccion_varianza_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 ```r
 # summary(lm(expu ~ u)) # R-squared: 0.9392
@@ -583,7 +594,7 @@ En el capítulo de aplicaciones de la simulación se empleó esta técnica para 
 Ejercicios fin de práctica
 --------------------------
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-19"><strong>(\#exr:unnamed-chunk-19) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-20"><strong>(\#exr:unnamed-chunk-20) </strong></span></div>\EndKnitrBlock{exercise}
 
 Aproximar mediante integración Monte Carlo (clásica) la media de una
 distribución exponencial de parámetro

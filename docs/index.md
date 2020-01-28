@@ -1,32 +1,54 @@
 --- 
-title: "Prácticas de Simulación"
-author: "Rubén F. Casal (ruben.fcasal@udc.es)"
-date: "2017-10-09"
+title: "Simulación Estadística"
+author: "Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)"
+date: "2020-01-28"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-github-repo: rstudio/bookdown-demo
-description: "Prácticas de la asignatura de Simulación Estadística del Máster en Técnicas Estadísticas."
+github-repo: rubenfcasal/simbook
+description: "Apuntes de la asignatura de Simulación Estadística del Máster en Técnicas Estadísticas."
 ---
 
 # Prólogo {-}
 
-Este libro contiene algunas de las prácticas de la asignatura de [Simulación Estadística](http://eio.usc.es/pub/mte/index.php?option=com_content&view=article&id=19&Itemid=51&idm=13&a%C3%B1o=2017) del [Máster interuniversitario en Técnicas Estadísticas](http://eio.usc.es/pub/mte)).
+Este libro contiene los apuntes de la asignatura de [Simulación Estadística](http://eamo.usc.es/pub/mte/index.php/es/?option=com_content&view=article&id=2201&idm=13&a%C3%B1o=2019) del [Máster en Técnicas Estadísticas](http://eio.usc.es/pub/mte). 
 
-Este libro ha sido escrito en [R-Markdown](http://rmarkdown.rstudio.com) empleando el paquete [`bookdown`](https://bookdown.org/yihui/bookdown/) y está disponible en el repositorio Github: [rubenfcasal/simbook](https://github.com/rubenfcasal/simbook). Para generar el libro (compilar) puede ser recomendable instalar la última versión de [RStudio]((https://www.rstudio.com/products/rstudio/download/)) y la versión de desarrollo de `bookdown` disponible en [Github](https://github.com/rstudio/bookdown):
+Este libro ha sido escrito en [R-Markdown](http://rmarkdown.rstudio.com) empleando el paquete [`bookdown`](https://bookdown.org/yihui/bookdown/)  y está disponible en el repositorio Github: [rubenfcasal/simbook](https://github.com/rubenfcasal/simbook). 
+Se puede acceder a la versión en línea a través del siguiente enlace:
 
+<https://rubenfcasal.github.io/simbook/index.html>.
+
+<!-- 
+<a class="btn pull-left js-toolbar-action" aria-label="PDF" title="PDF" href="#"><i class="fa fa-file-pdf-o"></i></a> 
+-->
+
+donde puede descargarse en formato [pdf](https://rubenfcasal.github.io/simbook/Simulacion.pdf).
+
+Para instalar los paquetes necesarios para poder ejecutar los ejemplos mostrados en el libro se puede emplear el siguiente comando:
 
 ```r
-devtools::install_github("rstudio/bookdown")
+pkgs <- c('boot', 'MASS', 'DEoptim', 'nortest', 'geoR', 'copula', 'sm',
+          'tseries', 'forecast', 'plot3D', 'rgl')
+install.packages(setdiff(pkgs, installed.packages()[,"Package"]), 
+                 dependencies = TRUE)
+
+# Si aparecen errores debidos a incompatibilidades entre las versiones de los paquetes, 
+# probar a ejecutar en lugar de lo anterior:
+# install.packages(pkgs, dependencies = TRUE) # Instala todos...
 ```
 
+Para generar el libro (compilar) serán necesarios paquetes adicionales, 
+para lo que se recomendaría consultar el libro de ["Escritura de libros con bookdown" ](https://rubenfcasal.github.io/bookdown_intro) en castellano.
 
-<img src="images/by-nc-nd-88x31.png" width="44" />
+
+
+
+\includegraphics[width=1.22in]{images/by-nc-nd-88x31} 
 
 Este obra está bajo una licencia de [Creative Commons Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es_ES) 
-(espero poder liberarlo bajo una licencia menos restrictiva más adelante...).
+(esperamos poder liberarlo bajo una licencia menos restrictiva más adelante...).
 
 

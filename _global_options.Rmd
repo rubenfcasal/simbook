@@ -1,0 +1,39 @@
+```{r, include=FALSE}
+knitr::opts_chunk$set(fig.width=7, fig.height=6, fig.align="center", fig.pos="!htb", out.width = "70%",
+               cache=TRUE, cache.path='cache/',
+               echo=TRUE, warning=FALSE, message=FALSE)
+fig.path <- "images/"
+# fig.path <- ""
+
+# funciones auxiliares
+  # Rmd, Bookdown
+    # rmd.lines <- function(l = 1) paste0("<br> \vspace{0.5cm}") #cat(rep("<br>", l)) # 0.5*l
+    is_latex <- function(...) knitr:::is_latex_output(...)
+    is_html <- function(...) knitr:::is_html_output(...)
+    # Rmd code:
+    inline <- function(x = "") paste0("`` `r ", x, "` ``")
+    inline2 <- function(x = "") paste0("`r ", x, "`")
+  # Citas
+    # Figuras:
+    # paste0("\\@ref(fig:", "media-dt-conocida", ")")   
+    # labs <- c("fig1", "fig2")
+    # paste0("\\@ref(fig:", labs, ")")  
+    # list <- c("fig1", "fig2")
+    # paste0("\\@ref(fig:", list, ")")   
+    # paste0("\\@ref(fig:", list, ")", collapse = ", ")   
+    # citefig("fig1", "fig2")
+    citefig <- function(..., text = "(ver ") {
+      x <- list(...)
+      paste0(text, if(length(x)>1) "figuras: " else "Figura ", 
+        paste0("\\@ref(fig:", x, ")", collapse = ", "),
+        ")")
+    }  
+    citefig2 <- function(...) {
+      x <- list(...)
+      paste0(if(length(x)>1) "[Figuras: " else "[Figura ", 
+        paste0("\\@ref(fig:", x, ")", collapse = ", "),
+        "]")
+    }  
+    latexfig <- function(..., output = TRUE) #  , output = is_latex()) 
+      if (output) citefig2(...) else ""
+```

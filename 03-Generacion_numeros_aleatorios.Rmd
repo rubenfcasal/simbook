@@ -1,20 +1,18 @@
 Generación de números pseudoaleatorios
 ======================================
 
-```{r setup, include=FALSE}
-# Este trozo de código se evalúa pero no se muestra...
-knitr::opts_chunk$set(cache = TRUE, cache.path='cache/')
+```{r , child = '_global_options.Rmd'}
 ```
 
 Generadores congruenciales
 --------------------------
 
-### Generador congruencial lineal (simple)
+### Generador congruencial lineal (simple) {#conlinsim}
 
 Partiendo de una semilla inicial $x_{0}$:
 $$\begin{aligned}
-x_{i}  & =(ax_{i-1}+c)\operatorname{mod}m\\
-u_{i}  & =\dfrac{x_{i}}{m}\\
+x_{i}  & = (ax_{i-1}+c) \operatorname{mod} m \\
+u_{i}  & = \dfrac{x_{i}}{m} \\
 i  & =1,2,\ldots
 \end{aligned}$$ 
 donde $a$ es el **multiplicador,**
@@ -125,7 +123,7 @@ Un generador multiplicativo tiene período máximo ($p=m-1$) si:
 
 1.  $m$ es primo.
 
-2.  $a$ es una raiz primitiva de $m$(i.e. el menor entero $q$ tal
+2.  $a$ es una raiz primitiva de $m$ (i.e. el menor entero $q$ tal
     que $a^{q}=1\operatorname{mod}m$ es $q=m-1$).
 
 .    
@@ -141,25 +139,26 @@ Por ejemplo, los valores generados pueden mostrar una estructura reticular.
 
 -   Generador RANDU de IBM (70’s):
 
-```{r, eval=FALSE}
-library(rgl)
+```{r randu, warning=FALSE, fig.cap='Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)'}
 system.time(u <- RANDCN(9999))  # Generar
 xyz <- matrix(u, ncol = 3, byrow = TRUE)
 
-plot3d(xyz) 
-# rglwidget()
+library(plot3D)
+points3D(xyz[,1], xyz[,2], xyz[,3], colvar = NULL, phi = 60, theta = -50, pch = 21, cex = 0.2)
 ```
 
-
-```{r, echo=FALSE, fig.width = 5, fig.height = 5, fig.align = 'center'}
-knitr::include_graphics("images/randu2.png")
+NOTA: Alternativamente se podría utilizar la función `plot3d` del paquete `rgl`,
+y pulsando con el ratón se podría rotar la figura para ver los hiperplanos:
+```{r, eval=FALSE}
+library(rgl)
+plot3d(xyz) 
 ```
 
 
 Se han propuesto diversas pruebas (ver sección siguiente) para
 determinar si un generador tiene problemas de este tipo y se han
 realizado numerosos estudios para determinadas familias (e.g. Park y
-Miller, 1988, $m=2^{31}-1$).
+Miller, 1988, estudiaron que parámetros son adecuados para $m=2^{31}-1$).
 
 -   En cualquier caso, se recomienda considerar un “periodo de
     seguridad” $\approx \sqrt{p}$ para evitar este tipo de problemas.
@@ -173,96 +172,54 @@ Miller, 1988, $m=2^{31}-1$).
 Generalizaciones del generador congruencial lineal simple:
 $$x_{i}=f\left(  x_{i-1},x_{i-2},\cdots,x_{i-k}\right)  \operatorname{mod}m$$
 
--   no lineal: e.g.
+-   No lineal: e.g.
     $\ x_{i}=a_{1}x_{i-1}+a_{2}x_{i-1}^{2}\operatorname{mod}m$
 
--   lineal múltiple: 
+-   Lineal múltiple: 
     $x_{i}=a_{1}x_{i-1}+a_{2}x_{i-2}+\cdots+a_{k}x_{i-k}\operatorname{mod}m$,
     con $p\leq m^{k}-1$)
 
--   matricial: $\boldsymbol{x}_{i} = A_{1}\boldsymbol{x}_{i-1} 
+-   Matricial: $\boldsymbol{x}_{i} = A_{1}\boldsymbol{x}_{i-1} 
     + A_{2}\boldsymbol{x}_{i-2} + \cdots 
     + A_{k}\boldsymbol{x}_{i-k} \operatorname{mod}m$
     (por ejemplo el generador por defecto de `R`).
 
--   Generadores de registros desfasados: generadores de bits basados en
-    el lineal múltiple $m=2$; $a_{i},x_{i}\in \left \{
-    0,1\right \}$ (cálculos mediante operaciones lógicas).
+Un caso particular del generador lineal múltiple son los denominados *generadores de registros desfasados*.
+Se generan bits de forma secuencial considerando $m=2$ y $a_{i} \in \left \{ 0,1\right \}$, 
+y los cálculos se pueden realizar rápidamente mediante operaciones lógicas
+(se pueden emplear directamente los registros del procesador).
 
--   Combinación de generadores:
+Otras alternativas bastante utilizadas consisten en la combinanción de varios generadores:
 
-    -   Combinación de salidas:
-        $u_{i}=\sum u_{i}^{(l)}\operatorname{mod}1$
+-   Combinación de salidas:
+    $u_{i}=\sum u_{i}^{(l)}\operatorname{mod}1$,
+    donde $u_{i}^{(l)}$ es el $i$-ésimo valor obtenido con el generador $l$.
 
-    -   Barajar salidas...
+-   Barajar salidas...
     
 ```{exercise}
 ```
 
-Considera el generador congruencial definido por: $$\begin{aligned}
+Considera el generador congruencial definido por: 
+$$\begin{aligned}
 x_{n+1}  & =(5x_{n}+1)\ \operatorname{mod}\ 512,\nonumber\\
-u_{n+1}  & =\frac{x_{n+1}}{512},\ n=0,1,\dots\nonumber\end{aligned}$$
-
+u_{n+1}  & =\frac{x_{n+1}}{512},\ n=0,1,\dots\nonumber
+\end{aligned}$$
 (de ciclo máximo).
 
-Algoritmo implementado en el fichero *RANDC.R*:
-
-```{r, echo=FALSE}
-# Generador congruencial de números pseudoaleatorios
-# ==================================================
-
-# --------------------------------------------------
-# initRANDC(semilla,a,c,m)
-#   Selecciona el generador congruencial
-#   Por defecto RANDU de IBM con semilla del reloj
-#   OJO: No se hace ninguna verificación de los parámetros
-# --------------------------------------------------
-initRANDC <- function(semilla=as.numeric(Sys.time()), a=2^16+3, c=0, m=2^31) {
-  .semilla <<- as.double(semilla) %% m  #Cálculos en doble precisión
-  .a <<- a
-  .c <<- c
-  .m <<- m
-  return(invisible(list(semilla=.semilla,a=.a,c=.c,m=.m))) #print(initRANDC())
-}
-
-# --------------------------------------------------
-# RANDC()
-#   Genera un valor pseudoaleatorio con el generador congruencial
-#   Actualiza la semilla (si no existe llama a initRANDC)
-# --------------------------------------------------
-RANDC <- function() {
-    if (!exists(".semilla", envir=globalenv())) initRANDC()
-    .semilla <<- (.a * .semilla + .c) %% .m
-    return(.semilla/.m)
-}
-
-# --------------------------------------------------
-# RANDCN(n)
-#   Genera un vector de valores pseudoaleatorios con el generador congruencial
-#   (por defecto de dimensión 1000)
-#   Actualiza la semilla (si no existe llama a initRANDC)
-# --------------------------------------------------
-RANDCN <- function(n=1000) {
-    x <- numeric(n)
-    for(i in 1:n) x[i]<-RANDC()
-    return(x)
-    # return(replicate(n,RANDC()))  # Alternativa más rápida    
-}
-
-```
-
+NOTA: El algoritmo está implementado en el fichero *RANDC.R* y se muestra en la Sección \@ref(conlinsim).
 
 a)  Generar 500 valores de este generador, obtener el tiempo de CPU,
     representar su distribución mediante un histograma (en escala
     de densidades) y compararla con la densidad teórica.
    
-    ```{r }
+    ```{r ejcona, fig.cap='Histograma de los valores generados'}
     initRANDC(321, 5, 1, 512)       # Fijar semilla para reproductibilidad
     nsim <- 500
     system.time(u <- RANDCN(nsim))  # Generar
     
     hist(u, freq = FALSE)
-    abline(h = 1)                   # curve(dunif(x, 0, 1), add = TRUE)
+    abline(h = 1)                   # Equivalente a curve(dunif(x, 0, 1), add = TRUE)
     ```
 
 
@@ -395,6 +352,7 @@ chisq.test.cont(u, distribution = "unif",
 ```
 
 **Importante**:
+
 Empleando los métodos genéricos del modo habitual, desconfiamos del
 generador si la muestra/secuencia no se ajusta a la distribución
 teórica (*p*-valor $\leq \alpha$).
@@ -656,30 +614,3 @@ valores. Emplear únicamente métodos gráficos.
 Considerando el generador congruencial multiplicativo de parámetros
 $a=7^{5}=16807$, $c=0$ y $m=2^{31}-1$. ¿Se observan los mismos problemas 
 que con el algoritmo RANDU al considerar las tripletas $(x_{k},x_{k+1},x_{k+2})$?
-
-```{exercise}
-**(para entregar)**
-```
-Considera el generador congruencial definido por: 
-$$\begin{aligned}
-x_{n+1}  & =(65x_{n}+1)\ \operatorname{mod}\ 2048,\nonumber\\
-u_{n+1}  & =\frac{x_{n+1}}{2048},\ n=0,1,\dots\nonumber
-\end{aligned}$$
-    
-a)  Indicar razonadamente si es de ciclo máximo.
-
-b)  Generar 1000 valores tomando como semilla inicial el nº de grupo 
-    multiplicado por 100 y obtener el tiempo de CPU. Representar
-    gráficamente el ajuste a la densidad teórica y realizar el
-    correspondiente contraste de Kolmogorov-Smirnov.
-
-c)  Representar los pares de datos $\left( u_{i}, u_{i+1} \right)$, 
-    ¿se observa algún problema?.
-
-d)  Estudiar la aleatoriedad de este generador empleando
-    repetidamente el test de Ljung-Box, considerando 500 pruebas con
-    muestras de tamaño 50 y hasta el salto 10
-    (`Box.test(u,lag=10, type=Ljung)`). Comparar el
-    ajuste de las distribuciones del estadístico y $p$-valor a las
-    de referencia.
-

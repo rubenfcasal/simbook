@@ -1,6 +1,8 @@
 Introducción a la simulación
 ============================
 
+
+
 ## Introducción
 
   Problemas de la experimentación directa sobre la realidad:
@@ -129,7 +131,8 @@ Se almacena(ban) en *tablas de dígitos aleatorios* (*true random*)
 y normalmente son obtenidos por procesos físicos
 (loterías, ruletas, ruidos,...)
 
-<img src="images/RAND.png" width="128" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics[width=0.7\linewidth]{images/RAND} \end{center}
 
 Se emplean para seleccionar números aleatorios 
 en un rango de 1 a *m*:
