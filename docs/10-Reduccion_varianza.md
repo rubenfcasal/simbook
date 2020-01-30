@@ -108,9 +108,7 @@ abline(h=0,lty=2)
 abline(v=c(a,b),lty=2)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{10-Reduccion_varianza_files/figure-latex/unnamed-chunk-3-1} \end{center}
+<img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" />
 
 Se trata de calcular la media de $e^{\mathcal{U}(0,2)}$:
 
@@ -147,9 +145,7 @@ res <- mc.integral(ftn, a, b, 500)
 abline(h = teor)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{10-Reduccion_varianza_files/figure-latex/unnamed-chunk-5-1} \end{center}
+<img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-5-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 res
@@ -191,9 +187,7 @@ set.seed(54321)
 res <- mc.integrala(ftn, a, b, 500)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{10-Reduccion_varianza_files/figure-latex/unnamed-chunk-6-1} \end{center}
+<img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-6-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 res
@@ -386,9 +380,7 @@ res <- mc.integral(ftn, a, b, 500)
 abline(h = teor)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{10-Reduccion_varianza_files/figure-latex/unnamed-chunk-12-1} \end{center}
+<img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 res
@@ -516,9 +508,7 @@ reg <- lm(expu ~ u)$coef
 abline(reg, col='blue')
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{10-Reduccion_varianza_files/figure-latex/unnamed-chunk-17-1} \end{center}
+<img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 # summary(lm(expu ~ u)) # R-squared: 0.9392

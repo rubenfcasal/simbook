@@ -1,11 +1,9 @@
-Generación de números pseudoaleatorios
-======================================
+# Generación de números pseudoaleatorios {#cap3}
 
 
 
 
-Generadores congruenciales
---------------------------
+## Generadores congruenciales {#cap3-gen-cong}
 
 ### Generador congruencial lineal (simple) {#conlinsim}
 
@@ -141,7 +139,7 @@ system.time(u <- RANDCN(9999))  # Generar
 
 ```
 ##    user  system elapsed 
-##    0.03    0.01    0.05
+##    0.01    0.00    0.02
 ```
 
 ```r
@@ -151,14 +149,10 @@ library(plot3D)
 points3D(xyz[,1], xyz[,2], xyz[,3], colvar = NULL, phi = 60, theta = -50, pch = 21, cex = 0.2)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/randu-1} 
-
-}
-
-\caption{Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)}(\#fig:randu)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/randu-1.png" alt="Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)" width="70%" />
+<p class="caption">(\#fig:randu)Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)</p>
+</div>
 
 NOTA: Alternativamente se podría utilizar la función `plot3d` del paquete `rgl`,
 y pulsando con el ratón se podría rotar la figura para ver los hiperplanos:
@@ -243,14 +237,10 @@ a)  Generar 500 valores de este generador, obtener el tiempo de CPU,
     abline(h = 1)                   # Equivalente a curve(dunif(x, 0, 1), add = TRUE)
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/ejcona-1} 
-    
-    }
-    
-    \caption{Histograma de los valores generados}(\#fig:ejcona)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/ejcona-1.png" alt="Histograma de los valores generados" width="70%" />
+    <p class="caption">(\#fig:ejcona)Histograma de los valores generados</p>
+    </div>
 
 
 b)  Calcular la media de las simulaciones (`mean`) y compararla con
@@ -399,9 +389,7 @@ chisq.test.cont(u, distribution = "unif",
                 nclasses = 10, nestpar = 0, min = 0, max = 1)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-11-1} \end{center}
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-11-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```
 ## 
@@ -460,9 +448,7 @@ a)  Realizar el contraste de Kolmogorov-Smirnov para estudiar el
     curve(punif(x, 0, 1), add = TRUE)
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-14-1} \end{center}
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" />
     
     ```r
     # Test de Kolmogorov-Smirnov
@@ -488,9 +474,7 @@ b)  Obtener el gráfico secuencial y el de dispersión retardado, ¿se
     plot(as.ts(u))
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-15-1} \end{center}
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" />
     
     Gráfico de dispersión retardado:
     
@@ -499,9 +483,7 @@ b)  Obtener el gráfico secuencial y el de dispersión retardado, ¿se
     plot(u[-nsim],u[-1])
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-16-1} \end{center}
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" />
 
 c)  Estudiar las correlaciones del vector $(u_{i},u_{i+k})$, con
     $k=1,...,10$. Contrastar si son nulas.
@@ -513,9 +495,7 @@ c)  Estudiar las correlaciones del vector $(u_{i},u_{i+k})$, con
     acf(u)
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-17-1} \end{center}
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" />
     
     Test de Ljung-Box:
     
@@ -622,9 +602,7 @@ hist(estadistico, breaks = "FD", freq=FALSE)
 curve(dchisq(x,99), add=TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-22-1} \end{center}
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 # Test ji-cuadrado
@@ -651,9 +629,7 @@ hist(pvalor, freq=FALSE)
 abline(h=1) # curve(dunif(x,0,1), add=TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-23-1} \end{center}
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-23-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 # Test ji-cuadrado

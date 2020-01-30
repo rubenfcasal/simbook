@@ -19,6 +19,9 @@ Entre las herramientas en el paquete base de `R` estarían:
 
 -   `sample`: genera muestras aleatorias (v.a. discretas) y permutaciones.
 
+Además están disponibles otros paquetes, como el paquete `r citepkg('distr')`,
+que implementan distribuciones adicionales.
+
 La semilla se almacena (en `globalenv`) en `.Random.seed`; es un vector
 de enteros cuya dimensión depende del tipo de generador:
 
@@ -28,10 +31,44 @@ de enteros cuya dimensión depende del tipo de generador:
 -   Si no se especifica con `set.seed` (o no existe) se genera a
     partir del reloj del sistema.
 
+
 ```{remark}
 Puede ser recomendable (para depurar) almacenarla antes de generar simulaciones, e.g. 
 `semilla <- .Random.seed`.
 ```
+
+
+En la mayoría de los ejemplos se generan todas las muestras de una vez,
+se guardan y se procesan vectorialmente (normalmente empleando la función `apply`).
+En problemas mas complejos, en los que no es necesario almacenar todas las simulaciones,
+puede ser preferible emplear un bucle para generar y procesar las muestras iterativamente.
+Por ejemplo podríamos emplear el siguiente esquema:
+
+```{r eval=FALSE}
+# Fijar semilla
+set.seed(1)
+for (isim in 1:nsim) {
+  seed <- .Random.seed
+  # Si se produce un error, podremos depurarlo ejecutando:
+  #  .Random.seed <- seed
+
+  # Generar valores pseudoaleatorios
+  ...
+}
+```
+
+o alternativamente fijar la semilla en cada iteración, por ejemplo:
+
+```{r eval=FALSE}
+for (isim in 1:nsim) {
+  set.seed(isim)
+
+  # Generar valores pseudoaleatorios
+  ...
+}
+```
+
+Hay que tener en cuenta que `.Random.seed` se almacena en el entorno de trabajo...
 
 
 ##  Opciones

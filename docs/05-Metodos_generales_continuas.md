@@ -95,9 +95,7 @@ hist(X,breaks="FD",freq=FALSE,xlim=c(0,5),ylim=c(0,2.5))
 curve(dexp(x,lambda),lwd=2,add=TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-2-1} \end{center}
+<img src="05-Metodos_generales_continuas_files/figure-html/unnamed-chunk-2-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 ### Algunas distribuciones que pueden simularse por el método de inversión
@@ -175,7 +173,7 @@ b)  Generar $10^{4}$ valores de la distribución doble exponencial de
     
     ```
     ##    user  system elapsed 
-    ##    0.03    0.00    0.04
+    ##    0.03    0.00    0.03
     ```
 
 
@@ -188,9 +186,7 @@ c)  Representar el histograma y compararlo con la densidad teórica.
     curve(ddexp(x, 2), add = TRUE)
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-6-1} \end{center}
+    <img src="05-Metodos_generales_continuas_files/figure-html/unnamed-chunk-6-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 ### Ventajas e inconvenientes
@@ -279,8 +275,7 @@ $$A_{f}=\left\{ \left( x,y\right) \in \mathbb{R}^{2}:0\leq y\leq
 f\left( x\right) \right\}.$$
 De esta forma la primera componente tendrá la distribución deseada:
 
-
-\begin{center}\includegraphics[width=0.7\linewidth]{images/rechazo} \end{center}
+<img src="images/rechazo.png" width="70%" style="display: block; margin: auto;" />
 
 $$ P\left( a<X<b\right) = \frac{\text{Area de }\left\{ \left( x,y\right) \in 
 \mathbb{R}^{2}:a<x<b;~0\leq y\leq f\left( x\right) \right\} }{\text{Area de }
@@ -427,9 +422,7 @@ curve(c.opt * ddexp(x), xlim = c(-4, 4), lty = 2)
 curve(dnorm(x), add = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-9-1} \end{center}
+<img src="05-Metodos_generales_continuas_files/figure-html/unnamed-chunk-9-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 a)  Generar una muestra de $10^{4}$ observaciones empleando este
@@ -447,7 +440,7 @@ a)  Generar una muestra de $10^{4}$ observaciones empleando este
     
     ```
     ##    user  system elapsed 
-    ##    0.08    0.00    0.08
+    ##    0.07    0.00    0.08
     ```
     
     ```r
@@ -475,9 +468,7 @@ b)  Representar el histograma y compararlo con la densidad teórica.
     curve(dnorm(x), add=TRUE)
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-11-1} \end{center}
+    <img src="05-Metodos_generales_continuas_files/figure-html/unnamed-chunk-11-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 
@@ -703,9 +694,7 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     abline(v = q, lty = 2)
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-16-1} \end{center}
+    <img src="05-Metodos_generales_continuas_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 b)  Repetir el apartado anterior con $n=100$.
@@ -745,8 +734,7 @@ Algoritmo:
 
 
 
-
-\begin{center}\includegraphics[width=0.7\linewidth]{images/squeeze} \end{center}
+<img src="images/squeeze.png" width="70%" style="display: block; margin: auto;" />
 
 Cuanto mayor sea el área bajo $s\left( x\right)$ (más próxima a 1)
 más efectivo será el algoritmo.

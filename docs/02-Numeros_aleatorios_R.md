@@ -19,6 +19,9 @@ Entre las herramientas en el paquete base de `R` estarían:
 
 -   `sample`: genera muestras aleatorias (v.a. discretas) y permutaciones.
 
+Además están disponibles otros paquetes, como el paquete [`distr`](https://cran.r-project.org/web/packages/distr/index.html),
+que implementan distribuciones adicionales.
+
 La semilla se almacena (en `globalenv`) en `.Random.seed`; es un vector
 de enteros cuya dimensión depende del tipo de generador:
 
@@ -28,8 +31,44 @@ de enteros cuya dimensión depende del tipo de generador:
 -   Si no se especifica con `set.seed` (o no existe) se genera a
     partir del reloj del sistema.
 
+
 \BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}Puede ser recomendable (para depurar) almacenarla antes de generar simulaciones, e.g. 
 `semilla <- .Random.seed`.</div>\EndKnitrBlock{remark}
+
+
+En la mayoría de los ejemplos se generan todas las muestras de una vez,
+se guardan y se procesan vectorialmente (normalmente empleando la función `apply`).
+En problemas mas complejos, en los que no es necesario almacenar todas las simulaciones,
+puede ser preferible emplear un bucle para generar y procesar las muestras iterativamente.
+Por ejemplo podríamos emplear el siguiente esquema:
+
+
+```r
+# Fijar semilla
+set.seed(1)
+for (isim in 1:nsim) {
+  seed <- .Random.seed
+  # Si se produce un error, podremos depurarlo ejecutando:
+  #  .Random.seed <- seed
+
+  # Generar valores pseudoaleatorios
+  ...
+}
+```
+
+o alternativamente fijar la semilla en cada iteración, por ejemplo:
+
+
+```r
+for (isim in 1:nsim) {
+  set.seed(isim)
+
+  # Generar valores pseudoaleatorios
+  ...
+}
+```
+
+Hay que tener en cuenta que `.Random.seed` se almacena en el entorno de trabajo...
 
 
 ##  Opciones
@@ -85,7 +124,7 @@ Otros paquetes de R que pueden ser de interés:
 
 ## Ejercicios
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-3"><strong>(\#exr:unnamed-chunk-3) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-5"><strong>(\#exr:unnamed-chunk-5) </strong></span></div>\EndKnitrBlock{exercise}
 
 Sea $(X,Y)$ es un vector aleatorio con distribución uniforme en el
 cuadrado $[-1,1]\times\lbrack-1,1]$ de área 4.
@@ -170,12 +209,10 @@ b)  Aproximar el valor de $\pi$ mediante simulación a partir de
     symbols(0, 0, squares = 2, inches = FALSE, add = TRUE)
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-7-1} \end{center}
+    <img src="02-Numeros_aleatorios_R_files/figure-html/unnamed-chunk-9-1.png" width="70%" style="display: block; margin: auto;" />
     
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-8"><strong>(\#exr:unnamed-chunk-8) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-10"><strong>(\#exr:unnamed-chunk-10) </strong></span></div>\EndKnitrBlock{exercise}
 Consideramos el experimento de Bernoulli consistente en el
 lanzamiento de una moneda.
 
@@ -200,9 +237,7 @@ a)  Empleando la función `sample`, obtener 1000 simulaciones del
     barplot(100*table(x)/nsim) # Representar porcentajes 
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-9-1} \end{center}
+    <img src="02-Numeros_aleatorios_R_files/figure-html/unnamed-chunk-11-1.png" width="70%" style="display: block; margin: auto;" />
 
 b)  En R pueden generarse valores de la distribución de Bernoulli
     mediante la función `rbinom(nsim, size=1, prob)`. Generar un
@@ -232,18 +267,15 @@ b)  En R pueden generarse valores de la distribución de Bernoulli
     abline(h=p, lty=2, col="red")
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-10-1} \end{center}
+    <img src="02-Numeros_aleatorios_R_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" />
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-11"><strong>(\#exr:unnamed-chunk-11) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-13"><strong>(\#exr:unnamed-chunk-13) </strong></span></div>\EndKnitrBlock{exercise}
 Simular el paso de corriente a través del siguiente circuito, donde
 figuran las probabilidades de que pase corriente por cada uno de los
 interruptores:
 
-
-\begin{center}\includegraphics[width=0.7\linewidth]{images/circuito2} \end{center}
+<img src="images/circuito2.png" width="70%" style="display: block; margin: auto;" />
 
 Considerar que cada interruptor es una v.a. de Bernoulli independiente
 para simular 1000 valores de cada una de ellas.
@@ -273,7 +305,7 @@ mean(fin)
 ```
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-15"><strong>(\#exr:unnamed-chunk-15) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-17"><strong>(\#exr:unnamed-chunk-17) </strong></span></div>\EndKnitrBlock{exercise}
 En 1651, el Caballero de Méré le planteó a Pascal una pregunta
 relacionada con las apuestas y los juegos de azar: ¿es ventajoso
 apostar a que en cuatro lanzamientos de un dado se obtiene al menos
@@ -407,10 +439,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.08    0.00    0.08 
+##    0.08    0.01    0.09 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.08    0.00    0.08
+##    0.08    0.01    0.09
 ```
 
 ```r
@@ -429,10 +461,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##       0       0       0 
+##    0.02    0.00    0.02 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.08    0.00    0.08
+##    0.10    0.01    0.11
 ```
 
 ### Paquetes de R
@@ -523,7 +555,7 @@ cpu.time('\nSample median of', 1000000, 'values =', res, total = FALSE)
 ## Time of last operation: 
 ## Sample median of 1e+06 values = 0.4993793 
 ##    user  system elapsed 
-##    0.05    0.02    0.06
+##    0.07    0.00    0.06
 ```
 
 ```r
@@ -535,10 +567,10 @@ cpu.time('\nSample median of', 1000, 'values =', res)
 ## Time of last operation: 
 ## Sample median of 1000 values = 0.4936829 
 ##    user  system elapsed 
-##       0       0       0 
+##    0.01    0.00    0.02 
 ## Total time:
 ##    user  system elapsed 
-##    0.05    0.02    0.06
+##    0.08    0.00    0.08
 ```
 
 Otro paquete que puede ser de utilidad es

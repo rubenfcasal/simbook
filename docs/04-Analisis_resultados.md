@@ -53,14 +53,10 @@ abline(h = mean(rx), lty = 2)
 abline(h = p) 
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/proporcion-1} 
-
-}
-
-\caption{Aproximación de la proporción en función del número de generaciones.}(\#fig:proporcion)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-Analisis_resultados_files/figure-html/proporcion-1.png" alt="Aproximación de la proporción en función del número de generaciones." width="70%" />
+<p class="caption">(\#fig:proporcion)Aproximación de la proporción en función del número de generaciones.</p>
+</div>
 
 ### Detección de problemas de convergencia
 
@@ -79,14 +75,10 @@ plot(cumsum(rx)/1:nsim, type="l", lwd=2,
      xlab="Número de generaciones", ylab="Media muestral")
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/cauchy-1} 
-
-}
-
-\caption{Evolución de la media muestral de una distribución de Cauchy en función del número de generaciones.}(\#fig:cauchy)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-Analisis_resultados_files/figure-html/cauchy-1.png" alt="Evolución de la media muestral de una distribución de Cauchy en función del número de generaciones." width="70%" />
+<p class="caption">(\#fig:cauchy)Evolución de la media muestral de una distribución de Cauchy en función del número de generaciones.</p>
+</div>
 
 
 Para detectar problemas de convergencia es recomendable representar la evolución de la aproximación de la
@@ -99,9 +91,7 @@ Por ejemplo, en el siguiente gráfico de cajas observamos los valores que produc
 boxplot(rx)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-5-1} \end{center}
+<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-5-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 Estimación de la precisión
@@ -185,9 +175,7 @@ lines(est - 2*esterr, lty=3)
 abline(h = xmed)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-10-1} \end{center}
+<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" />
 
  
 Determinación del número de generaciones
@@ -264,9 +252,7 @@ lines(est - 2*esterr, lty=2)
 abline(h = 1/3, col="darkgray")     # Prob. teor. cadenas Markov
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-13-1} \end{center}
+<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" />
 
 La aproximación de la proporción sería correcta (es consistente):
 
@@ -296,9 +282,7 @@ subestimación del verdadero error estandar.
 acf(as.numeric(rx))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-16-1} \end{center}
+<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" />
 
 El gráfico de autocorrelaciones sugiere que si tomamos 1 de cada 25 
 podemos suponer independencia.
@@ -312,9 +296,7 @@ rxi <- rx[xlag]
 acf(as.numeric(rxi))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-17-1} \end{center}
+<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 n <- 1:length(rxi)
@@ -328,9 +310,7 @@ lines(est - 2*esterr, lty=2)
 abline(h = 1/3, col="darkgray")     # Prob. teor. cadenas Markov
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-17-2} \end{center}
+<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-17-2.png" width="70%" style="display: block; margin: auto;" />
 
 
 Esta forma de proceder podría ser adecuada para tratar de aproximar la precisión 
@@ -354,9 +334,7 @@ lines(est - 2*esterr, lty=2)
 abline(h = 1/3, col="darkgray")     # Prob. teor. cadenas Markov
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-18-1} \end{center}
+<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;" />
 
 Esta es la idea del método de medias por lotes 
 (*batch means*; *macro-micro replicaciones*) para la estimación de la varianza.
@@ -425,9 +403,7 @@ lines(est2, lty = 2)
 abline(v = 2000, lty = 3)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-21-1} \end{center}
+<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 En estos casos puede ser recomendable ignorar los primeros valores generados (por ejemplo los primeros 2000) y recalcular los 
@@ -477,9 +453,7 @@ plot(x)
 abline(v = nburn, lty = 2)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-25-1} \end{center}
+<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-25-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 # Eliminar periodo de calentamiento
