@@ -84,7 +84,9 @@ $$x_{i}=\left(  a^{i}x_{0}+c\frac{a^{i}-1}{a-1}\right)  \operatorname{mod}m$$
 
 A pesar de su simplicidad, una adecuada elección de los parámetros
 permite obtener de manera eficiente secuencias de números
-“aparentemente” i.i.d. $\mathcal{U}(0,1).$
+“aparentemente” i.i.d. $\mathcal{U}(0,1)$.
+
+Es procedimiento habitual solía ser escoger $m$ de forma que la operación del módulo se pudiese realizar de forma muy eficiente, para posteriormente seleccionar $c$ y $a$ de forma que el período fuese lo más largo posible (o suficientemente largo).
 
 ### Periodo
 
@@ -124,13 +126,9 @@ Un generador multiplicativo tiene período máximo ($p=m-1$) si:
 
 Además de preocuparse de la longitud del ciclo, las secuencias
 generadas deben aparentar muestras i.i.d. $\mathcal{U}(0,1)$. 
-Por ejemplo, los valores generados pueden mostrar una estructura reticular.
 
--   Marsaglia (1968): $k$-uplas de generadores multiplicativos
-    contenidas en a lo sumo $\left(k!m\right)^{1/k}$
-    hiperplanos paralelos.
-
--   Generador RANDU de IBM (70’s):
+Uno de los principales problemas es que los valores generados pueden mostrar una clara estructura reticular.
+Este es el caso por ejemplo del generador RANDU de IBM muy empleado en la década de los 70 (ver Figura \@ref(fig:randu)). 
 
 
 ```r
@@ -139,7 +137,7 @@ system.time(u <- RANDCN(9999))  # Generar
 
 ```
 ##    user  system elapsed 
-##    0.01    0.00    0.02
+##    0.02    0.02    0.03
 ```
 
 ```r
@@ -154,14 +152,20 @@ points3D(xyz[,1], xyz[,2], xyz[,3], colvar = NULL, phi = 60, theta = -50, pch = 
 <p class="caption">(\#fig:randu)Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)</p>
 </div>
 
-NOTA: Alternativamente se podría utilizar la función `plot3d` del paquete `rgl`,
-y pulsando con el ratón se podría rotar la figura para ver los hiperplanos:
-
 ```r
-library(rgl)
-plot3d(xyz) 
+# Alternativamente se podría utilizar la función `plot3d` del paquete `rgl`,
+# y pulsando con el ratón se podría rotar la figura para ver los hiperplanos:
+# library(rgl)
+# plot3d(xyz) 
 ```
 
+En general todos los generadores de este tipo van a presentar estructuras reticulares:
+
+-   Marsaglia (1968): $k$-uplas de generadores multiplicativos
+    contenidas en a lo sumo $\left(k!m\right)^{1/k}$
+    hiperplanos paralelos.
+
+por lo que se trataría de seleccionar adecuadamente $m$ y $c$ ($a$ solo influiría en la pendiente)...
 
 Se han propuesto diversas pruebas (ver sección siguiente) para
 determinar si un generador tiene problemas de este tipo y se han
@@ -205,7 +209,7 @@ Otras alternativas bastante utilizadas consisten en la combinanción de varios g
 
 -   Barajar salidas...
     
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-7"><strong>(\#exr:unnamed-chunk-7) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-6"><strong>(\#exr:unnamed-chunk-6) </strong></span></div>\EndKnitrBlock{exercise}
 
 Considera el generador congruencial definido por: 
 $$\begin{aligned}
@@ -389,7 +393,7 @@ chisq.test.cont(u, distribution = "unif",
                 nclasses = 10, nestpar = 0, min = 0, max = 1)
 ```
 
-<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-11-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```
 ## 
@@ -426,7 +430,7 @@ bien** a la distribución teórica (*p*-valor $\geq1-\alpha$).
 Otro contraste de bondad de ajuste muy conocido 
 es el test de Kolmogorov-Smirnov, implementado en `ks.test`.
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-12"><strong>(\#exr:unnamed-chunk-12) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-11"><strong>(\#exr:unnamed-chunk-11) </strong></span></div>\EndKnitrBlock{exercise}
 
 Continuando con el generador congruencial anterior: 
 
@@ -448,7 +452,7 @@ a)  Realizar el contraste de Kolmogorov-Smirnov para estudiar el
     curve(punif(x, 0, 1), add = TRUE)
     ```
     
-    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" />
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" />
     
     ```r
     # Test de Kolmogorov-Smirnov
@@ -474,7 +478,7 @@ b)  Obtener el gráfico secuencial y el de dispersión retardado, ¿se
     plot(as.ts(u))
     ```
     
-    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" />
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" />
     
     Gráfico de dispersión retardado:
     
@@ -483,7 +487,7 @@ b)  Obtener el gráfico secuencial y el de dispersión retardado, ¿se
     plot(u[-nsim],u[-1])
     ```
     
-    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" />
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" />
 
 c)  Estudiar las correlaciones del vector $(u_{i},u_{i+k})$, con
     $k=1,...,10$. Contrastar si son nulas.
@@ -495,7 +499,7 @@ c)  Estudiar las correlaciones del vector $(u_{i},u_{i+k})$, con
     acf(u)
     ```
     
-    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" />
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" />
     
     Test de Ljung-Box:
     
@@ -537,7 +541,7 @@ pruebas:
 Este procedimiento es también el habitual para validar un método de
 contraste de hipótesis por simulación.
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-19"><strong>(\#exm:unnamed-chunk-19) </strong></span></div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-18"><strong>(\#exm:unnamed-chunk-18) </strong></span></div>\EndKnitrBlock{example}
 
 Consideramos el generador congruencial RANDU:
 
@@ -602,7 +606,7 @@ hist(estadistico, breaks = "FD", freq=FALSE)
 curve(dchisq(x,99), add=TRUE)
 ```
 
-<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 # Test ji-cuadrado
@@ -629,7 +633,7 @@ hist(pvalor, freq=FALSE)
 abline(h=1) # curve(dunif(x,0,1), add=TRUE)
 ```
 
-<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-23-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 # Test ji-cuadrado
@@ -681,7 +685,7 @@ Ejercicios de fin de práctica
 -----------------------------
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-24"><strong>(\#exr:unnamed-chunk-24) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-23"><strong>(\#exr:unnamed-chunk-23) </strong></span></div>\EndKnitrBlock{exercise}
 Uno de los primeros generadores fue el denominado método de los
 cuadrados medios propuesto por Von Neumann (1946). Con este
 procedimiento se generan números pseudoaleatorios de 4 dígitos de la
@@ -750,7 +754,7 @@ Estudiar las características del
 generador de cuadrados medios a partir de una secuencia de 500
 valores. Emplear únicamente métodos gráficos.
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-26"><strong>(\#exr:unnamed-chunk-26) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-25"><strong>(\#exr:unnamed-chunk-25) </strong></span></div>\EndKnitrBlock{exercise}
 Considerando el generador congruencial multiplicativo de parámetros
 $a=7^{5}=16807$, $c=0$ y $m=2^{31}-1$. ¿Se observan los mismos problemas 
 que con el algoritmo RANDU al considerar las tripletas $(x_{k},x_{k+1},x_{k+2})$?

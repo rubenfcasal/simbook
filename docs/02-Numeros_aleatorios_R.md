@@ -439,10 +439,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.08    0.01    0.09 
+##    0.08    0.00    0.08 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.08    0.01    0.09
+##    0.08    0.00    0.08
 ```
 
 ```r
@@ -461,10 +461,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.02    0.00    0.02 
+##    0.01    0.00    0.01 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.10    0.01    0.11
+##    0.09    0.00    0.09
 ```
 
 ### Paquetes de R
@@ -555,7 +555,7 @@ cpu.time('\nSample median of', 1000000, 'values =', res, total = FALSE)
 ## Time of last operation: 
 ## Sample median of 1e+06 values = 0.4993793 
 ##    user  system elapsed 
-##    0.07    0.00    0.06
+##    0.05    0.02    0.07
 ```
 
 ```r
@@ -567,10 +567,10 @@ cpu.time('\nSample median of', 1000, 'values =', res)
 ## Time of last operation: 
 ## Sample median of 1000 values = 0.4936829 
 ##    user  system elapsed 
-##    0.01    0.00    0.02 
+##       0       0       0 
 ## Total time:
 ##    user  system elapsed 
-##    0.08    0.00    0.08
+##    0.05    0.02    0.07
 ```
 
 Otro paquete que puede ser de utilidad es

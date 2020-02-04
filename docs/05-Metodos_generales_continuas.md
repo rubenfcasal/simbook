@@ -87,7 +87,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##    0.02    0.00    0.02
+##       0       0       0
 ```
 
 ```r
@@ -173,7 +173,7 @@ b)  Generar $10^{4}$ valores de la distribución doble exponencial de
     
     ```
     ##    user  system elapsed 
-    ##    0.03    0.00    0.03
+    ##    0.02    0.02    0.03
     ```
 
 
@@ -440,7 +440,7 @@ a)  Generar una muestra de $10^{4}$ observaciones empleando este
     
     ```
     ##    user  system elapsed 
-    ##    0.07    0.00    0.08
+    ##    0.08    0.00    0.08
     ```
     
     ```r

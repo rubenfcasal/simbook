@@ -85,7 +85,9 @@ $$x_{i}=\left(  a^{i}x_{0}+c\frac{a^{i}-1}{a-1}\right)  \operatorname{mod}m$$
 
 A pesar de su simplicidad, una adecuada elección de los parámetros
 permite obtener de manera eficiente secuencias de números
-“aparentemente” i.i.d. $\mathcal{U}(0,1).$
+“aparentemente” i.i.d. $\mathcal{U}(0,1)$.
+
+Es procedimiento habitual solía ser escoger $m$ de forma que la operación del módulo se pudiese realizar de forma muy eficiente, para posteriormente seleccionar $c$ y $a$ de forma que el período fuese lo más largo posible (o suficientemente largo).
 
 ### Periodo
 
@@ -129,13 +131,9 @@ Un generador multiplicativo tiene período máximo ($p=m-1$) si:
 
 Además de preocuparse de la longitud del ciclo, las secuencias
 generadas deben aparentar muestras i.i.d. $\mathcal{U}(0,1)$. 
-Por ejemplo, los valores generados pueden mostrar una estructura reticular.
 
--   Marsaglia (1968): $k$-uplas de generadores multiplicativos
-    contenidas en a lo sumo $\left(k!m\right)^{1/k}$
-    hiperplanos paralelos.
-
--   Generador RANDU de IBM (70’s):
+Uno de los principales problemas es que los valores generados pueden mostrar una clara estructura reticular.
+Este es el caso por ejemplo del generador RANDU de IBM muy empleado en la década de los 70 `r citefig("randu")`. 
 
 ```{r randu, warning=FALSE, fig.cap='Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)'}
 system.time(u <- RANDCN(9999))  # Generar
@@ -143,15 +141,20 @@ xyz <- matrix(u, ncol = 3, byrow = TRUE)
 
 library(plot3D)
 points3D(xyz[,1], xyz[,2], xyz[,3], colvar = NULL, phi = 60, theta = -50, pch = 21, cex = 0.2)
+
+# Alternativamente se podría utilizar la función `plot3d` del paquete `rgl`,
+# y pulsando con el ratón se podría rotar la figura para ver los hiperplanos:
+# library(rgl)
+# plot3d(xyz) 
 ```
 
-NOTA: Alternativamente se podría utilizar la función `plot3d` del paquete `rgl`,
-y pulsando con el ratón se podría rotar la figura para ver los hiperplanos:
-```{r, eval=FALSE}
-library(rgl)
-plot3d(xyz) 
-```
+En general todos los generadores de este tipo van a presentar estructuras reticulares:
 
+-   Marsaglia (1968): $k$-uplas de generadores multiplicativos
+    contenidas en a lo sumo $\left(k!m\right)^{1/k}$
+    hiperplanos paralelos.
+
+por lo que se trataría de seleccionar adecuadamente $m$ y $c$ ($a$ solo influiría en la pendiente)...
 
 Se han propuesto diversas pruebas (ver sección siguiente) para
 determinar si un generador tiene problemas de este tipo y se han

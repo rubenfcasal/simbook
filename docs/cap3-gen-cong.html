@@ -25,7 +25,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)">
 
 
-<meta name="date" content="2020-01-30">
+<meta name="date" content="2020-02-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -220,7 +220,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.6.6" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#intervalos-de-confianza-bootstrap"><i class="fa fa-check"></i><b>8.6.6</b> Intervalos de confianza bootstrap</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="cap9.html"><a href="cap9.html"><i class="fa fa-check"></i><b>9</b> Integración y Optimización Montecarlo</a><ul>
+<li class="chapter" data-level="9" data-path="cap9.html"><a href="cap9.html"><i class="fa fa-check"></i><b>9</b> Integracion y Optimizacion Montecarlo</a><ul>
 <li class="chapter" data-level="9.1" data-path="integracion-monte-carlo-clasica.html"><a href="integracion-monte-carlo-clasica.html"><i class="fa fa-check"></i><b>9.1</b> Integración Monte Carlo (clásica)</a><ul>
 <li class="chapter" data-level="9.1.1" data-path="integracion-monte-carlo-clasica.html"><a href="integracion-monte-carlo-clasica.html#ejercicio-1"><i class="fa fa-check"></i><b>9.1.1</b> Ejercicio 1</a></li>
 <li class="chapter" data-level="9.1.2" data-path="integracion-monte-carlo-clasica.html"><a href="integracion-monte-carlo-clasica.html#caso-general"><i class="fa fa-check"></i><b>9.1.2</b> Caso general</a></li>
@@ -359,7 +359,8 @@ RANDCN &lt;-<span class="st"> </span><span class="cf">function</span>(<span clas
 <li><p><span class="math inline">\(c=0\)</span>, <span class="math inline">\(a=7^{5}=16807\)</span> y <span class="math inline">\(m=2^{31}-1,\)</span> Park y Miller (1988) “minimal standar”,empleado por las librerías IMSL y NAG.</p></li>
 </ul>
 <p>Los parámetros y la semilla determinan los valores generados: <span class="math display">\[x_{i}=\left(  a^{i}x_{0}+c\frac{a^{i}-1}{a-1}\right)  \operatorname{mod}m\]</span></p>
-<p>A pesar de su simplicidad, una adecuada elección de los parámetros permite obtener de manera eficiente secuencias de números “aparentemente” i.i.d. <span class="math inline">\(\mathcal{U}(0,1).\)</span></p>
+<p>A pesar de su simplicidad, una adecuada elección de los parámetros permite obtener de manera eficiente secuencias de números “aparentemente” i.i.d. <span class="math inline">\(\mathcal{U}(0,1)\)</span>.</p>
+<p>Es procedimiento habitual solía ser escoger <span class="math inline">\(m\)</span> de forma que la operación del módulo se pudiese realizar de forma muy eficiente, para posteriormente seleccionar <span class="math inline">\(c\)</span> y <span class="math inline">\(a\)</span> de forma que el período fuese lo más largo posible (o suficientemente largo).</p>
 </div>
 <div id="periodo" class="section level3">
 <h3><span class="header-section-number">3.1.2</span> Periodo</h3>
@@ -390,14 +391,11 @@ RANDCN &lt;-<span class="st"> </span><span class="cf">function</span>(<span clas
 .
 </div>
 
-<p>Además de preocuparse de la longitud del ciclo, las secuencias generadas deben aparentar muestras i.i.d. <span class="math inline">\(\mathcal{U}(0,1)\)</span>. Por ejemplo, los valores generados pueden mostrar una estructura reticular.</p>
-<ul>
-<li><p>Marsaglia (1968): <span class="math inline">\(k\)</span>-uplas de generadores multiplicativos contenidas en a lo sumo <span class="math inline">\(\left(k!m\right)^{1/k}\)</span> hiperplanos paralelos.</p></li>
-<li><p>Generador RANDU de IBM (70’s):</p></li>
-</ul>
+<p>Además de preocuparse de la longitud del ciclo, las secuencias generadas deben aparentar muestras i.i.d. <span class="math inline">\(\mathcal{U}(0,1)\)</span>.</p>
+<p>Uno de los principales problemas es que los valores generados pueden mostrar una clara estructura reticular. Este es el caso por ejemplo del generador RANDU de IBM muy empleado en la década de los 70 (ver Figura <a href="cap3-gen-cong.html#fig:randu">2.1</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system.time</span>(u &lt;-<span class="st"> </span><span class="kw">RANDCN</span>(<span class="dv">9999</span>))  <span class="co"># Generar</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.01    0.00    0.02</code></pre>
+##    0.02    0.02    0.03</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xyz &lt;-<span class="st"> </span><span class="kw">matrix</span>(u, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
 
 <span class="kw">library</span>(plot3D)
@@ -408,9 +406,15 @@ RANDCN &lt;-<span class="st"> </span><span class="cf">function</span>(<span clas
 Figura 2.1: Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)
 </p>
 </div>
-<p>NOTA: Alternativamente se podría utilizar la función <code>plot3d</code> del paquete <code>rgl</code>, y pulsando con el ratón se podría rotar la figura para ver los hiperplanos:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rgl)
-<span class="kw">plot3d</span>(xyz) </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Alternativamente se podría utilizar la función `plot3d` del paquete `rgl`,</span>
+<span class="co"># y pulsando con el ratón se podría rotar la figura para ver los hiperplanos:</span>
+<span class="co"># library(rgl)</span>
+<span class="co"># plot3d(xyz) </span></code></pre></div>
+<p>En general todos los generadores de este tipo van a presentar estructuras reticulares:</p>
+<ul>
+<li>Marsaglia (1968): <span class="math inline">\(k\)</span>-uplas de generadores multiplicativos contenidas en a lo sumo <span class="math inline">\(\left(k!m\right)^{1/k}\)</span> hiperplanos paralelos.</li>
+</ul>
+<p>por lo que se trataría de seleccionar adecuadamente <span class="math inline">\(m\)</span> y <span class="math inline">\(c\)</span> (<span class="math inline">\(a\)</span> solo influiría en la pendiente)…</p>
 <p>Se han propuesto diversas pruebas (ver sección siguiente) para determinar si un generador tiene problemas de este tipo y se han realizado numerosos estudios para determinadas familias (e.g. Park y Miller, 1988, estudiaron que parámetros son adecuados para <span class="math inline">\(m=2^{31}-1\)</span>).</p>
 <ul>
 <li><p>En cualquier caso, se recomienda considerar un “periodo de seguridad” <span class="math inline">\(\approx \sqrt{p}\)</span> para evitar este tipo de problemas.</p></li>
@@ -433,7 +437,7 @@ Figura 2.1: Grafico de dispersión de tripletas del generador RANDU de IBM (cont
 </ul>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-7" class="exercise"><strong>Ejercicio 2.5  </strong></span>
+<span id="exr:unnamed-chunk-6" class="exercise"><strong>Ejercicio 2.5  </strong></span>
 </div>
 
 <p>Considera el generador congruencial definido por: <span class="math display">\[\begin{aligned}

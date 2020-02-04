@@ -36,12 +36,18 @@ El modelo debería considerar las variables más relevantes para explicar el fen
 La inferencia estadística proporciona herramientas para estimar los parámetros y contrastar la validez de un modelo estocástico a partir de los datos observados.
 
 La idea es emplear el modelo (suponiendo que es válido) para resolver el problema de interés. 
-Si se puede obtener la solución de forma análitica, esta suele ser exacta (aunque en ocasiones solo se dispone de soluciones aproximadas/asintóticas) y a menudo la resolución también es rápida.
+Si se puede obtener la solución de forma análitica, esta suele ser exacta (aunque en ocasiones solo se dispone de soluciones aproximadas, basadas en resultados asintóticos, o que dependen de supociones que pueden ser cuestionables) y a menudo la resolución también es rápida.
 Cuando la solución no se puede obtener de modo analítico (o si la aproximación disponible no es adecuada) se puede recurrir a la simulación.
 
 Podríamos decir que la *Simulación* es una técnica que consiste en realizar experimentos de muestreo sobre el modelo de un sistema, con el objetivo de recopilar información bajo determinadas condiciones. 
-Nos centraremos en el caso de la *Simulación Estocástica*:    las conclusiones se obtienen generando repetidamente simulaciones del modelo aleatorio.
+Nos centraremos en el caso de la *Simulación Estocástica*: las conclusiones se obtienen generando repetidamente simulaciones del modelo aleatorio.
 
+<!-- 
+Ejemplo: caballero de Meré 
+Experimentación directa sobre la realidad
+Modelo de probabilidad
+Aproximación por simulación
+-->
 
 ### Ventajas e inconvenientes de la simulación 
 
@@ -124,7 +130,7 @@ Normalmente son obtenidos por procesos físicos
 Por ejemplo, en 1955 la Corporación RAND publicó el libro [A Million Random Digits with 100,000 Normal Deviates](https://www.rand.org/pubs/monograph_reports/MR1418.html) que contenía números aleatorios generados mediante una ruleta electrónica conectada a una computadora  `r citefig("randbook")`.
 
 
-```{r randbook, echo=FALSE, fig.cap='Líneas 10580–10594, columnas 21–40, del libro *A Million Random Digits with 100,000 Normal Deviates*.', out.width="30%"}
+```{r randbook, echo=FALSE, fig.cap='Líneas 10580-10594, columnas 21-40, del libro *A Million Random Digits with 100,000 Normal Deviates*.', out.width="30%"}
 #  ![RAND](images/RAND.png)
 knitr::include_graphics(paste0(fig.path, "RAND.png"))
 ```
@@ -156,15 +162,23 @@ Aunque para un uso profesional puede ser recomendable emplear generadores implem
 
 Sus principales aplicaciones hoy en día son en criptografía (impredictibilidad).
 
+
 ### Inconvenientes:
 
--   Es necesario/recomendable conocer su distribución.
+Para su aplicación en el campo de la Estadística:
+
+-   Es necesario conocer su distribución.
 
 -   Los datos generados deberían ser i.i.d.
+
+(sería también muy recomendable para otros casos) y en general:
 
 -   Reproductivilidad.
 
 -   Pueden requerir del almacenamiento en tablas.
+
+Además siempre está la posible presencia de sesgos, principalmente debidos a fallos del sistema o interferencias. 
+Por ejemplo en el caso de la máquina RAND, fallos mecánicos en el sistema de grabación de los datos causaron problemas de aleatoriedad (Hacking, 1965, p. 129).
 
 
 ### Alternativas:
@@ -172,10 +186,9 @@ Sus principales aplicaciones hoy en día son en criptografía (impredictibilidad
 A partir de la década de 1960, al disponer de computadoras de mayor velocidad, empezó a resultar más eficiente generar valores mediante software en lugar de leerlos de las tablas. 
 Se distingue entre dos tipos de secuencias:
 
--   *números pseudo-aleatorios*: simulan realizaciones de una
-variable aleatoria (uniforme).
+-   *números pseudo-aleatorios*: simulan realizaciones de una variable aleatoria (uniforme).
 
--   números cuasi-aleatorios: secuencias determinísticas con una distribución más uniforme en el rango considerado (se podría            pensar que son una única generación de una variable aleatoria).
+-   números cuasi-aleatorios: secuencias determinísticas con una distribución más uniforme en el rango considerado (se podría pensar que son una única generación de una variable aleatoria).
 
 Algunos problemas, como la integración numérica (en el Capítulo \@ref(cap9) se tratarán métodos de integración Monte Carlo), no dependen realmente de la aleatoriedad de la secuencia. Para evitar generaciones poco probables, se puede recurrir a secuencias cuasi-aleatorias, también denominadas *sucesiones de baja discrepancia* (hablaríamos entonces de métodos cuasi-Monte Carlo). La idea sería que la proporción de valores en una región cualquiera sea siempre aproximadamente proporcional a la medida de la región (como sucedería en media con la distribución uniforme, aunque no necesariamente para una realización concreta).
 
@@ -196,13 +209,11 @@ par(par.old)
 Números pseudoaleatorios
 ------------------------
 
-La mayoría de los métodos de simulación se basan en la posibilidad
-de generar números pseudoaleatorios con distribución
-$\mathcal{U}(0,1)$. 
-Se obtienen mediante un algoritmo recursivo denominado
-*generador*:
+La mayoría de los métodos de simulación se basan en la posibilidad de generar números pseudoaleatorios que imiten las propiedades de generaciones independientes de una distribución $\mathcal{U}(0,1)$. 
 
-  $$x_{i} = f\left( x_{i-1}, x_{i-2}, \cdots, x_{i-k}\right)$$
+El procedimiento habitual para obtiener estas secuencias es emplear un algoritmo recursivo denominado *generador*:
+
+$$x_{i} = f\left( x_{i-1}, x_{i-2}, \cdots, x_{i-k}\right)$$
 
 donde:
 

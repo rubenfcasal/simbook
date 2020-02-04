@@ -25,7 +25,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)">
 
 
-<meta name="date" content="2020-01-30">
+<meta name="date" content="2020-02-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -220,7 +220,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.6.6" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#intervalos-de-confianza-bootstrap"><i class="fa fa-check"></i><b>8.6.6</b> Intervalos de confianza bootstrap</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="cap9.html"><a href="cap9.html"><i class="fa fa-check"></i><b>9</b> Integración y Optimización Montecarlo</a><ul>
+<li class="chapter" data-level="9" data-path="cap9.html"><a href="cap9.html"><i class="fa fa-check"></i><b>9</b> Integracion y Optimizacion Montecarlo</a><ul>
 <li class="chapter" data-level="9.1" data-path="integracion-monte-carlo-clasica.html"><a href="integracion-monte-carlo-clasica.html"><i class="fa fa-check"></i><b>9.1</b> Integración Monte Carlo (clásica)</a><ul>
 <li class="chapter" data-level="9.1.1" data-path="integracion-monte-carlo-clasica.html"><a href="integracion-monte-carlo-clasica.html#ejercicio-1"><i class="fa fa-check"></i><b>9.1.1</b> Ejercicio 1</a></li>
 <li class="chapter" data-level="9.1.2" data-path="integracion-monte-carlo-clasica.html"><a href="integracion-monte-carlo-clasica.html#caso-general"><i class="fa fa-check"></i><b>9.1.2</b> Caso general</a></li>
@@ -370,7 +370,7 @@ chisq.test.cont &lt;-<span class="st"> </span><span class="cf">function</span>(x
 <p>Por ejemplo, continuando con el generador congruencial anterior, obtendríamos:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">chisq.test.cont</span>(u, <span class="dt">distribution =</span> <span class="st">&quot;unif&quot;</span>, 
                 <span class="dt">nclasses =</span> <span class="dv">10</span>, <span class="dt">nestpar =</span> <span class="dv">0</span>, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">1</span>)</code></pre></div>
-<p><img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-11-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## Pearson&#39;s Chi-squared test table
 ##                          classes observed expected  residuals
@@ -394,7 +394,7 @@ chisq.test.cont &lt;-<span class="st"> </span><span class="cf">function</span>(x
 <p>Otro contraste de bondad de ajuste muy conocido es el test de Kolmogorov-Smirnov, implementado en <code>ks.test</code>.</p>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-12" class="exercise"><strong>Ejercicio 2.6  </strong></span>
+<span id="exr:unnamed-chunk-11" class="exercise"><strong>Ejercicio 2.6  </strong></span>
 </div>
 
 <p>Continuando con el generador congruencial anterior:</p>
@@ -406,7 +406,7 @@ nsim &lt;-<span class="st"> </span><span class="dv">500</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Distribución empírica</span>
 <span class="kw">curve</span>(<span class="kw">ecdf</span>(u)(x), <span class="dt">type =</span> <span class="st">&quot;s&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">curve</span>(<span class="kw">punif</span>(x, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Test de Kolmogorov-Smirnov</span>
 <span class="kw">ks.test</span>(u, <span class="st">&quot;punif&quot;</span>, <span class="dv">0</span>, <span class="dv">1</span>)</code></pre></div>
 <pre><code>## 
@@ -418,14 +418,14 @@ nsim &lt;-<span class="st"> </span><span class="dv">500</span>
 <li><p>Obtener el gráfico secuencial y el de dispersión retardado, ¿se observa algún problema?</p>
 <p>Gráfico secuencial:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">as.ts</span>(u))</code></pre></div>
-<p><img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Gráfico de dispersión retardado:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(u[<span class="op">-</span>nsim],u[<span class="op">-</span><span class="dv">1</span>])</code></pre></div>
-<p><img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" /></p></li>
+<p><img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" /></p></li>
 <li><p>Estudiar las correlaciones del vector <span class="math inline">\((u_{i},u_{i+k})\)</span>, con <span class="math inline">\(k=1,...,10\)</span>. Contrastar si son nulas.</p>
 <p>Correlaciones:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">acf</span>(u)</code></pre></div>
-<p><img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Test de Ljung-Box:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Box.test</span>(u, <span class="dt">lag =</span> <span class="dv">10</span>, <span class="dt">type =</span> <span class="st">&quot;Ljung&quot;</span>)</code></pre></div>
 <pre><code>## 
@@ -445,7 +445,7 @@ nsim &lt;-<span class="st"> </span><span class="dv">500</span>
 <p>Este procedimiento es también el habitual para validar un método de contraste de hipótesis por simulación.</p>
 
 <div class="example">
-<span id="exm:unnamed-chunk-19" class="example"><strong>Ejemplo 2.1  </strong></span>
+<span id="exm:unnamed-chunk-18" class="example"><strong>Ejemplo 2.1  </strong></span>
 </div>
 
 <p>Consideramos el generador congruencial RANDU:</p>
@@ -481,7 +481,7 @@ pvalor &lt;-<span class="st"> </span><span class="kw">numeric</span>(nsim)
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Histograma</span>
 <span class="kw">hist</span>(estadistico, <span class="dt">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="dt">freq=</span><span class="ot">FALSE</span>)
 <span class="kw">curve</span>(<span class="kw">dchisq</span>(x,<span class="dv">99</span>), <span class="dt">add=</span><span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Test ji-cuadrado</span>
 <span class="co"># chisq.test.cont(estadistico, distribution=&quot;chisq&quot;, nclasses=20, nestpar=0, df=99)</span>
 <span class="co"># Test de Kolmogorov-Smirnov</span>
@@ -496,7 +496,7 @@ pvalor &lt;-<span class="st"> </span><span class="kw">numeric</span>(nsim)
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Histograma</span>
 <span class="kw">hist</span>(pvalor, <span class="dt">freq=</span><span class="ot">FALSE</span>)
 <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">1</span>) <span class="co"># curve(dunif(x,0,1), add=TRUE)</span></code></pre></div>
-<p><img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-23-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Test ji-cuadrado</span>
 <span class="co"># chisq.test.cont(pvalor, distribution=&quot;unif&quot;, nclasses=20, nestpar=0, min=0, max=1)</span>
 <span class="co"># Test de Kolmogorov-Smirnov</span>
