@@ -3,7 +3,9 @@
 
 
 
-## Introducción
+Podríamos definir la *Simulación* como una técnica que consiste en realizar experimentos de muestreo sobre el modelo de un sistema, con el objetivo de recopilar información bajo determinadas condiciones. 
+
+## Conceptos básicos
 
 La experimentación directa sobre la realidad puede tener muchos inconvenientes:
 
@@ -39,7 +41,6 @@ La idea es emplear el modelo (suponiendo que es válido) para resolver el proble
 Si se puede obtener la solución de forma análitica, esta suele ser exacta (aunque en ocasiones solo se dispone de soluciones aproximadas, basadas en resultados asintóticos, o que dependen de supociones que pueden ser cuestionables) y a menudo la resolución también es rápida.
 Cuando la solución no se puede obtener de modo analítico (o si la aproximación disponible no es adecuada) se puede recurrir a la simulación.
 
-Podríamos decir que la *Simulación* es una técnica que consiste en realizar experimentos de muestreo sobre el modelo de un sistema, con el objetivo de recopilar información bajo determinadas condiciones. 
 Nos centraremos en el caso de la *Simulación Estocástica*: las conclusiones se obtienen generando repetidamente simulaciones del modelo aleatorio.
 
 <!-- 
@@ -130,10 +131,14 @@ Normalmente son obtenidos por procesos físicos
 Por ejemplo, en 1955 la Corporación RAND publicó el libro [A Million Random Digits with 100,000 Normal Deviates](https://www.rand.org/pubs/monograph_reports/MR1418.html) que contenía números aleatorios generados mediante una ruleta electrónica conectada a una computadora  (ver Figura \@ref(fig:randbook)).
 
 
-<div class="figure" style="text-align: center">
-<img src="images/RAND.png" alt="Líneas 10580-10594, columnas 21-40, del libro *A Million Random Digits with 100,000 Normal Deviates*." width="30%" />
-<p class="caption">(\#fig:randbook)Líneas 10580-10594, columnas 21-40, del libro *A Million Random Digits with 100,000 Normal Deviates*.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.3\linewidth]{images/RAND} 
+
+}
+
+\caption{Líneas 10580-10594, columnas 21-40, del libro *A Million Random Digits with 100,000 Normal Deviates*.}(\#fig:randbook)
+\end{figure}
 
 El procediento para generar de forma manual números aleatorios 
 en un rango de 1 a *m* era el siguiente:
@@ -192,7 +197,7 @@ Se distingue entre dos tipos de secuencias:
 
 Algunos problemas, como la integración numérica (en el Capítulo \@ref(cap9) se tratarán métodos de integración Monte Carlo), no dependen realmente de la aleatoriedad de la secuencia. Para evitar generaciones poco probables, se puede recurrir a secuencias cuasi-aleatorias, también denominadas *sucesiones de baja discrepancia* (hablaríamos entonces de métodos cuasi-Monte Carlo). La idea sería que la proporción de valores en una región cualquiera sea siempre aproximadamente proporcional a la medida de la región (como sucedería en media con la distribución uniforme, aunque no necesariamente para una realización concreta).
 
-Por ejemplo, el paquete [`randtoolbox`](https://cran.r-project.org/web/packages/randtoolbox/index.html) implementa métodos para la generación de secuencias cuasi-aleatorias (ver Figura \@ref(fig:randtoolbox)).
+Por ejemplo, el paquete [`randtoolbox`](https://CRAN.R-project.org/package=randtoolbox) implementa métodos para la generación de secuencias cuasi-aleatorias (ver Figura \@ref(fig:randtoolbox)).
 
 
 ```r
@@ -204,10 +209,14 @@ plot(sobol(n, dim = 2), xlab = 'x1', ylab = 'x2')
 plot(torus(n, dim = 2), xlab = 'x1', ylab = 'x2')
 ```
 
-<div class="figure" style="text-align: center">
-<img src="01-Introduccion_files/figure-html/randtoolbox-1.png" alt="Secuencias cuasi-aleatorias bidimensionales obtenidas con los métodos de Halton (izquierda), Sobol (centro) y Torus (derecha)." width="70%" />
-<p class="caption">(\#fig:randtoolbox)Secuencias cuasi-aleatorias bidimensionales obtenidas con los métodos de Halton (izquierda), Sobol (centro) y Torus (derecha).</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{01-Introduccion_files/figure-latex/randtoolbox-1} 
+
+}
+
+\caption{Secuencias cuasi-aleatorias bidimensionales obtenidas con los métodos de Halton (izquierda), Sobol (centro) y Torus (derecha).}(\#fig:randtoolbox)
+\end{figure}
 
 ```r
 par(par.old)
@@ -299,4 +308,4 @@ Código fuente disponible en múltiples librerias:
 
 -   ...
   
-Nos centraremos en los generadores congruenciales, descritos en la Sección \@ref(cap3-gen-cong).
+Nos centraremos en los generadores congruenciales, descritos en la Sección \@ref(gen-cong).

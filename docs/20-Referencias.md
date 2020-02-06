@@ -1,7 +1,7 @@
 # Referencias {-}
 
 <!-- 
-# Referencias {-}
+
 -->
 
 ## Bibliografía básica {-}
