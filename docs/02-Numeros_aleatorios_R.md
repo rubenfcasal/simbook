@@ -1,5 +1,4 @@
-Números aleatorios en R
-=======================
+# Números aleatorios en R {#cap2}
 
 
 
@@ -11,13 +10,18 @@ Entre las herramientas en el paquete base de `R` estarían:
 -   `set.seed(entero)`: permite establecer la semilla (y el
     generador).
 
--   `RNGkind`: selecciona el generador.
+-   `RNGkind()`: selecciona el generador.
 
 -   `rdistribución(n,...):` genera valores aleatorios de la
     correspondiente distribución. 
     Por ejemplo: `runif(n, min = 0, max = 1)`, generaría `n` valores de una uniforme.
 
--   `sample`: genera muestras aleatorias (v.a. discretas) y permutaciones.
+-   `sample()`: genera muestras aleatorias de variables discretas y permutaciones (se tratará en el Capítulo \@ref(cap6)).
+
+-   `simulate()`: genera realizaciones de la respuesta de un modelo ajustado.
+
+Además están disponibles otros paquetes, como el paquete [`distr`](http://distr.r-forge.r-project.org),
+que implementan distribuciones adicionales.
 
 La semilla se almacena (en `globalenv`) en `.Random.seed`; es un vector
 de enteros cuya dimensión depende del tipo de generador:
@@ -28,8 +32,44 @@ de enteros cuya dimensión depende del tipo de generador:
 -   Si no se especifica con `set.seed` (o no existe) se genera a
     partir del reloj del sistema.
 
+
 \BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}Puede ser recomendable (para depurar) almacenarla antes de generar simulaciones, e.g. 
 `semilla <- .Random.seed`.</div>\EndKnitrBlock{remark}
+
+
+En la mayoría de los ejemplos de este libro se generan todos los valores de una vez,
+se guardan y se procesan vectorialmente (normalmente empleando la función `apply`).
+En problemas mas complejos, en los que no es necesario almacenar todas las simulaciones,
+puede ser preferible emplear un bucle para generar y procesar cada simulación iterativamente.
+Por ejemplo podríamos emplear el siguiente esquema:
+
+
+```r
+# Fijar semilla
+set.seed(1)
+for (isim in 1:nsim) {
+  seed <- .Random.seed
+  # Si se produce un error, podremos depurarlo ejecutando:
+  #  .Random.seed <- seed
+  ...
+  # Generar valores pseudoaleatorios
+  ...
+}
+```
+
+o alternativamente fijar la semilla en cada iteración, por ejemplo:
+
+
+```r
+for (isim in 1:nsim) {
+  set.seed(isim)
+  ...
+  # Generar valores pseudoaleatorios
+  ...
+}
+```
+
+Hay que tener en cuenta que `.Random.seed` se almacena en el entorno de trabajo...
 
 
 ##  Opciones
@@ -46,7 +86,7 @@ seleccionar el tipo de generador (en negrita los valores por defecto):
     -   “Super-Duper”: Ciclo aprox. $4.6\times10^{18}$ (S-PLUS)
 
     -   **“Mersenne-Twister”**: Ciclo $2^{19937}-1$ y equidistribution
-        en 623 dim.
+        en 623 dimensiones.
 
     -   “Knuth-TAOCP-2002”: Ciclo aprox. $2^{129}$.
 
@@ -59,6 +99,7 @@ seleccionar el tipo de generador (en negrita los valores por defecto):
     “Kinderman-Ramage”, “Buggy Kinderman-Ramage”,
     “Ahrens-Dieter”, “Box-Muller”, **“Inversion”** , o “user-supplied”
 
+
 ##  Paquetes de R
 
 Otros paquetes de R que pueden ser de interés:
@@ -66,7 +107,7 @@ Otros paquetes de R que pueden ser de interés:
 -   `setRNG` contiene herramientas que facilitan operar con la semilla
     (dentro de funciones,...).
 
--   `random` generación de numeros “true random”.
+-   `random` permite la descarga de numeros “true random” desde [RANDOM.ORG](https://www.random.org).
 
 -   `randtoolbox` implementa generadores más recientes (`rngWELL`) y
     generación de secuencias cuasi-aleatorias.
@@ -74,18 +115,19 @@ Otros paquetes de R que pueden ser de interés:
 -   `RDieHarder` implementa diversos contrastes para el análisis de la
     calidad de un generador y varios generadores.
 
--   `Runuran` interfaz para la librería UNU.RAN para la
-    generación (automática) de variables aleatorias no uniformes.
+-   [`Runuran`](http://statmath.wu.ac.at/unuran) interfaz para la librería UNU.RAN para la
+    generación (automática) de variables aleatorias no uniformes (ver Hörmann et al., 2004).
 
--   `rsprng` y `rstream` implementan la generación de múltiples
-    secuencias (e.g. para programación paralela).
+-   `rsprng`, `rstream` y `rlecuyer` implementan la generación de múltiples
+    secuencias (para programación paralela).
 
 -   `gls`, `rngwell19937`, `randaes`, `SuppDists`, `lhs`, `mc2d`,
     `fOptions`, ...
 
+
 ## Ejercicios
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-3"><strong>(\#exr:unnamed-chunk-3) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-5"><strong>(\#exr:unnamed-chunk-5) </strong></span></div>\EndKnitrBlock{exercise}
 
 Sea $(X,Y)$ es un vector aleatorio con distribución uniforme en el
 cuadrado $[-1,1]\times\lbrack-1,1]$ de área 4.
@@ -172,10 +214,10 @@ b)  Aproximar el valor de $\pi$ mediante simulación a partir de
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-7-1} \end{center}
+    \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-9-1} \end{center}
     
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-8"><strong>(\#exr:unnamed-chunk-8) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-10"><strong>(\#exr:unnamed-chunk-10) </strong></span></div>\EndKnitrBlock{exercise}
 Consideramos el experimento de Bernoulli consistente en el
 lanzamiento de una moneda.
 
@@ -202,7 +244,7 @@ a)  Empleando la función `sample`, obtener 1000 simulaciones del
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-9-1} \end{center}
+    \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 b)  En R pueden generarse valores de la distribución de Bernoulli
     mediante la función `rbinom(nsim, size=1, prob)`. Generar un
@@ -234,10 +276,10 @@ b)  En R pueden generarse valores de la distribución de Bernoulli
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-10-1} \end{center}
+    \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-11"><strong>(\#exr:unnamed-chunk-11) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-13"><strong>(\#exr:unnamed-chunk-13) </strong></span></div>\EndKnitrBlock{exercise}
 Simular el paso de corriente a través del siguiente circuito, donde
 figuran las probabilidades de que pase corriente por cada uno de los
 interruptores:
@@ -273,7 +315,7 @@ mean(fin)
 ```
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-15"><strong>(\#exr:unnamed-chunk-15) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-17"><strong>(\#exr:unnamed-chunk-17) </strong></span></div>\EndKnitrBlock{exercise}
 En 1651, el Caballero de Méré le planteó a Pascal una pregunta
 relacionada con las apuestas y los juegos de azar: ¿es ventajoso
 apostar a que en cuatro lanzamientos de un dado se obtiene al menos
@@ -299,7 +341,7 @@ a)  Escribir una función que simule el lanzamiento de $n$ dados. El
     ```
     
     ```
-    ## [1] 4 5 3 1
+    ## [1] 3 5 1 6
     ```
     
     ```r
@@ -307,7 +349,7 @@ a)  Escribir una función que simule el lanzamiento de $n$ dados. El
     ```
     
     ```
-    ## [1] FALSE
+    ## [1] TRUE
     ```
 
 
@@ -326,7 +368,7 @@ b)  Utilizar la función anterior para simular $nsim=10000$ jugadas
     ```
     
     ```
-    ## [1] 0.5195
+    ## [1] 0.5148
     ```
     
     ```r
@@ -396,7 +438,7 @@ funtest(1000000)
 ```
 
 ```
-## [1] 0.5004536
+## [1] 0.5003313
 ```
 
 ```r
@@ -407,10 +449,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.08    0.00    0.08 
+##     0.1     0.0     0.1 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.08    0.00    0.08
+##     0.1     0.0     0.1
 ```
 
 ```r
@@ -418,7 +460,7 @@ funtest(1000)
 ```
 
 ```
-## [1] 0.4954613
+## [1] 0.5050682
 ```
 
 ```r
@@ -429,10 +471,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##       0       0       0 
+##    0.01    0.00    0.01 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.08    0.00    0.08
+##    0.11    0.00    0.11
 ```
 
 ### Paquetes de R
@@ -521,9 +563,9 @@ cpu.time('\nSample median of', 1000000, 'values =', res, total = FALSE)
 
 ```
 ## Time of last operation: 
-## Sample median of 1e+06 values = 0.4993793 
+## Sample median of 1e+06 values = 0.4993323 
 ##    user  system elapsed 
-##    0.05    0.02    0.06
+##    0.06    0.00    0.06
 ```
 
 ```r
@@ -533,12 +575,12 @@ cpu.time('\nSample median of', 1000, 'values =', res)
 
 ```
 ## Time of last operation: 
-## Sample median of 1000 values = 0.4936829 
+## Sample median of 1000 values = 0.5126436 
 ##    user  system elapsed 
 ##       0       0       0 
 ## Total time:
 ##    user  system elapsed 
-##    0.05    0.02    0.06
+##    0.06    0.00    0.06
 ```
 
 Otro paquete que puede ser de utilidad es

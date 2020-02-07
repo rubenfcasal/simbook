@@ -127,7 +127,7 @@ Ricardo Cao (\href{mailto:rcao@udc.es}{\nolinkurl{rcao@udc.es}})}
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2020-01-28}
+    \date{2020-01-30}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -196,7 +196,7 @@ mostrados en el libro se puede emplear el siguiente comando:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{pkgs <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{'boot'}\NormalTok{, }\StringTok{'MASS'}\NormalTok{, }\StringTok{'DEoptim'}\NormalTok{, }\StringTok{'nortest'}\NormalTok{, }\StringTok{'geoR'}\NormalTok{, }\StringTok{'copula'}\NormalTok{, }\StringTok{'sm'}\NormalTok{,}
+\NormalTok{pkgs <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{'boot'}\NormalTok{, }\StringTok{'randtoolbox'}\NormalTok{, }\StringTok{'MASS'}\NormalTok{, }\StringTok{'DEoptim'}\NormalTok{, }\StringTok{'nortest'}\NormalTok{, }\StringTok{'geoR'}\NormalTok{, }\StringTok{'copula'}\NormalTok{, }\StringTok{'sm'}\NormalTok{,}
           \StringTok{'tseries'}\NormalTok{, }\StringTok{'forecast'}\NormalTok{, }\StringTok{'plot3D'}\NormalTok{, }\StringTok{'rgl'}\NormalTok{)}
 \KeywordTok{install.packages}\NormalTok{(}\KeywordTok{setdiff}\NormalTok{(pkgs, }\KeywordTok{installed.packages}\NormalTok{()[,}\StringTok{"Package"}\NormalTok{]), }
                  \DataTypeTok{dependencies =} \OtherTok{TRUE}\NormalTok{)}
@@ -220,72 +220,86 @@ Commons Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional}
 (esperamos poder liberarlo bajo una licencia menos restrictiva más
 adelante\ldots{}).
 
-\chapter{Introducción a la
-simulación}\label{introduccion-a-la-simulacion}
+\chapter{Introducción a la simulación}\label{cap1}
 
 \section{Introducción}\label{introduccion}
 
-Problemas de la experimentación directa sobre la realidad:
+La experimentación directa sobre la realidad puede tener muchos
+inconvenientes:
 
 \begin{itemize}
 \item
   Coste elevado.
-\item
-  En ocasiones las pruebas son destructivas.
-\item
-  Lentitud.
+
+  \begin{itemize}
+  \item
+    En ocasiones las pruebas son destructivas.
+  \item
+    Lentitud.
+  \end{itemize}
 \item
   Puede no ser ética.
-\item
-  experimentación sobre seres humanos.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Experimentación sobre seres humanos.
+  \end{itemize}
 \item
   Puede resultar imposible.
-\item
-  Acontecimientos futuros, \ldots{}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Acontecimientos futuros, alternativas en el pasado, \ldots{}
+  \end{itemize}
 \item
   \ldots{}
 \end{itemize}
 
-Puede ser preferible trabajar con un modelo del sistema real. La
-realidad puede ser muy compleja por lo que es habitual emplear un modelo
-para tratar de explicarla:
+Además la realidad puede ser demasiado compleja como para ser estudiada
+directamente y resultar preferible trabajar con un modelo del sistema
+real. Un modelo no es más que un conjunto de variables junto con
+ecuaciones matemáticas que las relacionan y restricciones sobre dichas
+variables. Habría dos tipos de modelos:
 
 \begin{itemize}
 \item
   Modelos deterministas.
 \item
-  Modelos estocásticos (con componente aleatoria).
-
-  \begin{itemize}
-  \item
-    Cuando no se dispone de la suficiente información sobre las
-    variables que influyen en el fenómeno en estudio.
-  \item
-    Se tienen en cuenta esta incertidumbre.
-  \end{itemize}
+  Modelos estocásticos (con componente aleatoria): tienen en cuenta la
+  incertidumbre debida a que no se disponga de toda la información sobre
+  las variables que influyen en el fenómeno en estudio (puede ser
+  simplemente que haya errores de medida).
 \end{itemize}
 
-La inferencia estadística proporciona herramientas para estimar los
+La modelización es una etapa presente en la mayor parte de los trabajos
+de investigación (especialmente en las ciencias experimentales). El
+modelo debería considerar las variables más relevantes para explicar el
+fenómeno en estudio y las principales relaciones entre ellas. La
+inferencia estadística proporciona herramientas para estimar los
 parámetros y contrastar la validez de un modelo estocástico a partir de
 los datos observados.
 
-La idea es emplear el modelo para resolver el problema de interés.
-Cuando la solución no se puede obtener de modo analítico (teórico) se
-puede recurrir a la simulación.
+La idea es emplear el modelo (suponiendo que es válido) para resolver el
+problema de interés. Si se puede obtener la solución de forma análitica,
+esta suele ser exacta (aunque en ocasiones solo se dispone de soluciones
+aproximadas/asintóticas) y a menudo la resolución también es rápida.
+Cuando la solución no se puede obtener de modo analítico (o si la
+aproximación disponible no es adecuada) se puede recurrir a la
+simulación.
 
-\textbf{Simulación}: realizar experimentos con un modelo con el objetivo
-de recopilar información bajo determinadas condiciones. Nos centraremos
-en el caso de la \textbf{simulación estocástica}:
+Podríamos decir que la \emph{Simulación} es una técnica que consiste en
+realizar experimentos de muestreo sobre el modelo de un sistema, con el
+objetivo de recopilar información bajo determinadas condiciones. Nos
+centraremos en el caso de la \emph{Simulación Estocástica}: las
+conclusiones se obtienen generando repetidamente simulaciones del modelo
+aleatorio.
 
-\begin{itemize}
-\tightlist
-\item
-  Las conclusiones se obtienen habitualmente generando repetidamente
-  simulaciones del modelo aleatorio.
-\end{itemize}
+\subsection{Ventajas e inconvenientes de la
+simulación}\label{ventajas-e-inconvenientes-de-la-simulacion}
 
-\subsection{Ventajas de la simulación (Shannon,
-1975):}\label{ventajas-de-la-simulacion-shannon-1975}
+Ventajas (Shannon, 1975):
 
 \begin{itemize}
 \item
@@ -307,8 +321,12 @@ en el caso de la \textbf{simulación estocástica}:
   En sistemas que evolucionan muy lentamente en el tiempo.
 \end{itemize}
 
-\subsection{Inconvenientes de la
-simulación:}\label{inconvenientes-de-la-simulacion}
+El principal incoveniente puede ser el tiempo de computación necesario,
+aunque gracias a la gran potencia de cálculo de los computadores
+actuales, se puede obtener rápidamente una solución aproximada en la
+mayor parte de los problemas susceptibles de ser modelizados. Además
+siempre están presentes los posibles problemas debidos a emplear un
+modelo:
 
 \begin{itemize}
 \item
@@ -320,13 +338,12 @@ simulación:}\label{inconvenientes-de-la-simulacion}
   entre ellas (los resultados pueden no ser válidos para el sistema
   real).
 \item
-  Resulta difícil conocer la precisión de la simulación (especialmente
-  en lo relativo a la precisión del modelo formulado).
-\item
-  Problemas de extrapolación de las conclusiones.
-\item
-  Tiempo de computación.
+  Resulta difícil conocer la precisión del modelo formulado.
 \end{itemize}
+
+Otro problema de la simulación es que se obtienen resultados para unos
+valores concretos de los parámetros del modelo, por lo que en principio
+resultaría complicado extrapolar las conclusiones a otras situaciones.
 
 \section{Generación de números
 (pseudo)aleatorios}\label{generacion-de-numeros-pseudoaleatorios}
@@ -336,21 +353,27 @@ Aplicaciones:
 \begin{itemize}
 \item
   Estadística:
-\item
-  Muestreo, remuestreo, \ldots{}
-\item
-  Aproximación de distribuciones (de estadísticos, estimadores,
-  \ldots{})
-\item
-  Realización de contrastes, intervalos de confianza, \ldots{}
-\item
-  Comparación de estimadores, contrastes, \ldots{}
-\item
-  Validación teoría (distribución asintótica,\ldots{})
-\item
-  Inferencia Bayesiana
+
+  \begin{itemize}
+  \item
+    Muestreo, remuestreo, \ldots{}
+  \item
+    Aproximación de distribuciones (de estadísticos, estimadores,
+    \ldots{})
+  \item
+    Realización de contrastes, intervalos de confianza, \ldots{}
+  \item
+    Comparación de estimadores, contrastes, \ldots{}
+  \item
+    Validación teoría (distribución asintótica,\ldots{})
+  \item
+    Inferencia Bayesiana
+  \end{itemize}
 \item
   Optimización: Algoritmos genéticos, \ldots{}
+\item
+  Análisis numérico: Aproximación de integrales, resolución de
+  ecuaciones, \ldots{}
 \item
   Computación: Diseño, verificación y validación de algoritmos,\ldots{}
 \item
@@ -358,28 +381,37 @@ Aplicaciones:
 \item
   Física: Simulación de fenómenos naturales, \ldots{}
 \item
-  Análisis numérico: Evaluación de expresiones, \ldots{}
-\item
   \ldots{}
 \end{itemize}
 
-En el Capítulo XX nos centraremos en algunas de las aplicaciones de
-utilidad en Estadística.
+En los capítulos \ref{cap8} y \ref{cap9} nos centraremos en algunas de
+las aplicaciones de utilidad en Estadística.
 
 \section{Números aleatorios puros}\label{numeros-aleatorios-puros}
 
-Una sucesión de números aleatorios puros (true random), se caracteriza
-por que no existe ninguna regla o plan que nos permita conocer sus
-valores.
+Una sucesión de números aleatorios puros (\emph{true random}), se
+caracteriza por que no existe ninguna regla o plan que nos permita
+conocer sus valores.
 
-Se almacena(ban) en \emph{tablas de dígitos aleatorios} (\emph{true
-random}) y normalmente son obtenidos por procesos físicos (loterías,
-ruletas, ruidos,\ldots{})
+Normalmente son obtenidos por procesos físicos (loterías, ruletas,
+ruidos,\ldots{}) y se almacenaban en \emph{tablas de dígitos
+aleatorios}. Por ejemplo, en 1955 la Corporación RAND publicó el libro
+\href{https://www.rand.org/pubs/monograph_reports/MR1418.html}{A Million
+Random Digits with 100,000 Normal Deviates} que contenía números
+aleatorios generados mediante una ruleta electrónica conectada a una
+computadora (ver Figura \ref{fig:randbook}).
 
-\begin{center}\includegraphics[width=0.7\linewidth]{images/RAND} \end{center}
+\begin{figure}[!htb]
 
-Se emplean para seleccionar números aleatorios en un rango de 1 a
-\emph{m}:
+{\centering \includegraphics[width=0.3\linewidth]{images/RAND} 
+
+}
+
+\caption{Líneas 10580–10594, columnas 21–40, del libro *A Million Random Digits with 100,000 Normal Deviates*.}\label{fig:randbook}
+\end{figure}
+
+El procediento para generar de forma manual números aleatorios en un
+rango de 1 a \emph{m} era el siguiente:
 
 \begin{itemize}
 \item
@@ -391,32 +423,25 @@ Se emplean para seleccionar números aleatorios en un rango de 1 a
   el resto).
 \end{itemize}
 
-Algunos enlaces:
+Hoy en día están disponibles generadores de números aleatorios
+``online'':
 
 \begin{itemize}
 \item
-  \href{https://en.wikipedia.org/wiki/A_Million_Random_Digits_with_100,000_Normal_Deviates}{A
-  Million Random Digits with 100,000 Normal Deviates} . RAND
-  Corporation. 1955.
+  \url{http://www.random.org/integers} (ver paquete \texttt{random} en
+  R).
 \item
-  Generadores de números aleatorios ``online'':
+  \url{http://www.fourmilab.ch/hotbits}
+\end{itemize}
 
-  \begin{itemize}
-  \item
-    \url{http://www.random.org/integers} (ver paquete \textbf{random} en
-    R).
-  \item
-    \url{http://www.fourmilab.ch/hotbits}
-  \end{itemize}
+Aunque para un uso profesional puede ser recomendable emplear
+generadores implementados mediante hardware:
+
+\begin{itemize}
 \item
-  Generadores mediante hardware:
-
-  \begin{itemize}
-  \item
-    \href{http://software.intel.com/en-us/articles/intel-digital-random-number-generator-drng-software-implementation-guide}{http://software.intel.com}.
-  \item
-    \href{http://spectrum.ieee.org/semiconductors/devices/a-memristor-true-randomnumber-generator}{http://spectrum.ieee.org}
-  \end{itemize}
+  \href{http://software.intel.com/en-us/articles/intel-digital-random-number-generator-drng-software-implementation-guide}{http://software.intel.com}.
+\item
+  \href{http://spectrum.ieee.org/semiconductors/devices/a-memristor-true-randomnumber-generator}{http://spectrum.ieee.org}
 \end{itemize}
 
 Sus principales aplicaciones hoy en día son en criptografía
@@ -437,9 +462,14 @@ Sus principales aplicaciones hoy en día son en criptografía
 
 \subsection{Alternativas:}\label{alternativas}
 
+A partir de la década de 1960, al disponer de computadoras de mayor
+velocidad, empezó a resultar más eficiente generar valores mediante
+software en lugar de leerlos de las tablas. Se distingue entre dos tipos
+de secuencias:
+
 \begin{itemize}
 \item
-  \textbf{números pseudo-aleatorios}: simulan realizaciones de una
+  \emph{números pseudo-aleatorios}: simulan realizaciones de una
   variable aleatoria (uniforme).
 \item
   números cuasi-aleatorios: secuencias determinísticas con una
@@ -447,27 +477,67 @@ Sus principales aplicaciones hoy en día son en criptografía
   que son una única generación de una variable aleatoria).
 \end{itemize}
 
-\section{Números pseudoaleatorios}\label{numeros-pseudoaleatorios}
+Algunos problemas, como la integración numérica (en el Capítulo
+\ref{cap9} se tratarán métodos de integración Monte Carlo), no dependen
+realmente de la aleatoriedad de la secuencia. Para evitar generaciones
+poco probables, se puede recurrir a secuencias cuasi-aleatorias, también
+denominadas \emph{sucesiones de baja discrepancia} (hablaríamos entonces
+de métodos cuasi-Monte Carlo). La idea sería que la proporción de
+valores en una región cualquiera sea siempre aproximadamente
+proporcional a la medida de la región (como sucedería en media con la
+distribución uniforme, aunque no necesariamente para una realización
+concreta).
 
-\subsection{Generación de números pseudoaleatorios mediante
-software}\label{generacion-de-numeros-pseudoaleatorios-mediante-software}
+Por ejemplo, el paquete
+\href{https://cran.r-project.org/web/packages/randtoolbox/index.html}{\texttt{randtoolbox}}
+implementa métodos para la generación de secuencias cuasi-aleatorias
+(ver Figura \ref{fig:randtoolbox}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(randtoolbox)}
+\NormalTok{n <-}\StringTok{ }\DecValTok{2000}
+\NormalTok{par.old <-}\StringTok{ }\KeywordTok{par}\NormalTok{( }\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{halton}\NormalTok{(n, }\DataTypeTok{dim =} \DecValTok{2}\NormalTok{), }\DataTypeTok{xlab =} \StringTok{'x1'}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{'x2'}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{sobol}\NormalTok{(n, }\DataTypeTok{dim =} \DecValTok{2}\NormalTok{), }\DataTypeTok{xlab =} \StringTok{'x1'}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{'x2'}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{torus}\NormalTok{(n, }\DataTypeTok{dim =} \DecValTok{2}\NormalTok{), }\DataTypeTok{xlab =} \StringTok{'x1'}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{'x2'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{01-Introduccion_files/figure-latex/randtoolbox-1} 
+
+}
+
+\caption{Secuencias cuasi-aleatorias bidimensionales obtenidas con los métodos de Halton (izquierda), Sobol (centro) y Torus (derecha).}\label{fig:randtoolbox}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(par.old)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Números pseudoaleatorios}\label{numeros-pseudoaleatorios}
 
 La mayoría de los métodos de simulación se basan en la posibilidad de
 generar números pseudoaleatorios con distribución \(\mathcal{U}(0,1)\).
-Se obtienen mediante un algoritmo recursivo denominado
-\textbf{generador}:
+Se obtienen mediante un algoritmo recursivo denominado \emph{generador}:
 
-\[x_{i}=f\left(  x_{i-1},x_{i-2},\cdots,x_{i-k}\right)\]
+\[x_{i} = f\left( x_{i-1}, x_{i-2}, \cdots, x_{i-k}\right)\]
+
+donde:
 
 \begin{itemize}
 \item
-  \(k\) orden del generador.
+  \(k\) es el orden del generador.
 \item
-  \(\left( x_{0},x_{1},\cdots,x_{k-1}\right)\) \textbf{semilla} (estado
-  inicial).
+  \(\left( x_{0},x_{1},\cdots,x_{k-1}\right)\) es la \emph{semilla}
+  (estado inicial).
 \end{itemize}
 
-El \textbf{periodo} o \emph{longitud del ciclo} es la longitud de la
+El \emph{periodo} o \emph{longitud del ciclo} es la longitud de la
 secuencia antes de que vuelva a repetirse. Lo denotaremos por \(p\).
 
 Los números de la sucesión serán predecibles, conociendo el algoritmo y
@@ -475,8 +545,8 @@ la semilla.
 
 \begin{itemize}
 \item
-  Sin embargo, si no se conociesen, \textbf{no se debería poder
-  distinguir} una serie de números pseudoaleatorios \textbf{de una
+  Sin embargo, si no se conociesen, \emph{no se debería poder
+  distinguir} una serie de números pseudoaleatorios \emph{de una
   sucesión de números verdaderamente aleatoria} (utilizando recursos
   computacionales razonables).
 \item
@@ -485,7 +555,7 @@ la semilla.
 \end{itemize}
 
 Como regla general, por lo menos mientras se está desarrollando un
-programa, interesa \textbf{fijar la semilla de aleatorización}.
+programa, interesa \emph{fijar la semilla de aleatorización}.
 
 \begin{itemize}
 \item
@@ -552,7 +622,7 @@ Código fuente disponible en múltiples librerias:
 \end{itemize}
 
 Nos centraremos en los generadores congruenciales, descritos en la
-\protect\hyperlink{generadores-congruenciales}{Sección 3.1}.
+Sección \ref{cap3-gen-cong}.
 
 \chapter{Números aleatorios en R}\label{numeros-aleatorios-en-r}
 
@@ -576,6 +646,10 @@ paquete base de \texttt{R} estarían:
   permutaciones.
 \end{itemize}
 
+Además están disponibles otros paquetes, como el paquete
+\href{https://cran.r-project.org/web/packages/distr/index.html}{\texttt{distr}},
+que implementan distribuciones adicionales.
+
 La semilla se almacena (en \texttt{globalenv}) en \texttt{.Random.seed};
 es un vector de enteros cuya dimensión depende del tipo de generador:
 
@@ -594,7 +668,43 @@ almacenarla antes de generar simulaciones, e.g.
 \texttt{semilla\ \textless{}-\ .Random.seed}.
 \EndKnitrBlock{remark}
 
-\section{Opciones}\label{opciones}
+En la mayoría de los ejemplos se generan todas las muestras de una vez,
+se guardan y se procesan vectorialmente (normalmente empleando la
+función \texttt{apply}). En problemas mas complejos, en los que no es
+necesario almacenar todas las simulaciones, puede ser preferible emplear
+un bucle para generar y procesar las muestras iterativamente. Por
+ejemplo podríamos emplear el siguiente esquema:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Fijar semilla}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{ (isim }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{nsim) \{}
+\NormalTok{  seed <-}\StringTok{ }\NormalTok{.Random.seed}
+  \CommentTok{# Si se produce un error, podremos depurarlo ejecutando:}
+  \CommentTok{#  .Random.seed <- seed}
+
+  \CommentTok{# Generar valores pseudoaleatorios}
+\NormalTok{  ...}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+o alternativamente fijar la semilla en cada iteración, por ejemplo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ (isim }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{nsim) \{}
+  \KeywordTok{set.seed}\NormalTok{(isim)}
+
+  \CommentTok{# Generar valores pseudoaleatorios}
+\NormalTok{  ...}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Hay que tener en cuenta que \texttt{.Random.seed} se almacena en el
+entorno de trabajo\ldots{} \#\# Opciones
 
 La función \texttt{RNGkind(kind\ =\ NULL,\ normal.kind\ =\ NULL)}
 permite seleccionar el tipo de generador (en negrita los valores por
@@ -659,7 +769,7 @@ Otros paquetes de R que pueden ser de interés:
 \section{Ejercicios}\label{ejercicios}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-3}{}{\label{exr:unnamed-chunk-3} }
+\protect\hypertarget{exr:unnamed-chunk-5}{}{\label{exr:unnamed-chunk-5} }
 \EndKnitrBlock{exercise}
 
 Sea \((X,Y)\) es un vector aleatorio con distribución uniforme en el
@@ -761,11 +871,11 @@ cuadrado \([-1,1]\times\lbrack-1,1]\) de área 4.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-7-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-9-1} \end{center}
 \end{enumerate}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-8}{}{\label{exr:unnamed-chunk-8} }
+\protect\hypertarget{exr:unnamed-chunk-10}{}{\label{exr:unnamed-chunk-10} }
 \EndKnitrBlock{exercise} Consideramos el experimento de Bernoulli
 consistente en el lanzamiento de una moneda.
 
@@ -796,7 +906,7 @@ consistente en el lanzamiento de una moneda.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-9-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-11-1} \end{center}
 \item
   En R pueden generarse valores de la distribución de Bernoulli mediante
   la función \texttt{rbinom(nsim,\ size=1,\ prob)}. Generar un gráfico
@@ -828,11 +938,11 @@ consistente en el lanzamiento de una moneda.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-10-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-12-1} \end{center}
 \end{enumerate}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-11}{}{\label{exr:unnamed-chunk-11} }
+\protect\hypertarget{exr:unnamed-chunk-13}{}{\label{exr:unnamed-chunk-13} }
 \EndKnitrBlock{exercise} Simular el paso de corriente a través del
 siguiente circuito, donde figuran las probabilidades de que pase
 corriente por cada uno de los interruptores:
@@ -872,7 +982,7 @@ equivalente a \texttt{FALSE} y cualquier entero distinto de 0 a
 \end{verbatim}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-15}{}{\label{exr:unnamed-chunk-15} }
+\protect\hypertarget{exr:unnamed-chunk-17}{}{\label{exr:unnamed-chunk-17} }
 \EndKnitrBlock{exercise} En 1651, el Caballero de Méré le planteó a
 Pascal una pregunta relacionada con las apuestas y los juegos de azar:
 ¿es ventajoso apostar a que en cuatro lanzamientos de un dado se obtiene
@@ -1046,10 +1156,10 @@ la última llamada a una de estas funciones. Ejemplo:
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##       0       0       0 
+##    0.02    0.00    0.02 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.08    0.00    0.08
+##     0.1     0.0     0.1
 \end{verbatim}
 
 \subsection{Paquetes de R}\label{paquetes-de-r-1}
@@ -1178,11 +1288,9 @@ que, por construcción, aunque se realicen en la mismas condiciones (en
 el mismo equipo), los tiempos de CPU en \texttt{R} pueden variar
 ``ligeramente'' entre ejecuciones.
 
-\chapter{Generación de números
-pseudoaleatorios}\label{generacion-de-numeros-pseudoaleatorios-1}
+\chapter{Generación de números pseudoaleatorios}\label{cap3}
 
-\hypertarget{generadores-congruenciales}{\section{Generadores
-congruenciales}\label{generadores-congruenciales}}
+\section{Generadores congruenciales}\label{cap3-gen-cong}
 
 \subsection{Generador congruencial lineal (simple)}\label{conlinsim}
 
@@ -1343,7 +1451,7 @@ valores generados pueden mostrar una estructura reticular.
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.03    0.01    0.05
+##    0.03    0.00    0.03
 \end{verbatim}
 
 \begin{Shaded}
@@ -2680,7 +2788,7 @@ simplificada.
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.02    0.00    0.02
+##    0.02    0.00    0.01
 \end{verbatim}
 
 \begin{Shaded}
@@ -2838,7 +2946,7 @@ parámetro \(\lambda\) tiene función de densidad:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.03    0.00    0.04
+##    0.04    0.00    0.03
 \end{verbatim}
 \item
   Representar el histograma y compararlo con la densidad teórica.
@@ -3851,7 +3959,7 @@ Empleamos la rutina anterior para generar las simulaciones:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.08    0.00    0.08
+##    0.06    0.00    0.06
 \end{verbatim}
 
 Aproximación de la media:
@@ -4014,7 +4122,7 @@ R.
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.04    0.02    0.04
+##    0.04    0.00    0.04
 \end{verbatim}
 
 \begin{Shaded}
@@ -4153,7 +4261,7 @@ anterior empleando esta rutina con \(m=n-1\).
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.07    0.00    0.06
+##    0.05    0.00    0.05
 \end{verbatim}
 
 Análisis de los resultados:
@@ -4281,7 +4389,7 @@ anterior empleando esta rutina.
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.03    0.00    0.03
+##    0.04    0.00    0.03
 \end{verbatim}
 
 Análisis de los resultados:
@@ -5024,7 +5132,7 @@ espectral (\texttt{eigen}):
 ##         drop(X)
 ##     else t(X)
 ## }
-## <bytecode: 0x000000002f6b3860>
+## <bytecode: 0x00000000356ded98>
 ## <environment: namespace:MASS>
 \end{verbatim}
 
@@ -6212,7 +6320,7 @@ vector aleatorio basado en el método de las distribuciones condicionadas
 distribuciones unidimensionales de interés).
 
 \chapter{Aplicaciones de la simulación en Inferencia
-Estadística}\label{aplicaciones-de-la-simulacion-en-inferencia-estadistica}
+Estadística}\label{cap8}
 
 \section{Aplicaciones de la
 simulación}\label{aplicaciones-de-la-simulacion}
@@ -8007,8 +8115,7 @@ menos utilizar una corrección por continuidad).
   bootstrap.
 \end{enumerate}
 
-\chapter{Integración y Optimización
-Montecarlo}\label{integracion-y-optimizacion-montecarlo}
+\chapter{Integración y Optimización Montecarlo}\label{cap9}
 
 \section{Integración Monte Carlo
 (clásica)}\label{integracion-monte-carlo-clasica}

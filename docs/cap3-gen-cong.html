@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3.1 Generadores congruenciales | Simulación Estadística</title>
+  <meta name="description" content="Apuntes de la asignatura de Simulación Estadística del Máster en Técnicas Estadísticas." />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3.1 Generadores congruenciales | Simulación Estadística" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Apuntes de la asignatura de Simulación Estadística del Máster en Técnicas Estadísticas." />
+  <meta name="github-repo" content="rubenfcasal/simbook" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3.1 Generadores congruenciales | Simulación Estadística" />
+  
+  <meta name="twitter:description" content="Apuntes de la asignatura de Simulación Estadística del Máster en Técnicas Estadísticas." />
+  
+
+<meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
+
+
+<meta name="date" content="2020-02-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="cap3.html"/>
+<link rel="next" href="análisis-de-la-calidad-de-un-generador.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Simulación Estadística</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
+<li class="chapter" data-level="1" data-path="cap1.html"><a href="cap1.html"><i class="fa fa-check"></i><b>1</b> Introducción a la simulación</a><ul>
+<li class="chapter" data-level="1.1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1.1</b> Introducción</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="introducción.html"><a href="introducción.html#ventajas-e-inconvenientes-de-la-simulación"><i class="fa fa-check"></i><b>1.1.1</b> Ventajas e inconvenientes de la simulación</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="generación-de-números-pseudoaleatorios.html"><a href="generación-de-números-pseudoaleatorios.html"><i class="fa fa-check"></i><b>1.2</b> Generación de números (pseudo)aleatorios</a></li>
+<li class="chapter" data-level="1.3" data-path="números-aleatorios-puros.html"><a href="números-aleatorios-puros.html"><i class="fa fa-check"></i><b>1.3</b> Números aleatorios puros</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="números-aleatorios-puros.html"><a href="números-aleatorios-puros.html#inconvenientes"><i class="fa fa-check"></i><b>1.3.1</b> Inconvenientes:</a></li>
+<li class="chapter" data-level="1.3.2" data-path="números-aleatorios-puros.html"><a href="números-aleatorios-puros.html#alternativas"><i class="fa fa-check"></i><b>1.3.2</b> Alternativas:</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="números-pseudoaleatorios.html"><a href="números-pseudoaleatorios.html"><i class="fa fa-check"></i><b>1.4</b> Números pseudoaleatorios</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="cap2.html"><a href="cap2.html"><i class="fa fa-check"></i><b>2</b> Números aleatorios en R</a><ul>
+<li class="chapter" data-level="2.1" data-path="opciones.html"><a href="opciones.html"><i class="fa fa-check"></i><b>2.1</b> Opciones</a></li>
+<li class="chapter" data-level="2.2" data-path="paquetes-de-r.html"><a href="paquetes-de-r.html"><i class="fa fa-check"></i><b>2.2</b> Paquetes de R</a></li>
+<li class="chapter" data-level="2.3" data-path="ejercicios.html"><a href="ejercicios.html"><i class="fa fa-check"></i><b>2.3</b> Ejercicios</a></li>
+<li class="chapter" data-level="2.4" data-path="tiempo-de-cpu.html"><a href="tiempo-de-cpu.html"><i class="fa fa-check"></i><b>2.4</b> Tiempo de CPU</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="tiempo-de-cpu.html"><a href="tiempo-de-cpu.html#utilidades-tiempo-de-cpu"><i class="fa fa-check"></i><b>2.4.1</b> Utilidades tiempo de CPU</a></li>
+<li class="chapter" data-level="2.4.2" data-path="tiempo-de-cpu.html"><a href="tiempo-de-cpu.html#paquetes-de-r-1"><i class="fa fa-check"></i><b>2.4.2</b> Paquetes de R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="cap3.html"><a href="cap3.html"><i class="fa fa-check"></i><b>3</b> Generación de números pseudoaleatorios</a><ul>
+<li class="chapter" data-level="3.1" data-path="cap3-gen-cong.html"><a href="cap3-gen-cong.html"><i class="fa fa-check"></i><b>3.1</b> Generadores congruenciales</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="cap3-gen-cong.html"><a href="cap3-gen-cong.html#conlinsim"><i class="fa fa-check"></i><b>3.1.1</b> Generador congruencial lineal (simple)</a></li>
+<li class="chapter" data-level="3.1.2" data-path="cap3-gen-cong.html"><a href="cap3-gen-cong.html#periodo"><i class="fa fa-check"></i><b>3.1.2</b> Periodo</a></li>
+<li class="chapter" data-level="3.1.3" data-path="cap3-gen-cong.html"><a href="cap3-gen-cong.html#otros-generadores"><i class="fa fa-check"></i><b>3.1.3</b> Otros generadores</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="análisis-de-la-calidad-de-un-generador.html"><a href="análisis-de-la-calidad-de-un-generador.html"><i class="fa fa-check"></i><b>3.2</b> Análisis de la calidad de un generador</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="análisis-de-la-calidad-de-un-generador.html"><a href="análisis-de-la-calidad-de-un-generador.html#repetición-de-contrastes"><i class="fa fa-check"></i><b>3.2.1</b> Repetición de contrastes</a></li>
+<li class="chapter" data-level="3.2.2" data-path="análisis-de-la-calidad-de-un-generador.html"><a href="análisis-de-la-calidad-de-un-generador.html#baterías-de-contrastes"><i class="fa fa-check"></i><b>3.2.2</b> Baterías de contrastes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ejercicios-de-fin-de-práctica.html"><a href="ejercicios-de-fin-de-práctica.html"><i class="fa fa-check"></i><b>3.3</b> Ejercicios de fin de práctica</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="análisis-de-resultados-de-simulación.html"><a href="análisis-de-resultados-de-simulación.html"><i class="fa fa-check"></i><b>4</b> Análisis de resultados de simulación</a><ul>
+<li class="chapter" data-level="4.1" data-path="convergencia.html"><a href="convergencia.html"><i class="fa fa-check"></i><b>4.1</b> Convergencia</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="convergencia.html"><a href="convergencia.html#detección-de-problemas-de-convergencia"><i class="fa fa-check"></i><b>4.1.1</b> Detección de problemas de convergencia</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="estimación-de-la-precisión.html"><a href="estimación-de-la-precisión.html"><i class="fa fa-check"></i><b>4.2</b> Estimación de la precisión</a></li>
+<li class="chapter" data-level="4.3" data-path="teorema-central-del-límite.html"><a href="teorema-central-del-límite.html"><i class="fa fa-check"></i><b>4.3</b> Teorema central del límite</a></li>
+<li class="chapter" data-level="4.4" data-path="determinación-del-número-de-generaciones.html"><a href="determinación-del-número-de-generaciones.html"><i class="fa fa-check"></i><b>4.4</b> Determinación del número de generaciones</a></li>
+<li class="chapter" data-level="4.5" data-path="el-problema-de-la-dependencia.html"><a href="el-problema-de-la-dependencia.html"><i class="fa fa-check"></i><b>4.5</b> El problema de la dependencia</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="el-problema-de-la-dependencia.html"><a href="el-problema-de-la-dependencia.html#periodo-de-calentamiento"><i class="fa fa-check"></i><b>4.5.1</b> Periodo de calentamiento</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="observaciones.html"><a href="observaciones.html"><i class="fa fa-check"></i><b>4.6</b> Observaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="simulación-de-variables-continuas.html"><a href="simulación-de-variables-continuas.html"><i class="fa fa-check"></i><b>5</b> Simulación de variables continuas</a><ul>
+<li class="chapter" data-level="5.1" data-path="método-de-inversión.html"><a href="método-de-inversión.html"><i class="fa fa-check"></i><b>5.1</b> Método de inversión</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="método-de-inversión.html"><a href="método-de-inversión.html#ejemplo"><i class="fa fa-check"></i><b>5.1.1</b> Ejemplo</a></li>
+<li class="chapter" data-level="5.1.2" data-path="método-de-inversión.html"><a href="método-de-inversión.html#algunas-distribuciones-que-pueden-simularse-por-el-método-de-inversión"><i class="fa fa-check"></i><b>5.1.2</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
+<li class="chapter" data-level="5.1.3" data-path="método-de-inversión.html"><a href="método-de-inversión.html#ventajas-e-inconvenientes"><i class="fa fa-check"></i><b>5.1.3</b> Ventajas e inconvenientes</a></li>
+<li class="chapter" data-level="5.1.4" data-path="método-de-inversión.html"><a href="método-de-inversión.html#inversión-aproximada"><i class="fa fa-check"></i><b>5.1.4</b> Inversión aproximada</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="método-de-aceptación-rechazo.html"><a href="método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.2</b> Método de aceptación rechazo</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="método-de-aceptación-rechazo.html"><a href="método-de-aceptación-rechazo.html#algoritmo"><i class="fa fa-check"></i><b>5.2.1</b> Algoritmo</a></li>
+<li class="chapter" data-level="5.2.2" data-path="método-de-aceptación-rechazo.html"><a href="método-de-aceptación-rechazo.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
+<li class="chapter" data-level="5.2.3" data-path="método-de-aceptación-rechazo.html"><a href="método-de-aceptación-rechazo.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
+<li class="chapter" data-level="5.2.4" data-path="método-de-aceptación-rechazo.html"><a href="método-de-aceptación-rechazo.html#ejemplo-1"><i class="fa fa-check"></i><b>5.2.4</b> Ejemplo</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-ar.html"><a href="modificaciones-del-método-de-ar.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de AR</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-ar.html"><a href="modificaciones-del-método-de-ar.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-ar.html"><a href="modificaciones-del-método-de-ar.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="método-de-composición.html"><a href="método-de-composición.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="método-de-composición.html"><a href="método-de-composición.html#ejemplo-2"><i class="fa fa-check"></i><b>5.4.1</b> Ejemplo</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="métodos-específicos-para-generación-de-distribuciones-notables.html"><a href="métodos-específicos-para-generación-de-distribuciones-notables.html"><i class="fa fa-check"></i><b>5.5</b> Métodos específicos para generación de distribuciones notables</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="cap6.html"><a href="cap6.html"><i class="fa fa-check"></i><b>6</b> Simulación de variables discretas</a><ul>
+<li class="chapter" data-level="6.1" data-path="método-de-la-transformación-cuantil.html"><a href="método-de-la-transformación-cuantil.html"><i class="fa fa-check"></i><b>6.1</b> Método de la transformación cuantil</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="método-de-la-transformación-cuantil.html"><a href="método-de-la-transformación-cuantil.html#eficiencia-del-algoritmo-1"><i class="fa fa-check"></i><b>6.1.1</b> Eficiencia del algoritmo</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="método-de-la-tabla-guía.html"><a href="método-de-la-tabla-guía.html"><i class="fa fa-check"></i><b>6.2</b> Método de la tabla guía</a></li>
+<li class="chapter" data-level="6.3" data-path="alias.html"><a href="alias.html"><i class="fa fa-check"></i><b>6.3</b> Método de Alias</a></li>
+<li class="chapter" data-level="6.4" data-path="simulación-de-una-variable-discreta-con-dominio-infinito.html"><a href="simulación-de-una-variable-discreta-con-dominio-infinito.html"><i class="fa fa-check"></i><b>6.4</b> Simulación de una variable discreta con dominio infinito</a></li>
+<li class="chapter" data-level="6.5" data-path="cálculo-directo-de-la-función-cuantil.html"><a href="cálculo-directo-de-la-función-cuantil.html"><i class="fa fa-check"></i><b>6.5</b> Cálculo directo de la función cuantil</a></li>
+<li class="chapter" data-level="6.6" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>6.6</b> Otros métodos</a></li>
+<li class="chapter" data-level="6.7" data-path="métodos-específicos-para-generación-de-distribuciones-notables-1.html"><a href="métodos-específicos-para-generación-de-distribuciones-notables-1.html"><i class="fa fa-check"></i><b>6.7</b> Métodos específicos para generación de distribuciones notables</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="simulación-de-distribuciones-multidimensionales.html"><a href="simulación-de-distribuciones-multidimensionales.html"><i class="fa fa-check"></i><b>7</b> Simulación de Distribuciones Multidimensionales</a><ul>
+<li class="chapter" data-level="7.1" data-path="introducción-1.html"><a href="introducción-1.html"><i class="fa fa-check"></i><b>7.1</b> Introducción</a></li>
+<li class="chapter" data-level="7.2" data-path="el-método-de-aceptaciónrechazo.html"><a href="el-método-de-aceptaciónrechazo.html"><i class="fa fa-check"></i><b>7.2</b> El método de aceptación/rechazo</a></li>
+<li class="chapter" data-level="7.3" data-path="factorización-de-la-matriz-de-covarianzas.html"><a href="factorización-de-la-matriz-de-covarianzas.html"><i class="fa fa-check"></i><b>7.3</b> Factorización de la matriz de covarianzas</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="factorización-de-la-matriz-de-covarianzas.html"><a href="factorización-de-la-matriz-de-covarianzas.html#simulación-de-la-normal-multivariante"><i class="fa fa-check"></i><b>7.3.1</b> Simulación de la normal multivariante</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="método-de-las-distribuciones-condicionadas.html"><a href="método-de-las-distribuciones-condicionadas.html"><i class="fa fa-check"></i><b>7.4</b> Método de las distribuciones condicionadas</a></li>
+<li class="chapter" data-level="7.5" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html"><i class="fa fa-check"></i><b>7.5</b> Simulación condicional e incondicional</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html#condnormal"><i class="fa fa-check"></i><b>7.5.1</b> Simulación condicional de una normal multivariante</a></li>
+<li class="chapter" data-level="7.5.2" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html#simulación-condicional-a-partir-de-un-modelo-ajustado"><i class="fa fa-check"></i><b>7.5.2</b> Simulación condicional a partir de un modelo ajustado</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html"><i class="fa fa-check"></i><b>7.6</b> Simulación basada en cópulas</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html#cópulas-arquimedianas"><i class="fa fa-check"></i><b>7.6.1</b> Cópulas Arquimedianas</a></li>
+<li class="chapter" data-level="7.6.2" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html#simulación"><i class="fa fa-check"></i><b>7.6.2</b> Simulación</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="otros-métodos-para-variables-continuas.html"><a href="otros-métodos-para-variables-continuas.html"><i class="fa fa-check"></i><b>7.7</b> Otros métodos para variables continuas</a></li>
+<li class="chapter" data-level="7.8" data-path="simulación-de-distribuciones-multidimensionales-discretas.html"><a href="simulación-de-distribuciones-multidimensionales-discretas.html"><i class="fa fa-check"></i><b>7.8</b> Simulación de distribuciones multidimensionales discretas</a><ul>
+<li class="chapter" data-level="7.8.1" data-path="simulación-de-distribuciones-multidimensionales-discretas.html"><a href="simulación-de-distribuciones-multidimensionales-discretas.html#métodos-de-codificación-o-etiquetado-para-variables-discretas"><i class="fa fa-check"></i><b>7.8.1</b> Métodos de codificación o etiquetado para variables discretas</a></li>
+<li class="chapter" data-level="7.8.2" data-path="simulación-de-distribuciones-multidimensionales-discretas.html"><a href="simulación-de-distribuciones-multidimensionales-discretas.html#simulación-de-una-variable-discreta-bidimensional"><i class="fa fa-check"></i><b>7.8.2</b> Simulación de una variable discreta bidimensional</a></li>
+<li class="chapter" data-level="7.8.3" data-path="simulación-de-distribuciones-multidimensionales-discretas.html"><a href="simulación-de-distribuciones-multidimensionales-discretas.html#simulación-de-tablas-de-contingencia"><i class="fa fa-check"></i><b>7.8.3</b> Simulación de tablas de contingencia</a></li>
+</ul></li>
+<li class="chapter" data-level="7.9" data-path="ejercicios-propuestos.html"><a href="ejercicios-propuestos.html"><i class="fa fa-check"></i><b>7.9</b> Ejercicios propuestos</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="cap8.html"><a href="cap8.html"><i class="fa fa-check"></i><b>8</b> Aplicaciones de la simulación en Inferencia Estadística</a><ul>
+<li class="chapter" data-level="8.1" data-path="distribución-en-el-muestreo.html"><a href="distribución-en-el-muestreo.html"><i class="fa fa-check"></i><b>8.1</b> Distribución en el muestreo</a></li>
+<li class="chapter" data-level="8.2" data-path="intervalos-de-confianza.html"><a href="intervalos-de-confianza.html"><i class="fa fa-check"></i><b>8.2</b> Intervalos de confianza</a></li>
+<li class="chapter" data-level="8.3" data-path="contrastes-de-hipótesis.html"><a href="contrastes-de-hipótesis.html"><i class="fa fa-check"></i><b>8.3</b> Contrastes de hipótesis</a></li>
+<li class="chapter" data-level="8.4" data-path="comparación-de-estimadores.html"><a href="comparación-de-estimadores.html"><i class="fa fa-check"></i><b>8.4</b> Comparación de estimadores</a></li>
+<li class="chapter" data-level="8.5" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html"><i class="fa fa-check"></i><b>8.5</b> Remuestreo Bootstrap</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#idea"><i class="fa fa-check"></i><b>8.5.1</b> Idea:</a></li>
+<li class="chapter" data-level="8.5.2" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#métodos-de-remuestreo-bootstrap"><i class="fa fa-check"></i><b>8.5.2</b> Métodos de remuestreo Bootstrap</a></li>
+<li class="chapter" data-level="8.5.3" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#ejemplo-3"><i class="fa fa-check"></i><b>8.5.3</b> Ejemplo</a></li>
+<li class="chapter" data-level="8.5.4" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#paquetes-r-bootstrap-boot"><i class="fa fa-check"></i><b>8.5.4</b> Paquetes R: bootstrap, boot</a></li>
+<li class="chapter" data-level="8.5.5" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#gráficos"><i class="fa fa-check"></i><b>8.5.5</b> Gráficos</a></li>
+<li class="chapter" data-level="8.5.6" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#intervalos-de-confianza-bootstrap"><i class="fa fa-check"></i><b>8.5.6</b> Intervalos de confianza bootstrap</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="cap9.html"><a href="cap9.html"><i class="fa fa-check"></i><b>9</b> Integracion y Optimizacion Montecarlo</a><ul>
+<li class="chapter" data-level="9.1" data-path="integración-monte-carlo-clásica.html"><a href="integración-monte-carlo-clásica.html"><i class="fa fa-check"></i><b>9.1</b> Integración Monte Carlo (clásica)</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="integración-monte-carlo-clásica.html"><a href="integración-monte-carlo-clásica.html#ejercicio-1"><i class="fa fa-check"></i><b>9.1.1</b> Ejercicio 1</a></li>
+<li class="chapter" data-level="9.1.2" data-path="integración-monte-carlo-clásica.html"><a href="integración-monte-carlo-clásica.html#caso-general"><i class="fa fa-check"></i><b>9.1.2</b> Caso general</a></li>
+<li class="chapter" data-level="9.1.3" data-path="integración-monte-carlo-clásica.html"><a href="integración-monte-carlo-clásica.html#ejercicio-2"><i class="fa fa-check"></i><b>9.1.3</b> Ejercicio 2</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="muestreo-por-importancia.html"><a href="muestreo-por-importancia.html"><i class="fa fa-check"></i><b>9.2</b> Muestreo por importancia</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="muestreo-por-importancia.html"><a href="muestreo-por-importancia.html#ejercicio-3"><i class="fa fa-check"></i><b>9.2.1</b> Ejercicio 3</a></li>
+<li class="chapter" data-level="9.2.2" data-path="muestreo-por-importancia.html"><a href="muestreo-por-importancia.html#ejercicio-4"><i class="fa fa-check"></i><b>9.2.2</b> Ejercicio 4</a></li>
+<li class="chapter" data-level="9.2.3" data-path="muestreo-por-importancia.html"><a href="muestreo-por-importancia.html#remuestreo-del-muestreo-por-importancia"><i class="fa fa-check"></i><b>9.2.3</b> Remuestreo (del muestreo) por importancia</a></li>
+<li class="chapter" data-level="9.2.4" data-path="muestreo-por-importancia.html"><a href="muestreo-por-importancia.html#ejercicio-5"><i class="fa fa-check"></i><b>9.2.4</b> Ejercicio 5</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="optimización-monte-carlo.html"><a href="optimización-monte-carlo.html"><i class="fa fa-check"></i><b>9.3</b> Optimización Monte Carlo</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="optimización-monte-carlo.html"><a href="optimización-monte-carlo.html#ejercicio-6"><i class="fa fa-check"></i><b>9.3.1</b> Ejercicio 6</a></li>
+<li class="chapter" data-level="9.3.2" data-path="optimización-monte-carlo.html"><a href="optimización-monte-carlo.html#algoritmos-de-optimización-monte-carlo"><i class="fa fa-check"></i><b>9.3.2</b> Algoritmos de optimización Monte Carlo</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="temple-simulado.html"><a href="temple-simulado.html"><i class="fa fa-check"></i><b>9.4</b> Temple simulado</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="temple-simulado.html"><a href="temple-simulado.html#algoritmo-1"><i class="fa fa-check"></i><b>9.4.1</b> Algoritmo:</a></li>
+<li class="chapter" data-level="9.4.2" data-path="temple-simulado.html"><a href="temple-simulado.html#ejercicio-7"><i class="fa fa-check"></i><b>9.4.2</b> Ejercicio 7</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="algoritmos-genéticos.html"><a href="algoritmos-genéticos.html"><i class="fa fa-check"></i><b>9.5</b> Algoritmos genéticos</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="algoritmos-genéticos.html"><a href="algoritmos-genéticos.html#ejercicio-8"><i class="fa fa-check"></i><b>9.5.1</b> Ejercicio 8</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="técnicas-de-reducción-de-la-varianza.html"><a href="técnicas-de-reducción-de-la-varianza.html"><i class="fa fa-check"></i><b>10</b> Técnicas de reducción de la varianza</a><ul>
+<li class="chapter" data-level="10.1" data-path="reducción-de-la-varianza.html"><a href="reducción-de-la-varianza.html"><i class="fa fa-check"></i><b>10.1</b> Reducción de la varianza</a></li>
+<li class="chapter" data-level="10.2" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html"><i class="fa fa-check"></i><b>10.2</b> Variables antitéticas</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html#ejemplo-integración-monte-carlo"><i class="fa fa-check"></i><b>10.2.1</b> Ejemplo: Integración Monte Carlo</a></li>
+<li class="chapter" data-level="10.2.2" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html#generación-de-variables-antitéticas"><i class="fa fa-check"></i><b>10.2.2</b> Generación de variables antitéticas</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="estratificación.html"><a href="estratificación.html"><i class="fa fa-check"></i><b>10.3</b> Estratificación</a></li>
+<li class="chapter" data-level="10.4" data-path="variables-de-control.html"><a href="variables-de-control.html"><i class="fa fa-check"></i><b>10.4</b> Variables de control</a></li>
+<li class="chapter" data-level="10.5" data-path="números-aleatorios-comunes.html"><a href="números-aleatorios-comunes.html"><i class="fa fa-check"></i><b>10.5</b> Números aleatorios comunes</a></li>
+<li class="chapter" data-level="10.6" data-path="ejercicios-fin-de-práctica.html"><a href="ejercicios-fin-de-práctica.html"><i class="fa fa-check"></i><b>10.6</b> Ejercicios fin de práctica</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
+</ul></li>
+<li class="appendix"><span><b>Apendices</b></span></li>
+<li class="chapter" data-level="A" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i><b>A</b> Enlaces</a></li>
+<li class="chapter" data-level="B" data-path="integración-numérica.html"><a href="integración-numérica.html"><i class="fa fa-check"></i><b>B</b> Integración numérica</a><ul>
+<li class="chapter" data-level="B.1" data-path="introducción-2.html"><a href="introducción-2.html"><i class="fa fa-check"></i><b>B.1</b> Introducción</a></li>
+<li class="chapter" data-level="B.2" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html"><i class="fa fa-check"></i><b>B.2</b> Integración numérica unidimensional</a><ul>
+<li class="chapter" data-level="B.2.1" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#método-del-trapezoide"><i class="fa fa-check"></i><b>B.2.1</b> Método del trapezoide</a></li>
+<li class="chapter" data-level="B.2.2" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#regla-de-simpson"><i class="fa fa-check"></i><b>B.2.2</b> Regla de Simpson</a></li>
+<li class="chapter" data-level="B.2.3" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#cuadratura-adaptativa"><i class="fa fa-check"></i><b>B.2.3</b> Cuadratura adaptativa</a></li>
+<li class="chapter" data-level="B.2.4" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#comandos-de-r"><i class="fa fa-check"></i><b>B.2.4</b> Comandos de <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="B.3" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html"><i class="fa fa-check"></i><b>B.3</b> Integración numérica bidimensional</a><ul>
+<li class="chapter" data-level="B.3.1" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#representación-gráfica"><i class="fa fa-check"></i><b>B.3.1</b> Representación gráfica</a></li>
+<li class="chapter" data-level="B.3.2" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#método-del-trapezoide-1"><i class="fa fa-check"></i><b>B.3.2</b> Método del trapezoide</a></li>
+<li class="chapter" data-level="B.3.3" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#comandos-de-r-1"><i class="fa fa-check"></i><b>B.3.3</b> Comandos de <code>R</code></a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Simulación Estadística</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="cap3-gen-cong" class="section level2">
+<h2><span class="header-section-number">3.1</span> Generadores congruenciales</h2>
+<div id="conlinsim" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> Generador congruencial lineal (simple)</h3>
+<p>Partiendo de una semilla inicial <span class="math inline">\(x_{0}\)</span>:
+<span class="math display">\[\begin{aligned}
+x_{i}  &amp; = (ax_{i-1}+c) \operatorname{mod} m \\
+u_{i}  &amp; = \dfrac{x_{i}}{m} \\
+i  &amp; =1,2,\ldots
+\end{aligned}\]</span>
+donde <span class="math inline">\(a\)</span> es el <em>multiplicador,</em>
+<span class="math inline">\(c\)</span> el <em>incremento</em> y <span class="math inline">\(m\)</span> el <em>módulo</em> del generador (parámetros
+enteros fijados de antemano).</p>
+<ul>
+<li><p>Si <span class="math inline">\(c=0\)</span> se denomina congruencial <em>multiplicativo</em></p></li>
+<li><p>Si <span class="math inline">\(c\neq0\)</span> se denomina congruencial <em>mixto</em></p></li>
+</ul>
+<p>Implementado en el fichero <em>RANDC.R</em> (tratando de imitar el funcionamiento en R, aunque de forma no muy eficiente…):</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1"><span class="co"># Generador congruencial de números pseudoaleatorios</span></a>
+<a class="sourceLine" id="cb50-2" title="2"><span class="co"># ==================================================</span></a>
+<a class="sourceLine" id="cb50-3" title="3"></a>
+<a class="sourceLine" id="cb50-4" title="4"><span class="co"># --------------------------------------------------</span></a>
+<a class="sourceLine" id="cb50-5" title="5"><span class="co"># initRANDC(semilla,a,c,m)</span></a>
+<a class="sourceLine" id="cb50-6" title="6"><span class="co">#   Selecciona el generador congruencial</span></a>
+<a class="sourceLine" id="cb50-7" title="7"><span class="co">#   Por defecto RANDU de IBM con semilla del reloj</span></a>
+<a class="sourceLine" id="cb50-8" title="8"><span class="co">#   OJO: No se hace ninguna verificación de los parámetros</span></a>
+<a class="sourceLine" id="cb50-9" title="9">initRANDC &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">semilla=</span><span class="kw">as.numeric</span>(<span class="kw">Sys.time</span>()), <span class="dt">a=</span><span class="dv">2</span><span class="op">^</span><span class="dv">16</span><span class="op">+</span><span class="dv">3</span>, <span class="dt">c=</span><span class="dv">0</span>, <span class="dt">m=</span><span class="dv">2</span><span class="op">^</span><span class="dv">31</span>) {</a>
+<a class="sourceLine" id="cb50-10" title="10">  .semilla &lt;&lt;-<span class="st"> </span><span class="kw">as.double</span>(semilla) <span class="op">%%</span><span class="st"> </span>m  <span class="co">#Cálculos en doble precisión</span></a>
+<a class="sourceLine" id="cb50-11" title="11">  .a &lt;&lt;-<span class="st"> </span>a</a>
+<a class="sourceLine" id="cb50-12" title="12">  .c &lt;&lt;-<span class="st"> </span>c</a>
+<a class="sourceLine" id="cb50-13" title="13">  .m &lt;&lt;-<span class="st"> </span>m</a>
+<a class="sourceLine" id="cb50-14" title="14">  <span class="kw">return</span>(<span class="kw">invisible</span>(<span class="kw">list</span>(<span class="dt">semilla=</span>.semilla,<span class="dt">a=</span>.a,<span class="dt">c=</span>.c,<span class="dt">m=</span>.m))) <span class="co">#print(initRANDC())</span></a>
+<a class="sourceLine" id="cb50-15" title="15">}</a>
+<a class="sourceLine" id="cb50-16" title="16"></a>
+<a class="sourceLine" id="cb50-17" title="17"><span class="co"># --------------------------------------------------</span></a>
+<a class="sourceLine" id="cb50-18" title="18"><span class="co"># RANDC()</span></a>
+<a class="sourceLine" id="cb50-19" title="19"><span class="co">#   Genera un valor pseudoaleatorio con el generador congruencial</span></a>
+<a class="sourceLine" id="cb50-20" title="20"><span class="co">#   Actualiza la semilla (si no existe llama a initRANDC)</span></a>
+<a class="sourceLine" id="cb50-21" title="21">RANDC &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb50-22" title="22">    <span class="cf">if</span> (<span class="op">!</span><span class="kw">exists</span>(<span class="st">&quot;.semilla&quot;</span>, <span class="dt">envir=</span><span class="kw">globalenv</span>())) <span class="kw">initRANDC</span>()</a>
+<a class="sourceLine" id="cb50-23" title="23">    .semilla &lt;&lt;-<span class="st"> </span>(.a <span class="op">*</span><span class="st"> </span>.semilla <span class="op">+</span><span class="st"> </span>.c) <span class="op">%%</span><span class="st"> </span>.m</a>
+<a class="sourceLine" id="cb50-24" title="24">    <span class="kw">return</span>(.semilla<span class="op">/</span>.m)</a>
+<a class="sourceLine" id="cb50-25" title="25">}</a>
+<a class="sourceLine" id="cb50-26" title="26"></a>
+<a class="sourceLine" id="cb50-27" title="27"><span class="co"># --------------------------------------------------</span></a>
+<a class="sourceLine" id="cb50-28" title="28"><span class="co"># RANDCN(n)</span></a>
+<a class="sourceLine" id="cb50-29" title="29"><span class="co">#   Genera un vector de valores pseudoaleatorios con el generador congruencial</span></a>
+<a class="sourceLine" id="cb50-30" title="30"><span class="co">#   (por defecto de dimensión 1000)</span></a>
+<a class="sourceLine" id="cb50-31" title="31"><span class="co">#   Actualiza la semilla (si no existe llama a initRANDC)</span></a>
+<a class="sourceLine" id="cb50-32" title="32">RANDCN &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">n=</span><span class="dv">1000</span>) {</a>
+<a class="sourceLine" id="cb50-33" title="33">    x &lt;-<span class="st"> </span><span class="kw">numeric</span>(n)</a>
+<a class="sourceLine" id="cb50-34" title="34">    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n) x[i]&lt;-<span class="kw">RANDC</span>()</a>
+<a class="sourceLine" id="cb50-35" title="35">    <span class="kw">return</span>(x)</a>
+<a class="sourceLine" id="cb50-36" title="36">    <span class="co"># return(replicate(n,RANDC()))  # Alternativa más rápida    </span></a>
+<a class="sourceLine" id="cb50-37" title="37">}</a>
+<a class="sourceLine" id="cb50-38" title="38"></a>
+<a class="sourceLine" id="cb50-39" title="39"><span class="kw">initRANDC</span>(<span class="dv">543210</span>)       <span class="co"># Fijar semilla 543210 para reproductibilidad</span></a></code></pre></div>
+
+<div class="remark">
+ <span class="remark"><em>Nota: </em></span> Para evitar problemas computacionales, se recomienda emplear
+un algoritmo como el descrito en L’Ecuyer (1988).
+</div>
+
+<p>Ejemplos:</p>
+<ul>
+<li><p><span class="math inline">\(c=0\)</span>, <span class="math inline">\(a=2^{16}+3=65539\)</span> y <span class="math inline">\(m=2^{31}\)</span>, generador <code>RANDU</code> de IBM
+(<strong>no recomendable</strong>).</p></li>
+<li><p><span class="math inline">\(c=0\)</span>, <span class="math inline">\(a=7^{5}=16807\)</span> y <span class="math inline">\(m=2^{31}-1,\)</span> Park y Miller (1988)
+“minimal standar”,empleado por las librerías IMSL y NAG.</p></li>
+</ul>
+<p>Los parámetros y la semilla determinan los valores generados:
+<span class="math display">\[x_{i}=\left(  a^{i}x_{0}+c\frac{a^{i}-1}{a-1}\right)  \operatorname{mod}m\]</span></p>
+<p>A pesar de su simplicidad, una adecuada elección de los parámetros
+permite obtener de manera eficiente secuencias de números
+“aparentemente” i.i.d. <span class="math inline">\(\mathcal{U}(0,1)\)</span>.</p>
+<p>Es procedimiento habitual solía ser escoger <span class="math inline">\(m\)</span> de forma que la operación del módulo se pudiese realizar de forma muy eficiente, para posteriormente seleccionar <span class="math inline">\(c\)</span> y <span class="math inline">\(a\)</span> de forma que el período fuese lo más largo posible (o suficientemente largo).</p>
+</div>
+<div id="periodo" class="section level3">
+<h3><span class="header-section-number">3.1.2</span> Periodo</h3>
+
+<div class="theorem">
+<p><span id="thm:unnamed-chunk-4" class="theorem"><strong>Teorema 2.1  </strong></span>(Hull y Dobell, 1962)</p>
+<p>Un generador congruencial tiene período máximo (<span class="math inline">\(p=m\)</span>) si y solo si:</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(c\)</span> y <span class="math inline">\(m\)</span> son primos relativos (i.e. <span class="math inline">\(m.c.d.\left( c,m\right) =1\)</span>).</p></li>
+<li><p><span class="math inline">\(a-1\)</span> es múltiplo de todos los factores primos de <span class="math inline">\(m\)</span> (i.e.
+<span class="math inline">\(a\equiv1\operatorname{mod}q\)</span>, para todo <span class="math inline">\(q\)</span> factor primo de
+<span class="math inline">\(m\)</span>).</p></li>
+<li><p>Si <span class="math inline">\(m\)</span> es múltiplo de <span class="math inline">\(4\)</span>, entonces <span class="math inline">\(a-1\)</span> también lo ha de
+ser (i.e. <span class="math inline">\(m\equiv0\operatorname{mod}4\Rightarrow a\equiv 1\operatorname{mod}4\)</span>).</p></li>
+</ol>
+.
+</div>
+
+<p>Algunas consecuencias:</p>
+<ul>
+<li><p>Si <span class="math inline">\(m\)</span> primo, <span class="math inline">\(p=m\Leftrightarrow a=1\)</span></p></li>
+<li><p>Un generador multiplicativo no cumple la condición 1.</p></li>
+</ul>
+
+<div class="theorem">
+<p><span id="thm:unnamed-chunk-5" class="theorem"><strong>Teorema 2.2  </strong></span>
+Un generador multiplicativo tiene período máximo (<span class="math inline">\(p=m-1\)</span>) si:</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(m\)</span> es primo.</p></li>
+<li><p><span class="math inline">\(a\)</span> es una raiz primitiva de <span class="math inline">\(m\)</span> (i.e. el menor entero <span class="math inline">\(q\)</span> tal
+que <span class="math inline">\(a^{q}=1\operatorname{mod}m\)</span> es <span class="math inline">\(q=m-1\)</span>).</p></li>
+</ol>
+.
+</div>
+
+<p>Además de preocuparse de la longitud del ciclo, las secuencias
+generadas deben aparentar muestras i.i.d. <span class="math inline">\(\mathcal{U}(0,1)\)</span>.</p>
+<p>Uno de los principales problemas es que los valores generados pueden mostrar una clara estructura reticular.
+Este es el caso por ejemplo del generador RANDU de IBM muy empleado en la década de los 70 (ver Figura <a href="cap3-gen-cong.html#fig:randu">2.1</a>).</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1"><span class="kw">system.time</span>(u &lt;-<span class="st"> </span><span class="kw">RANDCN</span>(<span class="dv">9999</span>))  <span class="co"># Generar</span></a></code></pre></div>
+<pre><code>##    user  system elapsed 
+##    0.05    0.00    0.05</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1">xyz &lt;-<span class="st"> </span><span class="kw">matrix</span>(u, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb53-2" title="2"></a>
+<a class="sourceLine" id="cb53-3" title="3"><span class="kw">library</span>(plot3D)</a>
+<a class="sourceLine" id="cb53-4" title="4"><span class="kw">points3D</span>(xyz[,<span class="dv">1</span>], xyz[,<span class="dv">2</span>], xyz[,<span class="dv">3</span>], <span class="dt">colvar =</span> <span class="ot">NULL</span>, <span class="dt">phi =</span> <span class="dv">60</span>, <span class="dt">theta =</span> <span class="dv">-50</span>, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">cex =</span> <span class="fl">0.2</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:randu"></span>
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/randu-1.png" alt="Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)" width="70%" />
+<p class="caption">
+Figura 2.1: Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)
+</p>
+</div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1"><span class="co"># Alternativamente se podría utilizar la función `plot3d` del paquete `rgl`,</span></a>
+<a class="sourceLine" id="cb54-2" title="2"><span class="co"># y pulsando con el ratón se podría rotar la figura para ver los hiperplanos:</span></a>
+<a class="sourceLine" id="cb54-3" title="3"><span class="co"># library(rgl)</span></a>
+<a class="sourceLine" id="cb54-4" title="4"><span class="co"># plot3d(xyz) </span></a></code></pre></div>
+<p>En general todos los generadores de este tipo van a presentar estructuras reticulares:</p>
+<ul>
+<li>Marsaglia (1968): <span class="math inline">\(k\)</span>-uplas de generadores multiplicativos
+contenidas en a lo sumo <span class="math inline">\(\left(k!m\right)^{1/k}\)</span>
+hiperplanos paralelos.</li>
+</ul>
+<p>por lo que se trataría de seleccionar adecuadamente <span class="math inline">\(m\)</span> y <span class="math inline">\(c\)</span> (<span class="math inline">\(a\)</span> solo influiría en la pendiente)…</p>
+<p>Se han propuesto diversas pruebas (ver sección siguiente) para
+determinar si un generador tiene problemas de este tipo y se han
+realizado numerosos estudios para determinadas familias (e.g. Park y
+Miller, 1988, estudiaron que parámetros son adecuados para <span class="math inline">\(m=2^{31}-1\)</span>).</p>
+<ul>
+<li><p>En cualquier caso, se recomienda considerar un “periodo de
+seguridad” <span class="math inline">\(\approx \sqrt{p}\)</span> para evitar este tipo de problemas.</p></li>
+<li><p>Aunque estos generadores tiene limitaciones en su capacidad para
+producir secuencias muy largas de números i.i.d. <span class="math inline">\(\mathcal{U}(0,1)\)</span>,
+es un elemento básico en generadores más avanzados.</p></li>
+</ul>
+</div>
+<div id="otros-generadores" class="section level3">
+<h3><span class="header-section-number">3.1.3</span> Otros generadores</h3>
+<p>Generalizaciones del generador congruencial lineal simple:
+<span class="math display">\[x_{i}=f\left(  x_{i-1},x_{i-2},\cdots,x_{i-k}\right)  \operatorname{mod}m\]</span></p>
+<ul>
+<li><p>No lineal: e.g.
+<span class="math inline">\(\ x_{i}=a_{1}x_{i-1}+a_{2}x_{i-1}^{2}\operatorname{mod}m\)</span></p></li>
+<li><p>Lineal múltiple:
+<span class="math inline">\(x_{i}=a_{1}x_{i-1}+a_{2}x_{i-2}+\cdots+a_{k}x_{i-k}\operatorname{mod}m\)</span>,
+con <span class="math inline">\(p\leq m^{k}-1\)</span>)</p></li>
+<li><p>Matricial: <span class="math inline">\(\boldsymbol{x}_{i} = A_{1}\boldsymbol{x}_{i-1} + A_{2}\boldsymbol{x}_{i-2} + \cdots + A_{k}\boldsymbol{x}_{i-k} \operatorname{mod}m\)</span>
+(por ejemplo el generador por defecto de <code>R</code>).</p></li>
+</ul>
+<p>Un caso particular del generador lineal múltiple son los denominados <em>generadores de registros desfasados</em>.
+Se generan bits de forma secuencial considerando <span class="math inline">\(m=2\)</span> y <span class="math inline">\(a_{i} \in \left \{ 0,1\right \}\)</span>,
+y los cálculos se pueden realizar rápidamente mediante operaciones lógicas
+(se pueden emplear directamente los registros del procesador).</p>
+<p>Otras alternativas bastante utilizadas consisten en la combinanción de varios generadores:</p>
+<ul>
+<li><p>Combinación de salidas:
+<span class="math inline">\(u_{i}=\sum u_{i}^{(l)}\operatorname{mod}1\)</span>,
+donde <span class="math inline">\(u_{i}^{(l)}\)</span> es el <span class="math inline">\(i\)</span>-ésimo valor obtenido con el generador <span class="math inline">\(l\)</span>.</p></li>
+<li><p>Barajar salidas…</p></li>
+</ul>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-6" class="exercise"><strong>Ejercicio 2.5  </strong></span>
+</div>
+
+<p>Considera el generador congruencial definido por:
+<span class="math display">\[\begin{aligned}
+x_{n+1}  &amp; =(5x_{n}+1)\ \operatorname{mod}\ 512,\nonumber\\
+u_{n+1}  &amp; =\frac{x_{n+1}}{512},\ n=0,1,\dots\nonumber
+\end{aligned}\]</span>
+(de ciclo máximo).</p>
+<p>NOTA: El algoritmo está implementado en el fichero <em>RANDC.R</em> y se muestra en la Sección <a href="cap3-gen-cong.html#conlinsim">3.1.1</a>.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Generar 500 valores de este generador, obtener el tiempo de CPU,
+representar su distribución mediante un histograma (en escala
+de densidades) y compararla con la densidad teórica.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1"><span class="kw">initRANDC</span>(<span class="dv">321</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">512</span>)       <span class="co"># Fijar semilla para reproductibilidad</span></a>
+<a class="sourceLine" id="cb55-2" title="2">nsim &lt;-<span class="st"> </span><span class="dv">500</span></a>
+<a class="sourceLine" id="cb55-3" title="3"><span class="kw">system.time</span>(u &lt;-<span class="st"> </span><span class="kw">RANDCN</span>(nsim))  <span class="co"># Generar</span></a></code></pre></div>
+<pre><code>##    user  system elapsed 
+##       0       0       0</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1"><span class="kw">hist</span>(u, <span class="dt">freq =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb57-2" title="2"><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">1</span>)                   <span class="co"># Equivalente a curve(dunif(x, 0, 1), add = TRUE)</span></a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:ejcona"></span>
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/ejcona-1.png" alt="Histograma de los valores generados" width="70%" />
+<p class="caption">
+Figura 2.2: Histograma de los valores generados
+</p>
+</div></li>
+<li><p>Calcular la media de las simulaciones (<code>mean</code>) y compararla con
+la teórica.</p>
+<p>La aproximación por simulación de la media teórica es:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"><span class="kw">mean</span>(u)</a></code></pre></div>
+<pre><code>## [1] 0.4999609</code></pre>
+<p>La media teórica es 0.5.
+Error absoluto <span class="math inline">\(3.90625\times 10^{-5}\)</span>.</p></li>
+<li><p>Aproximar (mediante simulación) la probabilidad del intervalo
+<span class="math inline">\((0.4;0.8)\)</span> y compararla con la teórica.</p>
+<p>La probabilidad teórica es 0.8 - 0.4 = 0.4</p>
+<p>La aproximación mediante simulación:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1"><span class="kw">sum</span>((<span class="fl">0.4</span> <span class="op">&lt;</span><span class="st"> </span>u) <span class="op">&amp;</span><span class="st"> </span>(u <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.8</span>))<span class="op">/</span>nsim</a></code></pre></div>
+<pre><code>## [1] 0.402</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1"><span class="kw">mean</span>((<span class="fl">0.4</span> <span class="op">&lt;</span><span class="st"> </span>u) <span class="op">&amp;</span><span class="st"> </span>(u <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.8</span>))     <span class="co"># Alternativa</span></a></code></pre></div>
+<pre><code>## [1] 0.402</code></pre></li>
+</ol>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="cap3.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="análisis-de-la-calidad-de-un-generador.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rubenfcasal/simbook/edit/master/03-Generacion_numeros_aleatorios.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Simulacion.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

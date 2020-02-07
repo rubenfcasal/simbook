@@ -16,7 +16,7 @@ Ejemplo cociente de uniformes
 En este capítulo se expondrán métodos generales para simular
 distribuciones continuas: el método de inversión y los basados en
 aceptación/rechazo. En todos los casos como punto de partida es necesario
-disponer de un método de generación de números pseudoaleatorios uniformes en (0,1).
+disponer de un método de generación de números pseudoaleatorios uniformes en $(0,1)$.
 
 
 Método de inversión
@@ -87,7 +87,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##    0.02    0.00    0.02
+##       0       0       0
 ```
 
 ```r
@@ -175,7 +175,7 @@ b)  Generar $10^{4}$ valores de la distribución doble exponencial de
     
     ```
     ##    user  system elapsed 
-    ##    0.03    0.00    0.04
+    ##    0.03    0.00    0.03
     ```
 
 
@@ -447,7 +447,7 @@ a)  Generar una muestra de $10^{4}$ observaciones empleando este
     
     ```
     ##    user  system elapsed 
-    ##    0.08    0.00    0.08
+    ##    0.09    0.00    0.09
     ```
     
     ```r

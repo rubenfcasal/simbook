@@ -1,5 +1,4 @@
-Números aleatorios en R
-=======================
+# Números aleatorios en R {#cap2}
 
 ```{r , child = '_global_options.Rmd'}
 ```
@@ -11,13 +10,18 @@ Entre las herramientas en el paquete base de `R` estarían:
 -   `set.seed(entero)`: permite establecer la semilla (y el
     generador).
 
--   `RNGkind`: selecciona el generador.
+-   `RNGkind()`: selecciona el generador.
 
 -   `rdistribución(n,...):` genera valores aleatorios de la
     correspondiente distribución. 
     Por ejemplo: `runif(n, min = 0, max = 1)`, generaría `n` valores de una uniforme.
 
--   `sample`: genera muestras aleatorias (v.a. discretas) y permutaciones.
+-   `sample()`: genera muestras aleatorias de variables discretas y permutaciones (se tratará en el Capítulo \@ref(cap6)).
+
+-   `simulate()`: genera realizaciones de la respuesta de un modelo ajustado.
+
+Además están disponibles otros paquetes, como el paquete `r citepkg('distr', 'http://distr.r-forge.r-project.org')`,
+que implementan distribuciones adicionales.
 
 La semilla se almacena (en `globalenv`) en `.Random.seed`; es un vector
 de enteros cuya dimensión depende del tipo de generador:
@@ -28,10 +32,44 @@ de enteros cuya dimensión depende del tipo de generador:
 -   Si no se especifica con `set.seed` (o no existe) se genera a
     partir del reloj del sistema.
 
+
 ```{remark}
 Puede ser recomendable (para depurar) almacenarla antes de generar simulaciones, e.g. 
 `semilla <- .Random.seed`.
 ```
+
+
+En la mayoría de los ejemplos de este libro se generan todos los valores de una vez,
+se guardan y se procesan vectorialmente (normalmente empleando la función `apply`).
+En problemas mas complejos, en los que no es necesario almacenar todas las simulaciones,
+puede ser preferible emplear un bucle para generar y procesar cada simulación iterativamente.
+Por ejemplo podríamos emplear el siguiente esquema:
+
+```{r eval=FALSE}
+# Fijar semilla
+set.seed(1)
+for (isim in 1:nsim) {
+  seed <- .Random.seed
+  # Si se produce un error, podremos depurarlo ejecutando:
+  #  .Random.seed <- seed
+  ...
+  # Generar valores pseudoaleatorios
+  ...
+}
+```
+
+o alternativamente fijar la semilla en cada iteración, por ejemplo:
+
+```{r eval=FALSE}
+for (isim in 1:nsim) {
+  set.seed(isim)
+  ...
+  # Generar valores pseudoaleatorios
+  ...
+}
+```
+
+Hay que tener en cuenta que `.Random.seed` se almacena en el entorno de trabajo...
 
 
 ##  Opciones
@@ -48,7 +86,7 @@ seleccionar el tipo de generador (en negrita los valores por defecto):
     -   “Super-Duper”: Ciclo aprox. $4.6\times10^{18}$ (S-PLUS)
 
     -   **“Mersenne-Twister”**: Ciclo $2^{19937}-1$ y equidistribution
-        en 623 dim.
+        en 623 dimensiones.
 
     -   “Knuth-TAOCP-2002”: Ciclo aprox. $2^{129}$.
 
@@ -61,6 +99,7 @@ seleccionar el tipo de generador (en negrita los valores por defecto):
     “Kinderman-Ramage”, “Buggy Kinderman-Ramage”,
     “Ahrens-Dieter”, “Box-Muller”, **“Inversion”** , o “user-supplied”
 
+
 ##  Paquetes de R
 
 Otros paquetes de R que pueden ser de interés:
@@ -68,7 +107,7 @@ Otros paquetes de R que pueden ser de interés:
 -   `setRNG` contiene herramientas que facilitan operar con la semilla
     (dentro de funciones,...).
 
--   `random` generación de numeros “true random”.
+-   `random` permite la descarga de numeros “true random” desde [RANDOM.ORG](https://www.random.org).
 
 -   `randtoolbox` implementa generadores más recientes (`rngWELL`) y
     generación de secuencias cuasi-aleatorias.
@@ -76,14 +115,15 @@ Otros paquetes de R que pueden ser de interés:
 -   `RDieHarder` implementa diversos contrastes para el análisis de la
     calidad de un generador y varios generadores.
 
--   `Runuran` interfaz para la librería UNU.RAN para la
-    generación (automática) de variables aleatorias no uniformes.
+-   [`Runuran`](http://statmath.wu.ac.at/unuran) interfaz para la librería UNU.RAN para la
+    generación (automática) de variables aleatorias no uniformes (ver Hörmann et al., 2004).
 
--   `rsprng` y `rstream` implementan la generación de múltiples
-    secuencias (e.g. para programación paralela).
+-   `rsprng`, `rstream` y `rlecuyer` implementan la generación de múltiples
+    secuencias (para programación paralela).
 
 -   `gls`, `rngwell19937`, `randaes`, `SuppDists`, `lhs`, `mc2d`,
     `fOptions`, ...
+
 
 ## Ejercicios
 

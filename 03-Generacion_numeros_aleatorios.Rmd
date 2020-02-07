@@ -1,29 +1,24 @@
-Generación de números pseudoaleatorios
-======================================
+# Generación de números pseudoaleatorios con distribución uniforme {#cap3}
 
 ```{r , child = '_global_options.Rmd'}
 ```
 
-Generadores congruenciales
---------------------------
+Como ya se comentó, los distintos métodos de simulación requieren disponer de secuencias de números pseudoaleatorios que imiten las propiedades de generaciones independientes de una distribución $\mathcal{U}(0,1)$. 
+En primer lugar nos centraremos en el caso de los generadores congruenciales. A pesar de su simplicidad, podrían ser adecuados en muchos casos y constituyen la base de los generadores avanzados habitualmente considerados.
+Posteriormente se dará una visión de las diferentes herramientas para estudiar la calidad de un generador de números pseudoaleatorios.
 
-### Generador congruencial lineal (simple) {#conlinsim}
+## Generadores congruenciales (lineales) {#gen-cong}
 
-Partiendo de una semilla inicial $x_{0}$:
+Se basan en la idea de considerar una combinación lineal de los últimos $k$ enteros generados y calcular su resto al dividir por un entero fijo $m$. 
+En el método congruencial simple (de orden $k = 1$), partiendo de una semilla inicial $x_0$, el algoritmo secuencial es el siguiente:
 $$\begin{aligned}
 x_{i}  & = (ax_{i-1}+c) \operatorname{mod} m \\
 u_{i}  & = \dfrac{x_{i}}{m} \\
 i  & =1,2,\ldots
 \end{aligned}$$ 
-donde $a$ es el **multiplicador,**
-$c$ el **incremento** y $m$ el **módulo** del generador (parámetros
-enteros fijados de antemano).
+donde $a$ (*multiplicador*), $c$ (*incremento*) y $m$ (*módulo*) son parámetros enteros del generador fijados de antemano. Si $c=0$ el generador se denomina congruencial *multiplicativo* (Lehmer, 1951) y en caso contrario se dice que es *mixto* (Rotenburg, 1960).
 
--   Si $c=0$ se denomina congruencial **multiplicativo**
-
--   Si $c\neq0$ se denomina congruencial **mixto**
-
-Implementado en el fichero *RANDC.R* (tratando de imitar el funcionamiento en R, aunque de forma no muy eficiente...):
+Este método está implementado en el fichero *RANDC.R*, tratando de imitar el funcionamiento de un generador de R (aunque de un forma no muy eficiente):
 ```{r }
 # Generador congruencial de números pseudoaleatorios
 # ==================================================
@@ -79,42 +74,41 @@ Ejemplos:
 -   $c=0$, $a=2^{16}+3=65539$ y $m=2^{31}$, generador `RANDU` de IBM
     (**no recomendable**).
 
--   $c=0$, $a=7^{5}=16807$ y $m=2^{31}-1,$ Park y Miller (1988)
-    “minimal standar”,empleado por las librerías IMSL y NAG.
+-   $c=0$, $a=7^{5}=16807$ y $m=2^{31}-1$ (primo de Mersenne), Park y Miller (1988)
+    “minimal standar”, empleado por las librerías IMSL y NAG.
 
 Los parámetros y la semilla determinan los valores generados:
-$$x_{i}=\left(  a^{i}x_{0}+c\frac{a^{i}-1}{a-1}\right)  \operatorname{mod}m$$
+$$x_{i}=\left(  a^{i}x_0+c\frac{a^{i}-1}{a-1}\right)  \operatorname{mod}m$$
 
 A pesar de su simplicidad, una adecuada elección de los parámetros
 permite obtener de manera eficiente secuencias de números
-“aparentemente” i.i.d. $\mathcal{U}(0,1).$
+“aparentemente” i.i.d. $\mathcal{U}(0,1)$.
 
-### Periodo
+El procedimiento habitual solía ser escoger $m$ de forma que la operación del módulo se pudiese realizar de forma muy eficiente, para posteriormente seleccionar $c$ y $a$ de forma que el período fuese lo más largo posible (o suficientemente largo).
+
 
 ```{theorem}
 (Hull y Dobell, 1962)
 
 Un generador congruencial tiene período máximo ($p=m$) si y solo si:
 
-1.  $c$ y $m$ son primos relativos (i.e. $m.c.d.\left(  c,m\right)
-    =1$).
+1.  $c$ y $m$ son primos relativos (i.e. $m.c.d.(c, m) = 1$).
 
 2.  $a-1$ es múltiplo de todos los factores primos de $m$ (i.e.
-    $a\equiv1\operatorname{mod}q$, para todo $q$ factor primo de
-    $m$).
+    $a \equiv 1 \operatorname{mod}q$, para todo $q$ factor primo de $m$).
 
 3.  Si $m$ es múltiplo de $4$, entonces $a-1$ también lo ha de
-    ser (i.e. $m\equiv0\operatorname{mod}4\Rightarrow a\equiv
-    1\operatorname{mod}4$).
+    ser (i.e. $m \equiv 0 \operatorname{mod}4\Rightarrow a \equiv
+    1 \operatorname{mod}4$).
     
 .
 ```
 
 Algunas consecuencias:
 
--   Si $m$ primo, $p=m\Leftrightarrow a=1$
+-   Si $m$ primo, $p=m$ si y solo si $a=1$.
 
--   Un generador multiplicativo no cumple la condición 1.
+-   Un generador multiplicativo no cumple la condición 1 ($m.c.d.(0, m)=m$).
 
 
 ```{theorem}
@@ -131,13 +125,9 @@ Un generador multiplicativo tiene período máximo ($p=m-1$) si:
 
 Además de preocuparse de la longitud del ciclo, las secuencias
 generadas deben aparentar muestras i.i.d. $\mathcal{U}(0,1)$. 
-Por ejemplo, los valores generados pueden mostrar una estructura reticular.
 
--   Marsaglia (1968): $k$-uplas de generadores multiplicativos
-    contenidas en a lo sumo $\left(k!m\right)^{1/k}$
-    hiperplanos paralelos.
-
--   Generador RANDU de IBM (70’s):
+Uno de los principales problemas es que los valores generados pueden mostrar una clara estructura reticular.
+Este es el caso por ejemplo del generador RANDU de IBM muy empleado en la década de los 70 `r citefig("randu")`. 
 
 ```{r randu, warning=FALSE, fig.cap='Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)'}
 system.time(u <- RANDCN(9999))  # Generar
@@ -145,15 +135,16 @@ xyz <- matrix(u, ncol = 3, byrow = TRUE)
 
 library(plot3D)
 points3D(xyz[,1], xyz[,2], xyz[,3], colvar = NULL, phi = 60, theta = -50, pch = 21, cex = 0.2)
+
+# Alternativamente se podría utilizar la función `plot3d` del paquete `rgl`,
+# y pulsando con el ratón se podría rotar la figura para ver los hiperplanos:
+# library(rgl)
+# plot3d(xyz) 
 ```
 
-NOTA: Alternativamente se podría utilizar la función `plot3d` del paquete `rgl`,
-y pulsando con el ratón se podría rotar la figura para ver los hiperplanos:
-```{r, eval=FALSE}
-library(rgl)
-plot3d(xyz) 
-```
-
+En general todos los generadores de este tipo van a presentar estructuras reticulares.
+Marsaglia (1968) demostró que las $k$-uplas de un generadores multiplicativo están contenidas en a lo sumo $\left(k!m\right)^{1/k}$ hiperplanos paralelos (para más resultados sobre la estructura reticular, ver por ejemplo Ripley, 1987, sección 2.7).
+Por tanto habría que seleccionar adecuadamente $m$ y $c$ ($a$ solo influiría en la pendiente) de forma que la estructura reticular sea impreceptible teniendo en cuenta el número de datos que se pretende generar (por ejemplo de forma que la distancia mínima entre los puntos sea próxima a la esperada en teoría).
 
 Se han propuesto diversas pruebas (ver sección siguiente) para
 determinar si un generador tiene problemas de este tipo y se han
@@ -167,35 +158,36 @@ Miller, 1988, estudiaron que parámetros son adecuados para $m=2^{31}-1$).
     producir secuencias muy largas de números i.i.d. $\mathcal{U}(0,1)$,
     es un elemento básico en generadores más avanzados.
 
+
 ### Otros generadores
 
-Generalizaciones del generador congruencial lineal simple:
-$$x_{i}=f\left(  x_{i-1},x_{i-2},\cdots,x_{i-k}\right)  \operatorname{mod}m$$
-
--   No lineal: e.g.
-    $\ x_{i}=a_{1}x_{i-1}+a_{2}x_{i-1}^{2}\operatorname{mod}m$
+Se han considerado diversas extensiones del generador congruencial lineal simple:
 
 -   Lineal múltiple: 
-    $x_{i}=a_{1}x_{i-1}+a_{2}x_{i-2}+\cdots+a_{k}x_{i-k}\operatorname{mod}m$,
-    con $p\leq m^{k}-1$)
+    $x_{i}= a_0 + a_1 x_{i-1} + a_2 x_{i-2} + \cdots + a_{k} x_{i-k} \operatorname{mod} m$,
+    con periodo $p\leq m^{k}-1$.
 
--   Matricial: $\boldsymbol{x}_{i} = A_{1}\boldsymbol{x}_{i-1} 
-    + A_{2}\boldsymbol{x}_{i-2} + \cdots 
-    + A_{k}\boldsymbol{x}_{i-k} \operatorname{mod}m$
-    (por ejemplo el generador por defecto de `R`).
+-   No lineal: 
+    $x_{i} = f\left(  x_{i-1}, x_{i-2}, \cdots, x_{i-k} \right) \operatorname{mod} m$. 
+    Por ejemplo $x_{i} = a_0 + a_1 x_{i-1} + a_2 x_{i-1}^2 \operatorname{mod} m$.
+
+-   Matricial: 
+    $\boldsymbol{x}_{i} = A_0 + A_1\boldsymbol{x}_{i-1} 
+    + A_2\boldsymbol{x}_{i-2} + \cdots 
+    + A_{k}\boldsymbol{x}_{i-k} \operatorname{mod} m$.
+    Un ejemplo es el generador *Mersenne-Twister* (Matsumoto y Nishimura, 1998), empleado por defecto en R, de periodo $2^{19937}-1$ y equidistribution en 623 dimensiones.
 
 Un caso particular del generador lineal múltiple son los denominados *generadores de registros desfasados*.
-Se generan bits de forma secuencial considerando $m=2$ y $a_{i} \in \left \{ 0,1\right \}$, 
-y los cálculos se pueden realizar rápidamente mediante operaciones lógicas
-(se pueden emplear directamente los registros del procesador).
+Se generan bits de forma secuencial considerando $m=2$ y $a_{i} \in \left \{ 0,1\right \}$ y se van combinando $l$ bits para obtener valores en el intervalo $(0, 1)$, por ejemplo $u_i = 0.x_{it+1} x_{it+2} \ldots x__{it+l}$, siendo $t$ un parámetro denominado *aniquilación* (Tausworthe, 1965). 
+Los cálculos se pueden realizar rápidamente mediante operaciones lógicas ("o" exclusivo XOR), empleando directamente los registros del procesador.
 
-Otras alternativas bastante utilizadas consisten en la combinanción de varios generadores:
+Otras alternativas consisten en la combinanción de varios generadores, las más empleadas son:
 
--   Combinación de salidas:
-    $u_{i}=\sum u_{i}^{(l)}\operatorname{mod}1$,
-    donde $u_{i}^{(l)}$ es el $i$-ésimo valor obtenido con el generador $l$.
+-   Combinar las salidas: por ejemplo $u_{i}=\sum_{i=1}^L u_{i}^{(l)} \operatorname{mod} 1$, donde $u_{i}^{(l)}$ es el $i$-ésimo valor obtenido con el generador $l$.
 
--   Barajar salidas...
+-   Barajar las salidas: por ejemplo se crea una tabla empleando un generador y se utiliza otro para seleccionar el índice del valor que se va a devolver y posteriormente actualizar.
+
+El generador *L'Ecuyer-CMRG* (L'Ecuyer, 1999), empleado como base para la generación de múltiples secuencias en el paquete `parallel`, combina dos generadores concruenciales lineales múltiples de orden $k=3$ (el periodo aproximado es $2^{191}$).
     
 ```{exercise}
 ```
@@ -207,7 +199,7 @@ u_{n+1}  & =\frac{x_{n+1}}{512},\ n=0,1,\dots\nonumber
 \end{aligned}$$
 (de ciclo máximo).
 
-NOTA: El algoritmo está implementado en el fichero *RANDC.R* y se muestra en la Sección \@ref(conlinsim).
+NOTA: El algoritmo está implementado en el fichero *RANDC.R* y se muestra en la Sección \@ref(gen-cong).
 
 a)  Generar 500 valores de este generador, obtener el tiempo de CPU,
     representar su distribución mediante un histograma (en escala
@@ -222,6 +214,7 @@ a)  Generar 500 valores de este generador, obtener el tiempo de CPU,
     abline(h = 1)                   # Equivalente a curve(dunif(x, 0, 1), add = TRUE)
     ```
 
+    En este caso concreto la distribución de los valores generados es aparentemente más uniforme de lo que cabría esperar, lo que induciría a sospechar de la calidad de este gerenador.
 
 b)  Calcular la media de las simulaciones (`mean`) y compararla con
     la teórica.
@@ -355,9 +348,9 @@ chisq.test.cont(u, distribution = "unif",
 
 Empleando los métodos genéricos del modo habitual, desconfiamos del
 generador si la muestra/secuencia no se ajusta a la distribución
-teórica (*p*-valor $\leq \alpha$).
+teórica ($p$-valor $\leq \alpha$).
 En este caso además, **también se sospecha si se ajusta demasiado
-bien** a la distribución teórica (*p*-valor $\geq1-\alpha$).
+bien** a la distribución teórica ($p$-valor $\geq1-\alpha$).
 
 Otro contraste de bondad de ajuste muy conocido 
 es el test de Kolmogorov-Smirnov, implementado en `ks.test`.
@@ -422,7 +415,7 @@ c)  Estudiar las correlaciones del vector $(u_{i},u_{i+k})$, con
 Los contrastes se plantean habitualmente desde el punto de vista de
 la inferencia estadística en la práctica: se realiza una prueba
 sobre la única muestra disponible. Si se realiza una única prueba, 
-en las condiciones de $H_{0}$ hay
+en las condiciones de $H_0$ hay
 una probabilidad $\alpha$ de rechazarla.
 En simulación tiene mucho más sentido realizar un gran número de
 pruebas:
@@ -431,7 +424,7 @@ pruebas:
     $\alpha$(se puede comprobar para distintos valores de $\alpha$).
 
 -   La distribución del estadístico debería ajustarse a la teórica
-    bajo $H_{0}$(se podría realizar un nuevo contraste de bondad
+    bajo $H_0$(se podría realizar un nuevo contraste de bondad
     de ajuste).
 
 -   Los *p*-valores obtenidos deberían ajustarse a una
@@ -505,6 +498,15 @@ abline(h=1) # curve(dunif(x,0,1), add=TRUE)
 ks.test(pvalor, "punif",  min=0, max=1)
 ```
 
+Adicionalmente, si queremos estudiar la proporción de rechazos (el *tamaño del contraste*) para los posibles valores de $\alpha$, podemos emplear la distribución empírica del $p$-valor (proporción de veces que resultó menor que un determinado valor):
+
+```{r}
+# Distribución empírica
+curve(ecdf(pvalor)(x), type = "s", lwd = 2, 
+      xlab = 'Nivel de significación', ylab = 'Proporción de rechazos')
+abline(a=0, b=1, lty=2)   # curve(punif(x, 0, 1), add = TRUE)
+```
+
 
 ### Baterías de contrastes
 
@@ -546,20 +548,20 @@ cuadrados medios propuesto por Von Neumann (1946). Con este
 procedimiento se generan números pseudoaleatorios de 4 dígitos de la
 siguiente forma:
 
-i.  Se escoge un número de cuatro dígitos $x_{0}$ (semilla).
+i.  Se escoge un número de cuatro dígitos $x_0$ (semilla).
 
-ii.   Se eleva al cuadrado ($x_{0}^{2}$) y se toman los cuatro dígitos
-    centrales ($x_{1}$).
+ii.   Se eleva al cuadrado ($x_0^2$) y se toman los cuatro dígitos
+    centrales ($x_1$).
 
 iii.   Se genera el número pseudo-aleatorio
-    como$$u_{1}=\frac{x_{1}}{10^{4}}.$$
+    como$$u_1=\frac{x_1}{10^{4}}.$$
 
 iv.  Volver al paso ii y repetir el proceso.
 
-Para obtener los $k$ (número par) dígitos centrales de $x_{i}^{2}$
+Para obtener los $k$ (número par) dígitos centrales de $x_{i}^2$
 se puede utilizar que:
-$$x_{i+1}=\left\lfloor \left(  x_{i}^{2}-\left\lfloor \dfrac{x_{i}^{2}}{10^{(2k-\frac{k}{2})}}\right\rfloor 10^{(2k-\frac{k}{2})}\right)
-/10^{\frac{k}{2}}\right\rfloor$$ 
+$$x_{i+1}=\left\lfloor \left(  x_{i}^2-\left\lfloor \dfrac{x_{i}^2}{10^{(2k-\frac{k}2)}}\right\rfloor 10^{(2k-\frac{k}2)}\right)
+/10^{\frac{k}2}\right\rfloor$$ 
 
 El algoritmo está implementado en el fichero *RANDVN.R*:
 ```{r, eval=FALSE}

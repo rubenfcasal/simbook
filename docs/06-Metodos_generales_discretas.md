@@ -1,5 +1,4 @@
-Simulación de variables discretas
-=================================
+# Simulación de variables discretas {#cap6}
 
 
 
@@ -186,7 +185,7 @@ system.time( rx <- rfmp(x, fmp, nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.08    0.00    0.08
+##    0.06    0.00    0.07
 ```
 
 Aproximación de la media:
@@ -329,7 +328,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##    0.04    0.02    0.04
+##    0.05    0.00    0.05
 ```
 
 ```r
@@ -451,7 +450,7 @@ system.time( rx <- rfmp.tabla(x, fmp, n-1, nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.07    0.00    0.06
+##    0.05    0.00    0.05
 ```
 
 Análisis de los resultados:
@@ -566,7 +565,7 @@ system.time( rx <- rfmp.alias(x,fmp,nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.03    0.00    0.03
+##    0.01    0.02    0.03
 ```
 
 Análisis de los resultados:

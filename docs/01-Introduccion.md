@@ -1,57 +1,58 @@
-Introducción a la simulación
-============================
+# Introducción a la simulación {#cap1}
 
 
 
-## Introducción
 
-  Problemas de la experimentación directa sobre la realidad:
+Podríamos definir la *Simulación* como una técnica que consiste en realizar experimentos de muestreo sobre el modelo de un sistema, con el objetivo de recopilar información bajo determinadas condiciones. 
 
-  -   Coste elevado.
+## Conceptos básicos
 
--   En ocasiones las pruebas son destructivas.
+La experimentación directa sobre la realidad puede tener muchos inconvenientes:
 
--   Lentitud.
+-   Coste elevado.
+
+    -   En ocasiones las pruebas son destructivas.
+    
+    -   Lentitud.
 
 -   Puede no ser ética.
 
--   experimentación sobre seres humanos.
+    -   Experimentación sobre seres humanos.
 
 -   Puede resultar imposible.
 
--   Acontecimientos futuros, ...
+    -   Acontecimientos futuros, alternativas en el pasado, ...
 
 -   ...
 
-Puede ser preferible trabajar con un modelo del sistema real. La realidad puede ser muy compleja por lo que es habitual emplear un
-modelo para tratar de explicarla:
+Además la realidad puede ser demasiado compleja como para ser estudiada directamente y resultar preferible trabajar con un modelo del sistema real. 
+Un modelo no es más que un conjunto de variables junto con ecuaciones matemáticas que las relacionan y restricciones sobre dichas variables. 
+Habría dos tipos de modelos:
 
 -   Modelos deterministas.
 
--   Modelos estocásticos (con componente aleatoria).
+-   Modelos estocásticos (con componente aleatoria): tienen en cuenta la incertidumbre debida a que no se disponga de toda la información sobre las variables que influyen en el fenómeno en estudio (puede ser simplemente que haya errores de medida).
 
-    -   Cuando no se dispone de la suficiente información sobre las
-        variables que influyen en el fenómeno en estudio.
-    
-    -   Se tienen en cuenta esta incertidumbre.
+La modelización es una etapa presente en la mayor parte de los trabajos de investigación (especialmente en las ciencias experimentales).
+El modelo debería considerar las variables más relevantes para explicar el fenómeno en estudio y las principales relaciones entre ellas.
+La inferencia estadística proporciona herramientas para estimar los parámetros y contrastar la validez de un modelo estocástico a partir de los datos observados.
 
-La inferencia estadística proporciona herramientas para
-estimar los parámetros y contrastar la validez de un modelo estocástico a
-partir de los datos observados.
+La idea es emplear el modelo (suponiendo que es válido) para resolver el problema de interés. 
+Si se puede obtener la solución de forma análitica, esta suele ser exacta (aunque en ocasiones solo se dispone de soluciones aproximadas, basadas en resultados asintóticos, o que dependen de supociones que pueden ser cuestionables) y a menudo la resolución también es rápida.
+Cuando la solución no se puede obtener de modo analítico (o si la aproximación disponible no es adecuada) se puede recurrir a la simulación.
 
-La idea es emplear el modelo para resolver el problema de interés. 
-Cuando la solución no se puede obtener de modo
-analítico (teórico) se puede recurrir a la simulación.
+Nos centraremos en el caso de la *Simulación Estocástica*: las conclusiones se obtienen generando repetidamente simulaciones del modelo aleatorio.
 
-**Simulación**: realizar experimentos con un modelo con el objetivo
-de recopilar información bajo determinadas condiciones. Nos centraremos en el caso de la **simulación estocástica**: 
+<!-- 
+Ejemplo: caballero de Meré 
+Experimentación directa sobre la realidad
+Modelo de probabilidad
+Aproximación por simulación
+-->
 
--   Las conclusiones se obtienen habitualmente generando
-    repetidamente simulaciones del modelo aleatorio.
-    
+### Ventajas e inconvenientes de la simulación 
 
-
-### Ventajas de la simulación (Shannon, 1975):
+Ventajas (Shannon, 1975):
 
 -   Cuando la resolución analítica no puede llevarse a cabo.
 
@@ -71,20 +72,20 @@ de recopilar información bajo determinadas condiciones. Nos centraremos en el c
 -   En sistemas que evolucionan muy lentamente en el tiempo.
 
 
-### Inconvenientes de la simulación:
+El principal incoveniente puede ser el tiempo de computación necesario, aunque gracias a la gran potencia de cálculo de los computadores actuales, se puede obtener rápidamente una solución aproximada en la mayor parte de los problemas susceptibles de ser modelizados.
+Además siempre están presentes los posibles problemas debidos a emplear un modelo:
 
 -   La construcción de un buen modelo puede ser una tarea muy costosa 
-    (compleja, laboriosa y requerir mucho tiempo; e.g. modelos climáticos).
+    (compleja, laboriosa y requerir mucho tiempo; 
+    e.g. modelos climáticos).
 
 -   Frecuentemente el modelo omite variables o relaciones importantes entre ellas
     (los resultados pueden no ser válidos para el sistema real).
 
--   Resulta difícil conocer la precisión de la simulación
-    (especialmente en lo relativo a la precisión del modelo formulado).
+-   Resulta difícil conocer la precisión del modelo formulado.
 
--   Problemas de extrapolación de las conclusiones.
-
--   Tiempo de computación.
+Otro problema de la simulación es que se obtienen resultados para unos valores concretos de los parámetros del modelo, por lo que en principio
+resultaría complicado extrapolar las conclusiones a otras situaciones.
 
 
 ## Generación de números (pseudo)aleatorios
@@ -93,19 +94,21 @@ Aplicaciones:
 
 -   Estadística:
 
-  -   Muestreo, remuestreo, ...
-
--   Aproximación de distribuciones (de estadísticos, estimadores, ...)
-
--   Realización de contrastes, intervalos de confianza, ...
-
--   Comparación de estimadores, contrastes, ...
-
--   Validación teoría (distribución asintótica,...)
-
--   Inferencia Bayesiana
+    -   Muestreo, remuestreo, ...
+    
+    -   Aproximación de distribuciones (de estadísticos, estimadores, ...)
+    
+    -   Realización de contrastes, intervalos de confianza, ...
+    
+    -   Comparación de estimadores, contrastes, ...
+    
+    -   Validación teoría (distribución asintótica,...)
+    
+    -   Inferencia Bayesiana
 
 -   Optimización: Algoritmos genéticos, ...
+
+-   Análisis numérico: Aproximación de integrales, resolución de ecuaciones, ...
 
 -   Computación: Diseño, verificación y validación de algoritmos,...
 
@@ -113,29 +116,32 @@ Aplicaciones:
 
 -   Física: Simulación de fenómenos naturales, ...
 
--   Análisis numérico: Evaluación de expresiones, ...
-
 -   ...
 
 
-En el Capítulo XX nos centraremos en algunas de las aplicaciones de utilidad en Estadística.
+En los capítulos \@ref(cap8) y \@ref(cap9) nos centraremos en algunas de las aplicaciones de utilidad en Estadística.
 
 
 ## Números aleatorios puros
 
-Una sucesión de números aleatorios puros (true random), se
-caracteriza por que no existe ninguna regla o plan que nos permita
-conocer sus valores.
+Una sucesión de números aleatorios puros (*true random*), se caracteriza por que no existe ninguna regla o plan que nos permita conocer sus valores.
 
-Se almacena(ban) en *tablas de dígitos aleatorios* (*true random*)
-y normalmente son obtenidos por procesos físicos
-(loterías, ruletas, ruidos,...)
+Normalmente son obtenidos por procesos físicos
+(loterías, ruletas, ruidos,...) y se almacenaban en *tablas de dígitos aleatorios*. 
+Por ejemplo, en 1955 la Corporación RAND publicó el libro [A Million Random Digits with 100,000 Normal Deviates](https://www.rand.org/pubs/monograph_reports/MR1418.html) que contenía números aleatorios generados mediante una ruleta electrónica conectada a una computadora  (ver Figura \@ref(fig:randbook)).
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{images/RAND} \end{center}
+\begin{figure}[!htb]
 
-Se emplean para seleccionar números aleatorios 
-en un rango de 1 a *m*:
+{\centering \includegraphics[width=0.3\linewidth]{images/RAND} 
+
+}
+
+\caption{Líneas 10580-10594, columnas 21-40, del libro *A Million Random Digits with 100,000 Normal Deviates*.}(\#fig:randbook)
+\end{figure}
+
+El procediento para generar de forma manual números aleatorios 
+en un rango de 1 a *m* era el siguiente:
 
 -   Se selecciona al azar un pto de inicio en la tabla 
     y una dirección.
@@ -145,82 +151,109 @@ en un rango de 1 a *m*:
 -   Se seleccionan los valores menores o iguales que *m* 
     (se descarta el resto).
 
-Algunos enlaces:
+Hoy en día están disponibles generadores de números aleatorios “online”:
 
--   [A Million Random Digits with 100,000 Normal Deviates](https://en.wikipedia.org/wiki/A_Million_Random_Digits_with_100,000_Normal_Deviates) .
-    RAND Corporation. 1955.
+-   [http://www.random.org/integers](http://www.random.org/integers)
+    (ver paquete `random` en R).
 
--   Generadores de números aleatorios “online”:
+-   [http://www.fourmilab.ch/hotbits](http://www.fourmilab.ch/hotbits)
 
-    -   [http://www.random.org/integers](http://www.random.org/integers)
-        (ver paquete **random** en R).
-    
-    -   [http://www.fourmilab.ch/hotbits](http://www.fourmilab.ch/hotbits)
+Aunque para un uso profesional puede ser recomendable emplear generadores implementados mediante hardware:
 
--   Generadores mediante hardware:
+-   [http://software.intel.com](http://software.intel.com/en-us/articles/intel-digital-random-number-generator-drng-software-implementation-guide).
 
-    -   [http://software.intel.com](http://software.intel.com/en-us/articles/intel-digital-random-number-generator-drng-software-implementation-guide).
-    
-    -   [http://spectrum.ieee.org](http://spectrum.ieee.org/semiconductors/devices/a-memristor-true-randomnumber-generator)
+-   [http://spectrum.ieee.org](http://spectrum.ieee.org/semiconductors/devices/a-memristor-true-randomnumber-generator)
 
 
-  Sus principales aplicaciones hoy en día son en criptografía (impredictibilidad).
+Sus principales aplicaciones hoy en día son en criptografía (impredictibilidad).
+
 
 ### Inconvenientes:
 
-  -   Es necesario/recomendable conocer su distribución.
+Para su aplicación en el campo de la Estadística:
+
+-   Es necesario conocer su distribución.
 
 -   Los datos generados deberían ser i.i.d.
+
+(sería también muy recomendable para otros casos) y en general:
 
 -   Reproductivilidad.
 
 -   Pueden requerir del almacenamiento en tablas.
 
+Además siempre está la posible presencia de sesgos, principalmente debidos a fallos del sistema o interferencias. 
+Por ejemplo en el caso de la máquina RAND, fallos mecánicos en el sistema de grabación de los datos causaron problemas de aleatoriedad (Hacking, 1965, p. 129).
+
+
 ### Alternativas:
 
-  -   **números pseudo-aleatorios**: simulan realizaciones de una
-variable aleatoria (uniforme).
+A partir de la década de 1960, al disponer de computadoras de mayor velocidad, empezó a resultar más eficiente generar valores mediante software en lugar de leerlos de las tablas. 
+Se distingue entre dos tipos de secuencias:
 
--   números cuasi-aleatorios: secuencias determinísticas con una
-distribución más uniforme en el rango considerado (se podría
-                                                   pensar que son una única generación de una variable aleatoria).
+-   *números pseudo-aleatorios*: simulan realizaciones de una variable aleatoria (uniforme).
+
+-   números cuasi-aleatorios: secuencias determinísticas con una distribución más uniforme en el rango considerado (se podría pensar que son una única generación de una variable aleatoria).
+
+Algunos problemas, como la integración numérica (en el Capítulo \@ref(cap9) se tratarán métodos de integración Monte Carlo), no dependen realmente de la aleatoriedad de la secuencia. Para evitar generaciones poco probables, se puede recurrir a secuencias cuasi-aleatorias, también denominadas *sucesiones de baja discrepancia* (hablaríamos entonces de métodos cuasi-Monte Carlo). La idea sería que la proporción de valores en una región cualquiera sea siempre aproximadamente proporcional a la medida de la región (como sucedería en media con la distribución uniforme, aunque no necesariamente para una realización concreta).
+
+Por ejemplo, el paquete [`randtoolbox`](https://CRAN.R-project.org/package=randtoolbox) implementa métodos para la generación de secuencias cuasi-aleatorias (ver Figura \@ref(fig:randtoolbox)).
+
+
+```r
+library(randtoolbox)
+n <- 2000
+par.old <- par( mfrow=c(1,3))
+plot(halton(n, dim = 2), xlab = 'x1', ylab = 'x2')
+plot(sobol(n, dim = 2), xlab = 'x1', ylab = 'x2')
+plot(torus(n, dim = 2), xlab = 'x1', ylab = 'x2')
+```
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{01-Introduccion_files/figure-latex/randtoolbox-1} 
+
+}
+
+\caption{Secuencias cuasi-aleatorias bidimensionales obtenidas con los métodos de Halton (izquierda), Sobol (centro) y Torus (derecha).}(\#fig:randtoolbox)
+\end{figure}
+
+```r
+par(par.old)
+```
+
 
 
 Números pseudoaleatorios
 ------------------------
 
-### Generación de números pseudoaleatorios mediante software
+La mayoría de los métodos de simulación se basan en la posibilidad de generar números pseudoaleatorios que imiten las propiedades de generaciones independientes de una distribución $\mathcal{U}(0,1)$. 
 
-La mayoría de los métodos de simulación se basan en la posibilidad
-de generar números pseudoaleatorios con distribución
-$\mathcal{U}(0,1)$. 
-Se obtienen mediante un algoritmo recursivo denominado
-**generador**:
+El procedimiento habitual para obtiener estas secuencias es emplear un algoritmo recursivo denominado *generador*:
 
-  $$x_{i}=f\left(  x_{i-1},x_{i-2},\cdots,x_{i-k}\right)$$
+$$x_{i} = f\left( x_{i-1}, x_{i-2}, \cdots, x_{i-k}\right)$$
 
-  -   $k$ orden del generador.
+donde:
 
--   $\left(  x_{0},x_{1},\cdots,x_{k-1}\right)$ **semilla**
+-   $k$ es el orden del generador.
+
+-   $\left(  x_{0},x_{1},\cdots,x_{k-1}\right)$ es la *semilla*
   (estado inicial).
 
-El **periodo** o *longitud del ciclo* es la longitud de la secuencia antes
+El *periodo* o *longitud del ciclo* es la longitud de la secuencia antes
 de que vuelva a repetirse. Lo denotaremos por $p$.
 
 
 Los números de la sucesión serán predecibles, conociendo el
 algoritmo y la semilla.
 
--   Sin embargo, si no se conociesen, **no se debería poder
-distinguir** una serie de números pseudoaleatorios **de una
-sucesión de números verdaderamente aleatoria** (utilizando
-                                                recursos computacionales razonables).
+-   Sin embargo, si no se conociesen, *no se debería poder distinguir* una serie de números pseudoaleatorios *de una sucesión de números verdaderamente aleatoria* (utilizando recursos computacionales razonables).
 
 -   En caso contrario esta predecibilidad puede dar lugar a serios
 problemas (e.g. [http://eprint.iacr.org/2007/419](http://eprint.iacr.org/2007/419)).
 
 Como regla general, por lo menos mientras se está desarrollando un
-programa, interesa **fijar la semilla de aleatorización**.
+programa, interesa *fijar la semilla de aleatorización*.
 
 -   Permite la reproductibilidad de los resultados.
 
@@ -275,4 +308,4 @@ Código fuente disponible en múltiples librerias:
 
 -   ...
   
-Nos centraremos en los generadores congruenciales, descritos en la [Sección 3.1][Generadores congruenciales].
+Nos centraremos en los generadores congruenciales, descritos en la Sección \@ref(gen-cong).

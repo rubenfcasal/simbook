@@ -1,14 +1,11 @@
-Aplicaciones de la simulación en Inferencia Estadística
-=======================================================
+# Aplicaciones de la simulación en Inferencia Estadística {#cap8}
 
 ```{r , child = '_global_options.Rmd'}
 ```
 
-## Aplicaciones de la simulación
+Como ya se comentó en la introducción muchas de las aplicaciones de la simulación serían de utilidad en Estadística: 
 
-Aplicaciones:
-
--   Estadística: Muestreo, aproximación de distribuciones,
+-   Muestreo, aproximación de distribuciones,
     remuestreo,...
 
 -   Optimización: Algoritmos genéticos, ...
@@ -18,8 +15,7 @@ Aplicaciones:
 -   ...
 
 En este capítulo nos centraremos en 
-algunas de las aplicaciones en inferencia estadística, 
-aunque habría muchas:
+algunas de las aplicaciones en inferencia estadística:
 
 -   Distribución de estimadores puntuales/estadísticos:
 
@@ -52,40 +48,12 @@ aunque habría muchas:
 -   ...
 
 
-En el siguiente capítulo trararemos la Integración y Optimización Monte Carlo...
+En el siguiente capítulo trararemos la Integración y Optimización Monte Carlo.
 
 Observación: 
-En este capítulo se obtendrán simulaciones de estadísticos a partir de muestras 
-(podemos pensar que se parte de generaciones de una variable multivariante).
-En la mayoría de los ejemplos se generan todas las muestras de una vez, 
-se guardan y se procesan vectorialmente (normalmente empleando la función `apply`).
-En problemas mas complejos, en los que no es necesario almacenar todas las simulaciones, 
-puede ser preferible emplear un bucle para generar y procesar las muestras iterativamente. 
-Por ejemplo podríamos emplear el siguiente esquema:
-
-```{r eval=FALSE}
-# Fijar semilla
-set.seed(1)
-for (isim in 1:nsim) {
-  seed <- .Random.seed
-  # Si se produce un error, podremos depurarlo ejecutando:
-  #  .Random.seed <- seed
-  
-  # Generar muestra
-  ...
-}
-```
-
-o alternativamente fijar la semilla en cada iteración, por ejemplo:
-
-```{r eval=FALSE}
-for (isim in 1:nsim) {
-  set.seed(isim)
-
-  # Generar muestra
-  ...
-}
-```
+En este capítulo se obtendrán simulaciones de estadísticos a partir de muestras (podemos pensar que se parte de generaciones de una variable multivariante).
+En la mayoría de los ejemplos se generan todas las muestras de una vez, se guardan y se procesan vectorialmente (normalmente empleando la función `apply`).
+Como ya se comentó en la el Capítulo \@ref(cap2), en problemas mas complejos, en los que no es necesario almacenar todas las muestras, puede ser preferible emplear un bucle para generar y procesar las muestras iterativamente. 
 
 
 Distribución en el muestreo
@@ -798,7 +766,7 @@ e)  Estudiar la potencia de los contrastes de los apartados c) y d),
     CUIDADO: las simulaciones pueden requerir de mucho tiempo de computación
     (consideramos valores pequeños de `nx` y `nsim` en datos y en `ks.exp.sim`).
     
-    ```{r potencia, cache=FALSE}
+    ```{r potencia, cache=TRUE}
     set.seed(54321)
     nx <- 20
     ratex <- 1    # Puede ser interesante representarlo variando rate
