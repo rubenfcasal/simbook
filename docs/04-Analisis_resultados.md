@@ -32,6 +32,7 @@ Simulamos una distribución de Bernoulli de parámetro $p=0.5$:
 p <- 0.5
 set.seed(1)
 nsim <- 10000
+# nsim <- 100
 rx <- runif(nsim) <= p
 ```
 La aproximación por simulación de $p$ será:
@@ -53,14 +54,10 @@ abline(h = mean(rx), lty = 2)
 abline(h = p) 
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/proporcion-1} 
-
-}
-
-\caption{Aproximación de la proporción en función del número de generaciones.}(\#fig:proporcion)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-Analisis_resultados_files/figure-html/proporcion-1.png" alt="Aproximación de la proporción en función del número de generaciones." width="70%" />
+<p class="caption">(\#fig:proporcion)Aproximación de la proporción en función del número de generaciones.</p>
+</div>
 
 ### Detección de problemas de convergencia
 
@@ -79,14 +76,10 @@ plot(cumsum(rx)/1:nsim, type="l", lwd=2,
      xlab="Número de generaciones", ylab="Media muestral")
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/cauchy-1} 
-
-}
-
-\caption{Evolución de la media muestral de una distribución de Cauchy en función del número de generaciones.}(\#fig:cauchy)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-Analisis_resultados_files/figure-html/cauchy-1.png" alt="Evolución de la media muestral de una distribución de Cauchy en función del número de generaciones." width="70%" />
+<p class="caption">(\#fig:cauchy)Evolución de la media muestral de una distribución de Cauchy en función del número de generaciones.</p>
+</div>
 
 
 Para detectar problemas de convergencia es recomendable representar la evolución de la aproximación de la
@@ -99,16 +92,14 @@ Por ejemplo, en el siguiente gráfico de cajas observamos los valores que produc
 boxplot(rx)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-5-1} \end{center}
+<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-5-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 Estimación de la precisión
 --------------------------
 
 En el caso de la media muestral $\overline{X}_{n}$, un estimador
-insesgado de $Var\left( \overline{X}_{n}\right) =\sigma ^{2}/n$ es:
+insesgado de $Var\left( \overline{X}_{n}\right) =\sigma ^{2}/n$ es la cuasi-varianza muestral:
 $$\widehat{Var}\left( \overline{X}_{n}\right) =\frac{\widehat{S}^{2}}{n}$$
 con:
 $$\widehat{S}_{n}^{2}=\dfrac{1}{n-1}\sum\limits_{i=1}^{n}\left( X_{i}-
@@ -116,7 +107,8 @@ $$\widehat{S}_{n}^{2}=\dfrac{1}{n-1}\sum\limits_{i=1}^{n}\left( X_{i}-
 
 En el caso de una proporción $\hat{p}_{n}$:
 $$\widehat{Var}\left( \hat{p}_{n}\right) 
-=\frac{\hat{p}_{n}(1-\hat{p}_{n})}{n-1}.$$
+=\frac{\hat{p}_{n}(1-\hat{p}_{n})}{n-1},$$
+aunque se suele emplear la varianza muestral.
 
 Los valores obtenidos servirían como medidas básicas de la precisión
 de la aproximación, aunque su principal aplicación es la
@@ -140,6 +132,8 @@ Podemos considerar que
 $z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}}$ 
 es la precisión obtenida (con nivel de confianza $1-\alpha$).
 
+La convergencia de la aproximación, además de ser aleatoria, se podría considerar lenta.
+La idea es que para doblar la precisión (disminuir el error a la mitad), necesitaríamos un número de generaciones cuatro veces mayor. Pero una ventaja, es que este error no depende del número de dimensiones (en el caso multidimensional puede ser mucho más rápida que otras alternativas numéricas).
 
 \BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-6"><strong>(\#exm:unnamed-chunk-6) </strong></span>Aproximación de la media de una distribución normal</div>\EndKnitrBlock{example}
 
@@ -160,7 +154,7 @@ mean(rx)
 ```
 ## [1] -0.01164814
 ```
-Como medida de la precisión de la aproximación podemos considerar:
+Como medida de la precisión de la aproximación podemos considerar (se suele denominar error de la aproximación):
 
 ```r
 2*sd(rx)/sqrt(nsim)
@@ -185,17 +179,17 @@ lines(est - 2*esterr, lty=3)
 abline(h = xmed)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-10-1} \end{center}
+<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" />
 
  
 Determinación del número de generaciones
 ----------------------------------------
 
-En muchas ocasiones puede interesar obtener una aproximación con un
-nivel de precisión fijado.
+Normalmente el valor de $n$ se toma del orden de varias centenas o millares. 
+En los casos en los que la simulación se utiliza para aproximar una característica central de la distribución (como una media) puede bastar un número de simulaciones del orden de $n = 100, 200, 500$. 
+Sin embargo, en otros casos pueden ser necesarios valores del tipo $B = 1000, 2000, 5000, 10000$.
 
+En muchas ocasiones puede interesar obtener una aproximación con un nivel de precisión fijado.
 Para una precisión absoluta $\varepsilon$, se trata de determinar
 $n$ de forma que:
 $$z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}}<\varepsilon$$
@@ -219,10 +213,8 @@ Un algoritmo podría ser el siguiente:
       _{i=n_{j-1}+1}^{n_{j}}$ y calcular $\widehat{S}_{n_{j}}$.
 
 
-
-Para una precisión relativa $\varepsilon \left\vert \mu
-\right\vert$ se procede análogamente de forma
-que:$$z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}}<\varepsilon \left\vert 
+Para una precisión relativa $\varepsilon \left\vert \mu \right\vert$ se procede análogamente de forma que:
+$$z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}}<\varepsilon \left\vert 
 \overline{X}_{n}\right\vert .$$
 
 
@@ -264,9 +256,7 @@ lines(est - 2*esterr, lty=2)
 abline(h = 1/3, col="darkgray")     # Prob. teor. cadenas Markov
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-13-1} \end{center}
+<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" />
 
 La aproximación de la proporción sería correcta (es consistente):
 
@@ -296,9 +286,7 @@ subestimación del verdadero error estandar.
 acf(as.numeric(rx))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-16-1} \end{center}
+<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" />
 
 El gráfico de autocorrelaciones sugiere que si tomamos 1 de cada 25 
 podemos suponer independencia.
@@ -312,9 +300,7 @@ rxi <- rx[xlag]
 acf(as.numeric(rxi))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-17-1} \end{center}
+<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 n <- 1:length(rxi)
@@ -328,9 +314,7 @@ lines(est - 2*esterr, lty=2)
 abline(h = 1/3, col="darkgray")     # Prob. teor. cadenas Markov
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-17-2} \end{center}
+<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-17-2.png" width="70%" style="display: block; margin: auto;" />
 
 
 Esta forma de proceder podría ser adecuada para tratar de aproximar la precisión 
@@ -354,9 +338,7 @@ lines(est - 2*esterr, lty=2)
 abline(h = 1/3, col="darkgray")     # Prob. teor. cadenas Markov
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-18-1} \end{center}
+<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;" />
 
 Esta es la idea del método de medias por lotes 
 (*batch means*; *macro-micro replicaciones*) para la estimación de la varianza.
@@ -366,6 +348,8 @@ independientes.
 Trataremos este tipo de problemas en la diagnosis de algoritmos de
 simulación Monte Carlo de Cadenas de Markov (MCMC). 
 Aparecen también en la simulación dinámica (por eventos o cuantos). 
+
+<!-- Ecuaciones p.237 Gentle, Random numbers & MC methods -->
 
 **Nota**: En el caso anterior se calcula el error estándar de la aproximación por simulación de la proporción,
 pero si el objetivo es la aproximación de la varianza (de la variable y no de las medias por lotes), 
@@ -425,9 +409,7 @@ lines(est2, lty = 2)
 abline(v = 2000, lty = 3)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-21-1} \end{center}
+<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 En estos casos puede ser recomendable ignorar los primeros valores generados (por ejemplo los primeros 2000) y recalcular los 
@@ -477,9 +459,7 @@ plot(x)
 abline(v = nburn, lty = 2)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-25-1} \end{center}
+<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-25-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 # Eliminar periodo de calentamiento

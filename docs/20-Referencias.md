@@ -1,7 +1,7 @@
 # Referencias {-}
 
 <!-- 
-
+# Referencias {-}
 -->
 
 ## Bibliografía básica {-}
@@ -41,7 +41,7 @@ Springer-Verlag.
 
 Hörmann, W. et al. (2004). *Automatic Nonuniform Random Variate Generation*. Springer. 
 
-Knuth, D.E. (2002). *The Art of Computer Programming*. Volume 2, third edition, ninth printing. 
+Knuth, D.E. (2002). *The Art of Computer Programming*. Volume 2, third edition (1st ed. 1969), ninth printing . 
 
 Law, A.M. y Kelton, W.D. (1991). *Simulation, modeling and analysis*.
 McGraw-Hill.
@@ -61,7 +61,14 @@ Robert, C.P. y G. Casella (2004). *Monte Carlo statistical methods*. Springer.
 
 ## Artículos {-}
 
+Demirhan, H. y Bitirim, N. (2016). [CryptRndTest: an R package for testing the cryptographic randomness](https://journal.r-project.org/archive/2016/RJ-2016-016/index.html). 
+*The R Journal*, 8(1), 233-247.
+
 L'Ecuyer, P. (1999). Good parameters and implementations for combined multiple recursive random number generators. *Operations Research*, 47, 159–164.
+
+Marsaglia, G. y Tsang, W.W. (2002). [Some difficult-to-pass tests of randomness](http://www.jstatsoft.org/v07/i03). *Journal of Statistical Software*, 7(3), 1-9.    
+
+Marsaglia, G., Zaman, A. y Tsang, W.W. (1990). Toward a universal random number generator. *Stat. Prob. Lett.*, 9(1), 35-39.
 
 Matsumoto, M. y Nishimura, T. (1998). Mersenne Twister: A 623-dimensionally equidistributed uniform pseudo-random number generator, *ACM Transactions on Modeling and Computer Simulation*, 8, 3–30.
 

@@ -33,6 +33,7 @@ Simulamos una distribución de Bernoulli de parámetro $p=0.5$:
 p <- 0.5
 set.seed(1)
 nsim <- 10000
+# nsim <- 100
 rx <- runif(nsim) <= p
 ```
 La aproximación por simulación de $p$ será:
@@ -79,7 +80,7 @@ Estimación de la precisión
 --------------------------
 
 En el caso de la media muestral $\overline{X}_{n}$, un estimador
-insesgado de $Var\left( \overline{X}_{n}\right) =\sigma ^{2}/n$ es:
+insesgado de $Var\left( \overline{X}_{n}\right) =\sigma ^{2}/n$ es la cuasi-varianza muestral:
 $$\widehat{Var}\left( \overline{X}_{n}\right) =\frac{\widehat{S}^{2}}{n}$$
 con:
 $$\widehat{S}_{n}^{2}=\dfrac{1}{n-1}\sum\limits_{i=1}^{n}\left( X_{i}-
@@ -87,7 +88,8 @@ $$\widehat{S}_{n}^{2}=\dfrac{1}{n-1}\sum\limits_{i=1}^{n}\left( X_{i}-
 
 En el caso de una proporción $\hat{p}_{n}$:
 $$\widehat{Var}\left( \hat{p}_{n}\right) 
-=\frac{\hat{p}_{n}(1-\hat{p}_{n})}{n-1}.$$
+=\frac{\hat{p}_{n}(1-\hat{p}_{n})}{n-1},$$
+aunque se suele emplear la varianza muestral.
 
 Los valores obtenidos servirían como medidas básicas de la precisión
 de la aproximación, aunque su principal aplicación es la
@@ -111,6 +113,8 @@ Podemos considerar que
 $z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}}$ 
 es la precisión obtenida (con nivel de confianza $1-\alpha$).
 
+La convergencia de la aproximación, además de ser aleatoria, se podría considerar lenta.
+La idea es que para doblar la precisión (disminuir el error a la mitad), necesitaríamos un número de generaciones cuatro veces mayor. Pero una ventaja, es que este error no depende del número de dimensiones (en el caso multidimensional puede ser mucho más rápida que otras alternativas numéricas).
 
 ```{example}
 Aproximación de la media de una distribución normal
@@ -127,7 +131,7 @@ La aproximación por simulación de la media será:
 ```{r }
 mean(rx)
 ```
-Como medida de la precisión de la aproximación podemos considerar:
+Como medida de la precisión de la aproximación podemos considerar (se suele denominar error de la aproximación):
 ```{r }
 2*sd(rx)/sqrt(nsim)
 ```
@@ -150,9 +154,11 @@ abline(h = xmed)
 Determinación del número de generaciones
 ----------------------------------------
 
-En muchas ocasiones puede interesar obtener una aproximación con un
-nivel de precisión fijado.
+Normalmente el valor de $n$ se toma del orden de varias centenas o millares. 
+En los casos en los que la simulación se utiliza para aproximar una característica central de la distribución (como una media) puede bastar un número de simulaciones del orden de $n = 100, 200, 500$. 
+Sin embargo, en otros casos pueden ser necesarios valores del tipo $B = 1000, 2000, 5000, 10000$.
 
+En muchas ocasiones puede interesar obtener una aproximación con un nivel de precisión fijado.
 Para una precisión absoluta $\varepsilon$, se trata de determinar
 $n$ de forma que:
 $$z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}}<\varepsilon$$
@@ -176,10 +182,8 @@ Un algoritmo podría ser el siguiente:
       _{i=n_{j-1}+1}^{n_{j}}$ y calcular $\widehat{S}_{n_{j}}$.
 
 
-
-Para una precisión relativa $\varepsilon \left\vert \mu
-\right\vert$ se procede análogamente de forma
-que:$$z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}}<\varepsilon \left\vert 
+Para una precisión relativa $\varepsilon \left\vert \mu \right\vert$ se procede análogamente de forma que:
+$$z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}}<\varepsilon \left\vert 
 \overline{X}_{n}\right\vert .$$
 
 
@@ -288,6 +292,8 @@ independientes.
 Trataremos este tipo de problemas en la diagnosis de algoritmos de
 simulación Monte Carlo de Cadenas de Markov (MCMC). 
 Aparecen también en la simulación dinámica (por eventos o cuantos). 
+
+<!-- Ecuaciones p.237 Gentle, Random numbers & MC methods -->
 
 **Nota**: En el caso anterior se calcula el error estándar de la aproximación por simulación de la proporción,
 pero si el objetivo es la aproximación de la varianza (de la variable y no de las medias por lotes), 
