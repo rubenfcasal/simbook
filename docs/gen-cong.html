@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2020-02-06" />
+<meta name="date" content="2020-02-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="cap3.html"/>
-<link rel="next" href="análisis-de-la-calidad-de-un-generador.html"/>
+<link rel="next" href="calgen.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -156,9 +156,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1" data-path="gen-cong.html"><a href="gen-cong.html"><i class="fa fa-check"></i><b>3.1</b> Generadores congruenciales (lineales)</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="gen-cong.html"><a href="gen-cong.html#otros-generadores"><i class="fa fa-check"></i><b>3.1.1</b> Otros generadores</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="análisis-de-la-calidad-de-un-generador.html"><a href="análisis-de-la-calidad-de-un-generador.html"><i class="fa fa-check"></i><b>3.2</b> Análisis de la calidad de un generador</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="análisis-de-la-calidad-de-un-generador.html"><a href="análisis-de-la-calidad-de-un-generador.html#repetición-de-contrastes"><i class="fa fa-check"></i><b>3.2.1</b> Repetición de contrastes</a></li>
-<li class="chapter" data-level="3.2.2" data-path="análisis-de-la-calidad-de-un-generador.html"><a href="análisis-de-la-calidad-de-un-generador.html#baterías-de-contrastes"><i class="fa fa-check"></i><b>3.2.2</b> Baterías de contrastes</a></li>
+<li class="chapter" data-level="3.2" data-path="calgen.html"><a href="calgen.html"><i class="fa fa-check"></i><b>3.2</b> Análisis de la calidad de un generador</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="calgen.html"><a href="calgen.html#repetición-de-contrastes"><i class="fa fa-check"></i><b>3.2.1</b> Repetición de contrastes</a></li>
+<li class="chapter" data-level="3.2.2" data-path="calgen.html"><a href="calgen.html#baterías-de-contrastes"><i class="fa fa-check"></i><b>3.2.2</b> Baterías de contrastes</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="ejercicios-de-fin-de-práctica.html"><a href="ejercicios-de-fin-de-práctica.html"><i class="fa fa-check"></i><b>3.3</b> Ejercicios de fin de práctica</a></li>
 </ul></li>
@@ -282,6 +282,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
 <li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
 <li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
+<li class="chapter" data-level="" data-path="artículos.html"><a href="artículos.html"><i class="fa fa-check"></i>Artículos</a></li>
 </ul></li>
 <li class="appendix"><span><b>Apendices</b></span></li>
 <li class="chapter" data-level="A" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i><b>A</b> Enlaces</a></li>
@@ -372,7 +373,7 @@ donde <span class="math inline">\(a\)</span> (<em>multiplicador</em>), <span cla
 
 <div class="remark">
  <span class="remark"><em>Nota: </em></span> Para evitar problemas computacionales, se recomienda emplear
-un algoritmo como el descrito en L’Ecuyer (1988).
+el método de Schrage (ver Bratley <em>et al.</em>, 1987; L’Ecuyer, 1988)
 </div>
 
 <p>Ejemplos:</p>
@@ -381,6 +382,8 @@ un algoritmo como el descrito en L’Ecuyer (1988).
 (<strong>no recomendable</strong>).</p></li>
 <li><p><span class="math inline">\(c=0\)</span>, <span class="math inline">\(a=7^{5}=16807\)</span> y <span class="math inline">\(m=2^{31}-1\)</span> (primo de Mersenne), Park y Miller (1988)
 “minimal standar”, empleado por las librerías IMSL y NAG.</p></li>
+<li><p><span class="math inline">\(c=0\)</span>, <span class="math inline">\(a=48271\)</span> y <span class="math inline">\(m=2^{31}-1\)</span> actualización del “minimal standar”
+propuesta por Park, Miller y Stockmeyer (1993).</p></li>
 </ul>
 <p>Los parámetros y la semilla determinan los valores generados:
 <span class="math display">\[x_{i}=\left(  a^{i}x_0+c\frac{a^{i}-1}{a-1}\right)  \operatorname{mod}m\]</span></p>
@@ -422,10 +425,11 @@ que <span class="math inline">\(a^{q}=1\operatorname{mod}m\)</span> es <span cla
 <p>Además de preocuparse de la longitud del ciclo, las secuencias
 generadas deben aparentar muestras i.i.d. <span class="math inline">\(\mathcal{U}(0,1)\)</span>.</p>
 <p>Uno de los principales problemas es que los valores generados pueden mostrar una clara estructura reticular.
-Este es el caso por ejemplo del generador RANDU de IBM muy empleado en la década de los 70 (ver Figura <a href="gen-cong.html#fig:randu">3.1</a>).</p>
+Este es el caso por ejemplo del generador RANDU de IBM muy empleado en la década de los 70 (ver Figura <a href="gen-cong.html#fig:randu">3.1</a>).
+Por ejemplo, el conjunto de datos <code>randu</code> contiene 400 tripletas de números sucesivos obtenidos con la implementación en VAX/VMS 1.5 (1977).</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1"><span class="kw">system.time</span>(u &lt;-<span class="st"> </span><span class="kw">RANDCN</span>(<span class="dv">9999</span>))  <span class="co"># Generar</span></a></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.05    0.00    0.05</code></pre>
+##    0.01    0.00    0.01</code></pre>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1">xyz &lt;-<span class="st"> </span><span class="kw">matrix</span>(u, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb53-2" title="2"></a>
 <a class="sourceLine" id="cb53-3" title="3"><span class="kw">library</span>(plot3D)</a>
@@ -441,9 +445,9 @@ Figura 3.1: Grafico de dispersión de tripletas del generador RANDU de IBM (cont
 <a class="sourceLine" id="cb54-3" title="3"><span class="co"># library(rgl)</span></a>
 <a class="sourceLine" id="cb54-4" title="4"><span class="co"># plot3d(xyz) </span></a></code></pre></div>
 <p>En general todos los generadores de este tipo van a presentar estructuras reticulares.
-Marsaglia (1968) demostró que las <span class="math inline">\(k\)</span>-uplas de un generadores multiplicativo están contenidas en a lo sumo <span class="math inline">\(\left(k!m\right)^{1/k}\)</span> hiperplanos paralelos (para más resultados sobre la estructura reticular, ver por ejemplo Ripley, 1987, sección 2.7).
+Marsaglia (1968) demostró que las <span class="math inline">\(k\)</span>-uplas de un generadores multiplicativo están contenidas en a lo sumo <span class="math inline">\(\left(k!m\right)^{1/k}\)</span> hiperplanos paralelos (para más detalles sobre la estructura reticular, ver por ejemplo Ripley, 1987, sección 2.7).
 Por tanto habría que seleccionar adecuadamente <span class="math inline">\(m\)</span> y <span class="math inline">\(c\)</span> (<span class="math inline">\(a\)</span> solo influiría en la pendiente) de forma que la estructura reticular sea impreceptible teniendo en cuenta el número de datos que se pretende generar (por ejemplo de forma que la distancia mínima entre los puntos sea próxima a la esperada en teoría).</p>
-<p>Se han propuesto diversas pruebas (ver sección siguiente) para
+<p>Se han propuesto diversas pruebas (ver Sección <a href="calgen.html#calgen">3.2</a>) para
 determinar si un generador tiene problemas de este tipo y se han
 realizado numerosos estudios para determinadas familias (e.g. Park y
 Miller, 1988, estudiaron que parámetros son adecuados para <span class="math inline">\(m=2^{31}-1\)</span>).</p>
@@ -465,12 +469,12 @@ con periodo <span class="math inline">\(p\leq m^{k}-1\)</span>.</p></li>
 <span class="math inline">\(x_{i} = f\left( x_{i-1}, x_{i-2}, \cdots, x_{i-k} \right) \operatorname{mod} m\)</span>.
 Por ejemplo <span class="math inline">\(x_{i} = a_0 + a_1 x_{i-1} + a_2 x_{i-1}^2 \operatorname{mod} m\)</span>.</p></li>
 <li><p>Matricial:
-<span class="math inline">\(\boldsymbol{x}_{i} = A_0 + A_1\boldsymbol{x}_{i-1} + A_2\boldsymbol{x}_{i-2} + \cdots + A_{k}\boldsymbol{x}_{i-k} \operatorname{mod} m\)</span>.
-Un ejemplo es el generador <em>Mersenne-Twister</em> (Matsumoto y Nishimura, 1998), empleado por defecto en R, de periodo <span class="math inline">\(2^{19937}-1\)</span> y equidistribution en 623 dimensiones.</p></li>
+<span class="math inline">\(\boldsymbol{x}_{i} = A_0 + A_1\boldsymbol{x}_{i-1} + A_2\boldsymbol{x}_{i-2} + \cdots + A_{k}\boldsymbol{x}_{i-k} \operatorname{mod} m\)</span>.</p></li>
 </ul>
-<p>Un caso particular del generador lineal múltiple son los denominados <em>generadores de registros desfasados</em>.
-Se generan bits de forma secuencial considerando <span class="math inline">\(m=2\)</span> y <span class="math inline">\(a_{i} \in \left \{ 0,1\right \}\)</span> y se van combinando <span class="math inline">\(l\)</span> bits para obtener valores en el intervalo <span class="math inline">\((0, 1)\)</span>, por ejemplo <span class="math inline">\(u_i = 0.x_{it+1} x_{it+2} \ldots x__{it+l}\)</span>, siendo <span class="math inline">\(t\)</span> un parámetro denominado <em>aniquilación</em> (Tausworthe, 1965).
-Los cálculos se pueden realizar rápidamente mediante operaciones lógicas (“o” exclusivo XOR), empleando directamente los registros del procesador.</p>
+<p>El generador <em>Mersenne-Twister</em> (Matsumoto y Nishimura, 1998), empleado por defecto en R, de periodo <span class="math inline">\(2^{19937}-1\)</span> y equidistribution en 623 dimensiones, se puede expresar como un generador congruencial matricial lineal.</p>
+<p>Un caso particular del generador lineal múltiple son los denominados <em>generadores de registros desfasados</em> (más relacionados con la Criptografía).
+Se generan bits de forma secuencial considerando <span class="math inline">\(m=2\)</span> y <span class="math inline">\(a_{i} \in \left \{ 0,1\right \}\)</span> y se van combinando <span class="math inline">\(l\)</span> bits para obtener valores en el intervalo <span class="math inline">\((0, 1)\)</span>, por ejemplo <span class="math inline">\(u_i = 0 . x_{it+1} x_{it+2} \ldots x_{it+l}\)</span>, siendo <span class="math inline">\(t\)</span> un parámetro denominado <em>aniquilación</em> (Tausworthe, 1965).
+Los cálculos se pueden realizar rápidamente mediante operaciones lógicas (los sumandos de la combinación lineal se traducen en un “o” exclusivo XOR), empleando directamente los registros del procesador (ver por ejemplo, Ripley, 1987, Algoritmo 2.1).</p>
 <p>Otras alternativas consisten en la combinanción de varios generadores, las más empleadas son:</p>
 <ul>
 <li><p>Combinar las salidas: por ejemplo <span class="math inline">\(u_{i}=\sum_{i=1}^L u_{i}^{(l)} \operatorname{mod} 1\)</span>, donde <span class="math inline">\(u_{i}^{(l)}\)</span> es el <span class="math inline">\(i\)</span>-ésimo valor obtenido con el generador <span class="math inline">\(l\)</span>.</p></li>
@@ -531,7 +535,7 @@ Error absoluto <span class="math inline">\(3.90625\times 10^{-5}\)</span>.</p></
         </div>
       </div>
 <a href="cap3.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="análisis-de-la-calidad-de-un-generador.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="calgen.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

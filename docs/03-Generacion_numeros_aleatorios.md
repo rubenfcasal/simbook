@@ -65,7 +65,7 @@ initRANDC(543210)       # Fijar semilla 543210 para reproductibilidad
 
     
 \BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}Para evitar problemas computacionales, se recomienda emplear
-un algoritmo como el descrito en L'Ecuyer (1988).</div>\EndKnitrBlock{remark}
+el método de Schrage (ver Bratley *et al.*, 1987; L'Ecuyer, 1988)</div>\EndKnitrBlock{remark}
 
 
 Ejemplos:
@@ -75,7 +75,10 @@ Ejemplos:
 
 -   $c=0$, $a=7^{5}=16807$ y $m=2^{31}-1$ (primo de Mersenne), Park y Miller (1988)
     “minimal standar”, empleado por las librerías IMSL y NAG.
-
+    
+-   $c=0$, $a=48271$ y $m=2^{31}-1$ actualización del “minimal standar” 
+    propuesta por Park, Miller y Stockmeyer (1993).
+    
 Los parámetros y la semilla determinan los valores generados:
 $$x_{i}=\left(  a^{i}x_0+c\frac{a^{i}-1}{a-1}\right)  \operatorname{mod}m$$
 
@@ -122,7 +125,8 @@ Además de preocuparse de la longitud del ciclo, las secuencias
 generadas deben aparentar muestras i.i.d. $\mathcal{U}(0,1)$. 
 
 Uno de los principales problemas es que los valores generados pueden mostrar una clara estructura reticular.
-Este es el caso por ejemplo del generador RANDU de IBM muy empleado en la década de los 70 (ver Figura \@ref(fig:randu)). 
+Este es el caso por ejemplo del generador RANDU de IBM muy empleado en la década de los 70 (ver Figura \@ref(fig:randu)).
+Por ejemplo, el conjunto de datos `randu` contiene 400 tripletas de números sucesivos obtenidos con la implementación en VAX/VMS 1.5 (1977).
 
 
 ```r
@@ -131,7 +135,7 @@ system.time(u <- RANDCN(9999))  # Generar
 
 ```
 ##    user  system elapsed 
-##    0.03    0.00    0.03
+##    0.01    0.00    0.01
 ```
 
 ```r
@@ -141,14 +145,10 @@ library(plot3D)
 points3D(xyz[,1], xyz[,2], xyz[,3], colvar = NULL, phi = 60, theta = -50, pch = 21, cex = 0.2)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/randu-1} 
-
-}
-
-\caption{Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)}(\#fig:randu)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/randu-1.png" alt="Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)" width="70%" />
+<p class="caption">(\#fig:randu)Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)</p>
+</div>
 
 ```r
 # Alternativamente se podría utilizar la función `plot3d` del paquete `rgl`,
@@ -158,10 +158,10 @@ points3D(xyz[,1], xyz[,2], xyz[,3], colvar = NULL, phi = 60, theta = -50, pch = 
 ```
 
 En general todos los generadores de este tipo van a presentar estructuras reticulares.
-Marsaglia (1968) demostró que las $k$-uplas de un generadores multiplicativo están contenidas en a lo sumo $\left(k!m\right)^{1/k}$ hiperplanos paralelos (para más resultados sobre la estructura reticular, ver por ejemplo Ripley, 1987, sección 2.7).
+Marsaglia (1968) demostró que las $k$-uplas de un generadores multiplicativo están contenidas en a lo sumo $\left(k!m\right)^{1/k}$ hiperplanos paralelos (para más detalles sobre la estructura reticular, ver por ejemplo Ripley, 1987, sección 2.7).
 Por tanto habría que seleccionar adecuadamente $m$ y $c$ ($a$ solo influiría en la pendiente) de forma que la estructura reticular sea impreceptible teniendo en cuenta el número de datos que se pretende generar (por ejemplo de forma que la distancia mínima entre los puntos sea próxima a la esperada en teoría).
 
-Se han propuesto diversas pruebas (ver sección siguiente) para
+Se han propuesto diversas pruebas (ver Sección \@ref(calgen)) para
 determinar si un generador tiene problemas de este tipo y se han
 realizado numerosos estudios para determinadas familias (e.g. Park y
 Miller, 1988, estudiaron que parámetros son adecuados para $m=2^{31}-1$).
@@ -190,11 +190,12 @@ Se han considerado diversas extensiones del generador congruencial lineal simple
     $\boldsymbol{x}_{i} = A_0 + A_1\boldsymbol{x}_{i-1} 
     + A_2\boldsymbol{x}_{i-2} + \cdots 
     + A_{k}\boldsymbol{x}_{i-k} \operatorname{mod} m$.
-    Un ejemplo es el generador *Mersenne-Twister* (Matsumoto y Nishimura, 1998), empleado por defecto en R, de periodo $2^{19937}-1$ y equidistribution en 623 dimensiones.
+    
+El generador *Mersenne-Twister* (Matsumoto y Nishimura, 1998), empleado por defecto en R, de periodo $2^{19937}-1$ y equidistribution en 623 dimensiones, se puede expresar como un generador congruencial matricial lineal.
 
-Un caso particular del generador lineal múltiple son los denominados *generadores de registros desfasados*.
-Se generan bits de forma secuencial considerando $m=2$ y $a_{i} \in \left \{ 0,1\right \}$ y se van combinando $l$ bits para obtener valores en el intervalo $(0, 1)$, por ejemplo $u_i = 0.x_{it+1} x_{it+2} \ldots x__{it+l}$, siendo $t$ un parámetro denominado *aniquilación* (Tausworthe, 1965). 
-Los cálculos se pueden realizar rápidamente mediante operaciones lógicas ("o" exclusivo XOR), empleando directamente los registros del procesador.
+Un caso particular del generador lineal múltiple son los denominados *generadores de registros desfasados* (más relacionados con la Criptografía).
+Se generan bits de forma secuencial considerando $m=2$ y $a_{i} \in \left \{ 0,1\right \}$ y se van combinando $l$ bits para obtener valores en el intervalo $(0, 1)$, por ejemplo $u_i = 0 . x_{it+1} x_{it+2} \ldots x_{it+l}$, siendo $t$ un parámetro denominado *aniquilación* (Tausworthe, 1965). 
+Los cálculos se pueden realizar rápidamente mediante operaciones lógicas (los sumandos de la combinación lineal se traducen en un "o" exclusivo XOR), empleando directamente los registros del procesador (ver por ejemplo, Ripley, 1987, Algoritmo 2.1).
 
 Otras alternativas consisten en la combinanción de varios generadores, las más empleadas son:
 
@@ -236,14 +237,10 @@ a)  Generar 500 valores de este generador, obtener el tiempo de CPU,
     abline(h = 1)                   # Equivalente a curve(dunif(x, 0, 1), add = TRUE)
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/ejcona-1} 
-    
-    }
-    
-    \caption{Histograma de los valores generados}(\#fig:ejcona)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/ejcona-1.png" alt="Histograma de los valores generados" width="70%" />
+    <p class="caption">(\#fig:ejcona)Histograma de los valores generados</p>
+    </div>
 
     En este caso concreto la distribución de los valores generados es aparentemente más uniforme de lo que cabría esperar, lo que induciría a sospechar de la calidad de este gerenador.
 
@@ -262,7 +259,7 @@ b)  Calcular la media de las simulaciones (`mean`) y compararla con
     ```
     
     La media teórica es 0.5. 
-    Error absoluto $\ensuremath{3.90625\times 10^{-5}}$.
+    Error absoluto $3.90625\times 10^{-5}$.
 
 c)  Aproximar (mediante simulación) la probabilidad del intervalo
     $(0.4;0.8)$ y compararla con la teórica.
@@ -289,7 +286,7 @@ c)  Aproximar (mediante simulación) la probabilidad del intervalo
     ```
 
 
-Análisis de la calidad de un generador
+Análisis de la calidad de un generador {#calgen}
 --------------------------------------
 
 Para verificar si un generador tiene las propiedades estadísticas
@@ -393,9 +390,7 @@ chisq.test.cont(u, distribution = "unif",
                 nclasses = 10, nestpar = 0, min = 0, max = 1)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-10-1} \end{center}
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```
 ## 
@@ -454,9 +449,7 @@ a)  Realizar el contraste de Kolmogorov-Smirnov para estudiar el
     curve(punif(x, 0, 1), add = TRUE)
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-13-1} \end{center}
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" />
     
     ```r
     # Test de Kolmogorov-Smirnov
@@ -482,9 +475,7 @@ b)  Obtener el gráfico secuencial y el de dispersión retardado, ¿se
     plot(as.ts(u))
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-14-1} \end{center}
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" />
     
     Gráfico de dispersión retardado:
     
@@ -493,9 +484,7 @@ b)  Obtener el gráfico secuencial y el de dispersión retardado, ¿se
     plot(u[-nsim],u[-1])
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-15-1} \end{center}
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" />
 
 c)  Estudiar las correlaciones del vector $(u_{i},u_{i+k})$, con
     $k=1,...,10$. Contrastar si son nulas.
@@ -507,9 +496,7 @@ c)  Estudiar las correlaciones del vector $(u_{i},u_{i+k})$, con
     acf(u)
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-16-1} \end{center}
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" />
     
     Test de Ljung-Box:
     
@@ -616,9 +603,7 @@ hist(estadistico, breaks = "FD", freq=FALSE)
 curve(dchisq(x,99), add=TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-21-1} \end{center}
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 # Test ji-cuadrado
@@ -645,9 +630,7 @@ hist(pvalor, freq=FALSE)
 abline(h=1) # curve(dunif(x,0,1), add=TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-22-1} \end{center}
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 # Test ji-cuadrado
@@ -675,14 +658,14 @@ curve(ecdf(pvalor)(x), type = "s", lwd = 2,
 abline(a=0, b=1, lty=2)   # curve(punif(x, 0, 1), add = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-23-1} \end{center}
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-23-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 ### Baterías de contrastes
 
-Contrastes específicos para generadores aleatorios:
+Hay numerosos ejemplos de generadores que pasaron diferentes test de uniformidad y aleatoriedad pero que fallaron estrepitosamente al considerar nuevos contrastes diseñados específicamente para generadores aleatorios (ver Marsaglia *et al.*, 1990). 
+Por este motivo, el procedimiento habitual en la práctica es aplicar un número más o menos elevado de contrastes (de distinto tipo y difíciles de pasar, e.g. Marsaglia y Tsang, 2002), de forma que si el generador los pasa tendremos mayor confianza en que sus propiedades son las adecuadas.
+Este conjunto de pruebas es lo que se denomina batería de contrastes. Una de las primeras se introdujo en Knuth (2002; primera edición en 1969) y entre ellas podríamos destacar:
 
 -   Diehard tests (The Marsaglia Random Number CDROM):
     [http://www.stat.fsu.edu/pub/diehard](http://www.stat.fsu.edu/pub/diehard).
@@ -696,18 +679,17 @@ Contrastes específicos para generadores aleatorios:
 -   Dieharder (paquete `RDieHarder`):
     [http://www.phy.duke.edu/rgb/General/dieharder.php](http://www.phy.duke.edu/rgb/General/dieharder.php)
 
--   Entidad Certificadora (gratuita):
-    [CAcert](http://www.cacert.at/random).
+<!-- CryptRndTest -->
 
-Documentación adicional:
 
--   Randomness Tests: A Literature Survey
-    [http://www.ciphersbyritter.com/RES/RANDTEST.HTM](http://www.ciphersbyritter.com/RES/RANDTEST.HTM)-
+Para más detalles, ver por ejemplo^[También puede ser de interés el enlace [Randomness Tests: A Literature Survey](http://www.ciphersbyritter.com/RES/RANDTEST.HTM) y la entidad certificadora (gratuita) en línea [CAcert](http://www.cacert.at/random).]:
 
--   Marsaglia, Tsang (2002). Some Difficult-to-pass Tests of Randomness: 
-    [http://www.jstatsoft.org/v07/i03](http://www.jstatsoft.org/v07/i03)   
-    [http://www.csis.hku.hk/cisc/download/idetect](http://www.csis.hku.hk/cisc/download/idetect)
-    
+-  Marsaglia, G. y Tsang, W.W. (2002). [Some difficult-to-pass tests of randomness](http://www.jstatsoft.org/v07/i03). Journal of Statistical Software, 7(3), 1-9.    
+  
+-  Demirhan, H. y Bitirim, N. (2016). [CryptRndTest: an R package for testing the cryptographic randomness](https://journal.r-project.org/archive/2016/RJ-2016-016/index.html). 
+  The R Journal, 8(1), 233-247.
+
+
 
 Ejercicios de fin de práctica
 -----------------------------
