@@ -73,7 +73,8 @@ Ver: [Cursos MOOC relacionados con R](http://r-es.org/2016/02/12/cursos-masivos-
       ([No Starch Press](https://www.nostarch.com/artofr.htm))
     
     - R for Data Science
-      ([online](http://r4ds.had.co.nz/), [O'Reilly](http://shop.oreilly.com/product/0636920034407.do))
+      ([online](http://r4ds.had.co.nz), [online-castellano](https://es.r4ds.hadley.nz), 
+      [O'Reilly](http://shop.oreilly.com/product/0636920034407.do))
     
     - Hands-On Programming with R: Write Your Own Functions and Simulations, 
       by Garrett Grolemund 
