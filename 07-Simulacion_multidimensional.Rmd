@@ -227,7 +227,7 @@ Esto está relacionado con la "maldición de la dimensionalidad" (curse of dimen
 a medida que aumenta el número de dimensiones el volumen de la "frontera" crece exponencialmente.
 
 
-Factorización de la matriz de covarianzas
+Factorización de la matriz de covarianzas {#fact-cov}
 -----------------------------------------
 
 Teniendo en cuenta que si $Cov(\mathbf{X)=}\Sigma$, entonces:
@@ -238,8 +238,6 @@ modo que el resultado tenga la covarianza deseada.
 Este método se emplea principalmente para la simulación de una
 normal multivariante, aunque también es válido para muchas otras
 distribuciónes como la $t$-multivariante.
-
-### Simulación de la normal multivariante
 
 Si $\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right)$
 y $A$ matriz $p\times d$, entonces:
@@ -986,7 +984,7 @@ head(rxy)
 ```
 
 
-### Simulación de tablas de contingencia
+### Simulación de tablas de contingencia {#simconting}
 
 El código anterior puede ser empleado para simular tablas de contingencia. 
 Aunque en estos casos se suele fijar el total de la tabla (o incluso las frecuencias marginales). 
@@ -1033,16 +1031,16 @@ res
 ```
 
 
-```{exercise}
+```{exercise, label="chicuadind", name="Distribución del estadístico chi-cuadrado de independencia"}
 ```
 
 Aproximar por simulación la distribución (exacta) 
-del estadístico ji-cuadrado bajo independencia.
+del estadístico chi-cuadrado bajo independencia.
 
 ```{r }
 simstat <- apply(rtablas, 2, function(x){chisq.test(matrix(x,nrow=nrow(tabla)))$statistic})
 hist(simstat, freq = FALSE, breaks = 'FD')
-# Distribución asintótica (aproximación ji-cuadrado)
+# Distribución asintótica (aproximación chi-cuadrado)
 curve(dchisq(x, res$parameter), add = TRUE) 
 ```
 
