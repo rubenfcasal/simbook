@@ -4,13 +4,21 @@ Análisis de resultados de simulación
 ```{r , child = '_global_options.Rmd'}
 ```
 
+Work in progress...
+
+En este capítulo nos centraremos en la aproximación mediante simulación de la media teórica de un estadístico a partir de la media muestral de una secuencia de simulaciones de dicho estadístico.
+La aproximación de una probabilidad sería un caso particular considerando una variable de Bernouilli.
+
+En primer lugar se tratará el análisis de la convergencia y la precisión de la aproximación por simulación. 
+Al final del capítulo se incluye una breve introducción a los problemas de estabilización y dependencia (con los que nos solemos encontrar en simulación dinámica y MCMC).
+
+
 Convergencia
 ------------
 
 Supongamos que estamos interesados en aproximar la media teórica 
-$E\left( X\right)$ a partir de una secuencia i.i.d. $X_{1}$,
-$X_{2}$, $\cdots$, $X_{n}$ mediante la media muestral $\bar{X}_{n}$
-(aproximar una probabilidad sería un caso particular considerando una distribución de Bernouilli).
+$\mu = E\left( X\right)$ a partir de una secuencia i.i.d. $X_{1}$,
+$X_{2}$, $\cdots$, $X_{n}$ mediante la media muestral $\bar{X}_{n}$.
 Una justificación teórica de la validez de la aproximación obtenida
 mediante simulación es *la ley (débil) de los grandes números*:
 
@@ -107,7 +115,7 @@ i.e. $\lim\limits_{n\rightarrow \infty }F_{Z_{n}}(z)=\Phi (z)$.
 Por tanto, un intervalo de confianza asintótico para $\mu$ es:
 $$IC_{1-\alpha }(\mu ) = \left( \overline{X}_{n}
 - z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}},\ 
-\overline{X}+z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}} \right).$$
+\overline{X}_n+z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}} \right).$$
 
 Podemos considerar que
 $z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}}$ 
@@ -141,7 +149,8 @@ Podemos añadir también los correspondientes intervalos de confianza al gráfic
 ```{r }
 n <- 1:nsim
 est <- cumsum(rx)/n
-esterr <- sqrt(cumsum((rx-est)^2))/(n - 1)  # Error estandar
+# Errores estándar calculados con la varianza muestral por comodidad:
+esterr <- sqrt(cumsum((rx-est)^2))/n  
 plot(est, type = "l", lwd = 2, xlab = "Número de generaciones", 
      ylab = "Media y rango de error", ylim = c(-1, 1))
 abline(h = est[nsim], lty=2)
@@ -173,13 +182,13 @@ Un algoritmo podría ser el siguiente:
 3.  Mientras $\left. z_{1-\alpha /2}\widehat{S}_{n_{j-1}}\right/ 
     \sqrt{n_{j}}>\varepsilon$ hacer:
 
-4.  $\qquad j=j+1$.
-
-5.  $\qquad n_{j}=\left\lceil \left( \left. z_{1-\alpha /2}\widehat{S}
-      _{n_{j-1}}\right/ \varepsilon \right)^{2}\right\rceil$.
-
-6.  $\qquad$ Generar $\left\{ X_{i}\right\}
-      _{i=n_{j-1}+1}^{n_{j}}$ y calcular $\widehat{S}_{n_{j}}$.
+    3.1.  $\qquad j=j+1$.
+    
+    3.2.  $\qquad n_{j}=\left\lceil \left( \left. z_{1-\alpha /2}\widehat{S}
+          _{n_{j-1}}\right/ \varepsilon \right)^{2}\right\rceil$.
+    
+    3.3.  $\qquad$ Generar $\left\{ X_{i}\right\}
+          _{i=n_{j-1}+1}^{n_{j}}$ y calcular $\widehat{S}_{n_{j}}$.
 
 
 Para una precisión relativa $\varepsilon \left\vert \mu \right\vert$ se procede análogamente de forma que:
@@ -412,7 +421,7 @@ Observaciones
     distribución de $X$ no sea la media, los resultados anteriores
     no serían en principio aplicables.
 
--   Incluso en el caso de la media, las bandas de confianza
+-   Incluso en el caso de la media, las "bandas de confianza"
     obtenidas con el TCL son puntuales (si generamos nuevas
     secuencias de simulación es muy probable que no
     estén contenidas).
