@@ -212,7 +212,9 @@ b)  Aproximar el valor de $\pi$ mediante simulación a partir de
     symbols(0, 0, squares = 2, inches = FALSE, add = TRUE)
     ```
     
-    <img src="02-Numeros_aleatorios_R_files/figure-html/unnamed-chunk-9-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-9-1} \end{center}
     
 
 \BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-10"><strong>(\#exr:unnamed-chunk-10) </strong></span></div>\EndKnitrBlock{exercise}
@@ -240,7 +242,9 @@ a)  Empleando la función `sample`, obtener 1000 simulaciones del
     barplot(100*table(x)/nsim) # Representar porcentajes 
     ```
     
-    <img src="02-Numeros_aleatorios_R_files/figure-html/unnamed-chunk-11-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 b)  En R pueden generarse valores de la distribución de Bernoulli
     mediante la función `rbinom(nsim, size=1, prob)`. Generar un
@@ -270,7 +274,9 @@ b)  En R pueden generarse valores de la distribución de Bernoulli
     abline(h=p, lty=2, col="red")
     ```
     
-    <img src="02-Numeros_aleatorios_R_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
 
 \BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-13"><strong>(\#exr:unnamed-chunk-13) </strong></span></div>\EndKnitrBlock{exercise}
@@ -278,7 +284,8 @@ Simular el paso de corriente a través del siguiente circuito, donde
 figuran las probabilidades de que pase corriente por cada uno de los
 interruptores:
 
-<img src="images/circuito2.png" width="70%" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics[width=0.7\linewidth]{images/circuito2} \end{center}
 
 Considerar que cada interruptor es una v.a. de Bernoulli independiente
 para simular 1000 valores de cada una de ellas.
@@ -442,10 +449,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.05    0.02    0.07 
+##    0.06    0.00    0.06 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.05    0.02    0.07
+##    0.06    0.00    0.06
 ```
 
 ```r
@@ -464,10 +471,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.01    0.00    0.01 
+##       0       0       0 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.06    0.02    0.08
+##    0.06    0.00    0.06
 ```
 
 ### Paquetes de R
@@ -558,7 +565,7 @@ cpu.time('\nSample median of', 1000000, 'values =', res, total = FALSE)
 ## Time of last operation: 
 ## Sample median of 1e+06 values = 0.4993323 
 ##    user  system elapsed 
-##    0.05    0.01    0.06
+##    0.06    0.00    0.07
 ```
 
 ```r
@@ -573,7 +580,7 @@ cpu.time('\nSample median of', 1000, 'values =', res)
 ##       0       0       0 
 ## Total time:
 ##    user  system elapsed 
-##    0.05    0.01    0.06
+##    0.06    0.00    0.07
 ```
 
 Otro paquete que puede ser de utilidad es

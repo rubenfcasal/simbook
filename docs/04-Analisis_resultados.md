@@ -4,13 +4,21 @@ Análisis de resultados de simulación
 
 
 
+Work in progress...
+
+En este capítulo nos centraremos en la aproximación mediante simulación de la media teórica de un estadístico a partir de la media muestral de una secuencia de simulaciones de dicho estadístico.
+La aproximación de una probabilidad sería un caso particular considerando una variable de Bernouilli.
+
+En primer lugar se tratará el análisis de la convergencia y la precisión de la aproximación por simulación. 
+Al final del capítulo se incluye una breve introducción a los problemas de estabilización y dependencia (con los que nos solemos encontrar en simulación dinámica y MCMC).
+
+
 Convergencia
 ------------
 
 Supongamos que estamos interesados en aproximar la media teórica 
-$E\left( X\right)$ a partir de una secuencia i.i.d. $X_{1}$,
-$X_{2}$, $\cdots$, $X_{n}$ mediante la media muestral $\bar{X}_{n}$
-(aproximar una probabilidad sería un caso particular considerando una distribución de Bernouilli).
+$\mu = E\left( X\right)$ a partir de una secuencia i.i.d. $X_{1}$,
+$X_{2}$, $\cdots$, $X_{n}$ mediante la media muestral $\bar{X}_{n}$.
 Una justificación teórica de la validez de la aproximación obtenida
 mediante simulación es *la ley (débil) de los grandes números*:
 
@@ -54,10 +62,14 @@ abline(h = mean(rx), lty = 2)
 abline(h = p) 
 ```
 
-<div class="figure" style="text-align: center">
-<img src="04-Analisis_resultados_files/figure-html/proporcion-1.png" alt="Aproximación de la proporción en función del número de generaciones." width="70%" />
-<p class="caption">(\#fig:proporcion)Aproximación de la proporción en función del número de generaciones.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/proporcion-1} 
+
+}
+
+\caption{Aproximación de la proporción en función del número de generaciones.}(\#fig:proporcion)
+\end{figure}
 
 ### Detección de problemas de convergencia
 
@@ -76,10 +88,14 @@ plot(cumsum(rx)/1:nsim, type="l", lwd=2,
      xlab="Número de generaciones", ylab="Media muestral")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="04-Analisis_resultados_files/figure-html/cauchy-1.png" alt="Evolución de la media muestral de una distribución de Cauchy en función del número de generaciones." width="70%" />
-<p class="caption">(\#fig:cauchy)Evolución de la media muestral de una distribución de Cauchy en función del número de generaciones.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/cauchy-1} 
+
+}
+
+\caption{Evolución de la media muestral de una distribución de Cauchy en función del número de generaciones.}(\#fig:cauchy)
+\end{figure}
 
 
 Para detectar problemas de convergencia es recomendable representar la evolución de la aproximación de la
@@ -92,7 +108,9 @@ Por ejemplo, en el siguiente gráfico de cajas observamos los valores que produc
 boxplot(rx)
 ```
 
-<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-5-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-5-1} \end{center}
 
 
 Estimación de la precisión
@@ -126,7 +144,7 @@ i.e. $\lim\limits_{n\rightarrow \infty }F_{Z_{n}}(z)=\Phi (z)$.
 Por tanto, un intervalo de confianza asintótico para $\mu$ es:
 $$IC_{1-\alpha }(\mu ) = \left( \overline{X}_{n}
 - z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}},\ 
-\overline{X}+z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}} \right).$$
+\overline{X}_n+z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}} \right).$$
 
 Podemos considerar que
 $z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}}$ 
@@ -170,7 +188,8 @@ Podemos añadir también los correspondientes intervalos de confianza al gráfic
 ```r
 n <- 1:nsim
 est <- cumsum(rx)/n
-esterr <- sqrt(cumsum((rx-est)^2))/(n - 1)  # Error estandar
+# Errores estándar calculados con la varianza muestral por comodidad:
+esterr <- sqrt(cumsum((rx-est)^2))/n  
 plot(est, type = "l", lwd = 2, xlab = "Número de generaciones", 
      ylab = "Media y rango de error", ylim = c(-1, 1))
 abline(h = est[nsim], lty=2)
@@ -179,7 +198,9 @@ lines(est - 2*esterr, lty=3)
 abline(h = xmed)
 ```
 
-<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-10-1} \end{center}
 
  
 Determinación del número de generaciones
@@ -204,13 +225,13 @@ Un algoritmo podría ser el siguiente:
 3.  Mientras $\left. z_{1-\alpha /2}\widehat{S}_{n_{j-1}}\right/ 
     \sqrt{n_{j}}>\varepsilon$ hacer:
 
-4.  $\qquad j=j+1$.
-
-5.  $\qquad n_{j}=\left\lceil \left( \left. z_{1-\alpha /2}\widehat{S}
-      _{n_{j-1}}\right/ \varepsilon \right)^{2}\right\rceil$.
-
-6.  $\qquad$ Generar $\left\{ X_{i}\right\}
-      _{i=n_{j-1}+1}^{n_{j}}$ y calcular $\widehat{S}_{n_{j}}$.
+    3.1.  $\qquad j=j+1$.
+    
+    3.2.  $\qquad n_{j}=\left\lceil \left( \left. z_{1-\alpha /2}\widehat{S}
+          _{n_{j-1}}\right/ \varepsilon \right)^{2}\right\rceil$.
+    
+    3.3.  $\qquad$ Generar $\left\{ X_{i}\right\}
+          _{i=n_{j-1}+1}^{n_{j}}$ y calcular $\widehat{S}_{n_{j}}$.
 
 
 Para una precisión relativa $\varepsilon \left\vert \mu \right\vert$ se procede análogamente de forma que:
@@ -256,7 +277,9 @@ lines(est - 2*esterr, lty=2)
 abline(h = 1/3, col="darkgray")     # Prob. teor. cadenas Markov
 ```
 
-<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 La aproximación de la proporción sería correcta (es consistente):
 
@@ -286,7 +309,9 @@ subestimación del verdadero error estandar.
 acf(as.numeric(rx))
 ```
 
-<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-16-1} \end{center}
 
 El gráfico de autocorrelaciones sugiere que si tomamos 1 de cada 25 
 podemos suponer independencia.
@@ -300,7 +325,9 @@ rxi <- rx[xlag]
 acf(as.numeric(rxi))
 ```
 
-<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 ```r
 n <- 1:length(rxi)
@@ -314,7 +341,9 @@ lines(est - 2*esterr, lty=2)
 abline(h = 1/3, col="darkgray")     # Prob. teor. cadenas Markov
 ```
 
-<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-17-2.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-17-2} \end{center}
 
 
 Esta forma de proceder podría ser adecuada para tratar de aproximar la precisión 
@@ -338,7 +367,9 @@ lines(est - 2*esterr, lty=2)
 abline(h = 1/3, col="darkgray")     # Prob. teor. cadenas Markov
 ```
 
-<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
 Esta es la idea del método de medias por lotes 
 (*batch means*; *macro-micro replicaciones*) para la estimación de la varianza.
@@ -409,7 +440,9 @@ lines(est2, lty = 2)
 abline(v = 2000, lty = 3)
 ```
 
-<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 
 En estos casos puede ser recomendable ignorar los primeros valores generados (por ejemplo los primeros 2000) y recalcular los 
@@ -459,7 +492,9 @@ plot(x)
 abline(v = nburn, lty = 2)
 ```
 
-<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-25-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-25-1} \end{center}
 
 ```r
 # Eliminar periodo de calentamiento
@@ -488,7 +523,7 @@ Observaciones
     distribución de $X$ no sea la media, los resultados anteriores
     no serían en principio aplicables.
 
--   Incluso en el caso de la media, las bandas de confianza
+-   Incluso en el caso de la media, las "bandas de confianza"
     obtenidas con el TCL son puntuales (si generamos nuevas
     secuencias de simulación es muy probable que no
     estén contenidas).

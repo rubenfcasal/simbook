@@ -73,7 +73,9 @@ abline(h=0,lty=2)
 abline(v=c(0,1),lty=2)
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/unnamed-chunk-3-1} \end{center}
 
 ```r
 set.seed(54321)
@@ -137,7 +139,9 @@ mc.integral(fun, 0, 1, 5000)
 abline(h = 1, lty = 2)
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-4-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 Si sólo interesa la aproximación:
 
@@ -175,7 +179,9 @@ es preferible generar más valores donde hay mayor "área":
 curve(fun(x), 0, 1)
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-6-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/unnamed-chunk-6-1} \end{center}
 
 Los pasos serían simular `x` con densidad `fun` y aproximar la integral por `mean(h(x))`:
 
@@ -295,7 +301,9 @@ escala <- dnorm(4.5)  # Reescalado para comparación...
 curve(dexp(x - 4.5) * escala, add = TRUE, lty = 2)  
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/unnamed-chunk-10-1} \end{center}
 
 Se generan los valores de la densidad auxiliar y se calculan los pesos:
 
@@ -332,7 +340,9 @@ plot(cumsum(w)/1:nsim, type = "l", ylab = "Aproximación", xlab = "Iteraciones")
 abline(h = pnorm(-4.5), lty = 2)
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
 El error estandar de la aproximación sería `sqrt(var(w * h(y))/nsim)`:
 
@@ -417,7 +427,9 @@ plot(cumsum(w * (y > 2) * (y < 6))/1:nsim, type = "l", ylab = "Aproximación", x
 abline(h = pcauchy(6) - pcauchy(2), lty = 2)
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 Lo que indica es una mala elección de la densidad auxiliar... 
 
@@ -429,7 +441,9 @@ Por ejemplo, si los reescalamos para que su suma sea el número de valores gener
 boxplot(nsim * w/sum(w))  
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
 
 ### Remuestreo (del muestreo) por importancia
@@ -483,7 +497,9 @@ curve(dnorm, add = TRUE)
 lines(density(rx), col ="red")
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/unnamed-chunk-20-1} \end{center}
 
 **Nota**: Si f o g fuesen cuasidensidades y se pidiese aproximar la integral,
 habría que reescalar los pesos:  `w <- f(y)/g(y)`; `w <- w/sum(w)`,
@@ -547,7 +563,9 @@ hist(data, freq = FALSE, breaks = 'FD')
 curve(0.25 * dnorm(x, mu1, sd1) + 0.75 * dnorm(x, mu2, sd2), add = TRUE)
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 Logaritmo (negativo) de la función de verosimilitud
 (para la estimación de las medias)
@@ -633,7 +651,9 @@ for (j in 1:nstarts){
 }
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-25-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/unnamed-chunk-25-1} \end{center}
 
 ```
 ## par =  -0.03892511 2.494589 value = 361.5712 
@@ -691,7 +711,8 @@ Al tener una probabilidad no nula de aceptar una modificación
 óptimo local.
 
 
-<img src="images/templesimulado.png" width="70%" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics[width=0.7\linewidth]{images/templesimulado} \end{center}
 
 
 ### Algoritmo:
@@ -752,7 +773,9 @@ for (j in 1:nstarts){
 }
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/unnamed-chunk-28-1} \end{center}
 
 ```
 ## par =  0.0002023461 2.473437 value = 361.6372 
@@ -809,7 +832,9 @@ for (j in 1:nstarts) {
 }
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/unnamed-chunk-29-1} \end{center}
 
 
 Algoritmos genéticos
@@ -881,5 +906,7 @@ der <- DEoptim(tee.optim2d(like), lower, upper, DEoptim.control(itermax = 10))
 points(der$optim$bestmem[1], der$optim$bestmem[2], pch = 19)
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-30-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/unnamed-chunk-30-1} \end{center}
 

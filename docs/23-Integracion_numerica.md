@@ -1,14 +1,12 @@
 Integración numérica
 ====================
 
-```{r , child = '_global_options.Rmd'}
-```
 
-Introducción
-------------
+
+
 En muchos casos nos puede interesar la aproximación de una integral definida. 
-En estadística, además del caso de Inferencia Bayesiana (que trataremos más adelante
-empleando Integración Montecarlo), nos puede interesar por ejemplo aproximar mediante
+En estadística, además del caso de Inferencia Bayesiana (que se trató en el Capítulo 12
+empleando Integración Montecarlo y MCMC), nos puede interesar por ejemplo aproximar mediante
 simulación el error cuadrático integrado medio (MISE) de un estimador. 
 En el caso de una densidad univariante sería de la forma:
 $$MISE \left\{ \hat{f} \right\} = \operatorname{E}\int (\hat{f}(x)-f(x))^2 \, dx$$ 
@@ -27,12 +25,17 @@ Consideraremos como ejemplo:
 $$\int_{0}^{1}4x^{3}dx=1$$.
 
 
-```{r }
+
+```r
 fun <- function(x) return(4 * x^3)
 curve(fun, 0, 1)
 abline(h = 0, lty = 2)
 abline(v = c(0, 1), lty = 2)
 ```
+
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{23-Integracion_numerica_files/figure-latex/unnamed-chunk-2-1} \end{center}
 
 
 ### Método del trapezoide 
@@ -44,7 +47,8 @@ se aproxima linealmente la función en cada subintervalo, se obtiene que:
 $$\int_a^b f(x)\, dx \approx \frac{h}{2} [f(a)+2f(a+h)+2f(a+2h)+...+f(b)]$$
 
 
-```{r }
+
+```r
 trapezoid.vec <- function(f.vec, h = 0.01) {
 # Integración numérica unidimensional entre a y b
 # utilizando el método del trapezoide 
@@ -67,6 +71,10 @@ trapezoid <- function(fun, a = 0, b = 1, n = 100) {
 trapezoid(fun, 0, 1, 20)
 ```
 
+```
+## [1] 1.0025
+```
+
 
 El error en esta aproximación se corresponde con:
 $$ \frac{(b-a)^3}{12n^2}\,f''(\xi), $$
@@ -86,7 +94,8 @@ $$ \int_a^b f(x) \, dx \approx \frac{h}{3} \bigg[
 f(x_0)+2\sum_{j=1}^{(n/2)-1}f(x_{2j})+ 4\sum_{j=1}^{n/2}f(x_{2j-1})+f(x_n) \bigg],$$
 
 
-```{r }
+
+```r
 simpson <- function(fun, a, b, n = 100) { 
 # Integración numérica de fnt entre a y b
 # utilizando la regla de Simpson con n subdivisiones
@@ -107,6 +116,10 @@ simpson <- function(fun, a, b, n = 100) {
 simpson(fun, 0, 1, 20)
 ```
 
+```
+## [1] 1
+```
+
 
 El máximo error (en el caso unidimensional) viene dado por la expresión:
 $$\frac{(b-a)^5}{180n^4}\,\max_{a\leq \xi \leq b}\left| f^{(4)}(\xi) \right|.$$
@@ -121,7 +134,8 @@ En lugar de evaluar la función en una rejilla regular
 puede interesar ir añadiendo puntos sólo en los lugares "necesarios".
 
 
-```{r }
+
+```r
 quadrature <- function(fun, a, b, tol=1e-8) {
 	# numerical integration using adaptive quadrature
 
@@ -160,17 +174,33 @@ quadrature <- function(fun, a, b, tol=1e-8) {
 quadrature(fun, 0, 1)
 ```
 
+```
+## [1] 1
+```
+
 Fuente [r-blogger Guangchuang Yu](https://www.r-bloggers.com/one-dimensional-integrals)?
 
 ### Comandos de `R`
 
 
-```{r }
+
+```r
 integrate(fun, 0, 1)   # Permite límites infinitos  
+```
+
+```
+## 1 with absolute error < 1.1e-14
+```
+
+```r
 ## Cuidado: fun debe ser vectorial...
 
 require(MASS)
 area(fun, 0, 1)
+```
+
+```
+## [1] 1
 ```
 
 
@@ -185,7 +215,8 @@ $$\int_{-1}^{1} \int_{-1}^{1} \left( x^2 - y^2 \right) dx dy = 0$$.
 
 
 
-```{r }
+
+```r
 f2d <- function(x,y) x^2 - y^2
 ```
 
@@ -193,7 +224,8 @@ f2d <- function(x,y) x^2 - y^2
 Es habitual (especialmente en simulación) que la función se evalúe en una rejilla:
 
 
-```{r }
+
+```r
 ax = -1
 ay = -1
 bx = 1
@@ -216,7 +248,8 @@ Puede ser de utilidad las herramientas de los paquetes `plot3D` y `plot3Drgl`
 del paquete `npsp`).
 
 
-```{r }
+
+```r
 if(!require(plot3D)) stop('Required pakage `plot3D` not installed.')
 
 # persp3D(z = z, x = x, y = y)
@@ -234,12 +267,17 @@ persp3D.f2d(f2d, -1, 1, -1, 1, 50, 50, 1, ticktype = "detailed")
 ```
 
 
+
+\begin{center}\includegraphics[width=0.7\linewidth]{23-Integracion_numerica_files/figure-latex/unnamed-chunk-9-1} \end{center}
+
+
 ### Método del trapezoide 
 
 Error $O(n^{-\frac{2}{d}})$.
 
 
-```{r }
+
+```r
 trapezoid.mat <- function(z, hx, hy) { 
 # Integración numérica bidimensional
 # utilizando el método del trapezoide (se aproxima f linealmente)
@@ -261,25 +299,34 @@ trapezoid.f2d <- function(f2d, ax=-1, bx=1, ay=-1, by=1, nx=21, ny=21) {
 trapezoid.f2d(f2d, -1, 1, -1, 1, 101, 101) 
 ```
 
+```
+## [1] -8.881784e-18
+```
+
 
 ### Comandos de `R`
 
 Suponiendo que la función es vectorial, podemos emplear:
 
 
-```{r }
+
+```r
 integrate( function(y) {
     sapply(y, function(y) {
       integrate(function(x) f2d(x,y), ax, bx)$value }) }, 
     ay, by)
 ```
 
+```
+## -2.775558e-17 with absolute error < 1.1e-14
+```
+
 
 Si la función no es vectorial y solo admite parámetros escalares:
 
 
-```{r eval=FALSE}
 
+```r
 integrate(function(y) {
     sapply(y, function(y) {
       integrate(function(x) {
