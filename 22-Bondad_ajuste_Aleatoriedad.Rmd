@@ -1,4 +1,4 @@
-Bondad de Ajuste y Aleatoriedad
+Bondad de Ajuste y Aleatoriedad {#gof-aleat}
 ===============================
 
 ```{r , child = '_global_options.Rmd'}
@@ -19,12 +19,12 @@ Los métodos genéricos no son muy adecuados para evaluar generadores aleatorios
 La recomendación sería emplear baterías de contrastes recientes, como las descritas en la Sección \@ref(baterias).
 No obstante, en la última sección se describirán, únicamente con fines  ilustrativos, algunos de los primeros métodos diseñados específicamente para generadores aleatorios. 
 
-## Métodos de bondad de ajuste
+## Métodos de bondad de ajuste {#gof}
 
 A partir de $X_1,\ldots,X_n$ m.a.s. de $X$ con función de
 distribución $F$, interesa realizar un contraste de la forma:
 $$\left \{
-\begin{array}{}
+\begin{array}{l}
 H_0:F=F_0\\
 H_1:F\neq F_0
 \end{array}
@@ -37,7 +37,7 @@ Por ejemplo:
 |       $H_0$ simple           |          $H_0$ compuesta            | 
 +==============================+=====================================+
 | $\left \{                    | $\left \{                           |  
-| \begin{array}{}              | \begin{array}{}                     |
+| \begin{array}{l}             | \begin{array}{l}                    |
 | H_0:F= \mathcal{N}(0,1)\\    | H_0:F= \mathcal{N}(\mu,\sigma^2)\\  |
 | H_1:F\neq \mathcal{N}(0,1)   | H_1:F\neq \mathcal{N}(\mu,\sigma^2) |
 | \end{array}                  | \end{array}                         |
@@ -108,7 +108,7 @@ if (knitr:::is_latex_output()) {
 
 
 
-### Función de distribución empírica
+### Función de distribución empírica {#empdistr}
 
 La función de distribución empírica $F_n\left( x \right)=\frac{1}{n}\sum_{i=1}^{n}\mathbf{1}\left( X_i\leq x\right)$ asigna a cada número real $x$ la frecuencia relativa de observaciones menores o iguales que $x$.
 Para obtener las frecuencias relativas acumuladas, se ordena la muestra $X_{(1)}\leq X_{(2)}\leq \cdots \leq X_{(n)}$ y:
@@ -123,7 +123,7 @@ $$F_n(x)=\left \{
 
 
 Ejemplo:
-```{r}
+```{r ecdfplot, fig.cap="Comparación de la distribución empírica de los datos de ejemplo con la función de distribución de la aproximación normal."}
 fn <- ecdf(datos)
 curve(ecdf(datos)(x), xlim = extendrange(datos), type = 's', 
       ylab = 'distribution function', lwd = 2)
@@ -153,7 +153,7 @@ qqPlot(datos, "norm")
 ```
 
 
-### Contraste chi-cuadrado de Pearson {#chi2test}
+### Contraste ji-cuadrado de Pearson {#chi2test}
 
 
 Se trata de un contraste de bondad de ajuste:
@@ -559,7 +559,7 @@ par(par.old)
 ```
 
 Si se observa algún tipo de patrón indicaría dependencia (se podría considerar como una versión descriptiva del denominado “Parking lot test”).
-Se puede generalizar también a $d$-uplas $(X_{t+1},X_{t+2},\ldots,X_{t+d-1})$ 
+Se puede generalizar también a $d$-uplas $(X_{t+1},X_{t+2},\ldots,X_{t+d})$ 
 (ver ejemplo del generador RANDU en Figura \@ref(fig:randu) de la Sección \@ref(gen-cong)).
 
 ### El correlograma
@@ -643,7 +643,7 @@ $$\underbrace{++++}_{1}\underbrace{---}_{2}\underbrace{+++}_{3}
     no es aleatoria (con dependencia negativa o positiva, respec.).
 
 -   Estadístico del contraste:
-    $$R=\text{"Nº total de rachas en la muestra"}$$
+    $$R=\text{"Número total de rachas en la muestra"}$$
 
 -   Bajo la hipótesis nula de aleatoriedad:
     $$R\underset{aprox.}{\sim}N\left(  1+\frac{2n_{1}n_{2}}{n},
@@ -757,7 +757,7 @@ chisq.test(f)
 
 ### Contraste de series
 
-El contraste anterior se puede generalizar a contrastar la uniformidad de las $d$-uplas $(X_{t+1},X_{t+2},\ldots,X_{t+d-1})$ con $t=(i-1)d$, $i=1,\ldots,m$ siendo $m=\lfloor n/d \rfloor$. 
+El contraste anterior se puede generalizar a contrastar la uniformidad de las $d$-uplas $(X_{t+1},X_{t+2},\ldots,X_{t+d})$ con $t=(i-1)d$, $i=1,\ldots,m$ siendo $m=\lfloor n/d \rfloor$. 
 La idea es que troceamos el hipercubo $[0, 1]^d$ en $K^d$ celdas equiprobables.
 Considerando como categorías todos los posibles valores de las $d$-uplas, podemos emplear el estadístico chi-cuadrado para medir la discrepancia entre las frecuencias observadas en y las esperadas, iguales todas a $\frac{m}{K^d}$. La elecciones más frecuentes son $d=2$ (contraste de pares seriados) y $K=8$, $10$ ó $20$. 
 Por ejemplo, la función `serial.test()` del paquete `randtoolbox` implementa este contraste para $d=2$.
@@ -815,8 +815,13 @@ procediendo también a agrupar las dos primeras modalidades.
 En el caso general de considerar $d$-uplas (manos de $d$ cartas con $K$ posibilidades cada una), la probabilidad de obtener $c$ valores (cartas) diferentes es (e.g. Knuth, 2002, Sección 3.3.2, p. 64):
 $$P(C=c) = \frac{K!}{(K-c)!K^d}S(d,c),$$
 donde $S(d,c)$ es el número de Stirling de segunda clase, definido como el número de formas que existen de hacer una partición de un conjunto de $d$ elementos en $c$ subconjuntos: 
-$$S(d,c) = \left\{ {d \atop c}\right\} = \frac{1}{c!}\sum_{i=0}^{c} (-1)^{i} \binom{c}{i} (c-i)^d.$$
+$$S(d,c) = \frac{1}{c!}\sum_{i=0}^{c} (-1)^{i} \binom{c}{i} (c-i)^d.$$
 Por ejemplo, la función `poker.test()` del paquete `randtoolbox` implementa este contraste para el caso de $d=K$.
+
+<!-- 
+$S(d,c) = \genfrac{\{}{\}}{0pt}{}{d}{c}$
+-->
+
 
 ### El contraste del coleccionista
 
@@ -849,7 +854,7 @@ P( Q = 19 ) = 0.01760857, \ & P( Q\geq20 ) = 0.07144851.
 Para $K=10$ se podrían considerar las siguientes categorías (con sus correspondientes probabilidades): 
 $$\begin{array}{rr}
 P( 10 \leq Q \leq 19 ) = 0.17321155, \ & P( 20 \leq Q \leq 23 ) = 0.17492380,\\
-P( 24 \leq Q \le q27 ) = 0.17150818, \ & P( 28 \leq Q \leq 32 ) = 0.17134210,\\
+P( 24 \leq Q \leq 27 ) = 0.17150818, \ & P( 28 \leq Q \leq 32 ) = 0.17134210,\\
 P( 33 \leq Q \leq 39 ) = 0.15216056, \ & P( Q \geq 40 ) =0.15685380.
 \end{array}$$ 
 
