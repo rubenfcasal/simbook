@@ -1,4 +1,4 @@
-Bondad de Ajuste y Aleatoriedad
+Bondad de Ajuste y Aleatoriedad {#gof-aleat}
 ===============================
 
 
@@ -19,12 +19,12 @@ Los métodos genéricos no son muy adecuados para evaluar generadores aleatorios
 La recomendación sería emplear baterías de contrastes recientes, como las descritas en la Sección \@ref(baterias).
 No obstante, en la última sección se describirán, únicamente con fines  ilustrativos, algunos de los primeros métodos diseñados específicamente para generadores aleatorios. 
 
-## Métodos de bondad de ajuste
+## Métodos de bondad de ajuste {#gof}
 
 A partir de $X_1,\ldots,X_n$ m.a.s. de $X$ con función de
 distribución $F$, interesa realizar un contraste de la forma:
 $$\left \{
-\begin{array}{}
+\begin{array}{l}
 H_0:F=F_0\\
 H_1:F\neq F_0
 \end{array}
@@ -37,7 +37,7 @@ Por ejemplo:
 |       $H_0$ simple           |          $H_0$ compuesta            | 
 +==============================+=====================================+
 | $\left \{                    | $\left \{                           |  
-| \begin{array}{}              | \begin{array}{}                     |
+| \begin{array}{l}             | \begin{array}{l}                    |
 | H_0:F= \mathcal{N}(0,1)\\    | H_0:F= \mathcal{N}(\mu,\sigma^2)\\  |
 | H_1:F\neq \mathcal{N}(0,1)   | H_1:F\neq \mathcal{N}(\mu,\sigma^2) |
 | \end{array}                  | \end{array}                         |
@@ -81,28 +81,22 @@ hist(datos, freq = FALSE)
 curve(dnorm(x, mean(datos), sd(datos)), add = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-3-1} \end{center}
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" />
 
 Si el número de valores es muy grande (por ejemplo en el caso de secuencias aleatorias), nos puede interesar establecer la opción `breaks = "FD"` para aumentar el número de intervalos de discretización.
 En cualquier caso, como se muestra en la Figura \@ref(fig:hist-movie), la convergencia del histograma a la densidad teórica se podría considerar bastante lenta.
 Alternativamente se podría considerar una estimación suave de la densidad, por ejemplo empleando la estimación tipo núcleo implementada en la función `density()`.
 
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/hist-movie-1} 
-
-}
-
-\caption{Convergencia del histograma a la densidad teórica.}(\#fig:hist-movie)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="images/hist-movie.gif" alt="Convergencia del histograma a la densidad teórica." width="70%" />
+<p class="caption">(\#fig:hist-movie)Convergencia del histograma a la densidad teórica.</p>
+</div>
 
 
 
 
-### Función de distribución empírica
+### Función de distribución empírica {#empdistr}
 
 La función de distribución empírica $F_n\left( x \right)=\frac{1}{n}\sum_{i=1}^{n}\mathbf{1}\left( X_i\leq x\right)$ asigna a cada número real $x$ la frecuencia relativa de observaciones menores o iguales que $x$.
 Para obtener las frecuencias relativas acumuladas, se ordena la muestra $X_{(1)}\leq X_{(2)}\leq \cdots \leq X_{(n)}$ y:
@@ -125,9 +119,10 @@ curve(ecdf(datos)(x), xlim = extendrange(datos), type = 's',
 curve(pnorm(x, mean(datos), sd(datos)), add = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-4-1} \end{center}
+<div class="figure" style="text-align: center">
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/ecdfplot-1.png" alt="Comparación de la distribución empírica de los datos de ejemplo con la función de distribución de la aproximación normal." width="70%" />
+<p class="caption">(\#fig:ecdfplot)Comparación de la distribución empírica de los datos de ejemplo con la función de distribución de la aproximación normal.</p>
+</div>
 
 
 ### Gráficos P-P y Q-Q
@@ -149,25 +144,21 @@ qqnorm(datos)
 qqline(datos)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-5-1} \end{center}
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-4-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 require(car)
 qqPlot(datos, "norm")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-5-2} \end{center}
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-4-2.png" width="70%" style="display: block; margin: auto;" />
 
 ```
 ## [1] 10 38
 ```
 
 
-### Contraste chi-cuadrado de Pearson {#chi2test}
+### Contraste ji-cuadrado de Pearson {#chi2test}
 
 
 Se trata de un contraste de bondad de ajuste:
@@ -231,7 +222,7 @@ chisq.test(table(x))            # NOT 'chisq.test(x)'!
 ## 	Chi-squared test for given probabilities
 ## 
 ## data:  table(x)
-## X-squared = 9.2, df = 4, p-value = 0.05629
+## X-squared = 4.4, df = 4, p-value = 0.3546
 ```
 
 La distribución exacta del estadístico del contraste es discreta (se podría aproximar por simulación, por ejemplo empleando los parámetros `simulate.p.value = TRUE` y `B = 2000` de la función `chisq.test()`; ver también el Ejercicio \@ref(exr:chicuadind) de la Sección \@ref(simconting) para el caso del contraste chi-cuadrado de independencia).
@@ -329,9 +320,7 @@ Continuando con el ejemplo anterior, podríamos contrastar normalidad mediante:
 chisq.test.cont(datos, distribution = "norm", nestpar = 2, mean=mean(datos), sd=sd(datos))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-8-1} \end{center}
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-7-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```
 ## 
@@ -510,9 +499,7 @@ lines(t, x2, col = 'red')
 legend("bottomright", legend = c("Datos independientes", "Datos dependientes"), col = c('blue', 'red'), lty = 1)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-12-1} \end{center}
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-11-1.png" width="70%" style="display: block; margin: auto;" />
 
 En el caso anterior la varianza es uno con ambos procesos. 
 Las estimaciones suponiendo independencia serían:
@@ -580,14 +567,10 @@ plot(datos, type = 'l')
 plot(as.ts(datos))
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/grafsec-1} 
-
-}
-
-\caption{Ejemplos de gráficos secuenciales.}(\#fig:grafsec)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/grafsec-1.png" alt="Ejemplos de gráficos secuenciales." width="70%" />
+<p class="caption">(\#fig:grafsec)Ejemplos de gráficos secuenciales.</p>
+</div>
 
 ```r
 par(old.par)
@@ -613,9 +596,7 @@ x3 <- x2 * c(1, -1)
 plot(x3, type = 'l', ylab = '', main = 'Dependencia negativa')
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-14-1} \end{center}
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 par(old.par)
@@ -639,9 +620,7 @@ plot(x1[-length(x1)], x1[-1], xlab = "X_t", ylab = "X_t+1", main = 'Independenci
 plot(x3[-length(x3)], x3[-1], xlab = "X_t", ylab = "X_t+1", main = 'Dependencia negativa')
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-15-1} \end{center}
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 par(old.par)
@@ -659,9 +638,7 @@ que permite detectar dependencias a $k$ retardos
 plot(datos[-length(datos)], datos[-1], xlab = "X_t", ylab = "X_t+1")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-16-1} \end{center}
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" />
 
 El correspondiente coeficiente de correlación es una medida numérica 
 del grado de relación lineal (denominado autocorrelación de orden 1).
@@ -684,17 +661,13 @@ En el caso de una secuencia muy grande de número pseudoaleatorios (supuestament
 plot(u[-length(u)], u[-1], xlab="U_t", ylab="U_t+1", pch=21, bg="white")
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/dispret-1} 
-
-}
-
-\caption{Ejemplos de gráficos de dispensión retardados de dos secuencias de longitud 10000.}(\#fig:dispret)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/dispret-1.png" alt="Ejemplos de gráficos de dispensión retardados de dos secuencias de longitud 10000." width="70%" />
+<p class="caption">(\#fig:dispret)Ejemplos de gráficos de dispensión retardados de dos secuencias de longitud 10000.</p>
+</div>
 
 Si se observa algún tipo de patrón indicaría dependencia (se podría considerar como una versión descriptiva del denominado “Parking lot test”).
-Se puede generalizar también a $d$-uplas $(X_{t+1},X_{t+2},\ldots,X_{t+d-1})$ 
+Se puede generalizar también a $d$-uplas $(X_{t+1},X_{t+2},\ldots,X_{t+d})$ 
 (ver ejemplo del generador RANDU en Figura \@ref(fig:randu) de la Sección \@ref(gen-cong)).
 
 ### El correlograma
@@ -727,9 +700,7 @@ acf(x2, main = 'Dependencia positiva')
 acf(x3, main = 'Dependencia negativa')
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-19-1} \end{center}
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 par(old.par)
@@ -755,9 +726,7 @@ $$r(k)\underset{aprox.}{\sim}N\left(  \rho(k),\frac{1}{n}\right)$$
 acf(datos)  # correlaciones
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-20-1} \end{center}
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;" />
 
 La función `acf` también permite estimar el covariograma^[En algunos campos, como en estadística espacial, en lugar del covariograma se suele emplear el semivariograma $\gamma(k) = C(0) - C(k)$.]. 
 
@@ -766,9 +735,7 @@ La función `acf` también permite estimar el covariograma^[En algunos campos, c
 covar <- acf(x2, type = "covariance")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-21-1} \end{center}
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 ### Test de rachas
@@ -796,7 +763,7 @@ $$\underbrace{++++}_{1}\underbrace{---}_{2}\underbrace{+++}_{3}
     no es aleatoria (con dependencia negativa o positiva, respec.).
 
 -   Estadístico del contraste:
-    $$R=\text{"Nº total de rachas en la muestra"}$$
+    $$R=\text{"Número total de rachas en la muestra"}$$
 
 -   Bajo la hipótesis nula de aleatoriedad:
     $$R\underset{aprox.}{\sim}N\left(  1+\frac{2n_{1}n_{2}}{n},
@@ -952,7 +919,7 @@ chisq.test(f)
 
 ### Contraste de series
 
-El contraste anterior se puede generalizar a contrastar la uniformidad de las $d$-uplas $(X_{t+1},X_{t+2},\ldots,X_{t+d-1})$ con $t=(i-1)d$, $i=1,\ldots,m$ siendo $m=\lfloor n/d \rfloor$. 
+El contraste anterior se puede generalizar a contrastar la uniformidad de las $d$-uplas $(X_{t+1},X_{t+2},\ldots,X_{t+d})$ con $t=(i-1)d$, $i=1,\ldots,m$ siendo $m=\lfloor n/d \rfloor$. 
 La idea es que troceamos el hipercubo $[0, 1]^d$ en $K^d$ celdas equiprobables.
 Considerando como categorías todos los posibles valores de las $d$-uplas, podemos emplear el estadístico chi-cuadrado para medir la discrepancia entre las frecuencias observadas en y las esperadas, iguales todas a $\frac{m}{K^d}$. La elecciones más frecuentes son $d=2$ (contraste de pares seriados) y $K=8$, $10$ ó $20$. 
 Por ejemplo, la función `serial.test()` del paquete `randtoolbox` implementa este contraste para $d=2$.
@@ -1010,8 +977,13 @@ procediendo también a agrupar las dos primeras modalidades.
 En el caso general de considerar $d$-uplas (manos de $d$ cartas con $K$ posibilidades cada una), la probabilidad de obtener $c$ valores (cartas) diferentes es (e.g. Knuth, 2002, Sección 3.3.2, p. 64):
 $$P(C=c) = \frac{K!}{(K-c)!K^d}S(d,c),$$
 donde $S(d,c)$ es el número de Stirling de segunda clase, definido como el número de formas que existen de hacer una partición de un conjunto de $d$ elementos en $c$ subconjuntos: 
-$$S(d,c) = \left\{ {d \atop c}\right\} = \frac{1}{c!}\sum_{i=0}^{c} (-1)^{i} \binom{c}{i} (c-i)^d.$$
+$$S(d,c) = \frac{1}{c!}\sum_{i=0}^{c} (-1)^{i} \binom{c}{i} (c-i)^d.$$
 Por ejemplo, la función `poker.test()` del paquete `randtoolbox` implementa este contraste para el caso de $d=K$.
+
+<!-- 
+$S(d,c) = \genfrac{\{}{\}}{0pt}{}{d}{c}$
+-->
+
 
 ### El contraste del coleccionista
 
@@ -1044,7 +1016,7 @@ P( Q = 19 ) = 0.01760857, \ & P( Q\geq20 ) = 0.07144851.
 Para $K=10$ se podrían considerar las siguientes categorías (con sus correspondientes probabilidades): 
 $$\begin{array}{rr}
 P( 10 \leq Q \leq 19 ) = 0.17321155, \ & P( 20 \leq Q \leq 23 ) = 0.17492380,\\
-P( 24 \leq Q \le q27 ) = 0.17150818, \ & P( 28 \leq Q \leq 32 ) = 0.17134210,\\
+P( 24 \leq Q \leq 27 ) = 0.17150818, \ & P( 28 \leq Q \leq 32 ) = 0.17134210,\\
 P( 33 \leq Q \leq 39 ) = 0.15216056, \ & P( Q \geq 40 ) =0.15685380.
 \end{array}$$ 
 

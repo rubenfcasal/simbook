@@ -212,9 +212,7 @@ b)  Aproximar el valor de $\pi$ mediante simulación a partir de
     symbols(0, 0, squares = 2, inches = FALSE, add = TRUE)
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-9-1} \end{center}
+    <img src="02-Numeros_aleatorios_R_files/figure-html/unnamed-chunk-9-1.png" width="70%" style="display: block; margin: auto;" />
     
 
 \BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-10"><strong>(\#exr:unnamed-chunk-10) </strong></span></div>\EndKnitrBlock{exercise}
@@ -242,9 +240,7 @@ a)  Empleando la función `sample`, obtener 1000 simulaciones del
     barplot(100*table(x)/nsim) # Representar porcentajes 
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-11-1} \end{center}
+    <img src="02-Numeros_aleatorios_R_files/figure-html/unnamed-chunk-11-1.png" width="70%" style="display: block; margin: auto;" />
 
 b)  En R pueden generarse valores de la distribución de Bernoulli
     mediante la función `rbinom(nsim, size=1, prob)`. Generar un
@@ -274,9 +270,7 @@ b)  En R pueden generarse valores de la distribución de Bernoulli
     abline(h=p, lty=2, col="red")
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-12-1} \end{center}
+    <img src="02-Numeros_aleatorios_R_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 \BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-13"><strong>(\#exr:unnamed-chunk-13) </strong></span></div>\EndKnitrBlock{exercise}
@@ -284,8 +278,7 @@ Simular el paso de corriente a través del siguiente circuito, donde
 figuran las probabilidades de que pase corriente por cada uno de los
 interruptores:
 
-
-\begin{center}\includegraphics[width=0.7\linewidth]{images/circuito2} \end{center}
+<img src="images/circuito2.png" width="70%" style="display: block; margin: auto;" />
 
 Considerar que cada interruptor es una v.a. de Bernoulli independiente
 para simular 1000 valores de cada una de ellas.
@@ -341,7 +334,7 @@ a)  Escribir una función que simule el lanzamiento de $n$ dados. El
     ```
     
     ```
-    ## [1] 3 5 1 6
+    ## [1] 4 5 3 1
     ```
     
     ```r
@@ -349,7 +342,7 @@ a)  Escribir una función que simule el lanzamiento de $n$ dados. El
     ```
     
     ```
-    ## [1] TRUE
+    ## [1] FALSE
     ```
 
 
@@ -368,7 +361,7 @@ b)  Utilizar la función anterior para simular $nsim=10000$ jugadas
     ```
     
     ```
-    ## [1] 0.5148
+    ## [1] 0.5195
     ```
     
     ```r
@@ -438,7 +431,7 @@ funtest(1000000)
 ```
 
 ```
-## [1] 0.5003313
+## [1] 0.5004536
 ```
 
 ```r
@@ -449,10 +442,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.06    0.00    0.06 
+##    0.08    0.00    0.07 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.06    0.00    0.06
+##    0.08    0.00    0.07
 ```
 
 ```r
@@ -460,7 +453,7 @@ funtest(1000)
 ```
 
 ```
-## [1] 0.5050682
+## [1] 0.4954613
 ```
 
 ```r
@@ -474,7 +467,7 @@ CPUtimeprint()
 ##       0       0       0 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.06    0.00    0.06
+##    0.08    0.00    0.07
 ```
 
 ### Paquetes de R
@@ -563,9 +556,9 @@ cpu.time('\nSample median of', 1000000, 'values =', res, total = FALSE)
 
 ```
 ## Time of last operation: 
-## Sample median of 1e+06 values = 0.4993323 
+## Sample median of 1e+06 values = 0.4993793 
 ##    user  system elapsed 
-##    0.06    0.00    0.07
+##    0.04    0.03    0.08
 ```
 
 ```r
@@ -575,12 +568,12 @@ cpu.time('\nSample median of', 1000, 'values =', res)
 
 ```
 ## Time of last operation: 
-## Sample median of 1000 values = 0.5126436 
+## Sample median of 1000 values = 0.4936829 
 ##    user  system elapsed 
 ##       0       0       0 
 ## Total time:
 ##    user  system elapsed 
-##    0.06    0.00    0.07
+##    0.04    0.03    0.08
 ```
 
 Otro paquete que puede ser de utilidad es

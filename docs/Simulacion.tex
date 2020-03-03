@@ -127,7 +127,7 @@ Ricardo Cao (\href{mailto:rcao@udc.es}{\nolinkurl{rcao@udc.es}})}
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2020-01-30}
+    \date{2020-03-03}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -222,7 +222,11 @@ adelante\ldots{}).
 
 \chapter{Introducción a la simulación}\label{cap1}
 
-\section{Introducción}\label{introduccion}
+Podríamos definir la \emph{Simulación} como una técnica que consiste en
+realizar experimentos de muestreo sobre el modelo de un sistema, con el
+objetivo de recopilar información bajo determinadas condiciones.
+
+\section{Conceptos básicos}\label{conceptos-basicos}
 
 La experimentación directa sobre la realidad puede tener muchos
 inconvenientes:
@@ -273,6 +277,13 @@ variables. Habría dos tipos de modelos:
   simplemente que haya errores de medida).
 \end{itemize}
 
+\begin{quote}
+``Nothing in Nature is random\ldots{} a thing appears random only
+through the incompleteness of our knowledge.''
+
+--- Spinoza, Baruch (Ethics, 1677)
+\end{quote}
+
 La modelización es una etapa presente en la mayor parte de los trabajos
 de investigación (especialmente en las ciencias experimentales). El
 modelo debería considerar las variables más relevantes para explicar el
@@ -284,15 +295,13 @@ los datos observados.
 La idea es emplear el modelo (suponiendo que es válido) para resolver el
 problema de interés. Si se puede obtener la solución de forma análitica,
 esta suele ser exacta (aunque en ocasiones solo se dispone de soluciones
-aproximadas/asintóticas) y a menudo la resolución también es rápida.
-Cuando la solución no se puede obtener de modo analítico (o si la
-aproximación disponible no es adecuada) se puede recurrir a la
-simulación.
+aproximadas, basadas en resultados asintóticos, o que dependen de
+supociones que pueden ser cuestionables) y a menudo la resolución
+también es rápida. Cuando la solución no se puede obtener de modo
+analítico (o si la aproximación disponible no es adecuada) se puede
+recurrir a la simulación.
 
-Podríamos decir que la \emph{Simulación} es una técnica que consiste en
-realizar experimentos de muestreo sobre el modelo de un sistema, con el
-objetivo de recopilar información bajo determinadas condiciones. Nos
-centraremos en el caso de la \emph{Simulación Estocástica}: las
+Nos centraremos en el caso de la \emph{Simulación Estocástica}: las
 conclusiones se obtienen generando repetidamente simulaciones del modelo
 aleatorio.
 
@@ -407,7 +416,7 @@ computadora (ver Figura \ref{fig:randbook}).
 
 }
 
-\caption{Líneas 10580–10594, columnas 21–40, del libro *A Million Random Digits with 100,000 Normal Deviates*.}\label{fig:randbook}
+\caption{Líneas 10580-10594, columnas 21-40, del libro *A Million Random Digits with 100,000 Normal Deviates*.}\label{fig:randbook}
 \end{figure}
 
 El procediento para generar de forma manual números aleatorios en un
@@ -449,16 +458,28 @@ Sus principales aplicaciones hoy en día son en criptografía
 
 \subsection{Inconvenientes:}\label{inconvenientes}
 
+Para su aplicación en el campo de la Estadística:
+
 \begin{itemize}
 \item
-  Es necesario/recomendable conocer su distribución.
+  Es necesario conocer su distribución.
 \item
   Los datos generados deberían ser i.i.d.
+\end{itemize}
+
+(sería también muy recomendable para otros casos) y en general:
+
+\begin{itemize}
 \item
   Reproductivilidad.
 \item
   Pueden requerir del almacenamiento en tablas.
 \end{itemize}
+
+Además siempre está la posible presencia de sesgos, principalmente
+debidos a fallos del sistema o interferencias. Por ejemplo en el caso de
+la máquina RAND, fallos mecánicos en el sistema de grabación de los
+datos causaron problemas de aleatoriedad (Hacking, 1965, p.~129).
 
 \subsection{Alternativas:}\label{alternativas}
 
@@ -489,7 +510,7 @@ distribución uniforme, aunque no necesariamente para una realización
 concreta).
 
 Por ejemplo, el paquete
-\href{https://cran.r-project.org/web/packages/randtoolbox/index.html}{\texttt{randtoolbox}}
+\href{https://CRAN.R-project.org/package=randtoolbox}{\texttt{randtoolbox}}
 implementa métodos para la generación de secuencias cuasi-aleatorias
 (ver Figura \ref{fig:randtoolbox}).
 
@@ -519,11 +540,17 @@ implementa métodos para la generación de secuencias cuasi-aleatorias
 \end{Highlighting}
 \end{Shaded}
 
+En este libro sólo consideraremos los números pseudoaleatorios y por
+comodidad se eliminará el prefijo ``pseudo'' en algunos casos.
+
 \section{Números pseudoaleatorios}\label{numeros-pseudoaleatorios}
 
 La mayoría de los métodos de simulación se basan en la posibilidad de
-generar números pseudoaleatorios con distribución \(\mathcal{U}(0,1)\).
-Se obtienen mediante un algoritmo recursivo denominado \emph{generador}:
+generar números pseudoaleatorios que imiten las propiedades de
+generaciones independientes de una distribución \(\mathcal{U}(0,1)\).
+
+El procedimiento habitual para obtiener estas secuencias es emplear un
+algoritmo recursivo denominado \emph{generador}:
 
 \[x_{i} = f\left( x_{i-1}, x_{i-2}, \cdots, x_{i-k}\right)\]
 
@@ -584,6 +611,13 @@ serían:
   Parsimonia, \ldots{}
 \end{itemize}
 
+\begin{quote}
+``\ldots{} random numbers should not be generated with a method chosen
+at random.''
+
+--- Knuth, D.E. (TAOCP, 2002)
+\end{quote}
+
 Gran cantidad de algoritmos:
 
 \begin{itemize}
@@ -622,9 +656,9 @@ Código fuente disponible en múltiples librerias:
 \end{itemize}
 
 Nos centraremos en los generadores congruenciales, descritos en la
-Sección \ref{cap3-gen-cong}.
+Sección \ref{gen-cong}.
 
-\chapter{Números aleatorios en R}\label{numeros-aleatorios-en-r}
+\chapter{Números aleatorios en R}\label{cap2}
 
 La generación de números pseudoaleatorios en R es una de las mejores
 disponibles en paquetes estadísticos. Entre las herramientas en el
@@ -635,20 +669,23 @@ paquete base de \texttt{R} estarían:
   \texttt{set.seed(entero)}: permite establecer la semilla (y el
   generador).
 \item
-  \texttt{RNGkind}: selecciona el generador.
+  \texttt{RNGkind()}: selecciona el generador.
 \item
   \texttt{rdistribución(n,...):} genera valores aleatorios de la
   correspondiente distribución. Por ejemplo:
   \texttt{runif(n,\ min\ =\ 0,\ max\ =\ 1)}, generaría \texttt{n}
   valores de una uniforme.
 \item
-  \texttt{sample}: genera muestras aleatorias (v.a. discretas) y
-  permutaciones.
+  \texttt{sample()}: genera muestras aleatorias de variables discretas y
+  permutaciones (se tratará en el Capítulo \ref{cap6}).
+\item
+  \texttt{simulate()}: genera realizaciones de la respuesta de un modelo
+  ajustado.
 \end{itemize}
 
 Además están disponibles otros paquetes, como el paquete
-\href{https://cran.r-project.org/web/packages/distr/index.html}{\texttt{distr}},
-que implementan distribuciones adicionales.
+\href{http://distr.r-forge.r-project.org}{\texttt{distr}}, que
+implementan distribuciones adicionales.
 
 La semilla se almacena (en \texttt{globalenv}) en \texttt{.Random.seed};
 es un vector de enteros cuya dimensión depende del tipo de generador:
@@ -668,12 +705,12 @@ almacenarla antes de generar simulaciones, e.g.
 \texttt{semilla\ \textless{}-\ .Random.seed}.
 \EndKnitrBlock{remark}
 
-En la mayoría de los ejemplos se generan todas las muestras de una vez,
-se guardan y se procesan vectorialmente (normalmente empleando la
-función \texttt{apply}). En problemas mas complejos, en los que no es
-necesario almacenar todas las simulaciones, puede ser preferible emplear
-un bucle para generar y procesar las muestras iterativamente. Por
-ejemplo podríamos emplear el siguiente esquema:
+En la mayoría de los ejemplos de este libro se generan todos los valores
+de una vez, se guardan y se procesan vectorialmente (normalmente
+empleando la función \texttt{apply}). En problemas mas complejos, en los
+que no es necesario almacenar todas las simulaciones, puede ser
+preferible emplear un bucle para generar y procesar cada simulación
+iterativamente. Por ejemplo podríamos emplear el siguiente esquema:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -683,7 +720,7 @@ ejemplo podríamos emplear el siguiente esquema:
 \NormalTok{  seed <-}\StringTok{ }\NormalTok{.Random.seed}
   \CommentTok{# Si se produce un error, podremos depurarlo ejecutando:}
   \CommentTok{#  .Random.seed <- seed}
-
+\NormalTok{  ...}
   \CommentTok{# Generar valores pseudoaleatorios}
 \NormalTok{  ...}
 \NormalTok{\}}
@@ -696,7 +733,7 @@ o alternativamente fijar la semilla en cada iteración, por ejemplo:
 \begin{Highlighting}[]
 \ControlFlowTok{for}\NormalTok{ (isim }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{nsim) \{}
   \KeywordTok{set.seed}\NormalTok{(isim)}
-
+\NormalTok{  ...}
   \CommentTok{# Generar valores pseudoaleatorios}
 \NormalTok{  ...}
 \NormalTok{\}}
@@ -704,7 +741,9 @@ o alternativamente fijar la semilla en cada iteración, por ejemplo:
 \end{Shaded}
 
 Hay que tener en cuenta que \texttt{.Random.seed} se almacena en el
-entorno de trabajo\ldots{} \#\# Opciones
+entorno de trabajo\ldots{}
+
+\section{Opciones}\label{opciones}
 
 La función \texttt{RNGkind(kind\ =\ NULL,\ normal.kind\ =\ NULL)}
 permite seleccionar el tipo de generador (en negrita los valores por
@@ -723,7 +762,7 @@ defecto):
     ``Super-Duper'': Ciclo aprox. \(4.6\times10^{18}\) (S-PLUS)
   \item
     \textbf{``Mersenne-Twister''}: Ciclo \(2^{19937}-1\) y
-    equidistribution en 623 dim.
+    equidistribution en 623 dimensiones.
   \item
     ``Knuth-TAOCP-2002'': Ciclo aprox. \(2^{129}\).
   \item
@@ -747,7 +786,8 @@ Otros paquetes de R que pueden ser de interés:
   \texttt{setRNG} contiene herramientas que facilitan operar con la
   semilla (dentro de funciones,\ldots{}).
 \item
-  \texttt{random} generación de numeros ``true random''.
+  \texttt{random} permite la descarga de numeros ``true random'' desde
+  \href{https://www.random.org}{RANDOM.ORG}.
 \item
   \texttt{randtoolbox} implementa generadores más recientes
   (\texttt{rngWELL}) y generación de secuencias cuasi-aleatorias.
@@ -755,11 +795,12 @@ Otros paquetes de R que pueden ser de interés:
   \texttt{RDieHarder} implementa diversos contrastes para el análisis de
   la calidad de un generador y varios generadores.
 \item
-  \texttt{Runuran} interfaz para la librería UNU.RAN para la generación
-  (automática) de variables aleatorias no uniformes.
+  \href{http://statmath.wu.ac.at/unuran}{\texttt{Runuran}} interfaz para
+  la librería UNU.RAN para la generación (automática) de variables
+  aleatorias no uniformes (ver Hörmann et al., 2004).
 \item
-  \texttt{rsprng} y \texttt{rstream} implementan la generación de
-  múltiples secuencias (e.g.~para programación paralela).
+  \texttt{rsprng}, \texttt{rstream} y \texttt{rlecuyer} implementan la
+  generación de múltiples secuencias (para programación paralela).
 \item
   \texttt{gls}, \texttt{rngwell19937}, \texttt{randaes},
   \texttt{SuppDists}, \texttt{lhs}, \texttt{mc2d}, \texttt{fOptions},
@@ -1130,10 +1171,10 @@ la última llamada a una de estas funciones. Ejemplo:
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.08    0.00    0.08 
+##    0.07    0.00    0.06 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.08    0.00    0.08
+##    0.07    0.00    0.06
 \end{verbatim}
 
 \begin{Shaded}
@@ -1156,10 +1197,10 @@ la última llamada a una de estas funciones. Ejemplo:
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.02    0.00    0.02 
+##    0.01    0.00    0.02 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##     0.1     0.0     0.1
+##    0.08    0.00    0.08
 \end{verbatim}
 
 \subsection{Paquetes de R}\label{paquetes-de-r-1}
@@ -1260,7 +1301,7 @@ Ejemplo:
 ## Time of last operation: 
 ## Sample median of 1e+06 values = 0.4993793 
 ##    user  system elapsed 
-##    0.05    0.02    0.06
+##    0.08    0.00    0.08
 \end{verbatim}
 
 \begin{Shaded}
@@ -1277,7 +1318,7 @@ Ejemplo:
 ##       0       0       0 
 ## Total time:
 ##    user  system elapsed 
-##    0.05    0.02    0.06
+##    0.08    0.00    0.08
 \end{verbatim}
 
 Otro paquete que puede ser de utilidad es
@@ -1288,29 +1329,38 @@ que, por construcción, aunque se realicen en la mismas condiciones (en
 el mismo equipo), los tiempos de CPU en \texttt{R} pueden variar
 ``ligeramente'' entre ejecuciones.
 
-\chapter{Generación de números pseudoaleatorios}\label{cap3}
+\chapter{Generación de números pseudoaleatorios con distribución
+uniforme}\label{cap3}
 
-\section{Generadores congruenciales}\label{cap3-gen-cong}
+Como ya se comentó, los distintos métodos de simulación requieren
+disponer de secuencias de números pseudoaleatorios que imiten las
+propiedades de generaciones independientes de una distribución
+\(\mathcal{U}(0,1)\). En primer lugar nos centraremos en el caso de los
+generadores congruenciales. A pesar de su simplicidad, podrían ser
+adecuados en muchos casos y constituyen la base de los generadores
+avanzados habitualmente considerados. Posteriormente se dará una visión
+de las diferentes herramientas para estudiar la calidad de un generador
+de números pseudoaleatorios.
 
-\subsection{Generador congruencial lineal (simple)}\label{conlinsim}
+\section{Generadores congruenciales (lineales)}\label{gen-cong}
 
-Partiendo de una semilla inicial \(x_{0}\): \[\begin{aligned}
-x_{i}  & = (ax_{i-1}+c) \operatorname{mod} m \\
+Se basan en la idea de considerar una combinación lineal de los últimos
+\(k\) enteros generados y calcular su resto al dividir por un entero
+fijo \(m\). En el método congruencial simple (de orden \(k = 1\)),
+partiendo de una semilla inicial \(x_0\), el algoritmo secuencial es el
+siguiente: \[\begin{aligned}
+x_{i}  & = (ax_{i-1}+c) \bmod m \\
 u_{i}  & = \dfrac{x_{i}}{m} \\
 i  & =1,2,\ldots
-\end{aligned}\] donde \(a\) es el \textbf{multiplicador,} \(c\) el
-\textbf{incremento} y \(m\) el \textbf{módulo} del generador (parámetros
-enteros fijados de antemano).
+\end{aligned}\] donde \(a\) (\emph{multiplicador}), \(c\)
+(\emph{incremento}) y \(m\) (\emph{módulo}) son parámetros enteros del
+generador fijados de antemano. Si \(c=0\) el generador se denomina
+congruencial \emph{multiplicativo} (Lehmer, 1951) y en caso contrario se
+dice que es \emph{mixto} (Rotenburg, 1960).
 
-\begin{itemize}
-\item
-  Si \(c=0\) se denomina congruencial \textbf{multiplicativo}
-\item
-  Si \(c\neq0\) se denomina congruencial \textbf{mixto}
-\end{itemize}
-
-Implementado en el fichero \emph{RANDC.R} (tratando de imitar el
-funcionamiento en R, aunque de forma no muy eficiente\ldots{}):
+Este método está implementado en el fichero \emph{RANDC.R}, tratando de
+imitar el funcionamiento de un generador de R (aunque de un forma no muy
+eficiente):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1358,7 +1408,8 @@ funcionamiento en R, aunque de forma no muy eficiente\ldots{}):
 
 \BeginKnitrBlock{remark}
 \iffalse{} {Nota: } \fi{}Para evitar problemas computacionales, se
-recomienda emplear un algoritmo como el descrito en L'Ecuyer (1988).
+recomienda emplear el método de Schrage (ver Bratley \emph{et al.},
+1987; L'Ecuyer, 1988)
 \EndKnitrBlock{remark}
 
 Ejemplos:
@@ -1368,18 +1419,25 @@ Ejemplos:
   \(c=0\), \(a=2^{16}+3=65539\) y \(m=2^{31}\), generador \texttt{RANDU}
   de IBM (\textbf{no recomendable}).
 \item
-  \(c=0\), \(a=7^{5}=16807\) y \(m=2^{31}-1,\) Park y Miller (1988)
-  ``minimal standar'',empleado por las librerías IMSL y NAG.
+  \(c=0\), \(a=7^{5}=16807\) y \(m=2^{31}-1\) (primo de Mersenne), Park
+  y Miller (1988) ``minimal standar'', empleado por las librerías IMSL y
+  NAG.
+\item
+  \(c=0\), \(a=48271\) y \(m=2^{31}-1\) actualización del ``minimal
+  standar'' propuesta por Park, Miller y Stockmeyer (1993).
 \end{itemize}
 
 Los parámetros y la semilla determinan los valores generados:
-\[x_{i}=\left(  a^{i}x_{0}+c\frac{a^{i}-1}{a-1}\right)  \operatorname{mod}m\]
+\[x_{i}=\left(  a^{i}x_0+c\frac{a^{i}-1}{a-1}\right) \bmod m\]
 
 A pesar de su simplicidad, una adecuada elección de los parámetros
 permite obtener de manera eficiente secuencias de números
-``aparentemente'' i.i.d. \(\mathcal{U}(0,1).\)
+``aparentemente'' i.i.d. \(\mathcal{U}(0,1)\).
 
-\subsection{Periodo}\label{periodo}
+El procedimiento habitual solía ser escoger \(m\) de forma que la
+operación del módulo se pudiese realizar de forma muy eficiente, para
+posteriormente seleccionar \(c\) y \(a\) de forma que el período fuese
+lo más largo posible (o suficientemente largo).
 
 \BeginKnitrBlock{theorem}
 \protect\hypertarget{thm:unnamed-chunk-4}{}{\label{thm:unnamed-chunk-4}
@@ -1390,16 +1448,13 @@ Un generador congruencial tiene período máximo (\(p=m\)) si y solo si:
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  \(c\) y \(m\) son primos relativos (i.e.
-  \(m.c.d.\left( c,m\right) =1\)).
+  \(c\) y \(m\) son primos relativos (i.e. \(m.c.d.(c, m) = 1\)).
 \item
   \(a-1\) es múltiplo de todos los factores primos de \(m\) (i.e.
-  \(a\equiv1\operatorname{mod}q\), para todo \(q\) factor primo de
-  \(m\)).
+  \(a \equiv 1 \bmod q\), para todo \(q\) factor primo de \(m\)).
 \item
   Si \(m\) es múltiplo de \(4\), entonces \(a-1\) también lo ha de ser
-  (i.e.
-  \(m\equiv0\operatorname{mod}4\Rightarrow a\equiv 1\operatorname{mod}4\)).
+  (i.e. \(m \equiv 0 \bmod 4\Rightarrow a \equiv 1 \bmod 4\)).
 \end{enumerate}
 
 .
@@ -1409,9 +1464,10 @@ Algunas consecuencias:
 
 \begin{itemize}
 \item
-  Si \(m\) primo, \(p=m\Leftrightarrow a=1\)
+  Si \(m\) primo, \(p=m\) si y solo si \(a=1\).
 \item
-  Un generador multiplicativo no cumple la condición 1.
+  Un generador multiplicativo no cumple la condición 1
+  (\(m.c.d.(0, m)=m\)).
 \end{itemize}
 
 \BeginKnitrBlock{theorem}
@@ -1424,24 +1480,21 @@ generador multiplicativo tiene período máximo (\(p=m-1\)) si:
   \(m\) es primo.
 \item
   \(a\) es una raiz primitiva de \(m\) (i.e.~el menor entero \(q\) tal
-  que \(a^{q}=1\operatorname{mod}m\) es \(q=m-1\)).
+  que \(a^{q}=1 \bmod m\) es \(q=m-1\)).
 \end{enumerate}
 
 .
 \EndKnitrBlock{theorem}
 
 Además de preocuparse de la longitud del ciclo, las secuencias generadas
-deben aparentar muestras i.i.d. \(\mathcal{U}(0,1)\). Por ejemplo, los
-valores generados pueden mostrar una estructura reticular.
+deben aparentar muestras i.i.d. \(\mathcal{U}(0,1)\).
 
-\begin{itemize}
-\item
-  Marsaglia (1968): \(k\)-uplas de generadores multiplicativos
-  contenidas en a lo sumo \(\left(k!m\right)^{1/k}\) hiperplanos
-  paralelos.
-\item
-  Generador RANDU de IBM (70's):
-\end{itemize}
+Uno de los principales problemas es que los valores generados pueden
+mostrar una clara estructura reticular. Este es el caso por ejemplo del
+generador RANDU de IBM muy empleado en la década de los 70 (ver Figura
+\ref{fig:randu}). Por ejemplo, el conjunto de datos \texttt{randu}
+contiene 400 tripletas de números sucesivos obtenidos con la
+implementación en VAX/VMS 1.5 (1977).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1472,18 +1525,27 @@ valores generados pueden mostrar una estructura reticular.
 \caption{Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)}\label{fig:randu}
 \end{figure}
 
-NOTA: Alternativamente se podría utilizar la función \texttt{plot3d} del
-paquete \texttt{rgl}, y pulsando con el ratón se podría rotar la figura
-para ver los hiperplanos:
-
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(rgl)}
-\KeywordTok{plot3d}\NormalTok{(xyz) }
+\CommentTok{# Alternativamente se podría utilizar la función `plot3d` del paquete `rgl`,}
+\CommentTok{# y pulsando con el ratón se podría rotar la figura para ver los hiperplanos:}
+\CommentTok{# library(rgl)}
+\CommentTok{# plot3d(xyz) }
 \end{Highlighting}
 \end{Shaded}
 
-Se han propuesto diversas pruebas (ver sección siguiente) para
+En general todos los generadores de este tipo van a presentar
+estructuras reticulares. Marsaglia (1968) demostró que las \(k\)-uplas
+de un generadores multiplicativo están contenidas en a lo sumo
+\(\left(k!m\right)^{1/k}\) hiperplanos paralelos (para más detalles
+sobre la estructura reticular, ver por ejemplo Ripley, 1987, sección
+2.7). Por tanto habría que seleccionar adecuadamente \(m\) y \(c\)
+(\(a\) solo influiría en la pendiente) de forma que la estructura
+reticular sea impreceptible teniendo en cuenta el número de datos que se
+pretende generar (por ejemplo de forma que la distancia mínima entre los
+puntos sea próxima a la esperada en teoría).
+
+Se han propuesto diversas pruebas (ver Sección \ref{calgen}) para
 determinar si un generador tiene problemas de este tipo y se han
 realizado numerosos estudios para determinadas familias (e.g.~Park y
 Miller, 1988, estudiaron que parámetros son adecuados para
@@ -1501,52 +1563,80 @@ Miller, 1988, estudiaron que parámetros son adecuados para
 
 \subsection{Otros generadores}\label{otros-generadores}
 
-Generalizaciones del generador congruencial lineal simple:
-\[x_{i}=f\left(  x_{i-1},x_{i-2},\cdots,x_{i-k}\right)  \operatorname{mod}m\]
+Se han considerado diversas extensiones del generador congruencial
+lineal simple:
 
 \begin{itemize}
-\item
-  No lineal: e.g.
-  \(\ x_{i}=a_{1}x_{i-1}+a_{2}x_{i-1}^{2}\operatorname{mod}m\)
 \item
   Lineal múltiple:
-  \(x_{i}=a_{1}x_{i-1}+a_{2}x_{i-2}+\cdots+a_{k}x_{i-k}\operatorname{mod}m\),
-  con \(p\leq m^{k}-1\))
+  \(x_{i}= a_0 + a_1 x_{i-1} + a_2 x_{i-2} + \cdots + a_{k} x_{i-k} \bmod m\),
+  con periodo \(p\leq m^{k}-1\).
+\item
+  No lineal:
+  \(x_{i} = f\left( x_{i-1}, x_{i-2}, \cdots, x_{i-k} \right) \bmod m\).
+  Por ejemplo \(x_{i} = a_0 + a_1 x_{i-1} + a_2 x_{i-1}^2 \bmod m\).
 \item
   Matricial:
-  \(\boldsymbol{x}_{i} = A_{1}\boldsymbol{x}_{i-1} + A_{2}\boldsymbol{x}_{i-2} + \cdots + A_{k}\boldsymbol{x}_{i-k} \operatorname{mod}m\)
-  (por ejemplo el generador por defecto de \texttt{R}).
+  \(\boldsymbol{x}_{i} = A_0 + A_1\boldsymbol{x}_{i-1} + A_2\boldsymbol{x}_{i-2} + \cdots + A_{k}\boldsymbol{x}_{i-k} \bmod m\).
 \end{itemize}
 
-Un caso particular del generador lineal múltiple son los denominados
-\emph{generadores de registros desfasados}. Se generan bits de forma
-secuencial considerando \(m=2\) y \(a_{i} \in \left \{ 0,1\right \}\), y
-los cálculos se pueden realizar rápidamente mediante operaciones lógicas
-(se pueden emplear directamente los registros del procesador).
+Un ejemplo de generador congruencia lineal múltiple es el denominado
+\emph{generador de Fibonacci retardado} (Fibonacci-lagged generator;
+Knuth, 1969): \[x_n = (x_{n-37} + x_{n-100}) \bmod 2^{30},\] con un
+período aproximado de \(2^{129}\) y que puede ser empleado en R (lo cual
+no sería en principio recomendable; ver
+\href{https://www-cs-faculty.stanford.edu/~knuth/news02.html\#rng}{Knuth
+Recent News 2002}) estableciendo \texttt{kind} a
+\texttt{"Knuth-TAOCP-2002"} o \texttt{"Knuth-TAOCP"} en la llamada a
+\texttt{set.seed()} o \texttt{RNGkind()}.
 
-Otras alternativas bastante utilizadas consisten en la combinanción de
-varios generadores:
+El generador \emph{Mersenne-Twister} (Matsumoto y Nishimura, 1998),
+empleado por defecto en R, de periodo \(2^{19937}-1\) y equidistribution
+en 623 dimensiones, se puede expresar como un generador congruencial
+matricial lineal.
+
+Un caso particular del generador lineal múltiple son los denominados
+\emph{generadores de registros desfasados} (más relacionados con la
+Criptografía). Se generan bits de forma secuencial considerando \(m=2\)
+y \(a_{i} \in \left \{ 0,1\right \}\) y se van combinando \(l\) bits
+para obtener valores en el intervalo \((0, 1)\), por ejemplo
+\(u_i = 0 . x_{it+1} x_{it+2} \ldots x_{it+l}\), siendo \(t\) un
+parámetro denominado \emph{aniquilación} (Tausworthe, 1965). Los
+cálculos se pueden realizar rápidamente mediante operaciones lógicas
+(los sumandos de la combinación lineal se traducen en un ``o'' exclusivo
+XOR), empleando directamente los registros del procesador (ver por
+ejemplo, Ripley, 1987, Algoritmo 2.1).
+
+Otras alternativas consisten en la combinanción de varios generadores,
+las más empleadas son:
 
 \begin{itemize}
 \item
-  Combinación de salidas: \(u_{i}=\sum u_{i}^{(l)}\operatorname{mod}1\),
-  donde \(u_{i}^{(l)}\) es el \(i\)-ésimo valor obtenido con el
-  generador \(l\).
+  Combinar las salidas: por ejemplo
+  \(u_{i}=\sum_{i=1}^L u_{i}^{(l)} \bmod 1\), donde \(u_{i}^{(l)}\) es
+  el \(i\)-ésimo valor obtenido con el generador \(l\).
 \item
-  Barajar salidas\ldots{}
+  Barajar las salidas: por ejemplo se crea una tabla empleando un
+  generador y se utiliza otro para seleccionar el índice del valor que
+  se va a devolver y posteriormente actualizar.
 \end{itemize}
 
+El generador \emph{L'Ecuyer-CMRG} (L'Ecuyer, 1999), empleado como base
+para la generación de múltiples secuencias en el paquete
+\texttt{parallel}, combina dos generadores concruenciales lineales
+múltiples de orden \(k=3\) (el periodo aproximado es \(2^{191}\)).
+
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-7}{}{\label{exr:unnamed-chunk-7} }
+\protect\hypertarget{exr:unnamed-chunk-6}{}{\label{exr:unnamed-chunk-6} }
 \EndKnitrBlock{exercise}
 
 Considera el generador congruencial definido por: \[\begin{aligned}
-x_{n+1}  & =(5x_{n}+1)\ \operatorname{mod}\ 512,\nonumber\\
+x_{n+1}  & =(5x_{n}+1)\ \bmod\ 512,\nonumber\\
 u_{n+1}  & =\frac{x_{n+1}}{512},\ n=0,1,\dots\nonumber
 \end{aligned}\] (de ciclo máximo).
 
 NOTA: El algoritmo está implementado en el fichero \emph{RANDC.R} y se
-muestra en la Sección \ref{conlinsim}.
+muestra en la Sección \ref{gen-cong}.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -1583,6 +1673,10 @@ muestra en la Sección \ref{conlinsim}.
 
   \caption{Histograma de los valores generados}\label{fig:ejcona}
   \end{figure}
+
+  En este caso concreto la distribución de los valores generados es
+  aparentemente más uniforme de lo que cabría esperar, lo que induciría
+  a sospechar de la calidad de este gerenador.
 \item
   Calcular la media de las simulaciones (\texttt{mean}) y compararla con
   la teórica.
@@ -1629,40 +1723,40 @@ muestra en la Sección \ref{conlinsim}.
 \end{verbatim}
 \end{enumerate}
 
-\section{Análisis de la calidad de un
-generador}\label{analisis-de-la-calidad-de-un-generador}
+\section{Análisis de la calidad de un generador}\label{calgen}
 
 Para verificar si un generador tiene las propiedades estadísticas
-deseadas hay disponibles una gran cantidad de test de hipótesis
-(baterías de contrastes) y métodos gráficos:
+deseadas hay disponibles una gran cantidad de test de hipótesis y
+métodos gráficos, incluyendo métodos genéricos (de bondad de ajuste y
+aleatoriedad) y contrastes específicos para generadores aleatorios. Se
+trata principalmente de contrastar si las muestras generadas son i.i.d.
+\(\mathcal{U}\left(0,1\right)\) (análisis univariante). Aunque los
+métodos más avanzados tratan normalmente de contrastar si las
+\(d\)-uplas:
 
-\begin{itemize}
-\item
-  Contrastes genéricos de bondad de ajuste y aleatoriedad.
-\item
-  Contrastes específicos para generadores aleatorios.
-\end{itemize}
+\[(U_{t+1},U_{t+2},\ldots,U_{t+d}); \ t=(i-1)d, \ i=1,\ldots,m\]
 
-Se trata principalmente de contrastar si las muestras generadas son
-i.i.d. \(\mathcal{U}\left(0,1\right)\) (análisis univariante). Aunque
-los métodos más avanzados tratan normalmente de contrastar si las
-\(k\)-uplas:
+son i.i.d. \(\mathcal{U}\left(0,1\right)^{d}\) (uniformes independientes
+en el hipercubo; análisis multivariante). En el Apéndice \ref{gof-aleat}
+se describen algunos de estos métodos.
 
-\[(U_{t+1},U_{t+2},...,U_{t+k-1}); \ t=(i-1)k, \ i=1,...,m\]
+En esta sección emplearemos únicamente métodos genéricos, ya que también
+pueden ser de utilidad para evaluar generadores de variables no
+uniformes y para la construcción de modelos del sistema real (e.g.~para
+modelar variables que se tratarán como entradas del modelo general). Sin
+embargo, los métodos clásicos pueden no ser muy adecuados para evaluar
+generadores de números pseudoaleatorios (e.g.~L'Ecuyer y Simard, 2007).
+La recomendación sería emplear baterías de contrastes recientes, como
+las descritas en la Subsección \ref{baterias}.
 
-son i.i.d. \(\mathcal{U}\left(0,1\right)^{k}\) (uniformes independientes
-en el hipercubo; análisis multivariante).
-
-\textbf{Nos centraremos en los métodos genéricos}. Pueden usarse en:
-
-\begin{itemize}
-\item
-  Evaluación de generadores aleatorios
-\item
-  Evaluación de generadores de variables aleatorias
-\item
-  Modelado de entradas de modelos de simulación
-\end{itemize}
+Hay que destacar algunas diferencias entre el uso de este tipo de
+métodos en inferencia y en simulación. Por ejemplo, si empleamos un
+constrate de hipótesis del modo habitual, desconfiamos del generador si
+la muestra (secuencia) no se ajusta a la distribución teórica
+(\(p\)-valor \(\leq \alpha\)). En este caso además, también se sospecha
+si se ajusta demasiado bien a la distribución teórica (\(p\)-valor
+\(\geq1-\alpha\)), lo que indicaría que no reproduce adecuadamente la
+variabilidad.
 
 Uno de los contrastes más conocidos es el test ji-cuadrado de bondad de
 ajuste (\texttt{chisq.test} para el caso discreto). Aunque si la
@@ -1730,8 +1824,7 @@ la siguiente función (que imita a las incluídas en \texttt{R}):
 \end{Highlighting}
 \end{Shaded}
 
-Por ejemplo, continuando con el generador congruencial anterior,
-obtendríamos:
+Continuando con el generador congruencial anterior, obtendríamos:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1740,7 +1833,14 @@ obtendríamos:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-11-1} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/chisq-test-unif-1} 
+
+}
+
+\caption{Gráfico resultante de aplicar la función `chisq.test.cont()` comparando el histograma de los valores generados con la densidad uniforme.}\label{fig:chisq-test-unif}
+\end{figure}
 
 \begin{verbatim}
 ## 
@@ -1766,19 +1866,19 @@ obtendríamos:
 ## X-squared = 0.12, df = 9, p-value = 1
 \end{verbatim}
 
-\textbf{Importante}:
-
-Empleando los métodos genéricos del modo habitual, desconfiamos del
-generador si la muestra/secuencia no se ajusta a la distribución teórica
-(\emph{p}-valor \(\leq \alpha\)). En este caso además, \textbf{también
-se sospecha si se ajusta demasiado bien} a la distribución teórica
-(\emph{p}-valor \(\geq1-\alpha\)).
+Como se muestra en la Figura \ref{fig:chisq-test-unif} el histograma de
+la secuencia generada es muy plano (comparado con lo que cabría esperar
+de una muestra de tamaño 500 de una uniforme), y consecuentemente el
+\(p\)-valor del contraste ji-cuadrado es prácticamente 1, lo que
+indicaría que este generador no reproduce adecuadamente la variabilidad
+de una distribución uniforme.
 
 Otro contraste de bondad de ajuste muy conocido es el test de
-Kolmogorov-Smirnov, implementado en \texttt{ks.test}.
+Kolmogorov-Smirnov, implementado en \texttt{ks.test}. En la Sección
+\ref{gof} se describen con más detalle estos contrastes.
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-12}{}{\label{exr:unnamed-chunk-12} }
+\protect\hypertarget{exr:unnamed-chunk-10}{}{\label{exr:unnamed-chunk-10} }
 \EndKnitrBlock{exercise}
 
 Continuando con el generador congruencial anterior:
@@ -1797,6 +1897,10 @@ Continuando con el generador congruencial anterior:
   Realizar el contraste de Kolmogorov-Smirnov para estudiar el ajuste a
   una \(\mathcal{U}(0,1)\).
 
+  Este contraste de hipótesis compara la función de distribución bajo la
+  hipótesis nula con la función de distribución empírica (ver Sección
+  \ref{empdistr}):
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# Distribución empírica}
@@ -1805,7 +1909,16 @@ Continuando con el generador congruencial anterior:
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-14-1} \end{center}
+  \begin{figure}[!htb]
+
+  {\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/empdistrunif-1} 
+
+  }
+
+  \caption{Comparación de la distribución empírica de la secuencia generada con la función de distribución uniforme.}\label{fig:empdistrunif}
+  \end{figure}
+
+  Podemos realizar el contraste con el siguiente código:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1834,7 +1947,7 @@ Continuando con el generador congruencial anterior:
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-15-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
   Gráfico de dispersión retardado:
 
@@ -1844,10 +1957,10 @@ Continuando con el generador congruencial anterior:
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-16-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-14-1} \end{center}
 \item
   Estudiar las correlaciones del vector \((u_{i},u_{i+k})\), con
-  \(k=1,...,10\). Contrastar si son nulas.
+  \(k=1,\ldots,10\). Contrastar si son nulas.
 
   Correlaciones:
 
@@ -1857,7 +1970,7 @@ Continuando con el generador congruencial anterior:
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-17-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
   Test de Ljung-Box:
 
@@ -1881,9 +1994,8 @@ Continuando con el generador congruencial anterior:
 Los contrastes se plantean habitualmente desde el punto de vista de la
 inferencia estadística en la práctica: se realiza una prueba sobre la
 única muestra disponible. Si se realiza una única prueba, en las
-condiciones de \(H_{0}\) hay una probabilidad \(\alpha\) de rechazarla.
-En simulación tiene mucho más sentido realizar un gran número de
-pruebas:
+condiciones de \(H_0\) hay una probabilidad \(\alpha\) de rechazarla. En
+simulación tiene mucho más sentido realizar un gran número de pruebas:
 
 \begin{itemize}
 \item
@@ -1891,7 +2003,7 @@ pruebas:
   \(\alpha\)(se puede comprobar para distintos valores de \(\alpha\)).
 \item
   La distribución del estadístico debería ajustarse a la teórica bajo
-  \(H_{0}\)(se podría realizar un nuevo contraste de bondad de ajuste).
+  \(H_0\)(se podría realizar un nuevo contraste de bondad de ajuste).
 \item
   Los \emph{p}-valores obtenidos deberían ajustarse a una
   \(\mathcal{U}\left(0,1\right)\) (se podría realizar también un
@@ -1902,7 +2014,7 @@ Este procedimiento es también el habitual para validar un método de
 contraste de hipótesis por simulación.
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{exm:unnamed-chunk-19}{}{\label{exm:unnamed-chunk-19} }
+\protect\hypertarget{exm:unnamed-chunk-17}{}{\label{exm:unnamed-chunk-17} }
 \EndKnitrBlock{example}
 
 Consideramos el generador congruencial RANDU:
@@ -1975,7 +2087,7 @@ Análisis del estadístico contraste:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-22-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-20-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1995,7 +2107,7 @@ Análisis del estadístico contraste:
 ## alternative hypothesis: two-sided
 \end{verbatim}
 
-Análisis de los p-valores:
+Análisis de los \emph{p}-valores:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2005,7 +2117,7 @@ Análisis de los p-valores:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-23-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2025,43 +2137,76 @@ Análisis de los p-valores:
 ## alternative hypothesis: two-sided
 \end{verbatim}
 
-\subsection{Baterías de contrastes}\label{baterias-de-contrastes}
+Adicionalmente, si queremos estudiar la proporción de rechazos (el
+\emph{tamaño del contraste}) para los posibles valores de \(\alpha\),
+podemos emplear la distribución empírica del \(p\)-valor (proporción de
+veces que resultó menor que un determinado valor):
 
-Contrastes específicos para generadores aleatorios:
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Distribución empírica}
+\KeywordTok{curve}\NormalTok{(}\KeywordTok{ecdf}\NormalTok{(pvalor)(x), }\DataTypeTok{type =} \StringTok{"s"}\NormalTok{, }\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{, }
+      \DataTypeTok{xlab =} \StringTok{'Nivel de significación', ylab = '}\NormalTok{Proporción de rechazos}\StringTok{')}
+\StringTok{abline(a=0, b=1, lty=2)   # curve(punif(x, 0, 1), add = TRUE)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-22-1} \end{center}
+
+\subsection{Baterías de contrastes}\label{baterias}
+
+Hay numerosos ejemplos de generadores que pasaron diferentes test de
+uniformidad y aleatoriedad pero que fallaron estrepitosamente al
+considerar nuevos contrastes diseñados específicamente para generadores
+aleatorios (ver Marsaglia \emph{et al.}, 1990). Por este motivo, el
+procedimiento habitual en la práctica es aplicar un número más o menos
+elevado de contrastes (de distinto tipo y difíciles de pasar,
+e.g.~Marsaglia y Tsang, 2002), de forma que si el generador los pasa
+tendremos mayor confianza en que sus propiedades son las adecuadas. Este
+conjunto de pruebas es lo que se denomina batería de contrastes. Una de
+las primeras se introdujo en Knuth (1969) y de las más recientes
+podríamos destacar:
 
 \begin{itemize}
 \item
-  Diehard tests (The Marsaglia Random Number CDROM):
-  \url{http://www.stat.fsu.edu/pub/diehard}.
+  Diehard tests (The Marsaglia Random Number CDROM, 1995):
+  \href{https://web.archive.org/web/20160125103112/http://stat.fsu.edu/pub/diehard}{http://www.stat.fsu.edu/pub/diehard
+  (versión archivada el 2016-01-25)}.
 \item
-  TestU01: \url{http://www.iro.umontreal.ca/simardr/testu01/tu01.html}.
+  Dieharder (Brown y Bauer, 2003):
+  \href{https://webhome.phy.duke.edu/~rgb/General/dieharder.php}{Dieharder
+  Page}, paquete
+  \href{https://github.com/eddelbuettel/rdieharder}{\texttt{RDieHarder}}.
 \item
-  NIST test suite: \url{http://csrc.nist.gov/groups/ST/toolkit/rng}.
+  TestU01 (L'Ecuyer y Simard, 2007):
+  \url{http://simul.iro.umontreal.ca/testu01/tu01.html}.
 \item
-  Dieharder (paquete \texttt{RDieHarder}):
-  \url{http://www.phy.duke.edu/rgb/General/dieharder.php}
-\item
-  Entidad Certificadora (gratuita):
-  \href{http://www.cacert.at/random}{CAcert}.
+  NIST test suite (National Institute of Standards and Technology, USA,
+  2010): \url{http://csrc.nist.gov/groups/ST/toolkit/rng}.
 \end{itemize}
 
-Documentación adicional:
+Para más detalles, ver por ejemplo\footnote{También puede ser de interés
+  el enlace
+  \href{http://www.ciphersbyritter.com/RES/RANDTEST.HTM}{Randomness
+  Tests: A Literature Survey} y la entidad certificadora (gratuita) en
+  línea \href{http://www.cacert.at/random}{CAcert}.}:
 
 \begin{itemize}
 \item
-  Randomness Tests: A Literature Survey
-  \url{http://www.ciphersbyritter.com/RES/RANDTEST.HTM}-
+  Marsaglia, G. y Tsang, W.W. (2002).
+  \href{http://www.jstatsoft.org/v07/i03}{Some difficult-to-pass tests
+  of randomness}. Journal of Statistical Software, 7(3), 1-9.
 \item
-  Marsaglia, Tsang (2002). Some Difficult-to-pass Tests of Randomness:
-  \url{http://www.jstatsoft.org/v07/i03}\\
-  \url{http://www.csis.hku.hk/cisc/download/idetect}
+  Demirhan, H. y Bitirim, N. (2016).
+  \href{https://journal.r-project.org/archive/2016/RJ-2016-016/index.html}{CryptRndTest:
+  an R package for testing the cryptographic randomness}. The R Journal,
+  8(1), 233-247.
 \end{itemize}
 
-\section{Ejercicios de fin de
-práctica}\label{ejercicios-de-fin-de-practica}
+\section{Ejercicios}\label{ejercicios-1}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-24}{}{\label{exr:unnamed-chunk-24} }
+\protect\hypertarget{exr:unnamed-chunk-23}{}{\label{exr:unnamed-chunk-23} }
 \EndKnitrBlock{exercise} Uno de los primeros generadores fue el
 denominado método de los cuadrados medios propuesto por Von Neumann
 (1946). Con este procedimiento se generan números pseudoaleatorios de 4
@@ -2070,21 +2215,20 @@ dígitos de la siguiente forma:
 \begin{enumerate}
 \def\labelenumi{\roman{enumi}.}
 \item
-  Se escoge un número de cuatro dígitos \(x_{0}\) (semilla).
+  Se escoge un número de cuatro dígitos \(x_0\) (semilla).
 \item
-  Se eleva al cuadrado (\(x_{0}^{2}\)) y se toman los cuatro dígitos
-  centrales (\(x_{1}\)).
+  Se eleva al cuadrado (\(x_0^2\)) y se toman los cuatro dígitos
+  centrales (\(x_1\)).
 \item
-  Se genera el número pseudo-aleatorio
-  como\[u_{1}=\frac{x_{1}}{10^{4}}.\]
+  Se genera el número pseudo-aleatorio como \[u_1=\frac{x_1}{10^{4}}.\]
 \item
   Volver al paso ii y repetir el proceso.
 \end{enumerate}
 
-Para obtener los \(k\) (número par) dígitos centrales de \(x_{i}^{2}\)
-se puede utilizar que:
-\[x_{i+1}=\left\lfloor \left(  x_{i}^{2}-\left\lfloor \dfrac{x_{i}^{2}}{10^{(2k-\frac{k}{2})}}\right\rfloor 10^{(2k-\frac{k}{2})}\right)
-/10^{\frac{k}{2}}\right\rfloor\]
+Para obtener los \(k\) (número par) dígitos centrales de \(x_{i}^2\) se
+puede utilizar que:
+\[x_{i+1}=\left\lfloor \left(  x_{i}^2-\left\lfloor \dfrac{x_{i}^2}{10^{(2k-\frac{k}2)}}\right\rfloor 10^{(2k-\frac{k}2)}\right)
+/10^{\frac{k}2}\right\rfloor\]
 
 El algoritmo está implementado en el fichero \emph{RANDVN.R}:
 
@@ -2136,7 +2280,7 @@ Estudiar las características del generador de cuadrados medios a partir
 de una secuencia de 500 valores. Emplear únicamente métodos gráficos.
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-26}{}{\label{exr:unnamed-chunk-26} }
+\protect\hypertarget{exr:unnamed-chunk-25}{}{\label{exr:unnamed-chunk-25} }
 \EndKnitrBlock{exercise} Considerando el generador congruencial
 multiplicativo de parámetros \(a=7^{5}=16807\), \(c=0\) y
 \(m=2^{31}-1\). ¿Se observan los mismos problemas que con el algoritmo
@@ -2145,15 +2289,27 @@ RANDU al considerar las tripletas \((x_{k},x_{k+1},x_{k+2})\)?
 \chapter{Análisis de resultados de
 simulación}\label{analisis-de-resultados-de-simulacion}
 
+Work in progress\ldots{}
+
+En este capítulo nos centraremos en la aproximación mediante simulación
+de la media teórica de un estadístico a partir de la media muestral de
+una secuencia de simulaciones de dicho estadístico. La aproximación de
+una probabilidad sería un caso particular considerando una variable de
+Bernouilli.
+
+En primer lugar se tratará el análisis de la convergencia y la precisión
+de la aproximación por simulación. Al final del capítulo se incluye una
+breve introducción a los problemas de estabilización y dependencia (con
+los que nos solemos encontrar en simulación dinámica y MCMC).
+
 \section{Convergencia}\label{convergencia}
 
 Supongamos que estamos interesados en aproximar la media teórica
-\(E\left( X\right)\) a partir de una secuencia i.i.d. \(X_{1}\),
+\(\mu = E\left( X\right)\) a partir de una secuencia i.i.d. \(X_{1}\),
 \(X_{2}\), \(\cdots\), \(X_{n}\) mediante la media muestral
-\(\bar{X}_{n}\) (aproximar una probabilidad sería un caso particular
-considerando una distribución de Bernouilli). Una justificación teórica
-de la validez de la aproximación obtenida mediante simulación es
-\emph{la ley (débil) de los grandes números}:
+\(\bar{X}_{n}\). Una justificación teórica de la validez de la
+aproximación obtenida mediante simulación es \emph{la ley (débil) de los
+grandes números}:
 
 \begin{itemize}
 \item
@@ -2180,6 +2336,7 @@ parámetro \(p=0.5\):
 \NormalTok{p <-}\StringTok{ }\FloatTok{0.5}
 \KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
 \NormalTok{nsim <-}\StringTok{ }\DecValTok{10000}
+\CommentTok{# nsim <- 100}
 \NormalTok{rx <-}\StringTok{ }\KeywordTok{runif}\NormalTok{(nsim) }\OperatorTok{<=}\StringTok{ }\NormalTok{p}
 \end{Highlighting}
 \end{Shaded}
@@ -2248,9 +2405,9 @@ ejemplo conocido es la distribución de Cauchy:
 
 Para detectar problemas de convergencia es recomendable representar la
 evolución de la aproximación de la característica de interés (sobre el
-número de generaciones). Además del análisis descriptivo de las
-simulaciones. Por ejemplo, en el siguiente gráfico de cajas observamos
-los valores que producen estos saltos:
+número de generaciones), además de realizar otros análisis descriptivos
+de las simulaciones. Por ejemplo, en este caso podemos observar los
+valores que producen estos saltos mediante un gráfico de cajas:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2258,12 +2415,20 @@ los valores que producen estos saltos:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-5-1} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/cauchy-box-1} 
+
+}
+
+\caption{Gráfico de cajas de 10000 generaciones de una distribución de Cauchy.}\label{fig:cauchy-box}
+\end{figure}
 
 \section{Estimación de la precisión}\label{estimacion-de-la-precision}
 
 En el caso de la media muestral \(\overline{X}_{n}\), un estimador
-insesgado de \(Var\left( \overline{X}_{n}\right) =\sigma ^{2}/n\) es:
+insesgado de \(Var\left( \overline{X}_{n}\right) =\sigma ^{2}/n\) es la
+cuasi-varianza muestral:
 \[\widehat{Var}\left( \overline{X}_{n}\right) =\frac{\widehat{S}^{2}}{n}\]
 con:
 \[\widehat{S}_{n}^{2}=\dfrac{1}{n-1}\sum\limits_{i=1}^{n}\left( X_{i}-
@@ -2271,7 +2436,8 @@ con:
 
 En el caso de una proporción \(\hat{p}_{n}\):
 \[\widehat{Var}\left( \hat{p}_{n}\right) 
-=\frac{\hat{p}_{n}(1-\hat{p}_{n})}{n-1}.\]
+=\frac{\hat{p}_{n}(1-\hat{p}_{n})}{n-1},\] aunque se suele emplear la
+varianza muestral.
 
 Los valores obtenidos servirían como medidas básicas de la precisión de
 la aproximación, aunque su principal aplicación es la construcción de
@@ -2288,14 +2454,21 @@ independientes con \(E\left( X_{i}\right) =\mu\) y
 un intervalo de confianza asintótico para \(\mu\) es:
 \[IC_{1-\alpha }(\mu ) = \left( \overline{X}_{n}
 - z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}},\ 
-\overline{X}+z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}} \right).\]
+\overline{X}_n+z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}} \right).\]
 
 Podemos considerar que
 \(z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}}\) es la precisión
 obtenida (con nivel de confianza \(1-\alpha\)).
 
+La convergencia de la aproximación, además de ser aleatoria, se podría
+considerar lenta. La idea es que para doblar la precisión (disminuir el
+error a la mitad), necesitaríamos un número de generaciones cuatro veces
+mayor. Pero una ventaja, es que este error no depende del número de
+dimensiones (en el caso multidimensional puede ser mucho más rápida que
+otras alternativas numéricas).
+
 \BeginKnitrBlock{example}
-\protect\hypertarget{exm:unnamed-chunk-6}{}{\label{exm:unnamed-chunk-6}
+\protect\hypertarget{exm:unnamed-chunk-5}{}{\label{exm:unnamed-chunk-5}
 }Aproximación de la media de una distribución normal
 \EndKnitrBlock{example}
 
@@ -2321,7 +2494,8 @@ La aproximación por simulación de la media será:
 ## [1] -0.01164814
 \end{verbatim}
 
-Como medida de la precisión de la aproximación podemos considerar:
+Como medida de la precisión de la aproximación podemos considerar (se
+suele denominar error de la aproximación):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2342,7 +2516,8 @@ convergencia:
 \begin{Highlighting}[]
 \NormalTok{n <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\NormalTok{nsim}
 \NormalTok{est <-}\StringTok{ }\KeywordTok{cumsum}\NormalTok{(rx)}\OperatorTok{/}\NormalTok{n}
-\NormalTok{esterr <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{cumsum}\NormalTok{((rx}\OperatorTok{-}\NormalTok{est)}\OperatorTok{^}\DecValTok{2}\NormalTok{))}\OperatorTok{/}\NormalTok{(n }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{)  }\CommentTok{# Error estandar}
+\CommentTok{# Errores estándar calculados con la varianza muestral por comodidad:}
+\NormalTok{esterr <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{cumsum}\NormalTok{((rx}\OperatorTok{-}\NormalTok{est)}\OperatorTok{^}\DecValTok{2}\NormalTok{))}\OperatorTok{/}\NormalTok{n  }
 \KeywordTok{plot}\NormalTok{(est, }\DataTypeTok{type =} \StringTok{"l"}\NormalTok{, }\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"Número de generaciones"}\NormalTok{, }
      \DataTypeTok{ylab =} \StringTok{"Media y rango de error"}\NormalTok{, }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{))}
 \KeywordTok{abline}\NormalTok{(}\DataTypeTok{h =}\NormalTok{ est[nsim], }\DataTypeTok{lty=}\DecValTok{2}\NormalTok{)}
@@ -2352,16 +2527,28 @@ convergencia:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-10-1} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/conv-esterr-1} 
+
+}
+
+\caption{Gráfico de convergencia incluyendo el error de la aproximación.}\label{fig:conv-esterr}
+\end{figure}
 
 \section{Determinación del número de
 generaciones}\label{determinacion-del-numero-de-generaciones}
 
-En muchas ocasiones puede interesar obtener una aproximación con un
-nivel de precisión fijado.
+Normalmente el valor de \(n\) se toma del orden de varias centenas o
+millares. En los casos en los que la simulación se utiliza para
+aproximar una característica central de la distribución (como una media)
+puede bastar un número de simulaciones del orden de
+\(n = 100, 200, 500\). Sin embargo, en otros casos pueden ser necesarios
+valores del tipo \(B = 1000, 2000, 5000, 10000\).
 
-Para una precisión absoluta \(\varepsilon\), se trata de determinar
-\(n\) de forma que:
+En muchas ocasiones puede interesar obtener una aproximación con un
+nivel de precisión fijado. Para una precisión absoluta \(\varepsilon\),
+se trata de determinar \(n\) de forma que:
 \[z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}}<\varepsilon\]
 
 Un algoritmo podría ser el siguiente:
@@ -2372,23 +2559,27 @@ Un algoritmo podría ser el siguiente:
   Hacer \(j=0\) y fijar un tamaño inicial \(n_{0}\) (e.g.~30 ó 60).
 \item
   Generar \(\left\{ X_{i}\right\} _{i=1}^{n_{0}}\) y calcular
-  \(\widehat{S}_{n_{0}}\).
+  \(\overline{X}_{n_0}\) y \(\widehat{S}_{n_{0}}\).
 \item
   Mientras
-  \(\left. z_{1-\alpha /2}\widehat{S}_{n_{j-1}}\right/ \sqrt{n_{j}}>\varepsilon\)
+  \(\left. z_{1-\alpha /2}\widehat{S}_{n_j}\right/ \sqrt{n_{j}}>\varepsilon\)
   hacer:
+
+  3.1. \(j=j+1\).
+
+  3.2.
+  \(n_{j}=\left\lceil \left( \left. z_{1-\alpha /2}\widehat{S}  _{n_{j-1}}\right/ \varepsilon \right)^{2}\right\rceil\).
+
+  3.3. Generar \(\left\{ X_{i}\right\}_{i=n_{j-1}+1}^{n_j}\) y calcular
+  \(\overline{X}_{n_j}\) y \(\widehat{S}_{n_j}\).
 \item
-  \(\qquad j=j+1\).
-\item
-  \(\qquad n_{j}=\left\lceil \left( \left. z_{1-\alpha /2}\widehat{S}  _{n_{j-1}}\right/ \varepsilon \right)^{2}\right\rceil\).
-\item
-  \(\qquad\) Generar \(\left\{ X_{i}\right\}  _{i=n_{j-1}+1}^{n_{j}}\) y
-  calcular \(\widehat{S}_{n_{j}}\).
+  Devolver \(\overline{X}_{n_j}\) y
+  \(\left. z_{1-\alpha /2}\widehat{S}_{n_j}\right/ \sqrt{n_{j}}\).
 \end{enumerate}
 
 Para una precisión relativa \(\varepsilon \left\vert \mu \right\vert\)
-se procede análogamente de forma
-que:\[z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}}<\varepsilon \left\vert 
+se procede análogamente de forma que:
+\[z_{1-\alpha /2}\dfrac{\widehat{S}_{n}}{\sqrt{n}}<\varepsilon \left\vert 
 \overline{X}_{n}\right\vert .\]
 
 \section{El problema de la
@@ -2399,7 +2590,7 @@ En el caso de dependencia, la estimación de la precisión se complica:
 \sum_{i=1}^{n}Var\left( X_{i} \right) + 2\sum_{i<j}Cov\left( X_{i},X_{j}\right) \right).\]
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{exm:unnamed-chunk-11}{}{\label{exm:unnamed-chunk-11}
+\protect\hypertarget{exm:unnamed-chunk-9}{}{\label{exm:unnamed-chunk-9}
 }Aproximación de una proporción bajo dependencia (cadena de Markov)
 \EndKnitrBlock{example} Supongamos que en A Coruña llueve de media 1/3
 días al año, y que la probabilidad de que un día llueva solo depende de
@@ -2437,7 +2628,14 @@ Se podría pensar en emplear las expresiones anteriores:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-13-1} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/conv-dep-1} 
+
+}
+
+\caption{Gráfico de convergencia incluyendo el error de la aproximación (calculado asumiendo independencia).}\label{fig:conv-dep}
+\end{figure}
 
 La aproximación de la proporción sería correcta (es consistente):
 
@@ -2451,8 +2649,8 @@ La aproximación de la proporción sería correcta (es consistente):
 ## [1] 0.3038
 \end{verbatim}
 
-Sin embargo, al ser datos dependientes \textbf{esta aproximación del
-error estandar no es adecuada}:
+Sin embargo, al ser datos dependientes esta aproximación del error
+estandar no es adecuada:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2473,7 +2671,14 @@ del verdadero error estandar.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-16-1} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/acf-depsec-1} 
+
+}
+
+\caption{Correlograma de la secuencia indicadora de días de lluvia.}\label{fig:acf-depsec}
+\end{figure}
 
 El gráfico de autocorrelaciones sugiere que si tomamos 1 de cada 25
 podemos suponer independencia.
@@ -2487,11 +2692,19 @@ podemos suponer independencia.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-17-1} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/acf-depsec2-1} 
+
+}
+
+\caption{Correlograma de la subsecuencia de días de lluvia obtenida seleccionando uno de cada 25 valores.}\label{fig:acf-depsec2}
+\end{figure}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{n <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\KeywordTok{length}\NormalTok{(rxi)}
+\NormalTok{nrxi <-}\StringTok{ }\KeywordTok{length}\NormalTok{(rxi)}
+\NormalTok{n <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\NormalTok{nrxi}
 \NormalTok{est <-}\StringTok{ }\KeywordTok{cumsum}\NormalTok{(rxi)}\OperatorTok{/}\NormalTok{n}
 \NormalTok{esterr <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(est}\OperatorTok{*}\NormalTok{(}\DecValTok{1}\OperatorTok{-}\NormalTok{est)}\OperatorTok{/}\NormalTok{(n}\OperatorTok{-}\DecValTok{1}\NormalTok{))}
 \KeywordTok{plot}\NormalTok{(est, }\DataTypeTok{type=}\StringTok{"l"}\NormalTok{, }\DataTypeTok{lwd=}\DecValTok{2}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"Probabilidad"}\NormalTok{, }
@@ -2503,11 +2716,30 @@ podemos suponer independencia.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-17-2} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/conv-dep2-1} 
+
+}
+
+\caption{Gráfico de convergencia de la aproximación de la probabilidad a partir de la subsecuencia de días de lluvia (calculando el error de aproximación asumiendo independencia).}\label{fig:conv-dep2}
+\end{figure}
 
 Esta forma de proceder podría ser adecuada para tratar de aproximar la
-precisión pero no sería eficiente para aproximar la media. Siempre será
-preferible emplear todas las observaciones.
+precisión:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{esterr[nrxi]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.02277402
+\end{verbatim}
+
+pero no sería eficiente para aproximar la media. Siempre será preferible
+emplear todas las observaciones.
 
 Por ejemplo, se podría pensar en considerar las medias de grupos de 24
 valores consecutivos y suponer que hay independencia entre ellas:
@@ -2515,9 +2747,10 @@ valores consecutivos y suponer que hay independencia entre ellas:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{rxm <-}\StringTok{ }\KeywordTok{rowMeans}\NormalTok{(}\KeywordTok{matrix}\NormalTok{(rx, }\DataTypeTok{ncol =}\NormalTok{ lag, }\DataTypeTok{byrow =} \OtherTok{TRUE}\NormalTok{))}
-\NormalTok{n <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\KeywordTok{length}\NormalTok{(rxm)}
+\NormalTok{nrxm <-}\StringTok{ }\KeywordTok{length}\NormalTok{(rxm)}
+\NormalTok{n <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\NormalTok{nrxm}
 \NormalTok{est <-}\StringTok{ }\KeywordTok{cumsum}\NormalTok{(rxm)}\OperatorTok{/}\NormalTok{n}
-\NormalTok{esterr <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{cumsum}\NormalTok{((rxm}\OperatorTok{-}\NormalTok{est)}\OperatorTok{^}\DecValTok{2}\NormalTok{))}\OperatorTok{/}\NormalTok{(n }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{)  }\CommentTok{# Error estándar}
+\NormalTok{esterr <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{cumsum}\NormalTok{((rxm}\OperatorTok{-}\NormalTok{est)}\OperatorTok{^}\DecValTok{2}\NormalTok{))}\OperatorTok{/}\NormalTok{n  }\CommentTok{# Error estándar}
 \KeywordTok{plot}\NormalTok{(est, }\DataTypeTok{type=}\StringTok{"l"}\NormalTok{, }\DataTypeTok{lwd=}\DecValTok{2}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"Probabilidad"}\NormalTok{, }
      \DataTypeTok{xlab=}\KeywordTok{paste}\NormalTok{(}\StringTok{"Número de simulaciones /"}\NormalTok{, lag }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{), }\DataTypeTok{ylim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.6}\NormalTok{))}
 \KeywordTok{abline}\NormalTok{(}\DataTypeTok{h =}\NormalTok{ est[}\KeywordTok{length}\NormalTok{(rxm)], }\DataTypeTok{lty=}\DecValTok{2}\NormalTok{)}
@@ -2527,21 +2760,44 @@ valores consecutivos y suponer que hay independencia entre ellas:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-18-1} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/conv-dep-lotes-1} 
+
+}
+
+\caption{Gráfico de convergencia de las medias por lotes.}\label{fig:conv-dep-lotes}
+\end{figure}
 
 Esta es la idea del método de medias por lotes (\emph{batch means};
-\emph{macro-micro replicaciones}) para la estimación de la varianza.
-Alternativamente se podría recurrir a la generación de múltiples
-secuencias independientes.
+\emph{macro-micro replicaciones}) para la estimación de la varianza. En
+el ejemplo anterior se calcula el error estándar de la aproximación por
+simulación de la proporción:
 
-Trataremos este tipo de problemas en la diagnosis de algoritmos de
-simulación Monte Carlo de Cadenas de Markov (MCMC). Aparecen también en
-la simulación dinámica (por eventos o cuantos).
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{esterr[nrxm]}
+\end{Highlighting}
+\end{Shaded}
 
-\textbf{Nota}: En el caso anterior se calcula el error estándar de la
-aproximación por simulación de la proporción, pero si el objetivo es la
-aproximación de la varianza (de la variable y no de las medias por
-lotes), habrá que reescalarlo adecuadamente:
+\begin{verbatim}
+## [1] 0.01569017
+\end{verbatim}
+
+pero si el objetivo es la aproximación de la varianza (de la variable y
+no de las medias por lotes), habrá que reescalarlo adecuadamente.
+Supongamos que la correlación entre \(X_i\) y \(X_{i+k}\) es
+aproximadamente nula, y consideramos las subsecuencias (lotes)
+\((X_{t+1},X_{t+2},\ldots,X_{t+k})\) con \(t=(j-1)k\), \(j=1,\ldots,m\)
+y \(n = mk\). Entonces:
+
+\[\begin{aligned}
+Var \left(\bar X \right) &= Var \left(\frac{1}{n} \sum_{i=1}^n X_i\right) 
+= Var \left( \frac{1}{m}\sum_{j=1}^m \left(\frac{1}{k} \sum_{t=(i-1)k + 1}^{ik} X_t\right) \right) \\
+&\approx \frac{1}{m^2} \sum_{j=1}^m Var \left(\frac{1}{k} \sum_{t=(i-1)k + 1}^{ik} X_t\right)
+\approx \frac{1}{m} Var \left(\bar{X}_k \right)
+\end{aligned}\] donde \(\bar{X}_k\) es la media de una subsecuencia de
+longitud \(k\).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2551,7 +2807,7 @@ lotes), habrá que reescalarlo adecuadamente:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 2.473664
+## [1] 2.461814
 \end{verbatim}
 
 Obtenida asumiendo independencia entre las medias por lotes, y que será
@@ -2567,6 +2823,87 @@ de la variable:
 \begin{verbatim}
 ## [1] 0.2115267
 \end{verbatim}
+
+Alternativamente se podría recurrir a la generación de múltiples
+secuencias independientes entre sí:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Variable dicotómica 0/1 (FALSE/TRUE)  }
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{nsim <-}\StringTok{ }\DecValTok{1000}
+\NormalTok{nsec <-}\StringTok{ }\DecValTok{10}
+\NormalTok{alpha <-}\StringTok{ }\FloatTok{0.03} \CommentTok{# prob de cambio si seco}
+\NormalTok{beta <-}\StringTok{ }\FloatTok{0.06}  \CommentTok{# prob de cambio si lluvia}
+\NormalTok{rxm <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\OtherTok{FALSE}\NormalTok{, }\DataTypeTok{nrow =}\NormalTok{ nsec, }\DataTypeTok{ncol=}\NormalTok{ nsim)}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{nsec) \{}
+  \CommentTok{# rxm[i, 1] <- FALSE # El primer día no llueve}
+  \CommentTok{# rxm[i, 1] <- runif(1) < 1/2 # El primer día llueve con probabilidad 1/2}
+\NormalTok{  rxm[i, }\DecValTok{1}\NormalTok{] <-}\StringTok{ }\KeywordTok{runif}\NormalTok{(}\DecValTok{1}\NormalTok{) }\OperatorTok{<}\StringTok{ }\DecValTok{1}\OperatorTok{/}\DecValTok{3} \CommentTok{# El primer día llueve con probabilidad 1/3 (ideal)}
+  \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{2}\OperatorTok{:}\NormalTok{nsim)}
+\NormalTok{    rxm[i, j] <-}\StringTok{ }\ControlFlowTok{if}\NormalTok{ (rxm[i, j}\OperatorTok{-}\DecValTok{1}\NormalTok{]) }\KeywordTok{runif}\NormalTok{(}\DecValTok{1}\NormalTok{) }\OperatorTok{>}\StringTok{ }\NormalTok{beta }\ControlFlowTok{else} \KeywordTok{runif}\NormalTok{(}\DecValTok{1}\NormalTok{) }\OperatorTok{<}\StringTok{ }\NormalTok{alpha}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+La idea sería considerar las medias de las series como una muestra
+independiente de una nueva variable y estimar su varianza de la forma
+habitual:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Media de cada secuencia}
+\NormalTok{n <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\NormalTok{nsim}
+\NormalTok{est <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(rxm, }\DecValTok{1}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{cumsum}\NormalTok{(x)}\OperatorTok{/}\NormalTok{n)}
+\KeywordTok{matplot}\NormalTok{(n, est, }\DataTypeTok{type =} \StringTok{'l'}\NormalTok{, }\DataTypeTok{lty =} \DecValTok{3}\NormalTok{, }\DataTypeTok{col =} \StringTok{"lightgray"}\NormalTok{,}
+     \DataTypeTok{ylab=}\StringTok{"Probabilidad"}\NormalTok{, }\DataTypeTok{xlab=}\StringTok{"Número de simulaciones"}\NormalTok{)}
+\CommentTok{# Aproximación}
+\NormalTok{mest <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(est, }\DecValTok{1}\NormalTok{, mean)}
+\KeywordTok{lines}\NormalTok{(mest, }\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{h =}\NormalTok{ mest[nsim], }\DataTypeTok{lty =} \DecValTok{2}\NormalTok{)}
+\CommentTok{# Precisión}
+\NormalTok{mesterr <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(est, }\DecValTok{1}\NormalTok{, sd)}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(nsec)}
+\KeywordTok{lines}\NormalTok{(mest }\OperatorTok{+}\StringTok{ }\DecValTok{2}\OperatorTok{*}\NormalTok{mesterr, }\DataTypeTok{lty =} \DecValTok{2}\NormalTok{)}
+\KeywordTok{lines}\NormalTok{(mest }\OperatorTok{-}\StringTok{ }\DecValTok{2}\OperatorTok{*}\NormalTok{mesterr, }\DataTypeTok{lty =} \DecValTok{2}\NormalTok{)}
+\CommentTok{# Prob. teor. cadenas Markov}
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{h =} \DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{, }\DataTypeTok{col=}\StringTok{"darkgray"}\NormalTok{)     }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/conv-dep-nsec-1} 
+
+}
+
+\caption{Gráfico de convergencia de la media de 10 secuencias generadas de forma independiente.}\label{fig:conv-dep-nsec}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Aproximación final}
+\NormalTok{mest[nsim] }\CommentTok{# mean(rxm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.3089
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Error estándar}
+\NormalTok{mesterr[nsim]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.02403491
+\end{verbatim}
+
+Trataremos este tipo de problemas en la diagnosis de algoritmos de
+simulación Monte Carlo de Cadenas de Markov (MCMC). Aparecen también en
+la simulación dinámica (por eventos o cuantos).
 
 \subsection{Periodo de calentamiento}\label{periodo-de-calentamiento}
 
@@ -2600,7 +2937,7 @@ considerando como punto de partida un día lluvioso.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-21-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
 En estos casos puede ser recomendable ignorar los primeros valores
 generados (por ejemplo los primeros 2000) y recalcular los estadísticos
@@ -2610,7 +2947,7 @@ También trataremos este tipo de problemas en la diagnosis de algoritmos
 MCMC.
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{exm:unnamed-chunk-22}{}{\label{exm:unnamed-chunk-22}
+\protect\hypertarget{exm:unnamed-chunk-19}{}{\label{exm:unnamed-chunk-19}
 }Simulación de un proceso autorregresivo (serie de tiempo)
 \EndKnitrBlock{example}
 
@@ -2618,39 +2955,55 @@ MCMC.
 cuenta que en este caso la varianza es:
 \[\textrm{var}(X_t)=\operatorname{E}(X_t^2)-\mu^2=\frac{\sigma_\varepsilon^2}{1-\rho^2}.\]
 
-Establecer parámetros
+Establecemos los parámetros:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{nsim <-}\StringTok{ }\DecValTok{200}   \CommentTok{# Numero de simulaciones}
-\NormalTok{xvar <-}\StringTok{ }\DecValTok{1}     \CommentTok{# Varianza}
 \NormalTok{xmed <-}\StringTok{ }\DecValTok{0}     \CommentTok{# Media}
 \NormalTok{rho <-}\StringTok{ }\FloatTok{0.5}    \CommentTok{# Coeficiente AR}
 \NormalTok{nburn <-}\StringTok{ }\DecValTok{10}   \CommentTok{# Periodo de calentamiento (burn-in)}
+\end{Highlighting}
+\end{Shaded}
+
+Se podría fijar la varianza del error:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{evar <-}\StringTok{ }\DecValTok{1}
+\CommentTok{# Varianza de la respuesta}
+\NormalTok{xvar <-}\StringTok{ }\NormalTok{evar }\OperatorTok{/}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{rho}\OperatorTok{^}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+pero la recomendación sería fijar la varianza de la respuesta:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{xvar <-}\StringTok{ }\DecValTok{1}     
 \CommentTok{# Varianza del error}
 \NormalTok{evar <-}\StringTok{ }\NormalTok{xvar}\OperatorTok{*}\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{rho}\OperatorTok{^}\DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-Alternativamente se podría fijar la varianza del error:
+Para simular la serie, al ser un \(AR(1)\), normalmente simularíamos el
+primer valor
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#   evar <- 1     }
-\CommentTok{#   xvar <- evar / (1 - rho^2)}
+\NormalTok{rx[}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DataTypeTok{mean =}\NormalTok{ xmed, }\DataTypeTok{sd =} \KeywordTok{sqrt}\NormalTok{(xvar))}
 \end{Highlighting}
 \end{Shaded}
 
-Simular
+o lo fijamos a la media (en este caso nos alejamos un poco de la
+distribución estacionaria, para que el ``periodo de calentamiento'' sea
+mayor). Después generamos los siguientes valores de forma recursiva:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
 \NormalTok{x <-}\StringTok{ }\KeywordTok{numeric}\NormalTok{(nsim }\OperatorTok{+}\StringTok{ }\NormalTok{nburn)}
-\CommentTok{# Normalmente simularíamos el primer valor}
-\CommentTok{#   rx[1] <- rnorm(1, mean = xmed, sd = sqrt(xvar))}
-\CommentTok{# Aunque en este caso lo fijamos para alejarnos un poco de la distribución estacionaria}
-\CommentTok{# (lo que requerirá de un mayor periodo de calentamiento)}
+\CommentTok{# Establecer el primer valor }
 \NormalTok{x[}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\OperatorTok{-}\DecValTok{10}
 \CommentTok{# Simular el resto de la secuencia}
 \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{2}\OperatorTok{:}\KeywordTok{length}\NormalTok{(x))}
@@ -2661,11 +3014,19 @@ Simular
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-25-1} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/sim-ar1-1} 
+
+}
+
+\caption{Ejemplo de una simulación de una serie de tiempo autorregresiva.}\label{fig:sim-ar1}
+\end{figure}
+
+y eliminamos el periodo de calentamiento:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Eliminar periodo de calentamiento}
 \NormalTok{rx <-}\StringTok{ }\NormalTok{x[}\OperatorTok{-}\KeywordTok{seq_len}\NormalTok{(nburn)]}
 \end{Highlighting}
 \end{Shaded}
@@ -2695,9 +3056,9 @@ dependencia.
   \(X\) no sea la media, los resultados anteriores no serían en
   principio aplicables.
 \item
-  Incluso en el caso de la media, las bandas de confianza obtenidas con
-  el TCL son puntuales (si generamos nuevas secuencias de simulación es
-  muy probable que no estén contenidas).
+  Incluso en el caso de la media, las ``bandas de confianza'' obtenidas
+  con el TCL son puntuales (si generamos nuevas secuencias de simulación
+  es muy probable que no estén contenidas).
 \item
   En muchos casos (p.e. la generación de múltiples secuencias de
   simulación puede suponer un coste computacional importante), puede ser
@@ -2711,7 +3072,7 @@ En este capítulo se expondrán métodos generales para simular
 distribuciones continuas: el método de inversión y los basados en
 aceptación/rechazo. En todos los casos como punto de partida es
 necesario disponer de un método de generación de números
-pseudoaleatorios uniformes en (0,1).
+pseudoaleatorios uniformes en \((0,1)\).
 
 \section{Método de inversión}\label{metodo-de-inversion}
 
@@ -2741,21 +3102,21 @@ El recíproco también es cierto, si
   Devolver \(X=F^{-1}\left( U\right)\).
 \end{enumerate}
 
-\subsection{Ejemplo}\label{ejemplo}
+\BeginKnitrBlock{example}[Simulación de una distribución exponencial]
+\protect\hypertarget{exm:exp-inv}{}{\label{exm:exp-inv} \iffalse (Simulación
+de una distribución exponencial) \fi{} }
+\EndKnitrBlock{example}
 
-Algoritmo para simular el método de inversión la distribución
-exponencial \(\exp \left( \lambda \right)\):
-
-\begin{itemize}
-\item
-  \(f\left( x\right) =\lambda e^{-\lambda x}\) si \(x\geq 0\)
-\item
-  \(F\left( x\right) =1-e^{-\lambda x}\) si \(x\geq 0\)
-\item
-  \(1-e^{-\lambda x}=u \Leftrightarrow  x=-\frac{\ln \left( 1-u\right) }{ \lambda }\)
-\end{itemize}
-
-Algoritmo:
+La distribución exponencial \(\exp \left( \lambda \right)\) de parámetro
+\(\lambda>0\) tiene como función de densidad
+\(f\left( x\right) =\lambda e^{-\lambda x}\), si \(x\geq 0\), y como
+función de distribución: \[F(x)=\left\{ \begin{array}{ll}
+1-e^{-\lambda x} & \text{si } x \ge 0 \\
+0 & \text{si } x < 0\\
+\end{array} \right.\] Teniendo en cuenta que:
+\[1-e^{-\lambda x}=u \Leftrightarrow x=-\frac{\ln \left( 1-u\right) }{ \lambda },\]
+el algoritmo para simular esta variable mediante el método de inversión
+es:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -2765,10 +3126,12 @@ Algoritmo:
   Devolver \(X=-\dfrac{\ln \left( 1-U\right) }{\lambda }\).
 \end{enumerate}
 
-NOTA: en el último paso podemos emplear directamente \(U\) en lugar de
+En el último paso podemos emplear directamente \(U\) en lugar de
 \(1-U\), ya que \(1 - U\sim \mathcal{U}\left( 0,1\right)\). Esta última
-expresión para acelerar los cálculos es la que denominaremos forma
-simplificada.
+expresión para acelerar los cálculos es la que denominaremos \emph{forma
+simplificada}.
+
+El código para implementar este algoritmo en R podría ser el siguiente:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2788,17 +3151,30 @@ simplificada.
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.02    0.00    0.01
+##    0.02    0.00    0.02
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{hist}\NormalTok{(X,}\DataTypeTok{breaks=}\StringTok{"FD"}\NormalTok{,}\DataTypeTok{freq=}\OtherTok{FALSE}\NormalTok{,}\DataTypeTok{xlim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{5}\NormalTok{),}\DataTypeTok{ylim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{2.5}\NormalTok{))}
-\KeywordTok{curve}\NormalTok{(}\KeywordTok{dexp}\NormalTok{(x,lambda),}\DataTypeTok{lwd=}\DecValTok{2}\NormalTok{,}\DataTypeTok{add=}\OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{hist}\NormalTok{(X, }\DataTypeTok{breaks =} \StringTok{"FD"}\NormalTok{, }\DataTypeTok{freq =} \OtherTok{FALSE}\NormalTok{, }
+        \DataTypeTok{main =} \StringTok{""}\NormalTok{, }\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{), }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{2.5}\NormalTok{))}
+\KeywordTok{curve}\NormalTok{(}\KeywordTok{dexp}\NormalTok{(x, lambda), }\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{, }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-2-1} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/exp-inv-plot-1} 
+
+}
+
+\caption{Distribución de los valores generados de una exponencial mediante el método de inversión.}\label{fig:exp-inv-plot}
+\end{figure}
+
+Como se observa en la Figura \ref{fig:exp-inv-plot} se trata de un
+método exacto (si está bien implementado) y la distribución de los
+valores generados se aproxima a la distribución teórica como cabría
+esperar con una muestra de ese tamaño.
 
 \subsection{Algunas distribuciones que pueden simularse por el método de
 inversión}\label{algunas-distribuciones-que-pueden-simularse-por-el-metodo-de-inversion}
@@ -2883,7 +3259,7 @@ si \(x\geq0\)\strut
 \end{longtable}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-3}{}{\label{exr:unnamed-chunk-3} }
+\protect\hypertarget{exr:unnamed-chunk-2}{}{\label{exr:unnamed-chunk-2} }
 \EndKnitrBlock{exercise}
 
 La distribución doble exponencial (o distribución de Laplace) de
@@ -2892,8 +3268,8 @@ parámetro \(\lambda\) tiene función de densidad:
 }\text{, }x\in\mathbb{R}\] y función de distribución:
 \[F\left( x\right)  =\int_{-\infty}^{x}f\left( t\right)  dt=\left\{
 \begin{array}{ll}
-\frac{1}{2}e^{\lambda x} & x<0\\
-1-\frac{1}{2}e^{-\lambda x} & x\geq0
+\frac{1}{2}e^{\lambda x} & \text{si } x<0\\
+1-\frac{1}{2}e^{-\lambda x} & \text{si } x\geq0
 \end{array}
 \ \right.\]
 
@@ -2901,10 +3277,10 @@ parámetro \(\lambda\) tiene función de densidad:
 \def\labelenumi{\alph{enumi})}
 \item
   Escribir una función que permita generar, por el método de inversión,
-  una muestra de \(n\) observaciones de esta distribución (NOTA: esta
-  distribución puede generarse fácilmente simulando una distribución
-  exponencial y otorgarle un signo positivo o negativo con
-  equiprobabilidad; ver método de composición).
+  una muestra de \(n\) observaciones de esta distribución\footnote{Esta
+    distribución puede generarse fácilmente simulando una distribución
+    exponencial y otorgarle un signo positivo o negativo con
+    equiprobabilidad (ver Ejemplo \ref{exm:dexp-mix}).}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2946,20 +3322,27 @@ parámetro \(\lambda\) tiene función de densidad:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.04    0.00    0.03
+##    0.05    0.00    0.05
 \end{verbatim}
 \item
   Representar el histograma y compararlo con la densidad teórica.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{hist}\NormalTok{(x, }\DataTypeTok{breaks =} \StringTok{"FD"}\NormalTok{, }\DataTypeTok{freq =} \OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{hist}\NormalTok{(x, }\DataTypeTok{breaks =} \StringTok{"FD"}\NormalTok{, }\DataTypeTok{freq =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{main=}\StringTok{""}\NormalTok{)}
 \CommentTok{# lines(density(x), col = 'blue')}
 \KeywordTok{curve}\NormalTok{(}\KeywordTok{ddexp}\NormalTok{(x, }\DecValTok{2}\NormalTok{), }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-6-1} \end{center}
+  \begin{figure}[!htb]
+
+  {\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/dexp-inv-1} 
+
+  }
+
+  \caption{Distribución de los valores generados de una doble exponencial mediante el método de inversión.}\label{fig:dexp-inv}
+  \end{figure}
 \end{enumerate}
 
 \subsection{Ventajas e inconvenientes}\label{ventajas-e-inconvenientes}
@@ -3162,7 +3545,7 @@ sigue:
 \textbf{Nota}: no confundir \(M\) con \(c = M \left( b - a \right)\).
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-8}{}{\label{exr:unnamed-chunk-8} }
+\protect\hypertarget{exr:unnamed-chunk-6}{}{\label{exr:unnamed-chunk-6} }
 \EndKnitrBlock{exercise}
 
 Desarrollar el código necesario para generar, por el método de
@@ -3217,7 +3600,7 @@ recomendable emplear
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-9-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -3238,7 +3621,7 @@ recomendable emplear
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.08    0.00    0.08
+##    0.10    0.00    0.09
 \end{verbatim}
 
 \begin{Shaded}
@@ -3268,7 +3651,7 @@ recomendable emplear
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-11-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-9-1} \end{center}
 \end{enumerate}
 
 \subsection{Eficiencia del algoritmo}\label{eficiencia-del-algoritmo}
@@ -3288,14 +3671,22 @@ iteraciones del algoritmo (el número medio de pares de variables
 obtener una simulación de la densidad objetivo).
 
 Es obvio, por tanto, que cuanto más cercano a 1 sea el valor de \(c\)
-más eficiente será el algoritmo.
-
-El principal problema con este método es encontrar una densidad auxiliar
-\(g\) de forma que: \[c_{\text{opt}}=\max_{x/g\left( x\right) >0}
-\frac{f\left( x\right) }{g\left( x\right) }.\] sea próximo a 1.
+más eficiente será el algoritmo (el caso de \(c=1\) se correspondería
+con \(g=f\) y no tendría sentido emplear este algoritmo). El principal
+problema con este método es encontrar una densidad auxiliar \(g\) de
+forma que: \[c_{\text{opt}}=\max_{\{x : g\left( x\right) >0\}}
+\frac{f\left( x\right) }{g\left( x\right) }.\] sea próximo a 1. Una
+solución intermedia consiste en seleccionar una familia paramétrica de
+densidades \(\{g_{\theta} : \theta \in \Theta\}\) entre las que haya
+alguna que se parezca bastante a \(f\), encontrar el valor de \(c\)
+óptimo para cada densidad de esa familia:
+\[c_{\theta}=\max_{x}\frac{f\left(  x\right)  }{g_{\theta}\left( x\right) }\]
+y, finalmente, elegir el mejor valor \(\theta_{0}\) del parámetro, en el
+sentido de ofrecer el menor posible \(c_{\theta}\):
+\[c_{\theta_{0}}=\min_{\theta\in\Theta}\max_{x}\frac{f\left(  x\right) }{g_{\theta}\left(  x\right)  }.\]
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-12}{}{\label{exr:unnamed-chunk-12} }
+\protect\hypertarget{exr:unnamed-chunk-10}{}{\label{exr:unnamed-chunk-10} }
 \EndKnitrBlock{exercise}
 
 Continuando con el ejercicio anterior del método de aceptación-rechazo
@@ -3340,7 +3731,6 @@ empleando como distribución auxiliar una doble exponencial:
 \item
   Aproximar el parámetro óptimo de la densidad auxiliar numéricamente
   (normalmente comenzaríamos por este paso).
-\end{enumerate}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3357,8 +3747,10 @@ empleando como distribución auxiliar una doble exponencial:
 \NormalTok{c.opt2 <-}\StringTok{ }\NormalTok{res}\OperatorTok{$}\NormalTok{objective}
 \end{Highlighting}
 \end{Shaded}
+\end{enumerate}
 
-\subsection{Ejemplo}\label{ejemplo-1}
+\subsection{Ejemplo: Inferencia
+Bayesiana}\label{ejemplo-inferencia-bayesiana}
 
 El algoritmo de Aceptación-Rechazo se emplea habitualmente en Inferencia
 Bayesiana:
@@ -3409,7 +3801,7 @@ Algoritmo:
 \end{enumerate}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-15}{}{\label{exr:unnamed-chunk-15} }
+\protect\hypertarget{exr:unnamed-chunk-13}{}{\label{exr:unnamed-chunk-13} }
 \EndKnitrBlock{exercise}
 
 Para la estimación Bayes de la media de una normal se suele utilizar
@@ -3518,13 +3910,13 @@ como distribución a priori una Cauchy.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-16-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-14-1} \end{center}
 \item
   Repetir el apartado anterior con \(n=100\).
 \end{enumerate}
 
-\section{Modificaciones del método de
-AR}\label{modificaciones-del-metodo-de-ar}
+\section{Modificaciones del método de aceptación
+rechazo}\label{modificaciones-del-metodo-de-aceptacion-rechazo}
 
 En el tiempo de computación influye:
 
@@ -3673,42 +4065,29 @@ mediante polígonos:\[C_{i}\subset C_{h}\subset C_{s}.\]
 
 En ocasiones la densidad de interés se puede expresar como una mixtura
 discreta de densidades: \[f(x)=\sum_{j=1}^{k}p_{j}f_{j}(x)\] con
-\(\sum_{j=1}^{k}p_{j}=1\), \(p_{j}\geq 0\) y \(f_{j}\) densidades (sería
-también válido para funciones de distribución o variables aleatorias).
+\(\sum_{j=1}^{k}p_j=1\), \(p_j\geq 0\) y \(f_j\) densidades (sería
+también válido para funciones de distribución o variables aleatorias,
+incluyendo el caso discreto).
 
 Algoritmo:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  Generar \(J\) con distribución \(P\left(  J=j\right) =p_{j}\).
+  Generar \(J\) con distribución \(P\left( J=j \right) = p_j\).
 \item
-  Generar \(X\sim f_{J}\).
+  Generar \(X\sim f_J\).
 \end{enumerate}
 
-En el caso continuo tendríamos: \[f(x)=\int g(x|y)h(y)dy.\]
-
-Algoritmo:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Generar \(Y\sim h\).
-\item
-  Generar \(X\sim g(\cdot |Y)\).
-\end{enumerate}
-
-\subsection{Ejemplo}\label{ejemplo-2}
-
-Simulación de una densidad doble exponencial:
+\BeginKnitrBlock{example}[Distribución doble exponencial]
+\protect\hypertarget{exm:dexp-mix}{}{\label{exm:dexp-mix}
+\iffalse (Distribución doble exponencial) \fi{} }
+\EndKnitrBlock{example} A partir de la densidad de la distribución doble
+exponencial:
 \[f\left( x\right) =\frac{\lambda }{2}e^{-\lambda \left\vert x\right\vert }%
-\text{, }\forall x\in \mathbb{R}.\]
-
-Se tiene que:
+\text{, }\forall x\in \mathbb{R},\] se deduce que:
 \[f\left( x\right) =\frac{1}{2}f_{1}\left( x\right) +\frac{1}{2}f_{2}\left(
-x\right)\] siendo:
-
-\[f_{1}\left( x\right) = \left\{ 
+x\right)\] siendo: \[f_{1}\left( x\right) = \left\{ 
 \begin{array}{ll}
 \lambda e^{-\lambda x} & \text{si } x\geq 0 \\ 
 0 & \text{si} x<0
@@ -3745,14 +4124,50 @@ Observaciones:
   y se combinan aleatoriamente.
 \end{itemize}
 
-\section{Métodos específicos para generación de distribuciones
-notables}\label{metodos-especificos-para-generacion-de-distribuciones-notables}
+Otro ejemplo de una mixtura discreta es el estimador tipo núcleo de la
+densidad (ver e.g.~la ayuda de la función \texttt{density()} de R o la
+\href{https://rubenfcasal.github.io/book_remuestreo/cap4-boot-suav.html}{Sección
+4.3} del libro
+\href{https://rubenfcasal.github.io/book_remuestreo}{Técnicas de
+Remuestreo}). Simular a partir de una estimación de este tipo es lo que
+se conoce como \emph{bootstrap suavizado}.
 
-Ver ejemplos en el libro de Ricardo y ayuda de las funciones
-implementadas en R
+En el caso de una mixtura continua tendríamos:
+\[f(x)=\int g(x|y)h(y)dy\]
 
-\chapter{Simulación de variables
-discretas}\label{simulacion-de-variables-discretas}
+Algoritmo:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Generar \(Y\sim h\).
+\item
+  Generar \(X\sim g(\cdot |Y)\).
+\end{enumerate}
+
+Este algoritmo es muy empleado en Inferencia Bayesiana y en la
+simulación de algunas variables discretas (como la Binomial Negativa,
+llamada también distribución Gamma--Poisson, o la distribución
+Beta-Binomial), ya que el resultado sería válido cambiando las funciones
+de densidad \(f\) y \(g\) por funciones de masa de probabilidad.
+
+\section{Métodos específicos para la generación de algunas
+distribuciones
+notables}\label{metodos-especificos-para-la-generacion-de-algunas-distribuciones-notables}
+
+Ver ejemplos en el libro de Ricardo (cuidado con la notación de la
+distribución Gamma, no es la empleada en R y en el presente libro) y
+ayuda de las funciones implementadas en R:
+
+\begin{itemize}
+\item
+  Método de Box-Müller (para la generación de normales independientes)
+\item
+  Algoritmos de Jöhnk y Cheng para la generación de la distribución
+  Beta.
+\end{itemize}
+
+\chapter{Simulación de variables discretas}\label{cap6}
 
 Se trata de simular una variable aleatoria discreta \(X\) con función de
 masa de probabilidad (f.m.p.): \[\begin{array}{l|ccccc}
@@ -3959,7 +4374,7 @@ Empleamos la rutina anterior para generar las simulaciones:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.06    0.00    0.06
+##    0.06    0.01    0.07
 \end{verbatim}
 
 Aproximación de la media:
@@ -4122,7 +4537,7 @@ R.
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.04    0.00    0.04
+##    0.04    0.01    0.04
 \end{verbatim}
 
 \begin{Shaded}
@@ -4261,7 +4676,7 @@ anterior empleando esta rutina con \(m=n-1\).
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.05    0.00    0.05
+##    0.05    0.00    0.04
 \end{verbatim}
 
 Análisis de los resultados:
@@ -4389,7 +4804,7 @@ anterior empleando esta rutina.
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.04    0.00    0.03
+##    0.03    0.00    0.03
 \end{verbatim}
 
 Análisis de los resultados:
@@ -4633,7 +5048,7 @@ Función de distribución:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##       0       0       0
+##    0.01    0.00    0.02
 \end{verbatim}
 
 \begin{Shaded}
@@ -4685,14 +5100,14 @@ nº de grupo multiplicado por 10, \(n=100-m\) y \(k=20\).
 \end{enumerate}
 
 \section{Métodos específicos para generación de distribuciones
-notables}\label{metodos-especificos-para-generacion-de-distribuciones-notables-1}
+notables}\label{metodos-especificos-para-generacion-de-distribuciones-notables}
 
 Ver ejemplos del libro de Ricardo y de las funciones implementadas en R.
 
 \chapter{Simulación de Distribuciones
 Multidimensionales}\label{simulacion-de-distribuciones-multidimensionales}
 
-\section{Introducción}\label{introduccion-1}
+\section{Introducción}\label{introduccion}
 
 Supongamos que se pretende simular un vector aleatorio
 \(\mathbf{X} =\left( X_1,X_2,\ldots,X_d\right)\) con función de densidad
@@ -4950,8 +5365,7 @@ relacionado con la ``maldición de la dimensionalidad'' (curse of
 dimensionality), a medida que aumenta el número de dimensiones el
 volumen de la ``frontera'' crece exponencialmente.
 
-\section{Factorización de la matriz de
-covarianzas}\label{factorizacion-de-la-matriz-de-covarianzas}
+\section{Factorización de la matriz de covarianzas}\label{fact-cov}
 
 Teniendo en cuenta que si \(Cov(\mathbf{X)=}\Sigma\), entonces:
 \[Cov(A\mathbf{X}) = A\Sigma A^t.\] La idea de este tipo de métodos es
@@ -4961,9 +5375,6 @@ resultado tenga la covarianza deseada.
 Este método se emplea principalmente para la simulación de una normal
 multivariante, aunque también es válido para muchas otras distribuciónes
 como la \(t\)-multivariante.
-
-\subsection{Simulación de la normal
-multivariante}\label{simulacion-de-la-normal-multivariante}
 
 Si \(\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right)\)
 y \(A\) matriz \(p\times d\), entonces:
@@ -5132,7 +5543,7 @@ espectral (\texttt{eigen}):
 ##         drop(X)
 ##     else t(X)
 ## }
-## <bytecode: 0x00000000356ded98>
+## <bytecode: 0x0000000031b662b8>
 ## <environment: namespace:MASS>
 \end{verbatim}
 
@@ -6162,8 +6573,7 @@ Alternativamente, si queremos trabajar con data.frames:
 ## 6         si    mala
 \end{verbatim}
 
-\subsection{Simulación de tablas de
-contingencia}\label{simulacion-de-tablas-de-contingencia}
+\subsection{Simulación de tablas de contingencia}\label{simconting}
 
 El código anterior puede ser empleado para simular tablas de
 contingencia. Aunque en estos casos se suele fijar el total de la tabla
@@ -6268,28 +6678,30 @@ Para realizar el contraste de independencia:
 ## X-squared = 60.124, df = 1, p-value = 8.907e-15
 \end{verbatim}
 
-\BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-53}{}{\label{exr:unnamed-chunk-53} }
+\BeginKnitrBlock{exercise}[Distribución del estadístico chi-cuadrado de independencia]
+\protect\hypertarget{exr:chicuadind}{}{\label{exr:chicuadind}
+\iffalse (Distribución del estadístico chi-cuadrado de independencia)
+\fi{} }
 \EndKnitrBlock{exercise}
 
 Aproximar por simulación la distribución (exacta) del estadístico
-ji-cuadrado bajo independencia.
+chi-cuadrado bajo independencia.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{simstat <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(rtablas, }\DecValTok{2}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x)\{}\KeywordTok{chisq.test}\NormalTok{(}\KeywordTok{matrix}\NormalTok{(x,}\DataTypeTok{nrow=}\KeywordTok{nrow}\NormalTok{(tabla)))}\OperatorTok{$}\NormalTok{statistic\})}
 \KeywordTok{hist}\NormalTok{(simstat, }\DataTypeTok{freq =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{breaks =} \StringTok{'FD'}\NormalTok{)}
-\CommentTok{# Distribución asintótica (aproximación ji-cuadrado)}
+\CommentTok{# Distribución asintótica (aproximación chi-cuadrado)}
 \KeywordTok{curve}\NormalTok{(}\KeywordTok{dchisq}\NormalTok{(x, res}\OperatorTok{$}\NormalTok{parameter), }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{) }
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-54-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-53-1} \end{center}
 
 \section{Ejercicios propuestos}\label{ejercicios-propuestos}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-55}{}{\label{exr:unnamed-chunk-55} }
+\protect\hypertarget{exr:unnamed-chunk-54}{}{\label{exr:unnamed-chunk-54} }
 \EndKnitrBlock{exercise}
 
 Dar un algoritmo basado en el método de aceptación-rechazo (considerando
@@ -6304,7 +6716,7 @@ función de densidad: \[f(x,y)=\left\{
 \right.\]
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-56}{}{\label{exr:unnamed-chunk-56} }
+\protect\hypertarget{exr:unnamed-chunk-55}{}{\label{exr:unnamed-chunk-55} }
 \EndKnitrBlock{exercise}
 
 Considerando la variable aleatoria bidimensional del ejercicio anterior
@@ -6322,15 +6734,12 @@ distribuciones unidimensionales de interés).
 \chapter{Aplicaciones de la simulación en Inferencia
 Estadística}\label{cap8}
 
-\section{Aplicaciones de la
-simulación}\label{aplicaciones-de-la-simulacion}
-
-Aplicaciones:
+Como ya se comentó en la introducción muchas de las aplicaciones de la
+simulación serían de utilidad en Estadística:
 
 \begin{itemize}
 \item
-  Estadística: Muestreo, aproximación de distribuciones,
-  remuestreo,\ldots{}
+  Muestreo, aproximación de distribuciones, remuestreo,\ldots{}
 \item
   Optimización: Algoritmos genéticos, \ldots{}
 \item
@@ -6340,7 +6749,7 @@ Aplicaciones:
 \end{itemize}
 
 En este capítulo nos centraremos en algunas de las aplicaciones en
-inferencia estadística, aunque habría muchas:
+inferencia estadística:
 
 \begin{itemize}
 \item
@@ -6388,50 +6797,21 @@ inferencia estadística, aunque habría muchas:
 \end{itemize}
 
 En el siguiente capítulo trararemos la Integración y Optimización Monte
-Carlo\ldots{}
+Carlo.
 
 Observación: En este capítulo se obtendrán simulaciones de estadísticos
 a partir de muestras (podemos pensar que se parte de generaciones de una
 variable multivariante). En la mayoría de los ejemplos se generan todas
 las muestras de una vez, se guardan y se procesan vectorialmente
-(normalmente empleando la función \texttt{apply}). En problemas mas
-complejos, en los que no es necesario almacenar todas las simulaciones,
-puede ser preferible emplear un bucle para generar y procesar las
-muestras iterativamente. Por ejemplo podríamos emplear el siguiente
-esquema:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# Fijar semilla}
-\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
-\ControlFlowTok{for}\NormalTok{ (isim }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{nsim) \{}
-\NormalTok{  seed <-}\StringTok{ }\NormalTok{.Random.seed}
-  \CommentTok{# Si se produce un error, podremos depurarlo ejecutando:}
-  \CommentTok{#  .Random.seed <- seed}
-  
-  \CommentTok{# Generar muestra}
-\NormalTok{  ...}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-o alternativamente fijar la semilla en cada iteración, por ejemplo:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\ControlFlowTok{for}\NormalTok{ (isim }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{nsim) \{}
-  \KeywordTok{set.seed}\NormalTok{(isim)}
-
-  \CommentTok{# Generar muestra}
-\NormalTok{  ...}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
+(normalmente empleando la función \texttt{apply}). Como ya se comentó en
+la el Capítulo \ref{cap2}, en problemas mas complejos, en los que no es
+necesario almacenar todas las muestras, puede ser preferible emplear un
+bucle para generar y procesar las muestras iterativamente.
 
 \section{Distribución en el muestreo}\label{distribucion-en-el-muestreo}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-4}{}{\label{exr:unnamed-chunk-4} }
+\protect\hypertarget{exr:unnamed-chunk-2}{}{\label{exr:unnamed-chunk-2} }
 \EndKnitrBlock{exercise}
 
 Si \(X_{1},\ldots,X_{n}\) es una muestra aleatoria simple de una
@@ -6566,7 +6946,7 @@ fila se corresponderá con una generación).
  \vspace{0.5cm}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-10}{}{\label{exr:unnamed-chunk-10} }
+\protect\hypertarget{exr:unnamed-chunk-8}{}{\label{exr:unnamed-chunk-8} }
 \EndKnitrBlock{exercise}
 
 Si \(X_{1},\ldots,X_{n}\) es una m.a.s. de una variable aleatoria \(X\)
@@ -6669,7 +7049,7 @@ considerar que esta aproximación es buena para tamaños muestrales
 \section{Intervalos de confianza}\label{intervalos-de-confianza}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-15}{}{\label{exr:unnamed-chunk-15} }
+\protect\hypertarget{exr:unnamed-chunk-13}{}{\label{exr:unnamed-chunk-13} }
 \EndKnitrBlock{exercise}
 
 Siguiendo el enunciado del ejercicio 1, se deduce que el intervalo de
@@ -6899,7 +7279,7 @@ insesgado\ldots{}):
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-19-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 \BeginKnitrBlock{remark}
 \iffalse{} {Nota: } \fi{}Estimaciones puntuales, por intervalo de
@@ -6911,7 +7291,7 @@ desconocida bajo normalidad se pueden obtener con la función
  \vspace{0.5cm}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-21}{}{\label{exr:unnamed-chunk-21} }
+\protect\hypertarget{exr:unnamed-chunk-19}{}{\label{exr:unnamed-chunk-19} }
 \EndKnitrBlock{exercise}
 
 El Intervalo de confianza para una proporción construido usando la
@@ -6991,7 +7371,7 @@ IC_{1-\alpha}^{a}\left(  p\right)
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-26-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-24-1} \end{center}
 
   Fuente \href{http://www.springer.com/gp/book/9780387402734}{Suess y
   Trumbo (2010)}.
@@ -7032,7 +7412,7 @@ IC_{1-\alpha}^{a}\left(  p\right)
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-27-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-25-1} \end{center}
 \item
   Repetir el apartado anterior empleando simulación para aproximar la
   cobertura.
@@ -7080,13 +7460,13 @@ IC_{1-\alpha}^{a}\left(  p\right)
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-30-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-28-1} \end{center}
 \end{enumerate}
 
-\section{Contrastes de hipótesis}\label{contrastes-de-hipotesis}
+\section{Contrastes de hipótesis}\label{contrastes}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-31}{}{\label{exr:unnamed-chunk-31} }
+\protect\hypertarget{exr:ks-test-sim}{}{\label{exr:ks-test-sim} }
 \EndKnitrBlock{exercise}
 
 En el tema 2 se propuso el análisis de la bondad de ajuste de un
@@ -7161,7 +7541,7 @@ la distribución exacta.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-34-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-31-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7173,7 +7553,7 @@ la distribución exacta.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-34-2} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-31-2} \end{center}
 \item
   Repetir el apartado anterior considerando el test de Lilliefors
   (rutina \texttt{lillie.test} del paquete \texttt{nortest}).
@@ -7240,7 +7620,7 @@ la distribución exacta.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-39-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-36-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7251,7 +7631,7 @@ la distribución exacta.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-39-2} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-36-2} \end{center}
 \item
   Repetir el apartado a) contrastando una distribución exponencial y
   considerando 500 pruebas con muestras de tamaño 30 de una \(Exp(1)\).
@@ -7310,7 +7690,7 @@ la distribución exacta.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-43-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-40-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7322,7 +7702,7 @@ la distribución exacta.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-43-2} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-40-2} \end{center}
 \item
   Diseñar una rutina que permita realizar el contraste KS de bondad de
   ajuste de una variable exponencial aproximando el \(p\)-valor por
@@ -7414,7 +7794,7 @@ la distribución exacta.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-47-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-44-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7426,7 +7806,7 @@ la distribución exacta.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-47-2} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-44-2} \end{center}
 \item
   Estudiar la potencia de los contrastes de los apartados c) y d),
   considerando como alternativa una distribución Weibull.
@@ -7487,7 +7867,7 @@ y solo habría que cambiar el estadístico \texttt{Dn} en la función
 \section{Comparación de estimadores}\label{comparacion-de-estimadores}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-48}{}{\label{exr:unnamed-chunk-48} }
+\protect\hypertarget{exr:unnamed-chunk-45}{}{\label{exr:unnamed-chunk-45} }
 \EndKnitrBlock{exercise}
 
 Supongamos que estamos interesados en estudiar el efecto de datos
@@ -7567,7 +7947,7 @@ describirá el método de composición para simular mixturas.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-51-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-48-1} \end{center}
 
   Calculamos los estimadores:
 
@@ -7630,7 +8010,7 @@ describirá el método de composición para simular mixturas.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-54-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-51-1} \end{center}
 
   Error cuadrático:
 
@@ -7641,7 +8021,7 @@ describirá el método de composición para simular mixturas.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-55-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-52-1} \end{center}
 
   Estadísticos error cuadrático:
 
@@ -7695,7 +8075,7 @@ correspondientes de la distribución empírica de los datos observados:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-57-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-54-1} \end{center}
 
 Las características de la distribución empírica se pueden aproximar
 mediante simulación. En el caso i.i.d. esto puede ser implementado
@@ -7774,7 +8154,7 @@ Para información adicional sobre bootstrap ver p.e.: Davison, A.C. and
 Hinkley, D.V. (1997). \emph{Bootstrap Methods and Their Application}.
 Cambridge University Press
 
-\subsection{Ejemplo}\label{ejemplo-3}
+\subsection{Ejemplo}\label{ejemplo}
 
 Como ejemplo consideraremos una muestra de tamaño \(n=100\) de una
 normal estándar para tratar de aproximar el sesgo y error estándar de la
@@ -7845,7 +8225,7 @@ Bootstrap percentil:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-63-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-60-1} \end{center}
 
 Bootstrap natural/básico:
 
@@ -7861,7 +8241,7 @@ Bootstrap natural/básico:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-64-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-61-1} \end{center}
 
 Sesgo y error estándar bootstrap:
 
@@ -7997,7 +8377,7 @@ Generación de las muestras
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-69-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-66-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8005,7 +8385,7 @@ Generación de las muestras
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-69-2} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-66-2} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8013,7 +8393,7 @@ Generación de las muestras
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-69-3} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-66-3} \end{center}
 
 \subsection{Intervalos de confianza
 bootstrap}\label{intervalos-de-confianza-bootstrap}
@@ -8042,7 +8422,7 @@ bootstrap}\label{intervalos-de-confianza-bootstrap}
 \end{verbatim}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-71}{}{\label{exr:unnamed-chunk-71} }
+\protect\hypertarget{exr:unnamed-chunk-68}{}{\label{exr:unnamed-chunk-68} }
 \EndKnitrBlock{exercise}
 
 Repetir el ejemplo anterior considerando la media recortada al 10\%
@@ -8076,7 +8456,7 @@ Repetir el ejemplo anterior considerando la media recortada al 10\%
  \vspace{0.5cm}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-73}{}{\label{exr:unnamed-chunk-73}
+\protect\hypertarget{exr:unnamed-chunk-70}{}{\label{exr:unnamed-chunk-70}
 }(propuesto)
 \EndKnitrBlock{exercise}
 
@@ -8115,7 +8495,16 @@ menos utilizar una corrección por continuidad).
   bootstrap.
 \end{enumerate}
 
-\chapter{Integración y Optimización Montecarlo}\label{cap9}
+\chapter{Integracion y Optimizacion Montecarlo}\label{cap9}
+
+Uno de los objetivos habituales de los estudios de simulación es la
+aproximación de una esperanza, es decir, se trataría de evaluar una
+integral, que en ocasiones puede ser compleja y de alta dimensión. Esto
+puede ser de interés en otros campos, aunque la integral no esté
+relacionada con procesos estocásticos. Adicionalmente, en muchos campos,
+incluido la Estadística, hay que resolver problemas de optimización.
+Para evitar problemas de mínimos locales se puede recurrir a
+herramientas que emplean búsquedas aleatorias.
 
 \section{Integración Monte Carlo
 (clásica)}\label{integracion-monte-carlo-clasica}
@@ -9738,10 +10127,13 @@ simulation and Gibbs sampling with R}. Springer.
 complementaria}\label{bibliografia-complementaria}
 \addcontentsline{toc}{section}{Bibliografía complementaria}
 
+\subsection*{Libros}\label{libros}
+\addcontentsline{toc}{subsection}{Libros}
+
 Azarang, M. R. y García Dunna, E. (1996). \emph{Simulación y análisis de
 modelos estocásticos}. McGraw-Hill.
 
-Bratley, P., Fox, B. L. y Schrage L. E. (1990). \emph{A guide to
+Bratley, P., Fox, B.L. y Schrage L.E. (1987). \emph{A guide to
 simulation}. Springer-Verlag.
 
 Devroye, L. (1986). \emph{Non-uniform random variate generation}.
@@ -9755,6 +10147,12 @@ methods}. Springer-Verlag.
 
 Hörmann, W. et al. (2004). \emph{Automatic Nonuniform Random Variate
 Generation}. Springer.
+
+Knuth, D.E. (1969). \emph{The Art of Computer Programming}. Volume 2.
+Addison-Wesley.
+
+Knuth, D.E. (2002). \emph{The Art of Computer Programming}. Volume 2,
+third edition, ninth printing. Addison-Wesley.
 
 Law, A.M. y Kelton, W.D. (1991). \emph{Simulation, modeling and
 analysis}. McGraw-Hill.
@@ -9771,6 +10169,44 @@ a la empresa}. Díaz de Santos.
 
 Robert, C.P. y G. Casella (2004). \emph{Monte Carlo statistical
 methods}. Springer.
+
+\subsection*{Artículos}\label{articulos}
+\addcontentsline{toc}{subsection}{Artículos}
+
+Demirhan, H. y Bitirim, N. (2016).
+\href{https://journal.r-project.org/archive/2016/RJ-2016-016/index.html}{CryptRndTest:
+an R package for testing the cryptographic randomness}. \emph{The R
+Journal}, 8(1), 233-247.
+
+Downham, D.Y. (1970). Algorithm AS 29: The runs up and down test.
+\emph{Journal of the Royal Statistical Society}. Series C (Applied
+Statistics), 19(2), 190-192.
+
+L'Ecuyer, P. (1999). Good parameters and implementations for combined
+multiple recursive random number generators. \emph{Operations Research},
+47, 159--164.
+
+L'Ecuyer, P. y Simard, R. (2007). TestU01: A C library for empirical
+testing of random number generators. \emph{ACM Transactions on
+Mathematical Software} (TOMS), 33(4), 1-40.
+
+Marsaglia, G. y Tsang, W.W. (2002).
+\href{http://www.jstatsoft.org/v07/i03}{Some difficult-to-pass tests of
+randomness}. \emph{Journal of Statistical Software}, 7(3), 1-9.
+
+Marsaglia, G., Zaman, A. y Tsang, W.W. (1990). Toward a universal random
+number generator. \emph{Stat. Prob. Lett.}, 9(1), 35-39.
+
+Matsumoto, M. y Nishimura, T. (1998). Mersenne Twister: A
+623-dimensionally equidistributed uniform pseudo-random number
+generator, \emph{ACM Transactions on Modeling and Computer Simulation},
+8, 3--30.
+
+Park, S.K. y Miller , K.W. (1988). Random number generators: good ones
+are hard to find. \emph{Communications of the ACM}, 31(10), 1192-1201.
+
+Park, S.K., Miller, K.W. y Stockmeyer, P.K. (1993). Technical
+correspondence. \emph{Communications of the ACM}, 36(7), 108-110.
 
 \appendix
 
@@ -9879,7 +10315,8 @@ MOOC relacionados con R}.
     Design, (\href{https://www.nostarch.com/artofr.htm}{No Starch
     Press})
   \item
-    R for Data Science (\href{http://r4ds.had.co.nz/}{online},
+    R for Data Science (\href{http://r4ds.had.co.nz}{online},
+    \href{https://es.r4ds.hadley.nz}{online-castellano},
     \href{http://shop.oreilly.com/product/0636920034407.do}{O'Reilly})
   \item
     Hands-On Programming with R: Write Your Own Functions and
@@ -10012,16 +10449,1356 @@ material adicional, por ejemplo:
   \end{itemize}
 \end{itemize}
 
-\chapter{Integración numérica}\label{integracion-numerica}
+\chapter{Bondad de Ajuste y Aleatoriedad}\label{gof-aleat}
 
-\section{Introducción}\label{introduccion-2}
+En los métodos clásicos de inferencia estadística es habitual asumir que
+los valores observados \(X_1,\ldots, X_n\) (o los errores de un modelo)
+consituyen una muestra aleatoria simple de una variable aleatoria \(X\).
+Se están asumiendo por tanto dos hipótesis estructurales: la
+independencia (aleatoriedad) y la homogeneidad (misma distribución) de
+las observaciones (o de los errores). Adicionalmente, en inferencia
+paramétrica se supone que la distribución se ajusta a un modelo
+paramétrico específico \(F_{\theta}(x)\), siendo \(\theta\) un parámetro
+que normalmente es desconocido.
+
+Uno de los objetivos de la inferencia no paramétrica es desarrollar
+herramientas que permitan verificar el grado de cumplimiento de las
+hipótesis anteriores\footnote{El otro objetivo de la inferencia
+  estadística no paramétrica es desarrollar procedimientos alternativos
+  (métodos de distribución libre) que sean válidos cuando no se verifica
+  alguna de las hipótesis estructurales.}. Los procedimientos habituales
+incluyen métodos descriptivos (principalmente gráficos), contrastes de
+bondad de ajuste (también de homogeneidad o de datos atípicos) y
+contrastes de aleatoriedad.
+
+En este apéndice se describen brevemente algunos de los métodos
+clásicos, principalmente con la idea de que pueden ser de utilidad para
+evaluar resultados de simulación y para la construcción de modelos del
+sistema real (e.g.~para modelar variables que se tratarán como entradas
+del modelo general). Se empleará principalmente el enfoque de la
+estadística no paramétrica, aunque también se mostrarán algunas pequeñas
+diferencias entre su uso en inferencia y en simulación.
+
+Los métodos genéricos no son muy adecuados para evaluar generadores
+aleatorios (e.g.~L'Ecuyer y Simard, 2007). La recomendación sería
+emplear baterías de contrastes recientes, como las descritas en la
+Sección \ref{baterias}. No obstante, en la última sección se
+describirán, únicamente con fines ilustrativos, algunos de los primeros
+métodos diseñados específicamente para generadores aleatorios.
+
+\section{Métodos de bondad de ajuste}\label{gof}
+
+A partir de \(X_1,\ldots,X_n\) m.a.s. de \(X\) con función de
+distribución \(F\), interesa realizar un contraste de la forma:
+\[\left \{
+\begin{array}{l}
+H_0:F=F_0\\
+H_1:F\neq F_0
+\end{array}
+\right.\]
+
+En este caso interesará distinguir principalmente entre hipótesis nulas
+simples (especifican un único modelo) y compuestas (especifican un
+conjunto o familia de modelos). Por ejemplo:
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.41\columnwidth}\raggedright\strut
+\(H_0\) simple\strut
+\end{minipage} & \begin{minipage}[b]{0.50\columnwidth}\raggedright\strut
+\(H_0\) compuesta\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.41\columnwidth}\raggedright\strut
+\(\left \{ \begin{array}{l} H_0:F= \mathcal{N}(0,1)\\ H_1:F\neq \mathcal{N}(0,1) \end{array} \right.\)\strut
+\end{minipage} & \begin{minipage}[t]{0.50\columnwidth}\raggedright\strut
+\(\left \{ \begin{array}{l} H_0:F= \mathcal{N}(\mu,\sigma^2)\\ H_1:F\neq \mathcal{N}(\mu,\sigma^2) \end{array} \right.\)\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+Entre los métodos gráficos habituales estarían: histograma, gráfico de
+la densidad suavizada, gráfico de tallo y hojas, gráfico de la
+distribución empírica (o versión suavizada) y gráficos P-P o Q-Q.
+
+Entre los métodos de contrastes de hipótesis generales (\(H_0:F=F_0\))
+destacarían las pruebas: Chi-cuadrado de Pearson, Kolmogorov-Smirnov,
+Cramer-von Mises o Anderson-Darling. Además de los específicos de
+normalidad (\(H_0:F= \mathcal{N}(\mu,\sigma^2)\)):
+Kolmogorov-Smirnov-Lilliefors, Shapiro-Wilks y los de asimetría y
+apuntamiento.
+
+\subsection{Histograma}\label{histograma}
+
+Se agrupan los datos en intervalos \(I_{k}=\left[ L_{k-1},L_{k}\right)\)
+con \(k=1, \ldots, K\) y a cada intervalo se le asocia un valor (altura
+de la barra) igual a la frecuencia absoluta de ese intervalo
+\(n_k = \sum_{i=1}^{n}\mathbf{1}\left( X_i \in [L_{k-1},L_{k}) \right)\),
+si la longitud de los intervalos es constante, o proporcional a dicha
+frecuencia (de forma que el área coincida con la frecuencia relativa y
+pueda ser comparado con una función de densidad):
+\[\hat{f}_n(x)=\frac{n_{i}}{n\left(  L_{k}-L_{k-1}\right)}\]
+
+Como ya se ha visto anteriormente, en \texttt{R} podemos generar este
+gráfico con la función \texttt{hist()} del paquete base. Algunos de los
+principales parámetros (con los valores por defecto) son los siguientes:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{hist}\NormalTok{(x, }\DataTypeTok{breaks =} \StringTok{"Sturges"}\NormalTok{, }\DataTypeTok{freq =} \OtherTok{NULL}\NormalTok{, }\DataTypeTok{plot =} \OtherTok{TRUE}\NormalTok{, ...)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\item
+  \texttt{breaks}: puede ser un valor numérico con el número de puntos
+  de discretización, un vector con los puntos de discretización, una
+  cadena de texto que los determine (otras opciones son \texttt{"Scott"}
+  y \texttt{"FD"}; en este caso llamará internamente a la función
+  \texttt{nclass.xxx()} donde \texttt{xxx} se corresponde con la cadena
+  de texto), o incluso una función personalizada que devuelva el número
+  o el vector de puntos de discretización.
+\item
+  \texttt{freq}: lógico (\texttt{TRUE} por defecto si los puntos de
+  discretización son equidistantes), determina si en el gráfico se
+  representan frecuencias o ``densidades''.
+\item
+  \texttt{plot}: lógico, se puede establecer a \texttt{FALSE} si no
+  queremos generar el gráfico y solo nos interesan el objeto con los
+  resultados (que devuelve de forma ``invisible'', por ejemplo para
+  discretizar los valores en intervalos).
+\end{itemize}
+
+Ejemplo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\FloatTok{22.56}\NormalTok{,}\FloatTok{22.33}\NormalTok{,}\FloatTok{24.58}\NormalTok{,}\FloatTok{23.14}\NormalTok{,}\FloatTok{19.03}\NormalTok{,}\FloatTok{26.76}\NormalTok{,}\FloatTok{18.33}\NormalTok{,}\FloatTok{23.10}\NormalTok{,}
+  \FloatTok{21.53}\NormalTok{,}\FloatTok{9.06}\NormalTok{,}\FloatTok{16.75}\NormalTok{,}\FloatTok{23.29}\NormalTok{,}\FloatTok{22.14}\NormalTok{,}\FloatTok{16.28}\NormalTok{,}\FloatTok{18.89}\NormalTok{,}\FloatTok{27.48}\NormalTok{,}\FloatTok{10.44}\NormalTok{,}
+  \FloatTok{26.86}\NormalTok{,}\FloatTok{27.27}\NormalTok{,}\FloatTok{18.74}\NormalTok{,}\FloatTok{19.88}\NormalTok{,}\FloatTok{15.76}\NormalTok{,}\FloatTok{30.77}\NormalTok{,}\FloatTok{21.16}\NormalTok{,}\FloatTok{24.26}\NormalTok{,}\FloatTok{22.90}\NormalTok{,}
+  \FloatTok{27.14}\NormalTok{,}\FloatTok{18.02}\NormalTok{,}\FloatTok{21.53}\NormalTok{,}\FloatTok{24.99}\NormalTok{,}\FloatTok{19.81}\NormalTok{,}\FloatTok{11.88}\NormalTok{,}\FloatTok{24.01}\NormalTok{,}\FloatTok{22.11}\NormalTok{,}\FloatTok{21.91}\NormalTok{,}
+  \FloatTok{14.35}\NormalTok{,}\FloatTok{11.14}\NormalTok{,}\FloatTok{9.93}\NormalTok{,}\FloatTok{20.22}\NormalTok{,}\FloatTok{17.73}\NormalTok{,}\FloatTok{19.05}\NormalTok{)}
+\KeywordTok{hist}\NormalTok{(datos, }\DataTypeTok{freq =} \OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{curve}\NormalTok{(}\KeywordTok{dnorm}\NormalTok{(x, }\KeywordTok{mean}\NormalTok{(datos), }\KeywordTok{sd}\NormalTok{(datos)), }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-3-1} \end{center}
+
+Si el número de valores es muy grande (por ejemplo en el caso de
+secuencias aleatorias), nos puede interesar establecer la opción
+\texttt{breaks\ =\ "FD"} para aumentar el número de intervalos de
+discretización. En cualquier caso, como se muestra en la Figura
+\ref{fig:hist-movie}, la convergencia del histograma a la densidad
+teórica se podría considerar bastante lenta. Alternativamente se podría
+considerar una estimación suave de la densidad, por ejemplo empleando la
+estimación tipo núcleo implementada en la función \texttt{density()}.
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/hist-movie-1} 
+
+}
+
+\caption{Convergencia del histograma a la densidad teórica.}\label{fig:hist-movie}
+\end{figure}
+
+\subsection{Función de distribución empírica}\label{empdistr}
+
+La función de distribución empírica
+\(F_n\left( x \right)=\frac{1}{n}\sum_{i=1}^{n}\mathbf{1}\left( X_i\leq x\right)\)
+asigna a cada número real \(x\) la frecuencia relativa de observaciones
+menores o iguales que \(x\). Para obtener las frecuencias relativas
+acumuladas, se ordena la muestra
+\(X_{(1)}\leq X_{(2)}\leq \cdots \leq X_{(n)}\) y: \[F_n(x)=\left \{
+\begin{array}{cll}
+0 & \text{si } &x<X_{\left(  1\right)  }\\
+\tfrac{i}n & \text{si } & X_{\left(  i\right)  }\leq x<X_{\left(  i+1\right)  }\\
+1 & \text{si } & X_{\left(  n\right)  }\leq x
+\end{array}
+\right.\]
+
+Ejemplo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fn <-}\StringTok{ }\KeywordTok{ecdf}\NormalTok{(datos)}
+\KeywordTok{curve}\NormalTok{(}\KeywordTok{ecdf}\NormalTok{(datos)(x), }\DataTypeTok{xlim =} \KeywordTok{extendrange}\NormalTok{(datos), }\DataTypeTok{type =} \StringTok{'s'}\NormalTok{, }
+      \DataTypeTok{ylab =} \StringTok{'distribution function'}\NormalTok{, }\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\KeywordTok{curve}\NormalTok{(}\KeywordTok{pnorm}\NormalTok{(x, }\KeywordTok{mean}\NormalTok{(datos), }\KeywordTok{sd}\NormalTok{(datos)), }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/ecdfplot-1} 
+
+}
+
+\caption{Comparación de la distribución empírica de los datos de ejemplo con la función de distribución de la aproximación normal.}\label{fig:ecdfplot}
+\end{figure}
+
+\subsection{Gráficos P-P y Q-Q}\label{graficos-p-p-y-q-q}
+
+El gráfico de probabilidad (o de probabilidad-probabilidad) es el
+gráfico de dispersión de:
+\[\left \{  \left( F_0(x_{i}), F_n(x_{i}) \right)  :i=1,\cdots,n\right \}\]
+siendo \(F_n\) la función de distribución empírica y \(F_0\) la función
+de distribución bajo \(H_0\) (con la que desea comparar, si la hipótesis
+nula es simple) o una estimación bajo \(H_0\) (si la hipótesis nula es
+compuesta; e.g.~si \(H_0:F= \mathcal{N}(\mu,\sigma^2)\), \(\hat{F}_0\)
+función de distribución de \(\mathcal{N}(\hat{\mu},\hat{\sigma}^2)\)).
+Si \(H_0\) es cierta, la nube de puntos estará en torno a la recta
+\(y=x\) (probabilidades observadas próximas a las esperadas bajo
+\(H_0\)).
+
+El gráfico Q-Q (cuantil-cuantil) es equivalente al anterior pero en la
+escala de la variable:
+\[\left\{ \left( q_{i}, x_{(i)}\right) : i=1, \cdots, n \right\}\]
+siendo \(x_{(i)}\) los cuantiles observados y \(q_{i}=F_0^{-1}(p_{i})\)
+los esperados\footnote{Típicamente
+  \(\left \{ p_{i}=\frac{\left(i-0.5 \right)}n : i=1, \cdots, n \right\}\).}
+bajo \(H_0\).
+
+Ejemplo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{qqnorm}\NormalTok{(datos)}
+\KeywordTok{qqline}\NormalTok{(datos)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-4-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{require}\NormalTok{(car)}
+\KeywordTok{qqPlot}\NormalTok{(datos, }\StringTok{"norm"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-4-2} \end{center}
+
+\begin{verbatim}
+## [1] 10 38
+\end{verbatim}
+
+\subsection{Contraste ji-cuadrado de Pearson}\label{chi2test}
+
+Se trata de un contraste de bondad de ajuste: \[\left \{
+\begin{array}{l}
+H_0:F=F_0\\
+H_1:F\neq F_0\end{array}
+\right.\] desarrollado inicialmente para variables categóricas. En el
+caso general, podemos pensar que los datos están agrupados en \(k\)
+clases: \(C_1,\cdots,C_{k}\). Por ejemplo, si la variable es categórica
+o discreta, cada clase se puede corresponder con una modalidad. Si la
+variable es continua habrá que categorizarla en intervalos.
+
+Si la hipótesis nula es simple, cada clase tendrá asociada una
+probabilidad \(p_{i}=P\left( X\in C_{i} \right)\) bajo \(H_0\) . Si por
+el contrario es compuesta, se trabajará con una estimación de dicha
+probabilidad (y habrá que correguir la distribución aproximada del
+estadístico del contraste).
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule
+Clases & Discreta & Continua & \(H_0\) simple & \(H_0\)
+compuesta\tabularnewline
+\midrule
+\endhead
+\(C_1\) & \(x_1\) & \([L_0,L_1)\) & \(p_1\) &
+\(\hat{p}_1\)\tabularnewline
+\(\vdots\) & \(\vdots\) & \(\vdots\) & \(\vdots\) &
+\(\vdots\)\tabularnewline
+\(C_{k}\) & \(x_{k}\) & \([L_{k-1},L_{k})\) & \(p_{k}\) &
+\(\hat{p}_{k}\)\tabularnewline
+& & & \(\sum_{i}p_{i}=1\) & \(\sum_{i}\hat{p}_{i}=1\)\tabularnewline
+\bottomrule
+\end{longtable}
+
+Se realizará un contraste equivalente: \[\left\{ \begin{array}[c]{l}
+H_0:\text{Las probabilidades son correctas}\\
+H_1:\text{Las probabilidades no son correctas}
+\end{array} \right.\]
+
+Si \(H_0\) es cierta, la frecuencia relativa \(f_{i}\) de la clase
+\(C_{i}\) es una aproximación de la probabilidad teórica,
+\(f_{i}\approx p_{i}\). Equivalentemente, las frecuencias observadas
+\(n_{i}=n\cdot f_{i}\) deberían ser próximas a las esperadas
+\(e_{i}=n\cdot p_{i}\) bajo \(H_0\), sugiriendo el estadístico del
+contraste (Pearson, 1900):
+\[\chi^2=\sum_{i=1}^{k}\frac{(n_{i}-e_{i})^2}{e_{i}}\underset{aprox.}{\sim
+}\chi_{k-r-1}^2,\text{ si }H_0\text{ cierta}\] siendo \(k\) el número de
+clases y \(r\) el número de parámetros estimados (para aproximar las
+probabilidades bajo \(H_0\)).
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule
+\begin{minipage}[b]{0.06\columnwidth}\raggedright\strut
+Clases\strut
+\end{minipage} & \begin{minipage}[b]{0.17\columnwidth}\raggedright\strut
+\(n_{i}\) observadas\strut
+\end{minipage} & \begin{minipage}[b]{0.17\columnwidth}\raggedright\strut
+\(p_{i}\) bajo \(H_0\)\strut
+\end{minipage} & \begin{minipage}[b]{0.17\columnwidth}\raggedright\strut
+\(e_{i}\) bajo \(H_0\)\strut
+\end{minipage} & \begin{minipage}[b]{0.29\columnwidth}\raggedright\strut
+\(\frac{(n_{i}-e_{i})^2}{e_{i}}\)\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+\(C_1\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(n_1\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(p_1\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(e_1\)\strut
+\end{minipage} & \begin{minipage}[t]{0.29\columnwidth}\raggedright\strut
+\(\frac{(n_1-e_1)^2}{e_1}\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+\(\vdots\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\vdots\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\vdots\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\vdots\)\strut
+\end{minipage} & \begin{minipage}[t]{0.29\columnwidth}\raggedright\strut
+\(\vdots\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+\(C_{k}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(n_{k}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(p_{k}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(e_{k}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.29\columnwidth}\raggedright\strut
+\(\frac{(n_{k}-e_{k})^2}{e_{k}}\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.06\columnwidth}\raggedright\strut
+Total\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\sum_{i}n_{i}=n\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\sum_{i}p_{i}=1\)\strut
+\end{minipage} & \begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\(\sum_{i}e_{i}=n\)\strut
+\end{minipage} & \begin{minipage}[t]{0.29\columnwidth}\raggedright\strut
+\(\chi^2=\sum_{i=1}^{k}\frac{(n_{i}-e_{i})^2}{e_{i}}\)\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+Cuando \(H_0\) es cierta el estadístico tiende a tomar valores pequeños
+y grandes cuando es falsa. Por tanto se rechaza \(H_0\), para un nivel
+de significación \(\alpha\), si:
+\[\sum_{i=1}^{k}\frac{(n_{i}-e_{i})^2}{e_{i}}\geq \chi_{k-r-1,1-\alpha}^2\]
+
+Si realizamos el contraste a partir del p-valor o nivel crítico:
+\[p=P\left(  {\chi_{k-r-1}^2\geq \sum \limits_{i=1}^{k}{\frac{(n_{i}-e_{i})^2}{e_{i}}}}\right)\]
+rechazaremos \(H_0\) si \(p\leq \alpha\) (y cuanto menor sea se
+rechazará con mayor seguridad) y aceptaremos \(H_0\) si \(p>\)
+\(\alpha\) (con mayor seguridad cuanto mayor sea).
+
+Este método está implementado en la función \texttt{chisq.test()} para
+el caso discreto (no corrige los grados de libertad). Ejemplo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{trunc}\NormalTok{(}\DecValTok{5} \OperatorTok{*}\StringTok{ }\KeywordTok{runif}\NormalTok{(}\DecValTok{100}\NormalTok{))}
+\KeywordTok{chisq.test}\NormalTok{(}\KeywordTok{table}\NormalTok{(x))            }\CommentTok{# NOT 'chisq.test(x)'!}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Chi-squared test for given probabilities
+## 
+## data:  table(x)
+## X-squared = 9.2, df = 4, p-value = 0.05629
+\end{verbatim}
+
+La distribución exacta del estadístico del contraste es discreta (se
+podría aproximar por simulación, por ejemplo empleando los parámetros
+\texttt{simulate.p.value\ =\ TRUE} y \texttt{B\ =\ 2000} de la función
+\texttt{chisq.test()}; ver también el Ejercicio \ref{exr:chicuadind} de
+la Sección \ref{simconting} para el caso del contraste chi-cuadrado de
+independencia). Para que la aproximación continua \(\chi^2\) sea válida:
+
+\begin{itemize}
+\item
+  El tamaño muestral debe ser suficientemente grande (p.e. \(n>30\)).
+\item
+  La muestra debe ser una muestra aleatoria simple.
+\item
+  Los parámetros deben estimarse (si es necesario) por máxima
+  verosimilitud.
+\item
+  Las frecuencias esperadas \(e_{i}=n\cdot p_{i}\) deberían ser todas
+  \(\geq5\) (realmente esta es una restricción conservadora, la
+  aproximación puede ser adecuada si no hay frecuencias esperadas
+  inferiores a 1 y menos de un 20\% inferiores a 5).
+\end{itemize}
+
+Si la frecuencia esperada de alguna clase es \(<5\), se suele agrupar
+con otra clase (o con varias si no fuese suficiente con una) para
+obtener una frecuencia esperada \(\geq5\):
+
+\begin{itemize}
+\item
+  Cuando la variable es nominal (no hay una ordenación lógica) se suele
+  agrupar con la(s) que tiene(n) menor valor de \(e_{i}\).
+\item
+  Si la variable es ordinal (o numérica) debe juntarse la que causó el
+  problema con una de las adyacentes.
+\end{itemize}
+
+Si la variable de interés es continua, una forma de garantizar que
+\(e_{i}\geq5\) consiste en tomar un número de intervalos
+\(k\leq \lfloor n/5 \rfloor\) y de forma que sean equiprobables
+\(p_{i}=1/k\), considerando los puntos críticos \(x_{i/k}\) de la
+distribución bajo \(H_0\).
+
+Por ejemplo, se podría emplear la siguiente función (que imita a las
+incluídas en \texttt{R}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#-------------------------------------------------------------------------------}
+\CommentTok{# chisq.test.cont(x, distribution, nclasses, output, nestpar,...)}
+\CommentTok{#-------------------------------------------------------------------------------}
+\CommentTok{# Realiza el test ji-cuadrado de bondad de ajuste para una distribución continua}
+\CommentTok{# discretizando en intervalos equiprobables.}
+\CommentTok{# Parámetros:}
+\CommentTok{#   distribution = "norm","unif",etc}
+\CommentTok{#   nclasses = floor(length(x)/5)}
+\CommentTok{#   output = TRUE}
+\CommentTok{#   nestpar = 0= nº de parámetros estimados}
+\CommentTok{#   ... = parámetros distribución}
+\CommentTok{# Ejemplo:}
+\CommentTok{#   chisq.test.cont(x, distribution="norm", nestpar=2, mean=mean(x), sd=sqrt((nx-1)/nx)*sd(x))}
+\CommentTok{#-------------------------------------------------------------------------------}
+\NormalTok{chisq.test.cont <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, }\DataTypeTok{distribution =} \StringTok{"norm"}\NormalTok{, }\DataTypeTok{nclasses =} \KeywordTok{floor}\NormalTok{(}\KeywordTok{length}\NormalTok{(x)}\OperatorTok{/}\DecValTok{5}\NormalTok{), }
+    \DataTypeTok{output =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{nestpar =} \DecValTok{0}\NormalTok{, ...) \{}
+    \CommentTok{# Funciones distribución}
+\NormalTok{    q.distrib <-}\StringTok{ }\KeywordTok{eval}\NormalTok{(}\KeywordTok{parse}\NormalTok{(}\DataTypeTok{text =} \KeywordTok{paste}\NormalTok{(}\StringTok{"q"}\NormalTok{, distribution, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)))}
+\NormalTok{    d.distrib <-}\StringTok{ }\KeywordTok{eval}\NormalTok{(}\KeywordTok{parse}\NormalTok{(}\DataTypeTok{text =} \KeywordTok{paste}\NormalTok{(}\StringTok{"d"}\NormalTok{, distribution, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)))}
+    \CommentTok{# Puntos de corte}
+\NormalTok{    q <-}\StringTok{ }\KeywordTok{q.distrib}\NormalTok{((}\DecValTok{1}\OperatorTok{:}\NormalTok{(nclasses }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{))}\OperatorTok{/}\NormalTok{nclasses, ...)}
+\NormalTok{    tol <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(.Machine}\OperatorTok{$}\NormalTok{double.eps)}
+\NormalTok{    xbreaks <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{min}\NormalTok{(x) }\OperatorTok{-}\StringTok{ }\NormalTok{tol, q, }\KeywordTok{max}\NormalTok{(x) }\OperatorTok{+}\StringTok{ }\NormalTok{tol)}
+    \CommentTok{# Gráficos y frecuencias}
+    \ControlFlowTok{if}\NormalTok{ (output) \{}
+\NormalTok{        xhist <-}\StringTok{ }\KeywordTok{hist}\NormalTok{(x, }\DataTypeTok{breaks =}\NormalTok{ xbreaks, }\DataTypeTok{freq =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{lty =} \DecValTok{2}\NormalTok{, }\DataTypeTok{border =} \StringTok{"grey50"}\NormalTok{)}
+        \KeywordTok{curve}\NormalTok{(}\KeywordTok{d.distrib}\NormalTok{(x, ...), }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{    \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{        xhist <-}\StringTok{ }\KeywordTok{hist}\NormalTok{(x, }\DataTypeTok{breaks =}\NormalTok{ xbreaks, }\DataTypeTok{plot =} \OtherTok{FALSE}\NormalTok{)}
+\NormalTok{    \}}
+    \CommentTok{# Cálculo estadístico y p-valor}
+\NormalTok{    O <-}\StringTok{ }\NormalTok{xhist}\OperatorTok{$}\NormalTok{counts  }\CommentTok{# Equivalente a table(cut(x, xbreaks)) pero más eficiente}
+\NormalTok{    E <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}\OperatorTok{/}\NormalTok{nclasses}
+\NormalTok{    DNAME <-}\StringTok{ }\KeywordTok{deparse}\NormalTok{(}\KeywordTok{substitute}\NormalTok{(x))}
+\NormalTok{    METHOD <-}\StringTok{ "Pearson's Chi-squared test"}
+\NormalTok{    STATISTIC <-}\StringTok{ }\KeywordTok{sum}\NormalTok{((O }\OperatorTok{-}\StringTok{ }\NormalTok{E)}\OperatorTok{^}\DecValTok{2}\OperatorTok{/}\NormalTok{E)}
+    \KeywordTok{names}\NormalTok{(STATISTIC) <-}\StringTok{ "X-squared"}
+\NormalTok{    PARAMETER <-}\StringTok{ }\NormalTok{nclasses }\OperatorTok{-}\StringTok{ }\NormalTok{nestpar }\OperatorTok{-}\StringTok{ }\DecValTok{1}
+    \KeywordTok{names}\NormalTok{(PARAMETER) <-}\StringTok{ "df"}
+\NormalTok{    PVAL <-}\StringTok{ }\KeywordTok{pchisq}\NormalTok{(STATISTIC, PARAMETER, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{)}
+    \CommentTok{# Preparar resultados}
+\NormalTok{    classes <-}\StringTok{ }\KeywordTok{format}\NormalTok{(xbreaks)}
+\NormalTok{    classes <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"("}\NormalTok{, classes[}\OperatorTok{-}\NormalTok{(nclasses }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{)], }\StringTok{","}\NormalTok{, classes[}\OperatorTok{-}\DecValTok{1}\NormalTok{], }\StringTok{"]"}\NormalTok{, }
+        \DataTypeTok{sep =} \StringTok{""}\NormalTok{)}
+\NormalTok{    RESULTS <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{classes =}\NormalTok{ classes, }\DataTypeTok{observed =}\NormalTok{ O, }\DataTypeTok{expected =}\NormalTok{ E, }\DataTypeTok{residuals =}\NormalTok{ (O }\OperatorTok{-}\StringTok{ }
+\StringTok{        }\NormalTok{E)}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(E))}
+    \ControlFlowTok{if}\NormalTok{ (output) \{}
+        \KeywordTok{cat}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{Pearson's Chi-squared test table}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+        \KeywordTok{print}\NormalTok{(}\KeywordTok{as.data.frame}\NormalTok{(RESULTS))}
+\NormalTok{    \}}
+    \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{any}\NormalTok{(E }\OperatorTok{<}\StringTok{ }\DecValTok{5}\NormalTok{)) }
+        \KeywordTok{warning}\NormalTok{(}\StringTok{"Chi-squared approximation may be incorrect"}\NormalTok{)}
+    \KeywordTok{structure}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{statistic =}\NormalTok{ STATISTIC, }\DataTypeTok{parameter =}\NormalTok{ PARAMETER, }\DataTypeTok{p.value =}\NormalTok{ PVAL, }
+        \DataTypeTok{method =}\NormalTok{ METHOD, }\DataTypeTok{data.name =}\NormalTok{ DNAME), RESULTS), }\DataTypeTok{class =} \StringTok{"htest"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Continuando con el ejemplo anterior, podríamos contrastar normalidad
+mediante:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{chisq.test.cont}\NormalTok{(datos, }\DataTypeTok{distribution =} \StringTok{"norm"}\NormalTok{, }\DataTypeTok{nestpar =} \DecValTok{2}\NormalTok{, }\DataTypeTok{mean=}\KeywordTok{mean}\NormalTok{(datos), }\DataTypeTok{sd=}\KeywordTok{sd}\NormalTok{(datos))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-7-1} \end{center}
+
+\begin{verbatim}
+## 
+## Pearson's Chi-squared test table
+##               classes observed expected  residuals
+## 1 ( 9.06000,14.49908]        6    5.125  0.3865103
+## 2 (14.49908,16.94725]        3    5.125 -0.9386680
+## 3 (16.94725,18.77800]        4    5.125 -0.4969419
+## 4 (18.77800,20.41732]        6    5.125  0.3865103
+## 5 (20.41732,22.05663]        4    5.125 -0.4969419
+## 6 (22.05663,23.88739]        8    5.125  1.2699625
+## 7 (23.88739,26.33556]        4    5.125 -0.4969419
+## 8 (26.33556,30.77000]        6    5.125  0.3865103
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Pearson's Chi-squared test
+## 
+## data:  datos
+## X-squared = 3.6829, df = 5, p-value = 0.5959
+\end{verbatim}
+
+\subsection{Contraste de
+Kolmogorov-Smirnov}\label{contraste-de-kolmogorov-smirnov}
+
+Se trata de un contraste de bondad de ajuste diseñado para
+distribuciones continuas (similar a la prueba de Cramer-von Mises o a la
+de Anderson-Darling, implementadas en el paquete \texttt{goftest} de R,
+que son en principio mejores). Se basa en comparar la función de
+distribución \(F_0\) bajo \(H_0\) con la función de distribución
+empírica \(F_n\): \[\begin{aligned}
+& D_n=\sup_{x}|F_n(x)-F_0(x)|,\\
+& = \max_{1 \leq i \leq n} \left\{ |F_n(X_{(i)})-F_0(X_{(i)})|,|F_n(X_{(i-1)})-F_0(X_{(i)})| \right\}
+\end{aligned}\]
+
+Teniendo en cuenta que \(F_n\left( X_{(i)}\right) = \frac{i}n\):
+\[\begin{aligned}
+D_n  & =\max_{1\leq i\leq n}\left \{  \frac{i}n-F_0(X_{(i)}),F_0(X_{(i)})-\frac{i-1}n\right \} \\
+& =\max_{1\leq i\leq n}\left \{  D_{n,i}^{+},D_{n,i}^{-}\right \}
+\end{aligned}\]
+
+Si \(H_0\) es simple y \(F_0\) es continua, la distribución del
+estadístico \(D_n\) bajo \(H_0\) no depende \(F_0\) (es de distribución
+libre). Esta distribución está tabulada (para tamaños muestrales grandes
+se utiliza la aproximación asintótica). Se rechaza \(H_0\) si el valor
+observado \(d\) del estadístico es significativamente grande:
+\[p = P \left( D_n \geq d \right) \leq \alpha.\] Este método está
+implementado en la función \texttt{ks.test()} del paquete base de R:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ks.test}\NormalTok{(x, y, ...)}
+\end{Highlighting}
+\end{Shaded}
+
+donde \texttt{x} es un vector que contiene los datos, \texttt{y} es una
+función de distribución (o una cadena de texto que la especifica;
+también puede ser otro vector de datos para el contraste de dos
+muestras) y \texttt{...} representa los parámetros de la distribución.
+
+Continuando con el ejemplo anterior, para contrastar
+\(H_0:F= \mathcal{N}(20,5^2)\) podríamos emplear:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ks.test}\NormalTok{(datos, pnorm, }\DataTypeTok{mean =} \DecValTok{20}\NormalTok{, }\DataTypeTok{sd =} \DecValTok{5}\NormalTok{) }\CommentTok{# One-sample }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  One-sample Kolmogorov-Smirnov test
+## 
+## data:  datos
+## D = 0.13239, p-value = 0.4688
+## alternative hypothesis: two-sided
+\end{verbatim}
+
+Si \(H_0\) es compuesta, el procedimiento habitual es estimar los
+parámetros desconocidos por máxima verosimilitud y emplear \(\hat{F}_0\)
+en lugar de \(F_0\). Sin embargo, al proceder de esta forma es de
+esperar que \(\hat{F}_0\) se aproxime más que \(F_0\) a la distribución
+empírica, por lo que los cuantiles de la distribución de \(D_n\) pueden
+ser demasiado conservativos (los \(p\)-valores tenderán a ser mayores de
+lo que deberían) y se tenderá a aceptar la hipótesis nula (puede ser
+preferible aproximar el \(p\)-valor mediante simulación; como se muestra
+en el Ejercicio \ref{exr:ks-test-sim} de la Sección \ref{contrastes}).
+
+Para evitar este problema, en el caso de contrastar normalidad se
+desarrolló el test de Lilliefors, implementado en la función
+\texttt{lillie.test()} del paquete \texttt{nortest} (también hay
+versiones en este paquete para los métodos de Cramer-von Mises y
+Anderson-Darling).
+
+Por ejemplo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ks.test}\NormalTok{(datos, pnorm, }\KeywordTok{mean}\NormalTok{(datos), }\KeywordTok{sd}\NormalTok{(datos)) }\CommentTok{# One-sample Kolmogorov-Smirnov test}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  One-sample Kolmogorov-Smirnov test
+## 
+## data:  datos
+## D = 0.097809, p-value = 0.8277
+## alternative hypothesis: two-sided
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(nortest)}
+\KeywordTok{lillie.test}\NormalTok{(datos)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Lilliefors (Kolmogorov-Smirnov) normality test
+## 
+## data:  datos
+## D = 0.097809, p-value = 0.4162
+\end{verbatim}
+
+\section{Diagnosis de la
+independencia}\label{diagnosis-de-la-independencia}
+
+Los métodos ``clásicos'' de inferencia estadística se basan en suponer
+que las observaciones \(X_{1},\ldots,X_{n}\) son una muestra aleatoria
+simple (m.a.s.) de \(X\). Por tanto suponen que las observaciones son
+independientes (o los errores, en el caso de un modelo de regresión).
+
+\begin{itemize}
+\item
+  La ausencia de aleatoriedad es difícil de corregir y puede influir
+  notablemente en el análisis estadístico.
+\item
+  Si existe dependencia entre las observaciones muestrales (e.g.~el
+  conocimiento de \(X_{i}\) proporciona información sobre los valores de
+  \(X_{i+1}\), \(X_{i+2}\), \(\ldots\)), los métodos ``clásicos'' no
+  serán en principio adecuados (pueden conducir a conclusiones
+  erróneas).
+
+  \begin{itemize}
+  \item
+    Esto es debido principalmente a que introduce un sesgo en los
+    estimadores de las varianzas (diseñados asumiendo independencia).
+  \item
+    Los correspondientes intervalos de confianza y contrastes de
+    hipótesis tendrán una confianza o una potencia distinta de la que
+    deberían (aunque las estimaciones de los parámetros pueden no verse
+    muy afectadas).
+  \end{itemize}
+\end{itemize}
+
+Si \(X_{1}\) e \(X_{2}\) son independientes (\(Cov(X_{1},X_{2})=0\)):
+\[Var(X_{1}+X_{2})=Var(X_{1})+Var(X_{2})\]
+
+En el caso general (dependencia):
+\[Var(X_{1}+X_{2})=Var(X_{1})+Var(X_{2})+2Cov(X_{1},X_{2})\]
+
+Típicamente \(Cov(X_{1},X_{2})>0\) por lo que con los métodos
+``clásicos'' (basados en independencia) se suelen producir
+subestimaciones de las varianzas (IC más estrechos y tendencia a
+rechazar \(H_{0}\) en contrastes).
+
+\textbf{Ejemplo}: datos simulados
+
+Consideramos un proceso temporal estacionario con dependencia
+exponencial (la dependencia entre las observaciones depende del
+``salto'' entre ellas; ver Ejemplo \ref{exm:funcional} en la Sección
+\ref{fact-cov}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n <-}\StringTok{ }\DecValTok{100}          \CommentTok{# Nº de observaciones}
+\NormalTok{t <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DataTypeTok{length =}\NormalTok{ n)}
+\NormalTok{mu <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, n)   }\CommentTok{# Media}
+\CommentTok{# mu <- 0.25 + 0.5*t}
+\CommentTok{# mu <- sin(2*pi*t)}
+
+\CommentTok{# Matriz de covarianzas}
+\NormalTok{t.dist <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(}\KeywordTok{dist}\NormalTok{(t))}
+\NormalTok{t.cov <-}\StringTok{ }\KeywordTok{exp}\NormalTok{(}\OperatorTok{-}\NormalTok{t.dist)}
+\CommentTok{# str(t.cov)}
+\CommentTok{# num [1:100, 1:100] 1 0.99 0.98 0.97 0.96 ...}
+
+\CommentTok{# Simulación de las observaciones}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\KeywordTok{library}\NormalTok{(MASS)}
+
+\NormalTok{z <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(n)}
+\NormalTok{x1 <-}\StringTok{ }\NormalTok{mu }\OperatorTok{+}\StringTok{ }\NormalTok{z }\CommentTok{# Datos independientes}
+\NormalTok{x2 <-}\StringTok{ }\KeywordTok{mvrnorm}\NormalTok{(}\DecValTok{1}\NormalTok{, mu, t.cov) }\CommentTok{# Datos dependientes}
+
+\KeywordTok{plot}\NormalTok{(t, mu, }\DataTypeTok{type=}\StringTok{"l"}\NormalTok{, }\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{, }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{), }\DataTypeTok{ylab =} \StringTok{'x'}\NormalTok{)}
+\KeywordTok{lines}\NormalTok{(t, x1, }\DataTypeTok{col =} \StringTok{'blue'}\NormalTok{)}
+\KeywordTok{lines}\NormalTok{(t, x2, }\DataTypeTok{col =} \StringTok{'red'}\NormalTok{)}
+\KeywordTok{legend}\NormalTok{(}\StringTok{"bottomright"}\NormalTok{, }\DataTypeTok{legend =} \KeywordTok{c}\NormalTok{(}\StringTok{"Datos independientes"}\NormalTok{, }\StringTok{"Datos dependientes"}\NormalTok{), }\DataTypeTok{col =} \KeywordTok{c}\NormalTok{(}\StringTok{'blue'}\NormalTok{, }\StringTok{'red'}\NormalTok{), }\DataTypeTok{lty =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-11-1} \end{center}
+
+En el caso anterior la varianza es uno con ambos procesos. Las
+estimaciones suponiendo independencia serían:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{var}\NormalTok{(x1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.8067621
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{var}\NormalTok{(x2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.1108155
+\end{verbatim}
+
+En el caso de datos dependientes se produce una clara subestimación de
+la varianza
+
+\subsection{Métodos para detectar
+dependencia}\label{metodos-para-detectar-dependencia}
+
+Es de esperar que datos cercanos en el tiempo (o en el espacio) sean más
+parecidos (dependientes) que datos más alejados, hablaríamos entonces de
+dependencia temporal (espacial o espacio-temporal).
+
+En esta sección nos centraremos en el caso de dependencia temporal
+(unidimensional). Entre los métodos para detectar este tipo de
+dependencia destacaríamos:
+
+\begin{itemize}
+\item
+  Gráficos:
+
+  \begin{itemize}
+  \item
+    Secuencial / Dispersión frente al tiempo
+  \item
+    Dispersión retardado
+  \item
+    Correlograma
+  \end{itemize}
+\item
+  Contrastes:
+
+  \begin{itemize}
+  \item
+    Tests basados en rachas
+  \item
+    Test de Ljung-Box
+  \end{itemize}
+\end{itemize}
+
+\subsection{Gráfico secuencial}\label{grafico-secuencial}
+
+El gráfico de dispersión \(\{(i,X_{i}) : i = 1, \ldots, n \}\) permite
+detectar la presencia de un efecto temporal (en la tendencia o en la
+variabilidad).
+
+\begin{itemize}
+\item
+  Es importante mantener/guardar el orden de recogida de los datos.
+\item
+  Si existe una tendencia los datos no son homogéneos (debería tenerse
+  en cuenta la variable índice, o tiempo, como variable explicativa).
+  Podría indicar la presencia de un ``efecto aprendizaje''.
+\item
+  Comandos R: \texttt{plot(as.ts(x))}
+\end{itemize}
+
+Ejemplo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{old.par <-}\StringTok{ }\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(datos, }\DataTypeTok{type =} \StringTok{'l'}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{as.ts}\NormalTok{(datos))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/grafsec-1} 
+
+}
+
+\caption{Ejemplos de gráficos secuenciales.}\label{fig:grafsec}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(old.par)}
+\end{Highlighting}
+\end{Shaded}
+
+Es habitual que este tipo de análisis se realice sobre los residuos de
+un modelo de regresión (e.g.
+\texttt{datos\ \textless{}-\ residuals(modelo)})
+
+Este gráfico también podría servir para detectar dependencia temporal:
+
+\begin{itemize}
+\item
+  Valores próximos muy parecidos (valores grandes seguidos de grandes y
+  viceversa) indicarían una posible dependencia positiva.
+\item
+  Valores próximos dispares (valores grandes seguidos de pequeños y
+  viceversa) indicarían una posible dependencia negativa.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{old.par <-}\StringTok{ }\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(x2, }\DataTypeTok{type =} \StringTok{'l'}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{''}\NormalTok{, }\DataTypeTok{main =} \StringTok{'Dependencia positiva'}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(x1, }\DataTypeTok{type =} \StringTok{'l'}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{''}\NormalTok{, }\DataTypeTok{main =} \StringTok{'Independencia'}\NormalTok{)}
+\NormalTok{x3 <-}\StringTok{ }\NormalTok{x2 }\OperatorTok{*}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\OperatorTok{-}\DecValTok{1}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(x3, }\DataTypeTok{type =} \StringTok{'l'}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{''}\NormalTok{, }\DataTypeTok{main =} \StringTok{'Dependencia negativa'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-13-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(old.par)}
+\end{Highlighting}
+\end{Shaded}
+
+pero suele ser preferible emplear un gráfico de dispersión retardado.
+
+\subsection{Gráfico de dispersion
+retardado}\label{grafico-de-dispersion-retardado}
+
+El gráfico de dispersión \(\{(X_{i},X_{i+1}) : i = 1, \ldots, n-1 \}\)
+permite detectar dependencias a un retardo (relaciones entre valores
+separados por un instante)
+
+\begin{itemize}
+\tightlist
+\item
+  Comando
+  R:\texttt{plot(x{[}-length(x){]},\ x{[}-1{]},\ xlab\ =\ "X\_t",\ ylab\ =\ "X\_t+1")}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{old.par <-}\StringTok{ }\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(x2[}\OperatorTok{-}\KeywordTok{length}\NormalTok{(x2)], x2[}\OperatorTok{-}\DecValTok{1}\NormalTok{], }\DataTypeTok{xlab =} \StringTok{"X_t"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"X_t+1"}\NormalTok{, }\DataTypeTok{main =} \StringTok{'Dependencia positiva'}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(x1[}\OperatorTok{-}\KeywordTok{length}\NormalTok{(x1)], x1[}\OperatorTok{-}\DecValTok{1}\NormalTok{], }\DataTypeTok{xlab =} \StringTok{"X_t"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"X_t+1"}\NormalTok{, }\DataTypeTok{main =} \StringTok{'Independencia'}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(x3[}\OperatorTok{-}\KeywordTok{length}\NormalTok{(x3)], x3[}\OperatorTok{-}\DecValTok{1}\NormalTok{], }\DataTypeTok{xlab =} \StringTok{"X_t"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"X_t+1"}\NormalTok{, }\DataTypeTok{main =} \StringTok{'Dependencia negativa'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-14-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(old.par)}
+\end{Highlighting}
+\end{Shaded}
+
+Se puede generalizar al gráfico
+\(\{(X_{i},X_{i+k}) : i = 1, \ldots, n-k \}\) que permite detectar
+dependencias a \(k\) retardos (separadas \(k\) instantes).
+
+\textbf{Ejemplo}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Gráfico de dispersion retardado}
+\KeywordTok{plot}\NormalTok{(datos[}\OperatorTok{-}\KeywordTok{length}\NormalTok{(datos)], datos[}\OperatorTok{-}\DecValTok{1}\NormalTok{], }\DataTypeTok{xlab =} \StringTok{"X_t"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"X_t+1"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-15-1} \end{center}
+
+El correspondiente coeficiente de correlación es una medida numérica del
+grado de relación lineal (denominado autocorrelación de orden 1).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cor}\NormalTok{(datos[}\OperatorTok{-}\KeywordTok{length}\NormalTok{(datos)], datos[}\OperatorTok{-}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.01344127
+\end{verbatim}
+
+\textbf{Ejemplo}: Calidad de un generador aleatorio
+
+En el caso de una secuencia muy grande de número pseudoaleatorios
+(supuestamente independientes), sería muy dificil distinguir un patrón a
+partir del gráfico anterior. La recomendación en R sería utilizar puntos
+con color de relleno:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(u[}\OperatorTok{-}\KeywordTok{length}\NormalTok{(u)], u[}\OperatorTok{-}\DecValTok{1}\NormalTok{], }\DataTypeTok{xlab=}\StringTok{"U_t"}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"U_t+1"}\NormalTok{, }\DataTypeTok{pch=}\DecValTok{21}\NormalTok{, }\DataTypeTok{bg=}\StringTok{"white"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/dispret-1} 
+
+}
+
+\caption{Ejemplos de gráficos de dispensión retardados de dos secuencias de longitud 10000.}\label{fig:dispret}
+\end{figure}
+
+Si se observa algún tipo de patrón indicaría dependencia (se podría
+considerar como una versión descriptiva del denominado ``Parking lot
+test''). Se puede generalizar también a \(d\)-uplas
+\((X_{t+1},X_{t+2},\ldots,X_{t+d})\) (ver ejemplo del generador RANDU en
+Figura \ref{fig:randu} de la Sección \ref{gen-cong}).
+
+\subsection{El correlograma}\label{el-correlograma}
+
+Para estudiar si el grado de relación (lineal) entre \(X_{i}\) e
+\(X_{i+k}\) podemos utilizar el coeficiente de correlación:
+
+\[\rho\left(  X_{i},X_{i+k}\right) = \frac{Cov\left(  X_{i},X_{i+k}\right)    }
+{\sigma\left(  X_{i}\right)  \sigma\left(  X_{i+k}\right)  }\]
+
+\begin{itemize}
+\item
+  En el caso de datos homogéneos (estacionarios) la correlación sería
+  función únicamente del salto:
+  \[\rho\left(  X_{i},X_{i+k}\right)  \equiv\rho\left(  k\right)\]
+  denominada función de autocorrelación simple (fas) o correlograma.
+\item
+  Su estimador es el correlograma muestral:
+  \[r(k)=\frac{\sum_{i=1}^{n-k}(X_{i}-\overline{X})(X_{i+k}-\overline{X})}
+  {\sum_{i=1}^{n}(X_{i}-\overline{X})^{2}}\]
+\item
+  Comando R:\texttt{acf(x)}
+\end{itemize}
+
+En caso de independencia es de esperar que las autocorrelaciones
+muestrales sean próximas a cero (valores ``grandes'' indicarían
+dependencia positiva o negativa según el signo).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{old.par <-}\StringTok{ }\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{))}
+\KeywordTok{acf}\NormalTok{(x1, }\DataTypeTok{main =} \StringTok{'Independencia'}\NormalTok{)}
+\KeywordTok{acf}\NormalTok{(x2, }\DataTypeTok{main =} \StringTok{'Dependencia positiva'}\NormalTok{)}
+\KeywordTok{acf}\NormalTok{(x3, }\DataTypeTok{main =} \StringTok{'Dependencia negativa'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-18-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(old.par)}
+\end{Highlighting}
+\end{Shaded}
+
+Suponiendo normalidad e independencia, asintóticamente:
+\[r(k)\underset{aprox.}{\sim}N\left(  \rho(k),\frac{1}{n}\right)\]
+
+\begin{itemize}
+\item
+  Si el tamaño muestral es grande, podríamos aceptar \(H_{0}:\)
+  \(\rho\left( k\right) = 0\) si:\[|r(k)|<\dfrac{2}{\sqrt{n}}\]
+\item
+  En el \emph{gráfico de autocorrelaciones muestrales} (también
+  denominado correlograma) se representan las estimaciones \(r(k)\) de
+  las autocorrelaciones correspondientes a los primeros retardos
+  (típicamente \(k<n/4\)) y las correspondientes bandas de confianza
+  (para detectar dependencias significativas).
+\end{itemize}
+
+\textbf{Ejemplo}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{acf}\NormalTok{(datos)  }\CommentTok{# correlaciones}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-19-1} \end{center}
+
+La función \texttt{acf} también permite estimar el
+covariograma\footnote{En algunos campos, como en estadística espacial,
+  en lugar del covariograma se suele emplear el semivariograma
+  \(\gamma(k) = C(0) - C(k)\).}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{covar <-}\StringTok{ }\KeywordTok{acf}\NormalTok{(x2, }\DataTypeTok{type =} \StringTok{"covariance"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-20-1} \end{center}
+
+\subsection{Test de rachas}\label{test-de-rachas}
+
+Permite contrastar si el orden de aparición de dos valores de una
+variable dicotómica es aleatorio. Supongamos que \(X\) toma los valores
+\(+\) y \(-\) y que observamos una muestra del tipo:
+\[++++---+++--++++++----\] y nos interesa contrastar:
+
+\[\left\{ \begin{array}[c]{l}
+    H_{0}:\mathit{La\ muestra\ es\ aleatoria}\\
+    H_{1}:\mathit{La\ muestra\ no\ es\ aleatoria}
+\end{array}
+\right.\]
+
+Una \emph{racha} es una secuencia de observaciones iguales (o
+similares):
+\[\underbrace{++++}_{1}\underbrace{---}_{2}\underbrace{+++}_{3}
+\underbrace{--}_{4}\underbrace{++++++}_{5}\underbrace{----}_{6}\]
+
+\begin{itemize}
+\item
+  Una muestra con ``muchas'' o ``pocas'' rachas sugeriría que la muestra
+  no es aleatoria (con dependencia negativa o positiva, respec.).
+\item
+  Estadístico del contraste:
+  \[R=\text{"Número total de rachas en la muestra"}\]
+\item
+  Bajo la hipótesis nula de aleatoriedad:
+  \[R\underset{aprox.}{\sim}N\left(  1+\frac{2n_{1}n_{2}}{n},
+  \frac{2n_{1}n_{2}(2n_{1}n_{2}-n)}{n^{2}(n-1)}\right)\] siendo
+  \(n_{1}\) y \(n_{2}\) el nº de signos \(+\) y \(-\) en la muestra,
+  respectivamente (\(n_{1}+n_{2}=n\)). Para tamaños muéstrales pequeños
+  (\(n<40\)), esta aproximación no es buena y conviene utilizar la
+  distribución exacta (o utilizar corrección por continuidad). Los
+  valores críticos de esta distribución están tabulados.
+\end{itemize}
+
+Este contraste se emplea también para variables continuas, se fija un
+punto de corte para dicotomizarlas. Normalmente se toma como punto de
+corte la mediana.
+
+\begin{itemize}
+\item
+  En este caso si \(k=n_{1}\) (\(\simeq n_{2}\)):
+  \[R\underset{aprox.}{\sim}N\left(  k+1,\frac{k(k-1)}{2k-1}\right)\]
+\item
+  Se rechaza la hipótesis nula de aleatoriedad si el número de rachas es
+  significativamente pequeño o grande.
+\item
+  Si el tamaño muestral es grande, el \(p\)-valor será:
+  \[p \simeq 2 P\left( Z \geq \left\vert 
+  \frac{R-E(R)}{\sqrt{Var(R)}} \right\vert \right)\]
+\item
+  Comandos R:
+  \texttt{tseries::runs.test(as.factor(x\ \textgreater{}\ median(x)))}
+\end{itemize}
+
+\textbf{Ejemplo}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tseries)}
+\KeywordTok{runs.test}\NormalTok{(}\KeywordTok{as.factor}\NormalTok{(datos }\OperatorTok{>}\StringTok{ }\KeywordTok{median}\NormalTok{(datos)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Runs Test
+## 
+## data:  as.factor(datos > median(datos))
+## Standard Normal = -0.4422, p-value = 0.6583
+## alternative hypothesis: two.sided
+\end{verbatim}
+
+Alternativamente, para evitar el cálculo del punto de corte (la
+mediana), requerido para dicotomizar la variable continua, se podría
+emplear una modificación de este contraste, el denominado test de rachas
+ascendentes y descendentes, en el que se generan los valores \(+\) y
+\(-\) dependiendo de si el valor de la secuencia es mayor o menor que el
+anterior (ver e.g.~Downham, 1970). Este contraste es más adecuado para
+generadores aleatorios.
+
+\subsection{El contraste de Ljung-Box}\label{el-contraste-de-ljung-box}
+
+Es un test muy utilizado (en series de tiempo) para contrastar la
+hipótesis de independencia. Se contrasta la hipótesis nula de que las
+primeras \(m\) autocorrelaciones son cero: \[\left\{\begin{array}[c]{l}
+    H_{0}:\rho_{1}=\rho_{2}=\ldots=\rho_{m}=0\\
+    H_{1}:\rho_{i}\neq0\text{ para algún } i
+\end{array}
+\right.\]
+
+\begin{itemize}
+\item
+  Se elige un \(m\) tal que la estimación \(r(m)\) de
+  \(\rho_{m}=\rho(m)\) sea ``fiable'' (e.g. \(10\log_{10}n\)).
+\item
+  El estadístico del contraste:
+  \[Q=n(n+2)\sum_{k=1}^{m}\frac{r(k)^{2}}{n-k}\underset{aprox.}{\sim}\chi
+  _{m}^{2}\text{, si }H_{0}\text{ es cierta.}\]
+\item
+  Se rechaza \(H_{0}\) si el valor observado es grande
+  (\(Q\geq \chi_{m,1-\alpha}^{2}\)):
+  \[p=P\left(  {\chi_{m}^{2}}\geq Q\right)\]
+\item
+  Comandos R:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \KeywordTok{Box.test}\NormalTok{(x, }\DataTypeTok{type=}\NormalTok{Ljung)}
+    \KeywordTok{Box.test}\NormalTok{(x, lag, }\DataTypeTok{type=}\NormalTok{Ljung)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Ejemplo}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{Box.test}\NormalTok{(datos, }\DataTypeTok{type=}\StringTok{"Ljung"}\NormalTok{) }\CommentTok{# Contrasta si la primera autocorrelación es nula }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Box-Ljung test
+## 
+## data:  datos
+## X-squared = 0.0078317, df = 1, p-value = 0.9295
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{Box.test}\NormalTok{(datos, }\DataTypeTok{lag=}\DecValTok{5}\NormalTok{, }\DataTypeTok{type=}\StringTok{"Ljung"}\NormalTok{) }\CommentTok{# Contrasta si las 5 primeras autocorrelaciones son nulas}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Box-Ljung test
+## 
+## data:  datos
+## X-squared = 1.2556, df = 5, p-value = 0.9394
+\end{verbatim}
+
+NOTA: Cuando se trabaja con residuos de un modelo lineal, para
+contrastar que la primera autocorrelación es cero, es preferible emplear
+el test de Durbin-Watson implementado en la función \texttt{dwtest()}
+del paquete \texttt{lmtest}.
+
+\section{Contrastes específicos para generadores
+aleatorios}\label{contrastes-especificos-para-generadores-aleatorios}
+
+Los contrastes generales anteriores pueden ser muy poco adecuados para
+testear generadores de números pseudoaleatorios (ver e.g.~L'Ecuyer y
+Simard, 2007). Por ese motivo se han desarrollado contrastes
+específicos, principalmente con el objetivo de encontrar un generador
+con buenas propiedades criptográficas.
+
+Muchos de estos contrastes están basados en la prueba chi-cuadrado y
+trabajan con enteros en lugar de los valores uniformes. El procedimiento
+habitual consiste en fijar un entero positivo \(K\), y discretizar los
+valores uniformes \(U_{1},U_{2},\ldots,U_{n}\), de la forma:
+\[X_i = \left\lfloor K\cdot U_{i}\right\rfloor + 1 ,\] donde
+\(\left\lfloor u\right\rfloor\) denota la parte entera de \(u\). De esta
+forma se consigue una sucesión de enteros aleatorios supuestamente
+independientes con distribución uniforme en \(\{1, \ldots, K\}\).
+
+En está sección se describirán algunos de los métodos tradicionales en
+este campo con fines ilustrativos. Si realmente el objetivo es
+diagnosticar la calidad de un generador, la recomendación sería emplear
+las baterías de contrastes más recientes descritas en la Sección
+\ref{baterias}.
+
+\subsection{Contraste de frecuencias}\label{contraste-de-frecuencias}
+
+Empleando la discretización anterior se simplifica notablemente el
+contraste chi-cuadrado de bondad de ajuste a una uniforme, descrito en
+la Sección \ref{chi2test} e implementado en la función
+\texttt{chisq.test.cont()}. En este caso bastaría con contrastar la
+equiprobabilidad de la secuencia de enteros (empleando directamente la
+función \texttt{chisq.test()}) y este método de denomina \emph{contraste
+de frecuencias} (frequency test). Por ejemplo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{u <-}\StringTok{ }\KeywordTok{runif}\NormalTok{(}\DecValTok{1000}\NormalTok{)}
+
+\NormalTok{k <-}\StringTok{ }\DecValTok{10}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{floor}\NormalTok{(k}\OperatorTok{*}\NormalTok{u) }\OperatorTok{+}\StringTok{ }\DecValTok{1}
+\CommentTok{# Test chi-cuadrado}
+\NormalTok{f <-}\StringTok{ }\KeywordTok{table}\NormalTok{(}\KeywordTok{factor}\NormalTok{(x, }\DataTypeTok{levels =} \KeywordTok{seq_len}\NormalTok{(k)))}
+\KeywordTok{chisq.test}\NormalTok{(f)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Chi-squared test for given probabilities
+## 
+## data:  f
+## X-squared = 10.26, df = 9, p-value = 0.3298
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Equivalente a}
+\CommentTok{# source("Test Chi-cuadrado continua.R")  }
+\CommentTok{# chisq.test.cont(u, distribution = "unif", nclasses = k, output = FALSE, min = 0, max = 1)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Contraste de series}\label{contraste-de-series}
+
+El contraste anterior se puede generalizar a contrastar la uniformidad
+de las \(d\)-uplas \((X_{t+1},X_{t+2},\ldots,X_{t+d})\) con
+\(t=(i-1)d\), \(i=1,\ldots,m\) siendo \(m=\lfloor n/d \rfloor\). La idea
+es que troceamos el hipercubo \([0, 1]^d\) en \(K^d\) celdas
+equiprobables. Considerando como categorías todos los posibles valores
+de las \(d\)-uplas, podemos emplear el estadístico chi-cuadrado para
+medir la discrepancia entre las frecuencias observadas en y las
+esperadas, iguales todas a \(\frac{m}{K^d}\). La elecciones más
+frecuentes son \(d=2\) (contraste de pares seriados) y \(K=8\), \(10\) ó
+\(20\). Por ejemplo, la función \texttt{serial.test()} del paquete
+\texttt{randtoolbox} implementa este contraste para \(d=2\).
+
+Para que la prueba chi-cuadrado sea fiable el valor de \(n\) debería ser
+grande en comparación con el número de categorías \(K^d\) (e.g.
+\(n \geq 5dK^d\)). Si se considera un valor \(d \geq 3\) puede ser
+necesario reducir considerablemente el valor de \(K\) para evitar
+considerar demasiadas categorías. Alternativamente se podrían emplear
+pruebas menos precisas como el contraste del poker o del coleccionista
+descritos a continuación.
+
+\subsection{El contraste del poker}\label{el-contraste-del-poker}
+
+En el contrate del poker ``clásico'' se consideran conjuntos sucesivos
+de cinco enteros y, para cada uno, se determina cuál de las siguientes
+posibilidades se da:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Un mismo entero se repite cinco veces (abreviadamente, \(AAAAA\)).
+\item
+  Un mismo entero se repite cuatro veces y otro distinto aparece una vez
+  (\(AAAAB\)).
+\item
+  Un entero se repite tres veces y otro distinto se repite dos
+  (\(AAABB\)).
+\item
+  Un entero se repite tres veces y otros dos distintos aparecen una vez
+  cada uno (\(AAABC\)).
+\item
+  Un entero se repite dos veces, otro distinto se repite también dos
+  veces y un tercer entero diferente aparece una sóla vez (\(AABBC\)).
+\item
+  Un entero se repite dos veces y otros tres distintos aparecen una vez
+  cada uno (\(AABCD\)).
+\item
+  Los cinco enteros que aparecen son todos distintos (\(ABCDE\)).
+\end{enumerate}
+
+Bajo las hipótesis de aleatoriedad y uniformidad, se pueden calcular las
+probabilidades de estas modalidades. Por ejemplo para \(K=10\)
+obtendríamos:
+
+\[\begin{aligned}
+P(AAAAA) & =0.0001, P(AAAAB)=0.0045, P(AAABB)=0.0090,\\
+P(AAABC) & =0.0720, P(AABBC)=0.1080, P(AABCD)=0.5040,\\
+P(ABCDE) & =0.3024.
+\end{aligned}\]
+
+Es frecuente que las clases \(AAAAA\) y \(AAAAB\) se agrupen a la hora
+de aplicar el test chi-cuadrado, ya que, en caso contrario, la
+restricción habitual \(e_{i}\geq5\) llevaría a que
+\(0.0001\cdot\frac{n}{5}\geq5\), es decir, \(n\geq250\,000\).
+
+Es habitual simplificar el contraste anterior para facilitar su
+implementación definiendo las categorías según el número de enteros
+distintos de entre los cinco observados. Así obtendríamos:
+\[\begin{aligned}
+P(\text{1 entero diferente}) & = 0.0001,
+P(\text{2 enteros diferentes}) = 0.0135,\\
+P(\text{3 enteros diferentes}) & = 0.1800, 
+P(\text{4 enteros diferentes}) = 0.5040,\\
+P(\text{5 enteros diferentes}) & = 0.3024,
+\end{aligned}\] procediendo también a agrupar las dos primeras
+modalidades.
+
+En el caso general de considerar \(d\)-uplas (manos de \(d\) cartas con
+\(K\) posibilidades cada una), la probabilidad de obtener \(c\) valores
+(cartas) diferentes es (e.g.~Knuth, 2002, Sección 3.3.2, p.~64):
+\[P(C=c) = \frac{K!}{(K-c)!K^d}S(d,c),\] donde \(S(d,c)\) es el número
+de Stirling de segunda clase, definido como el número de formas que
+existen de hacer una partición de un conjunto de \(d\) elementos en
+\(c\) subconjuntos:
+\[S(d,c) = \frac{1}{c!}\sum_{i=0}^{c} (-1)^{i} \binom{c}{i} (c-i)^d.\]
+Por ejemplo, la función \texttt{poker.test()} del paquete
+\texttt{randtoolbox} implementa este contraste para el caso de \(d=K\).
+
+\subsection{El contraste del
+coleccionista}\label{el-contraste-del-coleccionista}
+
+Por simplicidad describiremos el caso de \(d=1\) (con \(K\) categorías).
+Considerando la sucesión de enteros aleatorios se procede (como un
+coleccionista) a contabilizar cuál es el número, \(Q\), (aleatorio) de
+valores consecutivos hasta que se completa la colección de todos los
+enteros entre \(1\) y \(K\). Obviamente, bajo las hipótesis de
+aleatoriedad y uniformidad, cada posible entero entre \(1\) y \(K\)
+tiene la misma probabilidad de aparecer en cada generación y, por tanto,
+resulta posible calcular la distribución de probabilidad de \(Q\). De
+esta forma podemos utilizar los valores calculados de las probabilidades
+\[P( Q = K ), P( Q = K+1 ),\ldots, P( Q = M -1 ), P( Q \geq M ),\] para
+obtener las frecuencias esperadas de cada clase y confrontarlas con las
+observadas vía el estadístico chi-cuadrado (e.g.~Knuth, 2002, Sección
+3.3.2, p.~65).
+
+Existen varias elecciones comunes de \(K\) y \(M\). Tomando \(K=5\) con
+clases \(Q=5\), \(Q=6\), \(\ldots\), \(Q=19\), \(Q\geq20\), las
+probabilidades vendrían dadas por: \[\begin{array}{rr}
+P( Q = 5 ) = 0.03840000, \ & P( Q = 6 ) = 0.07680000,\\
+P( Q = 7 ) = 0.09984000, \ & P( Q = 8 ) = 0.10752000,\\
+P( Q = 9 ) = 0.10450944, \ & P( Q = 10 ) = 0.09547776,\\
+P( Q = 11 ) = 0.08381645, \ & P( Q = 12 ) = 0.07163904,\\
+P( Q = 13 ) = 0.06011299, \ & P( Q = 14 ) = 0.04979157,\\
+P( Q = 15 ) = 0.04086200, \ & P( Q = 16 ) = 0.03331007,\\
+P( Q = 17 ) = 0.02702163, \ & P( Q = 18 ) = 0.02184196,\\
+P( Q = 19 ) = 0.01760857, \ & P( Q\geq20 ) = 0.07144851.
+\end{array}\]
+
+Para \(K=10\) se podrían considerar las siguientes categorías (con sus
+correspondientes probabilidades): \[\begin{array}{rr}
+P( 10 \leq Q \leq 19 ) = 0.17321155, \ & P( 20 \leq Q \leq 23 ) = 0.17492380,\\
+P( 24 \leq Q \leq 27 ) = 0.17150818, \ & P( 28 \leq Q \leq 32 ) = 0.17134210,\\
+P( 33 \leq Q \leq 39 ) = 0.15216056, \ & P( Q \geq 40 ) =0.15685380.
+\end{array}\]
+
+\chapter{Integración numérica}\label{integracion-numerica}
 
 En muchos casos nos puede interesar la aproximación de una integral
 definida. En estadística, además del caso de Inferencia Bayesiana (que
-trataremos más adelante empleando Integración Montecarlo), nos puede
-interesar por ejemplo aproximar mediante simulación el error cuadrático
-integrado medio (MISE) de un estimador. En el caso de una densidad
-univariante sería de la forma:
+se trató en el Capítulo 12 empleando Integración Montecarlo y MCMC), nos
+puede interesar por ejemplo aproximar mediante simulación el error
+cuadrático integrado medio (MISE) de un estimador. En el caso de una
+densidad univariante sería de la forma:
 \[MISE \left\{ \hat{f} \right\} = \operatorname{E}\int (\hat{f}(x)-f(x))^2 \, dx\]
 
 Cuendo el numero de dimensiones es pequeño, nos puede ineteresar emplear
@@ -10044,7 +11821,7 @@ Consideraremos como ejemplo: \[\int_{0}^{1}4x^{3}dx=1\].
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Integracion_numerica_files/figure-latex/unnamed-chunk-2-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{23-Integracion_numerica_files/figure-latex/unnamed-chunk-2-1} \end{center}
 
 \subsection{Método del trapezoide}\label{metodo-del-trapezoide}
 
@@ -10275,7 +12052,7 @@ paquete \texttt{npsp}).
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Integracion_numerica_files/figure-latex/unnamed-chunk-9-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{23-Integracion_numerica_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 \subsection{Método del trapezoide}\label{metodo-del-trapezoide-1}
 
