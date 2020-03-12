@@ -1,52 +1,65 @@
 
-Simulación de Distribuciones Multidimensionales
-===============================================
+Simulación de distribuciones multivariantes
+===========================================
+
+<!-- 
+bookdown::preview_chapter("07-Simulacion_multidimensional.Rmd") 
+-->
 
 ```{r , child = '_global_options.Rmd'}
 ```
 
-Introducción
-------------
+La simulación de vectores aleatorios $\mathbf{X} =\left( X_1,X_2,\ldots,X_d\right)$ que sigan cierta distribución dada no es tarea siempre sencilla. 
+En general, no resulta una extensión inmediata del caso unidimensional, 
+aúnque muchos de los algoritmos descritos en los temas anteriores (como el de aceptación-rechazo o el de composición) son válidos para distribuciones multivariantes.
+En este caso sin embargo, puede ser mucho más dificil cumplir los requerimientos (e.g. encontrar una densidad auxiliar adecuada) y los algoritmos obtenidos pueden ser computacionalmente poco eficientes (especialmente si el número de dimensiones es grande).
 
-Supongamos que se pretende simular un vector aleatorio
-$\mathbf{X} =\left( X_1,X_2,\ldots,X_d\right)$ con función
-de densidad conjunta $f\left( x_1,x_2,\ldots,x_d\right)$
-(análogo para una función de densidad discreta con función de masa de probabilidad).
+En las primeras secciones de este capítulo supondremos que se pretende simular una variable aleatoria multidimensional continua $\mathbf{X}$ con función de densidad conjunta $f\left( x_1, x_2, \ldots , x_d\right)$ (aunque muchos resultados serán válidos para variables discretas multidimensionales, simplemente cambiando funciones de densidad por las correspondientes de masa de probabilidad).
+En la Sección \@ref(mult-discr) se tratará brevemente la simulación de vectores aleatorios discretos y de tablas de contingencia, centrándose en el caso bidimensional.
 
-Si las componentes son independientes y $f_i$ son las
-correspondientes densidades marginales, bastará con generar
-$X_i \sim f_i$.
-Las dificultades aparecen cuando se quieren simular componentes con
-una determinada estructura de dependencia.
+Simulación de componentes independientes
+----------------------------------------
 
-```{example, name="simulación de normales independientes"}
+Si las componentes son independientes y $f_i$ son las correspondientes densidades marginales, bastará con generar $X_i \sim f_i$.
+Las dificultades aparecerán cuando se quiera simular componentes con una determinada estructura de dependencia.
+
+```{example, label="normind", name="simulación de normales independientes"}
 ```
 
-Si:
-$$\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right)$$
-con $\boldsymbol\mu =\left( \mu_1,\mu_2,\ldots,\mu_d\right)^t$ y
-$\Sigma=diag\left( \sigma_1^2,\sigma_2^2,\ldots,\sigma_d^2\right)$,
-entonces $X_i \sim \mathcal{N}\left( \mu_i,\sigma_i^2\right)$.
+Si $\boldsymbol\mu =\left( \mu_1,\mu_2,\ldots,\mu_d\right)^t$ es un vector (de medias) y
+$\Sigma$ es una matriz $d \times d$ definida positiva (de varianzas-covarianzas), el vector aleatorio $\mathbf{X}$ sigue una distribución normal multivariante con esos parámetros, 
+$\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right)$, 
+si su función de densidad es de la forma:
+$$f(\mathbf x) = \frac{1}{(2\pi)^{n/2}|\Sigma|^{1/2}}
+\exp \left( -\frac{1}{2} ( \mathbf x - \boldsymbol \mu)^t \Sigma^{-1} (\mathbf x - \boldsymbol \mu)
+\right),$$
+donde $| \Sigma |$ es el determinante de $\Sigma$.
+
+Si la matriz de covarianzas es diagonal $\Sigma=diag\left( \sigma_1^2,\sigma_2^2,\ldots,\sigma_d^2\right)$,
+entonces las componentes $X_i \sim \mathcal{N}\left( \mu_i,\sigma_i^2\right)$
+son independientes y podemos simular el vector aleatorio de forma trivial, por ejemplo mediante el siguiente algoritmo:
 
 ```{conjecture, name="de simulación de normales independientes" }
-<!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
-<br> \vspace{0.5cm}
+
+<br> 
 
 1.  Simular $Z_1, Z_2, \ldots, Z_d \sim \mathcal{N} \left( 0, 1 \right)$ independientes.
 
 2.  Para $i = 1, 2, \ldots, d$ hacer $X_i = \mu_i + \sigma_i Z_i$.
 
 ```
-<br>
-Las funciones implementadas en el paquete base de `R` 
-permiten simular fácilmente en el caso independiente. 
-Por ejemplo en el caso bidimensional con $X_1 \sim \mathcal{N}\left( 0, 1\right)$
-y $X_2 \sim \mathcal{N}\left( -1, 0.5^2 \right)$:
 
-```{r fig.cap="Densidades marginales de las componentes."}
+<br>
+
+Las funciones implementadas en el paquete base de `R` permiten simular fácilmente en el caso independiente ya que admiten vectores como parámetros. 
+Por ejemplo en el caso bidimensional con $X_1 \sim \mathcal{N}\left( 0, 1\right)$ y $X_2 \sim \mathcal{N}\left( -1, 0.5^2 \right)$:
+
+(ref:normind-plot) Densidades marginales de las componentes del Ejemplo \@ref(exm:normind). 
+
+```{r normind-plot, fig.cap="(ref:normind-plot)"}
 f1 <- function(x) dnorm(x)
 f2 <- function(x) dnorm(x, -1, 0.5)
-curve(f1, -3, 3, ylim = c(0, f2(-1)), ylab = "f_i(x)")
+curve(f1, -3, 3, ylim = c(0, f2(-1)), ylab = "fdp")
 curve(f2, add = TRUE, lty = 2)
 ```
 Para simular una generación bastaría con:
@@ -67,15 +80,7 @@ rx
 El método de aceptación/rechazo
 -------------------------------
 
-Muchos de los algoritmos descritos en los temas anteriores son válidos para el
-caso multivariante (aceptación-rechazo, cociente de uniformes, composición, ...).
-En este caso sin embargo, puede ser mucho más dificil cumplir los
-requerimientos (e.g. encontrar una densidad auxiliar adecuada) y los
-algoritmos obtenidos pueden ser computacionalmente poco eficientes
-(especialmente si el número de dimensiones es grande).
-
-El algoritmo de aceptación-rechazo sería exactamente el mismo,
-lo único que cambiaría serían que las densidades son multidimensionales.
+El algoritmo de aceptación-rechazo es el mismo que el del caso univariante descrito en la Sección \@ref(AR), la única diferencia es que las densidades son multidimensionales.
 Supongamos que la densidad objetivo $f$ y la densidad
 auxiliar $g$ verifican:
 $$f\left( x_1,x_2,\ldots,x_d\right) \leq c\cdot g\left( x_1,x_2,\ldots,x_d\right) 
@@ -90,18 +95,9 @@ El algoritmo sería:
 3.  Si $c\cdot U\cdot g\left( T_1,T_2,\ldots,T_d\right) \leq f\left( T_1,T_2,\ldots,T_d\right)$
     devolver $\mathbf{X}=\mathbf{T}$.
 
-4.  En caso contrario volver al paso 1.
+    En caso contrario volver al paso 1.
 
 
-<!-- 
-3.  Si $c\cdot U\cdot g\left( T_1,T_2,\ldots,T_d\right) \leq f\left( T_1,T_2,\ldots,T_d\right)$    
-      3.a. devolver $\mathbf{X}=\mathbf{T}$
-    
-    En caso contrario 
-    
-      3.b. volver al paso 1.
- -->
-      
 
 
 Por ejemplo, de forma análoga al caso unidimensional, en el caso de una densidad
@@ -178,7 +174,7 @@ i=1,2,\ldots,d\\
 
 La constante $c$ óptima para la utilización del método de
 aceptación/rechazo es:
-$$c=\max_{\mathbf{x}/g\left( \mathbf{x}\right) > 0}
+$$c=\max_{\{\mathbf{x}:g\left( \mathbf{x}\right) > 0\}}
 \frac{f\left( \mathbf{x}\right)  }{g\left( \mathbf{x}\right)  }
 =\frac{\frac{1}{V_d\left( 1\right)  }}{\frac{1}{2^{d}}}
 =\frac{2^{d}}{V_d\left( 1\right)}$$
@@ -189,7 +185,7 @@ $$\frac{2^{d}}{V_d\left( 1\right)  }U\frac{1}{2^{d}}1_{\left[  -1,1\right]
 }1_{C_d}\left( \mathbf{T}\right),$$ 
 o, lo que es lo mismo, $U1_{\left[  -1,1\right]^{d}}\left( \mathbf
 {T}\right)  \leq1_{C_d}\left( \mathbf{T}\right)$. 
-Dado que el número aleatorio $U$ está en el intervalo $[0,1)$ y que las funciones
+Dado que el número aleatorio $U$ está en el intervalo $(0,1)$ y que las funciones
 indicadoras valen $0$ ó $1$, esta condición equivale a que $1_{\left[
 -1,1\right]  ^{d}}\left( \mathbf{T}\right)  =1_{C_d}\left(
 \mathbf{T}\right)$, es decir, a que
@@ -212,6 +208,8 @@ este caso, el algoritmo queda:
 
 4. Devolver $\mathbf{X} = \left( T_1, T_2, \ldots, T_d \right)^t$.
 
+Ver el Ejercicio \@ref(exr:simpi) para el caso de $d=2$.
+
 Usando las fórmulas del “volumen” de una “esfera” $d$-dimensional:
 $$V_d\left( r\right)  =\left\{
 \begin{array}{ll}
@@ -223,38 +221,41 @@ $c=\frac{2^{d}}{V_d\left(1 \right)}$, puede llegar a ser enórmemente grande.
 Así, si $d=2$ se tiene $c=1.27$, si $d=3$ se tiene $c=1.91$, si $d=4$ entonces $c=3.24$ y para
 $d=10$ resulta $c=401.5$ que es un valor que hace que el algoritmo sea
 tremendamente lento en dimensión $10$.
-Esto está relacionado con la "maldición de la dimensionalidad" (curse of dimensionality),
-a medida que aumenta el número de dimensiones el volumen de la "frontera" crece exponencialmente.
+Esto está relacionado con la *maldición de la dimensionalidad* (curse of dimensionality), a medida que aumenta el número de dimensiones el volumen de la "frontera" crece exponencialmente.
 
 
 Factorización de la matriz de covarianzas {#fact-cov}
 -----------------------------------------
 
-Teniendo en cuenta que si $Cov(\mathbf{X)=}\Sigma$, entonces:
-$$Cov(A\mathbf{X}) = A\Sigma A^t.$$ 
-La idea de este tipo de métodos es simular datos independientes y transformarlos linealmente de
-modo que el resultado tenga la covarianza deseada.
+Teniendo en cuenta que si $Cov(\mathbf{X})= I$, entonces:
+$$Cov(A\mathbf{X}) = AA^t.$$ 
+La idea de este tipo de métodos es simular datos independientes y transformarlos linealmente de modo que el resultado tenga la covarianza deseada $\Sigma = AA^t$.
 
 Este método se emplea principalmente para la simulación de una
 normal multivariante, aunque también es válido para muchas otras
 distribuciónes como la $t$-multivariante.
 
-Si $\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right)$
-y $A$ matriz $p\times d$, entonces:
-$$A\mathbf{X} \sim \mathcal{N}_{p}\left(
-A\boldsymbol\mu,A\Sigma A^t\right).$$
+En el caso de normalidad, el resultado general es el siguiente.
+
+```{proposition}
+<br>
+Si $\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right)$ y $A$ es una matriz $p\times d$, de
+rango máximo, con $p\leq d$, entonces:
+$$A\mathbf{X} \sim \mathcal{N}_{p}\left(A\boldsymbol\mu,A\Sigma A^t\right).$$
+```
 
 Partiendo de $\mathbf{Z} \sim \mathcal{N}_d\left( \mathbf{0},I_d\right)$,
 se podrían considerar distrintas factorizaciones de la 
 matriz de covarianzas:
 
 * Factorización espectral: 
-  $\Sigma=H\Lambda H^t =H\Lambda^{1/2}(H\Lambda^{1/2})^t$
-  $$\mathbf{Y} =\mathbf{\mu+}H\Lambda^{1/2}\mathbf{Z} 
+  $\Sigma=H\Lambda H^t =H\Lambda^{1/2}(H\Lambda^{1/2})^t$,
+  donde $H$ es una matriz ortogonal (i.e. $H^{-1}=H^{t}$), cuyas columnas son los autovectores de la matriz $\Sigma$, y $\Lambda$ es una matriz diagonal, cuya diagonal esta formada por los correspondientes autovalores (positivos). De donde se deduce que:
+  $$\mathbf{Y} =\boldsymbol\mu + H\Lambda^{1/2}\mathbf{Z} 
   \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right).$$
 
-* Factorización de Cholesky: $\Sigma=LL^t$ 
-  $$\mathbf{Y} =\mathbf{\mu+}L\mathbf{Z} 
+* Factorización de Cholesky: $\Sigma=LL^t$, donde $L$ es una matriz triangular inferior (fácilmente invertible), por lo que: 
+  $$\mathbf{Y} =\boldsymbol\mu + L\mathbf{Z} 
   \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right).$$
 
 Desde el punto de vista de la eficiencia computacional la factorización de Cholesky
@@ -264,15 +265,15 @@ puede ser más adecuado emplear la factorización espectral.
 En el primer caso el algoritmo sería el siguiente:
 
 ```{conjecture, name="de simulación de una normal multivariante" }
-<!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
-<br> \vspace{0.5cm}
+
+<br> 
 
 1.  Obtener la factorización de Cholesky $\Sigma=LL^t$.
 
 2.  Simular $\mathbf{Z} =\left( Z_1,Z_2,\ldots,Z_d\right)$
     i.i.d. $\mathcal{N}\left( 0,1\right)$.
 
-3.  Hacer $\mathbf{X} =\mathbf{\mu+}L\mathbf{Z}$.
+3.  Hacer $\mathbf{X} = \boldsymbol\mu + L\mathbf{Z}$.
 
 4.  Repetir los pasos 2 y 3 las veces necesarias.
 
@@ -315,7 +316,10 @@ set.seed(1)
 head(mu + L %*% rnorm(n))
 ```
 y para simular `nsim`:
-```{r , fig.cap = "Realizaciones del proceso funcional."}
+
+(ref:funcional) Realizaciones del proceso funcional del Ejemplo \@ref(exm:funcional), obtenidas a partir de la factorización de Cholesky.
+
+```{r funcional-plot, fig.cap = "(ref:funcional)"}
 z <- matrix(rnorm(nsim * n), nrow = n)
 y <- mu + L %*% z
 
@@ -326,7 +330,9 @@ lines(x, mu, lwd = 2)
 Alternativamente se podría emplear, por ejemplo, la funcion `mvrnorm`
 del paquete `MASS` que emplea la factorización espectral (`eigen`):
 
-```{r }
+(ref:funcional2) Realizaciones del proceso funcional del Ejemplo \@ref(exm:funcional), obtenidas empleando la función `MASS::mvrnorm`.
+
+```{r funcional-plot2, fig.cap = "(ref:funcional2)"}
 library(MASS)
 mvrnorm
 y <- mvrnorm(nsim, mu, x.cov)
@@ -335,8 +341,10 @@ matplot(x, t(y), type = "l")
 lines(x, mu, lwd = 2)
 ```
 
+Otros métodos para variables continuas relacionados con la factorización de la matriz de covarianzas son el método FFT (transformada rápida de Fourier; e.g. Davies y Harte, 1987) o el *Circular embedding* (Dietrich and Newsam, 1997), que realmente son el mismo.
 
-Método de las distribuciones condicionadas
+
+Método de las distribuciones condicionadas {#distrcond}
 ------------------------------------------
 
 Teniendo en cuenta que:
@@ -351,8 +359,8 @@ x_1,x_2,\ldots,x_{i-1}\right)},$$
 se obtiene el siguiente algoritmo general:
 
 ```{conjecture, name="de simulación mediante distribuciones condicionadas" }
-<!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
-<br> \vspace{0.5cm}
+
+<br> 
 
 1.  Generar $X_1 \sim f_1$.
 
@@ -394,7 +402,7 @@ $$f_1\left( x_1\right)  =\left\{
 \end{array}\right.$$ 
 
 Además:
-$$f_2\left( x_2|x_1\right)  =\frac{f\left( x_1,x_2\right)  }{f_1\left( x_1\right)  }=\frac{\frac{1}{\pi}}{\frac{2\sqrt{1-x_1^2}}{\pi}}=\frac{1}{2\sqrt{1-x_1^2}}\text{, si }x_2\in\left[
+$$f_2\left( x_2|x_1\right) = \frac{f\left( x_1,x_2\right)  }{f_1\left( x_1\right)} = \frac{\frac{1}{\pi}}{\frac{2\sqrt{1-x_1^2}}{\pi}}=\frac{1}{2\sqrt{1-x_1^2}}\text{, si }x_2\in\left[
 -\sqrt{1-x_1^2},\sqrt{1-x_1^2}\right]$$ 
 valiendo cero en otro caso. 
 Se tiene entonces que:
@@ -435,21 +443,27 @@ $$\mathbf{X} = \begin{pmatrix}
 
 tendríamos que:
 
-*   $X_1 \sim \mathcal{N}\left( \mu_1, \sigma_1^2 \right)$.
+$$\begin{aligned}
+f(x_1,x_2) &= \frac{1}{2 \pi \sigma_1 \sigma_2 \sqrt{1-\rho^2}} \\
+&\exp \left( -\frac{1}{2 (1-\rho^2)} \left( \frac{(x_1 - \mu_1)^2}{\sigma_1^2} + \frac{(x_2 - \mu_2)^2}{\sigma_2^2} - \frac{2 \rho (x_1 - \mu_1) (x_2 - \mu_2)}{ \sigma_1 \sigma_2} \right)
+\right)
+\end{aligned}$$
 
-*   $X_2 | X_1 \sim \mathcal{N} \left( \mu_2 + \frac{\sigma_2}{\sigma_1}\rho( X_1 - \mu_1),
-    \sigma_2^2 (1-\rho^2) \right)$.
+de donde se deduce (ver e.g. Cao, 2002, p.88; o ecuaciones \@ref(eq:mediacond) y \@ref(eq:varcond) en la Sección \@ref(condnormal)) que:
 
-<!-- 
-incluir cuentas simplificadas? $f_2\left( x_2|x_1\right)  
-=\frac{f\left( x_1,x_2\right)  }{f_1\left( x_1\right)  }$  
--->
+$$f_1( x_1 ) = \frac{1}{\sigma_1\sqrt{2\pi}}
+\exp\left( -\frac{(x_1 - \mu_1)^{2}}{2\sigma_1^{2}}\right)$$
 
-Por lo que el algoritmo sería el siguiente:
+$$\begin{aligned}
+f_2\left( x_2|x_1\right)  &= \frac{f\left( x_1,x_2\right)  }{f_1\left( x_1\right)} \\ &= \frac{1}{\sigma_2\sqrt{2\pi (1-\rho^2)}}
+\exp\left( -\frac{\left(x_2 - \mu_2 - \frac{\sigma_2}{\sigma_1}\rho( x_1 - \mu_1)\right)^{2}}{2\sigma_2^2 (1-\rho^2)}\right)
+\end{aligned}$$
+
+Por tanto $X_1 \sim \mathcal{N}\left( \mu_1, \sigma_1^2 \right)$ y $X_2 | X_1 \sim \mathcal{N} \left( \mu_2 + \frac{\sigma_2}{\sigma_1}\rho( X_1 - \mu_1), \sigma_2^2 (1-\rho^2) \right)$, y el algoritmo sería el siguiente:
 
 ```{conjecture, name="de simulación de una normal bidimensional" }
-<!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
-<br> \vspace{0.5cm}
+
+<br> 
 
 1.  Simular $Z_1, Z_2 \sim \mathcal{N}\left( 0, 1 \right)$ independientes.
 
@@ -473,15 +487,11 @@ Además, esta aproximación puede generalizarse al caso multidimensional, ver Se
 Simulación condicional e incondicional
 --------------------------------------
 
-En ocasiones en inferencia estadística interesa la simulación
-condicional de nuevos valores de forma que se preserve la muestra
-observada.
-
-En este caso se suele emplear el algoritmo anterior:
+En ocasiones en inferencia estadística interesa la simulación condicional de nuevos valores de forma que se preserven los datos observados, para lo que se suele emplear el algoritmo anterior partiendo de la muestra observada:
 
 ```{conjecture, name="de simulación condicional" }
-<!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
-<br> \vspace{0.5cm}
+
+<br> 
 
 1.  Obtener la distribución condicional (correspondiente al punto
     que se quiere simular) dada la muestra y los valores simulados
@@ -533,7 +543,7 @@ Cov \left( \mathbf{X}_2 | \mathbf{X}_1 \right) =
 **Nota**: La ecuación \@ref(eq:mediacond) coincide con la expresión de la predicción lineal óptima de $\mathbf{X}_2$ 
 a partir de $\mathbf{X}_1$ con media y varianzas conocidas (denominado predictor del kriging simple en estadística espacial, y la diagonal de \@ref(eq:varcond) son las correspondientes varianzas kriging).
 
-```{example, name="simulación condicional de datos funcionales o temporales"}
+```{example, label = "funcionalcond", name="simulación condicional de datos funcionales o temporales"}
 ```
 
 Continuando con el Ejemplo \@ref(exm:funcional) anterior, consideramos los primeros
@@ -549,8 +559,7 @@ U <- chol(cov.data)
 set.seed(1)
 data <- drop(mu1 + t(U) %*% rnorm(n1))
 ```
-Para obtener la simulación condicional en los puntos de predicción, calculamos la correspondiente media y
-matriz de covarianzas condicionadas:
+Para obtener la simulación condicional en los puntos de predicción, calculamos la correspondiente media y matriz de covarianzas condicionadas:
 ```{r}
 mu2 <- mu[!idata]
 n2 <- length(mu2)
@@ -565,8 +574,12 @@ kpred <- mu2 + drop(lambda %*% (data - mu1))
 kcov <- cov.pred -  lambda %*% t(cov.preddat)
 # (La diagonal serán las varianzas kriging). 
 ```
-Las simulaciones condicionales se obtendrán de forma análoga:
-```{r, fig.cap = "Realizaciones condicionales del proceso funcional."}
+
+Las simulaciones condicionales se obtendrán de forma análoga (Figura \@ref(fig:funcional-cond)):
+
+(ref:funcional-cond) Realizaciones condicionales del proceso funcional del Ejemplo \@ref(exm:funcionalcond).
+
+```{r funcional-cond, fig.cap = "(ref:funcional-cond)"}
 z <- matrix(rnorm(nsim * n2), nrow = n2)
 y <- kpred + t(chol(kcov)) %*% z
 # Representación gráfica:
@@ -706,8 +719,8 @@ El teorema central en la teoría de cópulas es el teorema de Sklar (1959),
 que en este caso es:
 
 ```{theorem, sklar, name="de Sklar, caso bidimensional"}
-<!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
-<br> \vspace{0.5cm}
+
+<br> 
 
 Si $(X,Y)$ es una variable aleatoria bidimensional 
 con función de distribución conjunta $F(\cdot,\cdot)$ y
@@ -725,13 +738,11 @@ El recíproco también es cierto.
 
 Además de las cópulas Gausianas, es una de las familias de cópulas más utilizadas.
 Son de la forma:
-$$C(x_1,x_2,\dots,x_{n})
-=\Psi^{-1}\left( \sum_{i=1}^{n}\Psi\left( F_i(x_i)\right)\right),$$
+$$C(x_1,x_2,\dots,x_d)
+=\Psi^{-1}\left( \sum_{i=1}^d\Psi\left( F_i(x_i)\right)\right),$$
 siendo $\Psi$ su función generadora.
 
-Una condición suficiente para que sea una cópula multidimensional válida es
-que $\Psi(1)=0$, $\lim \limits_{x\ \rightarrow0}\Psi(x)=\infty$,
-$\Psi^{\prime}(x)<0$ y $\Psi^{\prime \prime}(x)>0$.
+Una condición suficiente para que sea una cópula multidimensional válida es que $\Psi(1)=0$, $\lim \limits_{x\ \rightarrow0}\Psi(x)=\infty$, $\Psi^{\prime}(x)<0$ y $\Psi^{\prime \prime}(x)>0$.
 
 **Ejemplos**:
 
@@ -757,12 +768,12 @@ $$\left( F_1^{-1}(U),F_2^{-1}(V)\right)  \sim F(\cdot,\cdot)$$
 En la mayoría de los casos se dispone de expresiones explicitas de
 $C_{u}(v)\equiv C_2\left( \left.  v\right \vert u\right)$ y de
 su inversa $C_{u}^{-1}(w)$, por lo que se puede generar $(U,V)$
-fácilmente mediante el **método secuencial de distribuciones
-condicionadas**.
+fácilmente mediante el método secuencial de distribuciones
+condicionadas descrito en la Sección \@ref(distrcond).
 
 ```{conjecture, name="de simulación bidimensional mediante cópulas" }
-<!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
-<br> \vspace{0.5cm}
+
+<br> 
 
 1.  Generar $U,W\sim \mathcal{U}(0,1)$
 
@@ -811,10 +822,12 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     # if(!require(sm)) stop('Required pakage `sm` not installed.')
     sm::sm.density(rcunif)
     # Distribuciones marginales
+    par.old <- par(mfrow = c(1, 2))
     hist(rcunif[,1], freq = FALSE)
     abline(h = 1)
     hist(rcunif[,2], freq = FALSE)
     abline(h = 1)
+    par(par.old)
     ```
 
     Empleando el paquete `copula`:
@@ -839,29 +852,17 @@ c)  A partir de la muestra anterior generar una muestra de una v.a.
     rcexp <- cbind(qexp(rcunif[,1], 1), qexp(rcunif[,2], 2))
     plot(rcexp, xlab = "exp1", ylab = "exp2")
     # Distribuciones marginales
+    par.old <- par(mfrow = c(1, 2))
     hist(rcexp[,1], freq = FALSE)
     curve(dexp(x,1), add = TRUE)
     hist(rcexp[,2], freq = FALSE)
     curve(dexp(x,2), add = TRUE)
-    # ...
-    z <- 1:10
-    xy <- matrix(z, ncol = 2)
-    xy
-    as.vector(xy)
-    # ...
+    par(par.old)
     ```
 
-Otros métodos para variables continuas
---------------------------------------
 
-* Método de la transformada de Fourier (FFT)
-  (e.g. Davies y Harte, 1987).
-  
-* Circular embedding (Dietrich and Newsam, 1997).
-
-
-Simulación de distribuciones multidimensionales discretas
----------------------------------------------------------
+Simulación de distribuciones multivariantes discretas {#mult-discr}
+-----------------------------------------------------
 
 ### Métodos de codificación o etiquetado para variables discretas
 

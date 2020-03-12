@@ -1,56 +1,69 @@
 
-Simulación de Distribuciones Multidimensionales
-===============================================
+Simulación de distribuciones multivariantes
+===========================================
+
+<!-- 
+bookdown::preview_chapter("07-Simulacion_multidimensional.Rmd") 
+-->
 
 
 
 
-Introducción
-------------
+La simulación de vectores aleatorios $\mathbf{X} =\left( X_1,X_2,\ldots,X_d\right)$ que sigan cierta distribución dada no es tarea siempre sencilla. 
+En general, no resulta una extensión inmediata del caso unidimensional, 
+aúnque muchos de los algoritmos descritos en los temas anteriores (como el de aceptación-rechazo o el de composición) son válidos para distribuciones multivariantes.
+En este caso sin embargo, puede ser mucho más dificil cumplir los requerimientos (e.g. encontrar una densidad auxiliar adecuada) y los algoritmos obtenidos pueden ser computacionalmente poco eficientes (especialmente si el número de dimensiones es grande).
 
-Supongamos que se pretende simular un vector aleatorio
-$\mathbf{X} =\left( X_1,X_2,\ldots,X_d\right)$ con función
-de densidad conjunta $f\left( x_1,x_2,\ldots,x_d\right)$
-(análogo para una función de densidad discreta con función de masa de probabilidad).
+En las primeras secciones de este capítulo supondremos que se pretende simular una variable aleatoria multidimensional continua $\mathbf{X}$ con función de densidad conjunta $f\left( x_1, x_2, \ldots , x_d\right)$ (aunque muchos resultados serán válidos para variables discretas multidimensionales, simplemente cambiando funciones de densidad por las correspondientes de masa de probabilidad).
+En la Sección \@ref(mult-discr) se tratará brevemente la simulación de vectores aleatorios discretos y de tablas de contingencia, centrándose en el caso bidimensional.
 
-Si las componentes son independientes y $f_i$ son las
-correspondientes densidades marginales, bastará con generar
-$X_i \sim f_i$.
-Las dificultades aparecen cuando se quieren simular componentes con
-una determinada estructura de dependencia.
+Simulación de componentes independientes
+----------------------------------------
 
-\BeginKnitrBlock{example}\iffalse{-91-115-105-109-117-108-97-99-105-243-110-32-100-101-32-110-111-114-109-97-108-101-115-32-105-110-100-101-112-101-110-100-105-101-110-116-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-2"><strong>(\#exm:unnamed-chunk-2)  \iffalse (simulación de normales independientes) \fi{} </strong></span></div>\EndKnitrBlock{example}
+Si las componentes son independientes y $f_i$ son las correspondientes densidades marginales, bastará con generar $X_i \sim f_i$.
+Las dificultades aparecerán cuando se quiera simular componentes con una determinada estructura de dependencia.
 
-Si:
-$$\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right)$$
-con $\boldsymbol\mu =\left( \mu_1,\mu_2,\ldots,\mu_d\right)^t$ y
-$\Sigma=diag\left( \sigma_1^2,\sigma_2^2,\ldots,\sigma_d^2\right)$,
-entonces $X_i \sim \mathcal{N}\left( \mu_i,\sigma_i^2\right)$.
+\BeginKnitrBlock{example}\iffalse{-91-115-105-109-117-108-97-99-105-243-110-32-100-101-32-110-111-114-109-97-108-101-115-32-105-110-100-101-112-101-110-100-105-101-110-116-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:normind"><strong>(\#exm:normind)  \iffalse (simulación de normales independientes) \fi{} </strong></span></div>\EndKnitrBlock{example}
 
-\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-100-101-32-110-111-114-109-97-108-101-115-32-105-110-100-101-112-101-110-100-105-101-110-116-101-115-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-3"><strong>(\#cnj:unnamed-chunk-3)  \iffalse (de simulación de normales independientes) \fi{} </strong></span><!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
-<br> \vspace{0.5cm}
+Si $\boldsymbol\mu =\left( \mu_1,\mu_2,\ldots,\mu_d\right)^t$ es un vector (de medias) y
+$\Sigma$ es una matriz $d \times d$ definida positiva (de varianzas-covarianzas), el vector aleatorio $\mathbf{X}$ sigue una distribución normal multivariante con esos parámetros, 
+$\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right)$, 
+si su función de densidad es de la forma:
+$$f(\mathbf x) = \frac{1}{(2\pi)^{n/2}|\Sigma|^{1/2}}
+\exp \left( -\frac{1}{2} ( \mathbf x - \boldsymbol \mu)^t \Sigma^{-1} (\mathbf x - \boldsymbol \mu)
+\right),$$
+donde $| \Sigma |$ es el determinante de $\Sigma$.
+
+Si la matriz de covarianzas es diagonal $\Sigma=diag\left( \sigma_1^2,\sigma_2^2,\ldots,\sigma_d^2\right)$,
+entonces las componentes $X_i \sim \mathcal{N}\left( \mu_i,\sigma_i^2\right)$
+son independientes y podemos simular el vector aleatorio de forma trivial, por ejemplo mediante el siguiente algoritmo:
+
+\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-100-101-32-110-111-114-109-97-108-101-115-32-105-110-100-101-112-101-110-100-105-101-110-116-101-115-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-2"><strong>(\#cnj:unnamed-chunk-2)  \iffalse (de simulación de normales independientes) \fi{} </strong></span>
+<br> 
 
 1.  Simular $Z_1, Z_2, \ldots, Z_d \sim \mathcal{N} \left( 0, 1 \right)$ independientes.
 
 2.  Para $i = 1, 2, \ldots, d$ hacer $X_i = \mu_i + \sigma_i Z_i$.
 </div>\EndKnitrBlock{conjecture}
+
 <br>
-Las funciones implementadas en el paquete base de `R` 
-permiten simular fácilmente en el caso independiente. 
-Por ejemplo en el caso bidimensional con $X_1 \sim \mathcal{N}\left( 0, 1\right)$
-y $X_2 \sim \mathcal{N}\left( -1, 0.5^2 \right)$:
+
+Las funciones implementadas en el paquete base de `R` permiten simular fácilmente en el caso independiente ya que admiten vectores como parámetros. 
+Por ejemplo en el caso bidimensional con $X_1 \sim \mathcal{N}\left( 0, 1\right)$ y $X_2 \sim \mathcal{N}\left( -1, 0.5^2 \right)$:
+
+(ref:normind-plot) Densidades marginales de las componentes del Ejemplo \@ref(exm:normind). 
 
 
 ```r
 f1 <- function(x) dnorm(x)
 f2 <- function(x) dnorm(x, -1, 0.5)
-curve(f1, -3, 3, ylim = c(0, f2(-1)), ylab = "f_i(x)")
+curve(f1, -3, 3, ylim = c(0, f2(-1)), ylab = "fdp")
 curve(f2, add = TRUE, lty = 2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-4-1.png" alt="Densidades marginales de las componentes." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-4)Densidades marginales de las componentes.</p>
+<img src="07-Simulacion_multidimensional_files/figure-html/normind-plot-1.png" alt="(ref:normind-plot)" width="70%" />
+<p class="caption">(\#fig:normind-plot)(ref:normind-plot)</p>
 </div>
 Para simular una generación bastaría con:
 
@@ -85,15 +98,7 @@ rx
 El método de aceptación/rechazo
 -------------------------------
 
-Muchos de los algoritmos descritos en los temas anteriores son válidos para el
-caso multivariante (aceptación-rechazo, cociente de uniformes, composición, ...).
-En este caso sin embargo, puede ser mucho más dificil cumplir los
-requerimientos (e.g. encontrar una densidad auxiliar adecuada) y los
-algoritmos obtenidos pueden ser computacionalmente poco eficientes
-(especialmente si el número de dimensiones es grande).
-
-El algoritmo de aceptación-rechazo sería exactamente el mismo,
-lo único que cambiaría serían que las densidades son multidimensionales.
+El algoritmo de aceptación-rechazo es el mismo que el del caso univariante descrito en la Sección \@ref(AR), la única diferencia es que las densidades son multidimensionales.
 Supongamos que la densidad objetivo $f$ y la densidad
 auxiliar $g$ verifican:
 $$f\left( x_1,x_2,\ldots,x_d\right) \leq c\cdot g\left( x_1,x_2,\ldots,x_d\right) 
@@ -108,25 +113,16 @@ El algoritmo sería:
 3.  Si $c\cdot U\cdot g\left( T_1,T_2,\ldots,T_d\right) \leq f\left( T_1,T_2,\ldots,T_d\right)$
     devolver $\mathbf{X}=\mathbf{T}$.
 
-4.  En caso contrario volver al paso 1.
+    En caso contrario volver al paso 1.
 
 
-<!-- 
-3.  Si $c\cdot U\cdot g\left( T_1,T_2,\ldots,T_d\right) \leq f\left( T_1,T_2,\ldots,T_d\right)$    
-      3.a. devolver $\mathbf{X}=\mathbf{T}$
-    
-    En caso contrario 
-    
-      3.b. volver al paso 1.
- -->
-      
 
 
 Por ejemplo, de forma análoga al caso unidimensional, en el caso de una densidad
 acotada en un hipercubo (intervalo cerrado multidimensional) siempre podríamos considerar
 una uniforme como densidad auxiliar. 
 
-\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-98-105-100-105-109-101-110-115-105-111-110-97-108-32-97-99-111-116-97-100-97-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-7"><strong>(\#exm:unnamed-chunk-7)  \iffalse (distribución bidimensional acotada) \fi{} </strong></span></div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-98-105-100-105-109-101-110-115-105-111-110-97-108-32-97-99-111-116-97-100-97-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-5"><strong>(\#exm:unnamed-chunk-5)  \iffalse (distribución bidimensional acotada) \fi{} </strong></span></div>\EndKnitrBlock{example}
 
 Supongamos que estamos interesados en generar valores de una variable aleatoria bidimensional
 $\left( X,Y\right)$ con función de densidad: 
@@ -163,7 +159,7 @@ En este caso, la condición de aceptación del paso 3 simplificada sería:
 $U \leq 1 - \left( T_1^2 + T_2^2 \right) / 2$.
 
 
-\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-117-110-105-102-111-114-109-101-32-101-110-32-108-97-32-101-115-102-101-114-97-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-8"><strong>(\#exm:unnamed-chunk-8)  \iffalse (distribución uniforme en la esfera) \fi{} </strong></span></div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-117-110-105-102-111-114-109-101-32-101-110-32-108-97-32-101-115-102-101-114-97-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-6"><strong>(\#exm:unnamed-chunk-6)  \iffalse (distribución uniforme en la esfera) \fi{} </strong></span></div>\EndKnitrBlock{example}
 
 Supongamos que el objetivo es simular puntos uniformemente distribuídos sobre la “esfera”
 unitaria $d$-dimensional:
@@ -194,7 +190,7 @@ i=1,2,\ldots,d\\
 
 La constante $c$ óptima para la utilización del método de
 aceptación/rechazo es:
-$$c=\max_{\mathbf{x}/g\left( \mathbf{x}\right) > 0}
+$$c=\max_{\{\mathbf{x}:g\left( \mathbf{x}\right) > 0\}}
 \frac{f\left( \mathbf{x}\right)  }{g\left( \mathbf{x}\right)  }
 =\frac{\frac{1}{V_d\left( 1\right)  }}{\frac{1}{2^{d}}}
 =\frac{2^{d}}{V_d\left( 1\right)}$$
@@ -205,7 +201,7 @@ $$\frac{2^{d}}{V_d\left( 1\right)  }U\frac{1}{2^{d}}1_{\left[  -1,1\right]
 }1_{C_d}\left( \mathbf{T}\right),$$ 
 o, lo que es lo mismo, $U1_{\left[  -1,1\right]^{d}}\left( \mathbf
 {T}\right)  \leq1_{C_d}\left( \mathbf{T}\right)$. 
-Dado que el número aleatorio $U$ está en el intervalo $[0,1)$ y que las funciones
+Dado que el número aleatorio $U$ está en el intervalo $(0,1)$ y que las funciones
 indicadoras valen $0$ ó $1$, esta condición equivale a que $1_{\left[
 -1,1\right]  ^{d}}\left( \mathbf{T}\right)  =1_{C_d}\left(
 \mathbf{T}\right)$, es decir, a que
@@ -228,6 +224,8 @@ este caso, el algoritmo queda:
 
 4. Devolver $\mathbf{X} = \left( T_1, T_2, \ldots, T_d \right)^t$.
 
+Ver el Ejercicio \@ref(exr:simpi) para el caso de $d=2$.
+
 Usando las fórmulas del “volumen” de una “esfera” $d$-dimensional:
 $$V_d\left( r\right)  =\left\{
 \begin{array}{ll}
@@ -239,38 +237,39 @@ $c=\frac{2^{d}}{V_d\left(1 \right)}$, puede llegar a ser enórmemente grande.
 Así, si $d=2$ se tiene $c=1.27$, si $d=3$ se tiene $c=1.91$, si $d=4$ entonces $c=3.24$ y para
 $d=10$ resulta $c=401.5$ que es un valor que hace que el algoritmo sea
 tremendamente lento en dimensión $10$.
-Esto está relacionado con la "maldición de la dimensionalidad" (curse of dimensionality),
-a medida que aumenta el número de dimensiones el volumen de la "frontera" crece exponencialmente.
+Esto está relacionado con la *maldición de la dimensionalidad* (curse of dimensionality), a medida que aumenta el número de dimensiones el volumen de la "frontera" crece exponencialmente.
 
 
 Factorización de la matriz de covarianzas {#fact-cov}
 -----------------------------------------
 
-Teniendo en cuenta que si $Cov(\mathbf{X)=}\Sigma$, entonces:
-$$Cov(A\mathbf{X}) = A\Sigma A^t.$$ 
-La idea de este tipo de métodos es simular datos independientes y transformarlos linealmente de
-modo que el resultado tenga la covarianza deseada.
+Teniendo en cuenta que si $Cov(\mathbf{X})= I$, entonces:
+$$Cov(A\mathbf{X}) = AA^t.$$ 
+La idea de este tipo de métodos es simular datos independientes y transformarlos linealmente de modo que el resultado tenga la covarianza deseada $\Sigma = AA^t$.
 
 Este método se emplea principalmente para la simulación de una
 normal multivariante, aunque también es válido para muchas otras
 distribuciónes como la $t$-multivariante.
 
-Si $\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right)$
-y $A$ matriz $p\times d$, entonces:
-$$A\mathbf{X} \sim \mathcal{N}_{p}\left(
-A\boldsymbol\mu,A\Sigma A^t\right).$$
+En el caso de normalidad, el resultado general es el siguiente.
+
+\BeginKnitrBlock{proposition}<div class="proposition"><span class="proposition" id="prp:unnamed-chunk-7"><strong>(\#prp:unnamed-chunk-7) </strong></span><br>
+Si $\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right)$ y $A$ es una matriz $p\times d$, de
+rango máximo, con $p\leq d$, entonces:
+$$A\mathbf{X} \sim \mathcal{N}_{p}\left(A\boldsymbol\mu,A\Sigma A^t\right).$$</div>\EndKnitrBlock{proposition}
 
 Partiendo de $\mathbf{Z} \sim \mathcal{N}_d\left( \mathbf{0},I_d\right)$,
 se podrían considerar distrintas factorizaciones de la 
 matriz de covarianzas:
 
 * Factorización espectral: 
-  $\Sigma=H\Lambda H^t =H\Lambda^{1/2}(H\Lambda^{1/2})^t$
-  $$\mathbf{Y} =\mathbf{\mu+}H\Lambda^{1/2}\mathbf{Z} 
+  $\Sigma=H\Lambda H^t =H\Lambda^{1/2}(H\Lambda^{1/2})^t$,
+  donde $H$ es una matriz ortogonal (i.e. $H^{-1}=H^{t}$), cuyas columnas son los autovectores de la matriz $\Sigma$, y $\Lambda$ es una matriz diagonal, cuya diagonal esta formada por los correspondientes autovalores (positivos). De donde se deduce que:
+  $$\mathbf{Y} =\boldsymbol\mu + H\Lambda^{1/2}\mathbf{Z} 
   \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right).$$
 
-* Factorización de Cholesky: $\Sigma=LL^t$ 
-  $$\mathbf{Y} =\mathbf{\mu+}L\mathbf{Z} 
+* Factorización de Cholesky: $\Sigma=LL^t$, donde $L$ es una matriz triangular inferior (fácilmente invertible), por lo que: 
+  $$\mathbf{Y} =\boldsymbol\mu + L\mathbf{Z} 
   \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right).$$
 
 Desde el punto de vista de la eficiencia computacional la factorización de Cholesky
@@ -279,15 +278,15 @@ sería la preferible. Pero en ocasiones, para evitar problemas numéricos
 puede ser más adecuado emplear la factorización espectral.
 En el primer caso el algoritmo sería el siguiente:
 
-\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-110-111-114-109-97-108-32-109-117-108-116-105-118-97-114-105-97-110-116-101-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-9"><strong>(\#cnj:unnamed-chunk-9)  \iffalse (de simulación de una normal multivariante) \fi{} </strong></span><!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
-<br> \vspace{0.5cm}
+\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-110-111-114-109-97-108-32-109-117-108-116-105-118-97-114-105-97-110-116-101-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-8"><strong>(\#cnj:unnamed-chunk-8)  \iffalse (de simulación de una normal multivariante) \fi{} </strong></span>
+<br> 
 
 1.  Obtener la factorización de Cholesky $\Sigma=LL^t$.
 
 2.  Simular $\mathbf{Z} =\left( Z_1,Z_2,\ldots,Z_d\right)$
     i.i.d. $\mathcal{N}\left( 0,1\right)$.
 
-3.  Hacer $\mathbf{X} =\mathbf{\mu+}L\mathbf{Z}$.
+3.  Hacer $\mathbf{X} = \boldsymbol\mu + L\mathbf{Z}$.
 
 4.  Repetir los pasos 2 y 3 las veces necesarias.
 </div>\EndKnitrBlock{conjecture}
@@ -342,6 +341,9 @@ head(mu + L %*% rnorm(n))
 ```
 y para simular `nsim`:
 
+(ref:funcional) Realizaciones del proceso funcional del Ejemplo \@ref(exm:funcional), obtenidas a partir de la factorización de Cholesky.
+
+
 ```r
 z <- matrix(rnorm(nsim * n), nrow = n)
 y <- mu + L %*% z
@@ -351,12 +353,14 @@ lines(x, mu, lwd = 2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-13-1.png" alt="Realizaciones del proceso funcional." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-13)Realizaciones del proceso funcional.</p>
+<img src="07-Simulacion_multidimensional_files/figure-html/funcional-plot-1.png" alt="(ref:funcional)" width="70%" />
+<p class="caption">(\#fig:funcional-plot)(ref:funcional)</p>
 </div>
 
 Alternativamente se podría emplear, por ejemplo, la funcion `mvrnorm`
 del paquete `MASS` que emplea la factorización espectral (`eigen`):
+
+(ref:funcional2) Realizaciones del proceso funcional del Ejemplo \@ref(exm:funcional), obtenidas empleando la función `MASS::mvrnorm`.
 
 
 ```r
@@ -392,7 +396,7 @@ mvrnorm
 ##         drop(X)
 ##     else t(X)
 ## }
-## <bytecode: 0x0000000031cacc38>
+## <bytecode: 0x00000000321be480>
 ## <environment: namespace:MASS>
 ```
 
@@ -403,10 +407,15 @@ matplot(x, t(y), type = "l")
 lines(x, mu, lwd = 2)
 ```
 
-<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="07-Simulacion_multidimensional_files/figure-html/funcional-plot2-1.png" alt="(ref:funcional2)" width="70%" />
+<p class="caption">(\#fig:funcional-plot2)(ref:funcional2)</p>
+</div>
+
+Otros métodos para variables continuas relacionados con la factorización de la matriz de covarianzas son el método FFT (transformada rápida de Fourier; e.g. Davies y Harte, 1987) o el *Circular embedding* (Dietrich and Newsam, 1997), que realmente son el mismo.
 
 
-Método de las distribuciones condicionadas
+Método de las distribuciones condicionadas {#distrcond}
 ------------------------------------------
 
 Teniendo en cuenta que:
@@ -420,8 +429,8 @@ x_1,x_2,\ldots,x_{i-1}\right)},$$
 
 se obtiene el siguiente algoritmo general:
 
-\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-109-101-100-105-97-110-116-101-32-100-105-115-116-114-105-98-117-99-105-111-110-101-115-32-99-111-110-100-105-99-105-111-110-97-100-97-115-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-15"><strong>(\#cnj:unnamed-chunk-15)  \iffalse (de simulación mediante distribuciones condicionadas) \fi{} </strong></span><!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
-<br> \vspace{0.5cm}
+\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-109-101-100-105-97-110-116-101-32-100-105-115-116-114-105-98-117-99-105-111-110-101-115-32-99-111-110-100-105-99-105-111-110-97-100-97-115-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-12"><strong>(\#cnj:unnamed-chunk-12)  \iffalse (de simulación mediante distribuciones condicionadas) \fi{} </strong></span>
+<br> 
 
 1.  Generar $X_1 \sim f_1$.
 
@@ -436,7 +445,7 @@ se obtiene el siguiente algoritmo general:
 $f_i\left( x_i|x_1,x_2,\ldots,x_{i-1}\right) 
 \propto f_{1,\ldots,i}\left( x_1,x_2,\ldots,x_i\right)$.
 
-\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-117-110-105-102-111-114-109-101-32-101-110-32-101-108-32-99-237-114-99-117-108-111-32-117-110-105-116-97-114-105-111-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-16"><strong>(\#exm:unnamed-chunk-16)  \iffalse (distribución uniforme en el círculo unitario) \fi{} </strong></span></div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-117-110-105-102-111-114-109-101-32-101-110-32-101-108-32-99-237-114-99-117-108-111-32-117-110-105-116-97-114-105-111-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-13"><strong>(\#exm:unnamed-chunk-13)  \iffalse (distribución uniforme en el círculo unitario) \fi{} </strong></span></div>\EndKnitrBlock{example}
 
 Se trata de la distribución bidimensional continua con densidad 
 constante en el círculo:
@@ -461,7 +470,7 @@ $$f_1\left( x_1\right)  =\left\{
 \end{array}\right.$$ 
 
 Además:
-$$f_2\left( x_2|x_1\right)  =\frac{f\left( x_1,x_2\right)  }{f_1\left( x_1\right)  }=\frac{\frac{1}{\pi}}{\frac{2\sqrt{1-x_1^2}}{\pi}}=\frac{1}{2\sqrt{1-x_1^2}}\text{, si }x_2\in\left[
+$$f_2\left( x_2|x_1\right) = \frac{f\left( x_1,x_2\right)  }{f_1\left( x_1\right)} = \frac{\frac{1}{\pi}}{\frac{2\sqrt{1-x_1^2}}{\pi}}=\frac{1}{2\sqrt{1-x_1^2}}\text{, si }x_2\in\left[
 -\sqrt{1-x_1^2},\sqrt{1-x_1^2}\right]$$ 
 valiendo cero en otro caso. 
 Se tiene entonces que:
@@ -483,7 +492,7 @@ Para el paso 1 puede utilizarse, por ejemplo, el método de
 aceptación/rechazo, pues se trata de una densidad acotada definida en un
 intervalo acotado.
 
-\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-110-111-114-109-97-108-32-98-105-100-105-109-101-110-115-105-111-110-97-108-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-17"><strong>(\#exm:unnamed-chunk-17)  \iffalse (distribución normal bidimensional) \fi{} </strong></span></div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-110-111-114-109-97-108-32-98-105-100-105-109-101-110-115-105-111-110-97-108-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-14"><strong>(\#exm:unnamed-chunk-14)  \iffalse (distribución normal bidimensional) \fi{} </strong></span></div>\EndKnitrBlock{example}
 
 En el caso de una distribución normal bidimensional:
 $$\mathbf{X} = \begin{pmatrix}
@@ -501,20 +510,26 @@ $$\mathbf{X} = \begin{pmatrix}
 
 tendríamos que:
 
-*   $X_1 \sim \mathcal{N}\left( \mu_1, \sigma_1^2 \right)$.
+$$\begin{aligned}
+f(x_1,x_2) &= \frac{1}{2 \pi \sigma_1 \sigma_2 \sqrt{1-\rho^2}} \\
+&\exp \left( -\frac{1}{2 (1-\rho^2)} \left( \frac{(x_1 - \mu_1)^2}{\sigma_1^2} + \frac{(x_2 - \mu_2)^2}{\sigma_2^2} - \frac{2 \rho (x_1 - \mu_1) (x_2 - \mu_2)}{ \sigma_1 \sigma_2} \right)
+\right)
+\end{aligned}$$
 
-*   $X_2 | X_1 \sim \mathcal{N} \left( \mu_2 + \frac{\sigma_2}{\sigma_1}\rho( X_1 - \mu_1),
-    \sigma_2^2 (1-\rho^2) \right)$.
+de donde se deduce (ver e.g. Cao, 2002, p.88; o ecuaciones \@ref(eq:mediacond) y \@ref(eq:varcond) en la Sección \@ref(condnormal)) que:
 
-<!-- 
-incluir cuentas simplificadas? $f_2\left( x_2|x_1\right)  
-=\frac{f\left( x_1,x_2\right)  }{f_1\left( x_1\right)  }$  
--->
+$$f_1( x_1 ) = \frac{1}{\sigma_1\sqrt{2\pi}}
+\exp\left( -\frac{(x_1 - \mu_1)^{2}}{2\sigma_1^{2}}\right)$$
 
-Por lo que el algoritmo sería el siguiente:
+$$\begin{aligned}
+f_2\left( x_2|x_1\right)  &= \frac{f\left( x_1,x_2\right)  }{f_1\left( x_1\right)} \\ &= \frac{1}{\sigma_2\sqrt{2\pi (1-\rho^2)}}
+\exp\left( -\frac{\left(x_2 - \mu_2 - \frac{\sigma_2}{\sigma_1}\rho( x_1 - \mu_1)\right)^{2}}{2\sigma_2^2 (1-\rho^2)}\right)
+\end{aligned}$$
 
-\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-110-111-114-109-97-108-32-98-105-100-105-109-101-110-115-105-111-110-97-108-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-18"><strong>(\#cnj:unnamed-chunk-18)  \iffalse (de simulación de una normal bidimensional) \fi{} </strong></span><!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
-<br> \vspace{0.5cm}
+Por tanto $X_1 \sim \mathcal{N}\left( \mu_1, \sigma_1^2 \right)$ y $X_2 | X_1 \sim \mathcal{N} \left( \mu_2 + \frac{\sigma_2}{\sigma_1}\rho( X_1 - \mu_1), \sigma_2^2 (1-\rho^2) \right)$, y el algoritmo sería el siguiente:
+
+\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-110-111-114-109-97-108-32-98-105-100-105-109-101-110-115-105-111-110-97-108-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-15"><strong>(\#cnj:unnamed-chunk-15)  \iffalse (de simulación de una normal bidimensional) \fi{} </strong></span>
+<br> 
 
 1.  Simular $Z_1, Z_2 \sim \mathcal{N}\left( 0, 1 \right)$ independientes.
 
@@ -537,14 +552,10 @@ Además, esta aproximación puede generalizarse al caso multidimensional, ver Se
 Simulación condicional e incondicional
 --------------------------------------
 
-En ocasiones en inferencia estadística interesa la simulación
-condicional de nuevos valores de forma que se preserve la muestra
-observada.
+En ocasiones en inferencia estadística interesa la simulación condicional de nuevos valores de forma que se preserven los datos observados, para lo que se suele emplear el algoritmo anterior partiendo de la muestra observada:
 
-En este caso se suele emplear el algoritmo anterior:
-
-\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-99-111-110-100-105-99-105-111-110-97-108-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-19"><strong>(\#cnj:unnamed-chunk-19)  \iffalse (de simulación condicional) \fi{} </strong></span><!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
-<br> \vspace{0.5cm}
+\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-99-111-110-100-105-99-105-111-110-97-108-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-16"><strong>(\#cnj:unnamed-chunk-16)  \iffalse (de simulación condicional) \fi{} </strong></span>
+<br> 
 
 1.  Obtener la distribución condicional (correspondiente al punto
     que se quiere simular) dada la muestra y los valores simulados
@@ -595,7 +606,7 @@ Cov \left( \mathbf{X}_2 | \mathbf{X}_1 \right) =
 **Nota**: La ecuación \@ref(eq:mediacond) coincide con la expresión de la predicción lineal óptima de $\mathbf{X}_2$ 
 a partir de $\mathbf{X}_1$ con media y varianzas conocidas (denominado predictor del kriging simple en estadística espacial, y la diagonal de \@ref(eq:varcond) son las correspondientes varianzas kriging).
 
-\BeginKnitrBlock{example}\iffalse{-91-115-105-109-117-108-97-99-105-243-110-32-99-111-110-100-105-99-105-111-110-97-108-32-100-101-32-100-97-116-111-115-32-102-117-110-99-105-111-110-97-108-101-115-32-111-32-116-101-109-112-111-114-97-108-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-20"><strong>(\#exm:unnamed-chunk-20)  \iffalse (simulación condicional de datos funcionales o temporales) \fi{} </strong></span></div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}\iffalse{-91-115-105-109-117-108-97-99-105-243-110-32-99-111-110-100-105-99-105-111-110-97-108-32-100-101-32-100-97-116-111-115-32-102-117-110-99-105-111-110-97-108-101-115-32-111-32-116-101-109-112-111-114-97-108-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:funcionalcond"><strong>(\#exm:funcionalcond)  \iffalse (simulación condicional de datos funcionales o temporales) \fi{} </strong></span></div>\EndKnitrBlock{example}
 
 Continuando con el Ejemplo \@ref(exm:funcional) anterior, consideramos los primeros
 valores de una simulación incondicional como los datos:
@@ -611,8 +622,7 @@ U <- chol(cov.data)
 set.seed(1)
 data <- drop(mu1 + t(U) %*% rnorm(n1))
 ```
-Para obtener la simulación condicional en los puntos de predicción, calculamos la correspondiente media y
-matriz de covarianzas condicionadas:
+Para obtener la simulación condicional en los puntos de predicción, calculamos la correspondiente media y matriz de covarianzas condicionadas:
 
 ```r
 mu2 <- mu[!idata]
@@ -628,7 +638,11 @@ kpred <- mu2 + drop(lambda %*% (data - mu1))
 kcov <- cov.pred -  lambda %*% t(cov.preddat)
 # (La diagonal serán las varianzas kriging). 
 ```
-Las simulaciones condicionales se obtendrán de forma análoga:
+
+Las simulaciones condicionales se obtendrán de forma análoga (Figura \@ref(fig:funcional-cond)):
+
+(ref:funcional-cond) Realizaciones condicionales del proceso funcional del Ejemplo \@ref(exm:funcionalcond).
+
 
 ```r
 z <- matrix(rnorm(nsim * n2), nrow = n2)
@@ -644,12 +658,12 @@ lines(x[!idata], kpred, lwd = 2, lty = 2) # media condicional (predicción krigi
 ```
 
 <div class="figure" style="text-align: center">
-<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-23-1.png" alt="Realizaciones condicionales del proceso funcional." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-23)Realizaciones condicionales del proceso funcional.</p>
+<img src="07-Simulacion_multidimensional_files/figure-html/funcional-cond-1.png" alt="(ref:funcional-cond)" width="70%" />
+<p class="caption">(\#fig:funcional-cond)(ref:funcional-cond)</p>
 </div>
 
 
-\BeginKnitrBlock{example}\iffalse{-91-115-105-109-117-108-97-99-105-243-110-32-99-111-110-100-105-99-105-111-110-97-108-32-100-101-32-100-97-116-111-115-32-101-115-112-97-99-105-97-108-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-24"><strong>(\#exm:unnamed-chunk-24)  \iffalse (simulación condicional de datos espaciales) \fi{} </strong></span></div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}\iffalse{-91-115-105-109-117-108-97-99-105-243-110-32-99-111-110-100-105-99-105-111-110-97-108-32-100-101-32-100-97-116-111-115-32-101-115-112-97-99-105-97-108-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-19"><strong>(\#exm:unnamed-chunk-19)  \iffalse (simulación condicional de datos espaciales) \fi{} </strong></span></div>\EndKnitrBlock{example}
 
 Consideramos un proceso espacial bidimensional normal
 $Z(\mathbf{s})\equiv Z(x,y)$ de media 0 y covariograma
@@ -716,7 +730,7 @@ data.s <- expand.grid(x = seq(0, 1, len = nx[1]), y = seq(0, 1, len = nx[2]))
 plot(data.s, type = "p", pch = 20, asp = 1) # Representar posiciones
 ```
 
-<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-26-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 # Matriz de varianzas covarianzas
@@ -769,7 +783,7 @@ plot(data.s, type = "p", pch = 20, asp = 1)
 points(ndata.s)
 ```
 
-<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 # Simulación condicional
@@ -796,7 +810,7 @@ image(kc, val=kc$simul[,3], main="simul. cond. 3", zlim=zlim)
 image(kc, val=kc$simul[,4], main="simul. cond. 3", zlim=zlim)
 ```
 
-<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-27-2.png" width="70%" style="display: block; margin: auto;" />
+<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-22-2.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 par(par.old)
@@ -827,7 +841,7 @@ set.seed(1)
 lines(simulate(fit, 24), col="red")
 ```
 
-<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-23-1.png" width="70%" style="display: block; margin: auto;" />
 
 Simulación basada en cópulas
 ----------------------------
@@ -846,8 +860,8 @@ Por simplicidad nos centraremos en el caso bidimensional.
 El teorema central en la teoría de cópulas es el teorema de Sklar (1959), 
 que en este caso es:
 
-\BeginKnitrBlock{theorem}\iffalse{-91-100-101-32-83-107-108-97-114-44-32-99-97-115-111-32-98-105-100-105-109-101-110-115-105-111-110-97-108-93-}\fi{}<div class="theorem"><span class="theorem" id="thm:sklar"><strong>(\#thm:sklar)  \iffalse (de Sklar, caso bidimensional) \fi{} </strong></span><!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
-<br> \vspace{0.5cm}
+\BeginKnitrBlock{theorem}\iffalse{-91-100-101-32-83-107-108-97-114-44-32-99-97-115-111-32-98-105-100-105-109-101-110-115-105-111-110-97-108-93-}\fi{}<div class="theorem"><span class="theorem" id="thm:sklar"><strong>(\#thm:sklar)  \iffalse (de Sklar, caso bidimensional) \fi{} </strong></span>
+<br> 
 
 Si $(X,Y)$ es una variable aleatoria bidimensional 
 con función de distribución conjunta $F(\cdot,\cdot)$ y
@@ -864,13 +878,11 @@ El recíproco también es cierto.</div>\EndKnitrBlock{theorem}
 
 Además de las cópulas Gausianas, es una de las familias de cópulas más utilizadas.
 Son de la forma:
-$$C(x_1,x_2,\dots,x_{n})
-=\Psi^{-1}\left( \sum_{i=1}^{n}\Psi\left( F_i(x_i)\right)\right),$$
+$$C(x_1,x_2,\dots,x_d)
+=\Psi^{-1}\left( \sum_{i=1}^d\Psi\left( F_i(x_i)\right)\right),$$
 siendo $\Psi$ su función generadora.
 
-Una condición suficiente para que sea una cópula multidimensional válida es
-que $\Psi(1)=0$, $\lim \limits_{x\ \rightarrow0}\Psi(x)=\infty$,
-$\Psi^{\prime}(x)<0$ y $\Psi^{\prime \prime}(x)>0$.
+Una condición suficiente para que sea una cópula multidimensional válida es que $\Psi(1)=0$, $\lim \limits_{x\ \rightarrow0}\Psi(x)=\infty$, $\Psi^{\prime}(x)<0$ y $\Psi^{\prime \prime}(x)>0$.
 
 **Ejemplos**:
 
@@ -896,11 +908,11 @@ $$\left( F_1^{-1}(U),F_2^{-1}(V)\right)  \sim F(\cdot,\cdot)$$
 En la mayoría de los casos se dispone de expresiones explicitas de
 $C_{u}(v)\equiv C_2\left( \left.  v\right \vert u\right)$ y de
 su inversa $C_{u}^{-1}(w)$, por lo que se puede generar $(U,V)$
-fácilmente mediante el **método secuencial de distribuciones
-condicionadas**.
+fácilmente mediante el método secuencial de distribuciones
+condicionadas descrito en la Sección \@ref(distrcond).
 
-\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-98-105-100-105-109-101-110-115-105-111-110-97-108-32-109-101-100-105-97-110-116-101-32-99-243-112-117-108-97-115-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-29"><strong>(\#cnj:unnamed-chunk-29)  \iffalse (de simulación bidimensional mediante cópulas) \fi{} </strong></span><!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
-<br> \vspace{0.5cm}
+\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-98-105-100-105-109-101-110-115-105-111-110-97-108-32-109-101-100-105-97-110-116-101-32-99-243-112-117-108-97-115-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-24"><strong>(\#cnj:unnamed-chunk-24)  \iffalse (de simulación bidimensional mediante cópulas) \fi{} </strong></span>
+<br> 
 
 1.  Generar $U,W\sim \mathcal{U}(0,1)$
 
@@ -909,7 +921,7 @@ condicionadas**.
 3.  Devolver $\left( F_1^{-1}(U),F_2^{-1}(V)\right)$
 </div>\EndKnitrBlock{conjecture}
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-30"><strong>(\#exr:unnamed-chunk-30) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-25"><strong>(\#exr:unnamed-chunk-25) </strong></span></div>\EndKnitrBlock{exercise}
 
 Consideramos una v.a. bidimensional con distribuciónes marginales
 uniformes y distribución bidimensional determinada por la cópula
@@ -943,7 +955,7 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     plot(rcunif, xlab = "u", ylab = "v")
     ```
     
-    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-32-1.png" width="70%" style="display: block; margin: auto;" />
+    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" />
     
     Representar la densidad conjunta (con `sm::sm.density()`) y las marginales:
     
@@ -957,22 +969,22 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     ## Warning: weights overwritten by binning
     ```
     
-    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-33-1.png" width="70%" style="display: block; margin: auto;" />
+    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" />
     
     ```r
     # Distribuciones marginales
+    par.old <- par(mfrow = c(1, 2))
     hist(rcunif[,1], freq = FALSE)
     abline(h = 1)
-    ```
-    
-    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-33-2.png" width="70%" style="display: block; margin: auto;" />
-    
-    ```r
     hist(rcunif[,2], freq = FALSE)
     abline(h = 1)
     ```
     
-    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-33-3.png" width="70%" style="display: block; margin: auto;" />
+    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-28-2.png" width="70%" style="display: block; margin: auto;" />
+    
+    ```r
+    par(par.old)
+    ```
 
     Empleando el paquete `copula`:
     
@@ -983,7 +995,7 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     plot(y)
     ```
     
-    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-34-1.png" width="70%" style="display: block; margin: auto;" />
+    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;" />
     
     ```r
     clayton.cop <- claytonCopula(2, dim = 3) # caso tridimensional
@@ -991,7 +1003,7 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     scatterplot3d::scatterplot3d(y)
     ```
     
-    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-34-2.png" width="70%" style="display: block; margin: auto;" />
+    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-29-2.png" width="70%" style="display: block; margin: auto;" />
     
     ```r
     # plot3D:::points3D(y[,1], y[,2], y[, 3], colvar = NULL) 
@@ -1009,62 +1021,26 @@ c)  A partir de la muestra anterior generar una muestra de una v.a.
     plot(rcexp, xlab = "exp1", ylab = "exp2")
     ```
     
-    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-35-1.png" width="70%" style="display: block; margin: auto;" />
+    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-30-1.png" width="70%" style="display: block; margin: auto;" />
     
     ```r
     # Distribuciones marginales
+    par.old <- par(mfrow = c(1, 2))
     hist(rcexp[,1], freq = FALSE)
     curve(dexp(x,1), add = TRUE)
-    ```
-    
-    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-35-2.png" width="70%" style="display: block; margin: auto;" />
-    
-    ```r
     hist(rcexp[,2], freq = FALSE)
     curve(dexp(x,2), add = TRUE)
     ```
     
-    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-35-3.png" width="70%" style="display: block; margin: auto;" />
+    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-30-2.png" width="70%" style="display: block; margin: auto;" />
     
     ```r
-    # ...
-    z <- 1:10
-    xy <- matrix(z, ncol = 2)
-    xy
-    ```
-    
-    ```
-    ##      [,1] [,2]
-    ## [1,]    1    6
-    ## [2,]    2    7
-    ## [3,]    3    8
-    ## [4,]    4    9
-    ## [5,]    5   10
-    ```
-    
-    ```r
-    as.vector(xy)
-    ```
-    
-    ```
-    ##  [1]  1  2  3  4  5  6  7  8  9 10
-    ```
-    
-    ```r
-    # ...
+    par(par.old)
     ```
 
-Otros métodos para variables continuas
---------------------------------------
 
-* Método de la transformada de Fourier (FFT)
-  (e.g. Davies y Harte, 1987).
-  
-* Circular embedding (Dietrich and Newsam, 1997).
-
-
-Simulación de distribuciones multidimensionales discretas
----------------------------------------------------------
+Simulación de distribuciones multivariantes discretas {#mult-discr}
+-----------------------------------------------------
 
 ### Métodos de codificación o etiquetado para variables discretas
 
@@ -1409,13 +1385,13 @@ hist(simstat, freq = FALSE, breaks = 'FD')
 curve(dchisq(x, res$parameter), add = TRUE) 
 ```
 
-<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-53-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-48-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 ## Ejercicios propuestos
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-54"><strong>(\#exr:unnamed-chunk-54) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-49"><strong>(\#exr:unnamed-chunk-49) </strong></span></div>\EndKnitrBlock{exercise}
 
 Dar un algoritmo basado en el método de aceptación-rechazo
 (considerando como densidad auxiliar una uniforme) que permita
@@ -1430,7 +1406,7 @@ $$f(x,y)=\left\{
 \right.$$
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-55"><strong>(\#exr:unnamed-chunk-55) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-50"><strong>(\#exr:unnamed-chunk-50) </strong></span></div>\EndKnitrBlock{exercise}
 
 Considerando la variable aleatoria bidimensional del ejercicio
 anterior y teniendo en cuenta que la densidad marginal de la

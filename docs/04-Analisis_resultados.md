@@ -240,7 +240,7 @@ En el caso de dependencia, la estimación de la precisión se complica:
 $$Var\left( \overline{X}\right) =\frac{1}{n^{2}}\left( 
 \sum_{i=1}^{n}Var\left( X_{i} \right) + 2\sum_{i<j}Cov\left( X_{i},X_{j}\right) \right).$$
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-9"><strong>(\#exm:unnamed-chunk-9) </strong></span>Aproximación de una proporción bajo dependencia (cadena de Markov)</div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:mmc"><strong>(\#exm:mmc) </strong></span>Aproximación de una proporción bajo dependencia (cadena de Markov)</div>\EndKnitrBlock{example}
 Supongamos que en A Coruña llueve de media 1/3 días al año,
 y que la probabilidad de que un día llueva solo depende de lo que ocurrió el día anterior, 
 siendo 0.94 si el día anterior llovió y 0.03 si no.
@@ -507,12 +507,12 @@ durante un cierto período inicial de tiempo (denominado período de calentamien
 o estabilización), cuyo único objeto es conseguir que se estabilice la distribución de
 probabilidad.
 
-Como ejemplo comparamos la simulación anterior con la obtenida 
-considerando como punto de partida un día lluvioso.
+Como ejemplo comparamos la simulación del Ejemplo \@ref(exm:mmc) con la obtenida considerando como punto de partida un día lluvioso (con una semilla distinta para evitar dependencia).
 
 
 ```r
-set.seed(1)
+set.seed(2)
+nsim <- 10000
 rx2 <- logical(nsim)
 rx2[1] <- TRUE # El primer día llueve
 for (i in 2:nsim)
@@ -523,10 +523,13 @@ est2 <- cumsum(rx2)/n
 plot(est, type="l", ylab="Probabilidad", 
      xlab="Número de simulaciones", ylim=c(0,0.6))
 lines(est2, lty = 2)
+# Ejemplo periodo calentamiento nburn = 2000
 abline(v = 2000, lty = 3)
+# Prob. teor. cadenas Markov
+abline(h = 1/3, col="darkgray")     
 ```
 
-<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 En estos casos puede ser recomendable ignorar los primeros valores generados (por ejemplo los primeros 2000) y recalcular los 
@@ -534,7 +537,7 @@ estadísticos deseados.
 
 También trataremos este tipo de problemas en la diagnosis de algoritmos MCMC. 
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-19"><strong>(\#exm:unnamed-chunk-19) </strong></span>Simulación de un proceso autorregresivo (serie de tiempo)</div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-18"><strong>(\#exm:unnamed-chunk-18) </strong></span>Simulación de un proceso autorregresivo (serie de tiempo)</div>\EndKnitrBlock{example}
 
 $$X_t = \mu + \rho * (X_{t-1} - \mu) + \varepsilon_t$$
 Podemos tener en cuenta que en este caso la varianza es:

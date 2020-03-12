@@ -222,7 +222,7 @@ chisq.test(table(x))            # NOT 'chisq.test(x)'!
 ## 	Chi-squared test for given probabilities
 ## 
 ## data:  table(x)
-## X-squared = 4.4, df = 4, p-value = 0.3546
+## X-squared = 4.7, df = 4, p-value = 0.3195
 ```
 
 La distribución exacta del estadístico del contraste es discreta (se podría aproximar por simulación, por ejemplo empleando los parámetros `simulate.p.value = TRUE` y `B = 2000` de la función `chisq.test()`; ver también el Ejercicio \@ref(exr:chicuadind) de la Sección \@ref(simconting) para el caso del contraste chi-cuadrado de independencia).

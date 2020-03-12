@@ -31,7 +31,7 @@ es recomendable emplear:
 sample(valores, nsim, replace = TRUE, prob)
 ```
 Esta función del paquete base implementa eficientemente el método "alias" 
-que describiremos más adelante en la sección \@ref(alias).
+que describiremos más adelante en la Sección \@ref(alias).
 
 Método de la transformación cuantil
 -----------------------------------
@@ -51,8 +51,8 @@ u\right\} ,\ \forall u\in \left( 0,1\right).$$
 Si $F$ es invertible $Q=F^{-1}$.
 
  
-\BeginKnitrBlock{theorem}\iffalse{-91-100-101-32-105-110-118-101-114-115-105-243-110-32-103-101-110-101-114-97-108-105-122-97-100-97-93-}\fi{}<div class="theorem"><span class="theorem" id="thm:invgen"><strong>(\#thm:invgen)  \iffalse (de inversión generalizada) \fi{} </strong></span><!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
-<br> \vspace{0.5cm}
+\BeginKnitrBlock{theorem}\iffalse{-91-100-101-32-105-110-118-101-114-115-105-243-110-32-103-101-110-101-114-97-108-105-122-97-100-97-93-}\fi{}<div class="theorem"><span class="theorem" id="thm:invgen"><strong>(\#thm:invgen)  \iffalse (de inversión generalizada) \fi{} </strong></span>
+<br>
 
 Si $U\sim \mathcal{U}\left( 0,1\right)$, la variable aleatoria $Q\left( U\right)$
 tiene función de distribución $F$.</div>\EndKnitrBlock{theorem}
@@ -64,14 +64,13 @@ $$Q\left( u\right) \leq x \Rightarrow u \leq F(Q\left( u\right)) \leq F(x).$$
 Por otro lado como $Q$ también es monótona: 
 $$u \leq F(x) \Rightarrow Q\left( u\right) \leq Q(F(x)) \leq x$$</div>\EndKnitrBlock{proof}
 
-<br>
 
 A partir de este resultado se deduce el siguiente algoritmo general 
 para simular una distribución de probabilidad discreta.
 
-\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-116-114-97-110-115-102-111-114-109-97-99-105-243-110-32-99-117-97-110-116-105-108-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-5"><strong>(\#cnj:unnamed-chunk-5)  \iffalse (de transformación cuantil) \fi{} </strong></span><!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
-<br> \vspace{0.5cm}
-
+\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-116-114-97-110-115-102-111-114-109-97-99-105-243-110-32-99-117-97-110-116-105-108-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-5"><strong>(\#cnj:unnamed-chunk-5)  \iffalse (de transformación cuantil) \fi{} </strong></span>
+<br>
+  
 1.  Generar $U\sim \mathcal{U}\left( 0,1\right)$.
 
 2.  Devolver $X=Q\left( U\right)$.
@@ -87,9 +86,9 @@ Q\left( U\right) &=\inf \left\{ x_{j}:\sum_{i=1}^{j}p_{i}\geq U\right\} \\
 
 Para encontrar este valor se puede emplear el siguiente algoritmo:
 
-\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-116-114-97-110-115-102-111-114-109-97-99-105-243-110-32-99-117-97-110-116-105-108-32-99-111-110-32-98-250-115-113-117-101-100-97-32-115-101-99-117-101-110-99-105-97-108-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-6"><strong>(\#cnj:unnamed-chunk-6)  \iffalse (de transformación cuantil con búsqueda secuencial) \fi{} </strong></span><!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
-<br> \vspace{0.5cm}
-
+\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-116-114-97-110-115-102-111-114-109-97-99-105-243-110-32-99-117-97-110-116-105-108-32-99-111-110-32-98-250-115-113-117-101-100-97-32-115-101-99-117-101-110-99-105-97-108-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-6"><strong>(\#cnj:unnamed-chunk-6)  \iffalse (de transformación cuantil con búsqueda secuencial) \fi{} </strong></span>
+<br>
+  
 1.  Generar $U\sim \mathcal{U}\left( 0,1\right)$.
 
 2.  Hacer $I=1$ y $S=p_{1}$.
@@ -185,7 +184,7 @@ system.time( rx <- rfmp(x, fmp, nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.07    0.00    0.08
+##    0.09    0.00    0.09
 ```
 
 Aproximación de la media:
@@ -324,7 +323,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##    0.02    0.02    0.04
+##    0.06    0.00    0.06
 ```
 
 ```r
@@ -378,8 +377,8 @@ $$j_{0}=\left\lfloor mU\right\rfloor +1$$
 En este caso, puede verse que una cota del número medio de comparaciones es:
 $$E\left( N\right) \leq 1+\frac{n}{m}$$
 
-\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-109-101-100-105-97-110-116-101-32-117-110-97-32-116-97-98-108-97-32-103-117-237-97-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-20"><strong>(\#cnj:unnamed-chunk-20)  \iffalse (de simulación mediante una tabla guía) \fi{} </strong></span><!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
-<br> \vspace{0.5cm}
+\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-109-101-100-105-97-110-116-101-32-117-110-97-32-116-97-98-108-97-32-103-117-237-97-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-20"><strong>(\#cnj:unnamed-chunk-20)  \iffalse (de simulación mediante una tabla guía) \fi{} </strong></span>
+<br>
 
 Inicialización:
 
@@ -445,7 +444,7 @@ system.time( rx <- rfmp.tabla(x, fmp, n-1, nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.04    0.00    0.05
+##    0.05    0.00    0.04
 ```
 
 Análisis de los resultados:

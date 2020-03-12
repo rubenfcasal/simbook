@@ -85,7 +85,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##    0.01    0.00    0.02
+##       0       0       0
 ```
 
 ```r
@@ -263,7 +263,7 @@ se tienen aproximaciones de la función cuantil de las principales distribucione
 las correspondientes a la normal estándar). 
 
 
-Método de aceptación rechazo
+Método de aceptación rechazo {#AR}
 ----------------------------
 
 Se trata de un método universal alternativo al de inversión para
@@ -444,7 +444,7 @@ a)  Generar una muestra de $10^{4}$ observaciones empleando este
     
     ```
     ##    user  system elapsed 
-    ##    0.08    0.00    0.08
+    ##    0.06    0.01    0.07
     ```
     
     ```r

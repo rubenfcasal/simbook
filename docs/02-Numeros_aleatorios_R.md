@@ -127,7 +127,7 @@ Otros paquetes de R que pueden ser de interés:
 
 ## Ejercicios
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-5"><strong>(\#exr:unnamed-chunk-5) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:simpi"><strong>(\#exr:simpi) </strong></span></div>\EndKnitrBlock{exercise}
 
 Sea $(X,Y)$ es un vector aleatorio con distribución uniforme en el
 cuadrado $[-1,1]\times\lbrack-1,1]$ de área 4.
@@ -212,10 +212,10 @@ b)  Aproximar el valor de $\pi$ mediante simulación a partir de
     symbols(0, 0, squares = 2, inches = FALSE, add = TRUE)
     ```
     
-    <img src="02-Numeros_aleatorios_R_files/figure-html/unnamed-chunk-9-1.png" width="70%" style="display: block; margin: auto;" />
+    <img src="02-Numeros_aleatorios_R_files/figure-html/unnamed-chunk-8-1.png" width="70%" style="display: block; margin: auto;" />
     
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-10"><strong>(\#exr:unnamed-chunk-10) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-9"><strong>(\#exr:unnamed-chunk-9) </strong></span></div>\EndKnitrBlock{exercise}
 Consideramos el experimento de Bernoulli consistente en el
 lanzamiento de una moneda.
 
@@ -240,7 +240,7 @@ a)  Empleando la función `sample`, obtener 1000 simulaciones del
     barplot(100*table(x)/nsim) # Representar porcentajes 
     ```
     
-    <img src="02-Numeros_aleatorios_R_files/figure-html/unnamed-chunk-11-1.png" width="70%" style="display: block; margin: auto;" />
+    <img src="02-Numeros_aleatorios_R_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" />
 
 b)  En R pueden generarse valores de la distribución de Bernoulli
     mediante la función `rbinom(nsim, size=1, prob)`. Generar un
@@ -270,10 +270,10 @@ b)  En R pueden generarse valores de la distribución de Bernoulli
     abline(h=p, lty=2, col="red")
     ```
     
-    <img src="02-Numeros_aleatorios_R_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" />
+    <img src="02-Numeros_aleatorios_R_files/figure-html/unnamed-chunk-11-1.png" width="70%" style="display: block; margin: auto;" />
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-13"><strong>(\#exr:unnamed-chunk-13) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-12"><strong>(\#exr:unnamed-chunk-12) </strong></span></div>\EndKnitrBlock{exercise}
 Simular el paso de corriente a través del siguiente circuito, donde
 figuran las probabilidades de que pase corriente por cada uno de los
 interruptores:
@@ -308,7 +308,7 @@ mean(fin)
 ```
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-17"><strong>(\#exr:unnamed-chunk-17) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-16"><strong>(\#exr:unnamed-chunk-16) </strong></span></div>\EndKnitrBlock{exercise}
 En 1651, el Caballero de Méré le planteó a Pascal una pregunta
 relacionada con las apuestas y los juegos de azar: ¿es ventajoso
 apostar a que en cuatro lanzamientos de un dado se obtiene al menos
@@ -442,10 +442,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.08    0.00    0.07 
+##    0.08    0.00    0.08 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.08    0.00    0.07
+##    0.08    0.00    0.08
 ```
 
 ```r
@@ -464,10 +464,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##       0       0       0 
+##    0.02    0.00    0.01 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.08    0.00    0.07
+##    0.10    0.00    0.09
 ```
 
 ### Paquetes de R
@@ -558,7 +558,7 @@ cpu.time('\nSample median of', 1000000, 'values =', res, total = FALSE)
 ## Time of last operation: 
 ## Sample median of 1e+06 values = 0.4993793 
 ##    user  system elapsed 
-##    0.04    0.03    0.08
+##    0.06    0.00    0.06
 ```
 
 ```r
@@ -573,7 +573,7 @@ cpu.time('\nSample median of', 1000, 'values =', res)
 ##       0       0       0 
 ## Total time:
 ##    user  system elapsed 
-##    0.04    0.03    0.08
+##    0.06    0.00    0.06
 ```
 
 Otro paquete que puede ser de utilidad es
