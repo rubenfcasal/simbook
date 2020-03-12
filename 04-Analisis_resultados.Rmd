@@ -203,7 +203,7 @@ En el caso de dependencia, la estimación de la precisión se complica:
 $$Var\left( \overline{X}\right) =\frac{1}{n^{2}}\left( 
 \sum_{i=1}^{n}Var\left( X_{i} \right) + 2\sum_{i<j}Cov\left( X_{i},X_{j}\right) \right).$$
 
-```{example}
+```{example, label="mmc"}
 Aproximación de una proporción bajo dependencia (cadena de Markov)
 ```
 Supongamos que en A Coruña llueve de media 1/3 días al año,
@@ -392,11 +392,11 @@ durante un cierto período inicial de tiempo (denominado período de calentamien
 o estabilización), cuyo único objeto es conseguir que se estabilice la distribución de
 probabilidad.
 
-Como ejemplo comparamos la simulación anterior con la obtenida 
-considerando como punto de partida un día lluvioso.
+Como ejemplo comparamos la simulación del Ejemplo \@ref(exm:mmc) con la obtenida considerando como punto de partida un día lluvioso (con una semilla distinta para evitar dependencia).
 
 ```{r }
-set.seed(1)
+set.seed(2)
+nsim <- 10000
 rx2 <- logical(nsim)
 rx2[1] <- TRUE # El primer día llueve
 for (i in 2:nsim)
@@ -407,7 +407,11 @@ est2 <- cumsum(rx2)/n
 plot(est, type="l", ylab="Probabilidad", 
      xlab="Número de simulaciones", ylim=c(0,0.6))
 lines(est2, lty = 2)
+# Ejemplo periodo calentamiento nburn = 2000
 abline(v = 2000, lty = 3)
+# Prob. teor. cadenas Markov
+abline(h = 1/3, col="darkgray")     
+
 ```
 
 
