@@ -257,6 +257,7 @@ b)  Aumentar el tamaño muestral a 50. ¿Se aproxima más la
 Intervalos de confianza
 ---------------------------
 
+
 \BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-13"><strong>(\#exr:unnamed-chunk-13) </strong></span></div>\EndKnitrBlock{exercise}
 
 Siguiendo el enunciado del ejercicio 1, se deduce que el intervalo de
@@ -616,9 +617,14 @@ c)  Repetir el apartado anterior empleando simulación para aproximar
     
     <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" />
     
+Como ya se comentó, el caso de ajustar un modelo a los datos y realizar simulaciones a partir de ese modelo ajustado para aproximar las características de interés de un estadístico, se denomina también bootstrap paramétrico (Ver [Sección 4.1](https://rubenfcasal.github.io/book_remuestreo/cap4-boot-par.html) de Cao y Fernández-Casal, 2019).
+
+En este libro en las secciones [5.6](https://rubenfcasal.github.io/book_remuestreo/cap5-ejem.html) y [E.3.2](https://rubenfcasal.github.io/book_remuestreo/ejemplos-1.html#estudio-de-simulaci%C3%B3n), se incluyen ejemplos adicionales de estudios de simulación.
 
 Contrastes de hipótesis {#contrastes}
 -----------------------
+
+Ver [Apéncide A](https://rubenfcasal.github.io/book_remuestreo/practica2.html) de Cao y Fernández-Casal (2019).
 
 \BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:ks-test-sim"><strong>(\#exr:ks-test-sim) </strong></span></div>\EndKnitrBlock{exercise}
 
@@ -1147,6 +1153,8 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
 Remuestreo Bootstrap
 --------------------
 
+Ver [Cao y Fernández-Casal (2019)](https://rubenfcasal.github.io/book_remuestreo/).
+
 ### Idea:
 
 Consideramos un conjunto de datos simulado:
@@ -1379,6 +1387,8 @@ res.boot
 ```
 
 ### Paquetes R: bootstrap, boot
+
+Ver [Sección 1.4](https://rubenfcasal.github.io/book_remuestreo/cap1-paquetes.html) de Cao y Fernández-Casal (2019).
 
 
 ```r

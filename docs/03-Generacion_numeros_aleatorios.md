@@ -135,7 +135,7 @@ system.time(u <- RANDCN(9999))  # Generar
 
 ```
 ##    user  system elapsed 
-##    0.01    0.00    0.01
+##    0.05    0.00    0.07
 ```
 
 ```r
