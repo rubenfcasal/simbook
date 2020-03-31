@@ -12,7 +12,7 @@ Posteriormente se dará una visión de las diferentes herramientas para estudiar
 Se basan en la idea de considerar una combinación lineal de los últimos $k$ enteros generados y calcular su resto al dividir por un entero fijo $m$. 
 En el método congruencial simple (de orden $k = 1$), partiendo de una semilla inicial $x_0$, el algoritmo secuencial es el siguiente:
 $$\begin{aligned}
-x_{i}  & = (ax_{i-1}+c) \operatorname{mod} m \\
+x_{i}  & = (ax_{i-1}+c) \bmod m \\
 u_{i}  & = \dfrac{x_{i}}{m} \\
 i  & =1,2,\ldots
 \end{aligned}$$ 
@@ -80,7 +80,7 @@ Ejemplos:
     propuesta por Park, Miller y Stockmeyer (1993).
     
 Los parámetros y la semilla determinan los valores generados:
-$$x_{i}=\left(  a^{i}x_0+c\frac{a^{i}-1}{a-1}\right)  \operatorname{mod}m$$
+$$x_{i}=\left(  a^{i}x_0+c\frac{a^{i}-1}{a-1}\right) \bmod m$$
 
 A pesar de su simplicidad, una adecuada elección de los parámetros
 permite obtener de manera eficiente secuencias de números
@@ -96,11 +96,11 @@ Un generador congruencial tiene período máximo ($p=m$) si y solo si:
 1.  $c$ y $m$ son primos relativos (i.e. $m.c.d.(c, m) = 1$).
 
 2.  $a-1$ es múltiplo de todos los factores primos de $m$ (i.e.
-    $a \equiv 1 \operatorname{mod}q$, para todo $q$ factor primo de $m$).
+    $a \equiv 1 \bmod q$, para todo $q$ factor primo de $m$).
 
 3.  Si $m$ es múltiplo de $4$, entonces $a-1$ también lo ha de
-    ser (i.e. $m \equiv 0 \operatorname{mod}4\Rightarrow a \equiv
-    1 \operatorname{mod}4$).
+    ser (i.e. $m \equiv 0 \bmod 4\Rightarrow a \equiv
+    1 \bmod 4$).
     
 .</div>\EndKnitrBlock{theorem}
 
@@ -117,7 +117,7 @@ Un generador multiplicativo tiene período máximo ($p=m-1$) si:
 1.  $m$ es primo.
 
 2.  $a$ es una raiz primitiva de $m$ (i.e. el menor entero $q$ tal
-    que $a^{q}=1\operatorname{mod}m$ es $q=m-1$).
+    que $a^{q}=1 \bmod m$ es $q=m-1$).
 
 .    </div>\EndKnitrBlock{theorem}
 
@@ -135,7 +135,7 @@ system.time(u <- RANDCN(9999))  # Generar
 
 ```
 ##    user  system elapsed 
-##    0.01    0.00    0.01
+##    0.05    0.00    0.07
 ```
 
 ```r
@@ -179,17 +179,21 @@ Miller, 1988, estudiaron que parámetros son adecuados para $m=2^{31}-1$).
 Se han considerado diversas extensiones del generador congruencial lineal simple:
 
 -   Lineal múltiple: 
-    $x_{i}= a_0 + a_1 x_{i-1} + a_2 x_{i-2} + \cdots + a_{k} x_{i-k} \operatorname{mod} m$,
+    $x_{i}= a_0 + a_1 x_{i-1} + a_2 x_{i-2} + \cdots + a_{k} x_{i-k} \bmod m$,
     con periodo $p\leq m^{k}-1$.
 
 -   No lineal: 
-    $x_{i} = f\left(  x_{i-1}, x_{i-2}, \cdots, x_{i-k} \right) \operatorname{mod} m$. 
-    Por ejemplo $x_{i} = a_0 + a_1 x_{i-1} + a_2 x_{i-1}^2 \operatorname{mod} m$.
+    $x_{i} = f\left(  x_{i-1}, x_{i-2}, \cdots, x_{i-k} \right) \bmod m$. 
+    Por ejemplo $x_{i} = a_0 + a_1 x_{i-1} + a_2 x_{i-1}^2 \bmod m$.
 
 -   Matricial: 
     $\boldsymbol{x}_{i} = A_0 + A_1\boldsymbol{x}_{i-1} 
     + A_2\boldsymbol{x}_{i-2} + \cdots 
-    + A_{k}\boldsymbol{x}_{i-k} \operatorname{mod} m$.
+    + A_{k}\boldsymbol{x}_{i-k} \bmod m$.
+
+Un ejemplo de generador congruencia lineal múltiple es el denominado *generador de Fibonacci retardado* (Fibonacci-lagged generator; Knuth, 1969):
+$$x_n = (x_{n-37} + x_{n-100}) \bmod 2^{30},$$
+con un período aproximado de $2^{129}$ y que puede ser empleado en R (lo cual no sería en principio recomendable; ver [Knuth Recent News 2002](https://www-cs-faculty.stanford.edu/~knuth/news02.html#rng)) estableciendo `kind` a `"Knuth-TAOCP-2002"` o `"Knuth-TAOCP"` en la llamada a `set.seed()` o `RNGkind()`.
     
 El generador *Mersenne-Twister* (Matsumoto y Nishimura, 1998), empleado por defecto en R, de periodo $2^{19937}-1$ y equidistribution en 623 dimensiones, se puede expresar como un generador congruencial matricial lineal.
 
@@ -199,7 +203,7 @@ Los cálculos se pueden realizar rápidamente mediante operaciones lógicas (los
 
 Otras alternativas consisten en la combinanción de varios generadores, las más empleadas son:
 
--   Combinar las salidas: por ejemplo $u_{i}=\sum_{i=1}^L u_{i}^{(l)} \operatorname{mod} 1$, donde $u_{i}^{(l)}$ es el $i$-ésimo valor obtenido con el generador $l$.
+-   Combinar las salidas: por ejemplo $u_{i}=\sum_{l=1}^L u_{i}^{(l)} \bmod 1$, donde $u_{i}^{(l)}$ es el $i$-ésimo valor obtenido con el generador $l$.
 
 -   Barajar las salidas: por ejemplo se crea una tabla empleando un generador y se utiliza otro para seleccionar el índice del valor que se va a devolver y posteriormente actualizar.
 
@@ -209,7 +213,7 @@ El generador *L'Ecuyer-CMRG* (L'Ecuyer, 1999), empleado como base para la genera
 
 Considera el generador congruencial definido por: 
 $$\begin{aligned}
-x_{n+1}  & =(5x_{n}+1)\ \operatorname{mod}\ 512,\nonumber\\
+x_{n+1}  & =(5x_{n}+1)\ \bmod\ 512,\nonumber\\
 u_{n+1}  & =\frac{x_{n+1}}{512},\ n=0,1,\dots\nonumber
 \end{aligned}$$
 (de ciclo máximo).
@@ -289,32 +293,25 @@ c)  Aproximar (mediante simulación) la probabilidad del intervalo
 Análisis de la calidad de un generador {#calgen}
 --------------------------------------
 
-Para verificar si un generador tiene las propiedades estadísticas
-deseadas hay disponibles una gran cantidad de test de hipótesis
-(baterías de contrastes) y métodos gráficos:
+Para verificar si un generador tiene las propiedades estadísticas deseadas hay disponibles una gran cantidad de test de hipótesis y métodos gráficos,
+incluyendo métodos genéricos (de bondad de ajuste y aleatoriedad) y contrastes específicos para generadores aleatorios.
+Se trata principalmente de contrastar si las muestras generadas son i.i.d. $\mathcal{U}\left(0,1\right)$ (análisis univariante).
+Aunque los métodos más avanzados tratan normalmente de contrastar si las $d$-uplas:
 
--   Contrastes genéricos de bondad de ajuste y aleatoriedad.
+$$(U_{t+1},U_{t+2},\ldots,U_{t+d}); \ t=(i-1)d, \ i=1,\ldots,m$$
 
--   Contrastes específicos para generadores aleatorios.
+son i.i.d. $\mathcal{U}\left(0,1\right)^{d}$ (uniformes independientes en el hipercubo; análisis multivariante).
+En el Apéndice \@ref(gof-aleat) se describen algunos de estos métodos.
 
-Se trata principalmente de contrastar si las muestras generadas son
-i.i.d. $\mathcal{U}\left(0,1\right)$ (análisis univariante).
-Aunque los métodos más avanzados tratan normalmente de
-contrastar si las $k$-uplas:
+En esta sección emplearemos únicamente métodos genéricos, ya que también pueden ser de utilidad para evaluar generadores de variables no uniformes y para la construcción de modelos del sistema real (e.g. para modelar variables que se tratarán como entradas del modelo general). 
+Sin embargo, los métodos clásicos pueden no ser muy adecuados para evaluar generadores de números pseudoaleatorios (e.g. L’Ecuyer y Simard, 2007).
+La recomendación sería emplear baterías de contrastes recientes, como las descritas en la Subsección \@ref(baterias).
 
-$$(U_{t+1},U_{t+2},...,U_{t+k-1}); \ t=(i-1)k, \ i=1,...,m$$
-
-son i.i.d. $\mathcal{U}\left(0,1\right)^{k}$ (uniformes
-independientes en el hipercubo; análisis multivariante).
-
-**Nos centraremos en los métodos genéricos**.
-Pueden usarse en:
-
--   Evaluación de generadores aleatorios
-
--   Evaluación de generadores de variables aleatorias
-
--   Modelado de entradas de modelos de simulación
+Hay que destacar algunas diferencias entre el uso de este tipo de métodos en inferencia y en simulación. 
+Por ejemplo, si empleamos un constrate de hipótesis del modo habitual, desconfiamos del generador si la muestra (secuencia) no se ajusta a la distribución teórica ($p$-valor $\leq \alpha$).
+En este caso además, también se sospecha si se ajusta demasiado
+bien a la distribución teórica ($p$-valor $\geq1-\alpha$),
+lo que indicaría que no reproduce adecuadamente la variabilidad.
 
 Uno de los contrastes más conocidos es el test ji-cuadrado de bondad de ajuste
 (`chisq.test` para el caso discreto). 
@@ -382,7 +379,7 @@ chisq.test.cont <- function(x, distribution = "norm", nclasses = floor(length(x)
         method = METHOD, data.name = DNAME), RESULTS), class = "htest")
 }
 ```
-Por ejemplo, continuando con el generador congruencial anterior, obtendríamos:
+Continuando con el generador congruencial anterior, obtendríamos:
 
 
 ```r
@@ -390,7 +387,10 @@ chisq.test.cont(u, distribution = "unif",
                 nclasses = 10, nestpar = 0, min = 0, max = 1)
 ```
 
-<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/chisq-test-unif-1.png" alt="Gráfico resultante de aplicar la función `chisq.test.cont()` comparando el histograma de los valores generados con la densidad uniforme." width="70%" />
+<p class="caption">(\#fig:chisq-test-unif)Gráfico resultante de aplicar la función `chisq.test.cont()` comparando el histograma de los valores generados con la densidad uniforme.</p>
+</div>
 
 ```
 ## 
@@ -416,18 +416,13 @@ chisq.test.cont(u, distribution = "unif",
 ## X-squared = 0.12, df = 9, p-value = 1
 ```
 
-**Importante**:
-
-Empleando los métodos genéricos del modo habitual, desconfiamos del
-generador si la muestra/secuencia no se ajusta a la distribución
-teórica ($p$-valor $\leq \alpha$).
-En este caso además, **también se sospecha si se ajusta demasiado
-bien** a la distribución teórica ($p$-valor $\geq1-\alpha$).
+Como se muestra en la Figura \@ref(fig:chisq-test-unif) el histograma de la secuencia generada es muy plano (comparado con lo que cabría esperar de una muestra de tamaño 500 de una uniforme), y consecuentemente el $p$-valor del contraste ji-cuadrado es prácticamente 1, lo que indicaría que este generador no reproduce adecuadamente la variabilidad de una distribución uniforme.   
 
 Otro contraste de bondad de ajuste muy conocido 
-es el test de Kolmogorov-Smirnov, implementado en `ks.test`.
+es el test de Kolmogorov-Smirnov, implementado en `ks.test`. 
+En la Sección \@ref(gof) se describen con más detalle estos contrastes.
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-11"><strong>(\#exr:unnamed-chunk-11) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-10"><strong>(\#exr:unnamed-chunk-10) </strong></span></div>\EndKnitrBlock{exercise}
 
 Continuando con el generador congruencial anterior: 
 
@@ -442,6 +437,7 @@ system.time(u <- RANDCN(nsim))  # Generar
 a)  Realizar el contraste de Kolmogorov-Smirnov para estudiar el
     ajuste a una $\mathcal{U}(0,1)$.
     
+    Este contraste de hipótesis compara la función de distribución bajo la hipótesis nula con la función de distribución empírica (ver Sección \@ref(empdistr)):
     
     ```r
     # Distribución empírica
@@ -449,7 +445,11 @@ a)  Realizar el contraste de Kolmogorov-Smirnov para estudiar el
     curve(punif(x, 0, 1), add = TRUE)
     ```
     
-    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" />
+    <div class="figure" style="text-align: center">
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/empdistrunif-1.png" alt="Comparación de la distribución empírica de la secuencia generada con la función de distribución uniforme." width="70%" />
+    <p class="caption">(\#fig:empdistrunif)Comparación de la distribución empírica de la secuencia generada con la función de distribución uniforme.</p>
+    </div>
+    Podemos realizar el contraste con el siguiente código:
     
     ```r
     # Test de Kolmogorov-Smirnov
@@ -475,7 +475,7 @@ b)  Obtener el gráfico secuencial y el de dispersión retardado, ¿se
     plot(as.ts(u))
     ```
     
-    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" />
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" />
     
     Gráfico de dispersión retardado:
     
@@ -484,10 +484,10 @@ b)  Obtener el gráfico secuencial y el de dispersión retardado, ¿se
     plot(u[-nsim],u[-1])
     ```
     
-    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" />
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" />
 
 c)  Estudiar las correlaciones del vector $(u_{i},u_{i+k})$, con
-    $k=1,...,10$. Contrastar si son nulas.
+    $k=1,\ldots,10$. Contrastar si son nulas.
 
     Correlaciones:
     
@@ -496,7 +496,7 @@ c)  Estudiar las correlaciones del vector $(u_{i},u_{i+k})$, con
     acf(u)
     ```
     
-    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" />
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" />
     
     Test de Ljung-Box:
     
@@ -538,7 +538,7 @@ pruebas:
 Este procedimiento es también el habitual para validar un método de
 contraste de hipótesis por simulación.
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-18"><strong>(\#exm:unnamed-chunk-18) </strong></span></div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-17"><strong>(\#exm:unnamed-chunk-17) </strong></span></div>\EndKnitrBlock{example}
 
 Consideramos el generador congruencial RANDU:
 
@@ -603,7 +603,7 @@ hist(estadistico, breaks = "FD", freq=FALSE)
 curve(dchisq(x,99), add=TRUE)
 ```
 
-<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 # Test ji-cuadrado
@@ -621,7 +621,7 @@ ks.test(estadistico, "pchisq", df=99)
 ## alternative hypothesis: two-sided
 ```
 
-Análisis de los p-valores:
+Análisis de los *p*-valores:
 
 
 ```r
@@ -630,7 +630,7 @@ hist(pvalor, freq=FALSE)
 abline(h=1) # curve(dunif(x,0,1), add=TRUE)
 ```
 
-<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 # Test ji-cuadrado
@@ -658,28 +658,27 @@ curve(ecdf(pvalor)(x), type = "s", lwd = 2,
 abline(a=0, b=1, lty=2)   # curve(punif(x, 0, 1), add = TRUE)
 ```
 
-<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-23-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" />
 
 
-### Baterías de contrastes
+### Baterías de contrastes {#baterias}
 
 Hay numerosos ejemplos de generadores que pasaron diferentes test de uniformidad y aleatoriedad pero que fallaron estrepitosamente al considerar nuevos contrastes diseñados específicamente para generadores aleatorios (ver Marsaglia *et al.*, 1990). 
 Por este motivo, el procedimiento habitual en la práctica es aplicar un número más o menos elevado de contrastes (de distinto tipo y difíciles de pasar, e.g. Marsaglia y Tsang, 2002), de forma que si el generador los pasa tendremos mayor confianza en que sus propiedades son las adecuadas.
-Este conjunto de pruebas es lo que se denomina batería de contrastes. Una de las primeras se introdujo en Knuth (2002; primera edición en 1969) y entre ellas podríamos destacar:
+Este conjunto de pruebas es lo que se denomina batería de contrastes. Una de las primeras se introdujo en Knuth (1969) y de las más recientes podríamos destacar:
 
--   Diehard tests (The Marsaglia Random Number CDROM):
-    [http://www.stat.fsu.edu/pub/diehard](http://www.stat.fsu.edu/pub/diehard).
+-   Diehard tests (The Marsaglia Random Number CDROM, 1995):
+    [http://www.stat.fsu.edu/pub/diehard (versión archivada el 2016-01-25)](https://web.archive.org/web/20160125103112/http://stat.fsu.edu/pub/diehard).
 
--   TestU01: 
-    [http://www.iro.umontreal.ca/simardr/testu01/tu01.html](http://www.iro.umontreal.ca/simardr/testu01/tu01.html).
+-   Dieharder (Brown y Bauer, 2003):
+    [Dieharder Page](https://webhome.phy.duke.edu/~rgb/General/dieharder.php),
+    paquete [`RDieHarder`](https://github.com/eddelbuettel/rdieharder).
+    
+-   TestU01 (L'Ecuyer y Simard, 2007): 
+    [http://simul.iro.umontreal.ca/testu01/tu01.html](http://simul.iro.umontreal.ca/testu01/tu01.html).
 
--   NIST test suite: 
+-   NIST test suite (National Institute of Standards and Technology, USA, 2010): 
     [http://csrc.nist.gov/groups/ST/toolkit/rng](http://csrc.nist.gov/groups/ST/toolkit/rng).
-
--   Dieharder (paquete `RDieHarder`):
-    [http://www.phy.duke.edu/rgb/General/dieharder.php](http://www.phy.duke.edu/rgb/General/dieharder.php)
-
-<!-- CryptRndTest -->
 
 
 Para más detalles, ver por ejemplo^[También puede ser de interés el enlace [Randomness Tests: A Literature Survey](http://www.ciphersbyritter.com/RES/RANDTEST.HTM) y la entidad certificadora (gratuita) en línea [CAcert](http://www.cacert.at/random).]:
@@ -691,11 +690,11 @@ Para más detalles, ver por ejemplo^[También puede ser de interés el enlace [R
 
 
 
-Ejercicios de fin de práctica
------------------------------
+Ejercicios
+----------
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-24"><strong>(\#exr:unnamed-chunk-24) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-23"><strong>(\#exr:unnamed-chunk-23) </strong></span></div>\EndKnitrBlock{exercise}
 Uno de los primeros generadores fue el denominado método de los
 cuadrados medios propuesto por Von Neumann (1946). Con este
 procedimiento se generan números pseudoaleatorios de 4 dígitos de la
@@ -703,11 +702,9 @@ siguiente forma:
 
 i.  Se escoge un número de cuatro dígitos $x_0$ (semilla).
 
-ii.   Se eleva al cuadrado ($x_0^2$) y se toman los cuatro dígitos
-    centrales ($x_1$).
+ii.   Se eleva al cuadrado ($x_0^2$) y se toman los cuatro dígitos centrales ($x_1$).
 
-iii.   Se genera el número pseudo-aleatorio
-    como$$u_1=\frac{x_1}{10^{4}}.$$
+iii.   Se genera el número pseudo-aleatorio como $$u_1=\frac{x_1}{10^{4}}.$$
 
 iv.  Volver al paso ii y repetir el proceso.
 
@@ -764,7 +761,7 @@ Estudiar las características del
 generador de cuadrados medios a partir de una secuencia de 500
 valores. Emplear únicamente métodos gráficos.
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-26"><strong>(\#exr:unnamed-chunk-26) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-25"><strong>(\#exr:unnamed-chunk-25) </strong></span></div>\EndKnitrBlock{exercise}
 Considerando el generador congruencial multiplicativo de parámetros
 $a=7^{5}=16807$, $c=0$ y $m=2^{31}-1$. ¿Se observan los mismos problemas 
 que con el algoritmo RANDU al considerar las tripletas $(x_{k},x_{k+1},x_{k+2})$?

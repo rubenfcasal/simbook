@@ -257,6 +257,7 @@ b)  Aumentar el tamaño muestral a 50. ¿Se aproxima más la
 Intervalos de confianza
 ---------------------------
 
+
 \BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-13"><strong>(\#exr:unnamed-chunk-13) </strong></span></div>\EndKnitrBlock{exercise}
 
 Siguiendo el enunciado del ejercicio 1, se deduce que el intervalo de
@@ -616,11 +617,16 @@ c)  Repetir el apartado anterior empleando simulación para aproximar
     
     <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" />
     
+Como ya se comentó, el caso de ajustar un modelo a los datos y realizar simulaciones a partir de ese modelo ajustado para aproximar las características de interés de un estadístico, se denomina también bootstrap paramétrico (Ver [Sección 4.1](https://rubenfcasal.github.io/book_remuestreo/cap4-boot-par.html) de Cao y Fernández-Casal, 2019).
 
-Contrastes de hipótesis
----------------------------
+En este libro en las secciones [5.6](https://rubenfcasal.github.io/book_remuestreo/cap5-ejem.html) y [E.3.2](https://rubenfcasal.github.io/book_remuestreo/ejemplos-1.html#estudio-de-simulaci%C3%B3n), se incluyen ejemplos adicionales de estudios de simulación.
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-29"><strong>(\#exr:unnamed-chunk-29) </strong></span></div>\EndKnitrBlock{exercise}
+Contrastes de hipótesis {#contrastes}
+-----------------------
+
+Ver [Apéncide A](https://rubenfcasal.github.io/book_remuestreo/practica2.html) de Cao y Fernández-Casal (2019).
+
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:ks-test-sim"><strong>(\#exr:ks-test-sim) </strong></span></div>\EndKnitrBlock{exercise}
 
 En el tema 2 se propuso el análisis de la bondad de ajuste de un
 generador de números pseudo-aleatorios mediante el test de
@@ -688,7 +694,7 @@ a)  Analizar el comportamiento del contraste de Kolmogorov-Smirnov
     abline(h=1, lty=2)   # curve(dunif(x,0,1), add=TRUE)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-32-1.png" width="70%" style="display: block; margin: auto;" />
+    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-31-1.png" width="70%" style="display: block; margin: auto;" />
     
     ```r
     # Distribución empírica
@@ -698,7 +704,7 @@ a)  Analizar el comportamiento del contraste de Kolmogorov-Smirnov
     abline(a=0, b=1, lty=2)   # curve(punif(x, 0, 1), add = TRUE)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-32-2.png" width="70%" style="display: block; margin: auto;" />
+    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-31-2.png" width="70%" style="display: block; margin: auto;" />
 
 b)  Repetir el apartado anterior considerando el test de Lilliefors
     (rutina `lillie.test` del paquete `nortest`).
@@ -761,7 +767,7 @@ b)  Repetir el apartado anterior considerando el test de Lilliefors
     abline(h=1, lty=2)   # curve(dunif(x,0,1), add=TRUE)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-37-1.png" width="70%" style="display: block; margin: auto;" />
+    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-36-1.png" width="70%" style="display: block; margin: auto;" />
     
     ```r
     # Distribución empírica
@@ -770,7 +776,7 @@ b)  Repetir el apartado anterior considerando el test de Lilliefors
     abline(a=0, b=1, lty=2)   # curve(punif(x, 0, 1), add = TRUE)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-37-2.png" width="70%" style="display: block; margin: auto;" />
+    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-36-2.png" width="70%" style="display: block; margin: auto;" />
 
 c)  Repetir el apartado a) contrastando una distribución exponencial
     y considerando 500 pruebas con muestras de tamaño 30 de una $Exp(1)$.
@@ -825,7 +831,7 @@ c)  Repetir el apartado a) contrastando una distribución exponencial
     abline(h=1, lty=2)   # curve(dunif(x,0,1), add=TRUE)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-41-1.png" width="70%" style="display: block; margin: auto;" />
+    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-40-1.png" width="70%" style="display: block; margin: auto;" />
     
     ```r
     # Distribución empírica
@@ -835,7 +841,7 @@ c)  Repetir el apartado a) contrastando una distribución exponencial
     abline(a=0, b=1, lty=2)   # curve(punif(x, 0, 1), add = TRUE) 
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-41-2.png" width="70%" style="display: block; margin: auto;" />
+    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-40-2.png" width="70%" style="display: block; margin: auto;" />
 
 d)  Diseñar una rutina que permita realizar el contraste KS de
     bondad de ajuste de una variable exponencial aproximando el
@@ -924,7 +930,7 @@ d)  Diseñar una rutina que permita realizar el contraste KS de
     abline(h=1, lty=2)   # curve(dunif(x,0,1), add=TRUE)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-45-1.png" width="70%" style="display: block; margin: auto;" />
+    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-44-1.png" width="70%" style="display: block; margin: auto;" />
     
     ```r
     # Distribución empírica
@@ -934,7 +940,7 @@ d)  Diseñar una rutina que permita realizar el contraste KS de
     abline(a=0, b=1, lty=2)   # curve(punif(x, 0, 1), add = TRUE) 
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-45-2.png" width="70%" style="display: block; margin: auto;" />
+    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-44-2.png" width="70%" style="display: block; margin: auto;" />
 
 e)  Estudiar la potencia de los contrastes de los apartados c) y d),
     considerando como alternativa una distribución Weibull.
@@ -990,7 +996,7 @@ valor absoluto del correspondiente gráfico PP, y solo habría que cambiar el es
 Comparación de estimadores
 --------------------------
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-46"><strong>(\#exr:unnamed-chunk-46) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-45"><strong>(\#exr:unnamed-chunk-45) </strong></span></div>\EndKnitrBlock{exercise}
 
 Supongamos que estamos interesados en estudiar el efecto de datos
 atípicos en la estimación de la media teórica mediante la media y la mediana muestrales. 
@@ -1054,7 +1060,7 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
     hist(dat.sim[,1])
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-49-1.png" width="70%" style="display: block; margin: auto;" />
+    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-48-1.png" width="70%" style="display: block; margin: auto;" />
     
     Calculamos los estimadores:
     
@@ -1108,7 +1114,7 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
     abline(h = 0, lty = 2)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-52-1.png" width="70%" style="display: block; margin: auto;" />
+    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-51-1.png" width="70%" style="display: block; margin: auto;" />
     
     Error cuadrático:
     
@@ -1118,7 +1124,7 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
           names=c("Media","Mediana"), ylab="Error cuadrático")
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-53-1.png" width="70%" style="display: block; margin: auto;" />
+    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-52-1.png" width="70%" style="display: block; margin: auto;" />
     
     Estadísticos error cuadrático:
     
@@ -1147,6 +1153,8 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
 Remuestreo Bootstrap
 --------------------
 
+Ver [Cao y Fernández-Casal (2019)](https://rubenfcasal.github.io/book_remuestreo/).
+
 ### Idea:
 
 Consideramos un conjunto de datos simulado:
@@ -1167,7 +1175,7 @@ curve(ecdf(data)(x), ylab = "FD", type = "s", lwd = 2)
 abline(a = 0, b = 1, lty = 2) 
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-55-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-54-1.png" width="70%" style="display: block; margin: auto;" />
 
 Las características de la distribución empírica se pueden aproximar mediante simulación. 
 En el caso i.i.d. esto puede ser implementado mediante remuestreo,
@@ -1282,7 +1290,7 @@ mean.boot
 ```
 
 ```
-## [1] -0.09274131
+## [1] -0.09202607
 ```
 
 Bootstrap percentil:
@@ -1298,7 +1306,7 @@ curve(dnorm(x, datmed, datsd/sqrt(ndat)), lty=2, add=TRUE)
 abline(v=datmed, lwd=2, lty=2)
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-61-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-60-1.png" width="70%" style="display: block; margin: auto;" />
 
 Bootstrap natural/básico:
 
@@ -1313,7 +1321,7 @@ curve(dnorm(x, 0, datsd/sqrt(ndat)), lty=2, add=TRUE)
 abline(v=0, lwd=2, lty=2)
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-62-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-61-1.png" width="70%" style="display: block; margin: auto;" />
 
 Sesgo y error estándar bootstrap:
 
@@ -1324,7 +1332,7 @@ mean.boot - stat.dat
 ```
 
 ```
-## [1] 0.0006390906
+## [1] 0.00135433
 ```
 
 ```r
@@ -1333,7 +1341,7 @@ sd(stat.boot)
 ```
 
 ```
-## [1] 0.1044501
+## [1] 0.1027024
 ```
 
 ```r
@@ -1375,10 +1383,12 @@ res.boot
 
 ```
 ##  Estadístico        Sesgo      Err.Std 
-## -0.144801929  0.005968729  0.119231743
+## -0.144801929  0.006044904  0.117978183
 ```
 
 ### Paquetes R: bootstrap, boot
+
+Ver [Sección 1.4](https://rubenfcasal.github.io/book_remuestreo/cap1-paquetes.html) de Cao y Fernández-Casal (2019).
 
 
 ```r
@@ -1415,8 +1425,8 @@ stat.boot
 ## 
 ## 
 ## Bootstrap Statistics :
-##       original       bias    std. error
-## t1* -0.0933804 0.0006390906   0.1049474
+##       original     bias    std. error
+## t1* -0.0933804 0.00135433    0.105385
 ```
 
 ```r
@@ -1424,8 +1434,9 @@ names(stat.boot)
 ```
 
 ```
-##  [1] "t0"        "t"         "R"         "data"      "seed"      "statistic"
-##  [7] "sim"       "call"      "stype"     "strata"    "weights"
+##  [1] "t0"        "t"         "R"         "data"      "seed"     
+##  [6] "statistic" "sim"       "call"      "stype"     "strata"   
+## [11] "weights"
 ```
 
 ### Gráficos
@@ -1435,19 +1446,19 @@ names(stat.boot)
 hist(stat.boot$t, freq=FALSE)
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-67-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-66-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 plot(stat.boot)
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-67-2.png" width="70%" style="display: block; margin: auto;" />
+<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-66-2.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 jack.after.boot(stat.boot)
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-67-3.png" width="70%" style="display: block; margin: auto;" />
+<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-66-3.png" width="70%" style="display: block; margin: auto;" />
 
 ### Intervalos de confianza bootstrap
 
@@ -1466,15 +1477,15 @@ boot.ci(stat.boot, type=c("norm", "basic", "perc", "bca"))
 ## 
 ## Intervals : 
 ## Level      Normal              Basic         
-## 95%   (-0.2997,  0.1117 )   (-0.3028,  0.1147 )  
+## 95%   (-0.3013,  0.1118 )   (-0.2900,  0.1212 )  
 ## 
 ## Level     Percentile            BCa          
-## 95%   (-0.3015,  0.1161 )   (-0.2993,  0.1180 )  
+## 95%   (-0.3079,  0.1032 )   (-0.3258,  0.0973 )  
 ## Calculations and Intervals on Original Scale
 ```
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-69"><strong>(\#exr:unnamed-chunk-69) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-68"><strong>(\#exr:unnamed-chunk-68) </strong></span></div>\EndKnitrBlock{exercise}
 
 Repetir el ejemplo anterior considerando la media recortada al 10\%
 (ejemplo con parámetros adicionales).
@@ -1500,13 +1511,13 @@ boot(dat, boot.f, nboot, trim=0.2)
 ## 
 ## Bootstrap Statistics :
 ##       original      bias    std. error
-## t1* -0.1448019 0.006095294    0.119021
+## t1* -0.1448019 0.005146914   0.1226472
 ```
 
 <!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
 <br> \vspace{0.5cm}
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-71"><strong>(\#exr:unnamed-chunk-71) </strong></span>(propuesto)</div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-70"><strong>(\#exr:unnamed-chunk-70) </strong></span>(propuesto)</div>\EndKnitrBlock{exercise}
 
 En el tema 2 se propuso el análisis de la aleatoriedad de un
 generador de números pseudo-aleatorios mediante el test de rachas,

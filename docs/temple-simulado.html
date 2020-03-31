@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9.4 Temple simulado | Simulación Estadística</title>
   <meta name="description" content="Apuntes de la asignatura de Simulación Estadística del Máster en Técnicas Estadísticas." />
-  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.10 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9.4 Temple simulado | Simulación Estadística" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2020-02-18" />
+<meta name="date" content="2020-03-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="optimización-monte-carlo.html"/>
-<link rel="next" href="algoritmos-genéticos.html"/>
+<link rel="prev" href="optimizacion-monte-carlo.html">
+<link rel="next" href="algoritmos-geneticos.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,9 +40,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
 
 
 
@@ -53,66 +50,41 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -133,15 +105,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
 <li class="chapter" data-level="1" data-path="cap1.html"><a href="cap1.html"><i class="fa fa-check"></i><b>1</b> Introducción a la simulación</a><ul>
-<li class="chapter" data-level="1.1" data-path="conceptos-básicos.html"><a href="conceptos-básicos.html"><i class="fa fa-check"></i><b>1.1</b> Conceptos básicos</a><ul>
-<li class="chapter" data-level="1.1.1" data-path="conceptos-básicos.html"><a href="conceptos-básicos.html#ventajas-e-inconvenientes-de-la-simulación"><i class="fa fa-check"></i><b>1.1.1</b> Ventajas e inconvenientes de la simulación</a></li>
+<li class="chapter" data-level="1.1" data-path="conceptos-basicos.html"><a href="conceptos-basicos.html"><i class="fa fa-check"></i><b>1.1</b> Conceptos básicos</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="conceptos-basicos.html"><a href="conceptos-basicos.html#ventajas-e-inconvenientes-de-la-simulacion"><i class="fa fa-check"></i><b>1.1.1</b> Ventajas e inconvenientes de la simulación</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="generación-de-números-pseudoaleatorios.html"><a href="generación-de-números-pseudoaleatorios.html"><i class="fa fa-check"></i><b>1.2</b> Generación de números (pseudo)aleatorios</a></li>
-<li class="chapter" data-level="1.3" data-path="números-aleatorios-puros.html"><a href="números-aleatorios-puros.html"><i class="fa fa-check"></i><b>1.3</b> Números aleatorios puros</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="números-aleatorios-puros.html"><a href="números-aleatorios-puros.html#inconvenientes"><i class="fa fa-check"></i><b>1.3.1</b> Inconvenientes:</a></li>
-<li class="chapter" data-level="1.3.2" data-path="números-aleatorios-puros.html"><a href="números-aleatorios-puros.html#alternativas"><i class="fa fa-check"></i><b>1.3.2</b> Alternativas:</a></li>
+<li class="chapter" data-level="1.2" data-path="generacion-de-numeros-pseudoaleatorios.html"><a href="generacion-de-numeros-pseudoaleatorios.html"><i class="fa fa-check"></i><b>1.2</b> Generación de números (pseudo)aleatorios</a></li>
+<li class="chapter" data-level="1.3" data-path="numeros-aleatorios-puros.html"><a href="numeros-aleatorios-puros.html"><i class="fa fa-check"></i><b>1.3</b> Números aleatorios puros</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="numeros-aleatorios-puros.html"><a href="numeros-aleatorios-puros.html#inconvenientes"><i class="fa fa-check"></i><b>1.3.1</b> Inconvenientes:</a></li>
+<li class="chapter" data-level="1.3.2" data-path="numeros-aleatorios-puros.html"><a href="numeros-aleatorios-puros.html#alternativas"><i class="fa fa-check"></i><b>1.3.2</b> Alternativas:</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="números-pseudoaleatorios.html"><a href="números-pseudoaleatorios.html"><i class="fa fa-check"></i><b>1.4</b> Números pseudoaleatorios</a></li>
+<li class="chapter" data-level="1.4" data-path="numeros-pseudoaleatorios.html"><a href="numeros-pseudoaleatorios.html"><i class="fa fa-check"></i><b>1.4</b> Números pseudoaleatorios</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="cap2.html"><a href="cap2.html"><i class="fa fa-check"></i><b>2</b> Números aleatorios en R</a><ul>
 <li class="chapter" data-level="2.1" data-path="opciones.html"><a href="opciones.html"><i class="fa fa-check"></i><b>2.1</b> Opciones</a></li>
@@ -157,98 +129,94 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1.1" data-path="gen-cong.html"><a href="gen-cong.html#otros-generadores"><i class="fa fa-check"></i><b>3.1.1</b> Otros generadores</a></li>
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="calgen.html"><a href="calgen.html"><i class="fa fa-check"></i><b>3.2</b> Análisis de la calidad de un generador</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="calgen.html"><a href="calgen.html#repetición-de-contrastes"><i class="fa fa-check"></i><b>3.2.1</b> Repetición de contrastes</a></li>
-<li class="chapter" data-level="3.2.2" data-path="calgen.html"><a href="calgen.html#baterías-de-contrastes"><i class="fa fa-check"></i><b>3.2.2</b> Baterías de contrastes</a></li>
+<li class="chapter" data-level="3.2.1" data-path="calgen.html"><a href="calgen.html#repeticion-de-contrastes"><i class="fa fa-check"></i><b>3.2.1</b> Repetición de contrastes</a></li>
+<li class="chapter" data-level="3.2.2" data-path="calgen.html"><a href="calgen.html#baterias"><i class="fa fa-check"></i><b>3.2.2</b> Baterías de contrastes</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="ejercicios-de-fin-de-práctica.html"><a href="ejercicios-de-fin-de-práctica.html"><i class="fa fa-check"></i><b>3.3</b> Ejercicios de fin de práctica</a></li>
+<li class="chapter" data-level="3.3" data-path="ejercicios-1.html"><a href="ejercicios-1.html"><i class="fa fa-check"></i><b>3.3</b> Ejercicios</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="análisis-de-resultados-de-simulación.html"><a href="análisis-de-resultados-de-simulación.html"><i class="fa fa-check"></i><b>4</b> Análisis de resultados de simulación</a><ul>
+<li class="chapter" data-level="4" data-path="analisis-de-resultados-de-simulacion.html"><a href="analisis-de-resultados-de-simulacion.html"><i class="fa fa-check"></i><b>4</b> Análisis de resultados de simulación</a><ul>
 <li class="chapter" data-level="4.1" data-path="convergencia.html"><a href="convergencia.html"><i class="fa fa-check"></i><b>4.1</b> Convergencia</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="convergencia.html"><a href="convergencia.html#detección-de-problemas-de-convergencia"><i class="fa fa-check"></i><b>4.1.1</b> Detección de problemas de convergencia</a></li>
+<li class="chapter" data-level="4.1.1" data-path="convergencia.html"><a href="convergencia.html#deteccion-de-problemas-de-convergencia"><i class="fa fa-check"></i><b>4.1.1</b> Detección de problemas de convergencia</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="estimación-de-la-precisión.html"><a href="estimación-de-la-precisión.html"><i class="fa fa-check"></i><b>4.2</b> Estimación de la precisión</a></li>
-<li class="chapter" data-level="4.3" data-path="teorema-central-del-límite.html"><a href="teorema-central-del-límite.html"><i class="fa fa-check"></i><b>4.3</b> Teorema central del límite</a></li>
-<li class="chapter" data-level="4.4" data-path="determinación-del-número-de-generaciones.html"><a href="determinación-del-número-de-generaciones.html"><i class="fa fa-check"></i><b>4.4</b> Determinación del número de generaciones</a></li>
+<li class="chapter" data-level="4.2" data-path="estimacion-de-la-precision.html"><a href="estimacion-de-la-precision.html"><i class="fa fa-check"></i><b>4.2</b> Estimación de la precisión</a></li>
+<li class="chapter" data-level="4.3" data-path="teorema-central-del-limite.html"><a href="teorema-central-del-limite.html"><i class="fa fa-check"></i><b>4.3</b> Teorema central del límite</a></li>
+<li class="chapter" data-level="4.4" data-path="determinacion-del-numero-de-generaciones.html"><a href="determinacion-del-numero-de-generaciones.html"><i class="fa fa-check"></i><b>4.4</b> Determinación del número de generaciones</a></li>
 <li class="chapter" data-level="4.5" data-path="el-problema-de-la-dependencia.html"><a href="el-problema-de-la-dependencia.html"><i class="fa fa-check"></i><b>4.5</b> El problema de la dependencia</a><ul>
 <li class="chapter" data-level="4.5.1" data-path="el-problema-de-la-dependencia.html"><a href="el-problema-de-la-dependencia.html#periodo-de-calentamiento"><i class="fa fa-check"></i><b>4.5.1</b> Periodo de calentamiento</a></li>
 </ul></li>
 <li class="chapter" data-level="4.6" data-path="observaciones.html"><a href="observaciones.html"><i class="fa fa-check"></i><b>4.6</b> Observaciones</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="simulación-de-variables-continuas.html"><a href="simulación-de-variables-continuas.html"><i class="fa fa-check"></i><b>5</b> Simulación de variables continuas</a><ul>
-<li class="chapter" data-level="5.1" data-path="método-de-inversión.html"><a href="método-de-inversión.html"><i class="fa fa-check"></i><b>5.1</b> Método de inversión</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="método-de-inversión.html"><a href="método-de-inversión.html#ejemplo"><i class="fa fa-check"></i><b>5.1.1</b> Ejemplo</a></li>
-<li class="chapter" data-level="5.1.2" data-path="método-de-inversión.html"><a href="método-de-inversión.html#algunas-distribuciones-que-pueden-simularse-por-el-método-de-inversión"><i class="fa fa-check"></i><b>5.1.2</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
-<li class="chapter" data-level="5.1.3" data-path="método-de-inversión.html"><a href="método-de-inversión.html#ventajas-e-inconvenientes"><i class="fa fa-check"></i><b>5.1.3</b> Ventajas e inconvenientes</a></li>
-<li class="chapter" data-level="5.1.4" data-path="método-de-inversión.html"><a href="método-de-inversión.html#inversión-aproximada"><i class="fa fa-check"></i><b>5.1.4</b> Inversión aproximada</a></li>
+<li class="chapter" data-level="5" data-path="simulacion-de-variables-continuas.html"><a href="simulacion-de-variables-continuas.html"><i class="fa fa-check"></i><b>5</b> Simulación de variables continuas</a><ul>
+<li class="chapter" data-level="5.1" data-path="metodo-de-inversion.html"><a href="metodo-de-inversion.html"><i class="fa fa-check"></i><b>5.1</b> Método de inversión</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="metodo-de-inversion.html"><a href="metodo-de-inversion.html#algunas-distribuciones-que-pueden-simularse-por-el-metodo-de-inversion"><i class="fa fa-check"></i><b>5.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
+<li class="chapter" data-level="5.1.2" data-path="metodo-de-inversion.html"><a href="metodo-de-inversion.html#ventajas-e-inconvenientes"><i class="fa fa-check"></i><b>5.1.2</b> Ventajas e inconvenientes</a></li>
+<li class="chapter" data-level="5.1.3" data-path="metodo-de-inversion.html"><a href="metodo-de-inversion.html#inversion-aproximada"><i class="fa fa-check"></i><b>5.1.3</b> Inversión aproximada</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="método-de-aceptación-rechazo.html"><a href="método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.2</b> Método de aceptación rechazo</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="método-de-aceptación-rechazo.html"><a href="método-de-aceptación-rechazo.html#algoritmo"><i class="fa fa-check"></i><b>5.2.1</b> Algoritmo</a></li>
-<li class="chapter" data-level="5.2.2" data-path="método-de-aceptación-rechazo.html"><a href="método-de-aceptación-rechazo.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
-<li class="chapter" data-level="5.2.3" data-path="método-de-aceptación-rechazo.html"><a href="método-de-aceptación-rechazo.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
-<li class="chapter" data-level="5.2.4" data-path="método-de-aceptación-rechazo.html"><a href="método-de-aceptación-rechazo.html#ejemplo-1"><i class="fa fa-check"></i><b>5.2.4</b> Ejemplo</a></li>
+<li class="chapter" data-level="5.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>5.2</b> Método de aceptación rechazo</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="AR.html"><a href="AR.html#algoritmo"><i class="fa fa-check"></i><b>5.2.1</b> Algoritmo</a></li>
+<li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
+<li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
+<li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.4</b> Ejemplo: Inferencia Bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-ar.html"><a href="modificaciones-del-método-de-ar.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de AR</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-ar.html"><a href="modificaciones-del-método-de-ar.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
-<li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-ar.html"><a href="modificaciones-del-método-de-ar.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-metodo-de-aceptacion-rechazo.html"><a href="modificaciones-del-metodo-de-aceptacion-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-metodo-de-aceptacion-rechazo.html"><a href="modificaciones-del-metodo-de-aceptacion-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="5.3.2" data-path="modificaciones-del-metodo-de-aceptacion-rechazo.html"><a href="modificaciones-del-metodo-de-aceptacion-rechazo.html#metodo-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="método-de-composición.html"><a href="método-de-composición.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición</a><ul>
-<li class="chapter" data-level="5.4.1" data-path="método-de-composición.html"><a href="método-de-composición.html#ejemplo-2"><i class="fa fa-check"></i><b>5.4.1</b> Ejemplo</a></li>
+<li class="chapter" data-level="5.4" data-path="metodo-de-composicion.html"><a href="metodo-de-composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición</a></li>
+<li class="chapter" data-level="5.5" data-path="metodos-especificos-para-la-generacion-de-algunas-distribuciones-notables.html"><a href="metodos-especificos-para-la-generacion-de-algunas-distribuciones-notables.html"><i class="fa fa-check"></i><b>5.5</b> Métodos específicos para la generación de algunas distribuciones notables</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="metodos-especificos-para-la-generacion-de-algunas-distribuciones-notables.html"><a href="metodos-especificos-para-la-generacion-de-algunas-distribuciones-notables.html#metodo-de-box-muller"><i class="fa fa-check"></i><b>5.5.1</b> Método de Box-Müller</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="métodos-específicos-para-generación-de-distribuciones-notables.html"><a href="métodos-específicos-para-generación-de-distribuciones-notables.html"><i class="fa fa-check"></i><b>5.5</b> Métodos específicos para generación de distribuciones notables</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="cap6.html"><a href="cap6.html"><i class="fa fa-check"></i><b>6</b> Simulación de variables discretas</a><ul>
-<li class="chapter" data-level="6.1" data-path="método-de-la-transformación-cuantil.html"><a href="método-de-la-transformación-cuantil.html"><i class="fa fa-check"></i><b>6.1</b> Método de la transformación cuantil</a><ul>
-<li class="chapter" data-level="6.1.1" data-path="método-de-la-transformación-cuantil.html"><a href="método-de-la-transformación-cuantil.html#eficiencia-del-algoritmo-1"><i class="fa fa-check"></i><b>6.1.1</b> Eficiencia del algoritmo</a></li>
+<li class="chapter" data-level="6.1" data-path="metodo-de-la-transformacion-cuantil.html"><a href="metodo-de-la-transformacion-cuantil.html"><i class="fa fa-check"></i><b>6.1</b> Método de la transformación cuantil</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="metodo-de-la-transformacion-cuantil.html"><a href="metodo-de-la-transformacion-cuantil.html#eficiencia-del-algoritmo-1"><i class="fa fa-check"></i><b>6.1.1</b> Eficiencia del algoritmo</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="método-de-la-tabla-guía.html"><a href="método-de-la-tabla-guía.html"><i class="fa fa-check"></i><b>6.2</b> Método de la tabla guía</a></li>
+<li class="chapter" data-level="6.2" data-path="metodo-de-la-tabla-guia.html"><a href="metodo-de-la-tabla-guia.html"><i class="fa fa-check"></i><b>6.2</b> Método de la tabla guía</a></li>
 <li class="chapter" data-level="6.3" data-path="alias.html"><a href="alias.html"><i class="fa fa-check"></i><b>6.3</b> Método de Alias</a></li>
-<li class="chapter" data-level="6.4" data-path="simulación-de-una-variable-discreta-con-dominio-infinito.html"><a href="simulación-de-una-variable-discreta-con-dominio-infinito.html"><i class="fa fa-check"></i><b>6.4</b> Simulación de una variable discreta con dominio infinito</a></li>
-<li class="chapter" data-level="6.5" data-path="cálculo-directo-de-la-función-cuantil.html"><a href="cálculo-directo-de-la-función-cuantil.html"><i class="fa fa-check"></i><b>6.5</b> Cálculo directo de la función cuantil</a></li>
-<li class="chapter" data-level="6.6" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>6.6</b> Otros métodos</a></li>
-<li class="chapter" data-level="6.7" data-path="métodos-específicos-para-generación-de-distribuciones-notables-1.html"><a href="métodos-específicos-para-generación-de-distribuciones-notables-1.html"><i class="fa fa-check"></i><b>6.7</b> Métodos específicos para generación de distribuciones notables</a></li>
+<li class="chapter" data-level="6.4" data-path="simulacion-de-una-variable-discreta-con-dominio-infinito.html"><a href="simulacion-de-una-variable-discreta-con-dominio-infinito.html"><i class="fa fa-check"></i><b>6.4</b> Simulación de una variable discreta con dominio infinito</a></li>
+<li class="chapter" data-level="6.5" data-path="calculo-directo-de-la-funcion-cuantil.html"><a href="calculo-directo-de-la-funcion-cuantil.html"><i class="fa fa-check"></i><b>6.5</b> Cálculo directo de la función cuantil</a></li>
+<li class="chapter" data-level="6.6" data-path="otros-metodos.html"><a href="otros-metodos.html"><i class="fa fa-check"></i><b>6.6</b> Otros métodos</a></li>
+<li class="chapter" data-level="6.7" data-path="metodos-especificos-para-generacion-de-distribuciones-notables.html"><a href="metodos-especificos-para-generacion-de-distribuciones-notables.html"><i class="fa fa-check"></i><b>6.7</b> Métodos específicos para generación de distribuciones notables</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="simulación-de-distribuciones-multidimensionales.html"><a href="simulación-de-distribuciones-multidimensionales.html"><i class="fa fa-check"></i><b>7</b> Simulación de Distribuciones Multidimensionales</a><ul>
-<li class="chapter" data-level="7.1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>7.1</b> Introducción</a></li>
-<li class="chapter" data-level="7.2" data-path="el-método-de-aceptaciónrechazo.html"><a href="el-método-de-aceptaciónrechazo.html"><i class="fa fa-check"></i><b>7.2</b> El método de aceptación/rechazo</a></li>
-<li class="chapter" data-level="7.3" data-path="factorización-de-la-matriz-de-covarianzas.html"><a href="factorización-de-la-matriz-de-covarianzas.html"><i class="fa fa-check"></i><b>7.3</b> Factorización de la matriz de covarianzas</a><ul>
-<li class="chapter" data-level="7.3.1" data-path="factorización-de-la-matriz-de-covarianzas.html"><a href="factorización-de-la-matriz-de-covarianzas.html#simulación-de-la-normal-multivariante"><i class="fa fa-check"></i><b>7.3.1</b> Simulación de la normal multivariante</a></li>
+<li class="chapter" data-level="7" data-path="simulacion-de-distribuciones-multivariantes.html"><a href="simulacion-de-distribuciones-multivariantes.html"><i class="fa fa-check"></i><b>7</b> Simulación de distribuciones multivariantes</a><ul>
+<li class="chapter" data-level="7.1" data-path="simulacion-de-componentes-independientes.html"><a href="simulacion-de-componentes-independientes.html"><i class="fa fa-check"></i><b>7.1</b> Simulación de componentes independientes</a></li>
+<li class="chapter" data-level="7.2" data-path="el-metodo-de-aceptacionrechazo.html"><a href="el-metodo-de-aceptacionrechazo.html"><i class="fa fa-check"></i><b>7.2</b> El método de aceptación/rechazo</a></li>
+<li class="chapter" data-level="7.3" data-path="fact-cov.html"><a href="fact-cov.html"><i class="fa fa-check"></i><b>7.3</b> Factorización de la matriz de covarianzas</a></li>
+<li class="chapter" data-level="7.4" data-path="distrcond.html"><a href="distrcond.html"><i class="fa fa-check"></i><b>7.4</b> Método de las distribuciones condicionadas</a></li>
+<li class="chapter" data-level="7.5" data-path="simulacion-condicional-e-incondicional.html"><a href="simulacion-condicional-e-incondicional.html"><i class="fa fa-check"></i><b>7.5</b> Simulación condicional e incondicional</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="simulacion-condicional-e-incondicional.html"><a href="simulacion-condicional-e-incondicional.html#condnormal"><i class="fa fa-check"></i><b>7.5.1</b> Simulación condicional de una normal multivariante</a></li>
+<li class="chapter" data-level="7.5.2" data-path="simulacion-condicional-e-incondicional.html"><a href="simulacion-condicional-e-incondicional.html#simulacion-condicional-a-partir-de-un-modelo-ajustado"><i class="fa fa-check"></i><b>7.5.2</b> Simulación condicional a partir de un modelo ajustado</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="método-de-las-distribuciones-condicionadas.html"><a href="método-de-las-distribuciones-condicionadas.html"><i class="fa fa-check"></i><b>7.4</b> Método de las distribuciones condicionadas</a></li>
-<li class="chapter" data-level="7.5" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html"><i class="fa fa-check"></i><b>7.5</b> Simulación condicional e incondicional</a><ul>
-<li class="chapter" data-level="7.5.1" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html#condnormal"><i class="fa fa-check"></i><b>7.5.1</b> Simulación condicional de una normal multivariante</a></li>
-<li class="chapter" data-level="7.5.2" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html#simulación-condicional-a-partir-de-un-modelo-ajustado"><i class="fa fa-check"></i><b>7.5.2</b> Simulación condicional a partir de un modelo ajustado</a></li>
+<li class="chapter" data-level="7.6" data-path="simulacion-basada-en-copulas.html"><a href="simulacion-basada-en-copulas.html"><i class="fa fa-check"></i><b>7.6</b> Simulación basada en cópulas</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="simulacion-basada-en-copulas.html"><a href="simulacion-basada-en-copulas.html#copulas-arquimedianas"><i class="fa fa-check"></i><b>7.6.1</b> Cópulas Arquimedianas</a></li>
+<li class="chapter" data-level="7.6.2" data-path="simulacion-basada-en-copulas.html"><a href="simulacion-basada-en-copulas.html#simulacion"><i class="fa fa-check"></i><b>7.6.2</b> Simulación</a></li>
 </ul></li>
-<li class="chapter" data-level="7.6" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html"><i class="fa fa-check"></i><b>7.6</b> Simulación basada en cópulas</a><ul>
-<li class="chapter" data-level="7.6.1" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html#cópulas-arquimedianas"><i class="fa fa-check"></i><b>7.6.1</b> Cópulas Arquimedianas</a></li>
-<li class="chapter" data-level="7.6.2" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html#simulación"><i class="fa fa-check"></i><b>7.6.2</b> Simulación</a></li>
+<li class="chapter" data-level="7.7" data-path="mult-discr.html"><a href="mult-discr.html"><i class="fa fa-check"></i><b>7.7</b> Simulación de distribuciones multivariantes discretas</a><ul>
+<li class="chapter" data-level="7.7.1" data-path="mult-discr.html"><a href="mult-discr.html#metodos-de-codificacion-o-etiquetado-para-variables-discretas"><i class="fa fa-check"></i><b>7.7.1</b> Métodos de codificación o etiquetado para variables discretas</a></li>
+<li class="chapter" data-level="7.7.2" data-path="mult-discr.html"><a href="mult-discr.html#simulacion-de-una-variable-discreta-bidimensional"><i class="fa fa-check"></i><b>7.7.2</b> Simulación de una variable discreta bidimensional</a></li>
+<li class="chapter" data-level="7.7.3" data-path="mult-discr.html"><a href="mult-discr.html#simconting"><i class="fa fa-check"></i><b>7.7.3</b> Simulación de tablas de contingencia</a></li>
 </ul></li>
-<li class="chapter" data-level="7.7" data-path="otros-métodos-para-variables-continuas.html"><a href="otros-métodos-para-variables-continuas.html"><i class="fa fa-check"></i><b>7.7</b> Otros métodos para variables continuas</a></li>
-<li class="chapter" data-level="7.8" data-path="simulación-de-distribuciones-multidimensionales-discretas.html"><a href="simulación-de-distribuciones-multidimensionales-discretas.html"><i class="fa fa-check"></i><b>7.8</b> Simulación de distribuciones multidimensionales discretas</a><ul>
-<li class="chapter" data-level="7.8.1" data-path="simulación-de-distribuciones-multidimensionales-discretas.html"><a href="simulación-de-distribuciones-multidimensionales-discretas.html#métodos-de-codificación-o-etiquetado-para-variables-discretas"><i class="fa fa-check"></i><b>7.8.1</b> Métodos de codificación o etiquetado para variables discretas</a></li>
-<li class="chapter" data-level="7.8.2" data-path="simulación-de-distribuciones-multidimensionales-discretas.html"><a href="simulación-de-distribuciones-multidimensionales-discretas.html#simulación-de-una-variable-discreta-bidimensional"><i class="fa fa-check"></i><b>7.8.2</b> Simulación de una variable discreta bidimensional</a></li>
-<li class="chapter" data-level="7.8.3" data-path="simulación-de-distribuciones-multidimensionales-discretas.html"><a href="simulación-de-distribuciones-multidimensionales-discretas.html#simulación-de-tablas-de-contingencia"><i class="fa fa-check"></i><b>7.8.3</b> Simulación de tablas de contingencia</a></li>
-</ul></li>
-<li class="chapter" data-level="7.9" data-path="ejercicios-propuestos.html"><a href="ejercicios-propuestos.html"><i class="fa fa-check"></i><b>7.9</b> Ejercicios propuestos</a></li>
+<li class="chapter" data-level="7.8" data-path="ejercicios-propuestos.html"><a href="ejercicios-propuestos.html"><i class="fa fa-check"></i><b>7.8</b> Ejercicios propuestos</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="cap8.html"><a href="cap8.html"><i class="fa fa-check"></i><b>8</b> Aplicaciones de la simulación en Inferencia Estadística</a><ul>
-<li class="chapter" data-level="8.1" data-path="distribución-en-el-muestreo.html"><a href="distribución-en-el-muestreo.html"><i class="fa fa-check"></i><b>8.1</b> Distribución en el muestreo</a></li>
+<li class="chapter" data-level="8.1" data-path="distribucion-en-el-muestreo.html"><a href="distribucion-en-el-muestreo.html"><i class="fa fa-check"></i><b>8.1</b> Distribución en el muestreo</a></li>
 <li class="chapter" data-level="8.2" data-path="intervalos-de-confianza.html"><a href="intervalos-de-confianza.html"><i class="fa fa-check"></i><b>8.2</b> Intervalos de confianza</a></li>
-<li class="chapter" data-level="8.3" data-path="contrastes-de-hipótesis.html"><a href="contrastes-de-hipótesis.html"><i class="fa fa-check"></i><b>8.3</b> Contrastes de hipótesis</a></li>
-<li class="chapter" data-level="8.4" data-path="comparación-de-estimadores.html"><a href="comparación-de-estimadores.html"><i class="fa fa-check"></i><b>8.4</b> Comparación de estimadores</a></li>
+<li class="chapter" data-level="8.3" data-path="contrastes.html"><a href="contrastes.html"><i class="fa fa-check"></i><b>8.3</b> Contrastes de hipótesis</a></li>
+<li class="chapter" data-level="8.4" data-path="comparacion-de-estimadores.html"><a href="comparacion-de-estimadores.html"><i class="fa fa-check"></i><b>8.4</b> Comparación de estimadores</a></li>
 <li class="chapter" data-level="8.5" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html"><i class="fa fa-check"></i><b>8.5</b> Remuestreo Bootstrap</a><ul>
 <li class="chapter" data-level="8.5.1" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#idea"><i class="fa fa-check"></i><b>8.5.1</b> Idea:</a></li>
-<li class="chapter" data-level="8.5.2" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#métodos-de-remuestreo-bootstrap"><i class="fa fa-check"></i><b>8.5.2</b> Métodos de remuestreo Bootstrap</a></li>
-<li class="chapter" data-level="8.5.3" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#ejemplo-3"><i class="fa fa-check"></i><b>8.5.3</b> Ejemplo</a></li>
+<li class="chapter" data-level="8.5.2" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#metodos-de-remuestreo-bootstrap"><i class="fa fa-check"></i><b>8.5.2</b> Métodos de remuestreo Bootstrap</a></li>
+<li class="chapter" data-level="8.5.3" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#ejemplo"><i class="fa fa-check"></i><b>8.5.3</b> Ejemplo</a></li>
 <li class="chapter" data-level="8.5.4" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#paquetes-r-bootstrap-boot"><i class="fa fa-check"></i><b>8.5.4</b> Paquetes R: bootstrap, boot</a></li>
-<li class="chapter" data-level="8.5.5" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#gráficos"><i class="fa fa-check"></i><b>8.5.5</b> Gráficos</a></li>
+<li class="chapter" data-level="8.5.5" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#graficos"><i class="fa fa-check"></i><b>8.5.5</b> Gráficos</a></li>
 <li class="chapter" data-level="8.5.6" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#intervalos-de-confianza-bootstrap"><i class="fa fa-check"></i><b>8.5.6</b> Intervalos de confianza bootstrap</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="cap9.html"><a href="cap9.html"><i class="fa fa-check"></i><b>9</b> Integracion y Optimizacion Montecarlo</a><ul>
-<li class="chapter" data-level="9.1" data-path="integración-monte-carlo-clásica.html"><a href="integración-monte-carlo-clásica.html"><i class="fa fa-check"></i><b>9.1</b> Integración Monte Carlo (clásica)</a><ul>
-<li class="chapter" data-level="9.1.1" data-path="integración-monte-carlo-clásica.html"><a href="integración-monte-carlo-clásica.html#ejercicio-1"><i class="fa fa-check"></i><b>9.1.1</b> Ejercicio 1</a></li>
-<li class="chapter" data-level="9.1.2" data-path="integración-monte-carlo-clásica.html"><a href="integración-monte-carlo-clásica.html#caso-general"><i class="fa fa-check"></i><b>9.1.2</b> Caso general</a></li>
-<li class="chapter" data-level="9.1.3" data-path="integración-monte-carlo-clásica.html"><a href="integración-monte-carlo-clásica.html#ejercicio-2"><i class="fa fa-check"></i><b>9.1.3</b> Ejercicio 2</a></li>
+<li class="chapter" data-level="9.1" data-path="integracion-monte-carlo-clasica.html"><a href="integracion-monte-carlo-clasica.html"><i class="fa fa-check"></i><b>9.1</b> Integración Monte Carlo (clásica)</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="integracion-monte-carlo-clasica.html"><a href="integracion-monte-carlo-clasica.html#ejercicio-1"><i class="fa fa-check"></i><b>9.1.1</b> Ejercicio 1</a></li>
+<li class="chapter" data-level="9.1.2" data-path="integracion-monte-carlo-clasica.html"><a href="integracion-monte-carlo-clasica.html#caso-general"><i class="fa fa-check"></i><b>9.1.2</b> Caso general</a></li>
+<li class="chapter" data-level="9.1.3" data-path="integracion-monte-carlo-clasica.html"><a href="integracion-monte-carlo-clasica.html#ejercicio-2"><i class="fa fa-check"></i><b>9.1.3</b> Ejercicio 2</a></li>
 </ul></li>
 <li class="chapter" data-level="9.2" data-path="muestreo-por-importancia.html"><a href="muestreo-por-importancia.html"><i class="fa fa-check"></i><b>9.2</b> Muestreo por importancia</a><ul>
 <li class="chapter" data-level="9.2.1" data-path="muestreo-por-importancia.html"><a href="muestreo-por-importancia.html#ejercicio-3"><i class="fa fa-check"></i><b>9.2.1</b> Ejercicio 3</a></li>
@@ -256,48 +224,72 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.2.3" data-path="muestreo-por-importancia.html"><a href="muestreo-por-importancia.html#remuestreo-del-muestreo-por-importancia"><i class="fa fa-check"></i><b>9.2.3</b> Remuestreo (del muestreo) por importancia</a></li>
 <li class="chapter" data-level="9.2.4" data-path="muestreo-por-importancia.html"><a href="muestreo-por-importancia.html#ejercicio-5"><i class="fa fa-check"></i><b>9.2.4</b> Ejercicio 5</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="optimización-monte-carlo.html"><a href="optimización-monte-carlo.html"><i class="fa fa-check"></i><b>9.3</b> Optimización Monte Carlo</a><ul>
-<li class="chapter" data-level="9.3.1" data-path="optimización-monte-carlo.html"><a href="optimización-monte-carlo.html#ejercicio-6"><i class="fa fa-check"></i><b>9.3.1</b> Ejercicio 6</a></li>
-<li class="chapter" data-level="9.3.2" data-path="optimización-monte-carlo.html"><a href="optimización-monte-carlo.html#algoritmos-de-optimización-monte-carlo"><i class="fa fa-check"></i><b>9.3.2</b> Algoritmos de optimización Monte Carlo</a></li>
+<li class="chapter" data-level="9.3" data-path="optimizacion-monte-carlo.html"><a href="optimizacion-monte-carlo.html"><i class="fa fa-check"></i><b>9.3</b> Optimización Monte Carlo</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="optimizacion-monte-carlo.html"><a href="optimizacion-monte-carlo.html#ejercicio-6"><i class="fa fa-check"></i><b>9.3.1</b> Ejercicio 6</a></li>
+<li class="chapter" data-level="9.3.2" data-path="optimizacion-monte-carlo.html"><a href="optimizacion-monte-carlo.html#algoritmos-de-optimizacion-monte-carlo"><i class="fa fa-check"></i><b>9.3.2</b> Algoritmos de optimización Monte Carlo</a></li>
 </ul></li>
 <li class="chapter" data-level="9.4" data-path="temple-simulado.html"><a href="temple-simulado.html"><i class="fa fa-check"></i><b>9.4</b> Temple simulado</a><ul>
 <li class="chapter" data-level="9.4.1" data-path="temple-simulado.html"><a href="temple-simulado.html#algoritmo-1"><i class="fa fa-check"></i><b>9.4.1</b> Algoritmo:</a></li>
 <li class="chapter" data-level="9.4.2" data-path="temple-simulado.html"><a href="temple-simulado.html#ejercicio-7"><i class="fa fa-check"></i><b>9.4.2</b> Ejercicio 7</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="algoritmos-genéticos.html"><a href="algoritmos-genéticos.html"><i class="fa fa-check"></i><b>9.5</b> Algoritmos genéticos</a><ul>
-<li class="chapter" data-level="9.5.1" data-path="algoritmos-genéticos.html"><a href="algoritmos-genéticos.html#ejercicio-8"><i class="fa fa-check"></i><b>9.5.1</b> Ejercicio 8</a></li>
+<li class="chapter" data-level="9.5" data-path="algoritmos-geneticos.html"><a href="algoritmos-geneticos.html"><i class="fa fa-check"></i><b>9.5</b> Algoritmos genéticos</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="algoritmos-geneticos.html"><a href="algoritmos-geneticos.html#ejercicio-8"><i class="fa fa-check"></i><b>9.5.1</b> Ejercicio 8</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="técnicas-de-reducción-de-la-varianza.html"><a href="técnicas-de-reducción-de-la-varianza.html"><i class="fa fa-check"></i><b>10</b> Técnicas de reducción de la varianza</a><ul>
-<li class="chapter" data-level="10.1" data-path="reducción-de-la-varianza.html"><a href="reducción-de-la-varianza.html"><i class="fa fa-check"></i><b>10.1</b> Reducción de la varianza</a></li>
-<li class="chapter" data-level="10.2" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html"><i class="fa fa-check"></i><b>10.2</b> Variables antitéticas</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html#ejemplo-integración-monte-carlo"><i class="fa fa-check"></i><b>10.2.1</b> Ejemplo: Integración Monte Carlo</a></li>
-<li class="chapter" data-level="10.2.2" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html#generación-de-variables-antitéticas"><i class="fa fa-check"></i><b>10.2.2</b> Generación de variables antitéticas</a></li>
+<li class="chapter" data-level="10" data-path="tecnicas-de-reduccion-de-la-varianza.html"><a href="tecnicas-de-reduccion-de-la-varianza.html"><i class="fa fa-check"></i><b>10</b> Técnicas de reducción de la varianza</a><ul>
+<li class="chapter" data-level="10.1" data-path="reduccion-de-la-varianza.html"><a href="reduccion-de-la-varianza.html"><i class="fa fa-check"></i><b>10.1</b> Reducción de la varianza</a></li>
+<li class="chapter" data-level="10.2" data-path="variables-antiteticas.html"><a href="variables-antiteticas.html"><i class="fa fa-check"></i><b>10.2</b> Variables antitéticas</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="variables-antiteticas.html"><a href="variables-antiteticas.html#ejemplo-integracion-monte-carlo"><i class="fa fa-check"></i><b>10.2.1</b> Ejemplo: Integración Monte Carlo</a></li>
+<li class="chapter" data-level="10.2.2" data-path="variables-antiteticas.html"><a href="variables-antiteticas.html#generacion-de-variables-antiteticas"><i class="fa fa-check"></i><b>10.2.2</b> Generación de variables antitéticas</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="estratificación.html"><a href="estratificación.html"><i class="fa fa-check"></i><b>10.3</b> Estratificación</a></li>
+<li class="chapter" data-level="10.3" data-path="estratificacion.html"><a href="estratificacion.html"><i class="fa fa-check"></i><b>10.3</b> Estratificación</a></li>
 <li class="chapter" data-level="10.4" data-path="variables-de-control.html"><a href="variables-de-control.html"><i class="fa fa-check"></i><b>10.4</b> Variables de control</a></li>
-<li class="chapter" data-level="10.5" data-path="números-aleatorios-comunes.html"><a href="números-aleatorios-comunes.html"><i class="fa fa-check"></i><b>10.5</b> Números aleatorios comunes</a></li>
-<li class="chapter" data-level="10.6" data-path="ejercicios-fin-de-práctica.html"><a href="ejercicios-fin-de-práctica.html"><i class="fa fa-check"></i><b>10.6</b> Ejercicios fin de práctica</a></li>
+<li class="chapter" data-level="10.5" data-path="numeros-aleatorios-comunes.html"><a href="numeros-aleatorios-comunes.html"><i class="fa fa-check"></i><b>10.5</b> Números aleatorios comunes</a></li>
+<li class="chapter" data-level="10.6" data-path="ejercicios-fin-de-practica.html"><a href="ejercicios-fin-de-practica.html"><i class="fa fa-check"></i><b>10.6</b> Ejercicios fin de práctica</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
-<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
-<li class="chapter" data-level="" data-path="artículos.html"><a href="artículos.html"><i class="fa fa-check"></i>Artículos</a></li>
+<li class="chapter" data-level="" data-path="bibliografia-basica.html"><a href="bibliografia-basica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografia-complementaria.html"><a href="bibliografia-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a><ul>
+<li class="chapter" data-level="" data-path="bibliografia-complementaria.html"><a href="bibliografia-complementaria.html#libros"><i class="fa fa-check"></i>Libros</a></li>
+<li class="chapter" data-level="" data-path="bibliografia-complementaria.html"><a href="bibliografia-complementaria.html#articulos"><i class="fa fa-check"></i>Artículos</a></li>
+</ul></li>
 </ul></li>
 <li class="appendix"><span><b>Apendices</b></span></li>
 <li class="chapter" data-level="A" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i><b>A</b> Enlaces</a></li>
-<li class="chapter" data-level="B" data-path="integración-numérica.html"><a href="integración-numérica.html"><i class="fa fa-check"></i><b>B</b> Integración numérica</a><ul>
-<li class="chapter" data-level="B.1" data-path="introducción-1.html"><a href="introducción-1.html"><i class="fa fa-check"></i><b>B.1</b> Introducción</a></li>
-<li class="chapter" data-level="B.2" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html"><i class="fa fa-check"></i><b>B.2</b> Integración numérica unidimensional</a><ul>
-<li class="chapter" data-level="B.2.1" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#método-del-trapezoide"><i class="fa fa-check"></i><b>B.2.1</b> Método del trapezoide</a></li>
-<li class="chapter" data-level="B.2.2" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#regla-de-simpson"><i class="fa fa-check"></i><b>B.2.2</b> Regla de Simpson</a></li>
-<li class="chapter" data-level="B.2.3" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#cuadratura-adaptativa"><i class="fa fa-check"></i><b>B.2.3</b> Cuadratura adaptativa</a></li>
-<li class="chapter" data-level="B.2.4" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#comandos-de-r"><i class="fa fa-check"></i><b>B.2.4</b> Comandos de <code>R</code></a></li>
+<li class="chapter" data-level="B" data-path="gof-aleat.html"><a href="gof-aleat.html"><i class="fa fa-check"></i><b>B</b> Bondad de Ajuste y Aleatoriedad</a><ul>
+<li class="chapter" data-level="B.1" data-path="gof.html"><a href="gof.html"><i class="fa fa-check"></i><b>B.1</b> Métodos de bondad de ajuste</a><ul>
+<li class="chapter" data-level="B.1.1" data-path="gof.html"><a href="gof.html#histograma"><i class="fa fa-check"></i><b>B.1.1</b> Histograma</a></li>
+<li class="chapter" data-level="B.1.2" data-path="gof.html"><a href="gof.html#empdistr"><i class="fa fa-check"></i><b>B.1.2</b> Función de distribución empírica</a></li>
+<li class="chapter" data-level="B.1.3" data-path="gof.html"><a href="gof.html#graficos-p-p-y-q-q"><i class="fa fa-check"></i><b>B.1.3</b> Gráficos P-P y Q-Q</a></li>
+<li class="chapter" data-level="B.1.4" data-path="gof.html"><a href="gof.html#chi2test"><i class="fa fa-check"></i><b>B.1.4</b> Contraste ji-cuadrado de Pearson</a></li>
+<li class="chapter" data-level="B.1.5" data-path="gof.html"><a href="gof.html#contraste-de-kolmogorov-smirnov"><i class="fa fa-check"></i><b>B.1.5</b> Contraste de Kolmogorov-Smirnov</a></li>
 </ul></li>
-<li class="chapter" data-level="B.3" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html"><i class="fa fa-check"></i><b>B.3</b> Integración numérica bidimensional</a><ul>
-<li class="chapter" data-level="B.3.1" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#representación-gráfica"><i class="fa fa-check"></i><b>B.3.1</b> Representación gráfica</a></li>
-<li class="chapter" data-level="B.3.2" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#método-del-trapezoide-1"><i class="fa fa-check"></i><b>B.3.2</b> Método del trapezoide</a></li>
-<li class="chapter" data-level="B.3.3" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#comandos-de-r-1"><i class="fa fa-check"></i><b>B.3.3</b> Comandos de <code>R</code></a></li>
+<li class="chapter" data-level="B.2" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html"><i class="fa fa-check"></i><b>B.2</b> Diagnosis de la independencia</a><ul>
+<li class="chapter" data-level="B.2.1" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#metodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>B.2.1</b> Métodos para detectar dependencia</a></li>
+<li class="chapter" data-level="B.2.2" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#grafico-secuencial"><i class="fa fa-check"></i><b>B.2.2</b> Gráfico secuencial</a></li>
+<li class="chapter" data-level="B.2.3" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#grafico-de-dispersion-retardado"><i class="fa fa-check"></i><b>B.2.3</b> Gráfico de dispersion retardado</a></li>
+<li class="chapter" data-level="B.2.4" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#el-correlograma"><i class="fa fa-check"></i><b>B.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="B.2.5" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#test-de-rachas"><i class="fa fa-check"></i><b>B.2.5</b> Test de rachas</a></li>
+<li class="chapter" data-level="B.2.6" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>B.2.6</b> El contraste de Ljung-Box</a></li>
+</ul></li>
+<li class="chapter" data-level="B.3" data-path="contrastes-especificos-para-generadores-aleatorios.html"><a href="contrastes-especificos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>B.3</b> Contrastes específicos para generadores aleatorios</a><ul>
+<li class="chapter" data-level="B.3.1" data-path="contrastes-especificos-para-generadores-aleatorios.html"><a href="contrastes-especificos-para-generadores-aleatorios.html#contraste-de-frecuencias"><i class="fa fa-check"></i><b>B.3.1</b> Contraste de frecuencias</a></li>
+<li class="chapter" data-level="B.3.2" data-path="contrastes-especificos-para-generadores-aleatorios.html"><a href="contrastes-especificos-para-generadores-aleatorios.html#contraste-de-series"><i class="fa fa-check"></i><b>B.3.2</b> Contraste de series</a></li>
+<li class="chapter" data-level="B.3.3" data-path="contrastes-especificos-para-generadores-aleatorios.html"><a href="contrastes-especificos-para-generadores-aleatorios.html#el-contraste-del-poker"><i class="fa fa-check"></i><b>B.3.3</b> El contraste del poker</a></li>
+<li class="chapter" data-level="B.3.4" data-path="contrastes-especificos-para-generadores-aleatorios.html"><a href="contrastes-especificos-para-generadores-aleatorios.html#el-contraste-del-coleccionista"><i class="fa fa-check"></i><b>B.3.4</b> El contraste del coleccionista</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="integracion-numerica.html"><a href="integracion-numerica.html"><i class="fa fa-check"></i><b>C</b> Integración numérica</a><ul>
+<li class="chapter" data-level="C.1" data-path="integracion-numerica-unidimensional.html"><a href="integracion-numerica-unidimensional.html"><i class="fa fa-check"></i><b>C.1</b> Integración numérica unidimensional</a><ul>
+<li class="chapter" data-level="C.1.1" data-path="integracion-numerica-unidimensional.html"><a href="integracion-numerica-unidimensional.html#metodo-del-trapezoide"><i class="fa fa-check"></i><b>C.1.1</b> Método del trapezoide</a></li>
+<li class="chapter" data-level="C.1.2" data-path="integracion-numerica-unidimensional.html"><a href="integracion-numerica-unidimensional.html#regla-de-simpson"><i class="fa fa-check"></i><b>C.1.2</b> Regla de Simpson</a></li>
+<li class="chapter" data-level="C.1.3" data-path="integracion-numerica-unidimensional.html"><a href="integracion-numerica-unidimensional.html#cuadratura-adaptativa"><i class="fa fa-check"></i><b>C.1.3</b> Cuadratura adaptativa</a></li>
+<li class="chapter" data-level="C.1.4" data-path="integracion-numerica-unidimensional.html"><a href="integracion-numerica-unidimensional.html#comandos-de-r"><i class="fa fa-check"></i><b>C.1.4</b> Comandos de <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="C.2" data-path="integracion-numerica-bidimensional.html"><a href="integracion-numerica-bidimensional.html"><i class="fa fa-check"></i><b>C.2</b> Integración numérica bidimensional</a><ul>
+<li class="chapter" data-level="C.2.1" data-path="integracion-numerica-bidimensional.html"><a href="integracion-numerica-bidimensional.html#representacion-grafica"><i class="fa fa-check"></i><b>C.2.1</b> Representación gráfica</a></li>
+<li class="chapter" data-level="C.2.2" data-path="integracion-numerica-bidimensional.html"><a href="integracion-numerica-bidimensional.html#metodo-del-trapezoide-1"><i class="fa fa-check"></i><b>C.2.2</b> Método del trapezoide</a></li>
+<li class="chapter" data-level="C.2.3" data-path="integracion-numerica-bidimensional.html"><a href="integracion-numerica-bidimensional.html#comandos-de-r-1"><i class="fa fa-check"></i><b>C.2.3</b> Comandos de <code>R</code></a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -322,115 +314,102 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="temple-simulado" class="section level2">
 <h2><span class="header-section-number">9.4</span> Temple simulado</h2>
-<p>Método inspirado en el templado de un metal (se calienta el metal a
-alta temperatura y se va enfriando lentamente).
-En cada paso se reemplaza la aproximación actual por un valor
-aleatorio “cercano”, elegido con una probabilidad que depende de la
-mejora en la función objetivo y de un parámetro <span class="math inline">\(T\)</span>
-(denominado temperatura) que disminuye gradualmente durante
-el proceso.</p>
+<p>Método inspirado en el templado de un metal (se calienta el metal a alta temperatura y se va enfriando lentamente). En cada paso se reemplaza la aproximación actual por un valor aleatorio “cercano”, elegido con una probabilidad que depende de la mejora en la función objetivo y de un parámetro <span class="math inline">\(T\)</span> (denominado temperatura) que disminuye gradualmente durante el proceso.</p>
 <ul>
-<li><p>Cuando la temperatura es grande los cambios son bastante
-probables en cualquier dirección.</p></li>
-<li><p>Al ir disminuyendo la temperatura los cambios tienden a ser
-siempre “cuesta abajo”.</p></li>
+<li><p>Cuando la temperatura es grande los cambios son bastante probables en cualquier dirección.</p></li>
+<li><p>Al ir disminuyendo la temperatura los cambios tienden a ser siempre “cuesta abajo”.</p></li>
 </ul>
-<p>Al tener una probabilidad no nula de aceptar una modificación
-“cuesta arriba” se trata de evitar quedar atrapado en un
-óptimo local.</p>
+<p>Al tener una probabilidad no nula de aceptar una modificación “cuesta arriba” se trata de evitar quedar atrapado en un óptimo local.</p>
 <p><img src="images/templesimulado.png" width="70%" style="display: block; margin: auto;" /></p>
 <div id="algoritmo-1" class="section level3">
 <h3><span class="header-section-number">9.4.1</span> Algoritmo:</h3>
-<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb449-1" title="1">temp &lt;-<span class="st"> </span>TEMP.INIT</a>
-<a class="sourceLine" id="cb449-2" title="2">place &lt;-<span class="st"> </span><span class="kw">INIT.PLACEMENT</span>()</a>
-<a class="sourceLine" id="cb449-3" title="3">cost.place &lt;-<span class="st"> </span><span class="kw">COST</span>(place)</a>
-<a class="sourceLine" id="cb449-4" title="4"><span class="cf">while</span>(temp <span class="op">&lt;</span><span class="st"> </span>TEMP.FINAL) {</a>
-<a class="sourceLine" id="cb449-5" title="5">  <span class="cf">while</span>(<span class="kw">LOOP.CRITERION</span>()) {</a>
-<a class="sourceLine" id="cb449-6" title="6">    place.new &lt;-<span class="st"> </span><span class="kw">PERTURB</span>(place, temp)</a>
-<a class="sourceLine" id="cb449-7" title="7">    cost.new &lt;-<span class="st"> </span><span class="kw">COST</span>(place.new)</a>
-<a class="sourceLine" id="cb449-8" title="8">    cost.inc &lt;-<span class="st"> </span>cost.new <span class="op">-</span><span class="st"> </span>cost.place</a>
-<a class="sourceLine" id="cb449-9" title="9">    temp &lt;-<span class="st"> </span><span class="kw">SCHEDULE</span>(temp)</a>
-<a class="sourceLine" id="cb449-10" title="10">    <span class="cf">if</span> ((cost.inc <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">||</span><span class="st"> </span>(<span class="kw">runif</span>(<span class="dv">1</span>) <span class="op">&gt;</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>(cost.inc<span class="op">/</span>temp)))) <span class="cf">break</span></a>
-<a class="sourceLine" id="cb449-11" title="11">  }</a>
-<a class="sourceLine" id="cb449-12" title="12">  place &lt;-<span class="st"> </span>place.new</a>
-<a class="sourceLine" id="cb449-13" title="13">  cost.place &lt;-<span class="st"> </span>cost.new</a>
-<a class="sourceLine" id="cb449-14" title="14">  <span class="co"># temp &lt;- SCHEDULE(temp)</span></a>
-<a class="sourceLine" id="cb449-15" title="15">}</a>
-<a class="sourceLine" id="cb449-16" title="16">COST &lt;-<span class="st"> </span><span class="cf">function</span>(place, ...) {...}</a>
-<a class="sourceLine" id="cb449-17" title="17">SCHEDULE &lt;-<span class="st"> </span><span class="cf">function</span>(temp, ...) {...}</a>
-<a class="sourceLine" id="cb449-18" title="18">INIT.PLACEMENT &lt;-<span class="st"> </span><span class="cf">function</span>(...) {...}</a>
-<a class="sourceLine" id="cb449-19" title="19">LOOP.CRITERION &lt;-<span class="st"> </span><span class="cf">function</span>(...) {...}</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">temp &lt;-<span class="st"> </span>TEMP.INIT
+place &lt;-<span class="st"> </span><span class="kw">INIT.PLACEMENT</span>()
+cost.place &lt;-<span class="st"> </span><span class="kw">COST</span>(place)
+<span class="cf">while</span>(temp <span class="op">&lt;</span><span class="st"> </span>TEMP.FINAL) {
+  <span class="cf">while</span>(<span class="kw">LOOP.CRITERION</span>()) {
+    place.new &lt;-<span class="st"> </span><span class="kw">PERTURB</span>(place, temp)
+    cost.new &lt;-<span class="st"> </span><span class="kw">COST</span>(place.new)
+    cost.inc &lt;-<span class="st"> </span>cost.new <span class="op">-</span><span class="st"> </span>cost.place
+    temp &lt;-<span class="st"> </span><span class="kw">SCHEDULE</span>(temp)
+    <span class="cf">if</span> ((cost.inc <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">||</span><span class="st"> </span>(<span class="kw">runif</span>(<span class="dv">1</span>) <span class="op">&gt;</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>(cost.inc<span class="op">/</span>temp)))) <span class="cf">break</span>
+  }
+  place &lt;-<span class="st"> </span>place.new
+  cost.place &lt;-<span class="st"> </span>cost.new
+  <span class="co"># temp &lt;- SCHEDULE(temp)</span>
+}
+COST &lt;-<span class="st"> </span><span class="cf">function</span>(place, ...) {...}
+SCHEDULE &lt;-<span class="st"> </span><span class="cf">function</span>(temp, ...) {...}
+INIT.PLACEMENT &lt;-<span class="st"> </span><span class="cf">function</span>(...) {...}
+LOOP.CRITERION &lt;-<span class="st"> </span><span class="cf">function</span>(...) {...}</code></pre></div>
 <p>Adaptado de <a href="http://www.ecs.umass.edu/ece/labs/vlsicad/ece665/slides/SimulatedAnnealing.ppt">Premchand Akella (ppt)</a>.</p>
-<p>Este algoritmo se puede ver como una adaptación del método de
-Metropolis-Hastings que veremos más adelante
-(Tema 12 Introducción a los métodos de cadenas de Markov Monte Carlo).</p>
+<p>Este algoritmo se puede ver como una adaptación del método de Metropolis-Hastings que veremos más adelante (Tema 12 Introducción a los métodos de cadenas de Markov Monte Carlo).</p>
 </div>
 <div id="ejercicio-7" class="section level3">
 <h3><span class="header-section-number">9.4.2</span> Ejercicio 7</h3>
 <p>Repetir el ejercicio anterior empleando el algoritmo del temple simulado.</p>
 <p>Minimización “SANN” con optim:</p>
-<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb450-1" title="1"><span class="co"># Representar la superficie del logaritmo de la verosimilitud</span></a>
-<a class="sourceLine" id="cb450-2" title="2"><span class="kw">image</span>(mmu1, mmu2, <span class="op">-</span>lli, <span class="dt">xlab =</span> <span class="kw">expression</span>(mu[<span class="dv">1</span>]), <span class="dt">ylab =</span> <span class="kw">expression</span>(mu[<span class="dv">2</span>]))</a>
-<a class="sourceLine" id="cb450-3" title="3"><span class="kw">contour</span>(mmu1, mmu2, <span class="op">-</span>lli, <span class="dt">nlevels =</span> <span class="dv">50</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb450-4" title="4"><span class="kw">points</span>(starts, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">pch =</span> <span class="dv">19</span>)</a>
-<a class="sourceLine" id="cb450-5" title="5"></a>
-<a class="sourceLine" id="cb450-6" title="6"><span class="kw">set.seed</span>(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb450-7" title="7"><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nstarts){</a>
-<a class="sourceLine" id="cb450-8" title="8">  <span class="co"># Normalmente llamaríamos a optim(start, like, method = &quot;SANN&quot;)</span></a>
-<a class="sourceLine" id="cb450-9" title="9">  <span class="co"># Note that the &quot;SANN&quot; method depends critically on the settings of the control parameters.</span></a>
-<a class="sourceLine" id="cb450-10" title="10">  <span class="co"># For &quot;SANN&quot; maxit gives the total number of function evaluations: there is no other stopping criterion. Defaults to 10000.</span></a>
-<a class="sourceLine" id="cb450-11" title="11">  res &lt;-<span class="st"> </span><span class="kw">optim</span>(starts[j, ], <span class="kw">tee.optim2d</span>(like), <span class="dt">method =</span> <span class="st">&quot;SANN&quot;</span>, <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">temp =</span> <span class="dv">100</span>, <span class="dt">maxit =</span> <span class="dv">2000</span>))</a>
-<a class="sourceLine" id="cb450-12" title="12">  <span class="kw">points</span>(res<span class="op">$</span>par[<span class="dv">1</span>],res<span class="op">$</span>par[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">19</span>)</a>
-<a class="sourceLine" id="cb450-13" title="13">  <span class="kw">cat</span>(<span class="st">&#39;par = &#39;</span>, res<span class="op">$</span>par, <span class="st">&#39;value =&#39;</span>, res<span class="op">$</span>value, <span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)</a>
-<a class="sourceLine" id="cb450-14" title="14">}</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Representar la superficie del logaritmo de la verosimilitud</span>
+<span class="kw">image</span>(mmu1, mmu2, <span class="op">-</span>lli, <span class="dt">xlab =</span> <span class="kw">expression</span>(mu[<span class="dv">1</span>]), <span class="dt">ylab =</span> <span class="kw">expression</span>(mu[<span class="dv">2</span>]))
+<span class="kw">contour</span>(mmu1, mmu2, <span class="op">-</span>lli, <span class="dt">nlevels =</span> <span class="dv">50</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)
+<span class="kw">points</span>(starts, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">pch =</span> <span class="dv">19</span>)
+
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nstarts){
+  <span class="co"># Normalmente llamaríamos a optim(start, like, method = &quot;SANN&quot;)</span>
+  <span class="co"># Note that the &quot;SANN&quot; method depends critically on the settings of the control parameters.</span>
+  <span class="co"># For &quot;SANN&quot; maxit gives the total number of function evaluations: there is no other stopping criterion. Defaults to 10000.</span>
+  res &lt;-<span class="st"> </span><span class="kw">optim</span>(starts[j, ], <span class="kw">tee.optim2d</span>(like), <span class="dt">method =</span> <span class="st">&quot;SANN&quot;</span>, <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">temp =</span> <span class="dv">100</span>, <span class="dt">maxit =</span> <span class="dv">2000</span>))
+  <span class="kw">points</span>(res<span class="op">$</span>par[<span class="dv">1</span>],res<span class="op">$</span>par[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">19</span>)
+  <span class="kw">cat</span>(<span class="st">&#39;par = &#39;</span>, res<span class="op">$</span>par, <span class="st">&#39;value =&#39;</span>, res<span class="op">$</span>value, <span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)
+}</code></pre></div>
 <p><img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre><code>## par =  0.0002023461 2.473437 value = 361.6372 
 ## par =  -0.182735 2.45585 value = 362.0255 
 ## par =  -0.0281341 2.484467 value = 361.5801 
 ## par =  -0.03642928 2.488626 value = 361.5732 
 ## par =  0.6814165 2.370026 value = 374.839</code></pre>
-<p>Alternativa: función basada en el algoritmo empleado en el ejemplo 5.9 del libro:
-Robert y Casella, Introducing Monte Carlo Methods with R, Springer, 2010.</p>
-<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb452-1" title="1">SA &lt;-<span class="st"> </span><span class="cf">function</span>(fun, pini, <span class="dt">lower =</span> <span class="op">-</span><span class="ot">Inf</span>, <span class="dt">upper =</span> <span class="ot">Inf</span>, <span class="dt">tolerance =</span> <span class="dv">10</span><span class="op">^</span>(<span class="op">-</span><span class="dv">4</span>), <span class="dt">factor =</span> <span class="dv">1</span>) {</a>
-<a class="sourceLine" id="cb452-2" title="2">  temp &lt;-<span class="st"> </span>scale &lt;-<span class="st"> </span>iter &lt;-<span class="st"> </span>dif &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb452-3" title="3">  npar &lt;-<span class="st"> </span><span class="kw">length</span>(pini) </a>
-<a class="sourceLine" id="cb452-4" title="4">  the &lt;-<span class="st"> </span><span class="kw">matrix</span>(pini, <span class="dt">ncol =</span> npar)</a>
-<a class="sourceLine" id="cb452-5" title="5">  curfun &lt;-<span class="st"> </span>hval &lt;-<span class="st"> </span><span class="kw">fun</span>(pini)</a>
-<a class="sourceLine" id="cb452-6" title="6">  <span class="cf">while</span> (dif <span class="op">&gt;</span><span class="st"> </span>tolerance) {</a>
-<a class="sourceLine" id="cb452-7" title="7">    prop &lt;-<span class="st"> </span>the[iter, ] <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(npar) <span class="op">*</span><span class="st"> </span>scale[iter]</a>
-<a class="sourceLine" id="cb452-8" title="8">    <span class="co"># Se decide si se acepta la propuesta</span></a>
-<a class="sourceLine" id="cb452-9" title="9">    <span class="cf">if</span> (<span class="kw">any</span>(prop <span class="op">&lt;</span><span class="st"> </span>lower) <span class="op">||</span><span class="st"> </span><span class="kw">any</span>(prop <span class="op">&gt;</span><span class="st"> </span>upper) <span class="op">||</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb452-10" title="10"><span class="st">        </span>(temp[iter] <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(<span class="kw">runif</span>(<span class="dv">1</span>)) <span class="op">&gt;</span><span class="st"> </span><span class="op">-</span><span class="kw">fun</span>(prop) <span class="op">+</span><span class="st"> </span>curfun))  prop &lt;-<span class="st"> </span>the[iter, ]</a>
-<a class="sourceLine" id="cb452-11" title="11">    curfun &lt;-<span class="st"> </span><span class="kw">fun</span>(prop)</a>
-<a class="sourceLine" id="cb452-12" title="12">    hval &lt;-<span class="st"> </span><span class="kw">c</span>(hval, curfun)</a>
-<a class="sourceLine" id="cb452-13" title="13">    the &lt;-<span class="st"> </span><span class="kw">rbind</span>(the, prop)</a>
-<a class="sourceLine" id="cb452-14" title="14">    iter &lt;-<span class="st"> </span>iter <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb452-15" title="15">    temp &lt;-<span class="st"> </span><span class="kw">c</span>(temp, <span class="dv">1</span><span class="op">/</span><span class="kw">log</span>(iter <span class="op">+</span><span class="st"> </span><span class="dv">1</span>))  <span class="co"># Actualizar la temperatura</span></a>
-<a class="sourceLine" id="cb452-16" title="16">    <span class="co"># Se controla el nº de perturbaciones aceptadas</span></a>
-<a class="sourceLine" id="cb452-17" title="17">    ace &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(the[(iter<span class="op">/</span><span class="dv">2</span>)<span class="op">:</span>iter, <span class="dv">1</span>]))</a>
-<a class="sourceLine" id="cb452-18" title="18">    <span class="cf">if</span> (ace <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) </a>
-<a class="sourceLine" id="cb452-19" title="19">      <span class="co"># si es muy pequeño se disminuye la escala de la perturbación</span></a>
-<a class="sourceLine" id="cb452-20" title="20">      factor &lt;-<span class="st"> </span>factor<span class="op">/</span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb452-21" title="21">    <span class="cf">if</span> (<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>ace <span class="op">&gt;</span><span class="st"> </span>iter) </a>
-<a class="sourceLine" id="cb452-22" title="22">      <span class="co"># si es muy grande se aumenta</span></a>
-<a class="sourceLine" id="cb452-23" title="23">      factor &lt;-<span class="st"> </span>factor <span class="op">*</span><span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb452-24" title="24">    scale &lt;-<span class="st"> </span><span class="kw">c</span>(scale, <span class="kw">max</span>(<span class="dv">2</span>, factor <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(temp[iter])))  <span class="co"># Actualizar la escala de la perturbación</span></a>
-<a class="sourceLine" id="cb452-25" title="25">    dif &lt;-<span class="st"> </span>(iter <span class="op">&lt;</span><span class="st"> </span><span class="dv">100</span>) <span class="op">+</span><span class="st"> </span>(ace <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span>(<span class="kw">max</span>(hval) <span class="op">-</span><span class="st"> </span><span class="kw">max</span>(hval[<span class="dv">1</span><span class="op">:</span>(iter<span class="op">/</span><span class="dv">2</span>)]))</a>
-<a class="sourceLine" id="cb452-26" title="26">  }</a>
-<a class="sourceLine" id="cb452-27" title="27">  <span class="kw">list</span>(<span class="dt">theta =</span> the, <span class="dt">val =</span> hval, <span class="dt">ite =</span> iter)</a>
-<a class="sourceLine" id="cb452-28" title="28">}</a>
-<a class="sourceLine" id="cb452-29" title="29"></a>
-<a class="sourceLine" id="cb452-30" title="30"><span class="co"># Representar la superficie del logaritmo de la verosimilitud</span></a>
-<a class="sourceLine" id="cb452-31" title="31"><span class="kw">image</span>(mmu1, mmu2, <span class="op">-</span>lli, <span class="dt">xlab =</span> <span class="kw">expression</span>(mu[<span class="dv">1</span>]), <span class="dt">ylab =</span> <span class="kw">expression</span>(mu[<span class="dv">2</span>]))</a>
-<a class="sourceLine" id="cb452-32" title="32"><span class="kw">contour</span>(mmu1, mmu2, <span class="op">-</span>lli, <span class="dt">nlevels =</span> <span class="dv">50</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb452-33" title="33"><span class="kw">points</span>(starts, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">pch =</span> <span class="dv">19</span>)</a>
-<a class="sourceLine" id="cb452-34" title="34"></a>
-<a class="sourceLine" id="cb452-35" title="35"><span class="kw">set.seed</span>(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb452-36" title="36"><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nstarts) {</a>
-<a class="sourceLine" id="cb452-37" title="37">  sar &lt;-<span class="st"> </span><span class="kw">SA</span>(like, starts[j, ])</a>
-<a class="sourceLine" id="cb452-38" title="38">  <span class="kw">lines</span>(sar<span class="op">$</span>the[, <span class="dv">1</span>], sar<span class="op">$</span>the[, <span class="dv">2</span>], <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a>
-<a class="sourceLine" id="cb452-39" title="39">  <span class="kw">points</span>(sar<span class="op">$</span>the[sar<span class="op">$</span>it, <span class="dv">1</span>], sar<span class="op">$</span>the[sar<span class="op">$</span>it, <span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">19</span>)</a>
-<a class="sourceLine" id="cb452-40" title="40">}</a></code></pre></div>
+<p>Alternativa: función basada en el algoritmo empleado en el ejemplo 5.9 del libro: Robert y Casella, Introducing Monte Carlo Methods with R, Springer, 2010.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SA &lt;-<span class="st"> </span><span class="cf">function</span>(fun, pini, <span class="dt">lower =</span> <span class="op">-</span><span class="ot">Inf</span>, <span class="dt">upper =</span> <span class="ot">Inf</span>, <span class="dt">tolerance =</span> <span class="dv">10</span><span class="op">^</span>(<span class="op">-</span><span class="dv">4</span>), <span class="dt">factor =</span> <span class="dv">1</span>) {
+  temp &lt;-<span class="st"> </span>scale &lt;-<span class="st"> </span>iter &lt;-<span class="st"> </span>dif &lt;-<span class="st"> </span><span class="dv">1</span>
+  npar &lt;-<span class="st"> </span><span class="kw">length</span>(pini) 
+  the &lt;-<span class="st"> </span><span class="kw">matrix</span>(pini, <span class="dt">ncol =</span> npar)
+  curfun &lt;-<span class="st"> </span>hval &lt;-<span class="st"> </span><span class="kw">fun</span>(pini)
+  <span class="cf">while</span> (dif <span class="op">&gt;</span><span class="st"> </span>tolerance) {
+    prop &lt;-<span class="st"> </span>the[iter, ] <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(npar) <span class="op">*</span><span class="st"> </span>scale[iter]
+    <span class="co"># Se decide si se acepta la propuesta</span>
+    <span class="cf">if</span> (<span class="kw">any</span>(prop <span class="op">&lt;</span><span class="st"> </span>lower) <span class="op">||</span><span class="st"> </span><span class="kw">any</span>(prop <span class="op">&gt;</span><span class="st"> </span>upper) <span class="op">||</span><span class="st"> </span>
+<span class="st">        </span>(temp[iter] <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(<span class="kw">runif</span>(<span class="dv">1</span>)) <span class="op">&gt;</span><span class="st"> </span><span class="op">-</span><span class="kw">fun</span>(prop) <span class="op">+</span><span class="st"> </span>curfun))  prop &lt;-<span class="st"> </span>the[iter, ]
+    curfun &lt;-<span class="st"> </span><span class="kw">fun</span>(prop)
+    hval &lt;-<span class="st"> </span><span class="kw">c</span>(hval, curfun)
+    the &lt;-<span class="st"> </span><span class="kw">rbind</span>(the, prop)
+    iter &lt;-<span class="st"> </span>iter <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+    temp &lt;-<span class="st"> </span><span class="kw">c</span>(temp, <span class="dv">1</span><span class="op">/</span><span class="kw">log</span>(iter <span class="op">+</span><span class="st"> </span><span class="dv">1</span>))  <span class="co"># Actualizar la temperatura</span>
+    <span class="co"># Se controla el nº de perturbaciones aceptadas</span>
+    ace &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(the[(iter<span class="op">/</span><span class="dv">2</span>)<span class="op">:</span>iter, <span class="dv">1</span>]))
+    <span class="cf">if</span> (ace <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) 
+      <span class="co"># si es muy pequeño se disminuye la escala de la perturbación</span>
+      factor &lt;-<span class="st"> </span>factor<span class="op">/</span><span class="dv">10</span>
+    <span class="cf">if</span> (<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>ace <span class="op">&gt;</span><span class="st"> </span>iter) 
+      <span class="co"># si es muy grande se aumenta</span>
+      factor &lt;-<span class="st"> </span>factor <span class="op">*</span><span class="st"> </span><span class="dv">10</span>
+    scale &lt;-<span class="st"> </span><span class="kw">c</span>(scale, <span class="kw">max</span>(<span class="dv">2</span>, factor <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(temp[iter])))  <span class="co"># Actualizar la escala de la perturbación</span>
+    dif &lt;-<span class="st"> </span>(iter <span class="op">&lt;</span><span class="st"> </span><span class="dv">100</span>) <span class="op">+</span><span class="st"> </span>(ace <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span>(<span class="kw">max</span>(hval) <span class="op">-</span><span class="st"> </span><span class="kw">max</span>(hval[<span class="dv">1</span><span class="op">:</span>(iter<span class="op">/</span><span class="dv">2</span>)]))
+  }
+  <span class="kw">list</span>(<span class="dt">theta =</span> the, <span class="dt">val =</span> hval, <span class="dt">ite =</span> iter)
+}
+
+<span class="co"># Representar la superficie del logaritmo de la verosimilitud</span>
+<span class="kw">image</span>(mmu1, mmu2, <span class="op">-</span>lli, <span class="dt">xlab =</span> <span class="kw">expression</span>(mu[<span class="dv">1</span>]), <span class="dt">ylab =</span> <span class="kw">expression</span>(mu[<span class="dv">2</span>]))
+<span class="kw">contour</span>(mmu1, mmu2, <span class="op">-</span>lli, <span class="dt">nlevels =</span> <span class="dv">50</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)
+<span class="kw">points</span>(starts, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">pch =</span> <span class="dv">19</span>)
+
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nstarts) {
+  sar &lt;-<span class="st"> </span><span class="kw">SA</span>(like, starts[j, ])
+  <span class="kw">lines</span>(sar<span class="op">$</span>the[, <span class="dv">1</span>], sar<span class="op">$</span>the[, <span class="dv">2</span>], <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)
+  <span class="kw">points</span>(sar<span class="op">$</span>the[sar<span class="op">$</span>it, <span class="dv">1</span>], sar<span class="op">$</span>the[sar<span class="op">$</span>it, <span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">19</span>)
+}</code></pre></div>
 <p><img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
@@ -439,19 +418,17 @@ Robert y Casella, Introducing Monte Carlo Methods with R, Springer, 2010.</p>
           </div>
         </div>
       </div>
-<a href="optimización-monte-carlo.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="algoritmos-genéticos.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="optimizacion-monte-carlo.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="algoritmos-geneticos.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -459,11 +436,12 @@ gitbook.start({
 "github": true,
 "facebook": false,
 "twitter": false,
+"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -475,10 +453,6 @@ gitbook.start({
 "text": "Edit"
 },
 "history": {
-"link": null,
-"text": null
-},
-"view": {
 "link": null,
 "text": null
 },
@@ -495,11 +469,10 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "true";
+    var src = "";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
