@@ -1,17 +1,16 @@
-Integración numérica
-====================
+# Integración numérica {#int-num}
 
 
 
 
 En muchos casos nos puede interesar la aproximación de una integral definida. 
-En estadística, además del caso de Inferencia Bayesiana (que se trató en el Capítulo 12
+En estadística, además del caso de Inferencia Bayesiana (que se trató en el Capítulo 11
 empleando Integración Montecarlo y MCMC), nos puede interesar por ejemplo aproximar mediante
 simulación el error cuadrático integrado medio (MISE) de un estimador. 
 En el caso de una densidad univariante sería de la forma:
 $$MISE \left\{ \hat{f} \right\} = \operatorname{E}\int (\hat{f}(x)-f(x))^2 \, dx$$ 
 
-Cuendo el numero de dimensiones es pequeño, nos puede ineteresar emplear un método numérico
+Cuando el numero de dimensiones es pequeño, nos puede ineteresar emplear un método numérico
 para aproximar este tipo de integrales. 
 
 
@@ -19,15 +18,15 @@ Integración numérica unidimensional
 -----------------------------------
 
 Supongamos que nos interesa aproximar una integral de la forma:
-$$I=\int_{a}^{b}h\left(  x\right)dx$$. 
+$$I = \int_a^b h(x)  dx.$$. 
 
 Consideraremos como ejemplo:
-$$\int_{0}^{1}4x^{3}dx=1$$.
+$$\int_0^1 4x^4 dx = \frac{4}{5}$$.
 
 
 
 ```r
-fun <- function(x) return(4 * x^3)
+fun <- function(x) return(4 * x^4)
 curve(fun, 0, 1)
 abline(h = 0, lty = 2)
 abline(v = c(0, 1), lty = 2)
@@ -70,7 +69,7 @@ trapezoid(fun, 0, 1, 20)
 ```
 
 ```
-## [1] 1.0025
+## [1] 0.8033325
 ```
 
 
@@ -115,7 +114,7 @@ simpson(fun, 0, 1, 20)
 ```
 
 ```
-## [1] 1
+## [1] 0.8000033
 ```
 
 
@@ -127,9 +126,9 @@ En el caso general multidimensional sería $O(n^{-\frac{4}{d}})$.
 
 ### Cuadratura adaptativa
 
-En lugar de evaluar la función en una rejilla regular 
-(muestrear por igual el dominio), 
-puede interesar ir añadiendo puntos sólo en los lugares "necesarios".
+En lugar de evaluar la función en una rejilla regular (muestrear por igual el dominio), 
+puede interesar ir añadiendo puntos sólo en los lugares donde se mejore la aproximación
+(en principio donde hay mayor área).
 
 
 
@@ -173,13 +172,13 @@ quadrature(fun, 0, 1)
 ```
 
 ```
-## [1] 1
+## [1] 0.8
 ```
 
-Fuente [r-blogger Guangchuang Yu](https://www.r-bloggers.com/one-dimensional-integrals)?
+Fuente: [r-blogger Guangchuang Yu](https://www.r-bloggers.com/one-dimensional-integrals)
+
 
 ### Comandos de `R`
-
 
 
 ```r
@@ -187,7 +186,7 @@ integrate(fun, 0, 1)   # Permite límites infinitos
 ```
 
 ```
-## 1 with absolute error < 1.1e-14
+## 0.8 with absolute error < 8.9e-15
 ```
 
 ```r
@@ -198,7 +197,7 @@ area(fun, 0, 1)
 ```
 
 ```
-## [1] 1
+## [1] 0.8000001
 ```
 
 
@@ -217,7 +216,6 @@ $$\int_{-1}^{1} \int_{-1}^{1} \left( x^2 - y^2 \right) dx dy = 0$$.
 ```r
 f2d <- function(x,y) x^2 - y^2
 ```
-
 
 Es habitual (especialmente en simulación) que la función se evalúe en una rejilla:
 
@@ -330,6 +328,6 @@ integrate(function(y) {
     ay, by)
 ```
 
-Fuente [tolstoy.newcastle.edu.au](http://tolstoy.newcastle.edu.au/R/help/04/10/5951.html).
+Fuente: [tolstoy.newcastle.edu.au](http://tolstoy.newcastle.edu.au/R/help/04/10/5951.html).
 
 Alternativamente se podría emplear la función `adaptIntegrate` del paquete `cubature`.

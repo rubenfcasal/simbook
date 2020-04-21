@@ -1,4 +1,4 @@
-Análisis de resultados de simulación
+Análisis de resultados de simulación {#cap4}
 ====================================
 
 
@@ -13,7 +13,7 @@ En primer lugar se tratará el análisis de la convergencia y la precisión de l
 Al final del capítulo se incluye una breve introducción a los problemas de estabilización y dependencia (con los que nos solemos encontrar en simulación dinámica y MCMC).
 
 
-Convergencia
+Convergencia {#convergencia}
 ------------
 
 Supongamos que estamos interesados en aproximar la media teórica 

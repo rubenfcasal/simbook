@@ -334,7 +334,7 @@ a)  Escribir una función que simule el lanzamiento de $n$ dados. El
     ```
     
     ```
-    ## [1] 4 5 3 1
+    ## [1] 3 5 1 6
     ```
     
     ```r
@@ -342,7 +342,7 @@ a)  Escribir una función que simule el lanzamiento de $n$ dados. El
     ```
     
     ```
-    ## [1] FALSE
+    ## [1] TRUE
     ```
 
 
@@ -361,7 +361,7 @@ b)  Utilizar la función anterior para simular $nsim=10000$ jugadas
     ```
     
     ```
-    ## [1] 0.5195
+    ## [1] 0.5148
     ```
     
     ```r
@@ -431,7 +431,7 @@ funtest(1000000)
 ```
 
 ```
-## [1] 0.5004536
+## [1] 0.5003313
 ```
 
 ```r
@@ -442,10 +442,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.09    0.00    0.13 
+##    0.07    0.01    0.08 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.09    0.00    0.13
+##    0.07    0.01    0.08
 ```
 
 ```r
@@ -453,7 +453,7 @@ funtest(1000)
 ```
 
 ```
-## [1] 0.4954613
+## [1] 0.5050682
 ```
 
 ```r
@@ -464,10 +464,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.02    0.00    0.01 
+##    0.01    0.00    0.03 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.11    0.00    0.14
+##    0.08    0.01    0.11
 ```
 
 ### Paquetes de R
@@ -556,9 +556,9 @@ cpu.time('\nSample median of', 1000000, 'values =', res, total = FALSE)
 
 ```
 ## Time of last operation: 
-## Sample median of 1e+06 values = 0.4993793 
+## Sample median of 1e+06 values = 0.4993323 
 ##    user  system elapsed 
-##    0.06    0.00    0.17
+##    0.09    0.00    0.10
 ```
 
 ```r
@@ -568,12 +568,12 @@ cpu.time('\nSample median of', 1000, 'values =', res)
 
 ```
 ## Time of last operation: 
-## Sample median of 1000 values = 0.4936829 
+## Sample median of 1000 values = 0.5126436 
 ##    user  system elapsed 
-##    0.01    0.00    0.01 
+##       0       0       0 
 ## Total time:
 ##    user  system elapsed 
-##    0.07    0.00    0.18
+##    0.09    0.00    0.10
 ```
 
 Otro paquete que puede ser de utilidad es

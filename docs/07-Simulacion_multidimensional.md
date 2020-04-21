@@ -396,7 +396,7 @@ mvrnorm
 ##         drop(X)
 ##     else t(X)
 ## }
-## <bytecode: 0x0000000032cad218>
+## <bytecode: 0x0000000018228340>
 ## <environment: namespace:MASS>
 ```
 
@@ -805,12 +805,27 @@ kc <- krige.conv(z, loc = ndata.s, output = s.out,
 par.old <- par(mfrow = c(2, 2), mar = c(3.5, 3.5, 1, 0), mgp = c(1.5, .5, 0))
 zlim <- range(kc$simul)     # Escala común
 image(kc, val=kc$simul[,1], main="simul. cond. 1", zlim=zlim)
-image(kc, val=kc$simul[,2], main="simul. cond. 2", zlim=zlim)
-image(kc, val=kc$simul[,3], main="simul. cond. 3", zlim=zlim)
-image(kc, val=kc$simul[,4], main="simul. cond. 3", zlim=zlim)
 ```
 
 <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-22-2.png" width="70%" style="display: block; margin: auto;" />
+
+```r
+image(kc, val=kc$simul[,2], main="simul. cond. 2", zlim=zlim)
+```
+
+<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-22-3.png" width="70%" style="display: block; margin: auto;" />
+
+```r
+image(kc, val=kc$simul[,3], main="simul. cond. 3", zlim=zlim)
+```
+
+<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-22-4.png" width="70%" style="display: block; margin: auto;" />
+
+```r
+image(kc, val=kc$simul[,4], main="simul. cond. 3", zlim=zlim)
+```
+
+<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-22-5.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 par(par.old)

@@ -1,48 +1,41 @@
-# Integracion y Optimizacion Montecarlo {#cap9}
+# Integración y Optimización Montecarlo {#cap9}
 
 
 
 
-Uno de los objetivos habituales de los estudios de simulación es la aproximación de una esperanza, es decir, se trataría de evaluar una integral, que en ocasiones puede ser compleja y de alta dimensión. Esto puede ser de interés en otros campos, aunque la integral no esté relacionada con procesos estocásticos. Adicionalmente, en muchos campos, incluido la Estadística, hay que resolver problemas de optimización. Para evitar problemas de mínimos locales se puede recurrir a herramientas que emplean búsquedas aleatorias.  
+Uno de los objetivos habituales de los estudios de simulación es la aproximación de una esperanza, es decir, se trataría de evaluar una integral, que en ocasiones puede ser compleja y de alta dimensión. Esto puede ser de interés en otros campos, aunque la integral no esté relacionada con procesos estocásticos. 
+Adicionalmente, en muchos campos, incluido la Estadística, hay que resolver problemas de optimización. Para evitar problemas de mínimos locales se puede recurrir a herramientas que emplean búsquedas aleatorias.  
 
 Integración Monte Carlo (clásica)
 -----------------------
 
-La integración Monte Carlo se emplea principalmente para aproximar
-integrales multidimensionales:
-$$I = \int \cdots \int h\left( x_{1},\ldots ,x_{d}\right) 
-dx_{1}\cdots dx_{d}$$ 
-donde puede presentar ventajas respecto a los métodos tradicionales de
-integración numérica.
+La integración Monte Carlo se emplea principalmente para aproximar integrales multidimensionales:
+$$I = \int \cdots \int h\left( x_1,\ldots ,x_d\right) dx_1 \cdots dx_d$$ 
+donde puede presentar ventajas respecto a los métodos tradicionales de integración numérica (ver Apéndice \@ref(int-num)),
+ya que la velocidad de convergencia no depende del número de dimensiones.
 
 Supongamos que nos interesa:
-$$I = \int_{0}^{1}h\left( x\right) dx$$
-Si $x_{1},x_{2},\ldots ,x_{n}$ *i.i.d.* $\mathcal{U}\left( 0,1\right)$
+$$I = \int_0^1h\left( x\right) dx$$
+Si $x_1,x_2,\ldots ,x_n$ *i.i.d.* $\mathcal{U}\left( 0,1\right)$
 entonces:
 $$I = E\left( h\left( \mathcal{U}\left( 0,1\right) \right) \right)
-\approx \frac{1}{n}\sum\limits_{i=1}^{n}h\left( x_{i}\right)$$
+\approx \frac{1}{n}\sum\limits_{i=1}^nh\left( x_{i}\right)$$
 
 Si el intervalo de integración es
 genérico:
-$$I = \int_{a}^{b}h\left( x\right) dx = 
-(b-a)\int_{a}^{b}h\left( x\right) \frac{1}{(b-a)}dx = 
+$$I = \int_a^bh\left( x\right) dx = 
+(b-a)\int_a^bh\left( x\right) \frac1{(b-a)}dx = 
 (b-a)E\left( h\left( \mathcal{U}\left( a, b \right) \right) \right).$$
-Si $x_{1},x_{2},\ldots ,x_{n}$ *i.i.d.*
+Si $x_1,x_2,\ldots ,x_n$ *i.i.d.*
 $\mathcal{U}\left( a, b\right)$:
-$$I\approx \frac{1}{n}\sum\limits_{i=1}^{n}h\left( x_{i}\right) (b-a)$$
+$$I\approx \frac{1}{n}\sum\limits_{i=1}^nh\left( x_{i}\right) (b-a)$$
 
 
-### Ejercicio 1
-
-<!-- 
-solo vale para dominio acotado
-Ejemplo unidimensional con dominio acotado
-Generalizar al caso multidimensional?
--->
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-2"><strong>(\#exr:unnamed-chunk-2) </strong></span></div>\EndKnitrBlock{exercise}
 
 Crear una función que implemente la integración Monte Carlo clásica
 para aproximar integrales del tipo:
-$$I=\int_{a}^{b}h\left(  x\right)  dx.$$ 
+$$I = \int_a^b h(x)  dx.$$ 
 
 
 ```r
@@ -58,30 +51,33 @@ mc.integral0 <- function(fun, a, b, n) {
 ```
 
 Emplearla para aproximar: 
-$$\int_{0}^{1}4x^{3}dx=1,$$ 
+$$\int_0^1 4x^4 dx = \frac{4}{5},$$ 
 y representar gráficamente la aproximación en función de $n$.
 
 Función a integrar:
 
 
 ```r
-fun <- function(x) ifelse((x > 0) & (x < 1), 4 * x^3, 0)
-# return(4 * x^3)
+fun <- function(x) ifelse((x > 0) & (x < 1), 4 * x^4, 0)
+# return(4 * x^4)
 
 curve(fun, 0, 1)
-abline(h=0,lty=2)
-abline(v=c(0,1),lty=2)
+abline(h = 0, lty = 2)
+abline(v = c(0, 1), lty = 2)
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="09-Monte_Carlo_files/figure-html/int-mc-clas-1.png" alt="Ejemplo de integral en dominio acotado." width="70%" />
+<p class="caption">(\#fig:int-mc-clas)Ejemplo de integral en dominio acotado.</p>
+</div>
 
 ```r
-set.seed(54321)
+set.seed(1)
 mc.integral0(fun, 0, 1, 20)
 ```
 
 ```
-## [1] 0.8051635
+## [1] 0.977663
 ```
 
 ```r
@@ -89,7 +85,7 @@ mc.integral0(fun, 0, 1, 100)
 ```
 
 ```
-## [1] 1.134583
+## [1] 0.7311169
 ```
 
 ```r
@@ -97,7 +93,7 @@ mc.integral0(fun, 0, 1, 100)
 ```
 
 ```
-## [1] 0.935731
+## [1] 0.8304299
 ```
 
 La función `mc.integral0` no es adecuada para analizar la convergencia 
@@ -121,20 +117,20 @@ Una alternativa más eficiente para representar gráficamente la convergencia:
     } else return(list(valor = mean(fx), error = 2 * sd(fx)/sqrt(n)))
   }
 
-set.seed(54321)
+set.seed(1)
 mc.integral(fun, 0, 1, 5000)
 ```
 
 ```
 ## $valor
-## [1] 0.9939051
+## [1] 0.8142206
 ## 
 ## $error
-## [1] 0.03206515
+## [1] 0.03087305
 ```
 
 ```r
-abline(h = 1, lty = 2)
+abline(h = 4/5, lty = 2)
 ```
 
 <img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-4-1.png" width="70%" style="display: block; margin: auto;" />
@@ -143,16 +139,16 @@ Si sólo interesa la aproximación:
 
 
 ```r
-set.seed(54321)
+set.seed(1)
 mc.integral(fun, 0, 1, 5000, plot = FALSE)
 ```
 
 ```
 ## $valor
-## [1] 0.9939051
+## [1] 0.8142206
 ## 
 ## $error
-## [1] 0.03209283
+## [1] 0.0309005
 ```
 
 **Nota**: Es importante tener en cuenta que la función `mc.integral` solo es válida para dominio finito.
@@ -161,44 +157,58 @@ mc.integral(fun, 0, 1, 5000, plot = FALSE)
 
 A partir a ahora consideraremos que interesa aproximar una integral de la forma:
 $$\theta = E\left( h\left( X\right) \right) = \int h\left( x\right) f(x)dx$$siendo
-$X\sim f$, entonces, si $x_{1},x_{2},\ldots ,x_{n}$ *i.i.d.*
+$X\sim f$, entonces, si $x_1,x_2,\ldots ,x_n$ *i.i.d.*
 $X$:
-$$\theta \approx \frac{1}{n}\sum\limits_{i=1}^{n}h\left( x_{i}\right)$$
+$$\theta \approx \frac{1}{n}\sum\limits_{i=1}^nh\left( x_{i}\right)$$
 
 Por ejemplo, como en el ejercicio anterior se considera de una función de densidad, 
-se correspondería con el caso general de $h(x) = 1$ y $f(x) = 4x^3$ para $0<x<1$.
+se correspondería con el caso general de $h(x) = x$ y $f(x) = 4x^3$ para $0<x<1$.
 La idea es que, en lugar de consderar una distribución uniforme, 
-es preferible generar más valores donde hay mayor "área":
+es preferible generar más valores donde hay mayor "área" (ver Figura \@ref(fig:int-mc-clas)).
+
+Los pasos serían simular `x` con densidad $f$ y aproximar la integral por `mean(h(x))`.
+En este caso podemos generar valores de la densidad objetivo fácilmente mediante el método de inversión,
+ya que $F(x) = x^4$ si $0<x<1$.
+:
 
 
 ```r
-curve(fun(x), 0, 1)
+rfun <- function(nsim) runif(nsim)^(1/4) # Método de inversión
+nsim <- 5000
+set.seed(1)
+x <- rfun(nsim)
+# h <- function(x) x
+# res <- mean(h(x)) # Aproximación por simulación 
+res <- mean(x)
+res
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-6-1.png" width="70%" style="display: block; margin: auto;" />
-
-Los pasos serían simular `x` con densidad `fun` y aproximar la integral por `mean(h(x))`:
-
+```
+## [1] 0.7967756
+```
 
 ```r
-x <- rfun(nsim) # Habría que implementarlo (por ejemplo por el método de inversión...)
-res <- mean(h(x)) # Aproximación por simulación 
-error <- 2*sd(h(x))/sqrt(nsim)
+# error <- 2*sd(h(x))/sqrt(nsim)
+error <- 2*sd(x)/sqrt(nsim)
+error
 ```
 
-En este caso como $h(x) = 1$ no tendría mucho sentido (`mean(1) = 1`). 
+```
+## [1] 0.004728174
+```
 
-### Ejercicio 2
+
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-7"><strong>(\#exr:unnamed-chunk-7) </strong></span></div>\EndKnitrBlock{exercise}
 
 Aproximar:
-$$\phi(t)=\int_{t}^{\infty}\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}}dx,$$
+$$\phi(t)=\int_{t}^{\infty}\frac1{\sqrt{2\pi}}e^{-\frac{x^2}2}dx,$$
 para $t=4.5$, empleando integración Monte Carlo (aproximación tradicional con dominio infinito).
 
 
 ```r
 # h <- function(x) x > 4.5
 # f <- function(x) dnorm(x)
-set.seed(54321)
+set.seed(1)
 nsim <- 10^3
 x <- rnorm(nsim)
 mean(x > 4.5) # mean(h(x))
@@ -228,7 +238,9 @@ any(x > 4.5)
 ## [1] FALSE
 ```
 
-Sería preferible generar más valores donde hay mayor "área"...
+Como ya se comentó anteriormente, sería preferible generar más valores donde hay mayor "área", 
+pero en este caso $f$ concentra la densidad en una región que no resulta de utilidad.
+Por ese motivo puede ser preferible recurrir a una densidad auxiliar que solvente este problema.
 
 
 Muestreo por importancia
@@ -246,37 +258,38 @@ $$\theta  = \int h\left( x\right) f(x)dx
 siendo
 $q\left( x\right)  = \frac{h\left( x\right) f(x)}{g(x)}$.
 
-Si $y_{1},y_{2},\ldots ,y_{n}$ *i.i.d.* $Y\sim g$:
-$$\theta \approx \frac{1}{n}\sum\limits_{i=1}^{n}q\left( y_{i}\right) 
-= \frac{1}{n}\sum\limits_{i=1}^{n}w(y_{i})h\left( y_{i}\right)  
+Si $y_1,y_2,\ldots ,y_n$ *i.i.d.* $Y\sim g$:
+$$\theta \approx \frac{1}{n}\sum\limits_{i=1}^nq\left( y_{i}\right) 
+= \frac{1}{n}\sum\limits_{i=1}^nw(y_{i})h\left( y_{i}\right)  
 = \hat{\theta}_{g}$$
 con $w\left( x\right)  = \frac{f(x)}{g(x)}$.
 
-En este caso
-$Var(\hat{\theta}_{g}) = Var\left( q\left( Y\right) \right) /n$, 
-pudiendo reducirse significativamente respecto al método
-clásico si:
-$$g(x)\underset{aprox.}{\propto }h\left( x\right) f(x).$$
+En este caso $Var(\hat{\theta}_{g}) = Var\left( q\left( Y\right) \right) /n$, 
+pudiendo reducirse significativamente respecto al método clásico si:
+$$g(x)\underset{aprox.}{\propto } \left\vert h(x) \right\vert f(x),$$
+ya que en ese caso $\left\vert q(x) \right\vert$ sería aproximadamente constante
+(puede demostrarse fácilmente que la varianza es mínima si esa relación en exacta).
+
 
 Para aplicar el TCL, la varianza del estimador $\hat{\theta}_{g}$ 
 es finita si:
-$$E\left( q^{2}\left( Y\right) \right)  
-= \int \frac{h^{2}\left( x\right)f^{2}(x)}{g(x)}dx 
-= E\left( h^{2}\left( X\right) \frac{f(X)}{g(X)}\right)
+$$E\left( q^2\left( Y\right) \right)  
+= \int \frac{h^2\left( x\right)f^2(x)}{g(x)}dx 
+= E\left( h^2\left( X\right) \frac{f(X)}{g(X)}\right)
 < \infty.$$
 
 La idea básica es que si la densidad $g$ tiene colas más pesadas que
 la densidad $f$ con mayor facilidad puede dar lugar a 
 "simulaciones" con varianza finita 
 (podría emplearse en casos en los que no existe
-$E \left( h^{2} \left( X \right) \right)$;
-ver Sección Convergencia en el Tema 4 de Analisis de resultados).
+$E \left( h^2 \left( X \right) \right)$;
+ver Sección \@ref(convergencia) en el Tema \@ref(cap4) de Análisis de resultados).
 
 La distribución de los pesos $w(y_{i})$ debería ser homogénea para
 evitar datos influyentes (inestabilidad).
 
 
-### Ejercicio 3
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-10"><strong>(\#exr:unnamed-chunk-10) </strong></span></div>\EndKnitrBlock{exercise}
 
 Aproximar la integral del ejercicio anterior empleando muestreo por importancia considerando como
 densidad auxiliar una exponencial de parámetro $\lambda=1$ truncada en $t$:
@@ -295,13 +308,13 @@ escala <- dnorm(4.5)  # Reescalado para comparación...
 curve(dexp(x - 4.5) * escala, add = TRUE, lty = 2)  
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-11-1.png" width="70%" style="display: block; margin: auto;" />
 
 Se generan los valores de la densidad auxiliar y se calculan los pesos:
 
 
 ```r
-set.seed(54321)
+set.seed(1)
 nsim <- 10^3
 y <- rexp(nsim) + 4.5    #  Y ~ g
 w <- dnorm(y)/dexp(y - 4.5)
@@ -316,7 +329,7 @@ mean(w) # w*h(y)
 ```
 
 ```
-## [1] 3.243321e-06
+## [1] 3.144811e-06
 ```
 
 ```r
@@ -332,7 +345,7 @@ plot(cumsum(w)/1:nsim, type = "l", ylab = "Aproximación", xlab = "Iteraciones")
 abline(h = pnorm(-4.5), lty = 2)
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" />
 
 El error estandar de la aproximación sería `sqrt(var(w * h(y))/nsim)`:
 
@@ -342,7 +355,7 @@ sqrt(var(w)/nsim) # sd(w*h(y))/sqrt(nsim)
 ```
 
 ```
-## [1] 1.386216e-07
+## [1] 1.371154e-07
 ```
 
 Empleando la aproximación tradicional:
@@ -366,7 +379,7 @@ sqrt(est * (1 - est)/nsim)
 ```
 
 
-### Ejercicio 4
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-16"><strong>(\#exr:unnamed-chunk-16) </strong></span></div>\EndKnitrBlock{exercise}
 
 Aproximar $P\left(2<X<6\right)$ siendo $X\sim Cauchy(0,1)$
 empleando muestreo por importancia y considerando como densidad
@@ -417,7 +430,7 @@ plot(cumsum(w * (y > 2) * (y < 6))/1:nsim, type = "l", ylab = "Aproximación", x
 abline(h = pcauchy(6) - pcauchy(2), lty = 2)
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;" />
 
 Lo que indica es una mala elección de la densidad auxiliar... 
 
@@ -429,7 +442,7 @@ Por ejemplo, si los reescalamos para que su suma sea el número de valores gener
 boxplot(nsim * w/sum(w))  
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 ### Remuestreo (del muestreo) por importancia
@@ -437,17 +450,17 @@ boxplot(nsim * w/sum(w))
 Cuando $f$ y/o $g$ son cuasi-densidades, para evitar calcular constantes
 normalizadoras, se emplea como
 aproximación:
-$$\theta \approx \frac{\sum\limits_{i=1}^{n}w(y_{i})h\left( y_{i}\right) }{ \sum\limits_{i=1}^{n}w(y_{i})}.$$
+$$\theta \approx \frac{\sum\limits_{i=1}^nw(y_{i})h\left( y_{i}\right) }{ \sum\limits_{i=1}^nw(y_{i})}.$$
 
 Adicionalmente, puede verse que con un muestreo de 
-$\left\{y_{1},y_{2},\ldots ,y_{n}\right\}$ 
+$\left\{y_1,y_2,\ldots ,y_n\right\}$ 
 ponderado por $w(y_{i})$ 
-(prob. $=w(y_{i})\left/ \sum\nolimits_{i=1}^{n}w(y_{i}) \right.$ ) 
+(prob. $=w(y_{i})\left/ \sum\nolimits_{i=1}^nw(y_{i}) \right.$ ) 
 se obtiene una simulación aproximada de $f$ 
 (*Sample importance resampling*, Rubin, 1987).
 
 
-### Ejercicio 5
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-21"><strong>(\#exr:unnamed-chunk-21) </strong></span></div>\EndKnitrBlock{exercise}
 
 Generar 1000 simulaciones de una distribución (aprox.) $N(0,1)$
 mediante remuestreo del muestreo por importancia de $10^{5}$ valores
@@ -483,7 +496,7 @@ curve(dnorm, add = TRUE)
 lines(density(rx), col ="red")
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-23-1.png" width="70%" style="display: block; margin: auto;" />
 
 **Nota**: Si f o g fuesen cuasidensidades y se pidiese aproximar la integral,
 habría que reescalar los pesos:  `w <- f(y)/g(y)`; `w <- w/sum(w)`,
@@ -520,13 +533,13 @@ en la estimación por máxima verosimilitud (la función objetivo puede
 ser multimodal).
 
 
-### Ejercicio 6
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-24"><strong>(\#exr:unnamed-chunk-24) </strong></span></div>\EndKnitrBlock{exercise}
 
 La mixtura de distribuciones normales:
-$$\frac{1}{4}N(\mu_{1},1)+\frac{3}{4}N(\mu_{2},1),$$ 
+$$\frac1{4}N(\mu_1,1)+\frac{3}{4}N(\mu_2,1),$$ 
 tiene una función de verosimilitud asociada bimodal.
 Generar una muestra de 200 valores de esta distribución con
-$\mu_{1}=0$ y $\mu_{2}=2.5$, construir la correspondiente
+$\mu_1=0$ y $\mu_2=2.5$, construir la correspondiente
 función de verosimilitud y representarla graficamente. Obtener
 la estimación por máxima verosimilitud de los parámetros
 empleando la rutina `nlm`.
@@ -543,11 +556,11 @@ set.seed(12345)
 p.sim <- rbinom(nsim, 1, 0.25)
 data <- rnorm(nsim, mu1*p.sim + mu2*(1-p.sim), sd1*p.sim + sd2*(1-p.sim))
 
-hist(data, freq = FALSE, breaks = 'FD')
+hist(data, freq = FALSE, breaks = "FD", ylim = c(0, 0.3))
 curve(0.25 * dnorm(x, mu1, sd1) + 0.75 * dnorm(x, mu2, sd2), add = TRUE)
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-25-1.png" width="70%" style="display: block; margin: auto;" />
 
 Logaritmo (negativo) de la función de verosimilitud
 (para la estimación de las medias)
@@ -598,7 +611,7 @@ tee.optim2d <- function(f) {
       best.f <<- output
       best.par <<- input
       # points(best.par[1], best.par[2], col = "blue", pch = 20)
-      # cat('par = ', best.par, 'value = ', best.f, '\n')
+      # cat("par = ", best.par, "value = ", best.f, "\n")
     } 
     ## ... con output e input
     return(output)
@@ -629,11 +642,11 @@ for (j in 1:nstarts){
   # Normalmente llamaríamos a nlm(like, start)
   res <- nlm(tee.optim2d(like), starts[j, ]) # nlm(like, starts[j, ])
   points(res$estimate[1],res$estimate[2], pch = 19)
-  cat('par = ', res$estimate, 'value =', res$minimum, '\n')
+  cat("par = ", res$estimate, "value =", res$minimum, "\n")
 }
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-25-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```
 ## par =  -0.03892511 2.494589 value = 361.5712 
@@ -725,11 +738,10 @@ Adaptado de [Premchand Akella (ppt)](http://www.ecs.umass.edu/ece/labs/vlsicad/e
 
 Este algoritmo se puede ver como una adaptación del método de
 Metropolis-Hastings que veremos más adelante 
-(Tema 12 Introducción a los métodos de cadenas de Markov Monte Carlo).
+(Tema 11 Introducción a los métodos de cadenas de Markov Monte Carlo).
 
 
-### Ejercicio 7
-
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-32"><strong>(\#exr:unnamed-chunk-32) </strong></span></div>\EndKnitrBlock{exercise}
 Repetir el ejercicio anterior empleando el algoritmo del temple simulado. 
 
 Minimización "SANN" con optim:
@@ -745,14 +757,15 @@ set.seed(1)
 for (j in 1:nstarts){
   # Normalmente llamaríamos a optim(start, like, method = "SANN")
   # Note that the "SANN" method depends critically on the settings of the control parameters.
-  # For "SANN" maxit gives the total number of function evaluations: there is no other stopping criterion. Defaults to 10000.
+  # For "SANN" maxit gives the total number of function evaluations: there is no other stopping criterion. 
+  # Defaults to 10000.
   res <- optim(starts[j, ], tee.optim2d(like), method = "SANN", control = list(temp = 100, maxit = 2000))
   points(res$par[1],res$par[2], pch = 19)
-  cat('par = ', res$par, 'value =', res$value, '\n')
+  cat("par = ", res$par, "value =", res$value, "\n")
 }
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-33-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```
 ## par =  0.0002023461 2.473437 value = 361.6372 
@@ -809,7 +822,7 @@ for (j in 1:nstarts) {
 }
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-34-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 Algoritmos genéticos
@@ -840,7 +853,7 @@ Los paquetes de R `DEOptim` y `gafit` implementan algunos de estos
 tipos de algoritmos.
 
 
-### Ejercicio 8
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-35"><strong>(\#exr:unnamed-chunk-35) </strong></span></div>\EndKnitrBlock{exercise}
 
 Repetir el ejercicio anterior empleando la función `DEOptim`.
     
@@ -881,5 +894,5 @@ der <- DEoptim(tee.optim2d(like), lower, upper, DEoptim.control(itermax = 10))
 points(der$optim$bestmem[1], der$optim$bestmem[2], pch = 19)
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-30-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-36-1.png" width="70%" style="display: block; margin: auto;" />
 

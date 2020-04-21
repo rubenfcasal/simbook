@@ -1290,7 +1290,7 @@ mean.boot
 ```
 
 ```
-## [1] -0.09202607
+## [1] -0.09274131
 ```
 
 Bootstrap percentil:
@@ -1332,7 +1332,7 @@ mean.boot - stat.dat
 ```
 
 ```
-## [1] 0.00135433
+## [1] 0.0006390906
 ```
 
 ```r
@@ -1341,7 +1341,7 @@ sd(stat.boot)
 ```
 
 ```
-## [1] 0.1027024
+## [1] 0.1044501
 ```
 
 ```r
@@ -1383,7 +1383,7 @@ res.boot
 
 ```
 ##  Estadístico        Sesgo      Err.Std 
-## -0.144801929  0.006044904  0.117978183
+## -0.144801929  0.005968729  0.119231743
 ```
 
 ### Paquetes R: bootstrap, boot
@@ -1425,8 +1425,8 @@ stat.boot
 ## 
 ## 
 ## Bootstrap Statistics :
-##       original     bias    std. error
-## t1* -0.0933804 0.00135433    0.105385
+##       original       bias    std. error
+## t1* -0.0933804 0.0006390906   0.1049474
 ```
 
 ```r
@@ -1434,9 +1434,8 @@ names(stat.boot)
 ```
 
 ```
-##  [1] "t0"        "t"         "R"         "data"      "seed"     
-##  [6] "statistic" "sim"       "call"      "stype"     "strata"   
-## [11] "weights"
+##  [1] "t0"        "t"         "R"         "data"      "seed"      "statistic"
+##  [7] "sim"       "call"      "stype"     "strata"    "weights"
 ```
 
 ### Gráficos
@@ -1477,10 +1476,10 @@ boot.ci(stat.boot, type=c("norm", "basic", "perc", "bca"))
 ## 
 ## Intervals : 
 ## Level      Normal              Basic         
-## 95%   (-0.3013,  0.1118 )   (-0.2900,  0.1212 )  
+## 95%   (-0.2997,  0.1117 )   (-0.3028,  0.1147 )  
 ## 
 ## Level     Percentile            BCa          
-## 95%   (-0.3079,  0.1032 )   (-0.3258,  0.0973 )  
+## 95%   (-0.3015,  0.1161 )   (-0.2993,  0.1180 )  
 ## Calculations and Intervals on Original Scale
 ```
 
@@ -1511,7 +1510,7 @@ boot(dat, boot.f, nboot, trim=0.2)
 ## 
 ## Bootstrap Statistics :
 ##       original      bias    std. error
-## t1* -0.1448019 0.005146914   0.1226472
+## t1* -0.1448019 0.006095294    0.119021
 ```
 
 <!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
