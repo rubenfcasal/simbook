@@ -1,4 +1,4 @@
-# Aplicaciones de la simulación en Inferencia Estadística {#cap8}
+# Aplicaciones en Inferencia Estadística {#cap8}
 
 
 
@@ -59,7 +59,7 @@ Como ya se comentó en la el Capítulo \@ref(cap2), en problemas mas complejos, 
 Distribución en el muestreo
 ---------------------------
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-2"><strong>(\#exr:unnamed-chunk-2) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-68-105-115-116-114-105-98-117-99-105-243-110-32-100-101-32-108-97-32-109-101-100-105-97-32-109-117-101-115-116-114-97-108-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:distr-media"><strong>(\#exr:distr-media)  \iffalse (Distribución de la media muestral) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
 Si $X_{1},\ldots,X_{n}$ es una muestra aleatoria simple de una
 variable aleatoria $X \sim N\left( \mu, \sigma \right)$, la
@@ -163,15 +163,19 @@ b)  Generar el histograma (en escala de densidades) de las medias
     abline(v = mux, col = "blue")
     ```
     
-    <div class="figure" style="text-align: center">
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/mednorm-1.png" alt="Distribución de la media muestral de una distribución normal." width="70%" />
-    <p class="caption">(\#fig:mednorm)Distribución de la media muestral de una distribución normal.</p>
-    </div>
+    \begin{figure}[!htb]
+    
+    {\centering \includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/mednorm-1} 
+    
+    }
+    
+    \caption{Distribución de la media muestral de una distribución normal.}(\#fig:mednorm)
+    \end{figure}
 
 <!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
 <br> \vspace{0.5cm}
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-8"><strong>(\#exr:unnamed-chunk-8) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-68-105-115-116-114-105-98-117-99-105-243-110-32-100-101-32-108-97-32-109-101-100-105-97-32-109-117-101-115-116-114-97-108-44-32-99-111-110-116-105-110-117-97-99-105-243-110-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:distr-mediab"><strong>(\#exr:distr-mediab)  \iffalse (Distribución de la media muestral, continuación) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
 Si $X_{1},\ldots,X_{n}$ es una m.a.s. de una variable aleatoria
 $X$ (cualquiera) con $E\left( X \right) = \mu$ y
@@ -184,9 +188,7 @@ Típicamente se suele considerar que esta aproximación es buena
 para tamaños muestrales $n>30$,
 aunque dependerá de las características de la distribución de $X$.
 
-a)  Repetir el ejercicio anterior considerando muestras de una
-    $Exp(1)$ (tener en cuenta que
-    $X\sim Exp(\lambda)\Rightarrow\mu_{X}=\sigma_{X}=1/\lambda$).
+a)  Repetir el Ejercicio \@ref(exr:distr-media) anterior considerando muestras de una $Exp(1)$ (tener en cuenta que $X\sim Exp(\lambda)\Rightarrow\mu_{X}=\sigma_{X}=1/\lambda$).
     ¿Qué ocurre con la distribución de la media muestral?
     
     
@@ -239,10 +241,14 @@ a)  Repetir el ejercicio anterior considerando muestras de una
     abline(v=muexp, col="blue")
     ```
     
-    <div class="figure" style="text-align: center">
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/medexp-1.png" alt="Distribución de la media muestral de una distribución exponencial y distribución asintótica." width="70%" />
-    <p class="caption">(\#fig:medexp)Distribución de la media muestral de una distribución exponencial y distribución asintótica.</p>
-    </div>
+    \begin{figure}[!htb]
+    
+    {\centering \includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/medexp-1} 
+    
+    }
+    
+    \caption{Distribución de la media muestral de una distribución exponencial y distribución asintótica.}(\#fig:medexp)
+    \end{figure}
 
 <!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
 <br> \vspace{0.5cm}
@@ -258,16 +264,13 @@ Intervalos de confianza
 ---------------------------
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-13"><strong>(\#exr:unnamed-chunk-13) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-73-110-116-101-114-118-97-108-111-32-100-101-32-99-111-110-102-105-97-110-122-97-32-112-97-114-97-32-108-97-32-109-101-100-105-97-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:ic-media"><strong>(\#exr:ic-media)  \iffalse (Intervalo de confianza para la media) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
-Siguiendo el enunciado del ejercicio 1, se deduce que el intervalo de
-confianza (de nivel $1-\alpha$) para la media $\mu$ de una población
-normal con varianza conocida es:
+A partir del enunciado del Ejercicio \@ref(exr:distr-media), se deduce que el intervalo de confianza (de nivel $1-\alpha$) para la media $\mu$ de una población normal con varianza conocida es:
 $$IC_{1-\alpha}\left(  \mu\right)  = 
 \left(  \overline{X}-z_{1-\alpha/2}\dfrac{\sigma}{\sqrt{n}},\ \overline{X} 
 + z_{1-\alpha/2}\dfrac{\sigma}{\sqrt{n}} \right).$$
-La idea es que el $100(1-\alpha)\%$ de los intervalos así
-construidos contentrán el verdadero valor del parámetro.
+La idea es que el $100(1-\alpha)\%$ de los intervalos así construidos contentrán el verdadero valor del parámetro.
 
 a)  Utilizando el conjunto de datos `muestras` del ejercicio 1 (500
     muestras de tamaño $n=10$ de una $N(1,2)$), añadir en dos nuevas
@@ -328,10 +331,14 @@ a)  Utilizando el conjunto de datos `muestras` del ejercicio 1 (500
     abline(h = mux, lty = 3)
     ```
     
-    <div class="figure" style="text-align: center">
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/cobicnorm-1.png" alt="Cobertura de las estimaciones por IC." width="70%" />
-    <p class="caption">(\#fig:cobicnorm)Cobertura de las estimaciones por IC.</p>
-    </div>
+    \begin{figure}[!htb]
+    
+    {\centering \includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/cobicnorm-1} 
+    
+    }
+    
+    \caption{Cobertura de las estimaciones por IC.}(\#fig:cobicnorm)
+    \end{figure}
     
     ```r
     detach(tmp)
@@ -399,10 +406,14 @@ b)  Repetir el apartado anterior considerando muestras de una
     abline(h = muexp, lty = 3)
     ```
     
-    <div class="figure" style="text-align: center">
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/cobicexp-1.png" alt="Cobertura de las estimaciones por IC (bajo normalidad)." width="70%" />
-    <p class="caption">(\#fig:cobicexp)Cobertura de las estimaciones por IC (bajo normalidad).</p>
-    </div>
+    \begin{figure}[!htb]
+    
+    {\centering \includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/cobicexp-1} 
+    
+    }
+    
+    \caption{Cobertura de las estimaciones por IC (bajo normalidad).}(\#fig:cobicexp)
+    \end{figure}
     
     ```r
     detach(tmp)
@@ -448,7 +459,9 @@ ic.sim <- quantile(muestras2$mean, c(alfa/2, 1 - alfa/2))
 abline(v=ic.sim, lty=2, col='red') 
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 
 \BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}Estimaciones puntuales, por intervalo de confianza y contrastes de hipótesis
@@ -458,7 +471,7 @@ se pueden obtener con la función `t.test`.</div>\EndKnitrBlock{remark}
 <!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
 <br> \vspace{0.5cm}
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-19"><strong>(\#exr:unnamed-chunk-19) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-73-110-116-101-114-118-97-108-111-32-100-101-32-99-111-110-102-105-97-110-122-97-32-65-103-114-101-115-116-105-45-67-111-117-108-108-32-112-97-114-97-32-117-110-97-32-112-114-111-112-111-114-99-105-243-110-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:ic-agresti-coull"><strong>(\#exr:ic-agresti-coull)  \iffalse (Intervalo de confianza Agresti-Coull para una proporción) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
 El Intervalo de confianza para una proporción construido usando la
 aproximación normal tiene un mal comportamiento cuando el tamaño de
@@ -531,7 +544,9 @@ a)  Teniendo en cuenta que la v.a. $X=n\hat{p}\sim\mathcal{B}(n,p)$,
     abline(h = 1 - alpha, lty = 2) 
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-24-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-20-1} \end{center}
     
     Fuente [Suess y Trumbo (2010)](http://www.springer.com/gp/book/9780387402734).
 
@@ -570,7 +585,9 @@ b)  Repetir el apartado anterior considerando intervalos de
     abline(h = 1 - alpha, lty = 2) 
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-25-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 c)  Repetir el apartado anterior empleando simulación para aproximar
     la cobertura.
@@ -615,7 +632,9 @@ c)  Repetir el apartado anterior empleando simulación para aproximar
     abline(h = 1 - alpha, lty = 2) 
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-24-1} \end{center}
     
 Como ya se comentó, el caso de ajustar un modelo a los datos y realizar simulaciones a partir de ese modelo ajustado para aproximar las características de interés de un estadístico, se denomina también bootstrap paramétrico (Ver [Sección 4.1](https://rubenfcasal.github.io/book_remuestreo/cap4-boot-par.html) de Cao y Fernández-Casal, 2019).
 
@@ -626,15 +645,10 @@ Contrastes de hipótesis {#contrastes}
 
 Ver [Apéncide A](https://rubenfcasal.github.io/book_remuestreo/practica2.html) de Cao y Fernández-Casal (2019).
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:ks-test-sim"><strong>(\#exr:ks-test-sim) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-84-101-115-116-32-100-101-32-75-111-108-109-111-103-111-114-111-118-45-83-109-105-114-110-111-118-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:ks-test-sim"><strong>(\#exr:ks-test-sim)  \iffalse (Test de Kolmogorov-Smirnov) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
-En el tema 2 se propuso el análisis de la bondad de ajuste de un
-generador de números pseudo-aleatorios mediante el test de
-Kolmogorov-Smirnov. Sin embargo, si $H_{0}$ es compuesta (los
-parámetros desconocidos se estiman por máxima verosimilitud y se
-trabaja con $\hat{F}_{0}$) los cuantiles de la
-distribución (asintótica) de $D_{n}$ pueden ser demasiado
-conservativos y sería preferible utilizar la distribución exacta.
+En la Sección \@ref(calgen) del Tema \@ref(cap3) se propuso el análisis de la bondad de ajuste de un generador de números pseudo-aleatorios mediante el test de Kolmogorov-Smirnov (ver Sección \@ref(ks-test)). 
+Sin embargo, si $H_{0}$ es compuesta (los parámetros desconocidos se estiman por máxima verosimilitud y se trabaja con $\hat{F}_{0}$) los cuantiles de la distribución (asintótica) de $D_{n}$ pueden ser demasiado conservativos y sería preferible utilizar la distribución exacta.
 
 a)  Analizar el comportamiento del contraste de Kolmogorov-Smirnov
     para contrastar normalidad empleando repetidamente este test,
@@ -694,7 +708,9 @@ a)  Analizar el comportamiento del contraste de Kolmogorov-Smirnov
     abline(h=1, lty=2)   # curve(dunif(x,0,1), add=TRUE)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-31-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-27-1} \end{center}
     
     ```r
     # Distribución empírica
@@ -704,7 +720,9 @@ a)  Analizar el comportamiento del contraste de Kolmogorov-Smirnov
     abline(a=0, b=1, lty=2)   # curve(punif(x, 0, 1), add = TRUE)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-31-2.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-27-2} \end{center}
 
 b)  Repetir el apartado anterior considerando el test de Lilliefors
     (rutina `lillie.test` del paquete `nortest`).
@@ -767,7 +785,9 @@ b)  Repetir el apartado anterior considerando el test de Lilliefors
     abline(h=1, lty=2)   # curve(dunif(x,0,1), add=TRUE)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-36-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-32-1} \end{center}
     
     ```r
     # Distribución empírica
@@ -776,7 +796,9 @@ b)  Repetir el apartado anterior considerando el test de Lilliefors
     abline(a=0, b=1, lty=2)   # curve(punif(x, 0, 1), add = TRUE)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-36-2.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-32-2} \end{center}
 
 c)  Repetir el apartado a) contrastando una distribución exponencial
     y considerando 500 pruebas con muestras de tamaño 30 de una $Exp(1)$.
@@ -831,7 +853,9 @@ c)  Repetir el apartado a) contrastando una distribución exponencial
     abline(h=1, lty=2)   # curve(dunif(x,0,1), add=TRUE)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-40-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-36-1} \end{center}
     
     ```r
     # Distribución empírica
@@ -841,7 +865,9 @@ c)  Repetir el apartado a) contrastando una distribución exponencial
     abline(a=0, b=1, lty=2)   # curve(punif(x, 0, 1), add = TRUE) 
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-40-2.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-36-2} \end{center}
 
 d)  Diseñar una rutina que permita realizar el contraste KS de
     bondad de ajuste de una variable exponencial aproximando el
@@ -930,7 +956,9 @@ d)  Diseñar una rutina que permita realizar el contraste KS de
     abline(h=1, lty=2)   # curve(dunif(x,0,1), add=TRUE)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-44-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-40-1} \end{center}
     
     ```r
     # Distribución empírica
@@ -940,7 +968,9 @@ d)  Diseñar una rutina que permita realizar el contraste KS de
     abline(a=0, b=1, lty=2)   # curve(punif(x, 0, 1), add = TRUE) 
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-44-2.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-40-2} \end{center}
 
 e)  Estudiar la potencia de los contrastes de los apartados c) y d),
     considerando como alternativa una distribución Weibull.
@@ -979,7 +1009,9 @@ e)  Estudiar la potencia de los contrastes de los apartados c) y d),
     abline(h = alfa, v = 1, lty = 3)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/potencia-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/potencia-1} \end{center}
 
 
 El estadístico de Kolmogorov-Smirnov `Dn = max(c(DMinus, DPlus))` tiene ventajas desde el
@@ -996,7 +1028,7 @@ valor absoluto del correspondiente gráfico PP, y solo habría que cambiar el es
 Comparación de estimadores
 --------------------------
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-45"><strong>(\#exr:unnamed-chunk-45) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-67-111-109-112-97-114-97-99-105-243-110-32-100-101-32-108-97-32-101-102-105-99-105-101-110-99-105-97-32-100-101-32-108-97-32-109-101-100-105-97-32-109-117-101-115-116-114-97-108-32-121-32-100-101-32-108-97-32-109-101-100-105-97-110-97-32-98-97-106-111-32-99-111-110-116-97-109-105-110-97-99-105-243-110-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:media-median"><strong>(\#exr:media-median)  \iffalse (Comparación de la eficiencia de la media muestral y de la mediana bajo contaminación) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
 Supongamos que estamos interesados en estudiar el efecto de datos
 atípicos en la estimación de la media teórica mediante la media y la mediana muestrales. 
@@ -1017,7 +1049,9 @@ curve(dnorm(x, 0, 1), -3, 12, ylab = 'densidad', lty = 3)
 curve(0.95*dnorm(x, 0, 1) + 0.05*dnorm(x, 3, 3), add = TRUE)
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/contaminada-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/contaminada-1} \end{center}
 
 \BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}También es habitual simular este tipo de datos generando un porcentaje alto de valores (en este caso un 95%) de la distribución base ($N(0,1)$) y el resto (5%) de la distibución "contaminadora" ($N(3,3^2)$), aunque se suele considerar un porcentaje de contaminación del 1% o inferior. En el tema 7 se describirá el método de composición para simular mixturas. </div>\EndKnitrBlock{remark}
 
@@ -1060,7 +1094,9 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
     hist(dat.sim[,1])
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-48-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-43-1} \end{center}
     
     Calculamos los estimadores:
     
@@ -1114,7 +1150,9 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
     abline(h = 0, lty = 2)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-51-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-46-1} \end{center}
     
     Error cuadrático:
     
@@ -1124,7 +1162,9 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
           names=c("Media","Mediana"), ylab="Error cuadrático")
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-52-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-47-1} \end{center}
     
     Estadísticos error cuadrático:
     
@@ -1175,7 +1215,9 @@ curve(ecdf(data)(x), ylab = "FD", type = "s", lwd = 2)
 abline(a = 0, b = 1, lty = 2) 
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-54-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-49-1} \end{center}
 
 Las características de la distribución empírica se pueden aproximar mediante simulación. 
 En el caso i.i.d. esto puede ser implementado mediante remuestreo,
@@ -1235,17 +1277,16 @@ En general podríamos decir que:
 * **la muestra es a la población**
 **lo que la muestra bootstrap es a la muestra**.
 
-<img src="images/bootstrap.png" width="70%" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics[width=0.7\linewidth]{images/bootstrap} \end{center}
 
 Para información adicional sobre bootstrap ver p.e.:
 Davison, A.C. and Hinkley, D.V. (1997). *Bootstrap Methods and Their Application*. Cambridge University Press
 
 
-### Ejemplo
+\BeginKnitrBlock{example}\iffalse{-91-65-112-114-111-120-105-109-97-99-105-243-110-32-100-101-108-32-115-101-115-103-111-32-121-32-100-101-108-32-101-114-114-111-114-32-101-115-116-225-110-100-97-114-32-109-101-100-105-97-110-116-101-32-98-111-111-116-115-116-114-97-112-93-}\fi{}<div class="example"><span class="example" id="exm:mean-median-boot"><strong>(\#exm:mean-median-boot)  \iffalse (Aproximación del sesgo y del error estándar mediante bootstrap) \fi{} </strong></span></div>\EndKnitrBlock{example}
 
-Como ejemplo consideraremos una muestra de tamaño $n=100$ de una normal
-estándar para tratar de aproximar el sesgo y error estándar de la media y la mediana
-mediante bootstrap.
+Como ejemplo consideraremos una muestra de tamaño $n=100$ de una normal estándar para tratar de aproximar el sesgo y error estándar de la media y la mediana mediante bootstrap.
 
 
 ```r
@@ -1306,7 +1347,9 @@ curve(dnorm(x, datmed, datsd/sqrt(ndat)), lty=2, add=TRUE)
 abline(v=datmed, lwd=2, lty=2)
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-60-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-55-1} \end{center}
 
 Bootstrap natural/básico:
 
@@ -1321,7 +1364,9 @@ curve(dnorm(x, 0, datsd/sqrt(ndat)), lty=2, add=TRUE)
 abline(v=0, lwd=2, lty=2)
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-61-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-56-1} \end{center}
 
 Sesgo y error estándar bootstrap:
 
@@ -1445,19 +1490,25 @@ names(stat.boot)
 hist(stat.boot$t, freq=FALSE)
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-66-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-61-1} \end{center}
 
 ```r
 plot(stat.boot)
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-66-2.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-61-2} \end{center}
 
 ```r
 jack.after.boot(stat.boot)
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-66-3.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-61-3} \end{center}
 
 ### Intervalos de confianza bootstrap
 
@@ -1484,19 +1535,19 @@ boot.ci(stat.boot, type=c("norm", "basic", "perc", "bca"))
 ```
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-68"><strong>(\#exr:unnamed-chunk-68) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:mean-trim-boot"><strong>(\#exr:mean-trim-boot) </strong></span></div>\EndKnitrBlock{exercise}
 
-Repetir el ejemplo anterior considerando la media recortada al 10\%
-(ejemplo con parámetros adicionales).
+Repetir el Ejemplo \@ref(exm:mean-median-boot) anterior considerando la media recortada al 10\%
+(con parámetros adicionales).
 
 
 ```r
-boot.f <- function(data, indices, trim=0.1){
+boot.f <- function(data, indices, trim = 0.1){
   mean(data[indices], trim)
 }
 
 set.seed(1)
-boot(dat, boot.f, nboot, trim=0.2)
+boot(dat, boot.f, nboot, trim = 0.2)
 ```
 
 ```
@@ -1516,7 +1567,7 @@ boot(dat, boot.f, nboot, trim=0.2)
 <!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
 <br> \vspace{0.5cm}
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-70"><strong>(\#exr:unnamed-chunk-70) </strong></span>(propuesto)</div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-112-114-111-112-117-101-115-116-111-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:rachas-sim"><strong>(\#exr:rachas-sim)  \iffalse (propuesto) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
 En el tema 2 se propuso el análisis de la aleatoriedad de un
 generador de números pseudo-aleatorios mediante el test de rachas,

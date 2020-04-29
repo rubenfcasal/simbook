@@ -1,4 +1,4 @@
-# Integración y Optimización Montecarlo {#cap9}
+# Integración y Optimización Monte Carlo {#cap9}
 
 ```{r , child = "_global_options.Rmd"}
 ```
@@ -14,12 +14,12 @@ $$I = \int \cdots \int h\left( x_1,\ldots ,x_d\right) dx_1 \cdots dx_d$$
 donde puede presentar ventajas respecto a los métodos tradicionales de integración numérica (ver Apéndice \@ref(int-num)),
 ya que la velocidad de convergencia no depende del número de dimensiones.
 
-Supongamos que nos interesa:
+Supongamos que nos interesa aproximar:
 $$I = \int_0^1h\left( x\right) dx$$
 Si $x_1,x_2,\ldots ,x_n$ *i.i.d.* $\mathcal{U}\left( 0,1\right)$
 entonces:
 $$I = E\left( h\left( \mathcal{U}\left( 0,1\right) \right) \right)
-\approx \frac{1}{n}\sum\limits_{i=1}^nh\left( x_{i}\right)$$
+\approx \frac{1}{n}\sum\limits_{i=1}^nh\left( x_i\right)$$
 
 Si el intervalo de integración es
 genérico:
@@ -28,10 +28,10 @@ $$I = \int_a^bh\left( x\right) dx =
 (b-a)E\left( h\left( \mathcal{U}\left( a, b \right) \right) \right).$$
 Si $x_1,x_2,\ldots ,x_n$ *i.i.d.*
 $\mathcal{U}\left( a, b\right)$:
-$$I\approx \frac{1}{n}\sum\limits_{i=1}^nh\left( x_{i}\right) (b-a)$$
+$$I\approx \frac{1}{n}\sum\limits_{i=1}^nh\left( x_i\right) (b-a)$$
 
 
-```{exercise}
+```{exercise, label="mc-integral"}
 ```
 
 Crear una función que implemente la integración Monte Carlo clásica
@@ -74,7 +74,7 @@ La función `mc.integral0` no es adecuada para analizar la convergencia
 de la aproximación por simulación.
 Una alternativa más eficiente para representar gráficamente la convergencia:
 
-```{r }
+```{r mc-integral, fig.cap="Convergencia de la aproximación de la integral mediante simulación."}
   mc.integral <- function(fun, a, b, n, plot = TRUE) {
     fx <- sapply(runif(n, a, b), fun) * (b - a)
     if (plot) {
@@ -110,7 +110,7 @@ A partir a ahora consideraremos que interesa aproximar una integral de la forma:
 $$\theta = E\left( h\left( X\right) \right) = \int h\left( x\right) f(x)dx$$siendo
 $X\sim f$, entonces, si $x_1,x_2,\ldots ,x_n$ *i.i.d.*
 $X$:
-$$\theta \approx \frac{1}{n}\sum\limits_{i=1}^nh\left( x_{i}\right)$$
+$$\theta \approx \frac{1}{n}\sum\limits_{i=1}^nh\left( x_i\right)$$
 
 Por ejemplo, como en el ejercicio anterior se considera de una función de densidad, 
 se correspondería con el caso general de $h(x) = x$ y $f(x) = 4x^3$ para $0<x<1$.
@@ -137,7 +137,7 @@ error
 ```
 
 
-```{exercise}
+```{exercise, label="mc-intinf"}
 ```
 
 Aproximar:
@@ -183,8 +183,8 @@ siendo
 $q\left( x\right)  = \frac{h\left( x\right) f(x)}{g(x)}$.
 
 Si $y_1,y_2,\ldots ,y_n$ *i.i.d.* $Y\sim g$:
-$$\theta \approx \frac{1}{n}\sum\limits_{i=1}^nq\left( y_{i}\right) 
-= \frac{1}{n}\sum\limits_{i=1}^nw(y_{i})h\left( y_{i}\right)  
+$$\theta \approx \frac{1}{n}\sum\limits_{i=1}^nq\left( y_i\right) 
+= \frac{1}{n}\sum\limits_{i=1}^nw(y_i)h\left( y_i\right)  
 = \hat{\theta}_{g}$$
 con $w\left( x\right)  = \frac{f(x)}{g(x)}$.
 
@@ -192,7 +192,7 @@ En este caso $Var(\hat{\theta}_{g}) = Var\left( q\left( Y\right) \right) /n$,
 pudiendo reducirse significativamente respecto al método clásico si:
 $$g(x)\underset{aprox.}{\propto } \left\vert h(x) \right\vert f(x),$$
 ya que en ese caso $\left\vert q(x) \right\vert$ sería aproximadamente constante
-(puede demostrarse fácilmente que la varianza es mínima si esa relación en exacta).
+(puede demostrarse fácilmente que la varianza es mínima si esa relación es exacta).
 
 
 Para aplicar el TCL, la varianza del estimador $\hat{\theta}_{g}$ 
@@ -209,22 +209,21 @@ la densidad $f$ con mayor facilidad puede dar lugar a
 $E \left( h^2 \left( X \right) \right)$;
 ver Sección \@ref(convergencia) en el Tema \@ref(cap4) de Análisis de resultados).
 
-La distribución de los pesos $w(y_{i})$ debería ser homogénea para
+La distribución de los pesos $w(y_i)$ debería ser homogénea para
 evitar datos influyentes (inestabilidad).
 
 
-```{exercise}
+```{exercise, label="mc-imp"}
 ```
 
-Aproximar la integral del ejercicio anterior empleando muestreo por importancia considerando como
-densidad auxiliar una exponencial de parámetro $\lambda=1$ truncada en $t$:
+Aproximar la integral del Ejercicio \@ref(exr:mc-intinf) anterior empleando muestreo por importancia considerando como densidad auxiliar una exponencial de parámetro $\lambda=1$ truncada en $t$:
 $$g\left(  x\right)  =\lambda e^{-\lambda\left(  x-t\right)  }\text{, }x>t,$$
 (emplear `rexp(n)+t` y `dexp(y-t)`). 
 Comparar $h(x)f(x)$ con $g(x)f(4.5)$ y representar gráficamente la
 aproximación en función de $n$.
     
 
-```{r }
+```{r mc-imp-int, fig.cap="Objetivo a integrar (densidad objetivo truncada) y densidad auxiliar reescalada."}
 curve(dnorm(x), 4.5, 6, ylab = "dnorm(x) y dexp(x-4.5)*k")
 abline(v = 4.5)
 abline(h = 0)
@@ -243,7 +242,7 @@ w <- dnorm(y)/dexp(y - 4.5)
 
 La aproximación por simulación sería `mean(w * h(y))`:
 
-```{r }
+```{r mc-imp-conv, fig.cap="Convergencia de la aproximación de la integral mediante muestreo por importancia."}
 # h(x) <- function(x) x > 4.5  # (1 si x > 4.5 => h(y) = 1)
 mean(w) # w*h(y)
 pnorm(-4.5)  # valor teórico
@@ -267,13 +266,10 @@ sqrt(est * (1 - est)/nsim)
 ```
 
 
-```{exercise}
+```{example, label="mc-imp2", name="Muestro por importancia con mala densidad auxiliar"}
 ```
 
-Aproximar $P\left(2<X<6\right)$ siendo $X\sim Cauchy(0,1)$
-empleando muestreo por importancia y considerando como densidad
-auxiliar la normal estandar $Y\sim N(0,1)$. Representar gráficamente
-la aproximación y estudiar los pesos $w(y_i)$.
+Supongamos que se pretende aproximar $P\left(2<X<6\right)$ siendo $X\sim Cauchy(0,1)$ empleando muestreo por importancia y considerando como densidad auxiliar la normal estandar $Y\sim N(0,1)$. Representaremos gráficamente la aproximación y estudiaremos los pesos $w(y_i)$.
     
 **Nota**: En este caso van a aparecer problemas 
 (la densidad auxiliar debería tener colas más pesadas que la densidad objetivo;
@@ -300,7 +296,7 @@ pcauchy(6) - pcauchy(2)  # Valor teórico
 
 Si se estudia la convergencia:
 
-```{r }
+```{r mc-imp2-conv, fig.cap="Gráfico de convergencia de la aproximación mediante muestreo por importancia con mala densidad auxiliar."}
 plot(cumsum(w * (y > 2) * (y < 6))/1:nsim, type = "l", ylab = "Aproximación", xlab = "Iteraciones")
 abline(h = pcauchy(6) - pcauchy(2), lty = 2)
 ```
@@ -310,35 +306,26 @@ Lo que indica es una mala elección de la densidad auxiliar...
 La distribución de los pesos debería ser homogénea.
 Por ejemplo, si los reescalamos para que su suma sea el número de valores generados, deberían tomar valores en torno a uno:
 
-```{r }
+```{r mc-imp2-boxplot, fig.cap="Gráfico de cajas de los pesos del muestreo por importancia reescalados (de forma que su media es 1)."}
 boxplot(nsim * w/sum(w))  
 ```
 
 
 ### Remuestreo (del muestreo) por importancia
 
-Cuando $f$ y/o $g$ son cuasi-densidades, para evitar calcular constantes
-normalizadoras, se emplea como
-aproximación:
-$$\theta \approx \frac{\sum\limits_{i=1}^nw(y_{i})h\left( y_{i}\right) }{ \sum\limits_{i=1}^nw(y_{i})}.$$
+Cuando $f$ y/o $g$ son cuasi-densidades, para evitar calcular constantes normalizadoras, se emplea como aproximación:
+$$\theta \approx \frac{\sum\limits_{i=1}^n w(y_i) h\left( y_i\right) }{ \sum\limits_{i=1}^n w(y_i)}.$$
 
-Adicionalmente, puede verse que con un muestreo de 
-$\left\{y_1,y_2,\ldots ,y_n\right\}$ 
-ponderado por $w(y_{i})$ 
-(prob. $=w(y_{i})\left/ \sum\nolimits_{i=1}^nw(y_{i}) \right.$ ) 
-se obtiene una simulación aproximada de $f$ 
-(*Sample importance resampling*, Rubin, 1987).
+Adicionalmente, puede verse que con un muestreo de $\left\{y_1, y_2, \ldots, y_n \right\}$ ponderado por $w(y_i)$ (prob. $=w(y_i)\left/ \sum\nolimits_{i=1}^n w(y_i) \right.$ ) se obtiene una simulación aproximada de $f$ (*Sample importance resampling*, Rubin, 1987).
 
 
-```{exercise}
+```{exercise, label="mc-imp-sample"}
 ```
 
-Generar 1000 simulaciones de una distribución (aprox.) $N(0,1)$
-mediante remuestreo del muestreo por importancia de $10^{5}$ valores
-de una $Cauchy(0,1)$.
+Generar 1000 simulaciones de una distribución (aprox.) $N(0,1)$ (densidad objetivo) mediante remuestreo del muestreo por importancia de $10^{5}$ valores de una $Cauchy(0,1)$ (densidad auxiliar).
     
 Se trata de simular una normal a partir de una Cauchy (Sampling Importance Resampling).
-En este caso `f(y) = dnorm(y)` y `g(y) = dcauchy(y)`, al revés del ejercicio anterior...
+NOTA: En este caso `f(y) = dnorm(y)` y `g(y) = dcauchy(y)`, al revés del ejercicio anterior...
 
 ```{r }
 # Densidad objetivo
@@ -358,37 +345,53 @@ w <- dnorm(y)/dcauchy(y) # w <- w/sum(w) si alguna es una cuasidensidad
 
 Sampling Importance Resampling: 
 
-```{r }
+```{r imp-res, fig.cap="Distribución de los valores generados mediante remuestreo por importancia y densidad objetivo."}
 rx <- sample(y, nsim, replace = TRUE, prob = w/sum(w))
-hist(rx, freq = FALSE)
-curve(dnorm, add = TRUE)
-lines(density(rx), col ="red")
+hist(rx, freq = FALSE, breaks = "FD", ylim = c(0, 0.5))
+lines(density(rx))
+curve(dnorm, col = "blue", add = TRUE)
 ```
 
-**Nota**: Si f o g fuesen cuasidensidades y se pidiese aproximar la integral,
-habría que reescalar los pesos:  `w <- f(y)/g(y)`; `w <- w/sum(w)`,
-y la aproximación por simulación sería `sum(w * h(y))` y en el análisis 
-de convergencia se emplearía `cumsum(w * h(y))` 
-(sin dividir por el número de simulaciones).
+**NOTA**: Si f o g fuesen cuasidensidades y se pidiese aproximar la integral, habría que reescalar los pesos:  `w <- f(y)/g(y)`; `w <- w/sum(w)`, y la aproximación por simulación sería `sum(w * h(y))` (media ponderada) y en el análisis de convergencia se emplearía `cumsum(w * h(y))` (sin dividir por el número de simulaciones).
 
+```{exercise, label="mc-imp-sample2", name="propuesto"}
+```
+
+Consideramos una v.a. con densidad:
+    $$f(x)\propto e^{-x}\cos^{2}(x),\text{ si }x>0.$$
+Tomando como semilla inicial el nº de grupo multiplicado por 100:
+
+a.  Aproximar mediante integración Monte Carlo la media de esta
+    distribución ($h(x)=x$) empleando muestreo de importancia con
+    distribución auxiliar una exponencial de parámetro $\lambda=1$ a
+    partir de 10000 simulaciones (OJO: se conoce la cuasi-densidad
+    de la v.a. de interés, emplear la aproximación descrita
+    en apuntes).
+
+b.  Generar 500 simulaciones (aprox.) de la distribución de interés
+    mediante remuestreo del muestreo por importancia.
+    
+---    
+
+***LA MATERIA EVALUABLE EN EL CURSO 2019/2020 TERMINA AQUÍ***
+
+---
 
 Optimización Monte Carlo
 ------------------------
 
-Supongamos que estamos interesados en la minimización de una
-función:
+Supongamos que estamos interesados en la minimización de una función:
 $$\underset{\mathbf{x}\in D}{\min }f(\mathbf{x}).$$
 
-Hay una gran cantidad de algoritmos numéricos para resolver
-problemas de optimización no lineal multidimensional, por ejemplo
-los basados en el método de Newton-Raphson.
+Hay una gran cantidad de algoritmos numéricos para resolver problemas de optimización no lineal multidimensional, por ejemplo los basados en el método de Newton-Raphson
+(implementados en la función `nlm`, entre otras).
 
 La idea original consiste en buscar los ceros de su primera derivada
 (o del gradiente) empleando una aproximación
 iterativa:
-$$\mathbf{x}_{i+1} = \mathbf{x}_{i}-[Hf(\mathbf{x}_{i})]^{-1}\nabla f(\mathbf{x} = 
-_{i}),$$donde $Hf(\mathbf{x}_{i})$ es el hessiano de la función
-(matriz de segundas derivadas) y $\nabla f(\mathbf{x}_{i})$ el
+$$\mathbf{x}_{i+1} = \mathbf{x}_i-[Hf(\mathbf{x}_i)]^{-1}\nabla f(\mathbf{x} = 
+_i),$$donde $Hf(\mathbf{x}_i)$ es el hessiano de la función
+(matriz de segundas derivadas) y $\nabla f(\mathbf{x}_i)$ el
 gradiente (vector de primeras derivadas).
 Estos métodos normalmente funcionan muy bien cuando la función
 objetivo no tiene mínimos locales (ideal $f$ cuadrática).
@@ -400,18 +403,17 @@ en la estimación por máxima verosimilitud (la función objetivo puede
 ser multimodal).
 
 
-```{exercise}
+```{exercise, label="mv-nlm", name="Estimación por máxima verosimilitud mediante un algoritmo de Newton"}
 ```
 
 La mixtura de distribuciones normales:
 $$\frac1{4}N(\mu_1,1)+\frac{3}{4}N(\mu_2,1),$$ 
 tiene una función de verosimilitud asociada bimodal.
-Generar una muestra de 200 valores de esta distribución con
-$\mu_1=0$ y $\mu_2=2.5$, construir la correspondiente
-función de verosimilitud y representarla graficamente. Obtener
-la estimación por máxima verosimilitud de los parámetros
-empleando la rutina `nlm`.
-Muestra (simulación mixtura dos normales)
+Generar una muestra de 200 valores de esta distribución con $\mu_1=0$ y $\mu_2=2.5$, construir la correspondiente
+función de verosimilitud y representarla graficamente.
+Obtener la estimación por máxima verosimilitud de los parámetros empleando la rutina `nlm`.
+
+Obtención de la muestra (simulación mixtura dos normales):
 
 ```{r }
 nsim <- 200
@@ -596,9 +598,9 @@ Metropolis-Hastings que veremos más adelante
 (Tema 11 Introducción a los métodos de cadenas de Markov Monte Carlo).
 
 
-```{exercise}
+```{exercise, label="mv-sann", name="Estimación máximo-verosimil empleando temple simulado"}
 ```
-Repetir el ejercicio anterior empleando el algoritmo del temple simulado. 
+Repetir el Ejercicio \@ref(exr:mv-nlm) anterior empleando el algoritmo del temple simulado. 
 
 Minimización "SANN" con optim:
 
@@ -674,11 +676,11 @@ Los algoritmos genéticos tratan de encontrar la mejor solución
 (entre un conjunto de soluciones posibles) imitando los procesos de
 evolución biológica:
 
--   **Población**: formada por $n$ individuos $\mathbf{x}_{i}$
+-   **Población**: formada por $n$ individuos $\mathbf{x}_i$
     codificados en **cromosomas**.
 
--   $f(\mathbf{x}_{i})$ ajuste/capacidad/**adaptación** del
-    individuo $\mathbf{x}_{i}$.
+-   $f(\mathbf{x}_i)$ ajuste/capacidad/**adaptación** del
+    individuo $\mathbf{x}_i$.
 
 -   **Selección**: los individuos mejor adaptados tienen mayor
     probabilidad de ser **padres**.
@@ -695,7 +697,7 @@ Los paquetes de R `DEOptim` y `gafit` implementan algunos de estos
 tipos de algoritmos.
 
 
-```{exercise}
+```{exercise, label="mv-DEoptim", name="Estimación máximo-verosimil empleando un algoritmo genético"}
 ```
 
 Repetir el ejercicio anterior empleando la función `DEOptim`.

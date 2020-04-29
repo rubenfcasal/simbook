@@ -89,15 +89,15 @@ simétrica repecto a un parámetro $\mu$.
 (e.g. $X\sim \mathcal{U}(a,b)$ e $Y=a+b-X$).
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-2"><strong>(\#exr:unnamed-chunk-2) </strong></span>Variables antitéticas en integración Monte Carlo </div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:mc-integrala"><strong>(\#exr:mc-integrala) </strong></span>Variables antitéticas en integración Monte Carlo </div>\EndKnitrBlock{exercise}
 
-Crear una función que implemente la técnica de variables antitéticas
-para aproximar integrales del
-tipo:$$I=\int_{a}^{b}h\left(  x\right)  dx.$$ Emplearla para
-aproximar:
+Crear una función que implemente la técnica de variables antitéticas para aproximar integrales del tipo:
+$$I=\int_{a}^{b}h\left(  x\right)  dx.$$ 
+Emplearla para aproximar:
 $$E\left(  e^{\mathcal{U}(0,2)}\right)  =\int_{0}^{2}\frac{1}{2}e^{x}dx\approx3.194,\label{integralmc}$$
 y representar gráficamente la aproximación en función de $n$.
- Función objetivo:
+
+Representamos la función objetivo:
 
 
 ```r
@@ -108,7 +108,9 @@ abline(h=0,lty=2)
 abline(v=c(a,b),lty=2)
 ```
 
-<img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{10-Reduccion_varianza_files/figure-latex/unnamed-chunk-2-1} \end{center}
 
 Se trata de calcular la media de $e^{\mathcal{U}(0,2)}$:
 
@@ -145,7 +147,9 @@ res <- mc.integral(ftn, a, b, 500)
 abline(h = teor)
 ```
 
-<img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-5-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{10-Reduccion_varianza_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 ```r
 res
@@ -187,7 +191,9 @@ set.seed(54321)
 res <- mc.integrala(ftn, a, b, 500)
 ```
 
-<img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-6-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{10-Reduccion_varianza_files/figure-latex/unnamed-chunk-5-1} \end{center}
 
 ```r
 res
@@ -214,10 +220,8 @@ Si calculamos el porcentaje (estimado) de reducción del error:
 ```
 
 El problema es que en este caso se está estimando mal la varianza (asumiendo independencia).
-Hay que tener cuidado con las técnicas de reducción de la varianza si uno de los objetivos 
-de la simulación es precisamente estimar la variabilidad.
-En este caso, una versión de la función anterior para integración Monte Carlo con variables antitéticas,
-con aproximación del error bajo dependencia podría ser:
+Hay que tener cuidado con las técnicas de reducción de la varianza si uno de los objetivos de la simulación es precisamente estimar la variabilidad.
+En este caso, una versión de la función anterior para integración Monte Carlo con variables antitéticas, con aproximación del error bajo dependencia podría ser:
 
 
 ```r
@@ -279,50 +283,31 @@ variabilidad en el estrato se puede obtener una reducción
 significativa de la varianza.
 
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-10"><strong>(\#exm:unnamed-chunk-10) </strong></span>Muestreo estratificado de una exponencial (libro Ricardo)</div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}\iffalse{-91-77-117-101-115-116-114-101-111-32-101-115-116-114-97-116-105-102-105-99-97-100-111-32-100-101-32-117-110-97-32-101-120-112-111-110-101-110-99-105-97-108-93-}\fi{}<div class="example"><span class="example" id="exm:estr-exp"><strong>(\#exm:estr-exp)  \iffalse (Muestreo estratificado de una exponencial) \fi{} </strong></span></div>\EndKnitrBlock{example}
 
-Supóngase el siguiente
-problema (absolutamente artificial pero ilustrativo para comprender esta
-técnica). Dada una muestra de tamaño 10 de una población con
-distribución: 
+Supóngase el siguiente problema (absolutamente artificial pero ilustrativo para comprender esta técnica). 
+Dada una muestra de tamaño 10 de una población con distribución: 
 $$X \sim \exp\left( 1 \right),$$
-se desea aproximar la media
-poblacional (es sobradamente conocido que es 1) a partir de 10 simulaciones. 
-Supongamos que para evitar que, por puro azar, exista alguna zona 
-en la que la exponencial toma valores, no representada en la muestra simulada 
-de 10 datos, se consideran tres estratos. 
-Por ejemplo, el del 40% de
-valores menores, el siguiente 50% de valores (intermedios) y el 10% de
-valores más grandes para esta distribución.
+se desea aproximar la media poblacional (es sobradamente conocido que es 1) a partir de 10 simulaciones. 
+Supongamos que para evitar que, por puro azar, exista alguna zona en la que la exponencial toma valores, no representada en la muestra simulada de 10 datos, se consideran tres estratos. 
+Por ejemplo, el del 40% de valores menores, el siguiente 50% de valores (intermedios) y el 10% de valores más grandes para esta distribución.
 
-El algoritmo de inversión (optimizado) para simular una 
-$\exp\left(1\right)$ es:
+El algoritmo de inversión (optimizado) para simular una $\exp\left(1\right)$ es:
 
-1. Generar $U\sim U\left(  0,1\right)$.
+1. Generar $U\sim \mathcal{U}\left(  0,1\right)$.
 
 2. Hacer $X=-\ln U$.
 
-Dado que, en
-principio, simulando diez valores
-$U_{1},U_{2},\ldots,U_{10}\sim U\left(  0,1\right)$, no hay nada que
-nos garantice que las proporciones de los estratos son las deseadas
-(aunque sí lo serán en media). Una forma de garantizar el que obtengamos **4, 5 y 1** valores, 
-repectivamente, en cada uno de los tres estratos,
-consiste en simular: 
+Dado que, en principio, simulando diez valores $U_{1},U_{2},\ldots,U_{10}\sim \mathcal{U}\left(  0,1\right)$, no hay nada que nos garantice que las proporciones de los estratos son las deseadas (aunque sí lo serán en media). 
+Una forma de garantizar el que obtengamos **4, 5 y 1** valores, repectivamente, en cada uno de los tres estratos, consiste en simular: 
 
--   4 valores de
-    $U[0.6,1)$ para el primer     estrato, 
+-   4 valores de $\mathcal{U}[0.6,1)$ para el primer estrato, 
 
--   5 valores
-    de $U[0.1,0.6)$ para el
-    segundo y 
+-   5 valores de $\mathcal{U}[0.1,0.6)$ para el segundo y 
 
--   uno de $U[0,0.1)$
-    para el tercero. 
+-   uno de $\mathcal{U}[0,0.1)$ para el tercero. 
     
-Otra forma de proceder consistiría en rechazar valores de $U$ 
-que caigan en uno de esos tres intervalos cuando el cupo de ese estrato 
-esté ya lleno (lo cual no sería computacionalmente eficiente).    
+Otra forma de proceder consistiría en rechazar valores de $U$ que caigan en uno de esos tres intervalos cuando el cupo de ese estrato esté ya lleno (lo cual no sería computacionalmente eficiente).    
 
 El algoritmo con la estratificación propuesta sería como sigue:
 
@@ -330,7 +315,7 @@ El algoritmo con la estratificación propuesta sería como sigue:
 
 2. Generar $U_{i}$:
 
-    2a. Generar $U\sim U\left(  0,1\right)$.
+    2a. Generar $U\sim \mathcal{U}\left(  0,1\right)$.
 
     2b. Si $i\leq4$ hacer $U_{i} = 0.4 \cdot U + 0.6$.
 
@@ -351,16 +336,13 @@ No es difícil probar que:
 Como consecuencia:
 $$Var\left(  \overline{X}\right)  =\frac{1}{10^{2}}\sum_{i=1}^{10}
 Var\left( X_{i} \right)  = 0.022338$$ 
-que es bastante menor que 1
-(la varianza en el caso de muestreo aleatorio simple no estratificado).
+que es bastante menor que 1 (la varianza en el caso de muestreo aleatorio simple no estratificado).
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-11"><strong>(\#exr:unnamed-chunk-11) </strong></span>Integración Monte Carlo con estratificación</div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-73-110-116-101-103-114-97-99-105-243-110-32-77-111-110-116-101-32-67-97-114-108-111-32-99-111-110-32-101-115-116-114-97-116-105-102-105-99-97-99-105-243-110-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:mc-integrale"><strong>(\#exr:mc-integrale)  \iffalse (Integración Monte Carlo con estratificación) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
-Aproximar la integral anterior empleando la técnica de
-estratificación, considerando $k$ subintervalos regularmente
-espaciados en el intervalo $\left[ 0, 2 \right]$. ¿Como varía la
-reducción en la varianza dependiendo del valor de $k$?
+Aproximar la integral anterior empleando la técnica de estratificación, considerando $k$ subintervalos regularmente espaciados en el intervalo $\left[ 0, 2 \right]$. 
+¿Como varía la reducción en la varianza dependiendo del valor de $k$?
 
 
 
@@ -380,7 +362,9 @@ res <- mc.integral(ftn, a, b, 500)
 abline(h = teor)
 ```
 
-<img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{10-Reduccion_varianza_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 ```r
 res
@@ -423,7 +407,7 @@ mc.integrale(ftn, a, b, 500, 100)
 De esta forma no se tiene en cuenta la variabilidad en el estrato.
 El tamaño de las submuestras debería incrementarse hacia el extremo superior.
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-13"><strong>(\#exr:unnamed-chunk-13) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:mc-integraleb"><strong>(\#exr:mc-integraleb) </strong></span></div>\EndKnitrBlock{exercise}
 Repetir el ejemplo anterior considerando intervalos regularmente espaciados en escala exponencial.
 
 
@@ -465,11 +449,9 @@ Para estimarlo se puede realizar ajuste lineal de $X$ sobre $Y$
 
           
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-14"><strong>(\#exr:unnamed-chunk-14) </strong></span>Integración Monte Carlo con variables de control </div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-73-110-116-101-103-114-97-99-105-243-110-32-77-111-110-116-101-32-67-97-114-108-111-32-99-111-110-32-118-97-114-105-97-98-108-101-115-32-100-101-32-99-111-110-116-114-111-108-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:mc-integral-contr"><strong>(\#exr:mc-integral-contr)  \iffalse (Integración Monte Carlo con variables de control) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
-Aproximar la integral anterior empleando la variable
-$U\sim\mathcal{U}(0,2)$ para controlar la variable $e^{U}$.
-
+Aproximar la integral anterior empleando la variable $U\sim\mathcal{U}(0,2)$ para controlar la variable $e^{U}$.
 
 Se trata de calcular la media de $exp(\mathcal{U}(a,b))$:
 
@@ -508,7 +490,9 @@ reg <- lm(expu ~ u)$coef
 abline(reg, col='blue')
 ```
 
-<img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{10-Reduccion_varianza_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
 ```r
 # summary(lm(expu ~ u)) # R-squared: 0.9392
@@ -584,11 +568,10 @@ En el capítulo de aplicaciones de la simulación se empleó esta técnica para 
 Ejercicios fin de práctica
 --------------------------
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-20"><strong>(\#exr:unnamed-chunk-20) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-112-114-111-112-117-101-115-116-111-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:mc-int-ainv"><strong>(\#exr:mc-int-ainv)  \iffalse (propuesto) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
-Aproximar mediante integración Monte Carlo (clásica) la media de una
-distribución exponencial de parámetro
-$1/2$:$$I=\int_{0}^{\infty}\frac{x}{2}e^{-\frac{x}{2}}dx$$ 
+Aproximar mediante integración Monte Carlo (clásica) la media de una distribución exponencial de parámetro $1/2$:
+$$I=\int_{0}^{\infty}\frac{x}{2}e^{-\frac{x}{2}}dx$$ 
 y representar gráficamente la aproximación en función de $n$. 
 Comparar los resultados con los obtenidos empleando variables antitéticas,
 ¿se produce una reducción en la varianza?

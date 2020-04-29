@@ -61,10 +61,14 @@ curve(f1, -3, 3, ylim = c(0, f2(-1)), ylab = "fdp")
 curve(f2, add = TRUE, lty = 2)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="07-Simulacion_multidimensional_files/figure-html/normind-plot-1.png" alt="(ref:normind-plot)" width="70%" />
-<p class="caption">(\#fig:normind-plot)(ref:normind-plot)</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/normind-plot-1} 
+
+}
+
+\caption{(ref:normind-plot)}(\#fig:normind-plot)
+\end{figure}
 Para simular una generación bastaría con:
 
 ```r
@@ -352,10 +356,14 @@ matplot(x, y, type = "l", ylim = c(-3.5, 3.5))
 lines(x, mu, lwd = 2)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="07-Simulacion_multidimensional_files/figure-html/funcional-plot-1.png" alt="(ref:funcional)" width="70%" />
-<p class="caption">(\#fig:funcional-plot)(ref:funcional)</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/funcional-plot-1} 
+
+}
+
+\caption{(ref:funcional)}(\#fig:funcional-plot)
+\end{figure}
 
 Alternativamente se podría emplear, por ejemplo, la funcion `mvrnorm`
 del paquete `MASS` que emplea la factorización espectral (`eigen`):
@@ -396,7 +404,7 @@ mvrnorm
 ##         drop(X)
 ##     else t(X)
 ## }
-## <bytecode: 0x0000000018228340>
+## <bytecode: 0x0000000031a48728>
 ## <environment: namespace:MASS>
 ```
 
@@ -407,10 +415,14 @@ matplot(x, t(y), type = "l")
 lines(x, mu, lwd = 2)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="07-Simulacion_multidimensional_files/figure-html/funcional-plot2-1.png" alt="(ref:funcional2)" width="70%" />
-<p class="caption">(\#fig:funcional-plot2)(ref:funcional2)</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/funcional-plot2-1} 
+
+}
+
+\caption{(ref:funcional2)}(\#fig:funcional-plot2)
+\end{figure}
 
 Otros métodos para variables continuas relacionados con la factorización de la matriz de covarianzas son el método FFT (transformada rápida de Fourier; e.g. Davies y Harte, 1987) o el *Circular embedding* (Dietrich and Newsam, 1997), que realmente son el mismo.
 
@@ -657,10 +669,14 @@ matplot(x[!idata], y, type = "l", add = TRUE) # simulaciones condicionales
 lines(x[!idata], kpred, lwd = 2, lty = 2) # media condicional (predicción kriging)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="07-Simulacion_multidimensional_files/figure-html/funcional-cond-1.png" alt="(ref:funcional-cond)" width="70%" />
-<p class="caption">(\#fig:funcional-cond)(ref:funcional-cond)</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/funcional-cond-1} 
+
+}
+
+\caption{(ref:funcional-cond)}(\#fig:funcional-cond)
+\end{figure}
 
 
 \BeginKnitrBlock{example}\iffalse{-91-115-105-109-117-108-97-99-105-243-110-32-99-111-110-100-105-99-105-111-110-97-108-32-100-101-32-100-97-116-111-115-32-101-115-112-97-99-105-97-108-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-19"><strong>(\#exm:unnamed-chunk-19)  \iffalse (simulación condicional de datos espaciales) \fi{} </strong></span></div>\EndKnitrBlock{example}
@@ -730,7 +746,9 @@ data.s <- expand.grid(x = seq(0, 1, len = nx[1]), y = seq(0, 1, len = nx[2]))
 plot(data.s, type = "p", pch = 20, asp = 1) # Representar posiciones
 ```
 
-<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 ```r
 # Matriz de varianzas covarianzas
@@ -783,7 +801,9 @@ plot(data.s, type = "p", pch = 20, asp = 1)
 points(ndata.s)
 ```
 
-<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
 ```r
 # Simulación condicional
@@ -807,25 +827,33 @@ zlim <- range(kc$simul)     # Escala común
 image(kc, val=kc$simul[,1], main="simul. cond. 1", zlim=zlim)
 ```
 
-<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-22-2.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-22-2} \end{center}
 
 ```r
 image(kc, val=kc$simul[,2], main="simul. cond. 2", zlim=zlim)
 ```
 
-<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-22-3.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-22-3} \end{center}
 
 ```r
 image(kc, val=kc$simul[,3], main="simul. cond. 3", zlim=zlim)
 ```
 
-<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-22-4.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-22-4} \end{center}
 
 ```r
 image(kc, val=kc$simul[,4], main="simul. cond. 3", zlim=zlim)
 ```
 
-<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-22-5.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-22-5} \end{center}
 
 ```r
 par(par.old)
@@ -856,7 +884,9 @@ set.seed(1)
 lines(simulate(fit, 24), col="red")
 ```
 
-<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-23-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-23-1} \end{center}
 
 Simulación basada en cópulas
 ----------------------------
@@ -936,7 +966,7 @@ condicionadas descrito en la Sección \@ref(distrcond).
 3.  Devolver $\left( F_1^{-1}(U),F_2^{-1}(V)\right)$
 </div>\EndKnitrBlock{conjecture}
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-25"><strong>(\#exr:unnamed-chunk-25) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-67-243-112-117-108-97-32-98-105-100-105-109-101-110-115-105-111-110-97-108-32-100-101-32-67-108-97-121-116-111-110-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:clayton2d"><strong>(\#exr:clayton2d)  \iffalse (Cópula bidimensional de Clayton) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
 Consideramos una v.a. bidimensional con distribuciónes marginales
 uniformes y distribución bidimensional determinada por la cópula
@@ -970,7 +1000,9 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     plot(rcunif, xlab = "u", ylab = "v")
     ```
     
-    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-26-1} \end{center}
     
     Representar la densidad conjunta (con `sm::sm.density()`) y las marginales:
     
@@ -984,7 +1016,9 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     ## Warning: weights overwritten by binning
     ```
     
-    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-27-1} \end{center}
     
     ```r
     # Distribuciones marginales
@@ -995,7 +1029,9 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     abline(h = 1)
     ```
     
-    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-28-2.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-27-2} \end{center}
     
     ```r
     par(par.old)
@@ -1010,7 +1046,9 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     plot(y)
     ```
     
-    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-28-1} \end{center}
     
     ```r
     clayton.cop <- claytonCopula(2, dim = 3) # caso tridimensional
@@ -1018,7 +1056,9 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     scatterplot3d::scatterplot3d(y)
     ```
     
-    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-29-2.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-28-2} \end{center}
     
     ```r
     # plot3D:::points3D(y[,1], y[,2], y[, 3], colvar = NULL) 
@@ -1036,7 +1076,9 @@ c)  A partir de la muestra anterior generar una muestra de una v.a.
     plot(rcexp, xlab = "exp1", ylab = "exp2")
     ```
     
-    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-30-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-29-1} \end{center}
     
     ```r
     # Distribuciones marginales
@@ -1047,7 +1089,9 @@ c)  A partir de la muestra anterior generar una muestra de una v.a.
     curve(dexp(x,2), add = TRUE)
     ```
     
-    <img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-30-2.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-29-2} \end{center}
     
     ```r
     par(par.old)
@@ -1400,13 +1444,15 @@ hist(simstat, freq = FALSE, breaks = 'FD')
 curve(dchisq(x, res$parameter), add = TRUE) 
 ```
 
-<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-48-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-47-1} \end{center}
 
 
 ## Ejercicios propuestos
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-49"><strong>(\#exr:unnamed-chunk-49) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:ar2d"><strong>(\#exr:ar2d) </strong></span></div>\EndKnitrBlock{exercise}
 
 Dar un algoritmo basado en el método de aceptación-rechazo
 (considerando como densidad auxiliar una uniforme) que permita
@@ -1421,7 +1467,7 @@ $$f(x,y)=\left\{
 \right.$$
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-50"><strong>(\#exr:unnamed-chunk-50) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:cond2d"><strong>(\#exr:cond2d) </strong></span></div>\EndKnitrBlock{exercise}
 
 Considerando la variable aleatoria bidimensional del ejercicio
 anterior y teniendo en cuenta que la densidad marginal de la

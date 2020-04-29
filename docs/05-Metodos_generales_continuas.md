@@ -85,7 +85,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##    0.00    0.00    0.02
+##    0.02    0.00    0.02
 ```
 
 ```r
@@ -94,10 +94,14 @@ hist(X, breaks = "FD", freq = FALSE,
 curve(dexp(x, lambda), lwd = 2, add = TRUE)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="05-Metodos_generales_continuas_files/figure-html/exp-inv-plot-1.png" alt="Distribución de los valores generados de una exponencial mediante el método de inversión." width="70%" />
-<p class="caption">(\#fig:exp-inv-plot)Distribución de los valores generados de una exponencial mediante el método de inversión.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/exp-inv-plot-1} 
+
+}
+
+\caption{Distribución de los valores generados de una exponencial mediante el método de inversión.}(\#fig:exp-inv-plot)
+\end{figure}
 
 Como se observa en la Figura \@ref(fig:exp-inv-plot) se trata de un método exacto (si está bien implementado) y la distribución de los valores generados se aproxima a la distribución teórica como cabría esperar con una muestra de ese tamaño.
 
@@ -118,7 +122,7 @@ Pareto ($a,b>0$)  | $\dfrac{ab^{a}}{x^{a+1}}$, si $x\geq b$  | $1-\left( \dfrac 
 Weibull ($\lambda,\alpha>0$) | $\alpha\lambda^{\alpha}x^{\alpha-1}e^{-\left( \lambda x\right)  ^{\alpha}}$, si $x\geq0$  | $1-e^{-\left( \lambda x\right)  ^{\alpha}}$  | $\dfrac{\left( -\ln\left(1-U\right)  \right)  ^{1/\alpha}}\lambda$   | $\dfrac{\left( -\ln U\right)^{1/\alpha}}\lambda$\
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-2"><strong>(\#exr:unnamed-chunk-2) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-68-105-115-116-114-105-98-117-99-105-243-110-32-100-111-98-108-101-32-101-120-112-111-110-101-110-99-105-97-108-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:ddexp"><strong>(\#exr:ddexp)  \iffalse (Distribución doble exponencial) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
 La distribución doble exponencial (o distribución de Laplace) de
 parámetro $\lambda$ tiene función de densidad:
@@ -174,7 +178,7 @@ b)  Generar $10^{4}$ valores de la distribución doble exponencial de
     
     ```
     ##    user  system elapsed 
-    ##    0.04    0.00    0.05
+    ##    0.03    0.00    0.04
     ```
 
 
@@ -187,10 +191,14 @@ c)  Representar el histograma y compararlo con la densidad teórica.
     curve(ddexp(x, 2), add = TRUE)
     ```
     
-    <div class="figure" style="text-align: center">
-    <img src="05-Metodos_generales_continuas_files/figure-html/dexp-inv-1.png" alt="Distribución de los valores generados de una doble exponencial mediante el método de inversión." width="70%" />
-    <p class="caption">(\#fig:dexp-inv)Distribución de los valores generados de una doble exponencial mediante el método de inversión.</p>
-    </div>
+    \begin{figure}[!htb]
+    
+    {\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/dexp-inv-1} 
+    
+    }
+    
+    \caption{Distribución de los valores generados de una doble exponencial mediante el método de inversión.}(\#fig:dexp-inv)
+    \end{figure}
 
 
 ### Ventajas e inconvenientes
@@ -279,7 +287,8 @@ $$A_{f}=\left\{ \left( x,y\right) \in \mathbb{R}^{2}:0\leq y\leq
 f\left( x\right) \right\}.$$
 De esta forma la primera componente tendrá la distribución deseada:
 
-<img src="images/rechazo.png" width="70%" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics[width=0.7\linewidth]{images/rechazo} \end{center}
 
 $$ P\left( a<X<b\right) = \frac{\text{Area de }\left\{ \left( x,y\right) \in 
 \mathbb{R}^{2}:a<x<b;~0\leq y\leq f\left( x\right) \right\} }{\text{Area de }
@@ -375,7 +384,7 @@ como sigue:
 
 <!-- Incluir cuentas de AR para la doble exponencial -->
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-6"><strong>(\#exr:unnamed-chunk-6) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-108-97-32-110-111-114-109-97-108-32-109-101-100-105-97-110-116-101-32-108-97-32-100-111-98-108-101-32-101-120-112-111-110-101-110-99-105-97-108-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:dnorm-ddexp-ar"><strong>(\#exr:dnorm-ddexp-ar)  \iffalse (Simulación de la normal mediante la doble exponencial) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
 Desarrollar el código necesario para generar, por el método de
 aceptación-rechazo, una muestra de $n$ observaciones de una
@@ -426,7 +435,9 @@ curve(c.opt * ddexp(x), xlim = c(-4, 4), lty = 2)
 curve(dnorm(x), add = TRUE)
 ```
 
-<img src="05-Metodos_generales_continuas_files/figure-html/unnamed-chunk-7-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-5-1} \end{center}
 
 
 a)  Generar una muestra de $10^{4}$ observaciones empleando este
@@ -444,7 +455,7 @@ a)  Generar una muestra de $10^{4}$ observaciones empleando este
     
     ```
     ##    user  system elapsed 
-    ##    0.11    0.02    0.12
+    ##    0.09    0.00    0.10
     ```
     
     ```r
@@ -472,7 +483,9 @@ b)  Representar el histograma y compararlo con la densidad teórica.
     curve(dnorm(x), add=TRUE)
     ```
     
-    <img src="05-Metodos_generales_continuas_files/figure-html/unnamed-chunk-9-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
 
 
@@ -507,12 +520,9 @@ y, finalmente, elegir el mejor valor $\theta_{0}$ del parámetro, en el sentido 
 $$c_{\theta_{0}}=\min_{\theta\in\Theta}\max_{x}\frac{f\left(  x\right) }{g_{\theta}\left(  x\right)  }.$$
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-10"><strong>(\#exr:unnamed-chunk-10) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-108-97-32-110-111-114-109-97-108-32-109-101-100-105-97-110-116-101-32-108-97-32-100-111-98-108-101-32-101-120-112-111-110-101-110-99-105-97-108-44-32-99-111-110-116-105-110-117-97-99-105-243-110-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:dnorm-ddexp-arb"><strong>(\#exr:dnorm-ddexp-arb)  \iffalse (Simulación de la normal mediante la doble exponencial, continuación) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
-Continuando con el ejercicio anterior del método de
-aceptación-rechazo para generar observaciones de una
-distribución normal estándar, empleando como distribución 
-auxiliar una doble exponencial:
+Continuando con el Ejercicio \@ref(exr:dnorm-ddexp-ar) anterior del método de aceptación-rechazo para generar observaciones de una distribución normal estándar, empleando como distribución auxiliar una doble exponencial:
 
 c)  Aproximar la cota óptima numéricamente.
 
@@ -602,7 +612,7 @@ Algoritmo:
 
     en caso contrario volver al paso 1.
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-13"><strong>(\#exr:unnamed-chunk-13) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-108-97-32-100-105-115-116-114-105-98-117-99-105-243-110-32-97-32-112-111-115-116-101-114-105-111-114-105-32-97-32-112-97-114-116-105-114-32-100-101-32-108-97-32-100-105-115-116-114-105-98-117-99-105-243-110-32-97-32-112-114-105-111-114-105-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:post-pri-ar"><strong>(\#exr:post-pri-ar)  \iffalse (Simulación de la distribución a posteriori a partir de la distribución a priori) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
 Para la estimación Bayes de la media de una normal se suele utilizar
 como distribución a priori una Cauchy.
@@ -700,7 +710,9 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     abline(v = q, lty = 2)
     ```
     
-    <img src="05-Metodos_generales_continuas_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 b)  Repetir el apartado anterior con $n=100$.
 
@@ -736,7 +748,8 @@ Algoritmo:
 
 
 
-<img src="images/squeeze.png" width="70%" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics[width=0.7\linewidth]{images/squeeze} \end{center}
 
 Cuanto mayor sea el área bajo $s\left( x\right)$ (más próxima a 1)
 más efectivo será el algoritmo.

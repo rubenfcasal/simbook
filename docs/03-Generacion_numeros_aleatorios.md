@@ -1,4 +1,12 @@
-# Generación de números pseudoaleatorios con distribución uniforme {#cap3}
+# Generación de números pseudoaleatorios {#cap3}
+
+<!-- 
+PENDIENTE:
+
+- Redactar ejemplo repetición de contrastes
+  Etiquetar figuras
+
+-->
 
 
 
@@ -7,9 +15,9 @@ Como ya se comentó, los distintos métodos de simulación requieren disponer de
 En primer lugar nos centraremos en el caso de los generadores congruenciales. A pesar de su simplicidad, podrían ser adecuados en muchos casos y constituyen la base de los generadores avanzados habitualmente considerados.
 Posteriormente se dará una visión de las diferentes herramientas para estudiar la calidad de un generador de números pseudoaleatorios.
 
-## Generadores congruenciales (lineales) {#gen-cong}
+## Generadores congruenciales {#gen-cong}
 
-Se basan en la idea de considerar una combinación lineal de los últimos $k$ enteros generados y calcular su resto al dividir por un entero fijo $m$. 
+En los generadores congruenciales lineales se considera una combinación lineal de los últimos $k$ enteros generados y se calcula su resto al dividir por un entero fijo $m$. 
 En el método congruencial simple (de orden $k = 1$), partiendo de una semilla inicial $x_0$, el algoritmo secuencial es el siguiente:
 $$\begin{aligned}
 x_{i}  & = (ax_{i-1}+c) \bmod m \\
@@ -89,8 +97,7 @@ permite obtener de manera eficiente secuencias de números
 El procedimiento habitual solía ser escoger $m$ de forma que la operación del módulo se pudiese realizar de forma muy eficiente, para posteriormente seleccionar $c$ y $a$ de forma que el período fuese lo más largo posible (o suficientemente largo).
 
 
-\BeginKnitrBlock{theorem}<div class="theorem"><span class="theorem" id="thm:unnamed-chunk-4"><strong>(\#thm:unnamed-chunk-4) </strong></span>(Hull y Dobell, 1962)
-
+\BeginKnitrBlock{theorem}\iffalse{-91-72-117-108-108-32-121-32-68-111-98-101-108-108-44-32-49-57-54-50-93-}\fi{}<div class="theorem"><span class="theorem" id="thm:hull-dobell"><strong>(\#thm:hull-dobell)  \iffalse (Hull y Dobell, 1962) \fi{} </strong></span>
 Un generador congruencial tiene período máximo ($p=m$) si y solo si:
 
 1.  $c$ y $m$ son primos relativos (i.e. $m.c.d.(c, m) = 1$).
@@ -111,7 +118,7 @@ Algunas consecuencias:
 -   Un generador multiplicativo no cumple la condición 1 ($m.c.d.(0, m)=m$).
 
 
-\BeginKnitrBlock{theorem}<div class="theorem"><span class="theorem" id="thm:unnamed-chunk-5"><strong>(\#thm:unnamed-chunk-5) </strong></span>
+\BeginKnitrBlock{theorem}<div class="theorem"><span class="theorem" id="thm:unnamed-chunk-4"><strong>(\#thm:unnamed-chunk-4) </strong></span>
 Un generador multiplicativo tiene período máximo ($p=m-1$) si:
 
 1.  $m$ es primo.
@@ -125,8 +132,9 @@ Además de preocuparse de la longitud del ciclo, las secuencias
 generadas deben aparentar muestras i.i.d. $\mathcal{U}(0,1)$. 
 
 Uno de los principales problemas es que los valores generados pueden mostrar una clara estructura reticular.
-Este es el caso por ejemplo del generador RANDU de IBM muy empleado en la década de los 70 (ver Figura \@ref(fig:randu)).
-Por ejemplo, el conjunto de datos `randu` contiene 400 tripletas de números sucesivos obtenidos con la implementación en VAX/VMS 1.5 (1977).
+Este es el caso por ejemplo del generador RANDU de IBM muy empleado en la década de los 70 (ver Figura \@ref(fig:randu))^[Alternativamente se podría utilizar la función `plot3d` del paquete `rgl`, y rotar la figura (pulsando con el ratón) para ver los hiperplanos:
+`rgl::plot3d(xyz)`].
+Por ejemplo, el conjunto de datos `randu` contiene 400 tripletas de números sucesivos obtenidos con la implementación de VAX/VMS 1.5 (1977).
 
 
 ```r
@@ -135,27 +143,25 @@ system.time(u <- RANDCN(9999))  # Generar
 
 ```
 ##    user  system elapsed 
-##    0.03    0.00    0.04
+##    0.03    0.00    0.03
 ```
 
 ```r
 xyz <- matrix(u, ncol = 3, byrow = TRUE)
 
 library(plot3D)
-points3D(xyz[,1], xyz[,2], xyz[,3], colvar = NULL, phi = 60, theta = -50, pch = 21, cex = 0.2)
+points3D(xyz[,1], xyz[,2], xyz[,3], colvar = NULL, phi = 60, 
+         theta = -50, pch = 21, cex = 0.2)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03-Generacion_numeros_aleatorios_files/figure-html/randu-1.png" alt="Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)" width="70%" />
-<p class="caption">(\#fig:randu)Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)</p>
-</div>
+\begin{figure}[!htb]
 
-```r
-# Alternativamente se podría utilizar la función `plot3d` del paquete `rgl`,
-# y pulsando con el ratón se podría rotar la figura para ver los hiperplanos:
-# library(rgl)
-# plot3d(xyz) 
-```
+{\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/randu-1} 
+
+}
+
+\caption{Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)}(\#fig:randu)
+\end{figure}
 
 En general todos los generadores de este tipo van a presentar estructuras reticulares.
 Marsaglia (1968) demostró que las $k$-uplas de un generadores multiplicativo están contenidas en a lo sumo $\left(k!m\right)^{1/k}$ hiperplanos paralelos (para más detalles sobre la estructura reticular, ver por ejemplo Ripley, 1987, sección 2.7).
@@ -209,7 +215,7 @@ Otras alternativas consisten en la combinanción de varios generadores, las más
 
 El generador *L'Ecuyer-CMRG* (L'Ecuyer, 1999), empleado como base para la generación de múltiples secuencias en el paquete `parallel`, combina dos generadores concruenciales lineales múltiples de orden $k=3$ (el periodo aproximado es $2^{191}$).
     
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-6"><strong>(\#exr:unnamed-chunk-6) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-65-110-225-108-105-115-105-115-32-100-101-32-117-110-32-103-101-110-101-114-97-100-111-114-32-99-111-110-103-114-117-101-110-99-105-97-108-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:congru512"><strong>(\#exr:congru512)  \iffalse (Análisis de un generador congruencial) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
 Considera el generador congruencial definido por: 
 $$\begin{aligned}
@@ -226,25 +232,29 @@ a)  Generar 500 valores de este generador, obtener el tiempo de CPU,
    
     
     ```r
-    initRANDC(321, 5, 1, 512)       # Fijar semilla para reproductibilidad
+    initRANDC(321, 5, 1, 512)       # Establecer semilla y parámetros
     nsim <- 500
     system.time(u <- RANDCN(nsim))  # Generar
     ```
     
     ```
     ##    user  system elapsed 
-    ##       0       0       0
+    ##    0.01    0.00    0.01
     ```
     
     ```r
     hist(u, freq = FALSE)
-    abline(h = 1)                   # Equivalente a curve(dunif(x, 0, 1), add = TRUE)
+    abline(h = 1)                   # Densidad uniforme
     ```
     
-    <div class="figure" style="text-align: center">
-    <img src="03-Generacion_numeros_aleatorios_files/figure-html/ejcona-1.png" alt="Histograma de los valores generados" width="70%" />
-    <p class="caption">(\#fig:ejcona)Histograma de los valores generados</p>
-    </div>
+    \begin{figure}[!htb]
+    
+    {\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/ejcona-1} 
+    
+    }
+    
+    \caption{Histograma de los valores generados}(\#fig:ejcona)
+    \end{figure}
 
     En este caso concreto la distribución de los valores generados es aparentemente más uniforme de lo que cabría esperar, lo que induciría a sospechar de la calidad de este gerenador.
 
@@ -263,7 +273,7 @@ b)  Calcular la media de las simulaciones (`mean`) y compararla con
     ```
     
     La media teórica es 0.5. 
-    Error absoluto $3.90625\times 10^{-5}$.
+    Error absoluto $\ensuremath{3.90625\times 10^{-5}}$.
 
 c)  Aproximar (mediante simulación) la probabilidad del intervalo
     $(0.4;0.8)$ y compararla con la teórica.
@@ -325,20 +335,21 @@ Por ejemplo, se podría emplear la siguiente función
 ```r
 #-------------------------------------------------------------------------------
 # chisq.test.cont(x, distribution, nclasses, output, nestpar,...)
-#-------------------------------------------------------------------------------
-# Realiza el test ji-cuadrado de bondad de ajuste para una distribución continua
-# discretizando en intervalos equiprobables.
+#-----------------------------------------------------------------------
+# Realiza el test ji-cuadrado de bondad de ajuste para una distribución 
+# continua discretizando en intervalos equiprobables.
 # Parámetros:
-#   distribution = "norm","unif",etc
+#   distribution = "norm","unif", etc
 #   nclasses = floor(length(x)/5)
 #   output = TRUE
-#   nestpar = 0= nº de parámetros estimados
+#   nestpar = 0 = nº de parámetros estimados
 #   ... = parámetros distribución
 # Ejemplo:
-#   chisq.test.cont(x, distribution="norm", nestpar=2, mean=mean(x), sd=sqrt((nx-1)/nx)*sd(x))
-#-------------------------------------------------------------------------------
-chisq.test.cont <- function(x, distribution = "norm", nclasses = floor(length(x)/5), 
-    output = TRUE, nestpar = 0, ...) {
+#   chisq.test.cont(x, distribution = "norm", nestpar = 2, 
+#                   mean = mean(x), sd = sqrt((nx - 1) / nx) * sd(x))
+#-----------------------------------------------------------------------
+chisq.test.cont <- function(x, distribution = "norm", 
+    nclasses = floor(length(x)/5), output = TRUE, nestpar = 0, ...) {
     # Funciones distribución
     q.distrib <- eval(parse(text = paste("q", distribution, sep = "")))
     d.distrib <- eval(parse(text = paste("d", distribution, sep = "")))
@@ -348,7 +359,8 @@ chisq.test.cont <- function(x, distribution = "norm", nclasses = floor(length(x)
     xbreaks <- c(min(x) - tol, q, max(x) + tol)
     # Gráficos y frecuencias
     if (output) {
-        xhist <- hist(x, breaks = xbreaks, freq = FALSE, lty = 2, border = "grey50")
+        xhist <- hist(x, breaks = xbreaks, freq = FALSE, 
+                      lty = 2, border = "grey50")
         curve(d.distrib(x, ...), add = TRUE)
     } else {
         xhist <- hist(x, breaks = xbreaks, plot = FALSE)
@@ -387,10 +399,14 @@ chisq.test.cont(u, distribution = "unif",
                 nclasses = 10, nestpar = 0, min = 0, max = 1)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03-Generacion_numeros_aleatorios_files/figure-html/chisq-test-unif-1.png" alt="Gráfico resultante de aplicar la función `chisq.test.cont()` comparando el histograma de los valores generados con la densidad uniforme." width="70%" />
-<p class="caption">(\#fig:chisq-test-unif)Gráfico resultante de aplicar la función `chisq.test.cont()` comparando el histograma de los valores generados con la densidad uniforme.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/chisq-test-unif-1} 
+
+}
+
+\caption{Gráfico resultante de aplicar la función `chisq.test.cont()` comparando el histograma de los valores generados con la densidad uniforme.}(\#fig:chisq-test-unif)
+\end{figure}
 
 ```
 ## 
@@ -418,26 +434,24 @@ chisq.test.cont(u, distribution = "unif",
 
 Como se muestra en la Figura \@ref(fig:chisq-test-unif) el histograma de la secuencia generada es muy plano (comparado con lo que cabría esperar de una muestra de tamaño 500 de una uniforme), y consecuentemente el $p$-valor del contraste ji-cuadrado es prácticamente 1, lo que indicaría que este generador no reproduce adecuadamente la variabilidad de una distribución uniforme.   
 
-Otro contraste de bondad de ajuste muy conocido 
-es el test de Kolmogorov-Smirnov, implementado en `ks.test`. 
+Otro contraste de bondad de ajuste muy conocido es el test de Kolmogorov-Smirnov, implementado en `ks.test` (ver Sección \@ref(ks-test)). 
 En la Sección \@ref(gof) se describen con más detalle estos contrastes.
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-10"><strong>(\#exr:unnamed-chunk-10) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-65-110-225-108-105-115-105-115-32-100-101-32-117-110-32-103-101-110-101-114-97-100-111-114-32-99-111-110-103-114-117-101-110-99-105-97-108-44-32-99-111-110-116-105-110-117-97-99-105-243-110-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:congru512b"><strong>(\#exr:congru512b)  \iffalse (Análisis de un generador congruencial, continuación) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
-Continuando con el generador congruencial anterior: 
+Continuando con el generador congruencial del Ejercicio \@ref(exr:congru512): 
 
 
 ```r
-initRANDC(321, 5, 1, 512)       # Fijar semilla para reproductibilidad
+initRANDC(321, 5, 1, 512)
 nsim <- 500
-system.time(u <- RANDCN(nsim))  # Generar
+system.time(u <- RANDCN(nsim))
 ```
 
-    
 a)  Realizar el contraste de Kolmogorov-Smirnov para estudiar el
     ajuste a una $\mathcal{U}(0,1)$.
     
-    Este contraste de hipótesis compara la función de distribución bajo la hipótesis nula con la función de distribución empírica (ver Sección \@ref(empdistr)):
+    Este contraste de hipótesis compara la función de distribución bajo la hipótesis nula con la función de distribución empírica (ver Sección \@ref(empdistr)), representadas en la Figura \@ref(fig:empdistrunif):
     
     ```r
     # Distribución empírica
@@ -445,10 +459,14 @@ a)  Realizar el contraste de Kolmogorov-Smirnov para estudiar el
     curve(punif(x, 0, 1), add = TRUE)
     ```
     
-    <div class="figure" style="text-align: center">
-    <img src="03-Generacion_numeros_aleatorios_files/figure-html/empdistrunif-1.png" alt="Comparación de la distribución empírica de la secuencia generada con la función de distribución uniforme." width="70%" />
-    <p class="caption">(\#fig:empdistrunif)Comparación de la distribución empírica de la secuencia generada con la función de distribución uniforme.</p>
-    </div>
+    \begin{figure}[!htb]
+    
+    {\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/empdistrunif-1} 
+    
+    }
+    
+    \caption{Comparación de la distribución empírica de la secuencia generada con la función de distribución uniforme.}(\#fig:empdistrunif)
+    \end{figure}
     Podemos realizar el contraste con el siguiente código:
     
     ```r
@@ -475,7 +493,14 @@ b)  Obtener el gráfico secuencial y el de dispersión retardado, ¿se
     plot(as.ts(u))
     ```
     
-    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" />
+    \begin{figure}[!htb]
+    
+    {\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/plot-sec-1} 
+    
+    }
+    
+    \caption{Gráfico secuencial de los valores generados.}(\#fig:plot-sec)
+    \end{figure}
     
     Gráfico de dispersión retardado:
     
@@ -484,7 +509,14 @@ b)  Obtener el gráfico secuencial y el de dispersión retardado, ¿se
     plot(u[-nsim],u[-1])
     ```
     
-    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" />
+    \begin{figure}[!htb]
+    
+    {\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/plot-ret-1} 
+    
+    }
+    
+    \caption{Gráfico de dispersión retardado de los valores generados.}(\#fig:plot-ret)
+    \end{figure}
 
 c)  Estudiar las correlaciones del vector $(u_{i},u_{i+k})$, con
     $k=1,\ldots,10$. Contrastar si son nulas.
@@ -496,7 +528,14 @@ c)  Estudiar las correlaciones del vector $(u_{i},u_{i+k})$, con
     acf(u)
     ```
     
-    <img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" />
+    \begin{figure}[!htb]
+    
+    {\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/plot-acf-1} 
+    
+    }
+    
+    \caption{Autocorrelaciones de los valores generados.}(\#fig:plot-acf)
+    \end{figure}
     
     Test de Ljung-Box:
     
@@ -538,7 +577,7 @@ pruebas:
 Este procedimiento es también el habitual para validar un método de
 contraste de hipótesis por simulación.
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-17"><strong>(\#exm:unnamed-chunk-17) </strong></span></div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:rep-test-randu"><strong>(\#exm:rep-test-randu) </strong></span></div>\EndKnitrBlock{example}
 
 Consideramos el generador congruencial RANDU:
 
@@ -557,7 +596,7 @@ for(isim in 1:nsim) {
   u <- RANDCN(n)    # Generar
   # u <- runif(n)
   tmp <- chisq.test.cont(u, distribution="unif", 
-                        nclasses=100, output=FALSE, nestpar=0, min=0, max=1)
+            nclasses=100, output=FALSE, nestpar=0, min=0, max=1)
   estadistico[isim] <- tmp$statistic
   pvalor[isim] <- tmp$p.value
 }
@@ -603,7 +642,9 @@ hist(estadistico, breaks = "FD", freq=FALSE)
 curve(dchisq(x,99), add=TRUE)
 ```
 
-<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 ```r
 # Test ji-cuadrado
@@ -630,7 +671,9 @@ hist(pvalor, freq=FALSE)
 abline(h=1) # curve(dunif(x,0,1), add=TRUE)
 ```
 
-<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 ```r
 # Test ji-cuadrado
@@ -655,10 +698,12 @@ Adicionalmente, si queremos estudiar la proporción de rechazos (el *tamaño del
 # Distribución empírica
 curve(ecdf(pvalor)(x), type = "s", lwd = 2, 
       xlab = 'Nivel de significación', ylab = 'Proporción de rechazos')
-abline(a=0, b=1, lty=2)   # curve(punif(x, 0, 1), add = TRUE)
+abline(a = 0, b = 1, lty = 2)   # curve(punif(x, 0, 1), add = TRUE)
 ```
 
-<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
 
 ### Baterías de contrastes {#baterias}
@@ -694,7 +739,7 @@ Ejercicios
 ----------
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-23"><strong>(\#exr:unnamed-chunk-23) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-77-233-116-111-100-111-32-100-101-32-108-111-115-32-99-117-97-100-114-97-100-111-115-32-109-101-100-105-111-115-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:RANDVN"><strong>(\#exr:RANDVN)  \iffalse (Método de los cuadrados medios) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 Uno de los primeros generadores fue el denominado método de los
 cuadrados medios propuesto por Von Neumann (1946). Con este
 procedimiento se generan números pseudoaleatorios de 4 dígitos de la
@@ -735,8 +780,8 @@ initRANDVN <- function(semilla = as.numeric(Sys.time()), n = 4) {
 
 # -------------------------------------------------
 # RANDVN()
-#   Genera un valor pseudoaleatorio con el generador de Von Neumann
-#   Actualiza la semilla (si no existe llama a initRANDVN)
+#   Genera un valor pseudoaleatorio con el generador de Von Neumann.
+#   Actualiza la semilla (si no existe llama a initRANDVN).
 RANDVN <- function() {
     if (!exists(".semilla", envir=globalenv())) initRANDVN()
     z <- .semilla^2
@@ -746,9 +791,9 @@ RANDVN <- function() {
 
 # -------------------------------------------------
 # RANDVNN(n)
-#   Genera un vector de valores pseudoaleatorios con el generador congruencial
-#   (por defecto de dimensión 1000)
-#   Actualiza la semilla (si no existe llama a initRANDVN)
+#   Genera un vector de valores pseudoaleatorios, de dimensión `n` 
+#   con elgenerador de Von Neumann.
+#   Actualiza la semilla (si no existe llama a initRANDVN).
 RANDVNN <- function(n = 1000) {
     x <- numeric(n)
     for(i in 1:n) x[i] <- RANDVN()
@@ -761,7 +806,7 @@ Estudiar las características del
 generador de cuadrados medios a partir de una secuencia de 500
 valores. Emplear únicamente métodos gráficos.
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-25"><strong>(\#exr:unnamed-chunk-25) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:parkmiller"><strong>(\#exr:parkmiller) </strong></span></div>\EndKnitrBlock{exercise}
 Considerando el generador congruencial multiplicativo de parámetros
 $a=7^{5}=16807$, $c=0$ y $m=2^{31}-1$. ¿Se observan los mismos problemas 
 que con el algoritmo RANDU al considerar las tripletas $(x_{k},x_{k+1},x_{k+2})$?
