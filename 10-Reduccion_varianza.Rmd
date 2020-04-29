@@ -89,17 +89,17 @@ simétrica repecto a un parámetro $\mu$.
 (e.g. $X\sim \mathcal{U}(a,b)$ e $Y=a+b-X$).
 
 
-```{exercise}
+```{exercise, label="mc-integrala"}
 Variables antitéticas en integración Monte Carlo 
 ``` 
 
-Crear una función que implemente la técnica de variables antitéticas
-para aproximar integrales del
-tipo:$$I=\int_{a}^{b}h\left(  x\right)  dx.$$ Emplearla para
-aproximar:
+Crear una función que implemente la técnica de variables antitéticas para aproximar integrales del tipo:
+$$I=\int_{a}^{b}h\left(  x\right)  dx.$$ 
+Emplearla para aproximar:
 $$E\left(  e^{\mathcal{U}(0,2)}\right)  =\int_{0}^{2}\frac{1}{2}e^{x}dx\approx3.194,\label{integralmc}$$
 y representar gráficamente la aproximación en función de $n$.
- Función objetivo:
+
+Representamos la función objetivo:
 
 ```{r }
 a <- 0; b <- 2
@@ -175,10 +175,8 @@ Si calculamos el porcentaje (estimado) de reducción del error:
 ```
 
 El problema es que en este caso se está estimando mal la varianza (asumiendo independencia).
-Hay que tener cuidado con las técnicas de reducción de la varianza si uno de los objetivos 
-de la simulación es precisamente estimar la variabilidad.
-En este caso, una versión de la función anterior para integración Monte Carlo con variables antitéticas,
-con aproximación del error bajo dependencia podría ser:
+Hay que tener cuidado con las técnicas de reducción de la varianza si uno de los objetivos de la simulación es precisamente estimar la variabilidad.
+En este caso, una versión de la función anterior para integración Monte Carlo con variables antitéticas, con aproximación del error bajo dependencia podría ser:
 
 ```{r }
 mc.integrala2 <- function(ftn, a, b, n, plot = TRUE,...) {
@@ -226,52 +224,32 @@ variabilidad en el estrato se puede obtener una reducción
 significativa de la varianza.
 
 
-```{example}
-Muestreo estratificado de una exponencial (libro Ricardo)
+```{example, label="estr-exp", name="Muestreo estratificado de una exponencial"}
 ``` 
 
-Supóngase el siguiente
-problema (absolutamente artificial pero ilustrativo para comprender esta
-técnica). Dada una muestra de tamaño 10 de una población con
-distribución: 
+Supóngase el siguiente problema (absolutamente artificial pero ilustrativo para comprender esta técnica). 
+Dada una muestra de tamaño 10 de una población con distribución: 
 $$X \sim \exp\left( 1 \right),$$
-se desea aproximar la media
-poblacional (es sobradamente conocido que es 1) a partir de 10 simulaciones. 
-Supongamos que para evitar que, por puro azar, exista alguna zona 
-en la que la exponencial toma valores, no representada en la muestra simulada 
-de 10 datos, se consideran tres estratos. 
-Por ejemplo, el del 40% de
-valores menores, el siguiente 50% de valores (intermedios) y el 10% de
-valores más grandes para esta distribución.
+se desea aproximar la media poblacional (es sobradamente conocido que es 1) a partir de 10 simulaciones. 
+Supongamos que para evitar que, por puro azar, exista alguna zona en la que la exponencial toma valores, no representada en la muestra simulada de 10 datos, se consideran tres estratos. 
+Por ejemplo, el del 40% de valores menores, el siguiente 50% de valores (intermedios) y el 10% de valores más grandes para esta distribución.
 
-El algoritmo de inversión (optimizado) para simular una 
-$\exp\left(1\right)$ es:
+El algoritmo de inversión (optimizado) para simular una $\exp\left(1\right)$ es:
 
-1. Generar $U\sim U\left(  0,1\right)$.
+1. Generar $U\sim \mathcal{U}\left(  0,1\right)$.
 
 2. Hacer $X=-\ln U$.
 
-Dado que, en
-principio, simulando diez valores
-$U_{1},U_{2},\ldots,U_{10}\sim U\left(  0,1\right)$, no hay nada que
-nos garantice que las proporciones de los estratos son las deseadas
-(aunque sí lo serán en media). Una forma de garantizar el que obtengamos **4, 5 y 1** valores, 
-repectivamente, en cada uno de los tres estratos,
-consiste en simular: 
+Dado que, en principio, simulando diez valores $U_{1},U_{2},\ldots,U_{10}\sim \mathcal{U}\left(  0,1\right)$, no hay nada que nos garantice que las proporciones de los estratos son las deseadas (aunque sí lo serán en media). 
+Una forma de garantizar el que obtengamos **4, 5 y 1** valores, repectivamente, en cada uno de los tres estratos, consiste en simular: 
 
--   4 valores de
-    $U[0.6,1)$ para el primer     estrato, 
+-   4 valores de $\mathcal{U}[0.6,1)$ para el primer estrato, 
 
--   5 valores
-    de $U[0.1,0.6)$ para el
-    segundo y 
+-   5 valores de $\mathcal{U}[0.1,0.6)$ para el segundo y 
 
--   uno de $U[0,0.1)$
-    para el tercero. 
+-   uno de $\mathcal{U}[0,0.1)$ para el tercero. 
     
-Otra forma de proceder consistiría en rechazar valores de $U$ 
-que caigan en uno de esos tres intervalos cuando el cupo de ese estrato 
-esté ya lleno (lo cual no sería computacionalmente eficiente).    
+Otra forma de proceder consistiría en rechazar valores de $U$ que caigan en uno de esos tres intervalos cuando el cupo de ese estrato esté ya lleno (lo cual no sería computacionalmente eficiente).    
 
 El algoritmo con la estratificación propuesta sería como sigue:
 
@@ -279,7 +257,7 @@ El algoritmo con la estratificación propuesta sería como sigue:
 
 2. Generar $U_{i}$:
 
-    2a. Generar $U\sim U\left(  0,1\right)$.
+    2a. Generar $U\sim \mathcal{U}\left(  0,1\right)$.
 
     2b. Si $i\leq4$ hacer $U_{i} = 0.4 \cdot U + 0.6$.
 
@@ -300,18 +278,14 @@ No es difícil probar que:
 Como consecuencia:
 $$Var\left(  \overline{X}\right)  =\frac{1}{10^{2}}\sum_{i=1}^{10}
 Var\left( X_{i} \right)  = 0.022338$$ 
-que es bastante menor que 1
-(la varianza en el caso de muestreo aleatorio simple no estratificado).
+que es bastante menor que 1 (la varianza en el caso de muestreo aleatorio simple no estratificado).
 
 
-```{exercise}
-Integración Monte Carlo con estratificación
+```{exercise, label="mc-integrale", name="Integración Monte Carlo con estratificación"}
 ``` 
 
-Aproximar la integral anterior empleando la técnica de
-estratificación, considerando $k$ subintervalos regularmente
-espaciados en el intervalo $\left[ 0, 2 \right]$. ¿Como varía la
-reducción en la varianza dependiendo del valor de $k$?
+Aproximar la integral anterior empleando la técnica de estratificación, considerando $k$ subintervalos regularmente espaciados en el intervalo $\left[ 0, 2 \right]$. 
+¿Como varía la reducción en la varianza dependiendo del valor de $k$?
 
 
 ```{r }
@@ -339,7 +313,7 @@ mc.integrale(ftn, a, b, 500, 100)
 De esta forma no se tiene en cuenta la variabilidad en el estrato.
 El tamaño de las submuestras debería incrementarse hacia el extremo superior.
 
-```{exercise}
+```{exercise, label="mc-integraleb"}
 ``` 
 Repetir el ejemplo anterior considerando intervalos regularmente espaciados en escala exponencial.
 
@@ -382,13 +356,10 @@ Para estimarlo se puede realizar ajuste lineal de $X$ sobre $Y$
 
           
 
-```{exercise}
-Integración Monte Carlo con variables de control 
+```{exercise, label="mc-integral-contr", name="Integración Monte Carlo con variables de control"}
 ``` 
 
-Aproximar la integral anterior empleando la variable
-$U\sim\mathcal{U}(0,2)$ para controlar la variable $e^{U}$.
-
+Aproximar la integral anterior empleando la variable $U\sim\mathcal{U}(0,2)$ para controlar la variable $e^{U}$.
 
 Se trata de calcular la media de $exp(\mathcal{U}(a,b))$:
 
@@ -472,12 +443,11 @@ En el capítulo de aplicaciones de la simulación se empleó esta técnica para 
 Ejercicios fin de práctica
 --------------------------
 
-```{exercise}
+```{exercise, label="mc-int-ainv", name="propuesto"}
 ``` 
 
-Aproximar mediante integración Monte Carlo (clásica) la media de una
-distribución exponencial de parámetro
-$1/2$:$$I=\int_{0}^{\infty}\frac{x}{2}e^{-\frac{x}{2}}dx$$ 
+Aproximar mediante integración Monte Carlo (clásica) la media de una distribución exponencial de parámetro $1/2$:
+$$I=\int_{0}^{\infty}\frac{x}{2}e^{-\frac{x}{2}}dx$$ 
 y representar gráficamente la aproximación en función de $n$. 
 Comparar los resultados con los obtenidos empleando variables antitéticas,
 ¿se produce una reducción en la varianza?

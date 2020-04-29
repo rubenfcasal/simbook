@@ -1,4 +1,4 @@
-# Aplicaciones de la simulación en Inferencia Estadística {#cap8}
+# Aplicaciones en Inferencia Estadística {#cap8}
 
 ```{r , child = '_global_options.Rmd'}
 ```
@@ -59,7 +59,7 @@ Como ya se comentó en la el Capítulo \@ref(cap2), en problemas mas complejos, 
 Distribución en el muestreo
 ---------------------------
 
-```{exercise}
+```{exercise, label="distr-media", name="Distribución de la media muestral"}
 ```
 
 Si $X_{1},\ldots,X_{n}$ es una muestra aleatoria simple de una
@@ -142,7 +142,7 @@ b)  Generar el histograma (en escala de densidades) de las medias
 <!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
 <br> \vspace{0.5cm}
 
-```{exercise}
+```{exercise, label="distr-mediab", name="Distribución de la media muestral, continuación"}
 ```
 
 Si $X_{1},\ldots,X_{n}$ es una m.a.s. de una variable aleatoria
@@ -156,9 +156,7 @@ Típicamente se suele considerar que esta aproximación es buena
 para tamaños muestrales $n>30$,
 aunque dependerá de las características de la distribución de $X$.
 
-a)  Repetir el ejercicio anterior considerando muestras de una
-    $Exp(1)$ (tener en cuenta que
-    $X\sim Exp(\lambda)\Rightarrow\mu_{X}=\sigma_{X}=1/\lambda$).
+a)  Repetir el Ejercicio \@ref(exr:distr-media) anterior considerando muestras de una $Exp(1)$ (tener en cuenta que $X\sim Exp(\lambda)\Rightarrow\mu_{X}=\sigma_{X}=1/\lambda$).
     ¿Qué ocurre con la distribución de la media muestral?
     
     ```{r }
@@ -220,17 +218,14 @@ Intervalos de confianza
 ---------------------------
 
 
-```{exercise}
+```{exercise, label="ic-media", name="Intervalo de confianza para la media"}
 ```
 
-Siguiendo el enunciado del ejercicio 1, se deduce que el intervalo de
-confianza (de nivel $1-\alpha$) para la media $\mu$ de una población
-normal con varianza conocida es:
+A partir del enunciado del Ejercicio \@ref(exr:distr-media), se deduce que el intervalo de confianza (de nivel $1-\alpha$) para la media $\mu$ de una población normal con varianza conocida es:
 $$IC_{1-\alpha}\left(  \mu\right)  = 
 \left(  \overline{X}-z_{1-\alpha/2}\dfrac{\sigma}{\sqrt{n}},\ \overline{X} 
 + z_{1-\alpha/2}\dfrac{\sigma}{\sqrt{n}} \right).$$
-La idea es que el $100(1-\alpha)\%$ de los intervalos así
-construidos contentrán el verdadero valor del parámetro.
+La idea es que el $100(1-\alpha)\%$ de los intervalos así construidos contentrán el verdadero valor del parámetro.
 
 a)  Utilizando el conjunto de datos `muestras` del ejercicio 1 (500
     muestras de tamaño $n=10$ de una $N(1,2)$), añadir en dos nuevas
@@ -362,7 +357,7 @@ se pueden obtener con la función `t.test`.
 <!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
 <br> \vspace{0.5cm}
 
-```{exercise}
+```{exercise, label="ic-agresti-coull", name="Intervalo de confianza Agresti-Coull para una proporción"}
 ```
 
 El Intervalo de confianza para una proporción construido usando la
@@ -516,16 +511,11 @@ Contrastes de hipótesis {#contrastes}
 
 Ver [Apéncide A](https://rubenfcasal.github.io/book_remuestreo/practica2.html) de Cao y Fernández-Casal (2019).
 
-```{exercise, label="ks-test-sim"}
+```{exercise, label="ks-test-sim", name="Test de Kolmogorov-Smirnov"}
 ```
 
-En el tema 2 se propuso el análisis de la bondad de ajuste de un
-generador de números pseudo-aleatorios mediante el test de
-Kolmogorov-Smirnov. Sin embargo, si $H_{0}$ es compuesta (los
-parámetros desconocidos se estiman por máxima verosimilitud y se
-trabaja con $\hat{F}_{0}$) los cuantiles de la
-distribución (asintótica) de $D_{n}$ pueden ser demasiado
-conservativos y sería preferible utilizar la distribución exacta.
+En la Sección \@ref(calgen) del Tema \@ref(cap3) se propuso el análisis de la bondad de ajuste de un generador de números pseudo-aleatorios mediante el test de Kolmogorov-Smirnov (ver Sección \@ref(ks-test)). 
+Sin embargo, si $H_{0}$ es compuesta (los parámetros desconocidos se estiman por máxima verosimilitud y se trabaja con $\hat{F}_{0}$) los cuantiles de la distribución (asintótica) de $D_{n}$ pueden ser demasiado conservativos y sería preferible utilizar la distribución exacta.
 
 a)  Analizar el comportamiento del contraste de Kolmogorov-Smirnov
     para contrastar normalidad empleando repetidamente este test,
@@ -813,7 +803,7 @@ valor absoluto del correspondiente gráfico PP, y solo habría que cambiar el es
 Comparación de estimadores
 --------------------------
 
-```{exercise}
+```{exercise, label="media-median", name="Comparación de la eficiencia de la media muestral y de la mediana bajo contaminación"}
 ```
 
 Supongamos que estamos interesados en estudiar el efecto de datos
@@ -998,11 +988,11 @@ Para información adicional sobre bootstrap ver p.e.:
 Davison, A.C. and Hinkley, D.V. (1997). *Bootstrap Methods and Their Application*. Cambridge University Press
 
 
-### Ejemplo
+```{example, label="mean-median-boot", name="Aproximación del sesgo y del error estándar mediante bootstrap"}
 
-Como ejemplo consideraremos una muestra de tamaño $n=100$ de una normal
-estándar para tratar de aproximar el sesgo y error estándar de la media y la mediana
-mediante bootstrap.
+```
+
+Como ejemplo consideraremos una muestra de tamaño $n=100$ de una normal estándar para tratar de aproximar el sesgo y error estándar de la media y la mediana mediante bootstrap.
 
 ```{r ejemplo}
 # dat <- dat.sim[, 1]
@@ -1146,26 +1136,25 @@ boot.ci(stat.boot, type=c("norm", "basic", "perc", "bca"))
 ```
 
 
-```{exercise} 
+```{exercise, label="mean-trim-boot" } 
 ```
 
-Repetir el ejemplo anterior considerando la media recortada al 10\%
-(ejemplo con parámetros adicionales).
+Repetir el Ejemplo \@ref(exm:mean-median-boot) anterior considerando la media recortada al 10\%
+(con parámetros adicionales).
 
 ```{r }
-boot.f <- function(data, indices, trim=0.1){
+boot.f <- function(data, indices, trim = 0.1){
   mean(data[indices], trim)
 }
 
 set.seed(1)
-boot(dat, boot.f, nboot, trim=0.2)
+boot(dat, boot.f, nboot, trim = 0.2)
 ```
 
 <!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
 <br> \vspace{0.5cm}
 
-```{exercise} 
-(propuesto)
+```{exercise, label="rachas-sim", name="propuesto"} 
 ```
 
 En el tema 2 se propuso el análisis de la aleatoriedad de un
