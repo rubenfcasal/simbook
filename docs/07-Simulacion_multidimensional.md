@@ -404,7 +404,7 @@ mvrnorm
 ##         drop(X)
 ##     else t(X)
 ## }
-## <bytecode: 0x0000000031a48728>
+## <bytecode: 0x0000000033488508>
 ## <environment: namespace:MASS>
 ```
 

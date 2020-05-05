@@ -184,7 +184,7 @@ system.time( rx <- rfmp(x, fmp, nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.11    0.00    0.11
+##    0.08    0.00    0.08
 ```
 
 Aproximación de la media:
@@ -327,7 +327,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##    0.13    0.01    0.16
+##    0.06    0.00    0.07
 ```
 
 ```r
@@ -357,7 +357,7 @@ system.time( rx <- sample(x, nsim, replace = TRUE, prob = fmp) )
 
 ```
 ##    user  system elapsed 
-##    0.02    0.00    0.02
+##       0       0       0
 ```
 
 
@@ -449,7 +449,7 @@ system.time( rx <- rfmp.tabla(x, fmp, n-1, nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.04    0.01    0.07
+##    0.06    0.00    0.06
 ```
 
 Análisis de los resultados:
@@ -564,7 +564,7 @@ system.time( rx <- rfmp.alias(x,fmp,nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.03    0.02    0.05
+##    0.03    0.00    0.04
 ```
 
 Análisis de los resultados:

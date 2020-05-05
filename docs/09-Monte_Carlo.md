@@ -14,7 +14,7 @@ $$I = \int \cdots \int h\left( x_1,\ldots ,x_d\right) dx_1 \cdots dx_d$$
 donde puede presentar ventajas respecto a los métodos tradicionales de integración numérica (ver Apéndice \@ref(int-num)),
 ya que la velocidad de convergencia no depende del número de dimensiones.
 
-Supongamos que nos interesa:
+Supongamos que nos interesa aproximar:
 $$I = \int_0^1h\left( x\right) dx$$
 Si $x_1,x_2,\ldots ,x_n$ *i.i.d.* $\mathcal{U}\left( 0,1\right)$
 entonces:
@@ -548,7 +548,7 @@ curve(dnorm, col = "blue", add = TRUE)
 \caption{Distribución de los valores generados mediante remuestreo por importancia y densidad objetivo.}(\#fig:imp-res)
 \end{figure}
 
-**NOTA**: Si f o g fuesen cuasidensidades y se pidiese aproximar la integral, habría que reescalar los pesos:  `w <- f(y)/g(y)`; `w <- w/sum(w)`, y la aproximación por simulación sería `sum(w * h(y))` (media ponderada) y en el análisis de convergencia se emplearía `cumsum(w * h(y))` (sin dividir por el número de simulaciones).
+**NOTA**: Si f o g fuesen cuasidensidades y se pidiese aproximar la integral, habría que reescalar los pesos  `w <- f(y)/g(y)` en la aproximación por simulación, resultando `sum(w * h(y))/sum(w)` (media ponderada) y en el análisis de convergencia se emplearía `cumsum(w * h(y))/cumsum(w)`.
 
 \BeginKnitrBlock{exercise}\iffalse{-91-112-114-111-112-117-101-115-116-111-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:mc-imp-sample2"><strong>(\#exr:mc-imp-sample2)  \iffalse (propuesto) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
