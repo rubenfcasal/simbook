@@ -186,7 +186,7 @@ Si $y_1,y_2,\ldots ,y_n$ *i.i.d.* $Y\sim g$:
 $$\theta \approx \frac{1}{n}\sum\limits_{i=1}^nq\left( y_i\right) 
 = \frac{1}{n}\sum\limits_{i=1}^nw(y_i)h\left( y_i\right)  
 = \hat{\theta}_{g}$$
-con $w\left( x\right)  = \frac{f(x)}{g(x)}$.
+con $w(y) = \frac{f(y)}{g(y)}$.
 
 En este caso $Var(\hat{\theta}_{g}) = Var\left( q\left( Y\right) \right) /n$, 
 pudiendo reducirse significativamente respecto al método clásico si:
@@ -244,7 +244,7 @@ La aproximación por simulación sería `mean(w * h(y))`:
 
 ```{r mc-imp-conv, fig.cap="Convergencia de la aproximación de la integral mediante muestreo por importancia."}
 # h(x) <- function(x) x > 4.5  # (1 si x > 4.5 => h(y) = 1)
-mean(w) # w*h(y)
+mean(w) # mean(w*h(y))
 pnorm(-4.5)  # valor teórico
 
 plot(cumsum(w)/1:nsim, type = "l", ylab = "Aproximación", xlab = "Iteraciones")
@@ -315,6 +315,7 @@ boxplot(nsim * w/sum(w))
 
 Cuando $f$ y/o $g$ son cuasi-densidades, para evitar calcular constantes normalizadoras, se emplea como aproximación:
 $$\theta \approx \frac{\sum\limits_{i=1}^n w(y_i) h\left( y_i\right) }{ \sum\limits_{i=1}^n w(y_i)}.$$
+De hecho este estimador es empleado muchas veces en lugar del anterior ya que, aunque en general no es insesgado, puede ser más eficiente si $w(Y)$ y $w(Y)h(Y)$ están altamente correlacionadas (e.g. Liu, 2004, p.35).
 
 Adicionalmente, puede verse que con un muestreo de $\left\{y_1, y_2, \ldots, y_n \right\}$ ponderado por $w(y_i)$ (prob. $=w(y_i)\left/ \sum\nolimits_{i=1}^n w(y_i) \right.$ ) se obtiene una simulación aproximada de $f$ (*Sample importance resampling*, Rubin, 1987).
 
@@ -386,21 +387,12 @@ $$\underset{\mathbf{x}\in D}{\min }f(\mathbf{x}).$$
 Hay una gran cantidad de algoritmos numéricos para resolver problemas de optimización no lineal multidimensional, por ejemplo los basados en el método de Newton-Raphson
 (implementados en la función `nlm`, entre otras).
 
-La idea original consiste en buscar los ceros de su primera derivada
-(o del gradiente) empleando una aproximación
-iterativa:
-$$\mathbf{x}_{i+1} = \mathbf{x}_i-[Hf(\mathbf{x}_i)]^{-1}\nabla f(\mathbf{x} = 
-_i),$$donde $Hf(\mathbf{x}_i)$ es el hessiano de la función
-(matriz de segundas derivadas) y $\nabla f(\mathbf{x}_i)$ el
-gradiente (vector de primeras derivadas).
-Estos métodos normalmente funcionan muy bien cuando la función
-objetivo no tiene mínimos locales (ideal $f$ cuadrática).
-Los resultados obtenidos pueden ser muy malos en caso contrario
-(especialmente en el caso multidimensional) y dependen en gran
-medida del punto inicial.
-Un ejemplo donde es habitual que aparezcan este tipo de problemas es
-en la estimación por máxima verosimilitud (la función objetivo puede
-ser multimodal).
+La idea original consiste en buscar los ceros de su primera derivada (o del gradiente) empleando una aproximación iterativa:
+$$\mathbf{x}_{i+1} = \mathbf{x}_i-[Hf(\mathbf{x}_i)]^{-1}\nabla f(\mathbf{x}_i),$$
+donde $Hf(\mathbf{x}_i)$ es el hessiano de la función (matriz de segundas derivadas) y $\nabla f(\mathbf{x}_i)$ el gradiente (vector de primeras derivadas).
+Estos métodos normalmente funcionan muy bien cuando la función objetivo no tiene mínimos locales (ideal $f$ cuadrática).
+Los resultados obtenidos pueden ser muy malos en caso contrario (especialmente en el caso multidimensional) y dependen en gran medida del punto inicial^[Este tipo de algoritmos se denominan *codiciosos* o *voraces*, porque buscan la mejor opción a "corto plazo".] 
+Un ejemplo donde es habitual que aparezcan este tipo de problemas es en la estimación por máxima verosimilitud (la función objetivo puede ser multimodal).
 
 
 ```{exercise, label="mv-nlm", name="Estimación por máxima verosimilitud mediante un algoritmo de Newton"}

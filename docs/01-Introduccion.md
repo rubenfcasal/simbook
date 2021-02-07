@@ -31,21 +31,24 @@ Habría dos tipos de modelos:
 
 -   Modelos deterministas.
 
--   Modelos estocásticos (con componente aleatoria): tienen en cuenta la incertidumbre debida a que no se disponga de toda la información sobre las variables que influyen en el fenómeno en estudio (puede ser simplemente que haya errores de medida).
+-   Modelos estocásticos (con componente aleatoria): tienen en cuenta la incertidumbre asociada al modelo. Tradicionalmente se supone que esta incertidumbre es debida a que no se dispone de toda la información sobre las variables que influyen en el fenómeno en estudio (puede ser debida simplemente a que haya errores de medida), lo que se conoce como *aleatoriedad aparente*:
 
-> "Nothing in Nature is random... a thing appears random only through the incompleteness of our knowledge."
->
-> --- Spinoza, Baruch (Ethics, 1677)
+    > "Nothing in Nature is random... a thing appears random only through the incompleteness of our knowledge."
+    >
+    > --- Spinoza, Baruch (Ethics, 1677)
+    
+    aunque hoy en día gana peso la idea de la física cuántica de que en el fondo hay una *aleatoriedad intrínseca*.
 
 La modelización es una etapa presente en la mayor parte de los trabajos de investigación (especialmente en las ciencias experimentales).
 El modelo debería considerar las variables más relevantes para explicar el fenómeno en estudio y las principales relaciones entre ellas.
 La inferencia estadística proporciona herramientas para estimar los parámetros y contrastar la validez de un modelo estocástico a partir de los datos observados.
 
 La idea es emplear el modelo (suponiendo que es válido) para resolver el problema de interés. 
-Si se puede obtener la solución de forma análitica, esta suele ser exacta (aunque en ocasiones solo se dispone de soluciones aproximadas, basadas en resultados asintóticos, o que dependen de supociones que pueden ser cuestionables) y a menudo la resolución también es rápida.
+Si se puede obtener la solución de forma analítica, esta suele ser exacta (aunque en ocasiones solo se dispone de soluciones aproximadas, basadas en resultados asintóticos, o que dependen de suposiciones que pueden ser cuestionables) y a menudo la resolución también es rápida.
 Cuando la solución no se puede obtener de modo analítico (o si la aproximación disponible no es adecuada) se puede recurrir a la simulación.
 
 Nos centraremos en el caso de la *Simulación Estocástica*: las conclusiones se obtienen generando repetidamente simulaciones del modelo aleatorio.
+Muchas veces se emplea la denominación de *método Monte-Carlo*^[Estos métodos surgieron a finales de la década de 1940 como resultado del trabajo realizado por Stanislaw Ulam y John von Neumann en el proyecto Manhattan para el desarrollo de la bomba atómica. Como se trataba de una investigación secreta, Nicholas Metropolis sugirió emplear el nombre clave de “Monte Carlo” en referencia al casino de Monte Carlo de Mónaco.] como sinónimo de simulación estocástica, pero normalmente se trata de métodos especializados que emplean simulación para resolver problemas que pueden no estar relacionados con un modelo estocástico de un sistema real. Por ejemplo, en el Capítulo \@ref(cap9) se tratarán métodos de integración y optimización Monte-Carlo.
 
 <!-- 
 Ejemplo: caballero de Meré 
@@ -132,7 +135,7 @@ Una sucesión de números aleatorios puros (*true random*), se caracteriza por q
 
 Normalmente son obtenidos por procesos físicos
 (loterías, ruletas, ruidos,...) y se almacenaban en *tablas de dígitos aleatorios*. 
-Por ejemplo, en 1955 la Corporación RAND publicó el libro [A Million Random Digits with 100,000 Normal Deviates](https://www.rand.org/pubs/monograph_reports/MR1418.html) que contenía números aleatorios generados mediante una ruleta electrónica conectada a una computadora  (ver Figura \@ref(fig:randbook)).
+Por ejemplo, en 1955 la Corporación RAND publicó el libro [A Million Random Digits with 100,000 Normal Deviates](https://www.rand.org/pubs/monograph_reports/MR1418.html) que contenía números aleatorios generados mediante una ruleta electrónica conectada a una computadora (ver Figura \@ref(fig:randbook)).
 
 
 \begin{figure}[!htb]
@@ -144,50 +147,37 @@ Por ejemplo, en 1955 la Corporación RAND publicó el libro [A Million Random Di
 \caption{Líneas 10580-10594, columnas 21-40, del libro *A Million Random Digits with 100,000 Normal Deviates*.}(\#fig:randbook)
 \end{figure}
 
-El procediento para generar de forma manual números aleatorios 
+El procedimiento para generar de forma manual números aleatorios 
 en un rango de 1 a *m* era el siguiente:
 
--   Se selecciona al azar un pto de inicio en la tabla 
-    y una dirección.
+-   Se selecciona al azar un punto de inicio en la tabla 
+    y la dirección que se seguirá.
 
 -   Se agrupan los dígitos de forma que “cubran” el valor de *m*.
 
--   Se seleccionan los valores menores o iguales que *m* 
-    (se descarta el resto).
+-   Se va avanzado en la dirección elegida, seleccionando los valores menores o iguales que *m* y descartando el resto.
 
-Hoy en día están disponibles generadores de números aleatorios “online”:
+Hoy en día están disponibles generadores de números aleatorios “online”, por ejemplo:
 
--   [http://www.random.org/integers](http://www.random.org/integers)
+-   [RANDOM.ORG](http://www.random.org/integers): ruido atmosférico 
     (ver paquete `random` en R).
 
--   [http://www.fourmilab.ch/hotbits](http://www.fourmilab.ch/hotbits)
+-   [HotBits](http://www.fourmilab.ch/hotbits): desintegración radiactiva.
 
 Aunque para un uso profesional puede ser recomendable emplear generadores implementados mediante hardware:
 
--   [http://software.intel.com](http://software.intel.com/en-us/articles/intel-digital-random-number-generator-drng-software-implementation-guide).
+-   [Intel Digital Random Number Generator](http://software.intel.com/en-us/articles/intel-digital-random-number-generator-drng-software-implementation-guide)
 
--   [http://spectrum.ieee.org](http://spectrum.ieee.org/semiconductors/devices/a-memristor-true-randomnumber-generator)
-
-
-Sus principales aplicaciones hoy en día son en criptografía (impredictibilidad).
+-   [An Overview of Hardware based True Random Number Generators](https://rbridge.inlab.net/manual/trngs)
 
 
-### Inconvenientes:
+Sus principales aplicaciones hoy en día son en criptografía y juegos de azar, donde resulta especialmente importante su impredecibilidad.
 
-Para su aplicación en el campo de la Estadística:
+El principal inconveniente para su aplicación en el campo de la Estadística (y en otros casos) es que los valores generados deberían ser independientes e idénticamente distribuidos con distribución conocida, algo que resulta difícil (o imposible) de garantizar.
+Siempre está presente la posible aparición de sesgos, principalmente debidos a fallos del sistema o interferencias. 
+Por ejemplo, en el caso de la máquina RAND, fallos mecánicos en el sistema de grabación de los datos causaron problemas de aleatoriedad (Hacking, 1965, p. 129).
 
--   Es necesario conocer su distribución.
-
--   Los datos generados deberían ser i.i.d.
-
-(sería también muy recomendable para otros casos) y en general:
-
--   Reproductivilidad.
-
--   Pueden requerir del almacenamiento en tablas.
-
-Además siempre está la posible presencia de sesgos, principalmente debidos a fallos del sistema o interferencias. 
-Por ejemplo en el caso de la máquina RAND, fallos mecánicos en el sistema de grabación de los datos causaron problemas de aleatoriedad (Hacking, 1965, p. 129).
+Otro inconveniente estaría relacionado con su reproducibilidad, por lo que habría que almacenarlos en tablas si se quieren volver a reproducir los resultados.
 
 
 ### Alternativas:
@@ -215,7 +205,7 @@ plot(torus(n, dim = 2), xlab = 'x1', ylab = 'x2')
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{01-Introduccion_files/figure-latex/randtoolbox-1} 
+{\centering \includegraphics[width=1\linewidth]{01-Introduccion_files/figure-latex/randtoolbox-1} 
 
 }
 
@@ -245,12 +235,10 @@ donde:
 -   $\left(  x_{0},x_{1},\cdots,x_{k-1}\right)$ es la *semilla*
   (estado inicial).
 
-El *periodo* o *longitud del ciclo* es la longitud de la secuencia antes
-de que vuelva a repetirse. Lo denotaremos por $p$.
+El *periodo* o *longitud del ciclo* es la longitud de la secuencia antes de que vuelva a repetirse. Lo denotaremos por $p$.
 
 
-Los números de la sucesión serán predecibles, conociendo el
-algoritmo y la semilla.
+Los números de la sucesión serán predecibles, conociendo el algoritmo y la semilla.
 
 -   Sin embargo, si no se conociesen, *no se debería poder distinguir* una serie de números pseudoaleatorios *de una sucesión de números verdaderamente aleatoria* (utilizando recursos computacionales razonables).
 

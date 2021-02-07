@@ -77,7 +77,7 @@ Hay que tener en cuenta que `.Random.seed` se almacena en el entorno de trabajo.
 La función `RNGkind(kind = NULL, normal.kind = NULL)` permite
 seleccionar el tipo de generador (en negrita los valores por defecto):
 
--   `kind `especifica el generador aleatorio:
+-   `kind` especifica el generador aleatorio:
 
     -   “Wichmann-Hill”: Ciclo $6.9536\times10^{12}$
 
@@ -94,7 +94,7 @@ seleccionar el tipo de generador (en negrita los valores por defecto):
 
     -   “user-supplied”
 
--   `normal.kind `selecciona el método de generación de normales 
+-   `normal.kind` selecciona el método de generación de normales 
     (se tratará más adelante).
     “Kinderman-Ramage”, “Buggy Kinderman-Ramage”,
     “Ahrens-Dieter”, “Box-Muller”, **“Inversion”** , o “user-supplied”
@@ -107,7 +107,7 @@ Otros paquetes de R que pueden ser de interés:
 -   `setRNG` contiene herramientas que facilitan operar con la semilla
     (dentro de funciones,...).
 
--   `random` permite la descarga de numeros “true random” desde [RANDOM.ORG](https://www.random.org).
+-   `random` permite la descarga de números “true random” desde [RANDOM.ORG](https://www.random.org).
 
 -   `randtoolbox` implementa generadores más recientes (`rngWELL`) y
     generación de secuencias cuasi-aleatorias.
@@ -136,30 +136,39 @@ a)  Aproximar mediante simulación $P\left(X + Y \leq 0 \right)$ y
     compararla con la probabilidad teórica (obtenida aplicando la
     regla de Laplace $\frac{\text{área favorable}}{\text{área posible}}$).
 
-    Probabilidad teórica 1/2 (area favorable / área total)
+    Generamos `nsim = 10000` valores del proceso bidimensional:
 
     
     ```r
     set.seed(1)
-    n <- 10000
-    x <- runif(n, -1, 1)
-    y <- runif(n, -1, 1)
-    indice <- (x+y < 0)
-    # Aproximación por simulación
-    sum(indice)/n
+    nsim <- 10000
+    x <- runif(nsim, -1, 1)
+    y <- runif(nsim, -1, 1)
     ```
+
+    La probabilidad teórica es 1/2 y la aproximación por simulación es la frecuencia relativa del suceso en los valores generados:
     
-    ```
-    ## [1] 0.4996
-    ```
     
     ```r
-    mean(indice) # Alternativa 
+    indice <- (x+y < 0)
+    sum(indice)/nsim
     ```
     
     ```
     ## [1] 0.4996
     ```
+    
+    Alternativamente (la frecuencia relativa es un caso particular de la media) se puede obtener de forma más simple como:
+    
+    
+    ```r
+    mean(indice)
+    ```
+    
+    ```
+    ## [1] 0.4996
+    ```
+
 
     \BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}R maneja internamente los valores lógicos como 1 (`TRUE`) y 0 (`FALSE`).</div>\EndKnitrBlock{remark}
 
@@ -198,11 +207,11 @@ b)  Aproximar el valor de $\pi$ mediante simulación a partir de
     ## [1] 3.1224
     ```
 
-    Gráfico
+    Generamos el correspondiente gráfico (ver Figura \@ref(fig:simpiplot)) (los puntos con color negro tienen distribución uniforme en el círculo unidad; esto está relacionado con el método de aceptación-rechazo, ver \@ref(exm:ar-esfera), o con el denominado método *hit-or-miss*).
     
     
     ```r
-    # Colores y símbolos depediendo de si el índice correspondiente es verdadero:
+    # Colores y símbolos dependiendo de si el índice correspondiente es verdadero:
     color <- ifelse(indice, "black", "red") 
     simbolo <- ifelse(indice, 1, 4)
     plot(x, y, pch = simbolo, col = color, 
@@ -212,9 +221,14 @@ b)  Aproximar el valor de $\pi$ mediante simulación a partir de
     symbols(0, 0, squares = 2, inches = FALSE, add = TRUE)
     ```
     
+    \begin{figure}[!htb]
     
+    {\centering \includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/simpiplot-1} 
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-8-1} \end{center}
+    }
+    
+    \caption{Valores generados con distribución uniforme bidimensional, con colores y símbolos indicando si están dentro del círculo unidad.}(\#fig:simpiplot)
+    \end{figure}
     
 
 \BeginKnitrBlock{exercise}\iffalse{-91-69-120-112-101-114-105-109-101-110-116-111-32-100-101-32-66-101-114-110-111-117-108-108-105-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:bernouilli"><strong>(\#exr:bernouilli)  \iffalse (Experimento de Bernoulli) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
@@ -239,12 +253,17 @@ a)  Empleando la función `sample`, obtener 1000 simulaciones del
     ```
     
     ```r
-    barplot(100*table(x)/nsim) # Representar porcentajes 
+    barplot(100*table(x)/nsim, ylab = "Porcentaje") # Representar porcentajes 
     ```
     
+    \begin{figure}[!htb]
     
+    {\centering \includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/simberplot-1} 
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-9-1} \end{center}
+    }
+    
+    \caption{Frecuencias relativas de los valores generados con distribución Bernoulli (aproximaciones por simulación de las probabilidades teóricas).}(\#fig:simberplot)
+    \end{figure}
 
 b)  En R pueden generarse valores de la distribución de Bernoulli
     mediante la función `rbinom(nsim, size=1, prob)`. Generar un
@@ -274,9 +293,14 @@ b)  En R pueden generarse valores de la distribución de Bernoulli
     abline(h=p, lty=2, col="red")
     ```
     
+    \begin{figure}[!htb]
     
+    {\centering \includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/simberconv-1} 
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/unnamed-chunk-10-1} \end{center}
+    }
+    
+    \caption{Gráfico de convergencia de la aproximación por simulación a la probabilidad teórica.}(\#fig:simberconv)
+    \end{figure}
 
 
 \BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-32-99-105-114-99-117-105-116-111-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:circuito"><strong>(\#exr:circuito)  \iffalse (Simulación de un circuito) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
@@ -285,7 +309,7 @@ figuran las probabilidades de que pase corriente por cada uno de los
 interruptores:
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{images/circuito2} \end{center}
+\begin{center}\includegraphics[width=0.5\linewidth]{images/circuito2} \end{center}
 
 Considerar que cada interruptor es una v.a. de Bernoulli independiente
 para simular 1000 valores de cada una de ellas.
@@ -449,10 +473,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.06    0.02    0.08 
+##    0.11    0.01    0.14 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.06    0.02    0.08
+##    0.11    0.01    0.14
 ```
 
 ```r
@@ -471,10 +495,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.03    0.00    0.03 
+##       0       0       0 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.09    0.02    0.11
+##    0.11    0.01    0.14
 ```
 
 ### Paquetes de R
@@ -565,7 +589,7 @@ cpu.time('\nSample median of', 1000000, 'values =', res, total = FALSE)
 ## Time of last operation: 
 ## Sample median of 1e+06 values = 0.4993323 
 ##    user  system elapsed 
-##    0.06    0.04    0.11
+##    0.10    0.02    0.13
 ```
 
 ```r
@@ -580,7 +604,7 @@ cpu.time('\nSample median of', 1000, 'values =', res)
 ##       0       0       0 
 ## Total time:
 ##    user  system elapsed 
-##    0.06    0.04    0.11
+##    0.10    0.02    0.13
 ```
 
 Otro paquete que puede ser de utilidad es

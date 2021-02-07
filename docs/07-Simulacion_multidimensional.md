@@ -126,7 +126,7 @@ Por ejemplo, de forma análoga al caso unidimensional, en el caso de una densida
 acotada en un hipercubo (intervalo cerrado multidimensional) siempre podríamos considerar
 una uniforme como densidad auxiliar. 
 
-\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-98-105-100-105-109-101-110-115-105-111-110-97-108-32-97-99-111-116-97-100-97-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-5"><strong>(\#exm:unnamed-chunk-5)  \iffalse (distribución bidimensional acotada) \fi{} </strong></span></div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-98-105-100-105-109-101-110-115-105-111-110-97-108-32-97-99-111-116-97-100-97-93-}\fi{}<div class="example"><span class="example" id="exm:ar-bidim"><strong>(\#exm:ar-bidim)  \iffalse (distribución bidimensional acotada) \fi{} </strong></span></div>\EndKnitrBlock{example}
 
 Supongamos que estamos interesados en generar valores de una variable aleatoria bidimensional
 $\left( X,Y\right)$ con función de densidad: 
@@ -163,10 +163,9 @@ En este caso, la condición de aceptación del paso 3 simplificada sería:
 $U \leq 1 - \left( T_1^2 + T_2^2 \right) / 2$.
 
 
-\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-117-110-105-102-111-114-109-101-32-101-110-32-108-97-32-101-115-102-101-114-97-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-6"><strong>(\#exm:unnamed-chunk-6)  \iffalse (distribución uniforme en la esfera) \fi{} </strong></span></div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-117-110-105-102-111-114-109-101-32-101-110-32-108-97-32-101-115-102-101-114-97-93-}\fi{}<div class="example"><span class="example" id="exm:ar-esfera"><strong>(\#exm:ar-esfera)  \iffalse (distribución uniforme en la esfera) \fi{} </strong></span></div>\EndKnitrBlock{example}
 
-Supongamos que el objetivo es simular puntos uniformemente distribuídos sobre la “esfera”
-unitaria $d$-dimensional:
+Supongamos que el objetivo es simular puntos uniformemente distribuídos sobre la “esfera” unitaria $d$-dimensional (ver Figura \@ref(fig:simpiplot)):
 $$C_d=\left\{  \left( x_1, x_2, \ldots, x_d \right) 
 : x_1^2 + x_2^2 + \cdots + x_d^2 \leq1 \right\}.$$
 
@@ -257,7 +256,7 @@ distribuciónes como la $t$-multivariante.
 
 En el caso de normalidad, el resultado general es el siguiente.
 
-\BeginKnitrBlock{proposition}<div class="proposition"><span class="proposition" id="prp:unnamed-chunk-7"><strong>(\#prp:unnamed-chunk-7) </strong></span><br>
+\BeginKnitrBlock{proposition}<div class="proposition"><span class="proposition" id="prp:unnamed-chunk-5"><strong>(\#prp:unnamed-chunk-5) </strong></span><br>
 Si $\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right)$ y $A$ es una matriz $p\times d$, de
 rango máximo, con $p\leq d$, entonces:
 $$A\mathbf{X} \sim \mathcal{N}_{p}\left(A\boldsymbol\mu,A\Sigma A^t\right).$$</div>\EndKnitrBlock{proposition}
@@ -282,7 +281,7 @@ sería la preferible. Pero en ocasiones, para evitar problemas numéricos
 puede ser más adecuado emplear la factorización espectral.
 En el primer caso el algoritmo sería el siguiente:
 
-\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-110-111-114-109-97-108-32-109-117-108-116-105-118-97-114-105-97-110-116-101-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-8"><strong>(\#cnj:unnamed-chunk-8)  \iffalse (de simulación de una normal multivariante) \fi{} </strong></span>
+\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-110-111-114-109-97-108-32-109-117-108-116-105-118-97-114-105-97-110-116-101-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-6"><strong>(\#cnj:unnamed-chunk-6)  \iffalse (de simulación de una normal multivariante) \fi{} </strong></span>
 <br> 
 
 1.  Obtener la factorización de Cholesky $\Sigma=LL^t$.
@@ -404,7 +403,7 @@ mvrnorm
 ##         drop(X)
 ##     else t(X)
 ## }
-## <bytecode: 0x0000000033488508>
+## <bytecode: 0x0000000032861e60>
 ## <environment: namespace:MASS>
 ```
 
@@ -441,7 +440,7 @@ x_1,x_2,\ldots,x_{i-1}\right)},$$
 
 se obtiene el siguiente algoritmo general:
 
-\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-109-101-100-105-97-110-116-101-32-100-105-115-116-114-105-98-117-99-105-111-110-101-115-32-99-111-110-100-105-99-105-111-110-97-100-97-115-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-12"><strong>(\#cnj:unnamed-chunk-12)  \iffalse (de simulación mediante distribuciones condicionadas) \fi{} </strong></span>
+\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-109-101-100-105-97-110-116-101-32-100-105-115-116-114-105-98-117-99-105-111-110-101-115-32-99-111-110-100-105-99-105-111-110-97-100-97-115-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-10"><strong>(\#cnj:unnamed-chunk-10)  \iffalse (de simulación mediante distribuciones condicionadas) \fi{} </strong></span>
 <br> 
 
 1.  Generar $X_1 \sim f_1$.
@@ -457,7 +456,7 @@ se obtiene el siguiente algoritmo general:
 $f_i\left( x_i|x_1,x_2,\ldots,x_{i-1}\right) 
 \propto f_{1,\ldots,i}\left( x_1,x_2,\ldots,x_i\right)$.
 
-\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-117-110-105-102-111-114-109-101-32-101-110-32-101-108-32-99-237-114-99-117-108-111-32-117-110-105-116-97-114-105-111-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-13"><strong>(\#exm:unnamed-chunk-13)  \iffalse (distribución uniforme en el círculo unitario) \fi{} </strong></span></div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-117-110-105-102-111-114-109-101-32-101-110-32-101-108-32-99-237-114-99-117-108-111-32-117-110-105-116-97-114-105-111-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-11"><strong>(\#exm:unnamed-chunk-11)  \iffalse (distribución uniforme en el círculo unitario) \fi{} </strong></span></div>\EndKnitrBlock{example}
 
 Se trata de la distribución bidimensional continua con densidad 
 constante en el círculo:
@@ -504,7 +503,7 @@ Para el paso 1 puede utilizarse, por ejemplo, el método de
 aceptación/rechazo, pues se trata de una densidad acotada definida en un
 intervalo acotado.
 
-\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-110-111-114-109-97-108-32-98-105-100-105-109-101-110-115-105-111-110-97-108-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-14"><strong>(\#exm:unnamed-chunk-14)  \iffalse (distribución normal bidimensional) \fi{} </strong></span></div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-110-111-114-109-97-108-32-98-105-100-105-109-101-110-115-105-111-110-97-108-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-12"><strong>(\#exm:unnamed-chunk-12)  \iffalse (distribución normal bidimensional) \fi{} </strong></span></div>\EndKnitrBlock{example}
 
 En el caso de una distribución normal bidimensional:
 $$\mathbf{X} = \begin{pmatrix}
@@ -540,7 +539,7 @@ f_2\left( x_2|x_1\right)  &= \frac{f\left( x_1,x_2\right)  }{f_1\left( x_1\right
 
 Por tanto $X_1 \sim \mathcal{N}\left( \mu_1, \sigma_1^2 \right)$ y $X_2 | X_1 \sim \mathcal{N} \left( \mu_2 + \frac{\sigma_2}{\sigma_1}\rho( X_1 - \mu_1), \sigma_2^2 (1-\rho^2) \right)$, y el algoritmo sería el siguiente:
 
-\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-110-111-114-109-97-108-32-98-105-100-105-109-101-110-115-105-111-110-97-108-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-15"><strong>(\#cnj:unnamed-chunk-15)  \iffalse (de simulación de una normal bidimensional) \fi{} </strong></span>
+\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-110-111-114-109-97-108-32-98-105-100-105-109-101-110-115-105-111-110-97-108-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-13"><strong>(\#cnj:unnamed-chunk-13)  \iffalse (de simulación de una normal bidimensional) \fi{} </strong></span>
 <br> 
 
 1.  Simular $Z_1, Z_2 \sim \mathcal{N}\left( 0, 1 \right)$ independientes.
@@ -566,7 +565,7 @@ Simulación condicional e incondicional
 
 En ocasiones en inferencia estadística interesa la simulación condicional de nuevos valores de forma que se preserven los datos observados, para lo que se suele emplear el algoritmo anterior partiendo de la muestra observada:
 
-\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-99-111-110-100-105-99-105-111-110-97-108-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-16"><strong>(\#cnj:unnamed-chunk-16)  \iffalse (de simulación condicional) \fi{} </strong></span>
+\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-99-111-110-100-105-99-105-111-110-97-108-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-14"><strong>(\#cnj:unnamed-chunk-14)  \iffalse (de simulación condicional) \fi{} </strong></span>
 <br> 
 
 1.  Obtener la distribución condicional (correspondiente al punto
@@ -679,7 +678,7 @@ lines(x[!idata], kpred, lwd = 2, lty = 2) # media condicional (predicción krigi
 \end{figure}
 
 
-\BeginKnitrBlock{example}\iffalse{-91-115-105-109-117-108-97-99-105-243-110-32-99-111-110-100-105-99-105-111-110-97-108-32-100-101-32-100-97-116-111-115-32-101-115-112-97-99-105-97-108-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-19"><strong>(\#exm:unnamed-chunk-19)  \iffalse (simulación condicional de datos espaciales) \fi{} </strong></span></div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}\iffalse{-91-115-105-109-117-108-97-99-105-243-110-32-99-111-110-100-105-99-105-111-110-97-108-32-100-101-32-100-97-116-111-115-32-101-115-112-97-99-105-97-108-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-17"><strong>(\#exm:unnamed-chunk-17)  \iffalse (simulación condicional de datos espaciales) \fi{} </strong></span></div>\EndKnitrBlock{example}
 
 Consideramos un proceso espacial bidimensional normal
 $Z(\mathbf{s})\equiv Z(x,y)$ de media 0 y covariograma
@@ -748,7 +747,7 @@ plot(data.s, type = "p", pch = 20, asp = 1) # Representar posiciones
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-21-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
 ```r
 # Matriz de varianzas covarianzas
@@ -803,7 +802,7 @@ points(ndata.s)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-22-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-20-1} \end{center}
 
 ```r
 # Simulación condicional
@@ -829,7 +828,7 @@ image(kc, val=kc$simul[,1], main="simul. cond. 1", zlim=zlim)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-22-2} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-20-2} \end{center}
 
 ```r
 image(kc, val=kc$simul[,2], main="simul. cond. 2", zlim=zlim)
@@ -837,7 +836,7 @@ image(kc, val=kc$simul[,2], main="simul. cond. 2", zlim=zlim)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-22-3} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-20-3} \end{center}
 
 ```r
 image(kc, val=kc$simul[,3], main="simul. cond. 3", zlim=zlim)
@@ -845,7 +844,7 @@ image(kc, val=kc$simul[,3], main="simul. cond. 3", zlim=zlim)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-22-4} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-20-4} \end{center}
 
 ```r
 image(kc, val=kc$simul[,4], main="simul. cond. 3", zlim=zlim)
@@ -853,7 +852,7 @@ image(kc, val=kc$simul[,4], main="simul. cond. 3", zlim=zlim)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-22-5} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-20-5} \end{center}
 
 ```r
 par(par.old)
@@ -886,7 +885,7 @@ lines(simulate(fit, 24), col="red")
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-23-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 Simulación basada en cópulas
 ----------------------------
@@ -956,7 +955,7 @@ su inversa $C_{u}^{-1}(w)$, por lo que se puede generar $(U,V)$
 fácilmente mediante el método secuencial de distribuciones
 condicionadas descrito en la Sección \@ref(distrcond).
 
-\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-98-105-100-105-109-101-110-115-105-111-110-97-108-32-109-101-100-105-97-110-116-101-32-99-243-112-117-108-97-115-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-24"><strong>(\#cnj:unnamed-chunk-24)  \iffalse (de simulación bidimensional mediante cópulas) \fi{} </strong></span>
+\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-98-105-100-105-109-101-110-115-105-111-110-97-108-32-109-101-100-105-97-110-116-101-32-99-243-112-117-108-97-115-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-22"><strong>(\#cnj:unnamed-chunk-22)  \iffalse (de simulación bidimensional mediante cópulas) \fi{} </strong></span>
 <br> 
 
 1.  Generar $U,W\sim \mathcal{U}(0,1)$
@@ -1002,7 +1001,7 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-26-1} \end{center}
+    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-24-1} \end{center}
     
     Representar la densidad conjunta (con `sm::sm.density()`) y las marginales:
     
@@ -1018,7 +1017,7 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-27-1} \end{center}
+    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-25-1} \end{center}
     
     ```r
     # Distribuciones marginales
@@ -1031,7 +1030,7 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-27-2} \end{center}
+    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-25-2} \end{center}
     
     ```r
     par(par.old)
@@ -1048,7 +1047,7 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-28-1} \end{center}
+    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-26-1} \end{center}
     
     ```r
     clayton.cop <- claytonCopula(2, dim = 3) # caso tridimensional
@@ -1058,7 +1057,7 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-28-2} \end{center}
+    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-26-2} \end{center}
     
     ```r
     # plot3D:::points3D(y[,1], y[,2], y[, 3], colvar = NULL) 
@@ -1078,7 +1077,7 @@ c)  A partir de la muestra anterior generar una muestra de una v.a.
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-29-1} \end{center}
+    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-27-1} \end{center}
     
     ```r
     # Distribuciones marginales
@@ -1091,7 +1090,7 @@ c)  A partir de la muestra anterior generar una muestra de una v.a.
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-29-2} \end{center}
+    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-27-2} \end{center}
     
     ```r
     par(par.old)
@@ -1446,7 +1445,7 @@ curve(dchisq(x, res$parameter), add = TRUE)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-47-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-45-1} \end{center}
 
 
 ## Ejercicios propuestos

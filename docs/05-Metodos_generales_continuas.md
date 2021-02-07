@@ -199,7 +199,8 @@ c)  Representar el histograma y compararlo con la densidad teórica.
     
     \caption{Distribución de los valores generados de una doble exponencial mediante el método de inversión.}(\#fig:dexp-inv)
     \end{figure}
-
+    Como se trata de un método exacto de simulación, si está bien implementado, la distribución de los valores generados debería comportarse como una muestra genuina de la distribución objetivo.
+    
 
 ### Ventajas e inconvenientes
 
@@ -391,24 +392,42 @@ aceptación-rechazo, una muestra de $n$ observaciones de una
 distribución normal estándar:
 $$f\left( x\right)  =\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}}\text{, }x\in\mathbb{R}\text{, }$$
 empleando como distribución auxiliar una doble exponencial con $\lambda=1$ 
-(más adelante veremos que esta es la elección óptima para el parámetro de la densidad auxiliar) y que la cota optima
-es:$$c_{\text{opt}}=\sqrt{\frac{2e}{\pi}}\simeq1.\,3155.$$ Para
-establecer la condición de aceptación o rechazo se puede tener en
-cuenta que:
+(más adelante veremos que esta es la elección óptima para el parámetro de la densidad auxiliar) y que la cota óptima es:
+$$c_{\text{opt}}=\sqrt{\frac{2e}{\pi}} \approx 1.3155$$ 
+Para establecer la condición de aceptación o rechazo se puede tener en cuenta que:
 $$c\cdot U\cdot\frac{g\left( T\right)  }{f\left( T\right)  }=\sqrt{\frac
 {2e}{\pi}}U\sqrt{\frac{\pi}{2}}\exp\left( \frac{T^{2}}{2}-\left\vert
 T\right\vert \right)  =U\cdot\exp\left( \frac{T^{2}}{2}-\left\vert
-T\right\vert +\frac{1}{2}\right)  ,$$
-aunque en general puede ser recomendable emplear $c\cdot U\cdot g\left( T\right) \leq f\left( T\right)$.
+T\right\vert +\frac{1}{2}\right) ,$$
+aunque en general puede ser recomendable emplear 
+$c\cdot U\cdot g\left( T\right) \leq f\left( T\right)$.
+
+En el código del Ejercicio \@ref(exr:ddexp) se definió la densidad auxiliar `ddexp(x, lambda)` y la función `rdexp(lambda)` para generar un valor aleatorio de esta densidad.
+Si comparamos la densidad objetivo con la auxiliar reescalada con los parámetros óptimos (Figura \@ref(fig:dnorm-ddexp-plot)), vemos que esta última está por encima, como debería ocurrir, pero llegan a tocarse (se está empleando la cota óptima; ver siguiente sección).
 
 
 ```r
 # densidad objetivo: dnorm
 # densidad auxiliar: ddexp
-
-# EJECUTAR CÓDIGO DEL APARTADO A DEL EJERCICIO 1
 c.opt <- sqrt(2*exp(1)/pi)
 lambda.opt <- 1
+curve(c.opt * ddexp(x), xlim = c(-4, 4), lty = 2)
+curve(dnorm(x), add = TRUE)
+```
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/dnorm-ddexp-plot-1} 
+
+}
+
+\caption{Densidad objetivo (normal estándar) y densidad auxiliar (doble exponencial) reescalada.}(\#fig:dnorm-ddexp-plot)
+\end{figure}
+
+Para generar los valores de la densidad objetivo podríamos emplear el siguiente código:
+
+
+```r
 ngen <- 0
 
 rnormAR <- function() {
@@ -416,28 +435,22 @@ rnormAR <- function() {
 # Normal estandar a partir de doble exponencial
   while (TRUE) {
     U <- runif(1)
-    X <- rdexp(1) # lambda = 1
-    ngen <<- ngen+1 # Comentar esta línea para uso normal
+    X <- rdexp(lambda.opt) # rdexpn(1, lambda.opt)
+    ngen <<- ngen + 1 # Comentar esta línea para uso normal
     # if (U*exp((X^2+1)*0.5-abs(X)) <= 1) return(X)
     if (c.opt * U * ddexp(X, lambda.opt) <= dnorm(X)) return(X)
   }
 }
 
-rnormARn <- function(n=1000) {
+rnormARn <- function(n = 1000) {
 # Simulación n valores N(0,1)
     x <- numeric(n)
-    for(i in 1:n) x[i]<-rnormAR()
+    for(i in 1:n) x[i] <- rnormAR()
     return(x)
 }
 
 # Grafico
-curve(c.opt * ddexp(x), xlim = c(-4, 4), lty = 2)
-curve(dnorm(x), add = TRUE)
 ```
-
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-5-1} \end{center}
 
 
 a)  Generar una muestra de $10^{4}$ observaciones empleando este
@@ -455,7 +468,7 @@ a)  Generar una muestra de $10^{4}$ observaciones empleando este
     
     ```
     ##    user  system elapsed 
-    ##    0.09    0.00    0.10
+    ##    0.08    0.00    0.08
     ```
     
     ```r
@@ -479,14 +492,19 @@ b)  Representar el histograma y compararlo con la densidad teórica.
     
     
     ```r
-    hist(x, breaks="FD", freq=FALSE)
-    curve(dnorm(x), add=TRUE)
+    hist(x, breaks = "FD", freq = FALSE)
+    curve(dnorm, add = TRUE)
     ```
     
+    \begin{figure}[!htb]
     
+    {\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/dnorm-ar-1} 
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-7-1} \end{center}
-
+    }
+    
+    \caption{Distribución de los valores generados mediante el método de aceptación-rechazo.}(\#fig:dnorm-ar)
+    \end{figure}
+    Podemos observar que la distribución de los valores generados es la que cabría esperar de una muestra de tamaño `nsim` de la distribución objetivo (lo que nos ayudaría a confirmar que el algoritmo está bien implementado, al ser un método exacto de simulación).
 
 
 ### Eficiencia del algoritmo
@@ -528,32 +546,21 @@ c)  Aproximar la cota óptima numéricamente.
 
     
     ```r
-    # Obtención de un valor c óptimo aproximado
-    optimize(f=function(x){dnorm(x)/ddexp(x)}, maximum=TRUE, interval=c(-1,1))
+    # 
+    # NOTA: Cuidado con los límites
+    # optimize(f=function(x) dnorm(x)/ddexp(x), maximum=TRUE, interval=c(-0.5,0.5))
+    optimize(f = function(x) dnorm(x)/ddexp(x), maximum = TRUE, interval = c(0, 2))
     ```
     
     ```
     ## $maximum
-    ## [1] -0.999959
+    ## [1] 1
     ## 
     ## $objective
     ## [1] 1.315489
     ```
+    Vemos que la aproximación numérica coincide con el valor óptimo real $c_{\text{opt}}=\sqrt{\frac{2e}{\pi}} \approx$  1.3154892 (que se alcanza en $x = \pm 1$).
     
-    ```r
-    # NOTA: Cuidado con los límites
-    # optimize(f=function(x){dnorm(x)/ddexp(x)}, maximum=TRUE, interval=c(0,2))
-    
-    # Valor óptimo real
-    # sqrt(2*exp(1)/pi)
-    c.opt
-    ```
-    
-    ```
-    ## [1] 1.315489
-    ```
-
-
 d)  Aproximar el parámetro óptimo de la densidad auxiliar
     numéricamente (normalmente comenzaríamos por este paso).
 
@@ -562,12 +569,12 @@ d)  Aproximar el parámetro óptimo de la densidad auxiliar
     # Obtención de valores c y lambda óptimos aproximados
     fopt <- function(lambda) {
       # Obtiene c fijado lambda
-      optimize(f = function(x){dnorm(x)/ddexp(x,lambda)},
-               maximum=TRUE, interval=c(0,2))$objective
+      optimize(f = function(x) dnorm(x)/ddexp(x,lambda),
+               maximum = TRUE, interval = c(0, 2))$objective
     }
     
     # Encontar lambda que minimiza
-    res <- optimize(f=function(x){fopt(x)}, interval=c(0.5,2))
+    res <- optimize(fopt, interval = c(0.5, 2))
     lambda.opt2 <- res$minimum
     c.opt2 <- res$objective
     ```
@@ -712,7 +719,7 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-13-1} \end{center}
+    \begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
 b)  Repetir el apartado anterior con $n=100$.
 

@@ -31,6 +31,8 @@ modelos estocásticos*. McGraw-Hill.
 Bratley, P., Fox, B.L. y Schrage L.E. (1987). *A guide to simulation*.
 Springer-Verlag.
 
+Cao R. y Fernández-Casal R. (2020). *Técnicas de Remuestreo* <https://rubenfcasal.github.io/book_remuestreo>.
+
 Devroye, L. (1986). *Non-uniform random variate generation*.
 Springer-Verlag.
 
@@ -48,6 +50,8 @@ Knuth, D.E. (2002). *The Art of Computer Programming*. Volume 2, third edition, 
 
 Law, A.M. y Kelton, W.D. (1991). *Simulation, modeling and analysis*.
 McGraw-Hill.
+
+Liu, J.S. (2004). *Monte Carlo strategies in scientific computing*. Springer. 
 
 Moeschlin, O., Grycko, E., Pohl, C. y Steinert, F. (1998). *Experimental
 stochastics*. Springer-Verlag.

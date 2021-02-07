@@ -1,8 +1,5 @@
 # (APPENDIX) Apendices {-} 
 
-
-
-
 # Enlaces {#links}
 
 
@@ -19,11 +16,12 @@ que puede estar más actualizado).
 
 - Buscador [RSeek](http://rseek.org/)
 
-- [StackOverflow](http://stackoverflow.com/questions/tagged/r)
+- [StackOverflow](http://stackoverflow.com/questions/tagged/r), [en castellano](https://es.stackoverflow.com/questions/tagged/r)
+
+- [Cross Validated](https://stats.stackexchange.com)
 
 
-***Cursos***:
-algunos cursos gratuitos:
+***Cursos*** (gratuitos):
    
 - [Coursera](https://www.coursera.org/):
 
@@ -46,6 +44,10 @@ algunos cursos gratuitos:
 <!-- -->
 
 - Curso UCA: [Introducción a R, R-commander y shiny](http://knuth.uca.es/moodle/course/view.php?id=51)
+
+<!-- -->
+
+- Curso [R CODER](https://r-coder.com/curso-r)
 
 <!-- -->
 
@@ -100,30 +102,23 @@ Ver: [Cursos MOOC relacionados con R](http://r-es.org/2016/02/12/cursos-masivos-
   En https://bookdown.org está disponible una selección de libros escritos con este paquete 
   (un listado más completo está disponible [aquí](https://bookdown.org/home/archive/)).
   Algunos libros en este formato en castellano son:
+
+    - Fernández-Casal R., Roca-Pardiñas J. y Costa J. (2019). *Introducción al Análisis de Datos con R*. <https://rubenfcasal.github.io/intror> ([github](https://github.com/rubenfcasal/intror)).
     
-    <!-- - [Prácticas de Simulación](https://rubenfcasal.github.io/simbook) 
-      (disponible en el repositorio de GitHub
-      [rubenfcasal/simbook](https://github.com/rubenfcasal/simbook)). -->
-      
-    - [Técnicas de Remuestreo](https://rubenfcasal.github.io/book_remuestreo)
-      (disponible en el repositorio de GitHub
-      [rubenfcasal/book_remuestreo](https://github.com/rubenfcasal/book_remuestreo)).
-      
-    - [Introducción al Análisis de Datos con R](https://rubenfcasal.github.io/intror)
-      (disponible en el repositorio de GitHub
-      [rubenfcasal/intror](https://github.com/rubenfcasal/intror)).
-      
-    - [Prácticas de Tecnologías de Gestión y Manipulación de Datos](https://gltaboada.github.io/tgdbook)
-      (disponible en el repositorio de GitHub
-      [gltaboada/tgdbook](https://github.com/gltaboada/tgdbook)).
-      
-    - [Escritura de libros con bookdown](https://rubenfcasal.github.io/bookdown_intro/)
-      (disponible en el repositorio de GitHub
-      [rubenfcasal/bookdown_intro](https://github.com/rubenfcasal/bookdown_intro)).
+    <!-- 
+    - Fernández-Casal R. y Cao R. (2020). *Simulación Estadística*. <https://rubenfcasal.github.io/simbook> ([github](https://github.com/rubenfcasal/simbook)). 
+    -->
+    - Cao R. y Fernández-Casal R. (2020). *Técnicas de Remuestreo* <https://rubenfcasal.github.io/book_remuestreo> ([github](https://github.com/rubenfcasal/book_remuestreo)).
     
-    - [R para profesionales de los datos: una introducción](https://www.datanalytics.com/libro_r/index.html).
+    - Fernández-Casal R. y Costa J. (2020). *Aprendizaje Estadístico*. <https://rubenfcasal.github.io/aprendizaje_estadistico> ([github](https://github.com/rubenfcasal/aprendizaje_estadistico)).
     
-    - [Estadística Básica Edulcorada](https://bookdown.org/aquintela/EBE).
+    - López-Taboada G. y Fernández-Casal R. (2020). *Prácticas de Tecnologías de Gestión y Manipulación de Datos*. <https://gltaboada.github.io/tgdbook> ([github](https://github.com/gltaboada/tgdbook)).
+
+    - Fernández-Casal R. y Cotos-Yáñez T.R. (2018). *Escritura de libros con bookdown*. <https://rubenfcasal.github.io/bookdown_intro> ([github](https://github.com/rubenfcasal/bookdown_intro)). 
+
+    - Gil Bellosta C.J. (2018). [R para profesionales de los datos: una introducción](https://www.datanalytics.com/libro_r/index.html).
+    
+    - Quintela del Rio A. (2019). [Estadística Básica Edulcorada](https://bookdown.org/aquintela/EBE).
 
 
 ***Material online***:
@@ -136,19 +131,23 @@ en la web se puede encontrar mucho material adicional, por ejemplo:
     - [Online learning](https://www.rstudio.com/online-learning), 
       [Webinars](https://resources.rstudio.com/webinars)
       
-    - [tidyverse](https://www.tidyverse.org/):
+    - [tidyverse](https://www.tidyverse.org):
       [dplyr](https://dplyr.tidyverse.org),
+      [ggplot2](https://ggplot2.tidyverse.org),
       [tibble](https://tibble.tidyverse.org),
       [tidyr](https://tidyr.tidyverse.org),
       [stringr](https://stringr.tidyverse.org),
-      [readr](https://readr.tidyverse.org).
-  
-    - [CheatSheets](https://resources.rstudio.com/rstudio-cheatsheets):
-      [RMarkdown](https://resources.rstudio.com/rstudio-cheatsheets/rmarkdown-2-0-cheat-sheet),
-      [Shiny](https://resources.rstudio.com/rstudio-cheatsheets/shiny-cheat-sheet),
-      [dplyr](https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf),
-      [tidyr](https://github.com/rstudio/cheatsheets/blob/master/data-import.pdf),
-      [stringr](https://resources.rstudio.com/rstudio-cheatsheets/stringr-cheat-sheet).
+      [readr](https://readr.tidyverse.org),
+      [purrr](https://purrr.tidyverse.org).
+      
+    - [RMarkdown](https://rmarkdown.rstudio.com), [shiny](http://shiny.rstudio.com), [sparklyr](https://spark.rstudio.com)
+
+    - [CheatSheets](https://resources.rstudio.com/rstudio-cheatsheets) [github](https://github.com/rstudio/cheatsheets):
+      [RMarkdown](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf),
+      [Shiny](https://github.com/rstudio/cheatsheets/raw/master/shiny.pdf),
+      [dplyr](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf),
+      [tidyr](https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf),
+      [stringr](https://github.com/rstudio/cheatsheets/raw/master/stringr-cheat-sheet.pdf).
       
       
 - Blogs en inglés:
@@ -182,3 +181,5 @@ en la web se puede encontrar mucho material adicional, por ejemplo:
         https://grokbase.com/g/r/r-help-es
 
     - Archivos de R-help-es: https://stat.ethz.ch/pipermail/r-help-es
+
+

@@ -217,7 +217,7 @@ Determinación del número de generaciones
 
 Normalmente el valor de $n$ se toma del orden de varias centenas o millares. 
 En los casos en los que la simulación se utiliza para aproximar una característica central de la distribución (como una media) puede bastar un número de simulaciones del orden de $n = 100, 200, 500$. 
-Sin embargo, en otros casos pueden ser necesarios valores del tipo $B = 1000, 2000, 5000, 10000$.
+Sin embargo, en otros casos pueden ser necesarios valores del tipo $n = 1000, 2000, 5000, 10000$.
 
 En muchas ocasiones puede interesar obtener una aproximación con un nivel de precisión fijado.
 Para una precisión absoluta $\varepsilon$, se trata de determinar

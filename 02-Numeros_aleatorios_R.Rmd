@@ -77,7 +77,7 @@ Hay que tener en cuenta que `.Random.seed` se almacena en el entorno de trabajo.
 La función `RNGkind(kind = NULL, normal.kind = NULL)` permite
 seleccionar el tipo de generador (en negrita los valores por defecto):
 
--   `kind `especifica el generador aleatorio:
+-   `kind` especifica el generador aleatorio:
 
     -   “Wichmann-Hill”: Ciclo $6.9536\times10^{12}$
 
@@ -94,7 +94,7 @@ seleccionar el tipo de generador (en negrita los valores por defecto):
 
     -   “user-supplied”
 
--   `normal.kind `selecciona el método de generación de normales 
+-   `normal.kind` selecciona el método de generación de normales 
     (se tratará más adelante).
     “Kinderman-Ramage”, “Buggy Kinderman-Ramage”,
     “Ahrens-Dieter”, “Box-Muller”, **“Inversion”** , o “user-supplied”
@@ -107,7 +107,7 @@ Otros paquetes de R que pueden ser de interés:
 -   `setRNG` contiene herramientas que facilitan operar con la semilla
     (dentro de funciones,...).
 
--   `random` permite la descarga de numeros “true random” desde [RANDOM.ORG](https://www.random.org).
+-   `random` permite la descarga de números “true random” desde [RANDOM.ORG](https://www.random.org).
 
 -   `randtoolbox` implementa generadores más recientes (`rngWELL`) y
     generación de secuencias cuasi-aleatorias.
@@ -137,18 +137,28 @@ a)  Aproximar mediante simulación $P\left(X + Y \leq 0 \right)$ y
     compararla con la probabilidad teórica (obtenida aplicando la
     regla de Laplace $\frac{\text{área favorable}}{\text{área posible}}$).
 
-    Probabilidad teórica 1/2 (area favorable / área total)
+    Generamos `nsim = 10000` valores del proceso bidimensional:
 
     ```{r }
     set.seed(1)
-    n <- 10000
-    x <- runif(n, -1, 1)
-    y <- runif(n, -1, 1)
-    indice <- (x+y < 0)
-    # Aproximación por simulación
-    sum(indice)/n
-    mean(indice) # Alternativa 
+    nsim <- 10000
+    x <- runif(nsim, -1, 1)
+    y <- runif(nsim, -1, 1)
     ```
+
+    La probabilidad teórica es 1/2 y la aproximación por simulación es la frecuencia relativa del suceso en los valores generados:
+    
+    ```{r}
+    indice <- (x+y < 0)
+    sum(indice)/nsim
+    ```
+    
+    Alternativamente (la frecuencia relativa es un caso particular de la media) se puede obtener de forma más simple como:
+    
+    ```{r}
+    mean(indice)
+    ```
+
 
     ```{remark}
     R maneja internamente los valores lógicos como 1 (`TRUE`) y 0 (`FALSE`).
@@ -170,10 +180,10 @@ b)  Aproximar el valor de $\pi$ mediante simulación a partir de
     pi_aprox
     ```
 
-    Gráfico
+    Generamos el correspondiente gráfico `r citefig("simpiplot")` (los puntos con color negro tienen distribución uniforme en el círculo unidad; esto está relacionado con el método de aceptación-rechazo, ver \@ref(exm:ar-esfera), o con el denominado método *hit-or-miss*).
     
-    ```{r }
-    # Colores y símbolos depediendo de si el índice correspondiente es verdadero:
+    ```{r simpiplot, fig.cap='Valores generados con distribución uniforme bidimensional, con colores y símbolos indicando si están dentro del círculo unidad.'}
+    # Colores y símbolos dependiendo de si el índice correspondiente es verdadero:
     color <- ifelse(indice, "black", "red") 
     simbolo <- ifelse(indice, 1, 4)
     plot(x, y, pch = simbolo, col = color, 
@@ -194,12 +204,12 @@ a)  Empleando la función `sample`, obtener 1000 simulaciones del
     no está trucada. Aproximar la probabilidad de cara a partir de
     las simulaciones.
 
-    ```{r }
+    ```{r simberplot, fig.cap='Frecuencias relativas de los valores generados con distribución Bernoulli (aproximaciones por simulación de las probabilidades teóricas).'}
     set.seed(1)
     nsim <- 10000
     x <- sample(c(cara = 1, cruz = 0), nsim, replace = TRUE, prob = c(0.5,0.5))
     mean(x)
-    barplot(100*table(x)/nsim) # Representar porcentajes 
+    barplot(100*table(x)/nsim, ylab = "Porcentaje") # Representar porcentajes 
     ```
 
 b)  En R pueden generarse valores de la distribución de Bernoulli
@@ -209,7 +219,7 @@ b)  En R pueden generarse valores de la distribución de Bernoulli
     relativa del suceso cara (puede ser recomendable emplear la
     función `cumsum`).
 
-    ```{r }
+    ```{r simberconv, fig.cap='Gráfico de convergencia de la aproximación por simulación a la probabilidad teórica.'}
     set.seed(1)
     nsim <- 1000
     p <- 0.4
@@ -229,7 +239,7 @@ Simular el paso de corriente a través del siguiente circuito, donde
 figuran las probabilidades de que pase corriente por cada uno de los
 interruptores:
 
-```{r, echo=FALSE, fig.width = 6, fig.height = 6, fig.align = 'center'}
+```{r, echo=FALSE, out.width="50%", fig.align='center'}
 #  ![Circuito](images/circuito2.png)
 knitr::include_graphics("images/circuito2.png")
 ```
