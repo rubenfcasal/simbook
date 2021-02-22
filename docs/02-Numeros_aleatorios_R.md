@@ -221,14 +221,10 @@ b)  Aproximar el valor de $\pi$ mediante simulación a partir de
     symbols(0, 0, squares = 2, inches = FALSE, add = TRUE)
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/simpiplot-1} 
-    
-    }
-    
-    \caption{Valores generados con distribución uniforme bidimensional, con colores y símbolos indicando si están dentro del círculo unidad.}(\#fig:simpiplot)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="02-Numeros_aleatorios_R_files/figure-html/simpiplot-1.png" alt="Valores generados con distribución uniforme bidimensional, con colores y símbolos indicando si están dentro del círculo unidad." width="70%" />
+    <p class="caption">(\#fig:simpiplot)Valores generados con distribución uniforme bidimensional, con colores y símbolos indicando si están dentro del círculo unidad.</p>
+    </div>
     
 
 \BeginKnitrBlock{exercise}\iffalse{-91-69-120-112-101-114-105-109-101-110-116-111-32-100-101-32-66-101-114-110-111-117-108-108-105-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:bernouilli"><strong>(\#exr:bernouilli)  \iffalse (Experimento de Bernoulli) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
@@ -256,14 +252,10 @@ a)  Empleando la función `sample`, obtener 1000 simulaciones del
     barplot(100*table(x)/nsim, ylab = "Porcentaje") # Representar porcentajes 
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/simberplot-1} 
-    
-    }
-    
-    \caption{Frecuencias relativas de los valores generados con distribución Bernoulli (aproximaciones por simulación de las probabilidades teóricas).}(\#fig:simberplot)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="02-Numeros_aleatorios_R_files/figure-html/simberplot-1.png" alt="Frecuencias relativas de los valores generados con distribución Bernoulli (aproximaciones por simulación de las probabilidades teóricas)." width="70%" />
+    <p class="caption">(\#fig:simberplot)Frecuencias relativas de los valores generados con distribución Bernoulli (aproximaciones por simulación de las probabilidades teóricas).</p>
+    </div>
 
 b)  En R pueden generarse valores de la distribución de Bernoulli
     mediante la función `rbinom(nsim, size=1, prob)`. Generar un
@@ -293,14 +285,10 @@ b)  En R pueden generarse valores de la distribución de Bernoulli
     abline(h=p, lty=2, col="red")
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/simberconv-1} 
-    
-    }
-    
-    \caption{Gráfico de convergencia de la aproximación por simulación a la probabilidad teórica.}(\#fig:simberconv)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="02-Numeros_aleatorios_R_files/figure-html/simberconv-1.png" alt="Gráfico de convergencia de la aproximación por simulación a la probabilidad teórica." width="70%" />
+    <p class="caption">(\#fig:simberconv)Gráfico de convergencia de la aproximación por simulación a la probabilidad teórica.</p>
+    </div>
 
 
 \BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-32-99-105-114-99-117-105-116-111-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:circuito"><strong>(\#exr:circuito)  \iffalse (Simulación de un circuito) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
@@ -308,8 +296,7 @@ Simular el paso de corriente a través del siguiente circuito, donde
 figuran las probabilidades de que pase corriente por cada uno de los
 interruptores:
 
-
-\begin{center}\includegraphics[width=0.5\linewidth]{images/circuito2} \end{center}
+<img src="images/circuito2.png" width="50%" style="display: block; margin: auto;" />
 
 Considerar que cada interruptor es una v.a. de Bernoulli independiente
 para simular 1000 valores de cada una de ellas.
@@ -473,10 +460,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.11    0.01    0.14 
+##    0.06    0.02    0.09 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.11    0.01    0.14
+##    0.06    0.02    0.09
 ```
 
 ```r
@@ -495,10 +482,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##       0       0       0 
+##    0.02    0.00    0.02 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.11    0.01    0.14
+##    0.08    0.02    0.11
 ```
 
 ### Paquetes de R
@@ -589,7 +576,7 @@ cpu.time('\nSample median of', 1000000, 'values =', res, total = FALSE)
 ## Time of last operation: 
 ## Sample median of 1e+06 values = 0.4993323 
 ##    user  system elapsed 
-##    0.10    0.02    0.13
+##    0.06    0.02    0.08
 ```
 
 ```r
@@ -604,7 +591,7 @@ cpu.time('\nSample median of', 1000, 'values =', res)
 ##       0       0       0 
 ## Total time:
 ##    user  system elapsed 
-##    0.10    0.02    0.13
+##    0.06    0.02    0.08
 ```
 
 Otro paquete que puede ser de utilidad es

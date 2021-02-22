@@ -17,6 +17,10 @@ Posteriormente se dará una visión de las diferentes herramientas para estudiar
 
 ## Generadores congruenciales {#gen-cong}
 
+<!-- 
+Pendiente: Incluir nota sobre generadores implementados en ordenadores que trabajan con números enteros o bits
+-->
+
 En los generadores congruenciales lineales se considera una combinación lineal de los últimos $k$ enteros generados y se calcula su resto al dividir por un entero fijo $m$. 
 En el método congruencial simple (de orden $k = 1$), partiendo de una semilla inicial $x_0$, el algoritmo secuencial es el siguiente:
 $$\begin{aligned}
@@ -24,16 +28,17 @@ x_{i}  & = (ax_{i-1}+c) \bmod m \\
 u_{i}  & = \dfrac{x_{i}}{m} \\
 i  & =1,2,\ldots
 \end{aligned}$$ 
-donde $a$ (*multiplicador*), $c$ (*incremento*) y $m$ (*módulo*) son parámetros enteros del generador fijados de antemano. Si $c=0$ el generador se denomina congruencial *multiplicativo* (Lehmer, 1951) y en caso contrario se dice que es *mixto* (Rotenburg, 1960).
+donde $a$ (*multiplicador*), $c$ (*incremento*) y $m$ (*módulo*) son enteros positivos^[Se supone además que $a$, $c$ y $x_0$ son menores que $m$, ya que, dadas las propiedades algebraicas de la suma y el producto en el conjunto de clases de resto módulo $m$ (que es un anillo), cualquier otra elección de valores mayores o iguales que $m$ tiene un equivalente verificando esta restricción.] fijados de antemano (los parámetros de este generador). Si $c=0$ el generador se denomina congruencial *multiplicativo* (Lehmer, 1951) y en caso contrario se dice que es *mixto* (Rotenburg, 1960).
 
 Este método está implementado en el fichero *RANDC.R*, tratando de imitar el funcionamiento de un generador de R (aunque de un forma no muy eficiente):
 
 ```r
-# Generador congruencial de números pseudoaleatorios
-# ==================================================
-
 # --------------------------------------------------
+# Generador congruencial de números pseudoaleatorios
+# --------------------------------------------------
+
 # initRANDC(semilla,a,c,m)
+# -----------------------
 #   Selecciona el generador congruencial
 #   Por defecto RANDU de IBM con semilla del reloj
 #   OJO: No se hace ninguna verificación de los parámetros
@@ -45,8 +50,8 @@ initRANDC <- function(semilla=as.numeric(Sys.time()), a=2^16+3, c=0, m=2^31) {
   return(invisible(list(semilla=.semilla,a=.a,c=.c,m=.m))) #print(initRANDC())
 }
 
-# --------------------------------------------------
 # RANDC()
+# -----------------------
 #   Genera un valor pseudoaleatorio con el generador congruencial
 #   Actualiza la semilla (si no existe llama a initRANDC)
 RANDC <- function() {
@@ -55,8 +60,8 @@ RANDC <- function() {
     return(.semilla/.m)
 }
 
-# --------------------------------------------------
 # RANDCN(n)
+# -----------------------
 #   Genera un vector de valores pseudoaleatorios con el generador congruencial
 #   (por defecto de dimensión 1000)
 #   Actualiza la semilla (si no existe llama a initRANDC)
@@ -72,8 +77,7 @@ initRANDC(543210)       # Fijar semilla 543210 para reproductibilidad
 
 
     
-\BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}Para evitar problemas computacionales, se recomienda emplear
-el método de Schrage (ver Bratley *et al.*, 1987; L'Ecuyer, 1988)</div>\EndKnitrBlock{remark}
+\BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}Para evitar problemas computacionales, se recomienda realizar el cálculo de los valores empleando el método de Schrage (ver Bratley *et al.*, 1987; L'Ecuyer, 1988)</div>\EndKnitrBlock{remark}
 
 
 Ejemplos:
@@ -143,7 +147,7 @@ system.time(u <- RANDCN(9999))  # Generar
 
 ```
 ##    user  system elapsed 
-##    0.05    0.00    0.05
+##    0.02    0.00    0.02
 ```
 
 ```r
@@ -154,14 +158,10 @@ points3D(xyz[,1], xyz[,2], xyz[,3], colvar = NULL, phi = 60,
          theta = -50, pch = 21, cex = 0.2)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/randu-1} 
-
-}
-
-\caption{Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)}(\#fig:randu)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/randu-1.png" alt="Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)" width="70%" />
+<p class="caption">(\#fig:randu)Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)</p>
+</div>
 
 En general todos los generadores de este tipo van a presentar estructuras reticulares.
 Marsaglia (1968) demostró que las $k$-uplas de un generadores multiplicativo están contenidas en a lo sumo $\left(k!m\right)^{1/k}$ hiperplanos paralelos (para más detalles sobre la estructura reticular, ver por ejemplo Ripley, 1987, sección 2.7).
@@ -247,16 +247,12 @@ a)  Generar 500 valores de este generador, obtener el tiempo de CPU,
     abline(h = 1)                   # Densidad uniforme
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/ejcona-1} 
-    
-    }
-    
-    \caption{Histograma de los valores generados}(\#fig:ejcona)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/ejcona-1.png" alt="Histograma de los valores generados" width="70%" />
+    <p class="caption">(\#fig:ejcona)Histograma de los valores generados</p>
+    </div>
 
-    En este caso concreto la distribución de los valores generados es aparentemente más uniforme de lo que cabría esperar, lo que induciría a sospechar de la calidad de este gerenador.
+    En este caso concreto la distribución de los valores generados es aparentemente más uniforme de lo que cabría esperar, lo que induciría a sospechar de la calidad de este generador.
 
 b)  Calcular la media de las simulaciones (`mean`) y compararla con
     la teórica.
@@ -273,7 +269,7 @@ b)  Calcular la media de las simulaciones (`mean`) y compararla con
     ```
     
     La media teórica es 0.5. 
-    Error absoluto $\ensuremath{3.90625\times 10^{-5}}$.
+    Error absoluto $3.90625\times 10^{-5}$.
 
 c)  Aproximar (mediante simulación) la probabilidad del intervalo
     $(0.4;0.8)$ y compararla con la teórica.
@@ -399,14 +395,10 @@ chisq.test.cont(u, distribution = "unif",
                 nclasses = 10, nestpar = 0, min = 0, max = 1)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/chisq-test-unif-1} 
-
-}
-
-\caption{Gráfico resultante de aplicar la función `chisq.test.cont()` comparando el histograma de los valores generados con la densidad uniforme.}(\#fig:chisq-test-unif)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/chisq-test-unif-1.png" alt="Gráfico resultante de aplicar la función `chisq.test.cont()` comparando el histograma de los valores generados con la densidad uniforme." width="70%" />
+<p class="caption">(\#fig:chisq-test-unif)Gráfico resultante de aplicar la función `chisq.test.cont()` comparando el histograma de los valores generados con la densidad uniforme.</p>
+</div>
 
 ```
 ## 
@@ -459,14 +451,10 @@ a)  Realizar el contraste de Kolmogorov-Smirnov para estudiar el
     curve(punif(x, 0, 1), add = TRUE)
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/empdistrunif-1} 
-    
-    }
-    
-    \caption{Comparación de la distribución empírica de la secuencia generada con la función de distribución uniforme.}(\#fig:empdistrunif)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/empdistrunif-1.png" alt="Comparación de la distribución empírica de la secuencia generada con la función de distribución uniforme." width="70%" />
+    <p class="caption">(\#fig:empdistrunif)Comparación de la distribución empírica de la secuencia generada con la función de distribución uniforme.</p>
+    </div>
     Podemos realizar el contraste con el siguiente código:
     
     ```r
@@ -493,14 +481,10 @@ b)  Obtener el gráfico secuencial y el de dispersión retardado, ¿se
     plot(as.ts(u))
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/plot-sec-1} 
-    
-    }
-    
-    \caption{Gráfico secuencial de los valores generados.}(\#fig:plot-sec)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/plot-sec-1.png" alt="Gráfico secuencial de los valores generados." width="70%" />
+    <p class="caption">(\#fig:plot-sec)Gráfico secuencial de los valores generados.</p>
+    </div>
     
     Gráfico de dispersión retardado:
     
@@ -509,14 +493,10 @@ b)  Obtener el gráfico secuencial y el de dispersión retardado, ¿se
     plot(u[-nsim],u[-1])
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/plot-ret-1} 
-    
-    }
-    
-    \caption{Gráfico de dispersión retardado de los valores generados.}(\#fig:plot-ret)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/plot-ret-1.png" alt="Gráfico de dispersión retardado de los valores generados." width="70%" />
+    <p class="caption">(\#fig:plot-ret)Gráfico de dispersión retardado de los valores generados.</p>
+    </div>
 
 c)  Estudiar las correlaciones del vector $(u_{i},u_{i+k})$, con
     $k=1,\ldots,10$. Contrastar si son nulas.
@@ -528,14 +508,10 @@ c)  Estudiar las correlaciones del vector $(u_{i},u_{i+k})$, con
     acf(u)
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/plot-acf-1} 
-    
-    }
-    
-    \caption{Autocorrelaciones de los valores generados.}(\#fig:plot-acf)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="03-Generacion_numeros_aleatorios_files/figure-html/plot-acf-1.png" alt="Autocorrelaciones de los valores generados." width="70%" />
+    <p class="caption">(\#fig:plot-acf)Autocorrelaciones de los valores generados.</p>
+    </div>
     
     Test de Ljung-Box:
     
@@ -642,9 +618,7 @@ hist(estadistico, breaks = "FD", freq=FALSE)
 curve(dchisq(x,99), add=TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-13-1} \end{center}
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 # Test ji-cuadrado
@@ -671,9 +645,7 @@ hist(pvalor, freq=FALSE)
 abline(h=1) # curve(dunif(x,0,1), add=TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-14-1} \end{center}
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 # Test ji-cuadrado
@@ -701,9 +673,7 @@ curve(ecdf(pvalor)(x), type = "s", lwd = 2,
 abline(a = 0, b = 1, lty = 2)   # curve(punif(x, 0, 1), add = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-15-1} \end{center}
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 ### Baterías de contrastes {#baterias}

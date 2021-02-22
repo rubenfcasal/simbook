@@ -85,7 +85,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##       0       0       0
+##    0.02    0.00    0.01
 ```
 
 ```r
@@ -94,14 +94,10 @@ hist(X, breaks = "FD", freq = FALSE,
 curve(dexp(x, lambda), lwd = 2, add = TRUE)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/exp-inv-plot-1} 
-
-}
-
-\caption{Distribución de los valores generados de una exponencial mediante el método de inversión.}(\#fig:exp-inv-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="05-Metodos_generales_continuas_files/figure-html/exp-inv-plot-1.png" alt="Distribución de los valores generados de una exponencial mediante el método de inversión." width="70%" />
+<p class="caption">(\#fig:exp-inv-plot)Distribución de los valores generados de una exponencial mediante el método de inversión.</p>
+</div>
 
 Como se observa en la Figura \@ref(fig:exp-inv-plot) se trata de un método exacto (si está bien implementado) y la distribución de los valores generados se aproxima a la distribución teórica como cabría esperar con una muestra de ese tamaño.
 
@@ -191,14 +187,10 @@ c)  Representar el histograma y compararlo con la densidad teórica.
     curve(ddexp(x, 2), add = TRUE)
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/dexp-inv-1} 
-    
-    }
-    
-    \caption{Distribución de los valores generados de una doble exponencial mediante el método de inversión.}(\#fig:dexp-inv)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="05-Metodos_generales_continuas_files/figure-html/dexp-inv-1.png" alt="Distribución de los valores generados de una doble exponencial mediante el método de inversión." width="70%" />
+    <p class="caption">(\#fig:dexp-inv)Distribución de los valores generados de una doble exponencial mediante el método de inversión.</p>
+    </div>
     Como se trata de un método exacto de simulación, si está bien implementado, la distribución de los valores generados debería comportarse como una muestra genuina de la distribución objetivo.
     
 
@@ -288,8 +280,7 @@ $$A_{f}=\left\{ \left( x,y\right) \in \mathbb{R}^{2}:0\leq y\leq
 f\left( x\right) \right\}.$$
 De esta forma la primera componente tendrá la distribución deseada:
 
-
-\begin{center}\includegraphics[width=0.7\linewidth]{images/rechazo} \end{center}
+<img src="images/rechazo.png" width="70%" style="display: block; margin: auto;" />
 
 $$ P\left( a<X<b\right) = \frac{\text{Area de }\left\{ \left( x,y\right) \in 
 \mathbb{R}^{2}:a<x<b;~0\leq y\leq f\left( x\right) \right\} }{\text{Area de }
@@ -415,14 +406,10 @@ curve(c.opt * ddexp(x), xlim = c(-4, 4), lty = 2)
 curve(dnorm(x), add = TRUE)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/dnorm-ddexp-plot-1} 
-
-}
-
-\caption{Densidad objetivo (normal estándar) y densidad auxiliar (doble exponencial) reescalada.}(\#fig:dnorm-ddexp-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="05-Metodos_generales_continuas_files/figure-html/dnorm-ddexp-plot-1.png" alt="Densidad objetivo (normal estándar) y densidad auxiliar (doble exponencial) reescalada." width="70%" />
+<p class="caption">(\#fig:dnorm-ddexp-plot)Densidad objetivo (normal estándar) y densidad auxiliar (doble exponencial) reescalada.</p>
+</div>
 
 Para generar los valores de la densidad objetivo podríamos emplear el siguiente código:
 
@@ -468,7 +455,7 @@ a)  Generar una muestra de $10^{4}$ observaciones empleando este
     
     ```
     ##    user  system elapsed 
-    ##    0.08    0.00    0.08
+    ##    0.07    0.00    0.08
     ```
     
     ```r
@@ -496,14 +483,10 @@ b)  Representar el histograma y compararlo con la densidad teórica.
     curve(dnorm, add = TRUE)
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/dnorm-ar-1} 
-    
-    }
-    
-    \caption{Distribución de los valores generados mediante el método de aceptación-rechazo.}(\#fig:dnorm-ar)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="05-Metodos_generales_continuas_files/figure-html/dnorm-ar-1.png" alt="Distribución de los valores generados mediante el método de aceptación-rechazo." width="70%" />
+    <p class="caption">(\#fig:dnorm-ar)Distribución de los valores generados mediante el método de aceptación-rechazo.</p>
+    </div>
     Podemos observar que la distribución de los valores generados es la que cabría esperar de una muestra de tamaño `nsim` de la distribución objetivo (lo que nos ayudaría a confirmar que el algoritmo está bien implementado, al ser un método exacto de simulación).
 
 
@@ -717,9 +700,7 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     abline(v = q, lty = 2)
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-12-1} \end{center}
+    <img src="05-Metodos_generales_continuas_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" />
 
 b)  Repetir el apartado anterior con $n=100$.
 
@@ -755,8 +736,7 @@ Algoritmo:
 
 
 
-
-\begin{center}\includegraphics[width=0.7\linewidth]{images/squeeze} \end{center}
+<img src="images/squeeze.png" width="70%" style="display: block; margin: auto;" />
 
 Cuanto mayor sea el área bajo $s\left( x\right)$ (más próxima a 1)
 más efectivo será el algoritmo.

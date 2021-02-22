@@ -114,7 +114,8 @@ Ver: [Cursos MOOC relacionados con R](http://r-es.org/2016/02/12/cursos-masivos-
     
     - López-Taboada G. y Fernández-Casal R. (2020). *Prácticas de Tecnologías de Gestión y Manipulación de Datos*. <https://gltaboada.github.io/tgdbook> ([github](https://github.com/gltaboada/tgdbook)).
 
-    - Fernández-Casal R. y Cotos-Yáñez T.R. (2018). *Escritura de libros con bookdown*. <https://rubenfcasal.github.io/bookdown_intro> ([github](https://github.com/rubenfcasal/bookdown_intro)). 
+    - Fernández-Casal R. y Cotos-Yáñez T.R. (2018). *Escritura de libros con bookdown*. <https://rubenfcasal.github.io/bookdown_intro> ([github](https://github.com/rubenfcasal/bookdown_intro)).
+    Incluye un apéndice con una [introducción a Rmarkdown](https://rubenfcasal.github.io/bookdown_intro/rmarkdown.html). 
 
     - Gil Bellosta C.J. (2018). [R para profesionales de los datos: una introducción](https://www.datanalytics.com/libro_r/index.html).
     

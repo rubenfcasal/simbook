@@ -48,7 +48,7 @@ Si se puede obtener la solución de forma analítica, esta suele ser exacta (aun
 Cuando la solución no se puede obtener de modo analítico (o si la aproximación disponible no es adecuada) se puede recurrir a la simulación.
 
 Nos centraremos en el caso de la *Simulación Estocástica*: las conclusiones se obtienen generando repetidamente simulaciones del modelo aleatorio.
-Muchas veces se emplea la denominación de *método Monte-Carlo*^[Estos métodos surgieron a finales de la década de 1940 como resultado del trabajo realizado por Stanislaw Ulam y John von Neumann en el proyecto Manhattan para el desarrollo de la bomba atómica. Como se trataba de una investigación secreta, Nicholas Metropolis sugirió emplear el nombre clave de “Monte Carlo” en referencia al casino de Monte Carlo de Mónaco.] como sinónimo de simulación estocástica, pero normalmente se trata de métodos especializados que emplean simulación para resolver problemas que pueden no estar relacionados con un modelo estocástico de un sistema real. Por ejemplo, en el Capítulo \@ref(cap9) se tratarán métodos de integración y optimización Monte-Carlo.
+Muchas veces se emplea la denominación de *método Monte-Carlo*^[Estos métodos surgieron a finales de la década de 1940 como resultado del trabajo realizado por Stanislaw Ulam y John von Neumann en el proyecto Manhattan para el desarrollo de la bomba atómica. Como se trataba de una investigación secreta, Nicholas Metropolis sugirió emplear el nombre clave de "Monte-Carlo" en referencia al casino de Monte Carlo de Mónaco.] como sinónimo de simulación estocástica, pero normalmente se trata de métodos especializados que emplean simulación para resolver problemas que pueden no estar relacionados con un modelo estocástico de un sistema real. Por ejemplo, en el Capítulo \@ref(cap9) se tratarán métodos de integración y optimización Monte-Carlo.
 
 <!-- 
 Ejemplo: caballero de Meré 
@@ -138,14 +138,10 @@ Normalmente son obtenidos por procesos físicos
 Por ejemplo, en 1955 la Corporación RAND publicó el libro [A Million Random Digits with 100,000 Normal Deviates](https://www.rand.org/pubs/monograph_reports/MR1418.html) que contenía números aleatorios generados mediante una ruleta electrónica conectada a una computadora (ver Figura \@ref(fig:randbook)).
 
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.3\linewidth]{images/RAND} 
-
-}
-
-\caption{Líneas 10580-10594, columnas 21-40, del libro *A Million Random Digits with 100,000 Normal Deviates*.}(\#fig:randbook)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="images/RAND.png" alt="Líneas 10580-10594, columnas 21-40, del libro *A Million Random Digits with 100,000 Normal Deviates*." width="30%" />
+<p class="caption">(\#fig:randbook)Líneas 10580-10594, columnas 21-40, del libro *A Million Random Digits with 100,000 Normal Deviates*.</p>
+</div>
 
 El procedimiento para generar de forma manual números aleatorios 
 en un rango de 1 a *m* era el siguiente:
@@ -203,14 +199,10 @@ plot(sobol(n, dim = 2), xlab = 'x1', ylab = 'x2')
 plot(torus(n, dim = 2), xlab = 'x1', ylab = 'x2')
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=1\linewidth]{01-Introduccion_files/figure-latex/randtoolbox-1} 
-
-}
-
-\caption{Secuencias cuasi-aleatorias bidimensionales obtenidas con los métodos de Halton (izquierda), Sobol (centro) y Torus (derecha).}(\#fig:randtoolbox)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="01-Introduccion_files/figure-html/randtoolbox-1.png" alt="Secuencias cuasi-aleatorias bidimensionales obtenidas con los métodos de Halton (izquierda), Sobol (centro) y Torus (derecha)." width="100%" />
+<p class="caption">(\#fig:randtoolbox)Secuencias cuasi-aleatorias bidimensionales obtenidas con los métodos de Halton (izquierda), Sobol (centro) y Torus (derecha).</p>
+</div>
 
 ```r
 par(par.old)

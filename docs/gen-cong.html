@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2021-02-07" />
+<meta name="date" content="2021-02-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -334,6 +334,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="gen-cong" class="section level2">
 <h2><span class="header-section-number">3.1</span> Generadores congruenciales</h2>
+<!-- 
+Pendiente: Incluir nota sobre generadores implementados en ordenadores que trabajan con números enteros o bits
+-->
 <p>En los generadores congruenciales lineales se considera una combinación lineal de los últimos <span class="math inline">\(k\)</span> enteros generados y se calcula su resto al dividir por un entero fijo <span class="math inline">\(m\)</span>.
 En el método congruencial simple (de orden <span class="math inline">\(k = 1\)</span>), partiendo de una semilla inicial <span class="math inline">\(x_0\)</span>, el algoritmo secuencial es el siguiente:
 <span class="math display">\[\begin{aligned}
@@ -341,51 +344,51 @@ x_{i}  &amp; = (ax_{i-1}+c) \bmod m \\
 u_{i}  &amp; = \dfrac{x_{i}}{m} \\
 i  &amp; =1,2,\ldots
 \end{aligned}\]</span>
-donde <span class="math inline">\(a\)</span> (<em>multiplicador</em>), <span class="math inline">\(c\)</span> (<em>incremento</em>) y <span class="math inline">\(m\)</span> (<em>módulo</em>) son parámetros enteros del generador fijados de antemano. Si <span class="math inline">\(c=0\)</span> el generador se denomina congruencial <em>multiplicativo</em> (Lehmer, 1951) y en caso contrario se dice que es <em>mixto</em> (Rotenburg, 1960).</p>
+donde <span class="math inline">\(a\)</span> (<em>multiplicador</em>), <span class="math inline">\(c\)</span> (<em>incremento</em>) y <span class="math inline">\(m\)</span> (<em>módulo</em>) son enteros positivos<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> fijados de antemano (los parámetros de este generador). Si <span class="math inline">\(c=0\)</span> el generador se denomina congruencial <em>multiplicativo</em> (Lehmer, 1951) y en caso contrario se dice que es <em>mixto</em> (Rotenburg, 1960).</p>
 <p>Este método está implementado en el fichero <em>RANDC.R</em>, tratando de imitar el funcionamiento de un generador de R (aunque de un forma no muy eficiente):</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="gen-cong.html#cb51-1"></a><span class="co"># Generador congruencial de números pseudoaleatorios</span></span>
-<span id="cb51-2"><a href="gen-cong.html#cb51-2"></a><span class="co"># ==================================================</span></span>
-<span id="cb51-3"><a href="gen-cong.html#cb51-3"></a></span>
-<span id="cb51-4"><a href="gen-cong.html#cb51-4"></a><span class="co"># --------------------------------------------------</span></span>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="gen-cong.html#cb51-1"></a><span class="co"># --------------------------------------------------</span></span>
+<span id="cb51-2"><a href="gen-cong.html#cb51-2"></a><span class="co"># Generador congruencial de números pseudoaleatorios</span></span>
+<span id="cb51-3"><a href="gen-cong.html#cb51-3"></a><span class="co"># --------------------------------------------------</span></span>
+<span id="cb51-4"><a href="gen-cong.html#cb51-4"></a></span>
 <span id="cb51-5"><a href="gen-cong.html#cb51-5"></a><span class="co"># initRANDC(semilla,a,c,m)</span></span>
-<span id="cb51-6"><a href="gen-cong.html#cb51-6"></a><span class="co">#   Selecciona el generador congruencial</span></span>
-<span id="cb51-7"><a href="gen-cong.html#cb51-7"></a><span class="co">#   Por defecto RANDU de IBM con semilla del reloj</span></span>
-<span id="cb51-8"><a href="gen-cong.html#cb51-8"></a><span class="co">#   OJO: No se hace ninguna verificación de los parámetros</span></span>
-<span id="cb51-9"><a href="gen-cong.html#cb51-9"></a>initRANDC &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">semilla=</span><span class="kw">as.numeric</span>(<span class="kw">Sys.time</span>()), <span class="dt">a=</span><span class="dv">2</span><span class="op">^</span><span class="dv">16</span><span class="op">+</span><span class="dv">3</span>, <span class="dt">c=</span><span class="dv">0</span>, <span class="dt">m=</span><span class="dv">2</span><span class="op">^</span><span class="dv">31</span>) {</span>
-<span id="cb51-10"><a href="gen-cong.html#cb51-10"></a>  .semilla &lt;&lt;-<span class="st"> </span><span class="kw">as.double</span>(semilla) <span class="op">%%</span><span class="st"> </span>m  <span class="co">#Cálculos en doble precisión</span></span>
-<span id="cb51-11"><a href="gen-cong.html#cb51-11"></a>  .a &lt;&lt;-<span class="st"> </span>a</span>
-<span id="cb51-12"><a href="gen-cong.html#cb51-12"></a>  .c &lt;&lt;-<span class="st"> </span>c</span>
-<span id="cb51-13"><a href="gen-cong.html#cb51-13"></a>  .m &lt;&lt;-<span class="st"> </span>m</span>
-<span id="cb51-14"><a href="gen-cong.html#cb51-14"></a>  <span class="kw">return</span>(<span class="kw">invisible</span>(<span class="kw">list</span>(<span class="dt">semilla=</span>.semilla,<span class="dt">a=</span>.a,<span class="dt">c=</span>.c,<span class="dt">m=</span>.m))) <span class="co">#print(initRANDC())</span></span>
-<span id="cb51-15"><a href="gen-cong.html#cb51-15"></a>}</span>
-<span id="cb51-16"><a href="gen-cong.html#cb51-16"></a></span>
-<span id="cb51-17"><a href="gen-cong.html#cb51-17"></a><span class="co"># --------------------------------------------------</span></span>
+<span id="cb51-6"><a href="gen-cong.html#cb51-6"></a><span class="co"># -----------------------</span></span>
+<span id="cb51-7"><a href="gen-cong.html#cb51-7"></a><span class="co">#   Selecciona el generador congruencial</span></span>
+<span id="cb51-8"><a href="gen-cong.html#cb51-8"></a><span class="co">#   Por defecto RANDU de IBM con semilla del reloj</span></span>
+<span id="cb51-9"><a href="gen-cong.html#cb51-9"></a><span class="co">#   OJO: No se hace ninguna verificación de los parámetros</span></span>
+<span id="cb51-10"><a href="gen-cong.html#cb51-10"></a>initRANDC &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">semilla=</span><span class="kw">as.numeric</span>(<span class="kw">Sys.time</span>()), <span class="dt">a=</span><span class="dv">2</span><span class="op">^</span><span class="dv">16</span><span class="op">+</span><span class="dv">3</span>, <span class="dt">c=</span><span class="dv">0</span>, <span class="dt">m=</span><span class="dv">2</span><span class="op">^</span><span class="dv">31</span>) {</span>
+<span id="cb51-11"><a href="gen-cong.html#cb51-11"></a>  .semilla &lt;&lt;-<span class="st"> </span><span class="kw">as.double</span>(semilla) <span class="op">%%</span><span class="st"> </span>m  <span class="co">#Cálculos en doble precisión</span></span>
+<span id="cb51-12"><a href="gen-cong.html#cb51-12"></a>  .a &lt;&lt;-<span class="st"> </span>a</span>
+<span id="cb51-13"><a href="gen-cong.html#cb51-13"></a>  .c &lt;&lt;-<span class="st"> </span>c</span>
+<span id="cb51-14"><a href="gen-cong.html#cb51-14"></a>  .m &lt;&lt;-<span class="st"> </span>m</span>
+<span id="cb51-15"><a href="gen-cong.html#cb51-15"></a>  <span class="kw">return</span>(<span class="kw">invisible</span>(<span class="kw">list</span>(<span class="dt">semilla=</span>.semilla,<span class="dt">a=</span>.a,<span class="dt">c=</span>.c,<span class="dt">m=</span>.m))) <span class="co">#print(initRANDC())</span></span>
+<span id="cb51-16"><a href="gen-cong.html#cb51-16"></a>}</span>
+<span id="cb51-17"><a href="gen-cong.html#cb51-17"></a></span>
 <span id="cb51-18"><a href="gen-cong.html#cb51-18"></a><span class="co"># RANDC()</span></span>
-<span id="cb51-19"><a href="gen-cong.html#cb51-19"></a><span class="co">#   Genera un valor pseudoaleatorio con el generador congruencial</span></span>
-<span id="cb51-20"><a href="gen-cong.html#cb51-20"></a><span class="co">#   Actualiza la semilla (si no existe llama a initRANDC)</span></span>
-<span id="cb51-21"><a href="gen-cong.html#cb51-21"></a>RANDC &lt;-<span class="st"> </span><span class="cf">function</span>() {</span>
-<span id="cb51-22"><a href="gen-cong.html#cb51-22"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="kw">exists</span>(<span class="st">&quot;.semilla&quot;</span>, <span class="dt">envir=</span><span class="kw">globalenv</span>())) <span class="kw">initRANDC</span>()</span>
-<span id="cb51-23"><a href="gen-cong.html#cb51-23"></a>    .semilla &lt;&lt;-<span class="st"> </span>(.a <span class="op">*</span><span class="st"> </span>.semilla <span class="op">+</span><span class="st"> </span>.c) <span class="op">%%</span><span class="st"> </span>.m</span>
-<span id="cb51-24"><a href="gen-cong.html#cb51-24"></a>    <span class="kw">return</span>(.semilla<span class="op">/</span>.m)</span>
-<span id="cb51-25"><a href="gen-cong.html#cb51-25"></a>}</span>
-<span id="cb51-26"><a href="gen-cong.html#cb51-26"></a></span>
-<span id="cb51-27"><a href="gen-cong.html#cb51-27"></a><span class="co"># --------------------------------------------------</span></span>
+<span id="cb51-19"><a href="gen-cong.html#cb51-19"></a><span class="co"># -----------------------</span></span>
+<span id="cb51-20"><a href="gen-cong.html#cb51-20"></a><span class="co">#   Genera un valor pseudoaleatorio con el generador congruencial</span></span>
+<span id="cb51-21"><a href="gen-cong.html#cb51-21"></a><span class="co">#   Actualiza la semilla (si no existe llama a initRANDC)</span></span>
+<span id="cb51-22"><a href="gen-cong.html#cb51-22"></a>RANDC &lt;-<span class="st"> </span><span class="cf">function</span>() {</span>
+<span id="cb51-23"><a href="gen-cong.html#cb51-23"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="kw">exists</span>(<span class="st">&quot;.semilla&quot;</span>, <span class="dt">envir=</span><span class="kw">globalenv</span>())) <span class="kw">initRANDC</span>()</span>
+<span id="cb51-24"><a href="gen-cong.html#cb51-24"></a>    .semilla &lt;&lt;-<span class="st"> </span>(.a <span class="op">*</span><span class="st"> </span>.semilla <span class="op">+</span><span class="st"> </span>.c) <span class="op">%%</span><span class="st"> </span>.m</span>
+<span id="cb51-25"><a href="gen-cong.html#cb51-25"></a>    <span class="kw">return</span>(.semilla<span class="op">/</span>.m)</span>
+<span id="cb51-26"><a href="gen-cong.html#cb51-26"></a>}</span>
+<span id="cb51-27"><a href="gen-cong.html#cb51-27"></a></span>
 <span id="cb51-28"><a href="gen-cong.html#cb51-28"></a><span class="co"># RANDCN(n)</span></span>
-<span id="cb51-29"><a href="gen-cong.html#cb51-29"></a><span class="co">#   Genera un vector de valores pseudoaleatorios con el generador congruencial</span></span>
-<span id="cb51-30"><a href="gen-cong.html#cb51-30"></a><span class="co">#   (por defecto de dimensión 1000)</span></span>
-<span id="cb51-31"><a href="gen-cong.html#cb51-31"></a><span class="co">#   Actualiza la semilla (si no existe llama a initRANDC)</span></span>
-<span id="cb51-32"><a href="gen-cong.html#cb51-32"></a>RANDCN &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">n=</span><span class="dv">1000</span>) {</span>
-<span id="cb51-33"><a href="gen-cong.html#cb51-33"></a>    x &lt;-<span class="st"> </span><span class="kw">numeric</span>(n)</span>
-<span id="cb51-34"><a href="gen-cong.html#cb51-34"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n) x[i]&lt;-<span class="kw">RANDC</span>()</span>
-<span id="cb51-35"><a href="gen-cong.html#cb51-35"></a>    <span class="kw">return</span>(x)</span>
-<span id="cb51-36"><a href="gen-cong.html#cb51-36"></a>    <span class="co"># return(replicate(n,RANDC()))  # Alternativa más rápida    </span></span>
-<span id="cb51-37"><a href="gen-cong.html#cb51-37"></a>}</span>
-<span id="cb51-38"><a href="gen-cong.html#cb51-38"></a></span>
-<span id="cb51-39"><a href="gen-cong.html#cb51-39"></a><span class="kw">initRANDC</span>(<span class="dv">543210</span>)       <span class="co"># Fijar semilla 543210 para reproductibilidad</span></span></code></pre></div>
+<span id="cb51-29"><a href="gen-cong.html#cb51-29"></a><span class="co"># -----------------------</span></span>
+<span id="cb51-30"><a href="gen-cong.html#cb51-30"></a><span class="co">#   Genera un vector de valores pseudoaleatorios con el generador congruencial</span></span>
+<span id="cb51-31"><a href="gen-cong.html#cb51-31"></a><span class="co">#   (por defecto de dimensión 1000)</span></span>
+<span id="cb51-32"><a href="gen-cong.html#cb51-32"></a><span class="co">#   Actualiza la semilla (si no existe llama a initRANDC)</span></span>
+<span id="cb51-33"><a href="gen-cong.html#cb51-33"></a>RANDCN &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">n=</span><span class="dv">1000</span>) {</span>
+<span id="cb51-34"><a href="gen-cong.html#cb51-34"></a>    x &lt;-<span class="st"> </span><span class="kw">numeric</span>(n)</span>
+<span id="cb51-35"><a href="gen-cong.html#cb51-35"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n) x[i]&lt;-<span class="kw">RANDC</span>()</span>
+<span id="cb51-36"><a href="gen-cong.html#cb51-36"></a>    <span class="kw">return</span>(x)</span>
+<span id="cb51-37"><a href="gen-cong.html#cb51-37"></a>    <span class="co"># return(replicate(n,RANDC()))  # Alternativa más rápida    </span></span>
+<span id="cb51-38"><a href="gen-cong.html#cb51-38"></a>}</span>
+<span id="cb51-39"><a href="gen-cong.html#cb51-39"></a></span>
+<span id="cb51-40"><a href="gen-cong.html#cb51-40"></a><span class="kw">initRANDC</span>(<span class="dv">543210</span>)       <span class="co"># Fijar semilla 543210 para reproductibilidad</span></span></code></pre></div>
 
 <div class="remark">
- <span class="remark"><em>Nota: </em></span> Para evitar problemas computacionales, se recomienda emplear
-el método de Schrage (ver Bratley <em>et al.</em>, 1987; L’Ecuyer, 1988)
+ <span class="remark"><em>Nota: </em></span> Para evitar problemas computacionales, se recomienda realizar el cálculo de los valores empleando el método de Schrage (ver Bratley <em>et al.</em>, 1987; L’Ecuyer, 1988)
 </div>
 
 <p>Ejemplos:</p>
@@ -437,11 +440,11 @@ que <span class="math inline">\(a^{q}=1 \bmod m\)</span> es <span class="math in
 <p>Además de preocuparse de la longitud del ciclo, las secuencias
 generadas deben aparentar muestras i.i.d. <span class="math inline">\(\mathcal{U}(0,1)\)</span>.</p>
 <p>Uno de los principales problemas es que los valores generados pueden mostrar una clara estructura reticular.
-Este es el caso por ejemplo del generador RANDU de IBM muy empleado en la década de los 70 (ver Figura <a href="gen-cong.html#fig:randu">3.1</a>)<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.
+Este es el caso por ejemplo del generador RANDU de IBM muy empleado en la década de los 70 (ver Figura <a href="gen-cong.html#fig:randu">3.1</a>)<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.
 Por ejemplo, el conjunto de datos <code>randu</code> contiene 400 tripletas de números sucesivos obtenidos con la implementación de VAX/VMS 1.5 (1977).</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="gen-cong.html#cb52-1"></a><span class="kw">system.time</span>(u &lt;-<span class="st"> </span><span class="kw">RANDCN</span>(<span class="dv">9999</span>))  <span class="co"># Generar</span></span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.05    0.00    0.05</code></pre>
+##    0.02    0.00    0.02</code></pre>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="gen-cong.html#cb54-1"></a>xyz &lt;-<span class="st"> </span><span class="kw">matrix</span>(u, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)</span>
 <span id="cb54-2"><a href="gen-cong.html#cb54-2"></a></span>
 <span id="cb54-3"><a href="gen-cong.html#cb54-3"></a><span class="kw">library</span>(plot3D)</span>
@@ -522,7 +525,7 @@ de densidades) y compararla con la densidad teórica.</p>
 Figura 3.2: Histograma de los valores generados
 </p>
 </div>
-<p>En este caso concreto la distribución de los valores generados es aparentemente más uniforme de lo que cabría esperar, lo que induciría a sospechar de la calidad de este gerenador.</p></li>
+<p>En este caso concreto la distribución de los valores generados es aparentemente más uniforme de lo que cabría esperar, lo que induciría a sospechar de la calidad de este generador.</p></li>
 <li><p>Calcular la media de las simulaciones (<code>mean</code>) y compararla con
 la teórica.</p>
 <p>La aproximación por simulación de la media teórica es:</p>
@@ -540,6 +543,12 @@ Error absoluto <span class="math inline">\(3.90625\times 10^{-5}\)</span>.</p></
 <pre><code>## [1] 0.402</code></pre></li>
 </ol>
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="2">
+<li id="fn2"><p>Se supone además que <span class="math inline">\(a\)</span>, <span class="math inline">\(c\)</span> y <span class="math inline">\(x_0\)</span> son menores que <span class="math inline">\(m\)</span>, ya que, dadas las propiedades algebraicas de la suma y el producto en el conjunto de clases de resto módulo <span class="math inline">\(m\)</span> (que es un anillo), cualquier otra elección de valores mayores o iguales que <span class="math inline">\(m\)</span> tiene un equivalente verificando esta restricción.<a href="gen-cong.html#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 
