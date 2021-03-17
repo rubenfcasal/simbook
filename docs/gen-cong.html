@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2021-02-22" />
+<meta name="date" content="2021-03-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -345,7 +345,7 @@ u_{i}  &amp; = \dfrac{x_{i}}{m} \\
 i  &amp; =1,2,\ldots
 \end{aligned}\]</span>
 donde <span class="math inline">\(a\)</span> (<em>multiplicador</em>), <span class="math inline">\(c\)</span> (<em>incremento</em>) y <span class="math inline">\(m\)</span> (<em>módulo</em>) son enteros positivos<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> fijados de antemano (los parámetros de este generador). Si <span class="math inline">\(c=0\)</span> el generador se denomina congruencial <em>multiplicativo</em> (Lehmer, 1951) y en caso contrario se dice que es <em>mixto</em> (Rotenburg, 1960).</p>
-<p>Este método está implementado en el fichero <em>RANDC.R</em>, tratando de imitar el funcionamiento de un generador de R (aunque de un forma no muy eficiente):</p>
+<p>Este método está implementado en el fichero <em>RANDC.R</em>, tratando de imitar el funcionamiento de un generador de R (aunque de un forma no muy eficiente<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>):</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="gen-cong.html#cb51-1"></a><span class="co"># --------------------------------------------------</span></span>
 <span id="cb51-2"><a href="gen-cong.html#cb51-2"></a><span class="co"># Generador congruencial de números pseudoaleatorios</span></span>
 <span id="cb51-3"><a href="gen-cong.html#cb51-3"></a><span class="co"># --------------------------------------------------</span></span>
@@ -386,18 +386,13 @@ donde <span class="math inline">\(a\)</span> (<em>multiplicador</em>), <span cla
 <span id="cb51-38"><a href="gen-cong.html#cb51-38"></a>}</span>
 <span id="cb51-39"><a href="gen-cong.html#cb51-39"></a></span>
 <span id="cb51-40"><a href="gen-cong.html#cb51-40"></a><span class="kw">initRANDC</span>(<span class="dv">543210</span>)       <span class="co"># Fijar semilla 543210 para reproductibilidad</span></span></code></pre></div>
-
-<div class="remark">
- <span class="remark"><em>Nota: </em></span> Para evitar problemas computacionales, se recomienda realizar el cálculo de los valores empleando el método de Schrage (ver Bratley <em>et al.</em>, 1987; L’Ecuyer, 1988)
-</div>
-
 <p>Ejemplos:</p>
 <ul>
-<li><p><span class="math inline">\(c=0\)</span>, <span class="math inline">\(a=2^{16}+3=65539\)</span> y <span class="math inline">\(m=2^{31}\)</span>, generador <code>RANDU</code> de IBM
+<li><p><span class="math inline">\(c=0\)</span>, <span class="math inline">\(a=2^{16}+3=65539\)</span> y <span class="math inline">\(m=2^{31}\)</span>, generador <em>RANDU</em> de IBM
 (<strong>no recomendable</strong>).</p></li>
 <li><p><span class="math inline">\(c=0\)</span>, <span class="math inline">\(a=7^{5}=16807\)</span> y <span class="math inline">\(m=2^{31}-1\)</span> (primo de Mersenne), Park y Miller (1988)
-“minimal standar”, empleado por las librerías IMSL y NAG.</p></li>
-<li><p><span class="math inline">\(c=0\)</span>, <span class="math inline">\(a=48271\)</span> y <span class="math inline">\(m=2^{31}-1\)</span> actualización del “minimal standar”
+<em>minimal standar</em>, empleado por las librerías IMSL y NAG.</p></li>
+<li><p><span class="math inline">\(c=0\)</span>, <span class="math inline">\(a=48271\)</span> y <span class="math inline">\(m=2^{31}-1\)</span> actualización del <em>minimal standar</em>
 propuesta por Park, Miller y Stockmeyer (1993).</p></li>
 </ul>
 <p>Los parámetros y la semilla determinan los valores generados:
@@ -427,7 +422,7 @@ ser (i.e. <span class="math inline">\(m \equiv 0 \bmod 4\Rightarrow a \equiv 1 
 </ul>
 
 <div class="theorem">
-<p><span id="thm:unnamed-chunk-4" class="theorem"><strong>Teorema 3.2  </strong></span>
+<p><span id="thm:unnamed-chunk-3" class="theorem"><strong>Teorema 3.2  </strong></span>
 Un generador multiplicativo tiene período máximo (<span class="math inline">\(p=m-1\)</span>) si:</p>
 <ol style="list-style-type: decimal">
 <li><p><span class="math inline">\(m\)</span> es primo.</p></li>
@@ -440,7 +435,7 @@ que <span class="math inline">\(a^{q}=1 \bmod m\)</span> es <span class="math in
 <p>Además de preocuparse de la longitud del ciclo, las secuencias
 generadas deben aparentar muestras i.i.d. <span class="math inline">\(\mathcal{U}(0,1)\)</span>.</p>
 <p>Uno de los principales problemas es que los valores generados pueden mostrar una clara estructura reticular.
-Este es el caso por ejemplo del generador RANDU de IBM muy empleado en la década de los 70 (ver Figura <a href="gen-cong.html#fig:randu">3.1</a>)<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.
+Este es el caso por ejemplo del generador RANDU de IBM muy empleado en la década de los 70 (ver Figura <a href="gen-cong.html#fig:randu">3.1</a>)<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>.
 Por ejemplo, el conjunto de datos <code>randu</code> contiene 400 tripletas de números sucesivos obtenidos con la implementación de VAX/VMS 1.5 (1977).</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="gen-cong.html#cb52-1"></a><span class="kw">system.time</span>(u &lt;-<span class="st"> </span><span class="kw">RANDCN</span>(<span class="dv">9999</span>))  <span class="co"># Generar</span></span></code></pre></div>
 <pre><code>##    user  system elapsed 
@@ -548,6 +543,7 @@ Error absoluto <span class="math inline">\(3.90625\times 10^{-5}\)</span>.</p></
 <hr />
 <ol start="2">
 <li id="fn2"><p>Se supone además que <span class="math inline">\(a\)</span>, <span class="math inline">\(c\)</span> y <span class="math inline">\(x_0\)</span> son menores que <span class="math inline">\(m\)</span>, ya que, dadas las propiedades algebraicas de la suma y el producto en el conjunto de clases de resto módulo <span class="math inline">\(m\)</span> (que es un anillo), cualquier otra elección de valores mayores o iguales que <span class="math inline">\(m\)</span> tiene un equivalente verificando esta restricción.<a href="gen-cong.html#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Para evitar problemas computacionales, se recomienda realizar el cálculo de los valores empleando el método de Schrage (ver Bratley <em>et al.</em>, 1987; L’Ecuyer, 1988).<a href="gen-cong.html#fnref3" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

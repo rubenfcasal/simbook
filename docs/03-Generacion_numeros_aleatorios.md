@@ -30,7 +30,7 @@ i  & =1,2,\ldots
 \end{aligned}$$ 
 donde $a$ (*multiplicador*), $c$ (*incremento*) y $m$ (*módulo*) son enteros positivos^[Se supone además que $a$, $c$ y $x_0$ son menores que $m$, ya que, dadas las propiedades algebraicas de la suma y el producto en el conjunto de clases de resto módulo $m$ (que es un anillo), cualquier otra elección de valores mayores o iguales que $m$ tiene un equivalente verificando esta restricción.] fijados de antemano (los parámetros de este generador). Si $c=0$ el generador se denomina congruencial *multiplicativo* (Lehmer, 1951) y en caso contrario se dice que es *mixto* (Rotenburg, 1960).
 
-Este método está implementado en el fichero *RANDC.R*, tratando de imitar el funcionamiento de un generador de R (aunque de un forma no muy eficiente):
+Este método está implementado en el fichero *RANDC.R*, tratando de imitar el funcionamiento de un generador de R (aunque de un forma no muy eficiente^[Para evitar problemas computacionales, se recomienda realizar el cálculo de los valores empleando el método de Schrage (ver Bratley *et al.*, 1987; L'Ecuyer, 1988).]):
 
 ```r
 # --------------------------------------------------
@@ -76,19 +76,15 @@ initRANDC(543210)       # Fijar semilla 543210 para reproductibilidad
 ```
 
 
-    
-\BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}Para evitar problemas computacionales, se recomienda realizar el cálculo de los valores empleando el método de Schrage (ver Bratley *et al.*, 1987; L'Ecuyer, 1988)</div>\EndKnitrBlock{remark}
-
-
 Ejemplos:
 
--   $c=0$, $a=2^{16}+3=65539$ y $m=2^{31}$, generador `RANDU` de IBM
+-   $c=0$, $a=2^{16}+3=65539$ y $m=2^{31}$, generador *RANDU* de IBM
     (**no recomendable**).
 
 -   $c=0$, $a=7^{5}=16807$ y $m=2^{31}-1$ (primo de Mersenne), Park y Miller (1988)
-    “minimal standar”, empleado por las librerías IMSL y NAG.
+    *minimal standar*, empleado por las librerías IMSL y NAG.
     
--   $c=0$, $a=48271$ y $m=2^{31}-1$ actualización del “minimal standar” 
+-   $c=0$, $a=48271$ y $m=2^{31}-1$ actualización del *minimal standar* 
     propuesta por Park, Miller y Stockmeyer (1993).
     
 Los parámetros y la semilla determinan los valores generados:
@@ -122,7 +118,7 @@ Algunas consecuencias:
 -   Un generador multiplicativo no cumple la condición 1 ($m.c.d.(0, m)=m$).
 
 
-\BeginKnitrBlock{theorem}<div class="theorem"><span class="theorem" id="thm:unnamed-chunk-4"><strong>(\#thm:unnamed-chunk-4) </strong></span>
+\BeginKnitrBlock{theorem}<div class="theorem"><span class="theorem" id="thm:unnamed-chunk-3"><strong>(\#thm:unnamed-chunk-3) </strong></span>
 Un generador multiplicativo tiene período máximo ($p=m-1$) si:
 
 1.  $m$ es primo.
@@ -618,7 +614,7 @@ hist(estadistico, breaks = "FD", freq=FALSE)
 curve(dchisq(x,99), add=TRUE)
 ```
 
-<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 # Test ji-cuadrado
@@ -645,7 +641,7 @@ hist(pvalor, freq=FALSE)
 abline(h=1) # curve(dunif(x,0,1), add=TRUE)
 ```
 
-<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 # Test ji-cuadrado
@@ -673,7 +669,7 @@ curve(ecdf(pvalor)(x), type = "s", lwd = 2,
 abline(a = 0, b = 1, lty = 2)   # curve(punif(x, 0, 1), add = TRUE)
 ```
 
-<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 ### Baterías de contrastes {#baterias}
@@ -731,11 +727,12 @@ $$x_{i+1}=\left\lfloor \left(  x_{i}^2-\left\lfloor \dfrac{x_{i}^2}{10^{(2k-\fra
 El algoritmo está implementado en el fichero *RANDVN.R*:
 
 ```r
-# Generador Von Neumann de números pseudoaleatorios
-# =================================================
-
 # -------------------------------------------------
+# Generador Von Neumann de números pseudoaleatorios
+# -------------------------------------------------
+
 # initRANDVN(semilla,n)
+# -----------------------
 #   Inicia el generador 
 #   n número de digitos centrales, 4 por defecto (debe ser un nº par)
 #   Por defecto semilla del reloj
@@ -748,8 +745,8 @@ initRANDVN <- function(semilla = as.numeric(Sys.time()), n = 4) {
   return(invisible(list(semilla=.semilla,n=.n)))
 }
 
-# -------------------------------------------------
 # RANDVN()
+# -----------------------
 #   Genera un valor pseudoaleatorio con el generador de Von Neumann.
 #   Actualiza la semilla (si no existe llama a initRANDVN).
 RANDVN <- function() {
@@ -759,8 +756,8 @@ RANDVN <- function() {
     return(.semilla/10^.n)
 }
 
-# -------------------------------------------------
 # RANDVNN(n)
+# -----------------------
 #   Genera un vector de valores pseudoaleatorios, de dimensión `n` 
 #   con elgenerador de Von Neumann.
 #   Actualiza la semilla (si no existe llama a initRANDVN).

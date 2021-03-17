@@ -460,10 +460,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.06    0.02    0.09 
+##    0.06    0.00    0.06 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.06    0.02    0.09
+##    0.06    0.00    0.06
 ```
 
 ```r
@@ -482,15 +482,15 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.02    0.00    0.02 
+##    0.02    0.00    0.01 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.08    0.02    0.11
+##    0.08    0.00    0.07
 ```
 
 ### Paquetes de R
 
-Por ejemplo, se puede emplear el paquete `npsp` (fichero *cpu.time.R*):
+Por ejemplo, se puede emplear el paquete `npsp` (fichero *[cpu.time.R](https://github.com/rubenfcasal/npsp/blob/master/R/cpu.time.R)*):
 
 -   Call `cpu.time(restart = TRUE)` where you want to start counting.
 
@@ -576,7 +576,7 @@ cpu.time('\nSample median of', 1000000, 'values =', res, total = FALSE)
 ## Time of last operation: 
 ## Sample median of 1e+06 values = 0.4993323 
 ##    user  system elapsed 
-##    0.06    0.02    0.08
+##    0.09    0.00    0.10
 ```
 
 ```r
@@ -591,7 +591,7 @@ cpu.time('\nSample median of', 1000, 'values =', res)
 ##       0       0       0 
 ## Total time:
 ##    user  system elapsed 
-##    0.06    0.02    0.08
+##    0.09    0.00    0.10
 ```
 
 Otro paquete que puede ser de utilidad es

@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2021-02-22" />
+<meta name="date" content="2021-03-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -354,45 +354,46 @@ se puede utilizar que:
 <span class="math display">\[x_{i+1}=\left\lfloor \left(  x_{i}^2-\left\lfloor \dfrac{x_{i}^2}{10^{(2k-\frac{k}2)}}\right\rfloor 10^{(2k-\frac{k}2)}\right)
 /10^{\frac{k}2}\right\rfloor\]</span></p>
 <p>El algoritmo está implementado en el fichero <em>RANDVN.R</em>:</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="ejercicios-1.html#cb91-1"></a><span class="co"># Generador Von Neumann de números pseudoaleatorios</span></span>
-<span id="cb91-2"><a href="ejercicios-1.html#cb91-2"></a><span class="co"># =================================================</span></span>
-<span id="cb91-3"><a href="ejercicios-1.html#cb91-3"></a></span>
-<span id="cb91-4"><a href="ejercicios-1.html#cb91-4"></a><span class="co"># -------------------------------------------------</span></span>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="ejercicios-1.html#cb91-1"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb91-2"><a href="ejercicios-1.html#cb91-2"></a><span class="co"># Generador Von Neumann de números pseudoaleatorios</span></span>
+<span id="cb91-3"><a href="ejercicios-1.html#cb91-3"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb91-4"><a href="ejercicios-1.html#cb91-4"></a></span>
 <span id="cb91-5"><a href="ejercicios-1.html#cb91-5"></a><span class="co"># initRANDVN(semilla,n)</span></span>
-<span id="cb91-6"><a href="ejercicios-1.html#cb91-6"></a><span class="co">#   Inicia el generador </span></span>
-<span id="cb91-7"><a href="ejercicios-1.html#cb91-7"></a><span class="co">#   n número de digitos centrales, 4 por defecto (debe ser un nº par)</span></span>
-<span id="cb91-8"><a href="ejercicios-1.html#cb91-8"></a><span class="co">#   Por defecto semilla del reloj</span></span>
-<span id="cb91-9"><a href="ejercicios-1.html#cb91-9"></a><span class="co">#   OJO: No se hace ninguna verificación de los parámetros</span></span>
-<span id="cb91-10"><a href="ejercicios-1.html#cb91-10"></a>initRANDVN &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">semilla =</span> <span class="kw">as.numeric</span>(<span class="kw">Sys.time</span>()), <span class="dt">n =</span> <span class="dv">4</span>) {</span>
-<span id="cb91-11"><a href="ejercicios-1.html#cb91-11"></a>  .semilla &lt;&lt;-<span class="st"> </span><span class="kw">as.double</span>(semilla) <span class="op">%%</span><span class="st"> </span><span class="dv">10</span><span class="op">^</span>n  <span class="co"># Cálculos en doble precisión</span></span>
-<span id="cb91-12"><a href="ejercicios-1.html#cb91-12"></a>  .n &lt;&lt;-<span class="st"> </span>n</span>
-<span id="cb91-13"><a href="ejercicios-1.html#cb91-13"></a>  .aux &lt;&lt;-<span class="st"> </span><span class="dv">10</span><span class="op">^</span>(<span class="dv">2</span><span class="op">*</span>n<span class="op">-</span>n<span class="op">/</span><span class="dv">2</span>)</span>
-<span id="cb91-14"><a href="ejercicios-1.html#cb91-14"></a>  .aux2 &lt;&lt;-<span class="st"> </span><span class="dv">10</span><span class="op">^</span>(n<span class="op">/</span><span class="dv">2</span>)</span>
-<span id="cb91-15"><a href="ejercicios-1.html#cb91-15"></a>  <span class="kw">return</span>(<span class="kw">invisible</span>(<span class="kw">list</span>(<span class="dt">semilla=</span>.semilla,<span class="dt">n=</span>.n)))</span>
-<span id="cb91-16"><a href="ejercicios-1.html#cb91-16"></a>}</span>
-<span id="cb91-17"><a href="ejercicios-1.html#cb91-17"></a></span>
-<span id="cb91-18"><a href="ejercicios-1.html#cb91-18"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb91-6"><a href="ejercicios-1.html#cb91-6"></a><span class="co"># -----------------------</span></span>
+<span id="cb91-7"><a href="ejercicios-1.html#cb91-7"></a><span class="co">#   Inicia el generador </span></span>
+<span id="cb91-8"><a href="ejercicios-1.html#cb91-8"></a><span class="co">#   n número de digitos centrales, 4 por defecto (debe ser un nº par)</span></span>
+<span id="cb91-9"><a href="ejercicios-1.html#cb91-9"></a><span class="co">#   Por defecto semilla del reloj</span></span>
+<span id="cb91-10"><a href="ejercicios-1.html#cb91-10"></a><span class="co">#   OJO: No se hace ninguna verificación de los parámetros</span></span>
+<span id="cb91-11"><a href="ejercicios-1.html#cb91-11"></a>initRANDVN &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">semilla =</span> <span class="kw">as.numeric</span>(<span class="kw">Sys.time</span>()), <span class="dt">n =</span> <span class="dv">4</span>) {</span>
+<span id="cb91-12"><a href="ejercicios-1.html#cb91-12"></a>  .semilla &lt;&lt;-<span class="st"> </span><span class="kw">as.double</span>(semilla) <span class="op">%%</span><span class="st"> </span><span class="dv">10</span><span class="op">^</span>n  <span class="co"># Cálculos en doble precisión</span></span>
+<span id="cb91-13"><a href="ejercicios-1.html#cb91-13"></a>  .n &lt;&lt;-<span class="st"> </span>n</span>
+<span id="cb91-14"><a href="ejercicios-1.html#cb91-14"></a>  .aux &lt;&lt;-<span class="st"> </span><span class="dv">10</span><span class="op">^</span>(<span class="dv">2</span><span class="op">*</span>n<span class="op">-</span>n<span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb91-15"><a href="ejercicios-1.html#cb91-15"></a>  .aux2 &lt;&lt;-<span class="st"> </span><span class="dv">10</span><span class="op">^</span>(n<span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb91-16"><a href="ejercicios-1.html#cb91-16"></a>  <span class="kw">return</span>(<span class="kw">invisible</span>(<span class="kw">list</span>(<span class="dt">semilla=</span>.semilla,<span class="dt">n=</span>.n)))</span>
+<span id="cb91-17"><a href="ejercicios-1.html#cb91-17"></a>}</span>
+<span id="cb91-18"><a href="ejercicios-1.html#cb91-18"></a></span>
 <span id="cb91-19"><a href="ejercicios-1.html#cb91-19"></a><span class="co"># RANDVN()</span></span>
-<span id="cb91-20"><a href="ejercicios-1.html#cb91-20"></a><span class="co">#   Genera un valor pseudoaleatorio con el generador de Von Neumann.</span></span>
-<span id="cb91-21"><a href="ejercicios-1.html#cb91-21"></a><span class="co">#   Actualiza la semilla (si no existe llama a initRANDVN).</span></span>
-<span id="cb91-22"><a href="ejercicios-1.html#cb91-22"></a>RANDVN &lt;-<span class="st"> </span><span class="cf">function</span>() {</span>
-<span id="cb91-23"><a href="ejercicios-1.html#cb91-23"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="kw">exists</span>(<span class="st">&quot;.semilla&quot;</span>, <span class="dt">envir=</span><span class="kw">globalenv</span>())) <span class="kw">initRANDVN</span>()</span>
-<span id="cb91-24"><a href="ejercicios-1.html#cb91-24"></a>    z &lt;-<span class="st"> </span>.semilla<span class="op">^</span><span class="dv">2</span></span>
-<span id="cb91-25"><a href="ejercicios-1.html#cb91-25"></a>    .semilla &lt;&lt;-<span class="st"> </span><span class="kw">trunc</span>((z<span class="op">-</span><span class="kw">trunc</span>(z<span class="op">/</span>.aux)<span class="op">*</span>.aux)<span class="op">/</span>.aux2)</span>
-<span id="cb91-26"><a href="ejercicios-1.html#cb91-26"></a>    <span class="kw">return</span>(.semilla<span class="op">/</span><span class="dv">10</span><span class="op">^</span>.n)</span>
-<span id="cb91-27"><a href="ejercicios-1.html#cb91-27"></a>}</span>
-<span id="cb91-28"><a href="ejercicios-1.html#cb91-28"></a></span>
-<span id="cb91-29"><a href="ejercicios-1.html#cb91-29"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb91-20"><a href="ejercicios-1.html#cb91-20"></a><span class="co"># -----------------------</span></span>
+<span id="cb91-21"><a href="ejercicios-1.html#cb91-21"></a><span class="co">#   Genera un valor pseudoaleatorio con el generador de Von Neumann.</span></span>
+<span id="cb91-22"><a href="ejercicios-1.html#cb91-22"></a><span class="co">#   Actualiza la semilla (si no existe llama a initRANDVN).</span></span>
+<span id="cb91-23"><a href="ejercicios-1.html#cb91-23"></a>RANDVN &lt;-<span class="st"> </span><span class="cf">function</span>() {</span>
+<span id="cb91-24"><a href="ejercicios-1.html#cb91-24"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="kw">exists</span>(<span class="st">&quot;.semilla&quot;</span>, <span class="dt">envir=</span><span class="kw">globalenv</span>())) <span class="kw">initRANDVN</span>()</span>
+<span id="cb91-25"><a href="ejercicios-1.html#cb91-25"></a>    z &lt;-<span class="st"> </span>.semilla<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb91-26"><a href="ejercicios-1.html#cb91-26"></a>    .semilla &lt;&lt;-<span class="st"> </span><span class="kw">trunc</span>((z<span class="op">-</span><span class="kw">trunc</span>(z<span class="op">/</span>.aux)<span class="op">*</span>.aux)<span class="op">/</span>.aux2)</span>
+<span id="cb91-27"><a href="ejercicios-1.html#cb91-27"></a>    <span class="kw">return</span>(.semilla<span class="op">/</span><span class="dv">10</span><span class="op">^</span>.n)</span>
+<span id="cb91-28"><a href="ejercicios-1.html#cb91-28"></a>}</span>
+<span id="cb91-29"><a href="ejercicios-1.html#cb91-29"></a></span>
 <span id="cb91-30"><a href="ejercicios-1.html#cb91-30"></a><span class="co"># RANDVNN(n)</span></span>
-<span id="cb91-31"><a href="ejercicios-1.html#cb91-31"></a><span class="co">#   Genera un vector de valores pseudoaleatorios, de dimensión `n` </span></span>
-<span id="cb91-32"><a href="ejercicios-1.html#cb91-32"></a><span class="co">#   con elgenerador de Von Neumann.</span></span>
-<span id="cb91-33"><a href="ejercicios-1.html#cb91-33"></a><span class="co">#   Actualiza la semilla (si no existe llama a initRANDVN).</span></span>
-<span id="cb91-34"><a href="ejercicios-1.html#cb91-34"></a>RANDVNN &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">n =</span> <span class="dv">1000</span>) {</span>
-<span id="cb91-35"><a href="ejercicios-1.html#cb91-35"></a>    x &lt;-<span class="st"> </span><span class="kw">numeric</span>(n)</span>
-<span id="cb91-36"><a href="ejercicios-1.html#cb91-36"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n) x[i] &lt;-<span class="st"> </span><span class="kw">RANDVN</span>()</span>
-<span id="cb91-37"><a href="ejercicios-1.html#cb91-37"></a>    <span class="kw">return</span>(x)</span>
-<span id="cb91-38"><a href="ejercicios-1.html#cb91-38"></a>    <span class="co"># return(replicate(n,RANDVN()))  # Alternativa más rápida</span></span>
-<span id="cb91-39"><a href="ejercicios-1.html#cb91-39"></a>}</span></code></pre></div>
+<span id="cb91-31"><a href="ejercicios-1.html#cb91-31"></a><span class="co"># -----------------------</span></span>
+<span id="cb91-32"><a href="ejercicios-1.html#cb91-32"></a><span class="co">#   Genera un vector de valores pseudoaleatorios, de dimensión `n` </span></span>
+<span id="cb91-33"><a href="ejercicios-1.html#cb91-33"></a><span class="co">#   con elgenerador de Von Neumann.</span></span>
+<span id="cb91-34"><a href="ejercicios-1.html#cb91-34"></a><span class="co">#   Actualiza la semilla (si no existe llama a initRANDVN).</span></span>
+<span id="cb91-35"><a href="ejercicios-1.html#cb91-35"></a>RANDVNN &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">n =</span> <span class="dv">1000</span>) {</span>
+<span id="cb91-36"><a href="ejercicios-1.html#cb91-36"></a>    x &lt;-<span class="st"> </span><span class="kw">numeric</span>(n)</span>
+<span id="cb91-37"><a href="ejercicios-1.html#cb91-37"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n) x[i] &lt;-<span class="st"> </span><span class="kw">RANDVN</span>()</span>
+<span id="cb91-38"><a href="ejercicios-1.html#cb91-38"></a>    <span class="kw">return</span>(x)</span>
+<span id="cb91-39"><a href="ejercicios-1.html#cb91-39"></a>    <span class="co"># return(replicate(n,RANDVN()))  # Alternativa más rápida</span></span>
+<span id="cb91-40"><a href="ejercicios-1.html#cb91-40"></a>}</span></code></pre></div>
 <p>Estudiar las características del
 generador de cuadrados medios a partir de una secuencia de 500
 valores. Emplear únicamente métodos gráficos.</p>

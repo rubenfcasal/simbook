@@ -174,7 +174,7 @@ b)  Generar $10^{4}$ valores de la distribución doble exponencial de
     
     ```
     ##    user  system elapsed 
-    ##    0.04    0.00    0.03
+    ##    0.02    0.00    0.02
     ```
 
 
@@ -227,7 +227,7 @@ buena que se puede emplear en el algoritmo anterior (se obtendrían simulaciones
 con una distribución aproximada a la deseada).
 
 Por ejemplo, para aproximar la función cuantil de la normal estándar, 
-Odeh y Evans consideraron la siguiente función auxiliar :
+Odeh y Evans (1974) consideraron la siguiente función auxiliar :
 $$ g\left( v\right)  =\sqrt{-2\ln v}\frac{A\left( \sqrt{-2\ln v}\right)
 }{B\left( \sqrt{-2\ln v}\right)  },$$
 siendo $A\left( x\right) =\sum_{i=0}^{4}a_{i}x^{i}$
@@ -258,11 +258,17 @@ $2\cdot10^{-20}$) la aproximación no es recomendable.
 
 4. Devolver $X$.
 
-En manuales de funciones matemáticas, como [Abramowitz y Stegun (1964)](http://people.math.sfu.ca/~cbm/aands/), 
+En manuales de funciones matemáticas, como [Abramowitz y Stegun (1964)](https://www.math.ubc.ca/~cbm/aands/frameindex.htm), 
 se tienen aproximaciones de la función cuantil de las principales distribuciones
-(por ejemplo en la página [993](http://people.math.sfu.ca/~cbm/aands/page_933.htm)
+(por ejemplo en la página [993](https://www.math.ubc.ca/~cbm/aands/page_933.htm)
 las correspondientes a la normal estándar). 
 
+<!-- Wichura, M. J. (1988) Algorithm AS 241: The Percentage Points of the  
+Normal Distribution. Applied Statistics, 37, 477–484.'
+
+and the exact code is in the R sources.  E.g. online at 
+https://svn.r-project.org/R/trunk/src/nmath/qnorm.c
+-->
 
 Método de aceptación rechazo {#AR}
 ----------------------------
@@ -455,7 +461,7 @@ a)  Generar una muestra de $10^{4}$ observaciones empleando este
     
     ```
     ##    user  system elapsed 
-    ##    0.07    0.00    0.08
+    ##    0.10    0.00    0.09
     ```
     
     ```r
@@ -890,7 +896,7 @@ Observaciones:
   $f_{i}$ y se combinan aleatoriamente.
 
 
-Otro ejemplo de una mixtura discreta es el estimador tipo núcleo de la densidad (ver e.g. la ayuda de la función `density()` de R o la [Sección 4.3](https://rubenfcasal.github.io/book_remuestreo/cap4-boot-suav.html) del libro [Técnicas de Remuestreo](https://rubenfcasal.github.io/book_remuestreo)).
+Otro ejemplo de una mixtura discreta es el estimador tipo núcleo de la densidad (ver e.g. la ayuda de la función `density()` de R o la [Sección 3.3](https://rubenfcasal.github.io/book_remuestreo/modunif-boot-suav.html) del libro [Técnicas de Remuestreo](https://rubenfcasal.github.io/book_remuestreo)).
 Simular a partir de una estimación de este tipo es lo que se conoce como *bootstrap suavizado*. 
 
 En el caso de una mixtura continua tendríamos:

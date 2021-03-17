@@ -83,6 +83,8 @@ Marsaglia, G., Zaman, A. y Tsang, W.W. (1990). Toward a universal random number 
 
 Matsumoto, M. y Nishimura, T. (1998). Mersenne Twister: A 623-dimensionally equidistributed uniform pseudo-random number generator, *ACM Transactions on Modeling and Computer Simulation*, 8, 3–30.
 
+Odeh, R.E. y Evans, J.O. (1974). The percentage points of the normal distribution. *Journal of the Royal Statistical Society: Series C (Applied Statistics)*, 23(1), 96-97.
+
 Park, S.K. y Miller , K.W. (1988). Random number generators: good ones are hard to find. *Communications of the ACM*, 31(10), 1192-1201.
 
 Park, S.K., Miller, K.W. y Stockmeyer, P.K. (1993). Technical correspondence. *Communications of the ACM*, 36(7), 108-110. 
