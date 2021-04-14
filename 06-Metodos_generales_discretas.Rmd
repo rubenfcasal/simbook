@@ -1,4 +1,4 @@
-# Simulación de variables discretas {#cap6}
+# Simulación de variables discretas {#discretas}
 
 ```{r , child = '_global_options.Rmd'}
 ```
@@ -57,6 +57,7 @@ Si $U\sim \mathcal{U}\left( 0,1\right)$, la variable aleatoria $Q\left( U\right)
 tiene función de distribución $F$.
 ```
 ```{proof}
+
 Bastaría ver que: 
 $$Q\left( u\right) \leq x \Longleftrightarrow u\leq F(x).$$
 
@@ -64,6 +65,7 @@ Como $F$ es monótona y por la definición de $Q$:
 $$Q\left( u\right) \leq x \Rightarrow u \leq F(Q\left( u\right)) \leq F(x).$$
 Por otro lado como $Q$ también es monótona: 
 $$u \leq F(x) \Rightarrow Q\left( u\right) \leq Q(F(x)) \leq x$$
+  
 ```
 
 
@@ -159,6 +161,7 @@ rfmp <- function(x, prob = 1/length(x), nsim = 1000) {
     ncomp <<- ncomp + i
   }
   return(X)
+  # return(factor(X, levels = x))
 }
 
 
@@ -222,7 +225,8 @@ max(abs(res$psim - res$pteor) / res$pteor)
 ```{remark}
 Puede ocurrir que no todos los valores sean generados en la simulación.
 En el código anterior si `length(x) > length(psim)`, la sentencia
-`res$pteor <- fmp` gererará un error. Alternativamente se podría emplear por ejemplo:
+`res$pteor <- fmp` gererará un error.
+Una posible solución sería trabajar con factores (hacer que la función ´rfmp()´ devuelva ´factor(X, levels = x)´). Alternativamente se podría emplear por ejemplo:
 ```
 ```{r}
 res <- data.frame(x = x, pteor = fmp, psim = 0)
@@ -282,7 +286,7 @@ sum((1:length(x))*fmp[ind]) # Valor teórico
 ```
 
 Como ya se comentó, en `R` se recomienda emplear la función `sample` 
-(implementa eficientemente el método de Alias):
+(implementa eficientemente el método de Alias descrito en la Sección \@ref(alias)):
 
 ```{r }
 system.time( rx <- sample(x, nsim, replace = TRUE, prob = fmp) )
@@ -587,7 +591,7 @@ Otros métodos
   para variables auxiliares continuas.
 
 * Método de composición: este es otro método directamente aplicable y 
-  que se emplea en el método de Alias
+  que se emplea en el método de Alias (descrito en la Sección \@ref(alias))
 
 * Hay otros métodos que tratan de reducir el número medio de comparaciones
   de la búsqueda secuencial, por ejemplo los árboles (binarios) de Huffman
@@ -659,11 +663,10 @@ b)  Implementa el algoritmo en una función que permita generar $nsim$
 
     ```{r }
     # Función cuantil:
-    fquant <- function(u) {
-    ifelse(u < 1/10, 0,
-         ifelse(u < 2/10, 2*(u - 1/10),
-                ifelse(u < 3/10, 1/5, u - 1/10) ) )
-    }
+    fquant <- function(u) 
+      ifelse(u < 1/10, 0,
+             ifelse(u < 2/10, 2*(u - 1/10),
+                    ifelse(u < 3/10, 1/5, u - 1/10) ) )
     # Función para generar nsim valores:
     rx <- function(nsim) fquant(runif(nsim))
     ```
@@ -709,7 +712,28 @@ b)  Repetir el apartado anterior ordenando previamente las
     $k-1$ subintervalos) y usando el método de Alias.
 
 
-## Métodos específicos para generación de distribuciones notables
+## Métodos específicos para generación de distribuciones notables {#notables-disc}
 
-Ver ejemplos del libro de Ricardo 
-y de las funciones implementadas en R. 
+Los comentarios al principio de la Sección \@ref(notables-cont) para el caso de variables continuas serían válidos también para distribuciones notables discretas.
+
+Entre los distintos métodos disponibles para la generación de las distribuciones discretas más conocidas podríamos destacar el de la distribución binomial negativa mediante el método de composición (Sección \@ref(composicion)).
+
+La distribución binomial negativa, $BN(r, p)$, puede interpretarse como el número de fracasos antes del $r$-ésimo éxito^[La distribución binomial negativa es una generalización de la geométrica y, debido a su reproductividad en el parámetro $r$, podría simularse como suma de $r$ variables geométricas. Sin embargo, este algoritmo puede ser muy costoso en tiempo de computación si $r$ es elevado.] y su función de masa de probabilidad es
+$$P(X = i) = \binom{i+r-1}i p^r (1-p)^i \text{, para }i=0,1,\ldots$$
+
+A partir de la propiedad
+$$X|_{Y} \sim \text{Pois}\left(  Y\right)  \text{, }Y \sim \operatorname{Gamma} \left( r, \frac{p}{1-p}\right)  \Rightarrow X \sim BN(r, p)$$
+se puede deducir el siguiente método específico de simulación.
+
+**Algoritmo condicional para simular la binomial negativa**
+
+1. Simular $L \sim \operatorname{Gamma}\left( r, \frac{p}{1-p} \right)$.
+
+2. Simular $X \sim Pois \left(  L\right)$.
+
+3. Devolver $X$.
+
+Por este motivo se denominada también a esta distribución *Gamma–Poisson*. Empleando una aproximación similar podríamos generar otras distribuciones, como la *Beta-Binomial*, empleadas habitualmente en Inferencia Bayesiana.
+
+
+

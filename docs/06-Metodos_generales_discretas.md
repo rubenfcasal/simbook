@@ -1,4 +1,4 @@
-# Simulación de variables discretas {#cap6}
+# Simulación de variables discretas {#discretas}
 
 
 
@@ -56,13 +56,15 @@ Si $F$ es invertible $Q=F^{-1}$.
 
 Si $U\sim \mathcal{U}\left( 0,1\right)$, la variable aleatoria $Q\left( U\right)$
 tiene función de distribución $F$.</div>\EndKnitrBlock{theorem}
-\BeginKnitrBlock{proof}<div class="proof">\iffalse{} <span class="proof"><em>Demostración. </em></span>  \fi{}Bastaría ver que: 
+\BeginKnitrBlock{proof}<div class="proof">\iffalse{} <span class="proof"><em>Demostración. </em></span>  \fi{}
+Bastaría ver que: 
 $$Q\left( u\right) \leq x \Longleftrightarrow u\leq F(x).$$
 
 Como $F$ es monótona y por la definición de $Q$: 
 $$Q\left( u\right) \leq x \Rightarrow u \leq F(Q\left( u\right)) \leq F(x).$$
 Por otro lado como $Q$ también es monótona: 
-$$u \leq F(x) \Rightarrow Q\left( u\right) \leq Q(F(x)) \leq x$$</div>\EndKnitrBlock{proof}
+$$u \leq F(x) \Rightarrow Q\left( u\right) \leq Q(F(x)) \leq x$$
+  </div>\EndKnitrBlock{proof}
 
 
 A partir de este resultado se deduce el siguiente algoritmo general 
@@ -152,6 +154,7 @@ rfmp <- function(x, prob = 1/length(x), nsim = 1000) {
     ncomp <<- ncomp + i
   }
   return(X)
+  # return(factor(X, levels = x))
 }
 ```
 
@@ -184,7 +187,7 @@ system.time( rx <- rfmp(x, fmp, nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.06    0.00    0.06
+##    0.14    0.00    0.15
 ```
 
 Aproximación de la media:
@@ -220,10 +223,14 @@ plot(res, ylab = "frecuencia relativa", xlab = "valores")
 points(x, fmp, pch = 4)  # Comparación teórica
 ```
 
-<div class="figure" style="text-align: center">
-<img src="06-Metodos_generales_discretas_files/figure-html/comprfmp-1.png" alt="Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas." width="70%" />
-<p class="caption">(\#fig:comprfmp)Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{06-Metodos_generales_discretas_files/figure-latex/comprfmp-1} 
+
+}
+
+\caption{Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas.}(\#fig:comprfmp)
+\end{figure}
 
 ```r
 res <- as.data.frame(res)
@@ -266,7 +273,8 @@ max(abs(res$psim - res$pteor) / res$pteor)
 
 \BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}Puede ocurrir que no todos los valores sean generados en la simulación.
 En el código anterior si `length(x) > length(psim)`, la sentencia
-`res$pteor <- fmp` gererará un error. Alternativamente se podría emplear por ejemplo:</div>\EndKnitrBlock{remark}
+`res$pteor <- fmp` gererará un error.
+Una posible solución sería trabajar con factores (hacer que la función ´rfmp()´ devuelva ´factor(X, levels = x)´). Alternativamente se podría emplear por ejemplo:</div>\EndKnitrBlock{remark}
 
 ```r
 res <- data.frame(x = x, pteor = fmp, psim = 0)
@@ -323,7 +331,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##    0.05    0.00    0.05
+##    0.06    0.00    0.06
 ```
 
 ```r
@@ -344,7 +352,7 @@ sum((1:length(x))*fmp[ind]) # Valor teórico
 ```
 
 Como ya se comentó, en `R` se recomienda emplear la función `sample` 
-(implementa eficientemente el método de Alias):
+(implementa eficientemente el método de Alias descrito en la Sección \@ref(alias)):
 
 
 ```r
@@ -353,7 +361,7 @@ system.time( rx <- sample(x, nsim, replace = TRUE, prob = fmp) )
 
 ```
 ##    user  system elapsed 
-##    0.02    0.00    0.01
+##       0       0       0
 ```
 
 
@@ -372,7 +380,8 @@ $$g_{j}=Q_{\mathcal{I}}(u_{j})=\inf \left\{ i:F_{i}\geq u_{j}=\frac{j-1}{m}\righ
 El punto de partida para un valor $U$ será $g_{j_{0}}$ siendo:
 $$j_{0}=\left\lfloor mU\right\rfloor +1$$
 
-<img src="images/tablaguia2.png" width="70%" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics[width=0.7\linewidth]{images/tablaguia2} \end{center}
 
 En este caso, puede verse que una cota del número medio de comparaciones es:
 $$E\left( N\right) \leq 1+\frac{n}{m}$$
@@ -444,7 +453,7 @@ system.time( rx <- rfmp.tabla(x, fmp, n-1, nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.05    0.00    0.05
+##    0.08    0.00    0.08
 ```
 
 Análisis de los resultados:
@@ -455,10 +464,14 @@ plot(res, ylab = "frecuencia relativa", xlab = "valores")
 points(x, fmp, pch = 4)  # Comparación teórica
 ```
 
-<div class="figure" style="text-align: center">
-<img src="06-Metodos_generales_discretas_files/figure-html/comptabla-1.png" alt="Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas." width="70%" />
-<p class="caption">(\#fig:comptabla)Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{06-Metodos_generales_discretas_files/figure-latex/comptabla-1} 
+
+}
+
+\caption{Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas.}(\#fig:comptabla)
+\end{figure}
 
 
 Método de Alias {#alias}
@@ -496,10 +509,14 @@ El algoritmo “Robin Hood” de inicialización (Kronmal y Peterson, 1979) es e
 9.  Ir al paso 3.
 
 
-<div class="figure" style="text-align: center">
-<img src="images/alias2.png" alt="Pasos del algoritmo de inicialización del método Alias." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-20)Pasos del algoritmo de inicialización del método Alias.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{images/alias2} 
+
+}
+
+\caption{Pasos del algoritmo de inicialización del método Alias.}(\#fig:unnamed-chunk-20)
+\end{figure}
 
 El algoritmo para generar las simulaciones es el estándar del método de composición:
 
@@ -551,7 +568,7 @@ system.time( rx <- rfmp.alias(x,fmp,nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.03    0.00    0.03
+##    0.05    0.00    0.04
 ```
 
 Análisis de los resultados:
@@ -562,10 +579,14 @@ plot(res, ylab = "frecuencia relativa", xlab = "valores")
 points(x, fmp, pch = 4)  # Comparación teórica
 ```
 
-<div class="figure" style="text-align: center">
-<img src="06-Metodos_generales_discretas_files/figure-html/compalias-1.png" alt="Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas." width="70%" />
-<p class="caption">(\#fig:compalias)Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{06-Metodos_generales_discretas_files/figure-latex/compalias-1} 
+
+}
+
+\caption{Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas.}(\#fig:compalias)
+\end{figure}
 
 Simulación de una variable discreta con dominio infinito
 --------------------------------------------------------
@@ -667,7 +688,7 @@ Otros métodos
   para variables auxiliares continuas.
 
 * Método de composición: este es otro método directamente aplicable y 
-  que se emplea en el método de Alias
+  que se emplea en el método de Alias (descrito en la Sección \@ref(alias))
 
 * Hay otros métodos que tratan de reducir el número medio de comparaciones
   de la búsqueda secuencial, por ejemplo los árboles (binarios) de Huffman
@@ -705,7 +726,9 @@ curve(fdistr(x), from = -0.1, to = 1.1, type = 's',
 abline(h = c(1/10, 2/10, 3/10), lty = 2) 
 ```
 
-<img src="06-Metodos_generales_discretas_files/figure-html/unnamed-chunk-25-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{06-Metodos_generales_discretas_files/figure-latex/unnamed-chunk-25-1} \end{center}
 
 
 **Nota**: Esta variable toma los valores 0 y 1/5 con probabilidad 1/10.
@@ -742,11 +765,10 @@ b)  Implementa el algoritmo en una función que permita generar $nsim$
     
     ```r
     # Función cuantil:
-    fquant <- function(u) {
-    ifelse(u < 1/10, 0,
-         ifelse(u < 2/10, 2*(u - 1/10),
-                ifelse(u < 3/10, 1/5, u - 1/10) ) )
-    }
+    fquant <- function(u) 
+      ifelse(u < 1/10, 0,
+             ifelse(u < 2/10, 2*(u - 1/10),
+                    ifelse(u < 3/10, 1/5, u - 1/10) ) )
     # Función para generar nsim valores:
     rx <- function(nsim) fquant(runif(nsim))
     ```
@@ -769,7 +791,9 @@ b)  Implementa el algoritmo en una función que permita generar $nsim$
     hist(simx, breaks = "FD", freq = FALSE)
     ```
     
-    <img src="06-Metodos_generales_discretas_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{06-Metodos_generales_discretas_files/figure-latex/unnamed-chunk-27-1} \end{center}
     
     En este caso como no es una variable absolutamente continua mejor emplear 
     la función de distribución para compararla con la teórica:
@@ -780,7 +804,9 @@ b)  Implementa el algoritmo en una función que permita generar $nsim$
     curve(fdistr(x), type = "s", lty = 2, add = TRUE)
     ```
     
-    <img src="06-Metodos_generales_discretas_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{06-Metodos_generales_discretas_files/figure-latex/unnamed-chunk-28-1} \end{center}
 
 
 \BeginKnitrBlock{exercise}\iffalse{-91-112-114-111-112-117-101-115-116-111-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:hipergeom"><strong>(\#exr:hipergeom)  \iffalse (propuesto) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
@@ -804,7 +830,28 @@ b)  Repetir el apartado anterior ordenando previamente las
     $k-1$ subintervalos) y usando el método de Alias.
 
 
-## Métodos específicos para generación de distribuciones notables
+## Métodos específicos para generación de distribuciones notables {#notables-disc}
 
-Ver ejemplos del libro de Ricardo 
-y de las funciones implementadas en R. 
+Los comentarios al principio de la Sección \@ref(notables-cont) para el caso de variables continuas serían válidos también para distribuciones notables discretas.
+
+Entre los distintos métodos disponibles para la generación de las distribuciones discretas más conocidas podríamos destacar el de la distribución binomial negativa mediante el método de composición (Sección \@ref(composicion)).
+
+La distribución binomial negativa, $BN(r, p)$, puede interpretarse como el número de fracasos antes del $r$-ésimo éxito^[La distribución binomial negativa es una generalización de la geométrica y, debido a su reproductividad en el parámetro $r$, podría simularse como suma de $r$ variables geométricas. Sin embargo, este algoritmo puede ser muy costoso en tiempo de computación si $r$ es elevado.] y su función de masa de probabilidad es
+$$P(X = i) = \binom{i+r-1}i p^r (1-p)^i \text{, para }i=0,1,\ldots$$
+
+A partir de la propiedad
+$$X|_{Y} \sim \text{Pois}\left(  Y\right)  \text{, }Y \sim \operatorname{Gamma} \left( r, \frac{p}{1-p}\right)  \Rightarrow X \sim BN(r, p)$$
+se puede deducir el siguiente método específico de simulación.
+
+**Algoritmo condicional para simular la binomial negativa**
+
+1. Simular $L \sim \operatorname{Gamma}\left( r, \frac{p}{1-p} \right)$.
+
+2. Simular $X \sim Pois \left(  L\right)$.
+
+3. Devolver $X$.
+
+Por este motivo se denominada también a esta distribución *Gamma–Poisson*. Empleando una aproximación similar podríamos generar otras distribuciones, como la *Beta-Binomial*, empleadas habitualmente en Inferencia Bayesiana.
+
+
+

@@ -1,11 +1,9 @@
-Simulación de variables continuas
-=================================
+# Simulación de variables continuas {#sim-con}
 
-<!-- PENDIENTE:
+<!-- 
+PENDIENTE:
 Emplear entorno algoritmo
 Usar ejemplos en lugar de ejercicios
-Emplearemos también $X\sim f$ para indicar que $X$ es una variable aleatoria con función de densidad $f$
-
 Ejemplo cociente de uniformes
 -->
 
@@ -13,64 +11,70 @@ Ejemplo cociente de uniformes
 
 
 
-En este capítulo se expondrán métodos generales para simular
-distribuciones continuas: el método de inversión y los basados en
-aceptación/rechazo. En todos los casos como punto de partida es necesario
+En este capítulo se expondrán métodos generales para simular distribuciones continuas: el método de inversión y los basados en aceptación/rechazo. 
+En todos los casos como punto de partida es necesario
 disponer de un método de generación de números pseudoaleatorios uniformes en $(0,1)$.
 
 
-Método de inversión
--------------------
+## Método de inversión
 
-Se trataría del método preferible para la simulación de una variable continua
-(siempre que se disponga de la función cuantil). 
+Se trataría del método preferible para la simulación de una variable continua (siempre que se disponga de la función cuantil). 
 Está basado en los siguientes resultados:
 
 Si $X$ es una variable aleatoria con función de distribución $F$ continua y estrictamente monótona 
 (invertible), entonces:
-$$U=F\left( X\right) \sim \mathcal{U}\left( 0,1\right),$$
+$$U=F\left( X \right) \sim \mathcal{U}(0, 1)$$
 ya que:
-$$G\left( u\right) = P\left( Y\leq u\right) 
-= P\left( F\left( X\right) \leq u\right) \\
-= P\left( X\leq F^{-1}\left( u\right) \right) 
-= F\left( F^{-1}\left( u\right) \right) = u.$$
+$$G\left( u \right) = P\left( Y \leq u \right) 
+= P\left( F(X) \leq u \right) \\
+= P\left( X \leq F^{-1}(u) \right) 
+= F\left( F^{-1}(u) \right) = u$$
 
-El recíproco también es cierto, si $U\sim \mathcal{U}\left( 0,1\right)$
-entonces: 
-$$F^{-1}\left( U\right) \sim X$$
+El recíproco también es cierto, si $U \sim \mathcal{U}(0, 1)$ entonces: 
+$$F^{-1}\left( U \right) \sim X$$
 
-**Algoritmo (método de inversión)**:
+A partir de este resultado se deduce el siguiente algoritmo genérico para simular una variable continua con función de distribución $F$ invertible:
 
-1. Generar $U\sim \mathcal{U}\left( 0,1\right)$.
+\BeginKnitrBlock{conjecture}\iffalse{-91-77-233-116-111-100-111-32-100-101-32-105-110-118-101-114-115-105-243-110-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:inversion"><strong>(\#cnj:inversion)  \iffalse (Método de inversión) \fi{} </strong></span>
+1. Generar $U \sim \mathcal{U}(0, 1)$.
 
-2. Devolver $X=F^{-1}\left( U\right)$.
-
-
+2. Devolver $X = F^{-1}\left( U \right)$.
+</div>\EndKnitrBlock{conjecture}
+<!-- \@ref(cnj:inversion) -->
 
 \BeginKnitrBlock{example}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-100-105-115-116-114-105-98-117-99-105-243-110-32-101-120-112-111-110-101-110-99-105-97-108-93-}\fi{}<div class="example"><span class="example" id="exm:exp-inv"><strong>(\#exm:exp-inv)  \iffalse (Simulación de una distribución exponencial) \fi{} </strong></span></div>\EndKnitrBlock{example}
 
 La distribución exponencial $\exp \left( \lambda \right)$ de parámetro $\lambda>0$
-tiene como función de densidad $f\left( x\right) =\lambda e^{-\lambda x}$, si $x\geq 0$,
+tiene como función de densidad $f(x) =\lambda e^{-\lambda x}$, si $x\geq 0$,
 y como función de distribución:
 $$F(x)=\left\{ \begin{array}{ll}
 1-e^{-\lambda x} & \text{si } x \ge 0 \\
 0 & \text{si } x < 0\\
 \end{array} \right.$$
 Teniendo en cuenta que:
-$$1-e^{-\lambda x}=u \Leftrightarrow x=-\frac{\ln \left( 1-u\right) }{ \lambda },$$
+$$1-e^{-\lambda x}=u \Leftrightarrow x=-\frac{\ln \left( 1-u\right) }{ \lambda }$$
 el algoritmo para simular esta variable mediante el método de inversión es:
 
-1. Generar $U\sim \mathcal{U}\left( 0,1\right)$.
+1. Generar $U \sim \mathcal{U}(0, 1)$.
 
 2. Devolver $X=-\dfrac{\ln \left( 1-U\right) }{\lambda }$.
 
-En el último paso podemos emplear directamente $U$ en lugar de $1-U$, ya que $1 - U\sim \mathcal{U}\left( 0,1\right)$.
+En el último paso podemos emplear directamente $U$ en lugar de $1-U$, ya que $1 - U \sim \mathcal{U}(0, 1)$.
 Esta última expresión para acelerar los cálculos es la que denominaremos *forma simplificada*. 
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/inv-movie-1} 
+
+}
+
+\caption{Ilustración de la simulación de una distribución exponencial por el método de inversión.}(\#fig:inv-movie)
+\end{figure}
+
 
 El código para implementar este algoritmo en R podría ser el siguiente:
 
 ```r
-# Simular vector exp(lambda)
 tini <- proc.time()
 
 lambda <- 2
@@ -94,10 +98,14 @@ hist(X, breaks = "FD", freq = FALSE,
 curve(dexp(x, lambda), lwd = 2, add = TRUE)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="05-Metodos_generales_continuas_files/figure-html/exp-inv-plot-1.png" alt="Distribución de los valores generados de una exponencial mediante el método de inversión." width="70%" />
-<p class="caption">(\#fig:exp-inv-plot)Distribución de los valores generados de una exponencial mediante el método de inversión.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/exp-inv-plot-1} 
+
+}
+
+\caption{Distribución de los valores generados de una exponencial mediante el método de inversión.}(\#fig:exp-inv-plot)
+\end{figure}
 
 Como se observa en la Figura \@ref(fig:exp-inv-plot) se trata de un método exacto (si está bien implementado) y la distribución de los valores generados se aproxima a la distribución teórica como cabría esperar con una muestra de ese tamaño.
 
@@ -109,7 +117,7 @@ fácilmente mediante el método de inversión. Se adjunta una forma
 simplificada del método que tiene por objeto evitar cálculos
 innecesarios (tal y como se hizo en el ejemplo de la exponencial).
 
-Nombre  | Densidad  | $F\left( x\right)$  | $F^{-1}\left( U\right)$  | Forma simplificada
+Nombre  | Densidad  | $F(x)$  | $F^{-1}\left( U\right)$  | Forma simplificada
 ------------- | ------------- | ------------- | ------------- | -------------
 $\exp\left( \lambda\right)$ ($\lambda>0$)  | $\lambda e^{-\lambda x}$, si $x\geq0$  | $1-e^{-\lambda x}$  | $-\dfrac{\ln\left( 1-U\right)  }\lambda$  | $-\dfrac{\ln U}\lambda$
 Cauchy  | $\dfrac1{\pi\left( 1+x^{2}\right)  }$  | $\dfrac12+\dfrac{\arctan x}\pi$   | $\tan\left( \pi\left( U-\dfrac12\right) \right)$  | $\tan\pi U$
@@ -122,10 +130,10 @@ Weibull ($\lambda,\alpha>0$) | $\alpha\lambda^{\alpha}x^{\alpha-1}e^{-\left( \la
 
 La distribución doble exponencial (o distribución de Laplace) de
 parámetro $\lambda$ tiene función de densidad:
-$$f\left( x\right)  =\frac{\lambda}{2}e^{-\lambda\left\vert x\right\vert
+$$f(x)  =\frac{\lambda}{2}e^{-\lambda\left\vert x\right\vert
 }\text{, }x\in\mathbb{R}$$ 
 y función de distribución:
-$$F\left( x\right)  =\int_{-\infty}^{x}f\left( t\right)  dt=\left\{
+$$F(x)  =\int_{-\infty}^{x}f\left( t\right)  dt=\left\{
 \begin{array}{ll}
 \frac{1}{2}e^{\lambda x} & \text{si } x<0\\
 1-\frac{1}{2}e^{-\lambda x} & \text{si } x\geq0
@@ -174,7 +182,7 @@ b)  Generar $10^{4}$ valores de la distribución doble exponencial de
     
     ```
     ##    user  system elapsed 
-    ##    0.02    0.00    0.02
+    ##    0.05    0.00    0.04
     ```
 
 
@@ -187,10 +195,14 @@ c)  Representar el histograma y compararlo con la densidad teórica.
     curve(ddexp(x, 2), add = TRUE)
     ```
     
-    <div class="figure" style="text-align: center">
-    <img src="05-Metodos_generales_continuas_files/figure-html/dexp-inv-1.png" alt="Distribución de los valores generados de una doble exponencial mediante el método de inversión." width="70%" />
-    <p class="caption">(\#fig:dexp-inv)Distribución de los valores generados de una doble exponencial mediante el método de inversión.</p>
-    </div>
+    \begin{figure}[!htb]
+    
+    {\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/dexp-inv-1} 
+    
+    }
+    
+    \caption{Distribución de los valores generados de una doble exponencial mediante el método de inversión.}(\#fig:dexp-inv)
+    \end{figure}
     Como se trata de un método exacto de simulación, si está bien implementado, la distribución de los valores generados debería comportarse como una muestra genuina de la distribución objetivo.
     
 
@@ -211,7 +223,7 @@ Inconvenientes:
 
 Alternativas:
 
-* Emplear métodos numéricos para resolver $F\left( x\right) -u=0$
+* Emplear métodos numéricos para resolver $F(x) - u=0$
   (requeriría resolver numéricamente esta ecuación para cada
   valor aleatorio que se desee generar).
 
@@ -227,11 +239,11 @@ buena que se puede emplear en el algoritmo anterior (se obtendrían simulaciones
 con una distribución aproximada a la deseada).
 
 Por ejemplo, para aproximar la función cuantil de la normal estándar, 
-Odeh y Evans (1974) consideraron la siguiente función auxiliar :
+Odeh y Evans (1974) consideraron la siguiente función auxiliar^[R emplea una aproximación similar, basada en el algoritmo de Wichura (1988) más preciso, y que está implementado en el fichero fuente [qnorm.c](https://svn.r-project.org/R/trunk/src/nmath/qnorm.c).]:
 $$ g\left( v\right)  =\sqrt{-2\ln v}\frac{A\left( \sqrt{-2\ln v}\right)
 }{B\left( \sqrt{-2\ln v}\right)  },$$
-siendo $A\left( x\right) =\sum_{i=0}^{4}a_{i}x^{i}$
-y $B\left( x\right)  =\sum_{i=0}^{4}b_{i}x^{i}$ con:
+siendo $A(x) =\sum_{i=0}^{4}a_{i}x^{i}$
+y $B(x)  =\sum_{i=0}^{4}b_{i}x^{i}$ con:
 
 $$\begin{array}{ll}
 a_{0}=-0.322232431088 &  b_{0}=0.0993484626060 \\
@@ -247,9 +259,10 @@ y $-g\left( u\right)$ si $u\in[\frac12,1-10^{-20}]$. Para $u\notin
 [10^{-20},1-10^{-20}]$ (que sólo ocurre con una probabilidad de
 $2\cdot10^{-20}$) la aproximación no es recomendable.
 
-**Algoritmo de Odeh y Evans**
 
-1. Generar $U\sim U\left( 0,1\right)$.
+\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-79-100-101-104-32-121-32-69-118-97-110-115-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:Odeh-Evans"><strong>(\#cnj:Odeh-Evans)  \iffalse (de Odeh y Evans) \fi{} </strong></span>
+
+1. Generar $U \sim U(0, 1)$.
 
 2. Si $U<10^{-20}$ ó $U>1-10^{-20}$ entonces volver a 1.
 
@@ -257,21 +270,17 @@ $2\cdot10^{-20}$) la aproximación no es recomendable.
    en caso contrario hacer $X=-g\left( U\right)$.
 
 4. Devolver $X$.
+</div>\EndKnitrBlock{conjecture}
+<!-- \@ref(cnj:Odeh-Evans) -->
+
 
 En manuales de funciones matemáticas, como [Abramowitz y Stegun (1964)](https://www.math.ubc.ca/~cbm/aands/frameindex.htm), 
 se tienen aproximaciones de la función cuantil de las principales distribuciones
 (por ejemplo en la página [993](https://www.math.ubc.ca/~cbm/aands/page_933.htm)
 las correspondientes a la normal estándar). 
 
-<!-- Wichura, M. J. (1988) Algorithm AS 241: The Percentage Points of the  
-Normal Distribution. Applied Statistics, 37, 477–484.'
 
-and the exact code is in the R sources.  E.g. online at 
-https://svn.r-project.org/R/trunk/src/nmath/qnorm.c
--->
-
-Método de aceptación rechazo {#AR}
-----------------------------
+## Método de aceptación rechazo {#AR}
 
 Se trata de un método universal alternativo al de inversión para
 el caso de que no se pueda emplear la función cuantil, 
@@ -283,34 +292,30 @@ bidimensional $\left( X, Y\right)$ con distribución
 uniforme en el hipografo de $f$ (el conjunto de puntos del plano 
 comprendidos entre el eje OX y $f$):
 $$A_{f}=\left\{ \left( x,y\right) \in \mathbb{R}^{2}:0\leq y\leq
-f\left( x\right) \right\}.$$
+f(x) \right\}.$$
 De esta forma la primera componente tendrá la distribución deseada:
 
-<img src="images/rechazo.png" width="70%" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics[width=0.7\linewidth]{images/rechazo} \end{center}
 
 $$ P\left( a<X<b\right) = \frac{\text{Area de }\left\{ \left( x,y\right) \in 
-\mathbb{R}^{2}:a<x<b;~0\leq y\leq f\left( x\right) \right\} }{\text{Area de }
+\mathbb{R}^{2}:a<x<b;~0\leq y\leq f(x) \right\} }{\text{Area de }
 A_{f}} \\
-= \int_{a}^{b}f\left( x\right) dx $$
+= \int_{a}^{b}f(x) dx $$
 
-<!-- 
-el resultado anterior no depende de la constante normalizadora,
-teorema aceptación/rechazo
-por tanto es válido para cuasidensidades
--->
 El resultado anterior es también válido para una cuasi-densidad $f^{\ast}$
 (no depende de la constante normalizadora). 
 El resultado general sería en siguiente:
 
 * Si $X$ es una variable aleatoria con función de densidad $f$ 
-  y $U \sim \mathcal{U}\left( 0, 1 \right)$ entonces
-  $$\left( X,c\cdot U\cdot f\left( X\right) \right) \sim \mathcal{U}\left(
+  y $U \sim \mathcal{U}(0, 1)$ entonces
+  $$\left( X,c\cdot U\cdot f(x) \right) \sim \mathcal{U}\left(
   A_{cf}\right)$$
   siendo
   $A_{cf}=\left\{ \left( x, y \right) \in \mathbb{R}^{2} : 0 \leq y \leq
   cf\left( x \right) \right\}$.
 
-* Recíprocamente si $\left( X,Y\right) \sim \mathcal{U}\left(A_{cf}\right) \Rightarrow X\sim f$.
+* Recíprocamente si $\left( X,Y\right) \sim \mathcal{U}\left(A_{cf}\right)$ entonces^[Emplearemos también $X\sim f$ para indicar que $X$ es una variable aleatoria con función de densidad $f$.] $X\sim f$.
 
 Para generar valores de una variable aleatoria bidimensional con distribución uniforme
 en $A_{f}$ (o en $A_{f^{\ast }}$), se emplea el resultado anterior para 
@@ -333,12 +338,12 @@ y la densidad de la primera componente $T$ será $f$.
 Supongamos que $f$ es la densidad objetivo y $g$ es una densidad
 auxiliar (fácil de simular y similar a $f$), de forma que
 existe una constante $c>0$ tal que:
-$$f\left( x\right) \leq c\cdot g\left( x\right) 
+$$f(x) \leq c\cdot g(x) 
 \text{, }\forall x\in \mathbb{R}\text{.}$$
 
-Algoritmo (Von Neuman, 1951):
+\BeginKnitrBlock{conjecture}\iffalse{-91-77-233-116-111-100-111-32-100-101-32-97-99-101-112-116-97-99-105-243-110-45-114-101-99-104-97-122-111-59-32-86-111-110-32-78-101-117-109-97-110-44-32-49-57-53-49-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:aceptacion-rechazo"><strong>(\#cnj:aceptacion-rechazo)  \iffalse (Método de aceptación-rechazo; Von Neuman, 1951) \fi{} </strong></span>
 
-1.  Generar $U\sim \mathcal{U}\left( 0, 1\right)$.
+1.  Generar $U \sim \mathcal{U}(0, 1)$.
 
 2.  Generar $T\sim g$.
 
@@ -346,28 +351,25 @@ Algoritmo (Von Neuman, 1951):
     devolver $X=T$,
 
     en caso contrario volver al paso 1.
+</div>\EndKnitrBlock{conjecture}
+<!-- \@ref(cnj:aceptacion-rechazo) -->
 
 
 ### Densidades acotadas en un intervalo cerrado
 
-Sea $f$ una función de
-densidad cualquiera con soporte en un intervalo cerrado $[a,b]$ (es
-decir, $\{x/f\left( x\right)  \neq0\}=[a,b]$) de tal forma que
-existe una constante $M>0$ tal que $f\left( x\right)  \leq M$ $\forall x$ (es decir,
-$f$ es acotada superiormente). En este caso puede tomarse como densidad
-auxiliar $g$, la de una $\mathcal{U}(a,b)$. En efecto, tomando
-$c=M\left( b-a\right)$ y teniendo en cuenta que
-$$g\left( x\right)  =\left\{
-\begin{array}{ll}\frac{1}{b-a} & \text{si } x\in\lbrack a,b]\\
+Sea $f$ una función de densidad cualquiera con soporte en un intervalo cerrado $[a,b]$ (es decir, $\{x : f(x) > 0\}=[a,b]$) de tal forma que existe una constante $M>0$ tal que $f(x) \leq M$ $\forall x$ (es decir, $f$ es acotada superiormente). 
+En este caso puede tomarse como densidad auxiliar $g$, la de una $\mathcal{U}(a,b)$. 
+En efecto, tomando $c = M\left( b-a\right)$ y teniendo en cuenta que
+$$g(x) = \left\{
+\begin{array}{ll}\frac{1}{b-a} & \text{si } x \in [a,b]\\
 0 & \text{en caso contrario}
 \end{array} \right.$$ 
-se tiene que
-$f\left( x\right)  \leq M = \frac{c}{b-a}=c\cdot g\left(
-x\right)$, $\forall x\in\lbrack a,b]$. Así pues, el algoritmo quedaría
-como sigue:
+se tiene que $f(x) \leq M = \frac{c}{b-a}=c \cdot g(x)$, 
+$\forall x \in [a,b]$. 
+Así pues, el algoritmo quedaría como sigue:
 
 
-1. Generar $U,V\sim \mathcal{U}\left( 0, 1\right)$.
+1. Generar $U,V\sim \mathcal{U}(0, 1)$.
 
 2. Hacer $T = a + \left( b-a \right) V$.
 
@@ -387,7 +389,7 @@ como sigue:
 Desarrollar el código necesario para generar, por el método de
 aceptación-rechazo, una muestra de $n$ observaciones de una
 distribución normal estándar:
-$$f\left( x\right)  =\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}}\text{, }x\in\mathbb{R}\text{, }$$
+$$f(x)  =\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}}\text{, }x\in\mathbb{R}\text{, }$$
 empleando como distribución auxiliar una doble exponencial con $\lambda=1$ 
 (más adelante veremos que esta es la elección óptima para el parámetro de la densidad auxiliar) y que la cota óptima es:
 $$c_{\text{opt}}=\sqrt{\frac{2e}{\pi}} \approx 1.3155$$ 
@@ -412,10 +414,14 @@ curve(c.opt * ddexp(x), xlim = c(-4, 4), lty = 2)
 curve(dnorm(x), add = TRUE)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="05-Metodos_generales_continuas_files/figure-html/dnorm-ddexp-plot-1.png" alt="Densidad objetivo (normal estándar) y densidad auxiliar (doble exponencial) reescalada." width="70%" />
-<p class="caption">(\#fig:dnorm-ddexp-plot)Densidad objetivo (normal estándar) y densidad auxiliar (doble exponencial) reescalada.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/dnorm-ddexp-plot-1} 
+
+}
+
+\caption{Densidad objetivo (normal estándar) y densidad auxiliar (doble exponencial) reescalada.}(\#fig:dnorm-ddexp-plot)
+\end{figure}
 
 Para generar los valores de la densidad objetivo podríamos emplear el siguiente código:
 
@@ -461,7 +467,7 @@ a)  Generar una muestra de $10^{4}$ observaciones empleando este
     
     ```
     ##    user  system elapsed 
-    ##    0.10    0.00    0.09
+    ##    0.12    0.00    0.13
     ```
     
     ```r
@@ -489,10 +495,14 @@ b)  Representar el histograma y compararlo con la densidad teórica.
     curve(dnorm, add = TRUE)
     ```
     
-    <div class="figure" style="text-align: center">
-    <img src="05-Metodos_generales_continuas_files/figure-html/dnorm-ar-1.png" alt="Distribución de los valores generados mediante el método de aceptación-rechazo." width="70%" />
-    <p class="caption">(\#fig:dnorm-ar)Distribución de los valores generados mediante el método de aceptación-rechazo.</p>
-    </div>
+    \begin{figure}[!htb]
+    
+    {\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/dnorm-ar-1} 
+    
+    }
+    
+    \caption{Distribución de los valores generados mediante el método de aceptación-rechazo.}(\#fig:dnorm-ar)
+    \end{figure}
     Podemos observar que la distribución de los valores generados es la que cabría esperar de una muestra de tamaño `nsim` de la distribución objetivo (lo que nos ayudaría a confirmar que el algoritmo está bien implementado, al ser un método exacto de simulación).
 
 
@@ -517,12 +527,12 @@ una simulación de la densidad objetivo).
 
 Es obvio, por tanto, que cuanto más cercano a 1 sea el valor de $c$ más eficiente será el algoritmo (el caso de $c=1$ se correspondería con $g=f$ y no tendría sentido emplear este algoritmo).
 El principal problema con este método es encontrar una densidad auxiliar $g$ de forma que:
-$$c_{\text{opt}}=\max_{\{x : g\left( x\right) >0\}}
-\frac{f\left( x\right) }{g\left( x\right) }.$$
+$$c_{\text{opt}}=\max_{\{x : g(x) >0\}}
+\frac{f(x) }{g(x) }.$$
 sea próximo a 1.
 Una solución intermedia consiste en seleccionar una familia paramétrica de densidades $\{g_{\theta} : \theta \in \Theta\}$ entre las que haya alguna que se parezca bastante a $f$, 
 encontrar el valor de $c$ óptimo para cada densidad de esa familia:
-$$c_{\theta}=\max_{x}\frac{f\left(  x\right)  }{g_{\theta}\left( x\right) }$$ 
+$$c_{\theta}=\max_{x}\frac{f\left(  x\right)  }{g_{\theta}(x) }$$ 
 y, finalmente, elegir el mejor valor $\theta_{0}$ del parámetro, en el sentido de ofrecer el menor posible $c_{\theta}$:
 $$c_{\theta_{0}}=\min_{\theta\in\Theta}\max_{x}\frac{f\left(  x\right) }{g_{\theta}\left(  x\right)  }.$$
 
@@ -535,7 +545,6 @@ c)  Aproximar la cota óptima numéricamente.
 
     
     ```r
-    # 
     # NOTA: Cuidado con los límites
     # optimize(f=function(x) dnorm(x)/ddexp(x), maximum=TRUE, interval=c(-0.5,0.5))
     optimize(f = function(x) dnorm(x)/ddexp(x), maximum = TRUE, interval = c(0, 2))
@@ -562,7 +571,7 @@ d)  Aproximar el parámetro óptimo de la densidad auxiliar
                maximum = TRUE, interval = c(0, 2))$objective
     }
     
-    # Encontar lambda que minimiza
+    # Encontrar lambda que minimiza
     res <- optimize(fopt, interval = c(0.5, 2))
     lambda.opt2 <- res$minimum
     c.opt2 <- res$objective
@@ -599,7 +608,7 @@ a partir de la densidad a priori $\pi (\theta )$
 
 Algoritmo:
 
-1. Generar $U\sim \mathcal{U}\left( 0,1\right)$.
+1. Generar $U \sim \mathcal{U}(0, 1)$.
 
 2. Generar $\tilde{\theta}\sim \pi (\theta )$.
 
@@ -706,13 +715,14 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     abline(v = q, lty = 2)
     ```
     
-    <img src="05-Metodos_generales_continuas_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
 b)  Repetir el apartado anterior con $n=100$.
 
 
-Modificaciones del método de aceptación rechazo
------------------------------------------------
+## Modificaciones del método de aceptación rechazo
 
 En el tiempo de computación influye:
 
@@ -729,7 +739,7 @@ $$s(x)\leq f(x).$$
 
 Algoritmo:
 
-1.  Generar $U\sim \mathcal{U}\left( 0,1\right)$ y $T\sim g$.
+1.  Generar $U \sim \mathcal{U}(0, 1)$ y $T\sim g$.
 
 2.  Si $c\cdot U\cdot g\left( T\right) \leq s\left( T\right)$ devolver $X=T$,
 
@@ -742,9 +752,10 @@ Algoritmo:
 
 
 
-<img src="images/squeeze.png" width="70%" style="display: block; margin: auto;" />
 
-Cuanto mayor sea el área bajo $s\left( x\right)$ (más próxima a 1)
+\begin{center}\includegraphics[width=0.7\linewidth]{images/squeeze} \end{center}
+
+Cuanto mayor sea el área bajo $s(x)$ (más próxima a 1)
 más efectivo será el algoritmo.
 
 Se han desarrollado métodos generales para la construcción de las
@@ -756,7 +767,7 @@ la densidad objetivo es cóncava o convexa.
 ### Muestreo por rechazo adaptativo (ARS)
 
 Supongamos que $f$ es una cuasi-densidad log-cóncava 
-(i.e. $\frac{\partial ^{2}}{\partial x^{2}}\log f\left( x\right) <0,
+(i.e. $\frac{\partial ^{2}}{\partial x^{2}}\log f(x) <0,
 ~\forall x$).
 
 Sea $S_n=\left\{ x_{i}:i=0,\cdots ,n+1\right\}$ con
@@ -765,10 +776,10 @@ $f(x_{i})$ conocidos.
 Denotamos por $L_{i,i+1}(x)$ la recta pasando por $\left( x_{i},\log
 f(x_{i})\right)$ y $\left( x_{i+1},\log f(x_{i+1})\right)$
 
-* $L_{i,i+1}(x)\leq \log f\left( x\right)$ en el intervalo 
+* $L_{i,i+1}(x)\leq \log f(x)$ en el intervalo 
   $I_{i}=(x_{i},x_{i+1}]$
 
-* $L_{i,i+1}(x)\geq \log f\left( x\right)$ fuera de $I_{i}$
+* $L_{i,i+1}(x)\geq \log f(x)$ fuera de $I_{i}$
 
 En el intervalo $I_{i}$ se definen las envolventes de $\log f\left(
 x\right)$:
@@ -777,7 +788,7 @@ x\right)$:
 
 * $\overline{\phi}_n(x)=\min \left\{L_{i-1,i}(x),L_{i+1,i+2}(x)\right\}$
 
-Las envolventes de $f\left( x\right)$ en $I_{i}$ serán:
+Las envolventes de $f(x)$ en $I_{i}$ serán:
 
 * $s_n(x)=\exp \left( \underline{\phi}_n(x)\right)$
 
@@ -785,16 +796,16 @@ Las envolventes de $f\left( x\right)$ en $I_{i}$ serán:
 
 
 Tenemos entonces que:
-$$s_n(x)\leq f\left( x\right) \leq G_n(x)=c\cdot g_n(x)$$
+$$s_n(x)\leq f(x) \leq G_n(x)=c\cdot g_n(x)$$
 donde $g_n(x)$ es una mixtura discreta de distribuciones tipo exponencial truncadas
 (las tasas pueden ser negativas), 
 que se puede simular fácilmente mediante el método de inversión.
 
 Algoritmo (Gilks, 1992):
 
-1. Inizializar $n$ y $s_n$.
+1.  Inizializar $n$ y $s_n$.
 
-2.  Generar $U\sim \mathcal{U}\left( 0,1\right)$ y
+2.  Generar $U \sim \mathcal{U}(0, 1)$ y
     $T\sim g_n$.
 
 3.  Si $U\cdot G_n\left( T\right) \leq s_n\left( T\right)$
@@ -811,17 +822,13 @@ Algoritmo (Gilks, 1992):
 4.  Volver al paso 2.
 
 
-Gilks y Wild (1992) propusieron un método similar pero empleando
-tangentes para construir la cota superior.
+Gilks y Wild (1992) propusieron una ligera modificación empleando tangentes para construir la cota superior, de esta forma se obtiene un método más eficiente pero habrí que especificar la derivada de la densidad objetivo.
 
-La mayoría de las densidades de la familia de distribuciones
-exponencial son log-cóncavas.
-Hörmann (1995) extendió esta aproximación al caso de densidades
-$T_{c}$-cóncavas:
+La mayoría de las densidades de la familia de distribuciones exponencial son log-cóncavas.
+Hörmann (1995) extendió esta aproximación al caso de densidades $T_{c}$-cóncavas:
 $$T_{c}(x) = signo(c)x^{c} \\
 T_{0}(x) = \log (x).$$
-Aparte de la transformación logarítmica, la transformación
-$T_{-1/2}(x)=-1/\sqrt{x}$ es habitualmente la más empleada.
+Aparte de la transformación logarítmica, la transformación $T_{-1/2}(x)=-1/\sqrt{x}$ es habitualmente la más empleada.
 
 ### Método del cociente de uniformes
 
@@ -840,8 +847,7 @@ De modo análogo al método de aceptación-rechazo, hay modificaciones
 para acelerar los cálculos y automatizar el proceso, construyendo
 regiones mediante polígonos:$$C_{i}\subset C_{h}\subset C_{s}.$$
 
-Método de composición
----------------------
+## Método de composición (o de simulación condicional) {#composicion}
 
 En ocasiones la densidad de interés se puede expresar como una
 mixtura discreta de densidades:
@@ -858,19 +864,19 @@ Algoritmo:
 
 \BeginKnitrBlock{example}\iffalse{-91-68-105-115-116-114-105-98-117-99-105-243-110-32-100-111-98-108-101-32-101-120-112-111-110-101-110-99-105-97-108-93-}\fi{}<div class="example"><span class="example" id="exm:dexp-mix"><strong>(\#exm:dexp-mix)  \iffalse (Distribución doble exponencial) \fi{} </strong></span></div>\EndKnitrBlock{example}
 A partir de la densidad de la distribución doble exponencial:
-$$f\left( x\right) =\frac{\lambda }{2}e^{-\lambda \left\vert x\right\vert }%
+$$f(x) =\frac{\lambda }{2}e^{-\lambda \left\vert x\right\vert }%
 \text{, }\forall x\in \mathbb{R},$$
 se deduce que:
-$$f\left( x\right) =\frac{1}{2}f_{1}\left( x\right) +\frac{1}{2}f_{2}\left(
+$$f(x) =\frac{1}{2}f_{1}(x) +\frac{1}{2}f_{2}\left(
 x\right)$$
 siendo:
-$$f_{1}\left( x\right) = \left\{ 
+$$f_{1}(x) = \left\{ 
 \begin{array}{ll}
 \lambda e^{-\lambda x} & \text{si } x\geq 0 \\ 
 0 & \text{si} x<0
 \end{array}
 \ \right. \\
-f_{2}\left( x\right) = \left\{ 
+f_{2}(x) = \left\{ 
 \begin{array}{ll}
 \lambda e^{\lambda x} & \text{si } x<0 \\ 
 0 & \text{si} x\geq 0
@@ -879,7 +885,7 @@ f_{2}\left( x\right) = \left\{
 
 Algoritmo:
 
-1. Generar $U,V\sim \mathcal{U}\left( 0,1\right)$.
+1. Generar $U,V\sim \mathcal{U}(0, 1)$.
 
 2. Si $U<0.5$ devolver $X=-\ln \left( 1-V\right)$.
 
@@ -908,16 +914,21 @@ Algoritmo:
 
 2. Generar $X\sim g(\cdot |Y)$.
 
-Este algoritmo es muy empleado en Inferencia Bayesiana y en la simulación de algunas variables discretas (como la Binomial Negativa, denominada también distribución Gamma–Poisson, o la distribución Beta-Binomial),
+Este algoritmo es muy empleado en Inferencia Bayesiana y en la simulación de algunas variables discretas (como la Binomial Negativa, denominada también distribución Gamma–Poisson, o la distribución Beta-Binomial; ver Sección \@ref(notables-disc)),
 ya que el resultado sería válido cambiando las funciones de densidad $f$ y $g$ por funciones de masa de probabilidad.
 
-## Métodos específicos para la generación de algunas distribuciones notables
+## Métodos específicos para la generación de algunas distribuciones notables {#notables-cont}
 
-Ver ejemplos en el libro de Ricardo (cuidado con la notación de la distribución Gamma, no es la empleada en R y en el presente libro) y ayuda de las funciones implementadas en R:
+En el pasado se ha realizado un esfuerzo considerable para desarrollar métodos eficientes para la simulación de las distribuciones de probabilidad más importantes.
+Estos algoritmos se describen en la mayoría de los libros clásicos de simulación (e.g. Cao, 2002, Capítulo 5)^[Cuidado con la notación y la parametrización empleadas, puede variar entre referencias. Por ejemplo, en Cao (2002) la notación de la distribución Gamma es ligeramente distinta a la empleada en R y en el presente libro.], principalmente porque resultaba necesario implementar estos métodos durante el desarrollo de software estadístico.
+Hoy en día estos algoritmos están disponibles en numerosas bibliotecas y no es necesario su implementación (por ejemplo, se puede recurrir a R o emplear su librería matemática disponible en <https://svn.r-project.org/R/trunk/src/nmath>).
+Sin embargo, además de que muchos de ellos servirían como ilustración de la aplicación de los métodos generales expuestos en secciones anteriores, pueden servir como punto de partida para la generación de otras distribuciones.
 
-* Método de Box-Müller (para la generación de normales independientes)
+Entre los distintos métodos disponibles para la generación de las distribuciones continuas más conocidas podríamos destacar:
 
-* Algoritmos de Jöhnk y Cheng para la generación de la distribución Beta.
+* Método de Box-Müller para la generación de normales independientes (pero que se puede generalizar para otras distribuciones y dependencia).
+
+* Algoritmos de Jöhnk (1963) y Cheng (1978) para la generación de la distribución Beta (como ejemplo de las eficiencias de los métodos de aceptación-rechazo).
 
 ### Método de Box-Müller
 
@@ -936,10 +947,31 @@ $\mathcal{N}( 0, 1 )$ independientes.
 
 Podemos hacer que la función `rnorm()` de R emplee este algoritmo estableciendo el parámetro `normal.kind` a `"Box-Muller"` en una llamada previa a `set.seed()` o `RNGkind()`.
 
-Este método está relacionado con el de la FFT (transformada de Fourier; e.g. Davies y Harte, 1987) o el *Circular embedding* (Dietrich and Newsam, 1997), para la generación de una normal multidimensional con dependencia.
-Considerando módulos exponenciales y fases aleatorias generamos normales independientes:
+Este método está relacionado con el denominado *método FFT* (transformada de Fourier; e.g. Davies y Harte, 1987) para la generación de una normal multidimensional con dependencia, que resulta ser equivalente al *Circular embedding* (Dietrich and Newsam, 1997).
+La idea de estos métodos es que, considerando módulos exponenciales y fases uniformes generamos normales independientes, pero cambiando la varianza de los módulos ($W_1$) podemos inducir dependencia.
+Adicionalmente, cambiando la distribución de las fases ($W_2$) se generan distribuciones distintas de la normal.
 
-* Cambiando la varianza de $W_1$ se induce dependencia.
+<!-- 
+Pendiente: Incluir subsección de la distribución Beta del libro de Ricardo
+La_distribucion_beta.Rmd
 
-* Cambiando la distribución de $W_2$ se generan distribuciones distintas de la normal.
+Densidad \operatorname{Beta}(a, b)$
+
+Existen multitud de algoritmos para simular la distribución $\operatorname{Beta}(a, b)$. 
+Probablemente, el más simple es el que se obtiene a partir de la distribución gamma (o de la ji-cuadrado), si se dispone de un algoritmo para generar esta distribución:
+
+* Si $X \sim \operatorname{Gamma}(a, s)$ e $Y \sim  \operatorname{Gamma}(b, s) son independientes, entonces $$\tfrac{X}{X+Y} \sim \operatorname{Beta}(a, b)$$.
+
+* Como caso particular ($\chi^2_{n} = \operatorname{Gamma}(tfrac{n}{2}, tfrac{1}{2})$), si $X \sim \chi^2_{2a}$$ e $Y \sim \chi^2_{2b}$ son independientes, entonces $$\tfrac{X}{X+Y} \sim \operatorname{Beta}(a, b)$$.
+
+Alternativamente se puede emplear el algoritmo de Jöhnk, aunque sólo sería recomendable para $a<1$ y $b<1$.
+
+Algoritmo de Jöhnk
+
+Este método resulta extremadamente ineficiente para $a$ ó $b$ mayores que 1, ya que la probabilidad de aceptar la condición $S\leq1$ del paso 2 puede ser muy próxima a cero. 
+Para evitar este problema se puede usar el algoritmo de Cheng (1978) que, aunque puede resultar bastante más complicado de implementar^[Referencia código de R], es mucho más eficiente.
+
+Algoritmo de Cheng
+
+-->
 

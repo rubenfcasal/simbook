@@ -1,7 +1,7 @@
 --- 
 title: "Simulación Estadística"
 author: "Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)"
-date: "2021-03-17"
+date: "2021-04-14"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
@@ -27,7 +27,7 @@ Para instalar los paquetes necesarios para poder ejecutar los ejemplos mostrados
 
 ```r
 pkgs <- c('boot', 'randtoolbox', 'MASS', 'DEoptim', 'nortest', 'geoR', 'copula', 'sm',
-          'car', 'tseries', 'forecast', 'plot3D', 'rgl')
+          'car', 'tseries', 'forecast', 'plot3D', 'rgl', 'rngWELL', 'randtoolbox')
 install.packages(setdiff(pkgs, installed.packages()[,"Package"]), 
                  dependencies = TRUE)
 
@@ -41,7 +41,8 @@ para lo que se recomendaría consultar el libro de ["Escritura de libros con boo
 
 
 
-<img src="images/by-nc-nd-88x31.png" width="44" />
+
+\includegraphics[width=1.22in]{images/by-nc-nd-88x31} 
 
 Este obra está bajo una licencia de [Creative Commons Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es_ES) 
 (esperamos poder liberarlo bajo una licencia menos restrictiva más adelante...).

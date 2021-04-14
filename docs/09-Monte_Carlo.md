@@ -31,28 +31,17 @@ $\mathcal{U}\left( a, b\right)$:
 $$I\approx \frac{1}{n}\sum\limits_{i=1}^nh\left( x_i\right) (b-a)$$
 
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:mc-integral"><strong>(\#exr:mc-integral) </strong></span>  mc.integral <- function(fun, a, b, n, plot = TRUE) {
-    fx <- sapply(runif(n, a, b), fun) * (b - a)
-    if (plot) {
-      estint <- cumsum(fx)/(1:n)
-      esterr <- sqrt(cumsum((fx - estint)^2))/(1:n)
-      plot(estint, ylab = "Media y rango de error", type = "l", lwd = 2, ylim = mean(fx) + 
-             2 * c(-esterr[1], esterr[1]), xlab = "Iteraciones")
-      lines(estint + 2 * esterr, col = "darkgray", lwd = 2)
-      lines(estint - 2 * esterr, col = "darkgray", lwd = 2)
-      valor <- estint[n]
-      abline(h = valor)
-      return(list(valor = valor, error = 2 * esterr[n]))
-    } else return(list(valor = mean(fx), error = 2 * sd(fx)/sqrt(n)))
-  }
-
-set.seed(1)
-mc.integral(fun, 0, 1, 5000)
-abline(h = 4/5, lty = 2)</div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:mc-integral-clas"><strong>(\#exr:mc-integral-clas) </strong></span>
 
 Crear una función que implemente la integración Monte Carlo clásica
 para aproximar integrales del tipo:
 $$I = \int_a^b h(x)  dx.$$ 
+Emplearla para aproximar: 
+$$\int_0^1 4x^4 dx = \frac{4}{5},$$ 
+y representar gráficamente la aproximación en función de $n$.  
+  </div>\EndKnitrBlock{exercise}
+
+Como primera aproximación podríamos considerar:
 
 
 ```r
@@ -67,10 +56,6 @@ mc.integral0 <- function(fun, a, b, n) {
 }
 ```
 
-Emplearla para aproximar: 
-$$\int_0^1 4x^4 dx = \frac{4}{5},$$ 
-y representar gráficamente la aproximación en función de $n$.
-
 Función a integrar:
 
 
@@ -83,10 +68,14 @@ abline(h = 0, lty = 2)
 abline(v = c(0, 1), lty = 2)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="09-Monte_Carlo_files/figure-html/int-mc-clas-1.png" alt="Ejemplo de integral en dominio acotado." width="70%" />
-<p class="caption">(\#fig:int-mc-clas)Ejemplo de integral en dominio acotado.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/int-mc-clas-1} 
+
+}
+
+\caption{Ejemplo de integral en dominio acotado.}(\#fig:int-mc-clas)
+\end{figure}
 
 ```r
 set.seed(1)
@@ -150,10 +139,14 @@ mc.integral(fun, 0, 1, 5000)
 abline(h = 4/5, lty = 2)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="09-Monte_Carlo_files/figure-html/mc-integral-1.png" alt="Convergencia de la aproximación de la integral mediante simulación." width="70%" />
-<p class="caption">(\#fig:mc-integral)Convergencia de la aproximación de la integral mediante simulación.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/mc-integral-1} 
+
+}
+
+\caption{Convergencia de la aproximación de la integral mediante simulación.}(\#fig:mc-integral)
+\end{figure}
 
 Si sólo interesa la aproximación:
 
@@ -327,10 +320,14 @@ escala <- dnorm(4.5)  # Reescalado para comparación...
 curve(dexp(x - 4.5) * escala, add = TRUE, lty = 2)  
 ```
 
-<div class="figure" style="text-align: center">
-<img src="09-Monte_Carlo_files/figure-html/mc-imp-int-1.png" alt="Objetivo a integrar (densidad objetivo truncada) y densidad auxiliar reescalada." width="70%" />
-<p class="caption">(\#fig:mc-imp-int)Objetivo a integrar (densidad objetivo truncada) y densidad auxiliar reescalada.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/mc-imp-int-1} 
+
+}
+
+\caption{Objetivo a integrar (densidad objetivo truncada) y densidad auxiliar reescalada.}(\#fig:mc-imp-int)
+\end{figure}
 
 Se generan los valores de la densidad auxiliar y se calculan los pesos:
 
@@ -367,10 +364,14 @@ plot(cumsum(w)/1:nsim, type = "l", ylab = "Aproximación", xlab = "Iteraciones")
 abline(h = pnorm(-4.5), lty = 2)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="09-Monte_Carlo_files/figure-html/mc-imp-conv-1.png" alt="Convergencia de la aproximación de la integral mediante muestreo por importancia." width="70%" />
-<p class="caption">(\#fig:mc-imp-conv)Convergencia de la aproximación de la integral mediante muestreo por importancia.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/mc-imp-conv-1} 
+
+}
+
+\caption{Convergencia de la aproximación de la integral mediante muestreo por importancia.}(\#fig:mc-imp-conv)
+\end{figure}
 
 El error estandar de la aproximación sería `sqrt(var(w * h(y))/nsim)`:
 
@@ -452,10 +453,14 @@ plot(cumsum(w * (y > 2) * (y < 6))/1:nsim, type = "l", ylab = "Aproximación", x
 abline(h = pcauchy(6) - pcauchy(2), lty = 2)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="09-Monte_Carlo_files/figure-html/mc-imp2-conv-1.png" alt="Gráfico de convergencia de la aproximación mediante muestreo por importancia con mala densidad auxiliar." width="70%" />
-<p class="caption">(\#fig:mc-imp2-conv)Gráfico de convergencia de la aproximación mediante muestreo por importancia con mala densidad auxiliar.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/mc-imp2-conv-1} 
+
+}
+
+\caption{Gráfico de convergencia de la aproximación mediante muestreo por importancia con mala densidad auxiliar.}(\#fig:mc-imp2-conv)
+\end{figure}
 
 Lo que indica es una mala elección de la densidad auxiliar... 
 
@@ -467,10 +472,14 @@ Por ejemplo, si los reescalamos para que su suma sea el número de valores gener
 boxplot(nsim * w/sum(w))  
 ```
 
-<div class="figure" style="text-align: center">
-<img src="09-Monte_Carlo_files/figure-html/mc-imp2-boxplot-1.png" alt="Gráfico de cajas de los pesos del muestreo por importancia reescalados (de forma que su media es 1)." width="70%" />
-<p class="caption">(\#fig:mc-imp2-boxplot)Gráfico de cajas de los pesos del muestreo por importancia reescalados (de forma que su media es 1).</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/mc-imp2-boxplot-1} 
+
+}
+
+\caption{Gráfico de cajas de los pesos del muestreo por importancia reescalados (de forma que su media es 1).}(\#fig:mc-imp2-boxplot)
+\end{figure}
 
 
 ### Remuestreo (del muestreo) por importancia
@@ -516,10 +525,14 @@ lines(density(rx))
 curve(dnorm, col = "blue", add = TRUE)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="09-Monte_Carlo_files/figure-html/imp-res-1.png" alt="Distribución de los valores generados mediante remuestreo por importancia y densidad objetivo." width="70%" />
-<p class="caption">(\#fig:imp-res)Distribución de los valores generados mediante remuestreo por importancia y densidad objetivo.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/imp-res-1} 
+
+}
+
+\caption{Distribución de los valores generados mediante remuestreo por importancia y densidad objetivo.}(\#fig:imp-res)
+\end{figure}
 
 **NOTA**: Si f o g fuesen cuasidensidades y se pidiese aproximar la integral, habría que reescalar los pesos  `w <- f(y)/g(y)` en la aproximación por simulación, resultando `sum(w * h(y))/sum(w)` (media ponderada) y en el análisis de convergencia se emplearía `cumsum(w * h(y))/cumsum(w)`.
 
@@ -588,7 +601,9 @@ hist(data, freq = FALSE, breaks = "FD", ylim = c(0, 0.3))
 curve(0.25 * dnorm(x, mu1, sd1) + 0.75 * dnorm(x, mu2, sd2), add = TRUE)
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 Logaritmo (negativo) de la función de verosimilitud
 (para la estimación de las medias)
@@ -674,7 +689,9 @@ for (j in 1:nstarts){
 }
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 ```
 ## par =  -0.03892511 2.494589 value = 361.5712 
@@ -732,7 +749,8 @@ Al tener una probabilidad no nula de aceptar una modificación
 óptimo local.
 
 
-<img src="images/templesimulado.png" width="70%" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics[width=0.7\linewidth]{images/templesimulado} \end{center}
 
 
 ### Algoritmo:
@@ -793,7 +811,9 @@ for (j in 1:nstarts){
 }
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/unnamed-chunk-20-1} \end{center}
 
 ```
 ## par =  0.0002023461 2.473437 value = 361.6372 
@@ -850,7 +870,9 @@ for (j in 1:nstarts) {
 }
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 
 Algoritmos genéticos
@@ -922,5 +944,7 @@ der <- DEoptim(tee.optim2d(like), lower, upper, DEoptim.control(itermax = 10))
 points(der$optim$bestmem[1], der$optim$bestmem[2], pch = 19)
 ```
 
-<img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{09-Monte_Carlo_files/figure-latex/unnamed-chunk-22-1} \end{center}
 

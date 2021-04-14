@@ -53,7 +53,7 @@ En el siguiente capítulo trararemos la Integración y Optimización Monte Carlo
 Observación: 
 En este capítulo se obtendrán simulaciones de estadísticos a partir de muestras (podemos pensar que se parte de generaciones de una variable multivariante).
 En la mayoría de los ejemplos se generan todas las muestras de una vez, se guardan y se procesan vectorialmente (normalmente empleando la función `apply`).
-Como ya se comentó en la el Capítulo \@ref(cap2), en problemas mas complejos, en los que no es necesario almacenar todas las muestras, puede ser preferible emplear un bucle para generar y procesar las muestras iterativamente. 
+Como ya se comentó en el Capítulo \@ref(rrng), en problemas mas complejos, en los que no es necesario almacenar todas las muestras, puede ser preferible emplear un bucle para generar y procesar las muestras iterativamente. 
 
 
 Distribución en el muestreo
@@ -163,10 +163,14 @@ b)  Generar el histograma (en escala de densidades) de las medias
     abline(v = mux, col = "blue")
     ```
     
-    <div class="figure" style="text-align: center">
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/mednorm-1.png" alt="Distribución de la media muestral de una distribución normal." width="70%" />
-    <p class="caption">(\#fig:mednorm)Distribución de la media muestral de una distribución normal.</p>
-    </div>
+    \begin{figure}[!htb]
+    
+    {\centering \includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/mednorm-1} 
+    
+    }
+    
+    \caption{Distribución de la media muestral de una distribución normal.}(\#fig:mednorm)
+    \end{figure}
 
 <!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
 <br> \vspace{0.5cm}
@@ -237,10 +241,14 @@ a)  Repetir el Ejercicio \@ref(exr:distr-media) anterior considerando muestras d
     abline(v=muexp, col="blue")
     ```
     
-    <div class="figure" style="text-align: center">
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/medexp-1.png" alt="Distribución de la media muestral de una distribución exponencial y distribución asintótica." width="70%" />
-    <p class="caption">(\#fig:medexp)Distribución de la media muestral de una distribución exponencial y distribución asintótica.</p>
-    </div>
+    \begin{figure}[!htb]
+    
+    {\centering \includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/medexp-1} 
+    
+    }
+    
+    \caption{Distribución de la media muestral de una distribución exponencial y distribución asintótica.}(\#fig:medexp)
+    \end{figure}
 
 <!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
 <br> \vspace{0.5cm}
@@ -323,10 +331,14 @@ a)  Utilizando el conjunto de datos `muestras` del ejercicio 1 (500
     abline(h = mux, lty = 3)
     ```
     
-    <div class="figure" style="text-align: center">
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/cobicnorm-1.png" alt="Cobertura de las estimaciones por IC." width="70%" />
-    <p class="caption">(\#fig:cobicnorm)Cobertura de las estimaciones por IC.</p>
-    </div>
+    \begin{figure}[!htb]
+    
+    {\centering \includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/cobicnorm-1} 
+    
+    }
+    
+    \caption{Cobertura de las estimaciones por IC.}(\#fig:cobicnorm)
+    \end{figure}
     
     ```r
     detach(tmp)
@@ -394,10 +406,14 @@ b)  Repetir el apartado anterior considerando muestras de una
     abline(h = muexp, lty = 3)
     ```
     
-    <div class="figure" style="text-align: center">
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/cobicexp-1.png" alt="Cobertura de las estimaciones por IC (bajo normalidad)." width="70%" />
-    <p class="caption">(\#fig:cobicexp)Cobertura de las estimaciones por IC (bajo normalidad).</p>
-    </div>
+    \begin{figure}[!htb]
+    
+    {\centering \includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/cobicexp-1} 
+    
+    }
+    
+    \caption{Cobertura de las estimaciones por IC (bajo normalidad).}(\#fig:cobicexp)
+    \end{figure}
     
     ```r
     detach(tmp)
@@ -443,7 +459,9 @@ ic.sim <- quantile(muestras2$mean, c(alfa/2, 1 - alfa/2))
 abline(v=ic.sim, lty=2, col='red') 
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 
 \BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}Estimaciones puntuales, por intervalo de confianza y contrastes de hipótesis
@@ -526,7 +544,9 @@ a)  Teniendo en cuenta que la v.a. $X=n\hat{p}\sim\mathcal{B}(n,p)$,
     abline(h = 1 - alpha, lty = 2) 
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-20-1} \end{center}
     
     Fuente [Suess y Trumbo (2010)](http://www.springer.com/gp/book/9780387402734).
 
@@ -565,7 +585,9 @@ b)  Repetir el apartado anterior considerando intervalos de
     abline(h = 1 - alpha, lty = 2) 
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 c)  Repetir el apartado anterior empleando simulación para aproximar
     la cobertura.
@@ -610,7 +632,9 @@ c)  Repetir el apartado anterior empleando simulación para aproximar
     abline(h = 1 - alpha, lty = 2) 
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-24-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-24-1} \end{center}
     
 Como ya se comentó, el caso de ajustar un modelo a los datos y realizar simulaciones a partir de ese modelo ajustado para aproximar las características de interés de un estadístico, se denomina también bootstrap paramétrico (Ver [Sección 4.1](https://rubenfcasal.github.io/book_remuestreo/cap4-boot-par.html) de Cao y Fernández-Casal, 2019).
 
@@ -684,7 +708,9 @@ a)  Analizar el comportamiento del contraste de Kolmogorov-Smirnov
     abline(h=1, lty=2)   # curve(dunif(x,0,1), add=TRUE)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-27-1} \end{center}
     
     ```r
     # Distribución empírica
@@ -694,7 +720,9 @@ a)  Analizar el comportamiento del contraste de Kolmogorov-Smirnov
     abline(a=0, b=1, lty=2)   # curve(punif(x, 0, 1), add = TRUE)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-27-2.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-27-2} \end{center}
 
 b)  Repetir el apartado anterior considerando el test de Lilliefors
     (rutina `lillie.test` del paquete `nortest`).
@@ -757,7 +785,9 @@ b)  Repetir el apartado anterior considerando el test de Lilliefors
     abline(h=1, lty=2)   # curve(dunif(x,0,1), add=TRUE)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-32-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-32-1} \end{center}
     
     ```r
     # Distribución empírica
@@ -766,7 +796,9 @@ b)  Repetir el apartado anterior considerando el test de Lilliefors
     abline(a=0, b=1, lty=2)   # curve(punif(x, 0, 1), add = TRUE)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-32-2.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-32-2} \end{center}
 
 c)  Repetir el apartado a) contrastando una distribución exponencial
     y considerando 500 pruebas con muestras de tamaño 30 de una $Exp(1)$.
@@ -821,7 +853,9 @@ c)  Repetir el apartado a) contrastando una distribución exponencial
     abline(h=1, lty=2)   # curve(dunif(x,0,1), add=TRUE)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-36-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-36-1} \end{center}
     
     ```r
     # Distribución empírica
@@ -831,7 +865,9 @@ c)  Repetir el apartado a) contrastando una distribución exponencial
     abline(a=0, b=1, lty=2)   # curve(punif(x, 0, 1), add = TRUE) 
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-36-2.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-36-2} \end{center}
 
 d)  Diseñar una rutina que permita realizar el contraste KS de
     bondad de ajuste de una variable exponencial aproximando el
@@ -920,7 +956,9 @@ d)  Diseñar una rutina que permita realizar el contraste KS de
     abline(h=1, lty=2)   # curve(dunif(x,0,1), add=TRUE)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-40-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-40-1} \end{center}
     
     ```r
     # Distribución empírica
@@ -930,7 +968,9 @@ d)  Diseñar una rutina que permita realizar el contraste KS de
     abline(a=0, b=1, lty=2)   # curve(punif(x, 0, 1), add = TRUE) 
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-40-2.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-40-2} \end{center}
 
 e)  Estudiar la potencia de los contrastes de los apartados c) y d),
     considerando como alternativa una distribución Weibull.
@@ -969,7 +1009,9 @@ e)  Estudiar la potencia de los contrastes de los apartados c) y d),
     abline(h = alfa, v = 1, lty = 3)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/potencia-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/potencia-1} \end{center}
 
 
 El estadístico de Kolmogorov-Smirnov `Dn = max(c(DMinus, DPlus))` tiene ventajas desde el
@@ -1007,7 +1049,9 @@ curve(dnorm(x, 0, 1), -3, 12, ylab = 'densidad', lty = 3)
 curve(0.95*dnorm(x, 0, 1) + 0.05*dnorm(x, 3, 3), add = TRUE)
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/contaminada-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/contaminada-1} \end{center}
 
 \BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}También es habitual simular este tipo de datos generando un porcentaje alto de valores (en este caso un 95%) de la distribución base ($N(0,1)$) y el resto (5%) de la distibución "contaminadora" ($N(3,3^2)$), aunque se suele considerar un porcentaje de contaminación del 1% o inferior. En el tema 7 se describirá el método de composición para simular mixturas. </div>\EndKnitrBlock{remark}
 
@@ -1050,7 +1094,9 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
     hist(dat.sim[,1])
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-43-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-43-1} \end{center}
     
     Calculamos los estimadores:
     
@@ -1104,7 +1150,9 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
     abline(h = 0, lty = 2)
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-46-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-46-1} \end{center}
     
     Error cuadrático:
     
@@ -1114,7 +1162,9 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
           names=c("Media","Mediana"), ylab="Error cuadrático")
     ```
     
-    <img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-47-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-47-1} \end{center}
     
     Estadísticos error cuadrático:
     
@@ -1165,7 +1215,9 @@ curve(ecdf(data)(x), ylab = "FD", type = "s", lwd = 2)
 abline(a = 0, b = 1, lty = 2) 
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-49-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-49-1} \end{center}
 
 Las características de la distribución empírica se pueden aproximar mediante simulación. 
 En el caso i.i.d. esto puede ser implementado mediante remuestreo,
@@ -1225,7 +1277,8 @@ En general podríamos decir que:
 * **la muestra es a la población**
 **lo que la muestra bootstrap es a la muestra**.
 
-<img src="images/bootstrap.png" width="70%" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics[width=0.7\linewidth]{images/bootstrap} \end{center}
 
 Para información adicional sobre bootstrap ver p.e.:
 Davison, A.C. and Hinkley, D.V. (1997). *Bootstrap Methods and Their Application*. Cambridge University Press
@@ -1294,7 +1347,9 @@ curve(dnorm(x, datmed, datsd/sqrt(ndat)), lty=2, add=TRUE)
 abline(v=datmed, lwd=2, lty=2)
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-55-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-55-1} \end{center}
 
 Bootstrap natural/básico:
 
@@ -1309,7 +1364,9 @@ curve(dnorm(x, 0, datsd/sqrt(ndat)), lty=2, add=TRUE)
 abline(v=0, lwd=2, lty=2)
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-56-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-56-1} \end{center}
 
 Sesgo y error estándar bootstrap:
 
@@ -1433,19 +1490,25 @@ names(stat.boot)
 hist(stat.boot$t, freq=FALSE)
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-61-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-61-1} \end{center}
 
 ```r
 plot(stat.boot)
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-61-2.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-61-2} \end{center}
 
 ```r
 jack.after.boot(stat.boot)
 ```
 
-<img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-61-3.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-61-3} \end{center}
 
 ### Intervalos de confianza bootstrap
 
