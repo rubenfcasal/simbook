@@ -538,25 +538,27 @@ curve(dnorm, col = "blue", add = TRUE)
 
 \BeginKnitrBlock{exercise}\iffalse{-91-112-114-111-112-117-101-115-116-111-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:mc-imp-sample2"><strong>(\#exr:mc-imp-sample2)  \iffalse (propuesto) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
-Consideramos una v.a. con densidad:
+Consideramos una variable aleatoria con densidad:
     $$f(x)\propto e^{-x}\cos^{2}(x),\text{ si }x>0.$$
-Tomando como semilla inicial el nº de grupo multiplicado por 100:
+Tomando como semilla inicial el número de grupo multiplicado por 100:
 
 a.  Aproximar mediante integración Monte Carlo la media de esta
     distribución ($h(x)=x$) empleando muestreo de importancia con
     distribución auxiliar una exponencial de parámetro $\lambda=1$ a
     partir de 10000 simulaciones (OJO: se conoce la cuasi-densidad
-    de la v.a. de interés, emplear la aproximación descrita
+    de la variable aleatoria de interés, emplear la aproximación descrita
     en apuntes).
 
 b.  Generar 500 simulaciones (aprox.) de la distribución de interés
     mediante remuestreo del muestreo por importancia.
     
----    
+<!-- 
+---
 
 ***LA MATERIA EVALUABLE EN EL CURSO 2019/2020 TERMINA AQUÍ***
 
----
+--- 
+-->
 
 Optimización Monte Carlo
 ------------------------

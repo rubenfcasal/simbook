@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2021-04-14" />
+<meta name="date" content="2021-04-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -226,7 +226,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.7.2" data-path="mult-discr.html"><a href="mult-discr.html#simulación-de-una-variable-discreta-bidimensional"><i class="fa fa-check"></i><b>7.7.2</b> Simulación de una variable discreta bidimensional</a></li>
 <li class="chapter" data-level="7.7.3" data-path="mult-discr.html"><a href="mult-discr.html#simconting"><i class="fa fa-check"></i><b>7.7.3</b> Simulación de tablas de contingencia</a></li>
 </ul></li>
-<li class="chapter" data-level="7.8" data-path="ejercicios-propuestos.html"><a href="ejercicios-propuestos.html"><i class="fa fa-check"></i><b>7.8</b> Ejercicios propuestos</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="cap8.html"><a href="cap8.html"><i class="fa fa-check"></i><b>8</b> Aplicaciones en Inferencia Estadística</a><ul>
 <li class="chapter" data-level="8.1" data-path="distribución-en-el-muestreo.html"><a href="distribución-en-el-muestreo.html"><i class="fa fa-check"></i><b>8.1</b> Distribución en el muestreo</a></li>
@@ -352,17 +351,17 @@ Confirmar este resultado mediante simulación, para ello:</p>
 estimaciones de la media y desviación típica obtenidas con cada
 una de las muestras.</p>
 <p>Valores iniciales:</p>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="distribución-en-el-muestreo.html#cb290-1"></a><span class="kw">set.seed</span>(<span class="dv">54321</span>) <span class="co"># Fijar semilla para reproductibilidad</span></span>
-<span id="cb290-2"><a href="distribución-en-el-muestreo.html#cb290-2"></a>nsim &lt;-<span class="st"> </span><span class="dv">500</span></span>
-<span id="cb290-3"><a href="distribución-en-el-muestreo.html#cb290-3"></a>nx &lt;-<span class="st"> </span><span class="dv">10</span></span></code></pre></div>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="distribución-en-el-muestreo.html#cb309-1"></a><span class="kw">set.seed</span>(<span class="dv">54321</span>) <span class="co"># Fijar semilla para reproductibilidad</span></span>
+<span id="cb309-2"><a href="distribución-en-el-muestreo.html#cb309-2"></a>nsim &lt;-<span class="st"> </span><span class="dv">500</span></span>
+<span id="cb309-3"><a href="distribución-en-el-muestreo.html#cb309-3"></a>nx &lt;-<span class="st"> </span><span class="dv">10</span></span></code></pre></div>
 <p>Valores teóricos:</p>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="distribución-en-el-muestreo.html#cb291-1"></a>mux &lt;-<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb291-2"><a href="distribución-en-el-muestreo.html#cb291-2"></a>sdx &lt;-<span class="st"> </span><span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="distribución-en-el-muestreo.html#cb310-1"></a>mux &lt;-<span class="st"> </span><span class="dv">1</span></span>
+<span id="cb310-2"><a href="distribución-en-el-muestreo.html#cb310-2"></a>sdx &lt;-<span class="st"> </span><span class="dv">2</span></span></code></pre></div>
 <p>Simulación de las muestras (al estilo <code>Rcmdr</code>):</p>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="distribución-en-el-muestreo.html#cb292-1"></a>muestras &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">matrix</span>(<span class="kw">rnorm</span>(nsim<span class="op">*</span>nx, <span class="dt">mean=</span>mux, <span class="dt">sd=</span>sdx), <span class="dt">ncol=</span>nx))</span>
-<span id="cb292-2"><a href="distribución-en-el-muestreo.html#cb292-2"></a><span class="kw">rownames</span>(muestras) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;muestra&quot;</span>, <span class="dv">1</span><span class="op">:</span>nsim, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb292-3"><a href="distribución-en-el-muestreo.html#cb292-3"></a><span class="kw">colnames</span>(muestras) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;obs&quot;</span>, <span class="dv">1</span><span class="op">:</span>nx, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb292-4"><a href="distribución-en-el-muestreo.html#cb292-4"></a><span class="kw">str</span>(muestras)</span></code></pre></div>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="distribución-en-el-muestreo.html#cb311-1"></a>muestras &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">matrix</span>(<span class="kw">rnorm</span>(nsim<span class="op">*</span>nx, <span class="dt">mean=</span>mux, <span class="dt">sd=</span>sdx), <span class="dt">ncol=</span>nx))</span>
+<span id="cb311-2"><a href="distribución-en-el-muestreo.html#cb311-2"></a><span class="kw">rownames</span>(muestras) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;muestra&quot;</span>, <span class="dv">1</span><span class="op">:</span>nsim, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb311-3"><a href="distribución-en-el-muestreo.html#cb311-3"></a><span class="kw">colnames</span>(muestras) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;obs&quot;</span>, <span class="dv">1</span><span class="op">:</span>nx, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb311-4"><a href="distribución-en-el-muestreo.html#cb311-4"></a><span class="kw">str</span>(muestras)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    500 obs. of  10 variables:
 ##  $ obs1 : num  0.642 -0.856 -0.568 -2.301 0.184 ...
 ##  $ obs2 : num  3.483 2.216 1.1 4.305 0.677 ...
@@ -375,14 +374,14 @@ una de las muestras.</p>
 ##  $ obs9 : num  0.4904 -0.6713 0.5451 -0.6517 0.0168 ...
 ##  $ obs10: num  2.79 2.84 1.27 3.93 2.17 ...</code></pre>
 <p>Estimaciones:</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="distribución-en-el-muestreo.html#cb294-1"></a>muestras<span class="op">$</span>mean &lt;-<span class="st"> </span><span class="kw">rowMeans</span>(muestras[,<span class="dv">1</span><span class="op">:</span>nx])</span>
-<span id="cb294-2"><a href="distribución-en-el-muestreo.html#cb294-2"></a>muestras<span class="op">$</span>sd &lt;-<span class="st"> </span><span class="kw">apply</span>(muestras[,<span class="dv">1</span><span class="op">:</span>nx], <span class="dv">1</span>, sd)</span></code></pre></div>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="distribución-en-el-muestreo.html#cb313-1"></a>muestras<span class="op">$</span>mean &lt;-<span class="st"> </span><span class="kw">rowMeans</span>(muestras[,<span class="dv">1</span><span class="op">:</span>nx])</span>
+<span id="cb313-2"><a href="distribución-en-el-muestreo.html#cb313-2"></a>muestras<span class="op">$</span>sd &lt;-<span class="st"> </span><span class="kw">apply</span>(muestras[,<span class="dv">1</span><span class="op">:</span>nx], <span class="dv">1</span>, sd)</span></code></pre></div>
 <p></p>
 <div class="remark">
  <span class="remark"><em>Nota: </em></span> La fila <code>muestras[i,]</code> contiene las observaciones de la i-ésima muestra y
 la correspondiente media y desviación típica.
 </div>
-<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="distribución-en-el-muestreo.html#cb295-1"></a>muestras[<span class="dv">1</span>,]</span></code></pre></div>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="distribución-en-el-muestreo.html#cb314-1"></a>muestras[<span class="dv">1</span>,]</span></code></pre></div>
 <pre><code>##               obs1     obs2     obs3    obs4     obs5     obs6      obs7
 ## muestra1 0.6421985 3.482661 1.242483 3.28559 3.766896 -2.04443 0.6186323
 ##                obs8      obs9    obs10     mean       sd
@@ -395,16 +394,16 @@ la correspondiente media y desviación típica.
 <li><p>Generar el histograma (en escala de densidades) de las medias
 muestrales y compararlo con la densidad teórica.</p>
 <p>Distribución de la media muestral:</p>
-<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="distribución-en-el-muestreo.html#cb297-1"></a><span class="kw">hist</span>(muestras<span class="op">$</span>mean, <span class="dt">freq =</span> <span class="ot">FALSE</span>, <span class="dt">breaks =</span> <span class="st">&quot;FD&quot;</span>, </span>
-<span id="cb297-2"><a href="distribución-en-el-muestreo.html#cb297-2"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Medias&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Densidad&quot;</span>)</span>
-<span id="cb297-3"><a href="distribución-en-el-muestreo.html#cb297-3"></a><span class="co"># Densidad observada (estimación)</span></span>
-<span id="cb297-4"><a href="distribución-en-el-muestreo.html#cb297-4"></a><span class="kw">lines</span>(<span class="kw">density</span>(muestras<span class="op">$</span>mean)) </span>
-<span id="cb297-5"><a href="distribución-en-el-muestreo.html#cb297-5"></a><span class="co"># Densidad teórica (bajo normalidad)</span></span>
-<span id="cb297-6"><a href="distribución-en-el-muestreo.html#cb297-6"></a><span class="kw">curve</span>(<span class="kw">dnorm</span>(x, mux, sdx<span class="op">/</span><span class="kw">sqrt</span>(nx)), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) </span>
-<span id="cb297-7"><a href="distribución-en-el-muestreo.html#cb297-7"></a><span class="co"># Aproximación del valor esperado de la media muestral mediante simulación</span></span>
-<span id="cb297-8"><a href="distribución-en-el-muestreo.html#cb297-8"></a><span class="kw">abline</span>(<span class="dt">v =</span> <span class="kw">mean</span>(muestras<span class="op">$</span>mean), <span class="dt">lty =</span> <span class="dv">2</span>)  </span>
-<span id="cb297-9"><a href="distribución-en-el-muestreo.html#cb297-9"></a><span class="co"># Valor esperado de la media muestral (teórico)</span></span>
-<span id="cb297-10"><a href="distribución-en-el-muestreo.html#cb297-10"></a><span class="kw">abline</span>(<span class="dt">v =</span> mux, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="distribución-en-el-muestreo.html#cb316-1"></a><span class="kw">hist</span>(muestras<span class="op">$</span>mean, <span class="dt">freq =</span> <span class="ot">FALSE</span>, <span class="dt">breaks =</span> <span class="st">&quot;FD&quot;</span>, </span>
+<span id="cb316-2"><a href="distribución-en-el-muestreo.html#cb316-2"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Medias&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Densidad&quot;</span>)</span>
+<span id="cb316-3"><a href="distribución-en-el-muestreo.html#cb316-3"></a><span class="co"># Densidad observada (estimación)</span></span>
+<span id="cb316-4"><a href="distribución-en-el-muestreo.html#cb316-4"></a><span class="kw">lines</span>(<span class="kw">density</span>(muestras<span class="op">$</span>mean)) </span>
+<span id="cb316-5"><a href="distribución-en-el-muestreo.html#cb316-5"></a><span class="co"># Densidad teórica (bajo normalidad)</span></span>
+<span id="cb316-6"><a href="distribución-en-el-muestreo.html#cb316-6"></a><span class="kw">curve</span>(<span class="kw">dnorm</span>(x, mux, sdx<span class="op">/</span><span class="kw">sqrt</span>(nx)), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) </span>
+<span id="cb316-7"><a href="distribución-en-el-muestreo.html#cb316-7"></a><span class="co"># Aproximación del valor esperado de la media muestral mediante simulación</span></span>
+<span id="cb316-8"><a href="distribución-en-el-muestreo.html#cb316-8"></a><span class="kw">abline</span>(<span class="dt">v =</span> <span class="kw">mean</span>(muestras<span class="op">$</span>mean), <span class="dt">lty =</span> <span class="dv">2</span>)  </span>
+<span id="cb316-9"><a href="distribución-en-el-muestreo.html#cb316-9"></a><span class="co"># Valor esperado de la media muestral (teórico)</span></span>
+<span id="cb316-10"><a href="distribución-en-el-muestreo.html#cb316-10"></a><span class="kw">abline</span>(<span class="dt">v =</span> mux, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:mednorm"></span>
 <img src="08-Aplicaciones_Inferencia_files/figure-html/mednorm-1.png" alt="Distribución de la media muestral de una distribución normal." width="70%" />
 <p class="caption">
@@ -432,32 +431,32 @@ aunque dependerá de las características de la distribución de <span class="ma
 <ol style="list-style-type: lower-alpha">
 <li><p>Repetir el Ejercicio <a href="distribución-en-el-muestreo.html#exr:distr-media">8.1</a> anterior considerando muestras de una <span class="math inline">\(Exp(1)\)</span> (tener en cuenta que <span class="math inline">\(X\sim Exp(\lambda)\Rightarrow\mu_{X}=\sigma_{X}=1/\lambda\)</span>).
 ¿Qué ocurre con la distribución de la media muestral?</p>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="distribución-en-el-muestreo.html#cb298-1"></a><span class="kw">set.seed</span>(<span class="dv">54321</span>) <span class="co"># Fijar semilla para reproductibilidad</span></span>
-<span id="cb298-2"><a href="distribución-en-el-muestreo.html#cb298-2"></a>nsim &lt;-<span class="st"> </span><span class="dv">500</span></span>
-<span id="cb298-3"><a href="distribución-en-el-muestreo.html#cb298-3"></a>nx &lt;-<span class="st"> </span><span class="dv">10</span>    </span>
-<span id="cb298-4"><a href="distribución-en-el-muestreo.html#cb298-4"></a><span class="co"># nx &lt;- 50</span></span></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="distribución-en-el-muestreo.html#cb317-1"></a><span class="kw">set.seed</span>(<span class="dv">54321</span>) <span class="co"># Fijar semilla para reproductibilidad</span></span>
+<span id="cb317-2"><a href="distribución-en-el-muestreo.html#cb317-2"></a>nsim &lt;-<span class="st"> </span><span class="dv">500</span></span>
+<span id="cb317-3"><a href="distribución-en-el-muestreo.html#cb317-3"></a>nx &lt;-<span class="st"> </span><span class="dv">10</span>    </span>
+<span id="cb317-4"><a href="distribución-en-el-muestreo.html#cb317-4"></a><span class="co"># nx &lt;- 50</span></span></code></pre></div>
 <p>Valores teóricos:</p>
-<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="distribución-en-el-muestreo.html#cb299-1"></a>lambda &lt;-<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb299-2"><a href="distribución-en-el-muestreo.html#cb299-2"></a>muexp &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">/</span>lambda</span>
-<span id="cb299-3"><a href="distribución-en-el-muestreo.html#cb299-3"></a>sdexp &lt;-<span class="st"> </span>muexp</span></code></pre></div>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="distribución-en-el-muestreo.html#cb318-1"></a>lambda &lt;-<span class="st"> </span><span class="dv">1</span></span>
+<span id="cb318-2"><a href="distribución-en-el-muestreo.html#cb318-2"></a>muexp &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">/</span>lambda</span>
+<span id="cb318-3"><a href="distribución-en-el-muestreo.html#cb318-3"></a>sdexp &lt;-<span class="st"> </span>muexp</span></code></pre></div>
 <p>Simulación de las muestras:</p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="distribución-en-el-muestreo.html#cb300-1"></a>muestras2 &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">matrix</span>(<span class="kw">rexp</span>(nsim<span class="op">*</span>nx, <span class="dt">rate=</span>lambda), <span class="dt">ncol=</span>nx))</span>
-<span id="cb300-2"><a href="distribución-en-el-muestreo.html#cb300-2"></a><span class="kw">rownames</span>(muestras2) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;muestra&quot;</span>, <span class="dv">1</span><span class="op">:</span>nsim, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb300-3"><a href="distribución-en-el-muestreo.html#cb300-3"></a><span class="kw">colnames</span>(muestras2) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;obs&quot;</span>, <span class="dv">1</span><span class="op">:</span>nx, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="distribución-en-el-muestreo.html#cb319-1"></a>muestras2 &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">matrix</span>(<span class="kw">rexp</span>(nsim<span class="op">*</span>nx, <span class="dt">rate=</span>lambda), <span class="dt">ncol=</span>nx))</span>
+<span id="cb319-2"><a href="distribución-en-el-muestreo.html#cb319-2"></a><span class="kw">rownames</span>(muestras2) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;muestra&quot;</span>, <span class="dv">1</span><span class="op">:</span>nsim, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb319-3"><a href="distribución-en-el-muestreo.html#cb319-3"></a><span class="kw">colnames</span>(muestras2) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;obs&quot;</span>, <span class="dv">1</span><span class="op">:</span>nx, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p>Estimaciones:</p>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="distribución-en-el-muestreo.html#cb301-1"></a>muestras2<span class="op">$</span>mean &lt;-<span class="st"> </span><span class="kw">rowMeans</span>(muestras2[,<span class="dv">1</span><span class="op">:</span>nx])</span>
-<span id="cb301-2"><a href="distribución-en-el-muestreo.html#cb301-2"></a>muestras2<span class="op">$</span>sd &lt;-<span class="st"> </span><span class="kw">apply</span>(muestras2[,<span class="dv">1</span><span class="op">:</span>nx], <span class="dv">1</span>, sd)</span></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="distribución-en-el-muestreo.html#cb320-1"></a>muestras2<span class="op">$</span>mean &lt;-<span class="st"> </span><span class="kw">rowMeans</span>(muestras2[,<span class="dv">1</span><span class="op">:</span>nx])</span>
+<span id="cb320-2"><a href="distribución-en-el-muestreo.html#cb320-2"></a>muestras2<span class="op">$</span>sd &lt;-<span class="st"> </span><span class="kw">apply</span>(muestras2[,<span class="dv">1</span><span class="op">:</span>nx], <span class="dv">1</span>, sd)</span></code></pre></div>
 <p>Distribución de la media muestral:</p>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="distribución-en-el-muestreo.html#cb302-1"></a><span class="kw">hist</span>(muestras2<span class="op">$</span>mean, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.1</span>, <span class="fl">2.5</span>), <span class="dt">freq =</span> <span class="ot">FALSE</span>, <span class="dt">breaks =</span> <span class="st">&quot;FD&quot;</span>, </span>
-<span id="cb302-2"><a href="distribución-en-el-muestreo.html#cb302-2"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Medias&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Densidad&quot;</span>)</span>
-<span id="cb302-3"><a href="distribución-en-el-muestreo.html#cb302-3"></a><span class="co"># Densidad observada (estimación)</span></span>
-<span id="cb302-4"><a href="distribución-en-el-muestreo.html#cb302-4"></a><span class="kw">lines</span>(<span class="kw">density</span>(muestras2<span class="op">$</span>mean)) </span>
-<span id="cb302-5"><a href="distribución-en-el-muestreo.html#cb302-5"></a><span class="co"># Distribución asintótica (TCL)</span></span>
-<span id="cb302-6"><a href="distribución-en-el-muestreo.html#cb302-6"></a><span class="kw">curve</span>(<span class="kw">dnorm</span>(x,muexp,sdexp<span class="op">/</span><span class="kw">sqrt</span>(nx)), <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">add=</span><span class="ot">TRUE</span>) </span>
-<span id="cb302-7"><a href="distribución-en-el-muestreo.html#cb302-7"></a><span class="co"># Aproximación del valor esperado de la media muestral mediante simulación</span></span>
-<span id="cb302-8"><a href="distribución-en-el-muestreo.html#cb302-8"></a><span class="kw">abline</span>(<span class="dt">v=</span><span class="kw">mean</span>(muestras2<span class="op">$</span>mean),<span class="dt">lty=</span><span class="dv">2</span>)  </span>
-<span id="cb302-9"><a href="distribución-en-el-muestreo.html#cb302-9"></a><span class="co"># Valor esperado de la media muestral (teórico)</span></span>
-<span id="cb302-10"><a href="distribución-en-el-muestreo.html#cb302-10"></a><span class="kw">abline</span>(<span class="dt">v=</span>muexp, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="distribución-en-el-muestreo.html#cb321-1"></a><span class="kw">hist</span>(muestras2<span class="op">$</span>mean, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.1</span>, <span class="fl">2.5</span>), <span class="dt">freq =</span> <span class="ot">FALSE</span>, <span class="dt">breaks =</span> <span class="st">&quot;FD&quot;</span>, </span>
+<span id="cb321-2"><a href="distribución-en-el-muestreo.html#cb321-2"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Medias&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Densidad&quot;</span>)</span>
+<span id="cb321-3"><a href="distribución-en-el-muestreo.html#cb321-3"></a><span class="co"># Densidad observada (estimación)</span></span>
+<span id="cb321-4"><a href="distribución-en-el-muestreo.html#cb321-4"></a><span class="kw">lines</span>(<span class="kw">density</span>(muestras2<span class="op">$</span>mean)) </span>
+<span id="cb321-5"><a href="distribución-en-el-muestreo.html#cb321-5"></a><span class="co"># Distribución asintótica (TCL)</span></span>
+<span id="cb321-6"><a href="distribución-en-el-muestreo.html#cb321-6"></a><span class="kw">curve</span>(<span class="kw">dnorm</span>(x,muexp,sdexp<span class="op">/</span><span class="kw">sqrt</span>(nx)), <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">add=</span><span class="ot">TRUE</span>) </span>
+<span id="cb321-7"><a href="distribución-en-el-muestreo.html#cb321-7"></a><span class="co"># Aproximación del valor esperado de la media muestral mediante simulación</span></span>
+<span id="cb321-8"><a href="distribución-en-el-muestreo.html#cb321-8"></a><span class="kw">abline</span>(<span class="dt">v=</span><span class="kw">mean</span>(muestras2<span class="op">$</span>mean),<span class="dt">lty=</span><span class="dv">2</span>)  </span>
+<span id="cb321-9"><a href="distribución-en-el-muestreo.html#cb321-9"></a><span class="co"># Valor esperado de la media muestral (teórico)</span></span>
+<span id="cb321-10"><a href="distribución-en-el-muestreo.html#cb321-10"></a><span class="kw">abline</span>(<span class="dt">v=</span>muexp, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:medexp"></span>
 <img src="08-Aplicaciones_Inferencia_files/figure-html/medexp-1.png" alt="Distribución de la media muestral de una distribución exponencial y distribución asintótica." width="70%" />
 <p class="caption">

@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2021-04-14" />
+<meta name="date" content="2021-04-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -226,7 +226,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.7.2" data-path="mult-discr.html"><a href="mult-discr.html#simulación-de-una-variable-discreta-bidimensional"><i class="fa fa-check"></i><b>7.7.2</b> Simulación de una variable discreta bidimensional</a></li>
 <li class="chapter" data-level="7.7.3" data-path="mult-discr.html"><a href="mult-discr.html#simconting"><i class="fa fa-check"></i><b>7.7.3</b> Simulación de tablas de contingencia</a></li>
 </ul></li>
-<li class="chapter" data-level="7.8" data-path="ejercicios-propuestos.html"><a href="ejercicios-propuestos.html"><i class="fa fa-check"></i><b>7.8</b> Ejercicios propuestos</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="cap8.html"><a href="cap8.html"><i class="fa fa-check"></i><b>8</b> Aplicaciones en Inferencia Estadística</a><ul>
 <li class="chapter" data-level="8.1" data-path="distribución-en-el-muestreo.html"><a href="distribución-en-el-muestreo.html"><i class="fa fa-check"></i><b>8.1</b> Distribución en el muestreo</a></li>
@@ -443,14 +442,14 @@ exponencial:
 = e^{-\left\Vert \mathbf{s}_1-\mathbf{s}_2\right\Vert }.\]</span></p>
 <p>En primer lugar, obtendremos una simulación del proceso en las posiciones
 <span class="math inline">\(\left\{(0,0),(0,1),(1,0),(1,1)\right\}\)</span> que será considerada posteriormente
-como los datos observados.</p>
-<p>Empleando las herramientas del paquete <code>geoR</code>, resulta muy fácil obtener
+como los datos observados.
+Empleando las herramientas del paquete <code>geoR</code>, resulta muy fácil obtener
 una simulación incondicional en una rejilla en el cuadrado unidad
 mediante la función <code>grf</code>:</p>
 <div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="simulación-condicional-e-incondicional.html#cb218-1"></a><span class="kw">library</span>(geoR)</span>
 <span id="cb218-2"><a href="simulación-condicional-e-incondicional.html#cb218-2"></a>n &lt;-<span class="st"> </span><span class="dv">4</span></span>
 <span id="cb218-3"><a href="simulación-condicional-e-incondicional.html#cb218-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb218-4"><a href="simulación-condicional-e-incondicional.html#cb218-4"></a>z &lt;-<span class="st"> </span><span class="kw">grf</span>(n, <span class="dt">grid=</span><span class="st">&quot;reg&quot;</span>, <span class="dt">cov.pars=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
+<span id="cb218-4"><a href="simulación-condicional-e-incondicional.html#cb218-4"></a>z &lt;-<span class="st"> </span><span class="kw">grf</span>(n, <span class="dt">grid =</span> <span class="st">&quot;reg&quot;</span>, <span class="dt">cov.pars =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
 <pre><code>## grf: generating grid  2  *  2  with  4  points
 ## grf: process with  1  covariance structure(s)
 ## grf: nugget effect is: tausq= 0 
@@ -467,88 +466,96 @@ mediante la función <code>grf</code>:</p>
 <div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="simulación-condicional-e-incondicional.html#cb222-1"></a>z<span class="op">$</span>data</span></code></pre></div>
 <pre><code>## [1] -0.62645381 -0.05969442 -0.98014198  1.09215113</code></pre>
 <p>La <code>grf</code> función emplea por defecto el método de la factorización de la matriz de covarianzas,
-sin embargo, si se desean obtener múltiples realizaciones, en lugar de llamar repetidamente a esta función,
-puede ser preferible emplear la siguiente aproximación:</p>
+sin embargo, si se desean obtener múltiples realizaciones, en lugar de llamar repetidamente a esta función (lo que implicaría factorizar repetidamente la matriz de covarianzas),
+puede ser preferible emplear un código similar al siguiente (de forma que solo se realiza una vez dicha factorización, y suponiendo además que no es necesario conservar las distintas realizaciones):</p>
 <div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="simulación-condicional-e-incondicional.html#cb224-1"></a><span class="co"># Posiciones datos</span></span>
 <span id="cb224-2"><a href="simulación-condicional-e-incondicional.html#cb224-2"></a>nx &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)</span>
 <span id="cb224-3"><a href="simulación-condicional-e-incondicional.html#cb224-3"></a>data.s &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">x =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">len =</span> nx[<span class="dv">1</span>]), <span class="dt">y =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">len =</span> nx[<span class="dv">2</span>]))</span>
-<span id="cb224-4"><a href="simulación-condicional-e-incondicional.html#cb224-4"></a><span class="kw">plot</span>(data.s, <span class="dt">type =</span> <span class="st">&quot;p&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">asp =</span> <span class="dv">1</span>) <span class="co"># Representar posiciones</span></span></code></pre></div>
-<p><img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="simulación-condicional-e-incondicional.html#cb225-1"></a><span class="co"># Matriz de varianzas covarianzas</span></span>
-<span id="cb225-2"><a href="simulación-condicional-e-incondicional.html#cb225-2"></a>cov.matrix &lt;-<span class="st"> </span><span class="kw">varcov.spatial</span>(<span class="dt">coords=</span>data.s, <span class="dt">cov.pars=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))<span class="op">$</span>varcov</span>
-<span id="cb225-3"><a href="simulación-condicional-e-incondicional.html#cb225-3"></a>cov.matrix</span></code></pre></div>
+<span id="cb224-4"><a href="simulación-condicional-e-incondicional.html#cb224-4"></a><span class="co"># plot(data.s, type = &quot;p&quot;, pch = 20, asp = 1) # Representar posiciones</span></span>
+<span id="cb224-5"><a href="simulación-condicional-e-incondicional.html#cb224-5"></a></span>
+<span id="cb224-6"><a href="simulación-condicional-e-incondicional.html#cb224-6"></a><span class="co"># Matriz de varianzas covarianzas</span></span>
+<span id="cb224-7"><a href="simulación-condicional-e-incondicional.html#cb224-7"></a>cov.matrix &lt;-<span class="st"> </span><span class="kw">varcov.spatial</span>(<span class="dt">coords=</span>data.s, <span class="dt">cov.pars=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))<span class="op">$</span>varcov</span>
+<span id="cb224-8"><a href="simulación-condicional-e-incondicional.html#cb224-8"></a>cov.matrix</span></code></pre></div>
 <pre><code>##           [,1]      [,2]      [,3]      [,4]
 ## [1,] 1.0000000 0.3678794 0.3678794 0.2431167
 ## [2,] 0.3678794 1.0000000 0.2431167 0.3678794
 ## [3,] 0.3678794 0.2431167 1.0000000 0.3678794
 ## [4,] 0.2431167 0.3678794 0.3678794 1.0000000</code></pre>
-<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="simulación-condicional-e-incondicional.html#cb227-1"></a><span class="co"># Simular valores</span></span>
-<span id="cb227-2"><a href="simulación-condicional-e-incondicional.html#cb227-2"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb227-3"><a href="simulación-condicional-e-incondicional.html#cb227-3"></a>L &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">chol</span>(cov.matrix))</span>
-<span id="cb227-4"><a href="simulación-condicional-e-incondicional.html#cb227-4"></a></span>
-<span id="cb227-5"><a href="simulación-condicional-e-incondicional.html#cb227-5"></a><span class="co"># Bucle simulación</span></span>
-<span id="cb227-6"><a href="simulación-condicional-e-incondicional.html#cb227-6"></a>nsim &lt;-<span class="st"> </span><span class="dv">1</span> <span class="co"># 1000</span></span>
-<span id="cb227-7"><a href="simulación-condicional-e-incondicional.html#cb227-7"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim) {</span>
-<span id="cb227-8"><a href="simulación-condicional-e-incondicional.html#cb227-8"></a>  y &lt;-<span class="st"> </span>L <span class="op">%*%</span><span class="st"> </span><span class="kw">rnorm</span>(n)</span>
-<span id="cb227-9"><a href="simulación-condicional-e-incondicional.html#cb227-9"></a>  <span class="co"># calcular estadísticos, errores,...</span></span>
-<span id="cb227-10"><a href="simulación-condicional-e-incondicional.html#cb227-10"></a>}</span>
-<span id="cb227-11"><a href="simulación-condicional-e-incondicional.html#cb227-11"></a>y</span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="simulación-condicional-e-incondicional.html#cb226-1"></a><span class="co"># Simular valores</span></span>
+<span id="cb226-2"><a href="simulación-condicional-e-incondicional.html#cb226-2"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb226-3"><a href="simulación-condicional-e-incondicional.html#cb226-3"></a>L &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">chol</span>(cov.matrix))</span>
+<span id="cb226-4"><a href="simulación-condicional-e-incondicional.html#cb226-4"></a></span>
+<span id="cb226-5"><a href="simulación-condicional-e-incondicional.html#cb226-5"></a><span class="co"># Bucle simulación</span></span>
+<span id="cb226-6"><a href="simulación-condicional-e-incondicional.html#cb226-6"></a>nsim &lt;-<span class="st"> </span><span class="dv">1</span> <span class="co"># 1000</span></span>
+<span id="cb226-7"><a href="simulación-condicional-e-incondicional.html#cb226-7"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim) {</span>
+<span id="cb226-8"><a href="simulación-condicional-e-incondicional.html#cb226-8"></a>  y &lt;-<span class="st"> </span>L <span class="op">%*%</span><span class="st"> </span><span class="kw">rnorm</span>(n)</span>
+<span id="cb226-9"><a href="simulación-condicional-e-incondicional.html#cb226-9"></a>  <span class="co"># calcular estadísticos, errores,...</span></span>
+<span id="cb226-10"><a href="simulación-condicional-e-incondicional.html#cb226-10"></a>}</span>
+<span id="cb226-11"><a href="simulación-condicional-e-incondicional.html#cb226-11"></a>y</span></code></pre></div>
 <pre><code>##             [,1]
 ## [1,] -0.62645381
 ## [2,] -0.05969442
 ## [3,] -0.98014198
 ## [4,]  1.09215113</code></pre>
 <p>Para generar simulaciones condicionales podemos emplear la función <code>krige.conv</code>.
-Por ejemplo, para generar 4 simulaciones en la rejilla regular <span class="math inline">\(10\times10\)</span> en el
-cuadrado unidad <span class="math inline">\([0,1] \times [0,1]\)</span> condicionadas a los
-valores generados en el apartado anterior podríamos emplear el siguiente código:</p>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="simulación-condicional-e-incondicional.html#cb229-1"></a><span class="co"># Posiciones simulación condicional</span></span>
-<span id="cb229-2"><a href="simulación-condicional-e-incondicional.html#cb229-2"></a>nnx &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">20</span>, <span class="dv">20</span>)</span>
-<span id="cb229-3"><a href="simulación-condicional-e-incondicional.html#cb229-3"></a>nn &lt;-<span class="st"> </span><span class="kw">prod</span>(nnx)</span>
-<span id="cb229-4"><a href="simulación-condicional-e-incondicional.html#cb229-4"></a>ndata.s &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">x =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">len =</span> nnx[<span class="dv">1</span>]), <span class="dt">y =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">len =</span> nnx[<span class="dv">2</span>]))</span>
-<span id="cb229-5"><a href="simulación-condicional-e-incondicional.html#cb229-5"></a><span class="kw">plot</span>(data.s, <span class="dt">type =</span> <span class="st">&quot;p&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">asp =</span> <span class="dv">1</span>)</span>
-<span id="cb229-6"><a href="simulación-condicional-e-incondicional.html#cb229-6"></a><span class="kw">points</span>(ndata.s)</span></code></pre></div>
-<p><img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="simulación-condicional-e-incondicional.html#cb230-1"></a><span class="co"># Simulación condicional</span></span>
-<span id="cb230-2"><a href="simulación-condicional-e-incondicional.html#cb230-2"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb230-3"><a href="simulación-condicional-e-incondicional.html#cb230-3"></a>s.out &lt;-<span class="st"> </span><span class="kw">output.control</span>(<span class="dt">n.predictive =</span> <span class="dv">4</span>)</span>
-<span id="cb230-4"><a href="simulación-condicional-e-incondicional.html#cb230-4"></a>kc &lt;-<span class="st"> </span><span class="kw">krige.conv</span>(z, <span class="dt">loc =</span> ndata.s, <span class="dt">output =</span> s.out,</span>
-<span id="cb230-5"><a href="simulación-condicional-e-incondicional.html#cb230-5"></a>                 <span class="dt">krige =</span> <span class="kw">krige.control</span>(<span class="dt">type.krige=</span><span class="st">&quot;SK&quot;</span>, <span class="dt">beta =</span> <span class="dv">0</span>, <span class="dt">cov.pars =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)))</span></code></pre></div>
+Por ejemplo, para generar 4 simulaciones en la rejilla regular <span class="math inline">\(10\times10\)</span> en el cuadrado unidad <span class="math inline">\([0,1] \times [0,1]\)</span> condicionadas a los valores generados en el apartado anterior podríamos emplear el siguiente código:</p>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="simulación-condicional-e-incondicional.html#cb228-1"></a><span class="co"># Posiciones simulación condicional</span></span>
+<span id="cb228-2"><a href="simulación-condicional-e-incondicional.html#cb228-2"></a>new.nx &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">20</span>, <span class="dv">20</span>)</span>
+<span id="cb228-3"><a href="simulación-condicional-e-incondicional.html#cb228-3"></a>new.x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">len =</span> new.nx[<span class="dv">1</span>])</span>
+<span id="cb228-4"><a href="simulación-condicional-e-incondicional.html#cb228-4"></a>new.y &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">len =</span> new.nx[<span class="dv">2</span>])</span>
+<span id="cb228-5"><a href="simulación-condicional-e-incondicional.html#cb228-5"></a>new.s &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">x =</span> new.x, <span class="dt">y =</span> new.y)</span>
+<span id="cb228-6"><a href="simulación-condicional-e-incondicional.html#cb228-6"></a><span class="kw">plot</span>(data.s, <span class="dt">type =</span> <span class="st">&quot;p&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">asp =</span> <span class="dv">1</span>)</span>
+<span id="cb228-7"><a href="simulación-condicional-e-incondicional.html#cb228-7"></a><span class="kw">points</span>(new.s)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:pos-sp-simcond"></span>
+<img src="07-Simulacion_multidimensional_files/figure-html/pos-sp-simcond-1.png" alt="Posiciones espaciales de las simulaciones condicionales (y las de los datos)." width="70%" />
+<p class="caption">
+Figura 7.5: Posiciones espaciales de las simulaciones condicionales (y las de los datos).
+</p>
+</div>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="simulación-condicional-e-incondicional.html#cb229-1"></a><span class="co"># Simulación condicional</span></span>
+<span id="cb229-2"><a href="simulación-condicional-e-incondicional.html#cb229-2"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb229-3"><a href="simulación-condicional-e-incondicional.html#cb229-3"></a>nsim.cond &lt;-<span class="st"> </span><span class="dv">4</span></span>
+<span id="cb229-4"><a href="simulación-condicional-e-incondicional.html#cb229-4"></a>s.out &lt;-<span class="st"> </span><span class="kw">output.control</span>(<span class="dt">n.predictive =</span> nsim.cond)</span>
+<span id="cb229-5"><a href="simulación-condicional-e-incondicional.html#cb229-5"></a>kc &lt;-<span class="st"> </span><span class="kw">krige.conv</span>(z, <span class="dt">loc =</span> new.s, <span class="dt">output =</span> s.out,</span>
+<span id="cb229-6"><a href="simulación-condicional-e-incondicional.html#cb229-6"></a>                 <span class="dt">krige =</span> <span class="kw">krige.control</span>(<span class="dt">type.krige=</span><span class="st">&quot;SK&quot;</span>, <span class="dt">beta =</span> <span class="dv">0</span>, <span class="dt">cov.pars =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)))</span></code></pre></div>
 <pre><code>## krige.conv: results will be returned only for prediction locations inside the borders
 ## krige.conv: model with constant mean
 ## krige.conv: sampling from the predictive distribution (conditional simulations)
 ## krige.conv: Kriging performed using global neighbourhood</code></pre>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="simulación-condicional-e-incondicional.html#cb232-1"></a><span class="co"># Generar gráficos</span></span>
-<span id="cb232-2"><a href="simulación-condicional-e-incondicional.html#cb232-2"></a>par.old &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="fl">3.5</span>, <span class="fl">3.5</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="dt">mgp =</span> <span class="kw">c</span>(<span class="fl">1.5</span>, <span class="fl">.5</span>, <span class="dv">0</span>))</span>
-<span id="cb232-3"><a href="simulación-condicional-e-incondicional.html#cb232-3"></a>zlim &lt;-<span class="st"> </span><span class="kw">range</span>(kc<span class="op">$</span>simul)     <span class="co"># Escala común</span></span>
-<span id="cb232-4"><a href="simulación-condicional-e-incondicional.html#cb232-4"></a><span class="kw">image</span>(kc, <span class="dt">val=</span>kc<span class="op">$</span>simul[,<span class="dv">1</span>], <span class="dt">main=</span><span class="st">&quot;simul. cond. 1&quot;</span>, <span class="dt">zlim=</span>zlim)</span></code></pre></div>
-<p><img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-15-2.png" width="70%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="simulación-condicional-e-incondicional.html#cb233-1"></a><span class="kw">image</span>(kc, <span class="dt">val=</span>kc<span class="op">$</span>simul[,<span class="dv">2</span>], <span class="dt">main=</span><span class="st">&quot;simul. cond. 2&quot;</span>, <span class="dt">zlim=</span>zlim)</span></code></pre></div>
-<p><img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-15-3.png" width="70%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="simulación-condicional-e-incondicional.html#cb234-1"></a><span class="kw">image</span>(kc, <span class="dt">val=</span>kc<span class="op">$</span>simul[,<span class="dv">3</span>], <span class="dt">main=</span><span class="st">&quot;simul. cond. 3&quot;</span>, <span class="dt">zlim=</span>zlim)</span></code></pre></div>
-<p><img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-15-4.png" width="70%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="simulación-condicional-e-incondicional.html#cb235-1"></a><span class="kw">image</span>(kc, <span class="dt">val=</span>kc<span class="op">$</span>simul[,<span class="dv">4</span>], <span class="dt">main=</span><span class="st">&quot;simul. cond. 4&quot;</span>, <span class="dt">zlim=</span>zlim)</span></code></pre></div>
-<p><img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-15-5.png" width="70%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="simulación-condicional-e-incondicional.html#cb236-1"></a><span class="kw">par</span>(par.old)</span></code></pre></div>
-<p>Los valores en las posiciones <span class="math inline">\(\left\{(0,0),(0,1),(1,0),(1,1)\right\}\)</span>
-coinciden con los generados anteriormente.</p>
+<p>Si las representamos podemos confirmar que los valores en las posiciones <span class="math inline">\(\left\{(0,0),(0,1),(1,0),(1,1)\right\}\)</span> coinciden con los generados anteriormente.</p>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="simulación-condicional-e-incondicional.html#cb231-1"></a><span class="co"># Generar gráficos</span></span>
+<span id="cb231-2"><a href="simulación-condicional-e-incondicional.html#cb231-2"></a>par.old &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="fl">3.5</span>, <span class="fl">3.5</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">mgp =</span> <span class="kw">c</span>(<span class="fl">1.5</span>, <span class="fl">.5</span>, <span class="dv">0</span>))</span>
+<span id="cb231-3"><a href="simulación-condicional-e-incondicional.html#cb231-3"></a>zlim &lt;-<span class="st"> </span><span class="kw">range</span>(kc<span class="op">$</span>simul)     <span class="co"># Escala común</span></span>
+<span id="cb231-4"><a href="simulación-condicional-e-incondicional.html#cb231-4"></a><span class="co"># La versión actual de geoR::image.kriging() no admite múltiples gráficos en una ventana</span></span>
+<span id="cb231-5"><a href="simulación-condicional-e-incondicional.html#cb231-5"></a><span class="co"># image(kc, val=kc$simul[,1], main=&quot;simul. cond. 1&quot;, zlim=zlim)</span></span>
+<span id="cb231-6"><a href="simulación-condicional-e-incondicional.html#cb231-6"></a><span class="co"># image(kc, val=kc$simul[,2], main=&quot;simul. cond. 2&quot;, zlim=zlim)</span></span>
+<span id="cb231-7"><a href="simulación-condicional-e-incondicional.html#cb231-7"></a><span class="co"># image(kc, val=kc$simul[,3], main=&quot;simul. cond. 3&quot;, zlim=zlim)</span></span>
+<span id="cb231-8"><a href="simulación-condicional-e-incondicional.html#cb231-8"></a><span class="co"># image(kc, val=kc$simul[,4], main=&quot;simul. cond. 4&quot;, zlim=zlim)</span></span>
+<span id="cb231-9"><a href="simulación-condicional-e-incondicional.html#cb231-9"></a><span class="kw">dim</span>(kc<span class="op">$</span>simul) &lt;-<span class="st"> </span><span class="kw">c</span>(new.nx, nsim.cond)</span>
+<span id="cb231-10"><a href="simulación-condicional-e-incondicional.html#cb231-10"></a><span class="kw">image</span>(new.x, new.y, kc<span class="op">$</span>simul[,,<span class="dv">1</span>], <span class="dt">main=</span><span class="st">&quot;simul. cond. 1&quot;</span>,</span>
+<span id="cb231-11"><a href="simulación-condicional-e-incondicional.html#cb231-11"></a>      <span class="dt">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">zlim =</span> zlim)</span>
+<span id="cb231-12"><a href="simulación-condicional-e-incondicional.html#cb231-12"></a><span class="kw">image</span>(new.x, new.y, kc<span class="op">$</span>simul[,,<span class="dv">2</span>], <span class="dt">main=</span><span class="st">&quot;simul. cond. 2&quot;</span>,</span>
+<span id="cb231-13"><a href="simulación-condicional-e-incondicional.html#cb231-13"></a>      <span class="dt">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">zlim =</span> zlim)</span>
+<span id="cb231-14"><a href="simulación-condicional-e-incondicional.html#cb231-14"></a><span class="kw">image</span>(new.x, new.y, kc<span class="op">$</span>simul[,,<span class="dv">3</span>], <span class="dt">main=</span><span class="st">&quot;simul. cond. 3&quot;</span>,</span>
+<span id="cb231-15"><a href="simulación-condicional-e-incondicional.html#cb231-15"></a>      <span class="dt">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">zlim =</span> zlim)</span>
+<span id="cb231-16"><a href="simulación-condicional-e-incondicional.html#cb231-16"></a><span class="kw">image</span>(new.x, new.y, kc<span class="op">$</span>simul[,,<span class="dv">4</span>], <span class="dt">main=</span><span class="st">&quot;simul. cond. 4&quot;</span>,</span>
+<span id="cb231-17"><a href="simulación-condicional-e-incondicional.html#cb231-17"></a>      <span class="dt">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">zlim =</span> zlim)</span></code></pre></div>
+<p><img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-14-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="simulación-condicional-e-incondicional.html#cb232-1"></a><span class="kw">par</span>(par.old)</span></code></pre></div>
 </div>
 <div id="simulación-condicional-a-partir-de-un-modelo-ajustado" class="section level3">
 <h3><span class="header-section-number">7.5.2</span> Simulación condicional a partir de un modelo ajustado</h3>
-<p>En la práctica normalmente se ajusta un modelo a los datos observados y
-posteriormente se obtienen las simulaciones condicionadas empleando
-el modelo ajustado.</p>
-<p>Por ejemplo, en el caso de series de tiempo, se puede emplear la función <code>simulate</code>
-del paquete <code>forecast</code>:</p>
-<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="simulación-condicional-e-incondicional.html#cb237-1"></a><span class="kw">library</span>(forecast)</span>
-<span id="cb237-2"><a href="simulación-condicional-e-incondicional.html#cb237-2"></a>data &lt;-<span class="st"> </span><span class="kw">window</span>(co2, <span class="dv">1990</span>) <span class="co"># datos de co2 desde 1990</span></span>
-<span id="cb237-3"><a href="simulación-condicional-e-incondicional.html#cb237-3"></a><span class="kw">plot</span>(data, <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;Atmospheric concentration of CO&quot;</span>[<span class="dv">2</span>]), </span>
-<span id="cb237-4"><a href="simulación-condicional-e-incondicional.html#cb237-4"></a>     <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">1990</span>,<span class="dv">2000</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">350</span>, <span class="dv">375</span>))</span>
-<span id="cb237-5"><a href="simulación-condicional-e-incondicional.html#cb237-5"></a>fit &lt;-<span class="st"> </span><span class="kw">ets</span>(data)</span>
-<span id="cb237-6"><a href="simulación-condicional-e-incondicional.html#cb237-6"></a><span class="co"># plot(forecast(fit, h=24))</span></span>
-<span id="cb237-7"><a href="simulación-condicional-e-incondicional.html#cb237-7"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb237-8"><a href="simulación-condicional-e-incondicional.html#cb237-8"></a><span class="kw">lines</span>(<span class="kw">simulate</span>(fit, <span class="dv">24</span>), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>En la práctica normalmente se ajusta un modelo a los datos observados y posteriormente se obtienen las simulaciones condicionadas empleando el modelo ajustado.
+Por ejemplo, en el caso de series de tiempo, se puede emplear la función <code>simulate</code> del paquete <code>forecast</code>:</p>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="simulación-condicional-e-incondicional.html#cb233-1"></a><span class="kw">library</span>(forecast)</span>
+<span id="cb233-2"><a href="simulación-condicional-e-incondicional.html#cb233-2"></a>data &lt;-<span class="st"> </span><span class="kw">window</span>(co2, <span class="dv">1990</span>) <span class="co"># datos de co2 desde 1990</span></span>
+<span id="cb233-3"><a href="simulación-condicional-e-incondicional.html#cb233-3"></a><span class="kw">plot</span>(data, <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;Atmospheric concentration of CO&quot;</span>[<span class="dv">2</span>]), </span>
+<span id="cb233-4"><a href="simulación-condicional-e-incondicional.html#cb233-4"></a>     <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">1990</span>,<span class="dv">2000</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">350</span>, <span class="dv">375</span>))</span>
+<span id="cb233-5"><a href="simulación-condicional-e-incondicional.html#cb233-5"></a>fit &lt;-<span class="st"> </span><span class="kw">ets</span>(data)</span>
+<span id="cb233-6"><a href="simulación-condicional-e-incondicional.html#cb233-6"></a><span class="co"># plot(forecast(fit, h=24))</span></span>
+<span id="cb233-7"><a href="simulación-condicional-e-incondicional.html#cb233-7"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb233-8"><a href="simulación-condicional-e-incondicional.html#cb233-8"></a><span class="kw">lines</span>(<span class="kw">simulate</span>(fit, <span class="dv">24</span>), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
             </section>

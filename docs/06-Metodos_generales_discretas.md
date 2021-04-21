@@ -187,7 +187,7 @@ system.time( rx <- rfmp(x, fmp, nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.14    0.00    0.15
+##    0.08    0.00    0.07
 ```
 
 Aproximación de la media:
@@ -331,7 +331,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##    0.06    0.00    0.06
+##    0.07    0.00    0.06
 ```
 
 ```r
@@ -453,7 +453,7 @@ system.time( rx <- rfmp.tabla(x, fmp, n-1, nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.08    0.00    0.08
+##    0.03    0.00    0.03
 ```
 
 Análisis de los resultados:
@@ -568,7 +568,7 @@ system.time( rx <- rfmp.alias(x,fmp,nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.05    0.00    0.04
+##    0.01    0.02    0.03
 ```
 
 Análisis de los resultados:
@@ -812,7 +812,7 @@ b)  Implementa el algoritmo en una función que permita generar $nsim$
 \BeginKnitrBlock{exercise}\iffalse{-91-112-114-111-112-117-101-115-116-111-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:hipergeom"><strong>(\#exr:hipergeom)  \iffalse (propuesto) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
 Se pretende simular $nsim=10^{4}$ observaciones de una variable
-hipergeométrica (`dhyper(x, m, n, k)`) de parámetros $m=$ el nº 
+hipergeométrica (`dhyper(x, m, n, k)`) de parámetros $m=$ el número 
 de grupo multiplicado por 10, $n=100-m$ y $k=20$.
 
 a)  Comprobar que el rango de posibles valores de esta variable es

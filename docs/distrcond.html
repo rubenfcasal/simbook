@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2021-04-14" />
+<meta name="date" content="2021-04-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -226,7 +226,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.7.2" data-path="mult-discr.html"><a href="mult-discr.html#simulación-de-una-variable-discreta-bidimensional"><i class="fa fa-check"></i><b>7.7.2</b> Simulación de una variable discreta bidimensional</a></li>
 <li class="chapter" data-level="7.7.3" data-path="mult-discr.html"><a href="mult-discr.html#simconting"><i class="fa fa-check"></i><b>7.7.3</b> Simulación de tablas de contingencia</a></li>
 </ul></li>
-<li class="chapter" data-level="7.8" data-path="ejercicios-propuestos.html"><a href="ejercicios-propuestos.html"><i class="fa fa-check"></i><b>7.8</b> Ejercicios propuestos</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="cap8.html"><a href="cap8.html"><i class="fa fa-check"></i><b>8</b> Aplicaciones en Inferencia Estadística</a><ul>
 <li class="chapter" data-level="8.1" data-path="distribución-en-el-muestreo.html"><a href="distribución-en-el-muestreo.html"><i class="fa fa-check"></i><b>8.1</b> Distribución en el muestreo</a></li>
@@ -365,7 +364,7 @@ x_1,x_2,\ldots,x_{i-1}\right)},\]</span></p>
 
 <p>Se trata de la distribución bidimensional continua con densidad
 constante en el círculo:
-<span class="math display">\[C = \left\{ \left( x_1, x_2 \right)  \in \mathbb{R} : x_1^2 + x_2^2 \leq 1 \right\}.\]</span></p>
+<span class="math display">\[C = \left\{ \left( x_1, x_2 \right)  \in \mathbb{R}^2 : x_1^2 + x_2^2 \leq 1 \right\}.\]</span></p>
 <p>Su función de densidad viene dada por:
 <span class="math display">\[f\left( x_1,x_2\right)  =\left\{
 \begin{array}{ll}
@@ -429,7 +428,12 @@ f(x_1,x_2) &amp;= \frac{1}{2 \pi \sigma_1 \sigma_2 \sqrt{1-\rho^2}} \\
 f_2\left( x_2|x_1\right)  &amp;= \frac{f\left( x_1,x_2\right)  }{f_1\left( x_1\right)} \\ &amp;= \frac{1}{\sigma_2\sqrt{2\pi (1-\rho^2)}}
 \exp\left( -\frac{\left(x_2 - \mu_2 - \frac{\sigma_2}{\sigma_1}\rho( x_1 - \mu_1)\right)^{2}}{2\sigma_2^2 (1-\rho^2)}\right)
 \end{aligned}\]</span></p>
-<p>Por tanto <span class="math inline">\(X_1 \sim \mathcal{N}\left( \mu_1, \sigma_1^2 \right)\)</span> y <span class="math inline">\(X_2 | X_1 \sim \mathcal{N} \left( \mu_2 + \frac{\sigma_2}{\sigma_1}\rho( X_1 - \mu_1), \sigma_2^2 (1-\rho^2) \right)\)</span>, y el algoritmo sería el siguiente:</p>
+<p>Por tanto:</p>
+<p><span class="math display">\[\begin{aligned}
+X_1 &amp;\sim \mathcal{N}\left( \mu_1, \sigma_1^2 \right) \\
+X_2 | X_1 &amp;\sim \mathcal{N} \left( \mu_2 + \frac{\sigma_2}{\sigma_1}\rho( X_1 - \mu_1), \sigma_2^2 (1-\rho^2) \right)
+\end{aligned}\]</span></p>
+<p>y el algoritmo sería el siguiente:</p>
 
 <div class="conjecture">
 <p><span id="cnj:norm-bidim-cond" class="conjecture"><strong>Algoritmo 7.4  (de simulación de una normal bidimensional)  </strong></span>
@@ -448,6 +452,23 @@ ya que <span class="math inline">\(\Sigma = L L^t\)</span> con:
  \sigma_2 \rho &amp;  \sigma_2  \sqrt{1-\rho^2}
 \end{pmatrix}\]</span></p>
 <p>Además, esta aproximación puede generalizarse al caso multidimensional, ver Sección <a href="simulación-condicional-e-incondicional.html#condnormal">7.5.1</a>.</p>
+
+<div class="exercise">
+<span id="exr:cond2d" class="exercise"><strong>Ejercicio 7.1  </strong></span>
+</div>
+
+<p>Considerando la variable aleatoria bidimensional del Ejemplo <a href="el-método-de-aceptaciónrechazo.html#exm:ar-bidim">7.2</a> y teniendo en cuenta que la densidad marginal de la
+variable <span class="math inline">\(X\)</span> es:
+<span class="math display">\[f_{X}(x)=\left\{ 
+\begin{array}{cl}
+\frac{1}{8}\left( 5-3x^2\right)  &amp; \text{si }x\in \lbrack -1,1] \\ 
+0 &amp; \text{en otro caso}
+\end{array}
+\right.\]</span>
+Describir brevemente un algoritmo para la simulación del
+vector aleatorio basado en el método de las distribuciones
+condicionadas (asumir que se dispone de un algoritmo para generar
+observaciones de las distribuciones unidimensionales de interés).</p>
 </div>
             </section>
 

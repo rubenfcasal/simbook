@@ -25,22 +25,19 @@ Suess, E.A. y Trumbo, B.E. (2010). *Introduction to probability simulation and G
 
 ### Libros {-}
 
-Azarang, M. R. y García Dunna, E. (1996). *Simulación y análisis de
-modelos estocásticos*. McGraw-Hill.
+Azarang, M. R. y García Dunna, E. (1996). *Simulación y análisis de modelos estocásticos*. McGraw-Hill.
 
-Bratley, P., Fox, B.L. y Schrage L.E. (1987). *A guide to simulation*.
-Springer-Verlag.
+Bratley, P., Fox, B.L. y Schrage L.E. (1987). *A guide to simulation*. Springer-Verlag.
 
 Cao R. y Fernández-Casal R. (2020). *Técnicas de Remuestreo* <https://rubenfcasal.github.io/book_remuestreo>.
 
-Devroye, L. (1986). *Non-uniform random variate generation*.
-Springer-Verlag.
+Devroye, L. (1986). *Non-uniform random variate generation*. Springer-Verlag.
 
-Evans, M. y Swartz, T. (2000). *Approximating integrals via Monte Carlo and
-determinstic methods*. Oxford University Press. 
+Evans, M. y Swartz, T. (2000). *Approximating integrals via Monte Carlo and determinstic methods*. Oxford University Press. 
 
-Gentle, J.E. (1998). *Random number generation and Monte Carlo methods*.
-Springer-Verlag.
+Gentle, J.E. (1998). *Random number generation and Monte Carlo methods*. Springer-Verlag.
+
+Hofert, M. (2018). *Elements of Copula Modeling with R*, Springer.
 
 Hörmann, W. et al. (2004). *Automatic Nonuniform Random Variate Generation*. Springer. 
 
@@ -48,28 +45,25 @@ Knuth, D.E. (1969). *The Art of Computer Programming*. Volume 2. Addison-Wesley.
 
 Knuth, D.E. (2002). *The Art of Computer Programming*. Volume 2, third edition, ninth printing. Addison-Wesley.
 
-Law, A.M. y Kelton, W.D. (1991). *Simulation, modeling and analysis*.
-McGraw-Hill.
+Law, A.M. y Kelton, W.D. (1991). *Simulation, modeling and analysis*. McGraw-Hill.
 
 Liu, J.S. (2004). *Monte Carlo strategies in scientific computing*. Springer. 
 
-Moeschlin, O., Grycko, E., Pohl, C. y Steinert, F. (1998). *Experimental
-stochastics*. Springer-Verlag.
+Moeschlin, O., Grycko, E., Pohl, C. y Steinert, F. (1998). *Experimental stochastics*. Springer-Verlag.
 
-Nelson, R. (1995). *Probability, stochastic processes, and queueing
-theory: the mathematics of computer performance modelling*.
-Springer-Verlag.
+Nelsen, R.B. (2006). *An introduction to copulas*, 2ª ed., Springer.
 
-Pardo, L. y Valdés, T. (1987). *Simulación. Aplicaciones prácticas a la
-empresa*. Díaz de Santos.
+Nelson, R. (1995). *Probability, stochastic processes, and queueing theory: the mathematics of computer performance modelling*. Springer-Verlag.
+
+
+Pardo, L. y Valdés, T. (1987). *Simulación. Aplicaciones prácticas a la empresa*. Díaz de Santos.
 
 Robert, C.P. y G. Casella (2004). *Monte Carlo statistical methods*. Springer. 
 
 
 ### Artículos {-}
 
-Demirhan, H. y Bitirim, N. (2016). [CryptRndTest: an R package for testing the cryptographic randomness](https://journal.r-project.org/archive/2016/RJ-2016-016/index.html). 
-*The R Journal*, 8(1), 233-247.
+Demirhan, H. y Bitirim, N. (2016). [CryptRndTest: an R package for testing the cryptographic randomness](https://journal.r-project.org/archive/2016/RJ-2016-016/index.html). *The R Journal*, 8(1), 233-247.
 
 Downham, D.Y. (1970). Algorithm AS 29: The runs up and down test. *Journal of the Royal Statistical Society*. Series C (Applied Statistics), 19(2), 190-192.
 
@@ -88,6 +82,8 @@ Marsaglia, G., Zaman, A. y Tsang, W.W. (1990). Toward a universal random number 
 Matsumoto, M. y Nishimura, T. (1998). Mersenne Twister: A 623-dimensionally equidistributed uniform pseudo-random number generator, *ACM Transactions on Modeling and Computer Simulation*, 8, 3–30.
 
 Odeh, R.E. y Evans, J.O. (1974). The percentage points of the normal distribution. *Journal of the Royal Statistical Society*. Series C (Applied Statistics), 23(1), 96-97.
+
+Patefield, W.M. (1981). [Algorithm AS 159: An efficient method of generating random r x c tables with given row and column totals](https://doi.org/10.2307/2346669). *Applied Statistics*, 30, 91–97.
 
 Park, S.K. y Miller , K.W. (1988). Random number generators: good ones are hard to find. *Communications of the ACM*, 31(10), 1192-1201.
 

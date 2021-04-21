@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2021-04-14" />
+<meta name="date" content="2021-04-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -226,7 +226,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.7.2" data-path="mult-discr.html"><a href="mult-discr.html#simulación-de-una-variable-discreta-bidimensional"><i class="fa fa-check"></i><b>7.7.2</b> Simulación de una variable discreta bidimensional</a></li>
 <li class="chapter" data-level="7.7.3" data-path="mult-discr.html"><a href="mult-discr.html#simconting"><i class="fa fa-check"></i><b>7.7.3</b> Simulación de tablas de contingencia</a></li>
 </ul></li>
-<li class="chapter" data-level="7.8" data-path="ejercicios-propuestos.html"><a href="ejercicios-propuestos.html"><i class="fa fa-check"></i><b>7.8</b> Ejercicios propuestos</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="cap8.html"><a href="cap8.html"><i class="fa fa-check"></i><b>8</b> Aplicaciones en Inferencia Estadística</a><ul>
 <li class="chapter" data-level="8.1" data-path="distribución-en-el-muestreo.html"><a href="distribución-en-el-muestreo.html"><i class="fa fa-check"></i><b>8.1</b> Distribución en el muestreo</a></li>
@@ -339,7 +338,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 La idea de este tipo de métodos es simular datos independientes y transformarlos linealmente de modo que el resultado tenga la covarianza deseada <span class="math inline">\(\Sigma = AA^t\)</span>.</p>
 <p>Este método se emplea principalmente para la simulación de una
 normal multivariante, aunque también es válido para muchas otras
-distribuciónes como la <span class="math inline">\(t\)</span>-multivariante.</p>
+distribuciones como la <span class="math inline">\(t\)</span>-multivariante.</p>
 <p>En el caso de normalidad, el resultado general es el siguiente.</p>
 
 <div class="proposition">
@@ -349,18 +348,17 @@ rango máximo, con <span class="math inline">\(p\leq d\)</span>, entonces:
 <span class="math display">\[A\mathbf{X} \sim \mathcal{N}_{p}\left(A\boldsymbol\mu,A\Sigma A^t\right).\]</span>
 </div>
 
-<p>Partiendo de <span class="math inline">\(\mathbf{Z} \sim \mathcal{N}_d\left( \mathbf{0},I_d\right)\)</span>,
-se podrían considerar distrintas factorizaciones de la
-matriz de covarianzas:</p>
+<p>Partiendo de <span class="math inline">\(\mathbf{Z} \sim \mathcal{N}_d\left( \mathbf{0},I_d\right)\)</span>, se podrían considerar distintas factorizaciones de la matriz de covarianzas:</p>
 <ul>
-<li><p>Factorización espectral:
+<li>Factorización espectral:
 <span class="math inline">\(\Sigma=H\Lambda H^t =H\Lambda^{1/2}(H\Lambda^{1/2})^t\)</span>,
-donde <span class="math inline">\(H\)</span> es una matriz ortogonal (i.e. <span class="math inline">\(H^{-1}=H^{t}\)</span>), cuyas columnas son los autovectores de la matriz <span class="math inline">\(\Sigma\)</span>, y <span class="math inline">\(\Lambda\)</span> es una matriz diagonal, cuya diagonal esta formada por los correspondientes autovalores (positivos). De donde se deduce que:
-<span class="math display">\[\mathbf{X} =\boldsymbol\mu + H\Lambda^{1/2}\mathbf{Z} 
-\sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right).\]</span></p></li>
-<li><p>Factorización de Cholesky: <span class="math inline">\(\Sigma=LL^t\)</span>, donde <span class="math inline">\(L\)</span> es una matriz triangular inferior (fácilmente invertible), por lo que:
+donde <span class="math inline">\(H\)</span> es una matriz ortogonal (i.e. <span class="math inline">\(H^{-1}=H^{t}\)</span>), cuyas columnas son los autovectores de la matriz <span class="math inline">\(\Sigma\)</span>, y <span class="math inline">\(\Lambda\)</span> es una matriz diagonal, cuya diagonal esta formada por los correspondientes autovalores (positivos). De donde se deduce que:</li>
+</ul>
+<p><span class="math display">\[\mathbf{X} =\boldsymbol\mu + H\Lambda^{1/2}\mathbf{Z} \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right).\]</span></p>
+<ul>
+<li>Factorización de Cholesky: <span class="math inline">\(\Sigma=LL^t\)</span>, donde <span class="math inline">\(L\)</span> es una matriz triangular inferior (fácilmente invertible), por lo que:
 <span class="math display">\[\mathbf{X} =\boldsymbol\mu + L\mathbf{Z} 
-\sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right).\]</span></p></li>
+\sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right).\]</span></li>
 </ul>
 <p>Desde el punto de vista de la eficiencia computacional la factorización de Cholesky
 sería la preferible. Pero en ocasiones, para evitar problemas numéricos
@@ -462,7 +460,7 @@ del paquete <code>MASS</code> que emplea la factorización espectral (<code>eige
 ##         drop(X)
 ##     else t(X)
 ## }
-## &lt;bytecode: 0x0000000019e26c60&gt;
+## &lt;bytecode: 0x0000000027d933e8&gt;
 ## &lt;environment: namespace:MASS&gt;</code></pre>
 <div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="fact-cov.html#cb214-1"></a>x &lt;-<span class="st"> </span><span class="kw">mvrnorm</span>(nsim, mu, x.cov)</span>
 <span id="cb214-2"><a href="fact-cov.html#cb214-2"></a></span>

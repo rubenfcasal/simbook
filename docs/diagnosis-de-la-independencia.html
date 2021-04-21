@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2021-04-14" />
+<meta name="date" content="2021-04-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -226,7 +226,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.7.2" data-path="mult-discr.html"><a href="mult-discr.html#simulación-de-una-variable-discreta-bidimensional"><i class="fa fa-check"></i><b>7.7.2</b> Simulación de una variable discreta bidimensional</a></li>
 <li class="chapter" data-level="7.7.3" data-path="mult-discr.html"><a href="mult-discr.html#simconting"><i class="fa fa-check"></i><b>7.7.3</b> Simulación de tablas de contingencia</a></li>
 </ul></li>
-<li class="chapter" data-level="7.8" data-path="ejercicios-propuestos.html"><a href="ejercicios-propuestos.html"><i class="fa fa-check"></i><b>7.8</b> Ejercicios propuestos</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="cap8.html"><a href="cap8.html"><i class="fa fa-check"></i><b>8</b> Aplicaciones en Inferencia Estadística</a><ul>
 <li class="chapter" data-level="8.1" data-path="distribución-en-el-muestreo.html"><a href="distribución-en-el-muestreo.html"><i class="fa fa-check"></i><b>8.1</b> Distribución en el muestreo</a></li>
@@ -367,36 +366,36 @@ rechazar <span class="math inline">\(H_{0}\)</span> en contrastes).</p>
 <p>Consideramos un proceso temporal estacionario con dependencia exponencial
 (la dependencia entre las observaciones depende del “salto” entre ellas;
 ver Ejemplo <a href="fact-cov.html#exm:funcional">7.4</a> en la Sección <a href="fact-cov.html#fact-cov">7.3</a>).</p>
-<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="diagnosis-de-la-independencia.html#cb526-1"></a>n &lt;-<span class="st"> </span><span class="dv">100</span>          <span class="co"># Nº de observaciones</span></span>
-<span id="cb526-2"><a href="diagnosis-de-la-independencia.html#cb526-2"></a>t &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length =</span> n)</span>
-<span id="cb526-3"><a href="diagnosis-de-la-independencia.html#cb526-3"></a>mu &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, n)   <span class="co"># Media</span></span>
-<span id="cb526-4"><a href="diagnosis-de-la-independencia.html#cb526-4"></a><span class="co"># mu &lt;- 0.25 + 0.5*t</span></span>
-<span id="cb526-5"><a href="diagnosis-de-la-independencia.html#cb526-5"></a><span class="co"># mu &lt;- sin(2*pi*t)</span></span>
-<span id="cb526-6"><a href="diagnosis-de-la-independencia.html#cb526-6"></a></span>
-<span id="cb526-7"><a href="diagnosis-de-la-independencia.html#cb526-7"></a><span class="co"># Matriz de covarianzas</span></span>
-<span id="cb526-8"><a href="diagnosis-de-la-independencia.html#cb526-8"></a>t.dist &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span class="kw">dist</span>(t))</span>
-<span id="cb526-9"><a href="diagnosis-de-la-independencia.html#cb526-9"></a>t.cov &lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>t.dist)</span>
-<span id="cb526-10"><a href="diagnosis-de-la-independencia.html#cb526-10"></a><span class="co"># str(t.cov)</span></span>
-<span id="cb526-11"><a href="diagnosis-de-la-independencia.html#cb526-11"></a><span class="co"># num [1:100, 1:100] 1 0.99 0.98 0.97 0.96 ...</span></span>
-<span id="cb526-12"><a href="diagnosis-de-la-independencia.html#cb526-12"></a></span>
-<span id="cb526-13"><a href="diagnosis-de-la-independencia.html#cb526-13"></a><span class="co"># Simulación de las observaciones</span></span>
-<span id="cb526-14"><a href="diagnosis-de-la-independencia.html#cb526-14"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb526-15"><a href="diagnosis-de-la-independencia.html#cb526-15"></a><span class="kw">library</span>(MASS)</span>
-<span id="cb526-16"><a href="diagnosis-de-la-independencia.html#cb526-16"></a></span>
-<span id="cb526-17"><a href="diagnosis-de-la-independencia.html#cb526-17"></a>z &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n)</span>
-<span id="cb526-18"><a href="diagnosis-de-la-independencia.html#cb526-18"></a>x1 &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span>z <span class="co"># Datos independientes</span></span>
-<span id="cb526-19"><a href="diagnosis-de-la-independencia.html#cb526-19"></a>x2 &lt;-<span class="st"> </span><span class="kw">mvrnorm</span>(<span class="dv">1</span>, mu, t.cov) <span class="co"># Datos dependientes</span></span>
-<span id="cb526-20"><a href="diagnosis-de-la-independencia.html#cb526-20"></a></span>
-<span id="cb526-21"><a href="diagnosis-de-la-independencia.html#cb526-21"></a><span class="kw">plot</span>(t, mu, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">3</span>,<span class="dv">3</span>), <span class="dt">ylab =</span> <span class="st">&#39;x&#39;</span>)</span>
-<span id="cb526-22"><a href="diagnosis-de-la-independencia.html#cb526-22"></a><span class="kw">lines</span>(t, x1, <span class="dt">col =</span> <span class="st">&#39;blue&#39;</span>)</span>
-<span id="cb526-23"><a href="diagnosis-de-la-independencia.html#cb526-23"></a><span class="kw">lines</span>(t, x2, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>)</span>
-<span id="cb526-24"><a href="diagnosis-de-la-independencia.html#cb526-24"></a><span class="kw">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Datos independientes&quot;</span>, <span class="st">&quot;Datos dependientes&quot;</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&#39;blue&#39;</span>, <span class="st">&#39;red&#39;</span>), <span class="dt">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="diagnosis-de-la-independencia.html#cb545-1"></a>n &lt;-<span class="st"> </span><span class="dv">100</span>          <span class="co"># Nº de observaciones</span></span>
+<span id="cb545-2"><a href="diagnosis-de-la-independencia.html#cb545-2"></a>t &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length =</span> n)</span>
+<span id="cb545-3"><a href="diagnosis-de-la-independencia.html#cb545-3"></a>mu &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, n)   <span class="co"># Media</span></span>
+<span id="cb545-4"><a href="diagnosis-de-la-independencia.html#cb545-4"></a><span class="co"># mu &lt;- 0.25 + 0.5*t</span></span>
+<span id="cb545-5"><a href="diagnosis-de-la-independencia.html#cb545-5"></a><span class="co"># mu &lt;- sin(2*pi*t)</span></span>
+<span id="cb545-6"><a href="diagnosis-de-la-independencia.html#cb545-6"></a></span>
+<span id="cb545-7"><a href="diagnosis-de-la-independencia.html#cb545-7"></a><span class="co"># Matriz de covarianzas</span></span>
+<span id="cb545-8"><a href="diagnosis-de-la-independencia.html#cb545-8"></a>t.dist &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span class="kw">dist</span>(t))</span>
+<span id="cb545-9"><a href="diagnosis-de-la-independencia.html#cb545-9"></a>t.cov &lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>t.dist)</span>
+<span id="cb545-10"><a href="diagnosis-de-la-independencia.html#cb545-10"></a><span class="co"># str(t.cov)</span></span>
+<span id="cb545-11"><a href="diagnosis-de-la-independencia.html#cb545-11"></a><span class="co"># num [1:100, 1:100] 1 0.99 0.98 0.97 0.96 ...</span></span>
+<span id="cb545-12"><a href="diagnosis-de-la-independencia.html#cb545-12"></a></span>
+<span id="cb545-13"><a href="diagnosis-de-la-independencia.html#cb545-13"></a><span class="co"># Simulación de las observaciones</span></span>
+<span id="cb545-14"><a href="diagnosis-de-la-independencia.html#cb545-14"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb545-15"><a href="diagnosis-de-la-independencia.html#cb545-15"></a><span class="kw">library</span>(MASS)</span>
+<span id="cb545-16"><a href="diagnosis-de-la-independencia.html#cb545-16"></a></span>
+<span id="cb545-17"><a href="diagnosis-de-la-independencia.html#cb545-17"></a>z &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n)</span>
+<span id="cb545-18"><a href="diagnosis-de-la-independencia.html#cb545-18"></a>x1 &lt;-<span class="st"> </span>mu <span class="op">+</span><span class="st"> </span>z <span class="co"># Datos independientes</span></span>
+<span id="cb545-19"><a href="diagnosis-de-la-independencia.html#cb545-19"></a>x2 &lt;-<span class="st"> </span><span class="kw">mvrnorm</span>(<span class="dv">1</span>, mu, t.cov) <span class="co"># Datos dependientes</span></span>
+<span id="cb545-20"><a href="diagnosis-de-la-independencia.html#cb545-20"></a></span>
+<span id="cb545-21"><a href="diagnosis-de-la-independencia.html#cb545-21"></a><span class="kw">plot</span>(t, mu, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">3</span>,<span class="dv">3</span>), <span class="dt">ylab =</span> <span class="st">&#39;x&#39;</span>)</span>
+<span id="cb545-22"><a href="diagnosis-de-la-independencia.html#cb545-22"></a><span class="kw">lines</span>(t, x1, <span class="dt">col =</span> <span class="st">&#39;blue&#39;</span>)</span>
+<span id="cb545-23"><a href="diagnosis-de-la-independencia.html#cb545-23"></a><span class="kw">lines</span>(t, x2, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>)</span>
+<span id="cb545-24"><a href="diagnosis-de-la-independencia.html#cb545-24"></a><span class="kw">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Datos independientes&quot;</span>, <span class="st">&quot;Datos dependientes&quot;</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&#39;blue&#39;</span>, <span class="st">&#39;red&#39;</span>), <span class="dt">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-11-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>En el caso anterior la varianza es uno con ambos procesos.
 Las estimaciones suponiendo independencia serían:</p>
-<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="diagnosis-de-la-independencia.html#cb527-1"></a><span class="kw">var</span>(x1)</span></code></pre></div>
+<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb546-1"><a href="diagnosis-de-la-independencia.html#cb546-1"></a><span class="kw">var</span>(x1)</span></code></pre></div>
 <pre><code>## [1] 0.8067621</code></pre>
-<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="diagnosis-de-la-independencia.html#cb529-1"></a><span class="kw">var</span>(x2)</span></code></pre></div>
+<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="diagnosis-de-la-independencia.html#cb548-1"></a><span class="kw">var</span>(x2)</span></code></pre></div>
 <pre><code>## [1] 0.1108155</code></pre>
 <p>En el caso de datos dependientes se produce una clara subestimación de la varianza</p>
 <div id="métodos-para-detectar-dependencia" class="section level3">
@@ -430,16 +429,16 @@ Podría indicar la presencia de un “efecto aprendizaje”.</p></li>
 <li><p>Comandos R: <code>plot(as.ts(x))</code></p></li>
 </ul>
 <p>Ejemplo:</p>
-<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="diagnosis-de-la-independencia.html#cb531-1"></a>old.par &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb531-2"><a href="diagnosis-de-la-independencia.html#cb531-2"></a><span class="kw">plot</span>(datos, <span class="dt">type =</span> <span class="st">&#39;l&#39;</span>)</span>
-<span id="cb531-3"><a href="diagnosis-de-la-independencia.html#cb531-3"></a><span class="kw">plot</span>(<span class="kw">as.ts</span>(datos))</span></code></pre></div>
+<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="diagnosis-de-la-independencia.html#cb550-1"></a>old.par &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb550-2"><a href="diagnosis-de-la-independencia.html#cb550-2"></a><span class="kw">plot</span>(datos, <span class="dt">type =</span> <span class="st">&#39;l&#39;</span>)</span>
+<span id="cb550-3"><a href="diagnosis-de-la-independencia.html#cb550-3"></a><span class="kw">plot</span>(<span class="kw">as.ts</span>(datos))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:grafsec"></span>
 <img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/grafsec-1.png" alt="Ejemplos de gráficos secuenciales." width="70%" />
 <p class="caption">
 Figura B.3: Ejemplos de gráficos secuenciales.
 </p>
 </div>
-<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="diagnosis-de-la-independencia.html#cb532-1"></a><span class="kw">par</span>(old.par)</span></code></pre></div>
+<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="diagnosis-de-la-independencia.html#cb551-1"></a><span class="kw">par</span>(old.par)</span></code></pre></div>
 <p>Es habitual que este tipo de análisis se realice sobre los residuos
 de un modelo de regresión (e.g. <code>datos &lt;- residuals(modelo)</code>)</p>
 <p>Este gráfico también podría servir para detectar dependencia temporal:</p>
@@ -449,13 +448,13 @@ y viceversa) indicarían una posible dependencia positiva.</p></li>
 <li><p>Valores próximos dispares (valores grandes seguidos de pequeños
 y viceversa) indicarían una posible dependencia negativa.</p></li>
 </ul>
-<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="diagnosis-de-la-independencia.html#cb533-1"></a>old.par &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb533-2"><a href="diagnosis-de-la-independencia.html#cb533-2"></a><span class="kw">plot</span>(x2, <span class="dt">type =</span> <span class="st">&#39;l&#39;</span>, <span class="dt">ylab =</span> <span class="st">&#39;&#39;</span>, <span class="dt">main =</span> <span class="st">&#39;Dependencia positiva&#39;</span>)</span>
-<span id="cb533-3"><a href="diagnosis-de-la-independencia.html#cb533-3"></a><span class="kw">plot</span>(x1, <span class="dt">type =</span> <span class="st">&#39;l&#39;</span>, <span class="dt">ylab =</span> <span class="st">&#39;&#39;</span>, <span class="dt">main =</span> <span class="st">&#39;Independencia&#39;</span>)</span>
-<span id="cb533-4"><a href="diagnosis-de-la-independencia.html#cb533-4"></a>x3 &lt;-<span class="st"> </span>x2 <span class="op">*</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">-1</span>)</span>
-<span id="cb533-5"><a href="diagnosis-de-la-independencia.html#cb533-5"></a><span class="kw">plot</span>(x3, <span class="dt">type =</span> <span class="st">&#39;l&#39;</span>, <span class="dt">ylab =</span> <span class="st">&#39;&#39;</span>, <span class="dt">main =</span> <span class="st">&#39;Dependencia negativa&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="diagnosis-de-la-independencia.html#cb552-1"></a>old.par &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb552-2"><a href="diagnosis-de-la-independencia.html#cb552-2"></a><span class="kw">plot</span>(x2, <span class="dt">type =</span> <span class="st">&#39;l&#39;</span>, <span class="dt">ylab =</span> <span class="st">&#39;&#39;</span>, <span class="dt">main =</span> <span class="st">&#39;Dependencia positiva&#39;</span>)</span>
+<span id="cb552-3"><a href="diagnosis-de-la-independencia.html#cb552-3"></a><span class="kw">plot</span>(x1, <span class="dt">type =</span> <span class="st">&#39;l&#39;</span>, <span class="dt">ylab =</span> <span class="st">&#39;&#39;</span>, <span class="dt">main =</span> <span class="st">&#39;Independencia&#39;</span>)</span>
+<span id="cb552-4"><a href="diagnosis-de-la-independencia.html#cb552-4"></a>x3 &lt;-<span class="st"> </span>x2 <span class="op">*</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">-1</span>)</span>
+<span id="cb552-5"><a href="diagnosis-de-la-independencia.html#cb552-5"></a><span class="kw">plot</span>(x3, <span class="dt">type =</span> <span class="st">&#39;l&#39;</span>, <span class="dt">ylab =</span> <span class="st">&#39;&#39;</span>, <span class="dt">main =</span> <span class="st">&#39;Dependencia negativa&#39;</span>)</span></code></pre></div>
 <p><img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="diagnosis-de-la-independencia.html#cb534-1"></a><span class="kw">par</span>(old.par)</span></code></pre></div>
+<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="diagnosis-de-la-independencia.html#cb553-1"></a><span class="kw">par</span>(old.par)</span></code></pre></div>
 <p>pero suele ser preferible emplear un gráfico de dispersión retardado.</p>
 </div>
 <div id="gráfico-de-dispersion-retardado" class="section level3">
@@ -466,26 +465,26 @@ por un instante)</p>
 <ul>
 <li>Comando R:<code>plot(x[-length(x)], x[-1], xlab = "X_t", ylab = "X_t+1")</code></li>
 </ul>
-<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="diagnosis-de-la-independencia.html#cb535-1"></a>old.par &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb535-2"><a href="diagnosis-de-la-independencia.html#cb535-2"></a><span class="kw">plot</span>(x2[<span class="op">-</span><span class="kw">length</span>(x2)], x2[<span class="op">-</span><span class="dv">1</span>], <span class="dt">xlab =</span> <span class="st">&quot;X_t&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;X_t+1&quot;</span>, <span class="dt">main =</span> <span class="st">&#39;Dependencia positiva&#39;</span>)</span>
-<span id="cb535-3"><a href="diagnosis-de-la-independencia.html#cb535-3"></a><span class="kw">plot</span>(x1[<span class="op">-</span><span class="kw">length</span>(x1)], x1[<span class="op">-</span><span class="dv">1</span>], <span class="dt">xlab =</span> <span class="st">&quot;X_t&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;X_t+1&quot;</span>, <span class="dt">main =</span> <span class="st">&#39;Independencia&#39;</span>)</span>
-<span id="cb535-4"><a href="diagnosis-de-la-independencia.html#cb535-4"></a><span class="kw">plot</span>(x3[<span class="op">-</span><span class="kw">length</span>(x3)], x3[<span class="op">-</span><span class="dv">1</span>], <span class="dt">xlab =</span> <span class="st">&quot;X_t&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;X_t+1&quot;</span>, <span class="dt">main =</span> <span class="st">&#39;Dependencia negativa&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="diagnosis-de-la-independencia.html#cb554-1"></a>old.par &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb554-2"><a href="diagnosis-de-la-independencia.html#cb554-2"></a><span class="kw">plot</span>(x2[<span class="op">-</span><span class="kw">length</span>(x2)], x2[<span class="op">-</span><span class="dv">1</span>], <span class="dt">xlab =</span> <span class="st">&quot;X_t&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;X_t+1&quot;</span>, <span class="dt">main =</span> <span class="st">&#39;Dependencia positiva&#39;</span>)</span>
+<span id="cb554-3"><a href="diagnosis-de-la-independencia.html#cb554-3"></a><span class="kw">plot</span>(x1[<span class="op">-</span><span class="kw">length</span>(x1)], x1[<span class="op">-</span><span class="dv">1</span>], <span class="dt">xlab =</span> <span class="st">&quot;X_t&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;X_t+1&quot;</span>, <span class="dt">main =</span> <span class="st">&#39;Independencia&#39;</span>)</span>
+<span id="cb554-4"><a href="diagnosis-de-la-independencia.html#cb554-4"></a><span class="kw">plot</span>(x3[<span class="op">-</span><span class="kw">length</span>(x3)], x3[<span class="op">-</span><span class="dv">1</span>], <span class="dt">xlab =</span> <span class="st">&quot;X_t&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;X_t+1&quot;</span>, <span class="dt">main =</span> <span class="st">&#39;Dependencia negativa&#39;</span>)</span></code></pre></div>
 <p><img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="diagnosis-de-la-independencia.html#cb536-1"></a><span class="kw">par</span>(old.par)</span></code></pre></div>
+<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="diagnosis-de-la-independencia.html#cb555-1"></a><span class="kw">par</span>(old.par)</span></code></pre></div>
 <p>Se puede generalizar al gráfico <span class="math inline">\(\{(X_{i},X_{i+k}) : i = 1, \ldots, n-k \}\)</span>
 que permite detectar dependencias a <span class="math inline">\(k\)</span> retardos
 (separadas <span class="math inline">\(k\)</span> instantes).</p>
 <p><strong>Ejemplo</strong></p>
-<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="diagnosis-de-la-independencia.html#cb537-1"></a><span class="co"># Gráfico de dispersion retardado</span></span>
-<span id="cb537-2"><a href="diagnosis-de-la-independencia.html#cb537-2"></a><span class="kw">plot</span>(datos[<span class="op">-</span><span class="kw">length</span>(datos)], datos[<span class="op">-</span><span class="dv">1</span>], <span class="dt">xlab =</span> <span class="st">&quot;X_t&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;X_t+1&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="diagnosis-de-la-independencia.html#cb556-1"></a><span class="co"># Gráfico de dispersion retardado</span></span>
+<span id="cb556-2"><a href="diagnosis-de-la-independencia.html#cb556-2"></a><span class="kw">plot</span>(datos[<span class="op">-</span><span class="kw">length</span>(datos)], datos[<span class="op">-</span><span class="dv">1</span>], <span class="dt">xlab =</span> <span class="st">&quot;X_t&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;X_t+1&quot;</span>)</span></code></pre></div>
 <p><img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>El correspondiente coeficiente de correlación es una medida numérica
 del grado de relación lineal (denominado autocorrelación de orden 1).</p>
-<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="diagnosis-de-la-independencia.html#cb538-1"></a><span class="kw">cor</span>(datos[<span class="op">-</span><span class="kw">length</span>(datos)], datos[<span class="op">-</span><span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="diagnosis-de-la-independencia.html#cb557-1"></a><span class="kw">cor</span>(datos[<span class="op">-</span><span class="kw">length</span>(datos)], datos[<span class="op">-</span><span class="dv">1</span>])</span></code></pre></div>
 <pre><code>## [1] 0.01344127</code></pre>
 <p><strong>Ejemplo</strong>: Calidad de un generador aleatorio</p>
 <p>En el caso de una secuencia muy grande de número pseudoaleatorios (supuestamente independientes), sería muy dificil distinguir un patrón a partir del gráfico anterior. La recomendación en R sería utilizar puntos con color de relleno:</p>
-<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="diagnosis-de-la-independencia.html#cb540-1"></a><span class="kw">plot</span>(u[<span class="op">-</span><span class="kw">length</span>(u)], u[<span class="op">-</span><span class="dv">1</span>], <span class="dt">xlab=</span><span class="st">&quot;U_t&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;U_t+1&quot;</span>, <span class="dt">pch=</span><span class="dv">21</span>, <span class="dt">bg=</span><span class="st">&quot;white&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="diagnosis-de-la-independencia.html#cb559-1"></a><span class="kw">plot</span>(u[<span class="op">-</span><span class="kw">length</span>(u)], u[<span class="op">-</span><span class="dv">1</span>], <span class="dt">xlab=</span><span class="st">&quot;U_t&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;U_t+1&quot;</span>, <span class="dt">pch=</span><span class="dv">21</span>, <span class="dt">bg=</span><span class="st">&quot;white&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:dispret"></span>
 <img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/dispret-1.png" alt="Ejemplos de gráficos de dispensión retardados de dos secuencias de longitud 10000." width="70%" />
 <p class="caption">
@@ -514,12 +513,12 @@ denominada función de autocorrelación simple (fas) o correlograma.</p></li>
 <p>En caso de independencia es de esperar que las autocorrelaciones
 muestrales sean próximas a cero (valores “grandes” indicarían
 dependencia positiva o negativa según el signo).</p>
-<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="diagnosis-de-la-independencia.html#cb541-1"></a>old.par &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb541-2"><a href="diagnosis-de-la-independencia.html#cb541-2"></a><span class="kw">acf</span>(x1, <span class="dt">main =</span> <span class="st">&#39;Independencia&#39;</span>)</span>
-<span id="cb541-3"><a href="diagnosis-de-la-independencia.html#cb541-3"></a><span class="kw">acf</span>(x2, <span class="dt">main =</span> <span class="st">&#39;Dependencia positiva&#39;</span>)</span>
-<span id="cb541-4"><a href="diagnosis-de-la-independencia.html#cb541-4"></a><span class="kw">acf</span>(x3, <span class="dt">main =</span> <span class="st">&#39;Dependencia negativa&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="diagnosis-de-la-independencia.html#cb560-1"></a>old.par &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb560-2"><a href="diagnosis-de-la-independencia.html#cb560-2"></a><span class="kw">acf</span>(x1, <span class="dt">main =</span> <span class="st">&#39;Independencia&#39;</span>)</span>
+<span id="cb560-3"><a href="diagnosis-de-la-independencia.html#cb560-3"></a><span class="kw">acf</span>(x2, <span class="dt">main =</span> <span class="st">&#39;Dependencia positiva&#39;</span>)</span>
+<span id="cb560-4"><a href="diagnosis-de-la-independencia.html#cb560-4"></a><span class="kw">acf</span>(x3, <span class="dt">main =</span> <span class="st">&#39;Dependencia negativa&#39;</span>)</span></code></pre></div>
 <p><img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="diagnosis-de-la-independencia.html#cb542-1"></a><span class="kw">par</span>(old.par)</span></code></pre></div>
+<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="diagnosis-de-la-independencia.html#cb561-1"></a><span class="kw">par</span>(old.par)</span></code></pre></div>
 <p>Suponiendo normalidad e independencia, asintóticamente:
 <span class="math display">\[r(k)\underset{aprox.}{\sim}N\left(  \rho(k),\frac{1}{n}\right)\]</span></p>
 <ul>
@@ -532,10 +531,10 @@ de las autocorrelaciones correspondientes a los primeros retardos
 (para detectar dependencias significativas).</p></li>
 </ul>
 <p><strong>Ejemplo</strong></p>
-<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="diagnosis-de-la-independencia.html#cb543-1"></a><span class="kw">acf</span>(datos)  <span class="co"># correlaciones</span></span></code></pre></div>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="diagnosis-de-la-independencia.html#cb562-1"></a><span class="kw">acf</span>(datos)  <span class="co"># correlaciones</span></span></code></pre></div>
 <p><img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>La función <code>acf</code> también permite estimar el covariograma<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a>.</p>
-<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb544-1"><a href="diagnosis-de-la-independencia.html#cb544-1"></a>covar &lt;-<span class="st"> </span><span class="kw">acf</span>(x2, <span class="dt">type =</span> <span class="st">&quot;covariance&quot;</span>)</span></code></pre></div>
+<p>La función <code>acf</code> también permite estimar el covariograma<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a>.</p>
+<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="diagnosis-de-la-independencia.html#cb563-1"></a>covar &lt;-<span class="st"> </span><span class="kw">acf</span>(x2, <span class="dt">type =</span> <span class="st">&quot;covariance&quot;</span>)</span></code></pre></div>
 <p><img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="test-de-rachas" class="section level3">
@@ -563,7 +562,7 @@ no es aleatoria (con dependencia negativa o positiva, respec.).</p></li>
 <li><p>Bajo la hipótesis nula de aleatoriedad:
 <span class="math display">\[R\underset{aprox.}{\sim}N\left(  1+\frac{2n_{1}n_{2}}{n},
 \frac{2n_{1}n_{2}(2n_{1}n_{2}-n)}{n^{2}(n-1)}\right)\]</span>
-siendo <span class="math inline">\(n_{1}\)</span> y <span class="math inline">\(n_{2}\)</span> el nº de signos <span class="math inline">\(+\)</span> y <span class="math inline">\(-\)</span> en la muestra,
+siendo <span class="math inline">\(n_{1}\)</span> y <span class="math inline">\(n_{2}\)</span> el número de signos <span class="math inline">\(+\)</span> y <span class="math inline">\(-\)</span> en la muestra,
 respectivamente (<span class="math inline">\(n_{1}+n_{2}=n\)</span>).
 Para tamaños muéstrales pequeños (<span class="math inline">\(n&lt;40\)</span>), esta aproximación
 no es buena y conviene utilizar la distribución exacta (o utilizar
@@ -583,8 +582,8 @@ es significativamente pequeño o grande.</p></li>
 <li><p>Comandos R: <code>tseries::runs.test(as.factor(x &gt; median(x)))</code></p></li>
 </ul>
 <p><strong>Ejemplo</strong></p>
-<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="diagnosis-de-la-independencia.html#cb545-1"></a><span class="kw">library</span>(tseries)</span>
-<span id="cb545-2"><a href="diagnosis-de-la-independencia.html#cb545-2"></a><span class="kw">runs.test</span>(<span class="kw">as.factor</span>(datos <span class="op">&gt;</span><span class="st"> </span><span class="kw">median</span>(datos)))</span></code></pre></div>
+<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="diagnosis-de-la-independencia.html#cb564-1"></a><span class="kw">library</span>(tseries)</span>
+<span id="cb564-2"><a href="diagnosis-de-la-independencia.html#cb564-2"></a><span class="kw">runs.test</span>(<span class="kw">as.factor</span>(datos <span class="op">&gt;</span><span class="st"> </span><span class="kw">median</span>(datos)))</span></code></pre></div>
 <pre><code>## 
 ##  Runs Test
 ## 
@@ -614,16 +613,16 @@ _{m}^{2}\text{, si }H_{0}\text{ es cierta.}\]</span></p></li>
 <span class="math display">\[p=P\left(  {\chi_{m}^{2}}\geq Q\right)\]</span></p></li>
 <li><p>Comandos R:</p></li>
 </ul>
-<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="diagnosis-de-la-independencia.html#cb547-1"></a>    <span class="kw">Box.test</span>(x, <span class="dt">type=</span>Ljung)</span>
-<span id="cb547-2"><a href="diagnosis-de-la-independencia.html#cb547-2"></a>    <span class="kw">Box.test</span>(x, lag, <span class="dt">type=</span>Ljung)</span></code></pre></div>
+<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="diagnosis-de-la-independencia.html#cb566-1"></a>    <span class="kw">Box.test</span>(x, <span class="dt">type=</span>Ljung)</span>
+<span id="cb566-2"><a href="diagnosis-de-la-independencia.html#cb566-2"></a>    <span class="kw">Box.test</span>(x, lag, <span class="dt">type=</span>Ljung)</span></code></pre></div>
 <p><strong>Ejemplo</strong></p>
-<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="diagnosis-de-la-independencia.html#cb548-1"></a><span class="kw">Box.test</span>(datos, <span class="dt">type=</span><span class="st">&quot;Ljung&quot;</span>) <span class="co"># Contrasta si la primera autocorrelación es nula </span></span></code></pre></div>
+<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="diagnosis-de-la-independencia.html#cb567-1"></a><span class="kw">Box.test</span>(datos, <span class="dt">type=</span><span class="st">&quot;Ljung&quot;</span>) <span class="co"># Contrasta si la primera autocorrelación es nula </span></span></code></pre></div>
 <pre><code>## 
 ##  Box-Ljung test
 ## 
 ## data:  datos
 ## X-squared = 0.0078317, df = 1, p-value = 0.9295</code></pre>
-<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="diagnosis-de-la-independencia.html#cb550-1"></a><span class="kw">Box.test</span>(datos, <span class="dt">lag=</span><span class="dv">5</span>, <span class="dt">type=</span><span class="st">&quot;Ljung&quot;</span>) <span class="co"># Contrasta si las 5 primeras autocorrelaciones son nulas</span></span></code></pre></div>
+<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="diagnosis-de-la-independencia.html#cb569-1"></a><span class="kw">Box.test</span>(datos, <span class="dt">lag=</span><span class="dv">5</span>, <span class="dt">type=</span><span class="st">&quot;Ljung&quot;</span>) <span class="co"># Contrasta si las 5 primeras autocorrelaciones son nulas</span></span></code></pre></div>
 <pre><code>## 
 ##  Box-Ljung test
 ## 
@@ -635,8 +634,8 @@ Durbin-Watson implementado en la función <code>dwtest()</code> del paquete <cod
 </div>
 <div class="footnotes">
 <hr />
-<ol start="14">
-<li id="fn14"><p>En algunos campos, como en estadística espacial, en lugar del covariograma se suele emplear el semivariograma <span class="math inline">\(\gamma(k) = C(0) - C(k)\)</span>.<a href="diagnosis-de-la-independencia.html#fnref14" class="footnote-back">↩︎</a></p></li>
+<ol start="15">
+<li id="fn15"><p>En algunos campos, como en estadística espacial, en lugar del covariograma se suele emplear el semivariograma <span class="math inline">\(\gamma(k) = C(0) - C(k)\)</span>.<a href="diagnosis-de-la-independencia.html#fnref15" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

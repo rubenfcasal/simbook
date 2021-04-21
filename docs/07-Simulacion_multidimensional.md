@@ -1,4 +1,3 @@
-
 # Simulación de distribuciones multivariantes
 
 <!-- 
@@ -159,7 +158,7 @@ $U \leq 1 - \left( T_1^2 + T_2^2 \right) / 2$.
 \BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-117-110-105-102-111-114-109-101-32-101-110-32-108-97-32-101-115-102-101-114-97-93-}\fi{}<div class="example"><span class="example" id="exm:ar-esfera"><strong>(\#exm:ar-esfera)  \iffalse (distribución uniforme en la esfera) \fi{} </strong></span></div>\EndKnitrBlock{example}
 
 Supongamos que el objetivo es simular puntos uniformemente distribuídos sobre la “esfera” unitaria $d$-dimensional (ver Figura \@ref(fig:simpiplot)):
-$$C_d=\left\{  \left( x_1, x_2, \ldots, x_d \right) 
+$$C_d=\left\{  \left( x_1, x_2, \ldots, x_d \right) \in \mathbb{R}^d
 : x_1^2 + x_2^2 + \cdots + x_d^2 \leq1 \right\}.$$
 
 Denotando por $V_d\left( 1\right)$, el “volumen” (la medida) de la
@@ -229,11 +228,11 @@ $$V_d\left( r\right)  =\left\{
 \dfrac{2^{\left\lfloor \frac{d}{2}\right\rfloor +1}\pi^{\left\lfloor \frac{d}{2}\right\rfloor }r^{d}}{1\cdot3\cdot5\cdots d} & \text{si } d \text{ es impar}
 \end{array}\right.$$ 
 puede verse que el número medio de iteraciones del algoritmo, dado por la constante
-$c=\frac{2^{d}}{V_d\left(1 \right)}$, puede llegar a ser enórmemente grande. 
+$c=\frac{2^{d}}{V_d\left(1 \right)}$, puede llegar a ser enormemente grande. 
 Así, si $d=2$ se tiene $c=1.27$, si $d=3$ se tiene $c=1.91$, si $d=4$ entonces $c=3.24$ y para
 $d=10$ resulta $c=401.5$ que es un valor que hace que el algoritmo sea
 tremendamente lento en dimensión $10$.
-Esto está relacionado con la *maldición de la dimensionalidad* (curse of dimensionality), a medida que aumenta el número de dimensiones el volumen de la "frontera" crece exponencialmente.
+Esto está relacionado con la *maldición de la dimensionalidad* (curse of dimensionality), a medida que aumenta el número de dimensiones el volumen de la "frontera" crece exponencialmente (ver p.e. Fernández-Casal y Costa, 2020, [Sección 1.4](https://rubenfcasal.github.io/aprendizaje_estadistico/dimen-curse.html)).
 
 
 Factorización de la matriz de covarianzas {#fact-cov}
@@ -245,7 +244,7 @@ La idea de este tipo de métodos es simular datos independientes y transformarlo
 
 Este método se emplea principalmente para la simulación de una
 normal multivariante, aunque también es válido para muchas otras
-distribuciónes como la $t$-multivariante.
+distribuciones como la $t$-multivariante.
 
 En el caso de normalidad, el resultado general es el siguiente.
 
@@ -254,15 +253,13 @@ Si $\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right)$ y $A$ es 
 rango máximo, con $p\leq d$, entonces:
 $$A\mathbf{X} \sim \mathcal{N}_{p}\left(A\boldsymbol\mu,A\Sigma A^t\right).$$</div>\EndKnitrBlock{proposition}
 
-Partiendo de $\mathbf{Z} \sim \mathcal{N}_d\left( \mathbf{0},I_d\right)$,
-se podrían considerar distrintas factorizaciones de la 
-matriz de covarianzas:
+Partiendo de $\mathbf{Z} \sim \mathcal{N}_d\left( \mathbf{0},I_d\right)$, se podrían considerar distintas factorizaciones de la matriz de covarianzas:
 
 * Factorización espectral: 
   $\Sigma=H\Lambda H^t =H\Lambda^{1/2}(H\Lambda^{1/2})^t$,
   donde $H$ es una matriz ortogonal (i.e. $H^{-1}=H^{t}$), cuyas columnas son los autovectores de la matriz $\Sigma$, y $\Lambda$ es una matriz diagonal, cuya diagonal esta formada por los correspondientes autovalores (positivos). De donde se deduce que:
-  $$\mathbf{X} =\boldsymbol\mu + H\Lambda^{1/2}\mathbf{Z} 
-  \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right).$$
+
+$$\mathbf{X} =\boldsymbol\mu + H\Lambda^{1/2}\mathbf{Z} \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right).$$
 
 * Factorización de Cholesky: $\Sigma=LL^t$, donde $L$ es una matriz triangular inferior (fácilmente invertible), por lo que: 
   $$\mathbf{X} =\boldsymbol\mu + L\mathbf{Z} 
@@ -396,7 +393,7 @@ mvrnorm
 ##         drop(X)
 ##     else t(X)
 ## }
-## <bytecode: 0x00000000331af888>
+## <bytecode: 0x0000000028889e28>
 ## <environment: namespace:MASS>
 ```
 
@@ -452,7 +449,7 @@ $f_i\left( x_i|x_1,x_2,\ldots,x_{i-1}\right)
 
 Se trata de la distribución bidimensional continua con densidad 
 constante en el círculo:
-$$C = \left\{ \left( x_1, x_2 \right)  \in \mathbb{R} : x_1^2 + x_2^2 \leq 1 \right\}.$$
+$$C = \left\{ \left( x_1, x_2 \right)  \in \mathbb{R}^2 : x_1^2 + x_2^2 \leq 1 \right\}.$$
 
 Su función de densidad viene dada por:
 $$f\left( x_1,x_2\right)  =\left\{
@@ -529,7 +526,14 @@ f_2\left( x_2|x_1\right)  &= \frac{f\left( x_1,x_2\right)  }{f_1\left( x_1\right
 \exp\left( -\frac{\left(x_2 - \mu_2 - \frac{\sigma_2}{\sigma_1}\rho( x_1 - \mu_1)\right)^{2}}{2\sigma_2^2 (1-\rho^2)}\right)
 \end{aligned}$$
 
-Por tanto $X_1 \sim \mathcal{N}\left( \mu_1, \sigma_1^2 \right)$ y $X_2 | X_1 \sim \mathcal{N} \left( \mu_2 + \frac{\sigma_2}{\sigma_1}\rho( X_1 - \mu_1), \sigma_2^2 (1-\rho^2) \right)$, y el algoritmo sería el siguiente:
+Por tanto:
+
+$$\begin{aligned}
+X_1 &\sim \mathcal{N}\left( \mu_1, \sigma_1^2 \right) \\
+X_2 | X_1 &\sim \mathcal{N} \left( \mu_2 + \frac{\sigma_2}{\sigma_1}\rho( X_1 - \mu_1), \sigma_2^2 (1-\rho^2) \right)
+\end{aligned}$$
+
+y el algoritmo sería el siguiente:
 
 \BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-110-111-114-109-97-108-32-98-105-100-105-109-101-110-115-105-111-110-97-108-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:norm-bidim-cond"><strong>(\#cnj:norm-bidim-cond)  \iffalse (de simulación de una normal bidimensional) \fi{} </strong></span>
 <br> 
@@ -550,6 +554,23 @@ $$L = \begin{pmatrix}
 \end{pmatrix}$$
 
 Además, esta aproximación puede generalizarse al caso multidimensional, ver Sección \@ref(condnormal).
+
+
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:cond2d"><strong>(\#exr:cond2d) </strong></span></div>\EndKnitrBlock{exercise}
+
+Considerando la variable aleatoria bidimensional del Ejemplo \@ref(exm:ar-bidim) y teniendo en cuenta que la densidad marginal de la
+variable $X$ es:
+$$f_{X}(x)=\left\{ 
+\begin{array}{cl}
+\frac{1}{8}\left( 5-3x^2\right)  & \text{si }x\in \lbrack -1,1] \\ 
+0 & \text{en otro caso}
+\end{array}
+\right.$$
+Describir brevemente un algoritmo para la simulación del
+vector aleatorio basado en el método de las distribuciones
+condicionadas (asumir que se dispone de un algoritmo para generar
+observaciones de las distribuciones unidimensionales de interés).
+
 
 
 ## Simulación condicional e incondicional
@@ -681,7 +702,6 @@ $$Cov(Z(\mathbf{s}_1),Z(\mathbf{s}_2))
 En primer lugar, obtendremos una simulación del proceso en las posiciones 
 $\left\{(0,0),(0,1),(1,0),(1,1)\right\}$ que será considerada posteriormente
 como los datos observados.
-
 Empleando las herramientas del paquete `geoR`, resulta muy fácil obtener
 una simulación incondicional en una rejilla en el cuadrado unidad
 mediante la función `grf`:
@@ -691,7 +711,7 @@ mediante la función `grf`:
 library(geoR)
 n <- 4
 set.seed(1)
-z <- grf(n, grid="reg", cov.pars=c(1,1))
+z <- grf(n, grid = "reg", cov.pars = c(1, 1))
 ```
 
 ```
@@ -725,22 +745,16 @@ z$data
 ```
 
 La `grf` función emplea por defecto el método de la factorización de la matriz de covarianzas,
-sin embargo, si se desean obtener múltiples realizaciones, en lugar de llamar repetidamente a esta función,
-puede ser preferible emplear la siguiente aproximación:
+sin embargo, si se desean obtener múltiples realizaciones, en lugar de llamar repetidamente a esta función (lo que implicaría factorizar repetidamente la matriz de covarianzas),
+puede ser preferible emplear un código similar al siguiente (de forma que solo se realiza una vez dicha factorización, y suponiendo además que no es necesario conservar las distintas realizaciones):
 
 
 ```r
 # Posiciones datos
 nx <- c(2, 2)
 data.s <- expand.grid(x = seq(0, 1, len = nx[1]), y = seq(0, 1, len = nx[2]))
-plot(data.s, type = "p", pch = 20, asp = 1) # Representar posiciones
-```
+# plot(data.s, type = "p", pch = 20, asp = 1) # Representar posiciones
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-14-1} \end{center}
-
-```r
 # Matriz de varianzas covarianzas
 cov.matrix <- varcov.spatial(coords=data.s, cov.pars=c(1,1))$varcov
 cov.matrix
@@ -777,29 +791,34 @@ y
 ```
 
 Para generar simulaciones condicionales podemos emplear la función `krige.conv`.
-Por ejemplo, para generar 4 simulaciones en la rejilla regular $10\times10$ en el
-cuadrado unidad $[0,1] \times [0,1]$ condicionadas a los
-valores generados en el apartado anterior podríamos emplear el siguiente código:
+Por ejemplo, para generar 4 simulaciones en la rejilla regular $10\times10$ en el cuadrado unidad $[0,1] \times [0,1]$ condicionadas a los valores generados en el apartado anterior podríamos emplear el siguiente código:
 
 
 ```r
 # Posiciones simulación condicional
-nnx <- c(20, 20)
-nn <- prod(nnx)
-ndata.s <- expand.grid(x = seq(0, 1, len = nnx[1]), y = seq(0, 1, len = nnx[2]))
+new.nx <- c(20, 20)
+new.x <- seq(0, 1, len = new.nx[1])
+new.y <- seq(0, 1, len = new.nx[2])
+new.s <- expand.grid(x = new.x, y = new.y)
 plot(data.s, type = "p", pch = 20, asp = 1)
-points(ndata.s)
+points(new.s)
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/pos-sp-simcond-1} 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-15-1} \end{center}
+}
+
+\caption{Posiciones espaciales de las simulaciones condicionales (y las de los datos).}(\#fig:pos-sp-simcond)
+\end{figure}
 
 ```r
 # Simulación condicional
 set.seed(1)
-s.out <- output.control(n.predictive = 4)
-kc <- krige.conv(z, loc = ndata.s, output = s.out,
+nsim.cond <- 4
+s.out <- output.control(n.predictive = nsim.cond)
+kc <- krige.conv(z, loc = new.s, output = s.out,
                  krige = krige.control(type.krige="SK", beta = 0, cov.pars = c(1, 1)))
 ```
 
@@ -810,57 +829,42 @@ kc <- krige.conv(z, loc = ndata.s, output = s.out,
 ## krige.conv: Kriging performed using global neighbourhood
 ```
 
+Si las representamos podemos confirmar que los valores en las posiciones $\left\{(0,0),(0,1),(1,0),(1,1)\right\}$ coinciden con los generados anteriormente.
+
+
 ```r
 # Generar gráficos
-par.old <- par(mfrow = c(2, 2), mar = c(3.5, 3.5, 1, 0), mgp = c(1.5, .5, 0))
+par.old <- par(mfrow = c(2, 2), mar = c(3.5, 3.5, 1, 2), mgp = c(1.5, .5, 0))
 zlim <- range(kc$simul)     # Escala común
-image(kc, val=kc$simul[,1], main="simul. cond. 1", zlim=zlim)
+# La versión actual de geoR::image.kriging() no admite múltiples gráficos en una ventana
+# image(kc, val=kc$simul[,1], main="simul. cond. 1", zlim=zlim)
+# image(kc, val=kc$simul[,2], main="simul. cond. 2", zlim=zlim)
+# image(kc, val=kc$simul[,3], main="simul. cond. 3", zlim=zlim)
+# image(kc, val=kc$simul[,4], main="simul. cond. 4", zlim=zlim)
+dim(kc$simul) <- c(new.nx, nsim.cond)
+image(new.x, new.y, kc$simul[,,1], main="simul. cond. 1",
+      xlab = "x", ylab = "y", zlim = zlim)
+image(new.x, new.y, kc$simul[,,2], main="simul. cond. 2",
+      xlab = "x", ylab = "y", zlim = zlim)
+image(new.x, new.y, kc$simul[,,3], main="simul. cond. 3",
+      xlab = "x", ylab = "y", zlim = zlim)
+image(new.x, new.y, kc$simul[,,4], main="simul. cond. 4",
+      xlab = "x", ylab = "y", zlim = zlim)
 ```
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-15-2} \end{center}
-
-```r
-image(kc, val=kc$simul[,2], main="simul. cond. 2", zlim=zlim)
-```
-
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-15-3} \end{center}
-
-```r
-image(kc, val=kc$simul[,3], main="simul. cond. 3", zlim=zlim)
-```
-
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-15-4} \end{center}
-
-```r
-image(kc, val=kc$simul[,4], main="simul. cond. 4", zlim=zlim)
-```
-
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-15-5} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 ```r
 par(par.old)
 ```
 
-Los valores en las posiciones $\left\{(0,0),(0,1),(1,0),(1,1)\right\}$
-coinciden con los generados anteriormente.
-
 
 ### Simulación condicional a partir de un modelo ajustado
 
-En la práctica normalmente se ajusta un modelo a los datos observados y
-posteriormente se obtienen las simulaciones condicionadas empleando 
-el modelo ajustado.
-
-Por ejemplo, en el caso de series de tiempo, se puede emplear la función `simulate`
-del paquete `forecast`:
+En la práctica normalmente se ajusta un modelo a los datos observados y posteriormente se obtienen las simulaciones condicionadas empleando el modelo ajustado.
+Por ejemplo, en el caso de series de tiempo, se puede emplear la función `simulate` del paquete `forecast`:
 
 
 ```r
@@ -876,37 +880,23 @@ lines(simulate(fit, 24), col="red")
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-16-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
 ## Simulación basada en cópulas
 
-Una cópula es una función de distribución multidimensional con
-distribuciones marginales uniformes (e.g. Nelsen, 2006).
-Se emplean principalmente para la construcción de distribuciones
-multivariantes a partir de distribuciones marginales (también en
-análisis de dependencia y medidas de asociación).
-
-Nelsen, R.B. (2006). *An introduction to copulas*, 2ª ed., Springer
-
-Hofert, M. (2018). *Elements of Copula Modeling with R*, Springer.
+Una cópula es una función de distribución multidimensional con distribuciones marginales uniformes (e.g. Nelsen, 2006; Hofert, 2018).
+Se emplean principalmente para la construcción de distribuciones multivariantes a partir de distribuciones marginales (también en análisis de dependencia y medidas de asociación).
 
 Por simplicidad nos centraremos en el caso bidimensional. 
-El teorema central en la teoría de cópulas es el teorema de Sklar (1959), 
-que en este caso es:
+El teorema central en la teoría de cópulas es el teorema de Sklar (1959), que en este caso es:
 
 \BeginKnitrBlock{theorem}\iffalse{-91-100-101-32-83-107-108-97-114-44-32-99-97-115-111-32-98-105-100-105-109-101-110-115-105-111-110-97-108-93-}\fi{}<div class="theorem"><span class="theorem" id="thm:sklar"><strong>(\#thm:sklar)  \iffalse (de Sklar, caso bidimensional) \fi{} </strong></span>
 <br> 
 
-Si $(X,Y)$ es una variable aleatoria bidimensional 
-con función de distribución conjunta $F(\cdot,\cdot)$ y
-distribuciones marginales $F_1(\cdot)$ y $F_2(\cdot)$
-respectivamente, entonces existe una cópula $C(\cdot,\cdot)$ tal
-que:
+Si $(X,Y)$ es una variable aleatoria bidimensional con función de distribución conjunta $F(\cdot,\cdot)$ y distribuciones marginales $F_1(\cdot)$ y $F_2(\cdot)$ respectivamente, entonces existe una cópula $C(\cdot,\cdot)$ tal que:
 $$F(x,y)=C\left( F_1(x),F_2(y)\right) ,\quad \forall x,y\in\mathbb{R}.$$
-Además, si $F_1(\cdot)$ y $F_2(\cdot)$ son continuas
-$C(\cdot,\cdot)$ es única. 
-
-El recíproco también es cierto.</div>\EndKnitrBlock{theorem}
+Además, si $F_1(\cdot)$ y $F_2(\cdot)$ son continuas entonces $C(\cdot,\cdot)$ es única. 
+Siendo el recíproco también cierto.</div>\EndKnitrBlock{theorem}
 
 ### Cópulas Arquimedianas
 
@@ -934,16 +924,11 @@ Una condición suficiente para que sea una cópula multidimensional válida es q
 
 ### Simulación
 
-Las cópulas pueden facilitar notablemente la simulación de la
-distribución conjunta.
+Las cópulas pueden facilitar notablemente la simulación de la distribución conjunta.
 Si $(U,V)\sim C(\cdot,\cdot)$ (marginales uniformes):
 $$\left( F_1^{-1}(U),F_2^{-1}(V)\right)  \sim F(\cdot,\cdot)$$
 
-En la mayoría de los casos se dispone de expresiones explicitas de
-$C_{u}(v)\equiv C_2\left( \left.  v\right \vert u\right)$ y de
-su inversa $C_{u}^{-1}(w)$, por lo que se puede generar $(U,V)$
-fácilmente mediante el método secuencial de distribuciones
-condicionadas descrito en la Sección \@ref(distrcond).
+En la mayoría de los casos se dispone de expresiones explicitas de $C_{u}(v)\equiv C_2\left( \left.  v\right \vert u\right)$ y de su inversa $C_{u}^{-1}(w)$, por lo que se puede generar $(U,V)$ fácilmente mediante el método secuencial de distribuciones condicionadas descrito en la Sección \@ref(distrcond).
 
 \BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-98-105-100-105-109-101-110-115-105-111-110-97-108-32-109-101-100-105-97-110-116-101-32-99-243-112-117-108-97-115-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:copula-bidim"><strong>(\#cnj:copula-bidim)  \iffalse (de simulación bidimensional mediante cópulas) \fi{} </strong></span>
 <br> 
@@ -957,9 +942,7 @@ condicionadas descrito en la Sección \@ref(distrcond).
 
 \BeginKnitrBlock{exercise}\iffalse{-91-67-243-112-117-108-97-32-98-105-100-105-109-101-110-115-105-111-110-97-108-32-100-101-32-67-108-97-121-116-111-110-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:clayton2d"><strong>(\#exr:clayton2d)  \iffalse (Cópula bidimensional de Clayton) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
-Consideramos una v.a. bidimensional con distribuciónes marginales
-uniformes y distribución bidimensional determinada por la cópula
-de Clayton.
+Consideramos una variable aleatoria bidimensional con distribuciones marginales uniformes y distribución bidimensional determinada por la cópula de Clayton.
 
 a)  Teniendo en cuenta que en este caso:
     $$C_{u}^{-1}(w)\equiv\left(  u^{-\alpha}\left(  
@@ -989,98 +972,137 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     plot(rcunif, xlab = "u", ylab = "v")
     ```
     
+    \begin{figure}[!htb]
     
+    {\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/cclayton2-dispersion-1} 
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-18-1} \end{center}
+    }
     
-    Representar la densidad conjunta (con `sm::sm.density()`) y las marginales:
+    \caption{Gráfico de dispersión de los valores generados con distribución bidimensional de Clayton.}(\#fig:cclayton2-dispersion)
+    \end{figure}
+    
+    Representar la densidad conjunta (con `sm::sm.density()`) y las marginales [Figuras: \@ref(fig:cclayton2b-dispersion), \@ref(fig:cclayton3-dispersion)]:
+    
     
     ```r
     # Densidad conjunta
     # if(!require(sm)) stop('Required pakage `sm` not installed.')
-    sm::sm.density(rcunif)
+    sm::sm.density(rcunif, xlab = "u", ylab = "v", zlab = "Density")    
     ```
     
     ```
     ## Warning: weights overwritten by binning
     ```
     
+    \begin{figure}[!htb]
     
+    {\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/cclayton2-conjunta-1} 
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-19-1} \end{center}
+    }
+    
+    \caption{Densidad conjunta de los valores generados con distribución bidimensional de Clayton.}(\#fig:cclayton2-conjunta)
+    \end{figure}
+    
     
     ```r
     # Distribuciones marginales
     par.old <- par(mfrow = c(1, 2))
-    hist(rcunif[,1], freq = FALSE)
+    hist(rcunif[,1], freq = FALSE, xlab = "u")
     abline(h = 1)
-    hist(rcunif[,2], freq = FALSE)
+    hist(rcunif[,2], freq = FALSE, xlab = "v")
     abline(h = 1)
     ```
     
+    \begin{figure}[!htb]
     
+    {\centering \includegraphics[width=0.9\linewidth]{07-Simulacion_multidimensional_files/figure-latex/cclayton2-marginales-1} 
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-19-2} \end{center}
+    }
+    
+    \caption{Distribuciones marginales de los valores generados con distribución bidimensional de Clayton.}(\#fig:cclayton2-marginales)
+    \end{figure}
     
     ```r
     par(par.old)
     ```
 
-    Empleando el paquete `copula`:
+    Empleando el paquete *copula* [Figuras: \@ref(fig:cclayton2b-dispersion), \@ref(fig:cclayton3-dispersion)]:
+    
     
     ```r
     if(!require(copula)) stop('Required pakage `copula` not installed.')
     clayton.cop <- claytonCopula(2, dim = 2) # caso bidimensional
     y <- rCopula(10000, clayton.cop)
-    plot(y)
+    plot(y, xlab = "u", ylab = "v")
     ```
     
+    \begin{figure}[!htb]
+    
+    {\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/cclayton2b-dispersion-1} 
+    
+    }
+    
+    \caption{Gráfico de dispersión de los valores generados con distribución bidimensional de Clayton empleando el paquete `copula`.}(\#fig:cclayton2b-dispersion)
+    \end{figure}
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-20-1} \end{center}
     
     ```r
     clayton.cop <- claytonCopula(2, dim = 3) # caso tridimensional
     y <- rCopula(10000, clayton.cop)
-    scatterplot3d::scatterplot3d(y)
+    # scatterplot3d::scatterplot3d(y)
+    plot3D:::points3D(y[,1], y[,2], y[, 3], colvar = NULL, 
+                      xlab = "u1", ylab = "u2", zlab = "u3") 
     ```
     
+    \begin{figure}[!htb]
     
+    {\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/cclayton3-dispersion-1} 
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-20-2} \end{center}
+    }
     
-    ```r
-    # plot3D:::points3D(y[,1], y[,2], y[, 3], colvar = NULL) 
-    ```
+    \caption{Gráfico de dispersión de los valores generados con distribución trididimensional de Clayton empleando el paquete `copula`.}(\#fig:cclayton3-dispersion)
+    \end{figure}
 
 
 c)  A partir de la muestra anterior generar una muestra de una v.a.
     bidimensional con distribuciones marginales exponenciales de
     parámetros 1 y 2 respectivamente (y distribución bidimensional
     determinada por la cópula de Clayton).
-
+    
     
     ```r
     rcexp <- cbind(qexp(rcunif[,1], 1), qexp(rcunif[,2], 2))
-    plot(rcexp, xlab = "exp1", ylab = "exp2")
+    plot(rcexp, xlab = "exp1", ylab = "exp2")  
     ```
     
+    \begin{figure}[!htb]
     
+    {\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/cclayton-exp-conjunta-1} 
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-21-1} \end{center}
+    }
+    
+    \caption{Gráfico de dispersión de los valores generados con distribución exponencial y dependencia definida por la cópula de Clayton.}(\#fig:cclayton-exp-conjunta)
+    \end{figure}
+    
     
     ```r
     # Distribuciones marginales
     par.old <- par(mfrow = c(1, 2))
-    hist(rcexp[,1], freq = FALSE)
-    curve(dexp(x,1), add = TRUE)
-    hist(rcexp[,2], freq = FALSE)
-    curve(dexp(x,2), add = TRUE)
+    hist(rcexp[,1], freq = FALSE, xlab = "exp1")
+    curve(dexp(x, 1), add = TRUE)
+    hist(rcexp[,2], freq = FALSE, xlab = "exp2")
+    curve(dexp(x, 2), add = TRUE)
     ```
     
+    \begin{figure}[!htb]
     
+    {\centering \includegraphics[width=0.9\linewidth]{07-Simulacion_multidimensional_files/figure-latex/cclayton-exp-marginales-1} 
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-21-2} \end{center}
+    }
+    
+    \caption{Distribuciones marginales exponenciales de los valores generados con dependencia definida por la cópula de Clayton.}(\#fig:cclayton-exp-marginales)
+    \end{figure}
     
     ```r
     par(par.old)
@@ -1092,61 +1114,169 @@ c)  A partir de la muestra anterior generar una muestra de una v.a.
 
 ### Métodos de codificación o etiquetado para variables discretas
 
-En el caso de una distribución $d$-dimensional discreta 
-el procedimiento habitual es simular una variable aleatoria discreta
-unidimensional equivalente. 
-Este tipo de procedimientos son conocidos como métodos de etiquetado o
-codificación y la idea básica consistiría en construir un
-indice unidimensional equivalente al indice multidimensional.
+En el caso de una distribución $d$-dimensional discreta el procedimiento habitual es simular una variable aleatoria discreta unidimensional equivalente. 
+Este tipo de procedimientos son conocidos como métodos de etiquetado o codificación y la idea básica consistiría en construir un
+indice unidimensional equivalente al indice multidimensional, 
+mediante una función de etiquetado 
+$l(\mathbf{i}) = l\left(i_1, i_2, \ldots,i_d \right) \in \mathbb{N}$.
 
-Si la variable discreta multidimensional tiene soporte finito, este tipo de recodificación
-se puede hacer de forma automática en `R` cambiando simplemente el indexado
-(internamente un objeto `matrix` o `array` ya está almacenado como un vector y
-`R` permite un indexado multidimensional a partir del atributo `dim`).
+Si la variable discreta multidimensional tiene soporte finito, este tipo de recodificación se puede hacer de forma automática en `R` cambiando simplemente el indexado^[En `R` podemos obtener el índice multidimensional empleando la función `arrayInd(ind, .dim, ...)`, siendo `ind` un vector de índices unidimensionales.] (empleando la función `as.vector()` para cambiar a un indexado unidimensional  y posteriormente las funciones `as.matrix()`, o `as.array()`,  para reconstruir el indexado multidimensional).
 
+Como ejemplo ilustrativo (en el caso bidimensional) podríamos emplear el siguiente código:
 
 
 ```r
-z <- 1:10
+z <- 11:18
 xy <- matrix(z, ncol = 2)
 xy
 ```
 
 ```
 ##      [,1] [,2]
-## [1,]    1    6
-## [2,]    2    7
-## [3,]    3    8
-## [4,]    4    9
-## [5,]    5   10
+## [1,]   11   15
+## [2,]   12   16
+## [3,]   13   17
+## [4,]   14   18
 ```
 
 ```r
-as.vector(xy)
+z <- as.vector(xy)
+z
 ```
 
 ```
-##  [1]  1  2  3  4  5  6  7  8  9 10
+## [1] 11 12 13 14 15 16 17 18
 ```
 
-Si la variable discreta multidimensional no tiene soporte finito
-(no se podría guardar la f.m.p. en una tabla), se podrían emplear
-métodos de codificación más avanzados (ver sección 6.3 del libro de R. Cao).
+```r
+i1d <- seq_along(z)
+i1d 
+```
 
+```
+## [1] 1 2 3 4 5 6 7 8
+```
+
+```r
+# Cálculo del índice bidimensional (inversa de la función de etiquetado: 1d -> 2d)
+nx <- nrow(xy)
+linv <- function(k) cbind((k - 1) %% nx + 1, floor((k - 1)/nx) + 1)
+i2d <- linv(i1d)
+# i2d <- arrayInd(i1d, dim(xy))
+i2d
+```
+
+```
+##      [,1] [,2]
+## [1,]    1    1
+## [2,]    2    1
+## [3,]    3    1
+## [4,]    4    1
+## [5,]    1    2
+## [6,]    2    2
+## [7,]    3    2
+## [8,]    4    2
+```
+
+```r
+xy[i2d]
+```
+
+```
+## [1] 11 12 13 14 15 16 17 18
+```
+
+```r
+# Cálculo del índice unidimensional (función de etiquetado: 2d -> 1d)
+l <- function(i, j) nx*(j-1) + i
+l(2, 1)
+```
+
+```
+## [1] 2
+```
+
+```r
+l(2, 2)
+```
+
+```
+## [1] 6
+```
+
+```r
+i1d <- mapply(l, i2d[, 1], i2d[, 2])
+i1d
+```
+
+```
+## [1] 1 2 3 4 5 6 7 8
+```
+
+```r
+z[i1d]
+```
+
+```
+## [1] 11 12 13 14 15 16 17 18
+```
+
+Realmente lo que ocurre es que internamente un objeto `matrix` o `array` está almacenado como un vector y `R` admite un indexado multidimensional si está presente un atributo `dim`:
+
+
+```r
+dim(z) <- c(4, 2)
+z
+```
+
+```
+##      [,1] [,2]
+## [1,]   11   15
+## [2,]   12   16
+## [3,]   13   17
+## [4,]   14   18
+```
+
+```r
+dim(z) <- c(2, 2, 2)
+z
+```
+
+```
+## , , 1
+## 
+##      [,1] [,2]
+## [1,]   11   13
+## [2,]   12   14
+## 
+## , , 2
+## 
+##      [,1] [,2]
+## [1,]   15   17
+## [2,]   16   18
+```
+
+```r
+dim(z) <- NULL
+z
+```
+
+```
+## [1] 11 12 13 14 15 16 17 18
+```
+
+Si la variable discreta multidimensional no tiene soporte finito (tampoco se podría guardar la función de masa de probabilidad en una tabla), se podrían emplear métodos de codificación más avanzados (ver Cao, 2002, Sección 6.3).
 
 
 ### Simulación de una variable discreta bidimensional
 
 Consideramos datos recogidos en un estudio de mejora de calidad en una fábrica de semiconductores. 
-Se obtuvo una muestra de obleas que se clasificaron dependiendo de si se encontraron partículas 
-en la matriz que producía la oblea y de si la calidad de oblea era buena
-(para más detalles Hall, 1994. Analysis of defectivity of semiconductor wafers by contigency table. 
-Proceedings of the Institute of Environmental Sciences 1, 177-183).
+Se obtuvo una muestra de obleas que se clasificaron dependiendo de si se encontraron partículas en la matriz que producía la oblea y de si la calidad de oblea era buena (para más detalles Hall, 1994. Analysis of defectivity of semiconductor wafers by contigency table. Proceedings of the Institute of Environmental Sciences 1, 177-183).
 
 
 ```r
 n <- c(320, 14, 80, 36)
-particulas <- gl(2, 1, 4, labels = c("no","si"))
+particulas <- gl(2, 1, 4, labels = c("no", "si"))
 calidad <- gl(2, 2, labels = c("buena", "mala"))
 df <- data.frame(n, particulas, calidad)
 df
@@ -1287,7 +1417,9 @@ head(rxy)
 ## [5,] "no"       "buena"
 ## [6,] "si"       "mala"
 ```
+
 Alternativamente, si queremos trabajar con data.frames:
+
 
 ```r
 etiquetas <- df[c('particulas', 'calidad')]
@@ -1326,7 +1458,7 @@ head(rxy)
 
 El código anterior puede ser empleado para simular tablas de contingencia. 
 Aunque en estos casos se suele fijar el total de la tabla (o incluso las frecuencias marginales). 
-En este caso, sólo habría que fijar el nº de simulaciones al total de la tabla:
+En este caso, sólo habría que fijar el número de simulaciones al total de la tabla:
 
 
 ```r
@@ -1422,53 +1554,51 @@ res
 
 \BeginKnitrBlock{exercise}\iffalse{-91-68-105-115-116-114-105-98-117-99-105-243-110-32-100-101-108-32-101-115-116-97-100-237-115-116-105-99-111-32-99-104-105-45-99-117-97-100-114-97-100-111-32-100-101-32-105-110-100-101-112-101-110-100-101-110-99-105-97-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:chicuadind"><strong>(\#exr:chicuadind)  \iffalse (Distribución del estadístico chi-cuadrado de independencia) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
-Aproximar por simulación la distribución (exacta) 
-del estadístico chi-cuadrado bajo independencia.
+Aproximar por simulación la distribución (exacta) del estadístico chi-cuadrado bajo independencia.
 
 
 ```r
-simstat <- apply(rtablas, 2, function(x){chisq.test(matrix(x,nrow=nrow(tabla)))$statistic})
-hist(simstat, freq = FALSE, breaks = 'FD')
-# Distribución asintótica (aproximación chi-cuadrado)
-curve(dchisq(x, res$parameter), add = TRUE) 
+sim.stat <- apply(rtablas, 2, function(x){chisq.test(matrix(x,nrow=nrow(tabla)))$statistic})
+hist(sim.stat, freq = FALSE, breaks = 'FD')
+# lines(density(sim.stat))
+# Distribución asintótica (aproximación ji-cuadrado)
+curve(dchisq(x, res$parameter), col = 'blue', add = TRUE) 
 ```
 
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/chi2-plot-1} 
+
+}
+
+\caption{Aproximación Monte-Carlo de la distribución del estadístico chi-cuadrado bajo independencia.}(\#fig:chi2-plot)
+\end{figure}
+
+Como se mostrará en la Sección \@ref(contrastes) del siguiente capítulo, podríamos aproximar el $p$-valor del contraste de independencia a partir de esta distribución:
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-39-1} \end{center}
+```r
+obs.stat <- res$statistic
+pvalue.mc <- mean(sim.stat >= obs.stat)
+pvalue.mc
+```
+
+```
+## [1] 0
+```
+
+Esto es similar a lo que realiza la función `chisq.test()` con la opción `simulate.p.value = TRUE` (empleando el algoritmo de Patefield, 1981):
 
 
-## Ejercicios propuestos
+```r
+chisq.test(tabla, simulate.p.value = TRUE, B = 2000)
+```
 
-
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:ar2d"><strong>(\#exr:ar2d) </strong></span></div>\EndKnitrBlock{exercise}
-
-Dar un algoritmo basado en el método de aceptación-rechazo
-(considerando como densidad auxiliar una uniforme) que permita
-generar observaciones de una variable aleatoria bidimensional
-$\left( X,Y\right)$ con función de densidad: 
-$$f(x,y)=\left\{ 
-\begin{array}{cl}
-\frac{3}{16}\left( 2-\left( x^2+y^2\right) \right)  & \text{si }x\in
-\lbrack -1,1]\text{ e }y\in \lbrack -1,1] \\ 
-0 & \text{en otro caso}
-\end{array}
-\right.$$
-
-
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:cond2d"><strong>(\#exr:cond2d) </strong></span></div>\EndKnitrBlock{exercise}
-
-Considerando la variable aleatoria bidimensional del ejercicio
-anterior y teniendo en cuenta que la densidad marginal de la
-variable $X$ es:
-$$f_{X}(x)=\left\{ 
-\begin{array}{cl}
-\frac{1}{8}\left( 5-3x^2\right)  & \text{si }x\in \lbrack -1,1] \\ 
-0 & \text{en otro caso}
-\end{array}
-\right.$$
-Describir brevemente un algoritmo para la simulación del
-vector aleatorio basado en el método de las distribuciones
-condicionadas (asumir que se dispone de un algoritmo para generar
-observaciones de las distribuciones unidimensionales de interés).
-
+```
+## 
+## 	Pearson's Chi-squared test with simulated p-value (based on 2000
+## 	replicates)
+## 
+## data:  tabla
+## X-squared = 62.812, df = NA, p-value = 0.0004998
+```

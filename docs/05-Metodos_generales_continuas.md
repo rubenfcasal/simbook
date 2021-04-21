@@ -89,7 +89,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##    0.02    0.00    0.01
+##    0.02    0.00    0.02
 ```
 
 ```r
@@ -182,7 +182,7 @@ b)  Generar $10^{4}$ valores de la distribución doble exponencial de
     
     ```
     ##    user  system elapsed 
-    ##    0.05    0.00    0.04
+    ##    0.02    0.01    0.03
     ```
 
 
@@ -467,22 +467,22 @@ a)  Generar una muestra de $10^{4}$ observaciones empleando este
     
     ```
     ##    user  system elapsed 
-    ##    0.12    0.00    0.13
+    ##    0.08    0.00    0.08
     ```
     
     ```r
     # Nº generaciones
     {
-    cat("\nNº de generaciones = ", ngen)
-    cat("\nNº medio de generaciones = ", ngen/nsim)
+    cat("\nNúmero de generaciones = ", ngen)
+    cat("\nNúmero medio de generaciones = ", ngen/nsim)
     cat("\nProporción de rechazos = ", 1-nsim/ngen, "\n")
     }
     ```
     
     ```
     ## 
-    ## Nº de generaciones =  13163
-    ## Nº medio de generaciones =  1.3163
+    ## Número de generaciones =  13163
+    ## Número medio de generaciones =  1.3163
     ## Proporción de rechazos =  0.2402948
     ```
 

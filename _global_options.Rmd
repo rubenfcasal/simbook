@@ -27,14 +27,14 @@ fig.path <- "images/"
         paste0("\\@ref(fig:", x, ")", collapse = ", "),
         ")")
     }  
-    citefig2 <- function(...) {
+    citefig2 <- function(..., text = "") {
       x <- list(...)
-      paste0(if(length(x)>1) "[Figuras: " else "[Figura ", 
+      paste0(text, if(length(x)>1) "[Figuras: " else "[Figura ", 
         paste0("\\@ref(fig:", x, ")", collapse = ", "),
         "]")
     }  
-    latexfig <- function(..., output = TRUE) #  , output = is_latex()) 
-      if (output) citefig2(...) else ""
+    latexfig <- function(..., output = is_latex()) 
+      if (output) citefig2(..., text = " ") else ""
   # Citas Paquetes:
     citepkg <- function(x, url = paste0("https://CRAN.R-project.org/package=", x))
       paste0("[`", x, "`](", url, ")")

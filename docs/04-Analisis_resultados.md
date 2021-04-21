@@ -22,7 +22,7 @@ $X_{2}$, $\cdots$, $X_{n}$ mediante la media muestral $\bar{X}_{n}$.
 Una justificación teórica de la validez de la aproximación obtenida
 mediante simulación es *la ley (débil) de los grandes números*:
 
--   Si $X_{1}$, $X_{2}$, $\cdots$ es una secuencia de v.a.'s
+-   Si $X_{1}$, $X_{2}$, $\cdots$ es una secuencia de variables aleatorias
     independientes con:
     $$E\left( X_{i}\right) =\mu \text{ y }Var\left( X_{i}\right) 
     =\sigma^{2}<\infty,$$
@@ -139,7 +139,7 @@ construcción de intervalos de confianza.
 Teorema central del límite
 --------------------------
 
-Si $X_{1}$, $X_{2}$, $\cdots$ es una secuencia de v.a.'s
+Si $X_{1}$, $X_{2}$, $\cdots$ es una secuencia de variables aleatorias
 independientes con $E\left( X_{i}\right) =\mu$ y
 $Var\left( X_{i}\right) = \sigma ^{2}<\infty$, entonces:
 $$Z_{n}=\frac{\overline{X}_{n}-\mu }{\frac{\sigma }{\sqrt{n}}}

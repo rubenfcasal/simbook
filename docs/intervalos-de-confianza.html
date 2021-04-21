@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2021-04-14" />
+<meta name="date" content="2021-04-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -226,7 +226,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.7.2" data-path="mult-discr.html"><a href="mult-discr.html#simulación-de-una-variable-discreta-bidimensional"><i class="fa fa-check"></i><b>7.7.2</b> Simulación de una variable discreta bidimensional</a></li>
 <li class="chapter" data-level="7.7.3" data-path="mult-discr.html"><a href="mult-discr.html#simconting"><i class="fa fa-check"></i><b>7.7.3</b> Simulación de tablas de contingencia</a></li>
 </ul></li>
-<li class="chapter" data-level="7.8" data-path="ejercicios-propuestos.html"><a href="ejercicios-propuestos.html"><i class="fa fa-check"></i><b>7.8</b> Ejercicios propuestos</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="cap8.html"><a href="cap8.html"><i class="fa fa-check"></i><b>8</b> Aplicaciones en Inferencia Estadística</a><ul>
 <li class="chapter" data-level="8.1" data-path="distribución-en-el-muestreo.html"><a href="distribución-en-el-muestreo.html"><i class="fa fa-check"></i><b>8.1</b> Distribución en el muestreo</a></li>
@@ -351,35 +350,35 @@ variables los extremos del intervalo de confianza para la media
 con varianza conocida al conjunto de datos. Analizar la
 cobertura de estas estimaciones por IC.</p>
 <p>IC para la media con varianza conocida (bajo normalidad):</p>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="intervalos-de-confianza.html#cb303-1"></a>alfa &lt;-<span class="st"> </span><span class="fl">0.05</span></span>
-<span id="cb303-2"><a href="intervalos-de-confianza.html#cb303-2"></a>z &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alfa<span class="op">/</span><span class="dv">2</span>)</span>
-<span id="cb303-3"><a href="intervalos-de-confianza.html#cb303-3"></a>muestras<span class="op">$</span>ici &lt;-<span class="st"> </span>muestras<span class="op">$</span>mean <span class="op">-</span><span class="st"> </span>z<span class="op">*</span>sdx<span class="op">/</span><span class="kw">sqrt</span>(nx)</span>
-<span id="cb303-4"><a href="intervalos-de-confianza.html#cb303-4"></a>muestras<span class="op">$</span>ics &lt;-<span class="st"> </span>muestras<span class="op">$</span>mean <span class="op">+</span><span class="st"> </span>z<span class="op">*</span>sdx<span class="op">/</span><span class="kw">sqrt</span>(nx)</span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="intervalos-de-confianza.html#cb322-1"></a>alfa &lt;-<span class="st"> </span><span class="fl">0.05</span></span>
+<span id="cb322-2"><a href="intervalos-de-confianza.html#cb322-2"></a>z &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alfa<span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb322-3"><a href="intervalos-de-confianza.html#cb322-3"></a>muestras<span class="op">$</span>ici &lt;-<span class="st"> </span>muestras<span class="op">$</span>mean <span class="op">-</span><span class="st"> </span>z<span class="op">*</span>sdx<span class="op">/</span><span class="kw">sqrt</span>(nx)</span>
+<span id="cb322-4"><a href="intervalos-de-confianza.html#cb322-4"></a>muestras<span class="op">$</span>ics &lt;-<span class="st"> </span>muestras<span class="op">$</span>mean <span class="op">+</span><span class="st"> </span>z<span class="op">*</span>sdx<span class="op">/</span><span class="kw">sqrt</span>(nx)</span></code></pre></div>
 <p>Cobertura de las estimaciones por IC:</p>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="intervalos-de-confianza.html#cb304-1"></a>muestras<span class="op">$</span>cob &lt;-<span class="st"> </span>(muestras<span class="op">$</span>ici <span class="op">&lt;</span><span class="st"> </span>mux) <span class="op">&amp;</span><span class="st"> </span>(mux <span class="op">&lt;</span><span class="st"> </span>muestras<span class="op">$</span>ics) </span>
-<span id="cb304-2"><a href="intervalos-de-confianza.html#cb304-2"></a>ncob &lt;-<span class="st"> </span><span class="kw">sum</span>(muestras<span class="op">$</span>cob) <span class="co"># Nº de intervalos que contienen la verdadera media</span></span>
-<span id="cb304-3"><a href="intervalos-de-confianza.html#cb304-3"></a>ncob</span></code></pre></div>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="intervalos-de-confianza.html#cb323-1"></a>muestras<span class="op">$</span>cob &lt;-<span class="st"> </span>(muestras<span class="op">$</span>ici <span class="op">&lt;</span><span class="st"> </span>mux) <span class="op">&amp;</span><span class="st"> </span>(mux <span class="op">&lt;</span><span class="st"> </span>muestras<span class="op">$</span>ics) </span>
+<span id="cb323-2"><a href="intervalos-de-confianza.html#cb323-2"></a>ncob &lt;-<span class="st"> </span><span class="kw">sum</span>(muestras<span class="op">$</span>cob) <span class="co"># Nº de intervalos que contienen la verdadera media</span></span>
+<span id="cb323-3"><a href="intervalos-de-confianza.html#cb323-3"></a>ncob</span></code></pre></div>
 <pre><code>## [1] 480</code></pre>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="intervalos-de-confianza.html#cb306-1"></a><span class="dv">100</span><span class="op">*</span>ncob<span class="op">/</span>nsim     <span class="co"># Proporción de intervalos</span></span></code></pre></div>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="intervalos-de-confianza.html#cb325-1"></a><span class="dv">100</span><span class="op">*</span>ncob<span class="op">/</span>nsim     <span class="co"># Proporción de intervalos</span></span></code></pre></div>
 <pre><code>## [1] 96</code></pre>
-<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="intervalos-de-confianza.html#cb308-1"></a><span class="dv">100</span><span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alfa)    <span class="co"># Proporción teórica bajo normalidad</span></span></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="intervalos-de-confianza.html#cb327-1"></a><span class="dv">100</span><span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alfa)    <span class="co"># Proporción teórica bajo normalidad</span></span></code></pre></div>
 <pre><code>## [1] 95</code></pre>
 <p>Como ejemplo ilustrativo, generamos el gráfico de los primeros 50 intervalos:</p>
-<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="intervalos-de-confianza.html#cb310-1"></a>m &lt;-<span class="st"> </span><span class="dv">50</span></span>
-<span id="cb310-2"><a href="intervalos-de-confianza.html#cb310-2"></a>tmp &lt;-<span class="st"> </span>muestras[<span class="dv">1</span><span class="op">:</span>m,]</span>
-<span id="cb310-3"><a href="intervalos-de-confianza.html#cb310-3"></a><span class="kw">attach</span>(tmp)</span>
-<span id="cb310-4"><a href="intervalos-de-confianza.html#cb310-4"></a>color &lt;-<span class="st"> </span><span class="kw">ifelse</span>(cob,<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;red&quot;</span>)</span>
-<span id="cb310-5"><a href="intervalos-de-confianza.html#cb310-5"></a><span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span>m, mean, <span class="dt">col =</span> color, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="kw">min</span>(ici),<span class="kw">max</span>(ics)), </span>
-<span id="cb310-6"><a href="intervalos-de-confianza.html#cb310-6"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Muestra&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;IC&quot;</span>)</span>
-<span id="cb310-7"><a href="intervalos-de-confianza.html#cb310-7"></a><span class="kw">arrows</span>(<span class="dv">1</span><span class="op">:</span>m, ici, <span class="dv">1</span><span class="op">:</span>m, ics, <span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">length =</span> <span class="fl">0.05</span>, <span class="dt">code =</span> <span class="dv">3</span>, <span class="dt">col =</span> color)</span>
-<span id="cb310-8"><a href="intervalos-de-confianza.html#cb310-8"></a><span class="kw">abline</span>(<span class="dt">h =</span> mux, <span class="dt">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="intervalos-de-confianza.html#cb329-1"></a>m &lt;-<span class="st"> </span><span class="dv">50</span></span>
+<span id="cb329-2"><a href="intervalos-de-confianza.html#cb329-2"></a>tmp &lt;-<span class="st"> </span>muestras[<span class="dv">1</span><span class="op">:</span>m,]</span>
+<span id="cb329-3"><a href="intervalos-de-confianza.html#cb329-3"></a><span class="kw">attach</span>(tmp)</span>
+<span id="cb329-4"><a href="intervalos-de-confianza.html#cb329-4"></a>color &lt;-<span class="st"> </span><span class="kw">ifelse</span>(cob,<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;red&quot;</span>)</span>
+<span id="cb329-5"><a href="intervalos-de-confianza.html#cb329-5"></a><span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span>m, mean, <span class="dt">col =</span> color, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="kw">min</span>(ici),<span class="kw">max</span>(ics)), </span>
+<span id="cb329-6"><a href="intervalos-de-confianza.html#cb329-6"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Muestra&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;IC&quot;</span>)</span>
+<span id="cb329-7"><a href="intervalos-de-confianza.html#cb329-7"></a><span class="kw">arrows</span>(<span class="dv">1</span><span class="op">:</span>m, ici, <span class="dv">1</span><span class="op">:</span>m, ics, <span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">length =</span> <span class="fl">0.05</span>, <span class="dt">code =</span> <span class="dv">3</span>, <span class="dt">col =</span> color)</span>
+<span id="cb329-8"><a href="intervalos-de-confianza.html#cb329-8"></a><span class="kw">abline</span>(<span class="dt">h =</span> mux, <span class="dt">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:cobicnorm"></span>
 <img src="08-Aplicaciones_Inferencia_files/figure-html/cobicnorm-1.png" alt="Cobertura de las estimaciones por IC." width="70%" />
 <p class="caption">
 Figura 8.3: Cobertura de las estimaciones por IC.
 </p>
 </div>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="intervalos-de-confianza.html#cb311-1"></a><span class="kw">detach</span>(tmp)</span></code></pre></div></li>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="intervalos-de-confianza.html#cb330-1"></a><span class="kw">detach</span>(tmp)</span></code></pre></div></li>
 </ol>
 <!--- Los siguientes comandos añaden una línea en html, word y un salto vertical en pdf -->
 <p><br> </p>
@@ -389,35 +388,35 @@ Figura 8.3: Cobertura de las estimaciones por IC.
 confianza obtenido bajo normalidad?</p>
 <p>Ejecutar el código del apartado a) del ejercicio 2.</p>
 <p>IC para la media con varianza conocida (bajo normalidad)</p>
-<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="intervalos-de-confianza.html#cb312-1"></a>alfa &lt;-<span class="st"> </span><span class="fl">0.05</span></span>
-<span id="cb312-2"><a href="intervalos-de-confianza.html#cb312-2"></a>z &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alfa<span class="op">/</span><span class="dv">2</span>)</span>
-<span id="cb312-3"><a href="intervalos-de-confianza.html#cb312-3"></a>muestras2<span class="op">$</span>ici &lt;-<span class="st"> </span>muestras2<span class="op">$</span>mean <span class="op">-</span><span class="st"> </span>z<span class="op">*</span>sdexp<span class="op">/</span><span class="kw">sqrt</span>(nx)</span>
-<span id="cb312-4"><a href="intervalos-de-confianza.html#cb312-4"></a>muestras2<span class="op">$</span>ics &lt;-<span class="st"> </span>muestras2<span class="op">$</span>mean <span class="op">+</span><span class="st"> </span>z<span class="op">*</span>sdexp<span class="op">/</span><span class="kw">sqrt</span>(nx)</span></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="intervalos-de-confianza.html#cb331-1"></a>alfa &lt;-<span class="st"> </span><span class="fl">0.05</span></span>
+<span id="cb331-2"><a href="intervalos-de-confianza.html#cb331-2"></a>z &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alfa<span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb331-3"><a href="intervalos-de-confianza.html#cb331-3"></a>muestras2<span class="op">$</span>ici &lt;-<span class="st"> </span>muestras2<span class="op">$</span>mean <span class="op">-</span><span class="st"> </span>z<span class="op">*</span>sdexp<span class="op">/</span><span class="kw">sqrt</span>(nx)</span>
+<span id="cb331-4"><a href="intervalos-de-confianza.html#cb331-4"></a>muestras2<span class="op">$</span>ics &lt;-<span class="st"> </span>muestras2<span class="op">$</span>mean <span class="op">+</span><span class="st"> </span>z<span class="op">*</span>sdexp<span class="op">/</span><span class="kw">sqrt</span>(nx)</span></code></pre></div>
 <p>Cobertura de las estimaciones por IC:</p>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="intervalos-de-confianza.html#cb313-1"></a>muestras2<span class="op">$</span>cob &lt;-<span class="st"> </span>(muestras2<span class="op">$</span>ici <span class="op">&lt;</span><span class="st"> </span>muexp) <span class="op">&amp;</span><span class="st"> </span>(muexp <span class="op">&lt;</span><span class="st"> </span>muestras2<span class="op">$</span>ics) </span>
-<span id="cb313-2"><a href="intervalos-de-confianza.html#cb313-2"></a>ncob &lt;-<span class="st"> </span><span class="kw">sum</span>(muestras2<span class="op">$</span>cob) <span class="co"># Nº de intervalos que contienen la verdadera media</span></span>
-<span id="cb313-3"><a href="intervalos-de-confianza.html#cb313-3"></a>ncob</span></code></pre></div>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="intervalos-de-confianza.html#cb332-1"></a>muestras2<span class="op">$</span>cob &lt;-<span class="st"> </span>(muestras2<span class="op">$</span>ici <span class="op">&lt;</span><span class="st"> </span>muexp) <span class="op">&amp;</span><span class="st"> </span>(muexp <span class="op">&lt;</span><span class="st"> </span>muestras2<span class="op">$</span>ics) </span>
+<span id="cb332-2"><a href="intervalos-de-confianza.html#cb332-2"></a>ncob &lt;-<span class="st"> </span><span class="kw">sum</span>(muestras2<span class="op">$</span>cob) <span class="co"># Nº de intervalos que contienen la verdadera media</span></span>
+<span id="cb332-3"><a href="intervalos-de-confianza.html#cb332-3"></a>ncob</span></code></pre></div>
 <pre><code>## [1] 469</code></pre>
-<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="intervalos-de-confianza.html#cb315-1"></a><span class="dv">100</span><span class="op">*</span>ncob<span class="op">/</span>nsim     <span class="co"># Proporción de intervalos</span></span></code></pre></div>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="intervalos-de-confianza.html#cb334-1"></a><span class="dv">100</span><span class="op">*</span>ncob<span class="op">/</span>nsim     <span class="co"># Proporción de intervalos</span></span></code></pre></div>
 <pre><code>## [1] 93.8</code></pre>
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="intervalos-de-confianza.html#cb317-1"></a><span class="dv">100</span><span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alfa)    <span class="co"># Proporción teórica bajo normalidad</span></span></code></pre></div>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="intervalos-de-confianza.html#cb336-1"></a><span class="dv">100</span><span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alfa)    <span class="co"># Proporción teórica bajo normalidad</span></span></code></pre></div>
 <pre><code>## [1] 95</code></pre>
 <p>Como ejemplo ilustrativo, generamos el gráfico de los primeros 100 intervalos:</p>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="intervalos-de-confianza.html#cb319-1"></a>m &lt;-<span class="st"> </span><span class="dv">100</span></span>
-<span id="cb319-2"><a href="intervalos-de-confianza.html#cb319-2"></a>tmp &lt;-<span class="st"> </span>muestras2[<span class="dv">1</span><span class="op">:</span>m,]</span>
-<span id="cb319-3"><a href="intervalos-de-confianza.html#cb319-3"></a><span class="kw">attach</span>(tmp)</span>
-<span id="cb319-4"><a href="intervalos-de-confianza.html#cb319-4"></a>color &lt;-<span class="st"> </span><span class="kw">ifelse</span>(cob,<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;red&quot;</span>)</span>
-<span id="cb319-5"><a href="intervalos-de-confianza.html#cb319-5"></a><span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span>m, mean, <span class="dt">col =</span> color, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="kw">min</span>(ici),<span class="kw">max</span>(ics)), </span>
-<span id="cb319-6"><a href="intervalos-de-confianza.html#cb319-6"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Muestra&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;IC&quot;</span>)</span>
-<span id="cb319-7"><a href="intervalos-de-confianza.html#cb319-7"></a><span class="kw">arrows</span>(<span class="dv">1</span><span class="op">:</span>m, ici, <span class="dv">1</span><span class="op">:</span>m, ics, <span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">length =</span> <span class="fl">0.05</span>, <span class="dt">code =</span> <span class="dv">3</span>, <span class="dt">col =</span> color)</span>
-<span id="cb319-8"><a href="intervalos-de-confianza.html#cb319-8"></a><span class="kw">abline</span>(<span class="dt">h =</span> muexp, <span class="dt">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="intervalos-de-confianza.html#cb338-1"></a>m &lt;-<span class="st"> </span><span class="dv">100</span></span>
+<span id="cb338-2"><a href="intervalos-de-confianza.html#cb338-2"></a>tmp &lt;-<span class="st"> </span>muestras2[<span class="dv">1</span><span class="op">:</span>m,]</span>
+<span id="cb338-3"><a href="intervalos-de-confianza.html#cb338-3"></a><span class="kw">attach</span>(tmp)</span>
+<span id="cb338-4"><a href="intervalos-de-confianza.html#cb338-4"></a>color &lt;-<span class="st"> </span><span class="kw">ifelse</span>(cob,<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;red&quot;</span>)</span>
+<span id="cb338-5"><a href="intervalos-de-confianza.html#cb338-5"></a><span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span>m, mean, <span class="dt">col =</span> color, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="kw">min</span>(ici),<span class="kw">max</span>(ics)), </span>
+<span id="cb338-6"><a href="intervalos-de-confianza.html#cb338-6"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Muestra&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;IC&quot;</span>)</span>
+<span id="cb338-7"><a href="intervalos-de-confianza.html#cb338-7"></a><span class="kw">arrows</span>(<span class="dv">1</span><span class="op">:</span>m, ici, <span class="dv">1</span><span class="op">:</span>m, ics, <span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">length =</span> <span class="fl">0.05</span>, <span class="dt">code =</span> <span class="dv">3</span>, <span class="dt">col =</span> color)</span>
+<span id="cb338-8"><a href="intervalos-de-confianza.html#cb338-8"></a><span class="kw">abline</span>(<span class="dt">h =</span> muexp, <span class="dt">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:cobicexp"></span>
 <img src="08-Aplicaciones_Inferencia_files/figure-html/cobicexp-1.png" alt="Cobertura de las estimaciones por IC (bajo normalidad)." width="70%" />
 <p class="caption">
 Figura 8.4: Cobertura de las estimaciones por IC (bajo normalidad).
 </p>
 </div>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="intervalos-de-confianza.html#cb320-1"></a><span class="kw">detach</span>(tmp)</span></code></pre></div></li>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="intervalos-de-confianza.html#cb339-1"></a><span class="kw">detach</span>(tmp)</span></code></pre></div></li>
 <li><p>¿Qué ocurre si aumentamos el tamaño muestral a 50?</p>
 <p>Ejecutar el código del ejercicio anterior fijando <code>nx &lt;- 50</code>
 y el del apartado anterior.</p></li>
@@ -425,32 +424,32 @@ y el del apartado anterior.</p></li>
 <p>En los apartados b) y c) podíamos considerar bootstrap descrito al final de este capítulo.</p>
 <p>Podemos aproximar por simulación los intervalos de probabilidad de la media muestral (tendríamos una idea del valor esperado de lo que obtendríamos
 con el bootstrap percentil; en este caso el estimador es insesgado…):</p>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="intervalos-de-confianza.html#cb321-1"></a><span class="co"># Distribución de la media muestral</span></span>
-<span id="cb321-2"><a href="intervalos-de-confianza.html#cb321-2"></a><span class="kw">hist</span>(muestras2<span class="op">$</span>mean, <span class="dt">freq=</span><span class="ot">FALSE</span>, <span class="dt">breaks=</span><span class="st">&quot;FD&quot;</span>, </span>
-<span id="cb321-3"><a href="intervalos-de-confianza.html#cb321-3"></a>     <span class="dt">main=</span><span class="st">&quot;Distribución de la media muestral&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Medias&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Densidad&quot;</span>)</span>
-<span id="cb321-4"><a href="intervalos-de-confianza.html#cb321-4"></a><span class="co"># Densidad observada (estimación)</span></span>
-<span id="cb321-5"><a href="intervalos-de-confianza.html#cb321-5"></a><span class="kw">lines</span>(<span class="kw">density</span>(muestras2<span class="op">$</span>mean), <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&#39;red&#39;</span>) </span>
-<span id="cb321-6"><a href="intervalos-de-confianza.html#cb321-6"></a><span class="co"># Densidad teórica (bajo normalidad)</span></span>
-<span id="cb321-7"><a href="intervalos-de-confianza.html#cb321-7"></a><span class="kw">curve</span>(<span class="kw">dnorm</span>(x,muexp,sdexp<span class="op">/</span><span class="kw">sqrt</span>(nx)), <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">add=</span><span class="ot">TRUE</span>) </span>
-<span id="cb321-8"><a href="intervalos-de-confianza.html#cb321-8"></a><span class="co"># Aproximación por simulación del valor esperado de la media muestral</span></span>
-<span id="cb321-9"><a href="intervalos-de-confianza.html#cb321-9"></a><span class="kw">abline</span>(<span class="dt">v=</span><span class="kw">mean</span>(muestras2<span class="op">$</span>mean), <span class="dt">lty=</span><span class="dv">2</span>)</span>
-<span id="cb321-10"><a href="intervalos-de-confianza.html#cb321-10"></a><span class="co"># Valor esperado de la media muestral (teórico)</span></span>
-<span id="cb321-11"><a href="intervalos-de-confianza.html#cb321-11"></a><span class="kw">abline</span>(<span class="dt">v=</span>muexp, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>) </span>
-<span id="cb321-12"><a href="intervalos-de-confianza.html#cb321-12"></a><span class="co"># IP bajo normalidad</span></span>
-<span id="cb321-13"><a href="intervalos-de-confianza.html#cb321-13"></a>ic.aprox &lt;-<span class="st"> </span><span class="kw">apply</span>(muestras2[ ,<span class="kw">c</span>(<span class="st">&#39;ici&#39;</span>,<span class="st">&#39;ics&#39;</span>)], <span class="dv">2</span>, mean)</span>
-<span id="cb321-14"><a href="intervalos-de-confianza.html#cb321-14"></a><span class="co">## ic.aprox </span></span>
-<span id="cb321-15"><a href="intervalos-de-confianza.html#cb321-15"></a><span class="co">##       ici       ics </span></span>
-<span id="cb321-16"><a href="intervalos-de-confianza.html#cb321-16"></a><span class="co">## 0.3865199 1.6261099</span></span>
-<span id="cb321-17"><a href="intervalos-de-confianza.html#cb321-17"></a><span class="co"># Intervalo de probabilidad para la media muestral aproximado bajo normalidad</span></span>
-<span id="cb321-18"><a href="intervalos-de-confianza.html#cb321-18"></a><span class="kw">abline</span>(<span class="dt">v =</span> ic.aprox, <span class="dt">col=</span><span class="st">&#39;blue&#39;</span>)</span>
-<span id="cb321-19"><a href="intervalos-de-confianza.html#cb321-19"></a></span>
-<span id="cb321-20"><a href="intervalos-de-confianza.html#cb321-20"></a><span class="co"># Intervalo de probabilidad para la media muestral (aproximado por simulación)</span></span>
-<span id="cb321-21"><a href="intervalos-de-confianza.html#cb321-21"></a>ic.sim &lt;-<span class="st"> </span><span class="kw">quantile</span>(muestras2<span class="op">$</span>mean, <span class="kw">c</span>(alfa<span class="op">/</span><span class="dv">2</span>, <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alfa<span class="op">/</span><span class="dv">2</span>))</span>
-<span id="cb321-22"><a href="intervalos-de-confianza.html#cb321-22"></a><span class="co">## ic.sim</span></span>
-<span id="cb321-23"><a href="intervalos-de-confianza.html#cb321-23"></a><span class="co">##      2.5%     97.5% </span></span>
-<span id="cb321-24"><a href="intervalos-de-confianza.html#cb321-24"></a><span class="co">## 0.4714233 1.8059094</span></span>
-<span id="cb321-25"><a href="intervalos-de-confianza.html#cb321-25"></a><span class="co"># IP (aprox.) </span></span>
-<span id="cb321-26"><a href="intervalos-de-confianza.html#cb321-26"></a><span class="kw">abline</span>(<span class="dt">v=</span>ic.sim, <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&#39;red&#39;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="intervalos-de-confianza.html#cb340-1"></a><span class="co"># Distribución de la media muestral</span></span>
+<span id="cb340-2"><a href="intervalos-de-confianza.html#cb340-2"></a><span class="kw">hist</span>(muestras2<span class="op">$</span>mean, <span class="dt">freq=</span><span class="ot">FALSE</span>, <span class="dt">breaks=</span><span class="st">&quot;FD&quot;</span>, </span>
+<span id="cb340-3"><a href="intervalos-de-confianza.html#cb340-3"></a>     <span class="dt">main=</span><span class="st">&quot;Distribución de la media muestral&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Medias&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Densidad&quot;</span>)</span>
+<span id="cb340-4"><a href="intervalos-de-confianza.html#cb340-4"></a><span class="co"># Densidad observada (estimación)</span></span>
+<span id="cb340-5"><a href="intervalos-de-confianza.html#cb340-5"></a><span class="kw">lines</span>(<span class="kw">density</span>(muestras2<span class="op">$</span>mean), <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&#39;red&#39;</span>) </span>
+<span id="cb340-6"><a href="intervalos-de-confianza.html#cb340-6"></a><span class="co"># Densidad teórica (bajo normalidad)</span></span>
+<span id="cb340-7"><a href="intervalos-de-confianza.html#cb340-7"></a><span class="kw">curve</span>(<span class="kw">dnorm</span>(x,muexp,sdexp<span class="op">/</span><span class="kw">sqrt</span>(nx)), <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">add=</span><span class="ot">TRUE</span>) </span>
+<span id="cb340-8"><a href="intervalos-de-confianza.html#cb340-8"></a><span class="co"># Aproximación por simulación del valor esperado de la media muestral</span></span>
+<span id="cb340-9"><a href="intervalos-de-confianza.html#cb340-9"></a><span class="kw">abline</span>(<span class="dt">v=</span><span class="kw">mean</span>(muestras2<span class="op">$</span>mean), <span class="dt">lty=</span><span class="dv">2</span>)</span>
+<span id="cb340-10"><a href="intervalos-de-confianza.html#cb340-10"></a><span class="co"># Valor esperado de la media muestral (teórico)</span></span>
+<span id="cb340-11"><a href="intervalos-de-confianza.html#cb340-11"></a><span class="kw">abline</span>(<span class="dt">v=</span>muexp, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>) </span>
+<span id="cb340-12"><a href="intervalos-de-confianza.html#cb340-12"></a><span class="co"># IP bajo normalidad</span></span>
+<span id="cb340-13"><a href="intervalos-de-confianza.html#cb340-13"></a>ic.aprox &lt;-<span class="st"> </span><span class="kw">apply</span>(muestras2[ ,<span class="kw">c</span>(<span class="st">&#39;ici&#39;</span>,<span class="st">&#39;ics&#39;</span>)], <span class="dv">2</span>, mean)</span>
+<span id="cb340-14"><a href="intervalos-de-confianza.html#cb340-14"></a><span class="co">## ic.aprox </span></span>
+<span id="cb340-15"><a href="intervalos-de-confianza.html#cb340-15"></a><span class="co">##       ici       ics </span></span>
+<span id="cb340-16"><a href="intervalos-de-confianza.html#cb340-16"></a><span class="co">## 0.3865199 1.6261099</span></span>
+<span id="cb340-17"><a href="intervalos-de-confianza.html#cb340-17"></a><span class="co"># Intervalo de probabilidad para la media muestral aproximado bajo normalidad</span></span>
+<span id="cb340-18"><a href="intervalos-de-confianza.html#cb340-18"></a><span class="kw">abline</span>(<span class="dt">v =</span> ic.aprox, <span class="dt">col=</span><span class="st">&#39;blue&#39;</span>)</span>
+<span id="cb340-19"><a href="intervalos-de-confianza.html#cb340-19"></a></span>
+<span id="cb340-20"><a href="intervalos-de-confianza.html#cb340-20"></a><span class="co"># Intervalo de probabilidad para la media muestral (aproximado por simulación)</span></span>
+<span id="cb340-21"><a href="intervalos-de-confianza.html#cb340-21"></a>ic.sim &lt;-<span class="st"> </span><span class="kw">quantile</span>(muestras2<span class="op">$</span>mean, <span class="kw">c</span>(alfa<span class="op">/</span><span class="dv">2</span>, <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alfa<span class="op">/</span><span class="dv">2</span>))</span>
+<span id="cb340-22"><a href="intervalos-de-confianza.html#cb340-22"></a><span class="co">## ic.sim</span></span>
+<span id="cb340-23"><a href="intervalos-de-confianza.html#cb340-23"></a><span class="co">##      2.5%     97.5% </span></span>
+<span id="cb340-24"><a href="intervalos-de-confianza.html#cb340-24"></a><span class="co">## 0.4714233 1.8059094</span></span>
+<span id="cb340-25"><a href="intervalos-de-confianza.html#cb340-25"></a><span class="co"># IP (aprox.) </span></span>
+<span id="cb340-26"><a href="intervalos-de-confianza.html#cb340-26"></a><span class="kw">abline</span>(<span class="dt">v=</span>ic.sim, <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&#39;red&#39;</span>) </span></code></pre></div>
 <p><img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /></p>
 
 <div class="remark">
@@ -480,96 +479,96 @@ IC_{1-\alpha}^{a}\left(  p\right)
 \end{aligned}\]</span>
 En el caso de <span class="math inline">\(a=2\)</span> se denomina IC Agresti-Coull.</p>
 <ol style="list-style-type: lower-alpha">
-<li><p>Teniendo en cuenta que la v.a. <span class="math inline">\(X=n\hat{p}\sim\mathcal{B}(n,p)\)</span>,
+<li><p>Teniendo en cuenta que la variable aleatoria <span class="math inline">\(X=n\hat{p}\sim\mathcal{B}(n,p)\)</span>,
 obtener y representar gráficamente la cobertura teórica del
 intervalo de confianza estándar (<span class="math inline">\(a=0\)</span>) de una proporción para
 una muestra de tamaño <span class="math inline">\(n=30\)</span>, <span class="math inline">\(\alpha=0.05\)</span> y distintos valores
 de <span class="math inline">\(p\)</span> (<code>p.teor &lt;- seq(1/n, 1 - 1/n, length = 1000)</code>).</p>
 <p>Parámetros:</p>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="intervalos-de-confianza.html#cb322-1"></a>n &lt;-<span class="st"> </span><span class="dv">30</span></span>
-<span id="cb322-2"><a href="intervalos-de-confianza.html#cb322-2"></a>alpha &lt;-<span class="st"> </span><span class="fl">0.05</span></span>
-<span id="cb322-3"><a href="intervalos-de-confianza.html#cb322-3"></a>adj &lt;-<span class="st"> </span><span class="dv">0</span>  <span class="co"># (adj &lt;- 2 para Agresti-Coull)</span></span></code></pre></div>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="intervalos-de-confianza.html#cb341-1"></a>n &lt;-<span class="st"> </span><span class="dv">30</span></span>
+<span id="cb341-2"><a href="intervalos-de-confianza.html#cb341-2"></a>alpha &lt;-<span class="st"> </span><span class="fl">0.05</span></span>
+<span id="cb341-3"><a href="intervalos-de-confianza.html#cb341-3"></a>adj &lt;-<span class="st"> </span><span class="dv">0</span>  <span class="co"># (adj &lt;- 2 para Agresti-Coull)</span></span></code></pre></div>
 <p>Probabilidades teóricas:</p>
-<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="intervalos-de-confianza.html#cb323-1"></a>m &lt;-<span class="st"> </span><span class="dv">1000</span></span>
-<span id="cb323-2"><a href="intervalos-de-confianza.html#cb323-2"></a>p.teor &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span><span class="op">/</span>n, <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span>n, <span class="dt">length =</span> m) </span></code></pre></div>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="intervalos-de-confianza.html#cb342-1"></a>m &lt;-<span class="st"> </span><span class="dv">1000</span></span>
+<span id="cb342-2"><a href="intervalos-de-confianza.html#cb342-2"></a>p.teor &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span><span class="op">/</span>n, <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span>n, <span class="dt">length =</span> m) </span></code></pre></div>
 <p>Posibles resultados:</p>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="intervalos-de-confianza.html#cb324-1"></a>x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span>n</span>
-<span id="cb324-2"><a href="intervalos-de-confianza.html#cb324-2"></a>p.est &lt;-<span class="st"> </span>(x <span class="op">+</span><span class="st"> </span>adj)<span class="op">/</span>(n <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>adj) </span>
-<span id="cb324-3"><a href="intervalos-de-confianza.html#cb324-3"></a>ic.err &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha<span class="op">/</span><span class="dv">2</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(p.est <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p.est)<span class="op">/</span>(n <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>adj))  </span>
-<span id="cb324-4"><a href="intervalos-de-confianza.html#cb324-4"></a>lcl &lt;-<span class="st"> </span>p.est <span class="op">-</span><span class="st"> </span>ic.err </span>
-<span id="cb324-5"><a href="intervalos-de-confianza.html#cb324-5"></a>ucl &lt;-<span class="st"> </span>p.est <span class="op">+</span><span class="st"> </span>ic.err </span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="intervalos-de-confianza.html#cb343-1"></a>x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span>n</span>
+<span id="cb343-2"><a href="intervalos-de-confianza.html#cb343-2"></a>p.est &lt;-<span class="st"> </span>(x <span class="op">+</span><span class="st"> </span>adj)<span class="op">/</span>(n <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>adj) </span>
+<span id="cb343-3"><a href="intervalos-de-confianza.html#cb343-3"></a>ic.err &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha<span class="op">/</span><span class="dv">2</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(p.est <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p.est)<span class="op">/</span>(n <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>adj))  </span>
+<span id="cb343-4"><a href="intervalos-de-confianza.html#cb343-4"></a>lcl &lt;-<span class="st"> </span>p.est <span class="op">-</span><span class="st"> </span>ic.err </span>
+<span id="cb343-5"><a href="intervalos-de-confianza.html#cb343-5"></a>ucl &lt;-<span class="st"> </span>p.est <span class="op">+</span><span class="st"> </span>ic.err </span></code></pre></div>
 <p>Recorrer prob. teóricas:</p>
-<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="intervalos-de-confianza.html#cb325-1"></a>p.cov &lt;-<span class="st"> </span><span class="kw">numeric</span>(m)</span>
-<span id="cb325-2"><a href="intervalos-de-confianza.html#cb325-2"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>m) {</span>
-<span id="cb325-3"><a href="intervalos-de-confianza.html#cb325-3"></a>  <span class="co"># cobertura de los posibles intervalos</span></span>
-<span id="cb325-4"><a href="intervalos-de-confianza.html#cb325-4"></a>  cover &lt;-<span class="st"> </span>(p.teor[i] <span class="op">&gt;=</span><span class="st"> </span>lcl) <span class="op">&amp;</span><span class="st"> </span>(p.teor[i] <span class="op">&lt;=</span><span class="st"> </span>ucl)  </span>
-<span id="cb325-5"><a href="intervalos-de-confianza.html#cb325-5"></a>  <span class="co"># prob. de los posibles intervalos</span></span>
-<span id="cb325-6"><a href="intervalos-de-confianza.html#cb325-6"></a>  p.rel &lt;-<span class="st"> </span><span class="kw">dbinom</span>(x[cover], n, p.teor[i])           </span>
-<span id="cb325-7"><a href="intervalos-de-confianza.html#cb325-7"></a>  <span class="co"># prob. total de cobertura</span></span>
-<span id="cb325-8"><a href="intervalos-de-confianza.html#cb325-8"></a>  p.cov[i] &lt;-<span class="st"> </span><span class="kw">sum</span>(p.rel)                            </span>
-<span id="cb325-9"><a href="intervalos-de-confianza.html#cb325-9"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="intervalos-de-confianza.html#cb344-1"></a>p.cov &lt;-<span class="st"> </span><span class="kw">numeric</span>(m)</span>
+<span id="cb344-2"><a href="intervalos-de-confianza.html#cb344-2"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>m) {</span>
+<span id="cb344-3"><a href="intervalos-de-confianza.html#cb344-3"></a>  <span class="co"># cobertura de los posibles intervalos</span></span>
+<span id="cb344-4"><a href="intervalos-de-confianza.html#cb344-4"></a>  cover &lt;-<span class="st"> </span>(p.teor[i] <span class="op">&gt;=</span><span class="st"> </span>lcl) <span class="op">&amp;</span><span class="st"> </span>(p.teor[i] <span class="op">&lt;=</span><span class="st"> </span>ucl)  </span>
+<span id="cb344-5"><a href="intervalos-de-confianza.html#cb344-5"></a>  <span class="co"># prob. de los posibles intervalos</span></span>
+<span id="cb344-6"><a href="intervalos-de-confianza.html#cb344-6"></a>  p.rel &lt;-<span class="st"> </span><span class="kw">dbinom</span>(x[cover], n, p.teor[i])           </span>
+<span id="cb344-7"><a href="intervalos-de-confianza.html#cb344-7"></a>  <span class="co"># prob. total de cobertura</span></span>
+<span id="cb344-8"><a href="intervalos-de-confianza.html#cb344-8"></a>  p.cov[i] &lt;-<span class="st"> </span><span class="kw">sum</span>(p.rel)                            </span>
+<span id="cb344-9"><a href="intervalos-de-confianza.html#cb344-9"></a>}</span></code></pre></div>
 <p>Gráfico coberturas:</p>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="intervalos-de-confianza.html#cb326-1"></a><span class="kw">plot</span>(p.teor, p.cov, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">4</span> <span class="op">*</span><span class="st"> </span>alpha, <span class="dv">1</span>))</span>
-<span id="cb326-2"><a href="intervalos-de-confianza.html#cb326-2"></a><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha, <span class="dt">lty =</span> <span class="dv">2</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="intervalos-de-confianza.html#cb345-1"></a><span class="kw">plot</span>(p.teor, p.cov, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">4</span> <span class="op">*</span><span class="st"> </span>alpha, <span class="dv">1</span>))</span>
+<span id="cb345-2"><a href="intervalos-de-confianza.html#cb345-2"></a><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha, <span class="dt">lty =</span> <span class="dv">2</span>) </span></code></pre></div>
 <p><img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Fuente <a href="http://www.springer.com/gp/book/9780387402734">Suess y Trumbo (2010)</a>.</p></li>
 <li><p>Repetir el apartado anterior considerando intervalos de
 confianza Agresti-Coull (<span class="math inline">\(a=2\)</span>).</p>
 <p>Parámetros:</p>
-<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="intervalos-de-confianza.html#cb327-1"></a>n &lt;-<span class="st"> </span><span class="dv">30</span></span>
-<span id="cb327-2"><a href="intervalos-de-confianza.html#cb327-2"></a>alpha &lt;-<span class="st"> </span><span class="fl">0.05</span></span>
-<span id="cb327-3"><a href="intervalos-de-confianza.html#cb327-3"></a>adj &lt;-<span class="st"> </span><span class="dv">2</span>  <span class="co"># Agresti-Coull</span></span>
-<span id="cb327-4"><a href="intervalos-de-confianza.html#cb327-4"></a></span>
-<span id="cb327-5"><a href="intervalos-de-confianza.html#cb327-5"></a><span class="co"># Probabilidades teóricas:</span></span>
-<span id="cb327-6"><a href="intervalos-de-confianza.html#cb327-6"></a>m &lt;-<span class="st"> </span><span class="dv">1000</span></span>
-<span id="cb327-7"><a href="intervalos-de-confianza.html#cb327-7"></a>p.teor &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span><span class="op">/</span>n, <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span>n, <span class="dt">length =</span> m) </span>
-<span id="cb327-8"><a href="intervalos-de-confianza.html#cb327-8"></a><span class="co"># Posibles resultados:</span></span>
-<span id="cb327-9"><a href="intervalos-de-confianza.html#cb327-9"></a>x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span>n</span>
-<span id="cb327-10"><a href="intervalos-de-confianza.html#cb327-10"></a>p.est &lt;-<span class="st"> </span>(x <span class="op">+</span><span class="st"> </span>adj)<span class="op">/</span>(n <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>adj) </span>
-<span id="cb327-11"><a href="intervalos-de-confianza.html#cb327-11"></a>ic.err &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha<span class="op">/</span><span class="dv">2</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(p.est <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p.est)<span class="op">/</span>(n <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>adj))  </span>
-<span id="cb327-12"><a href="intervalos-de-confianza.html#cb327-12"></a>lcl &lt;-<span class="st"> </span>p.est <span class="op">-</span><span class="st"> </span>ic.err </span>
-<span id="cb327-13"><a href="intervalos-de-confianza.html#cb327-13"></a>ucl &lt;-<span class="st"> </span>p.est <span class="op">+</span><span class="st"> </span>ic.err </span>
-<span id="cb327-14"><a href="intervalos-de-confianza.html#cb327-14"></a><span class="co"># Recorrer prob. teóricas:</span></span>
-<span id="cb327-15"><a href="intervalos-de-confianza.html#cb327-15"></a>p.cov &lt;-<span class="st"> </span><span class="kw">numeric</span>(m)</span>
-<span id="cb327-16"><a href="intervalos-de-confianza.html#cb327-16"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>m) {</span>
-<span id="cb327-17"><a href="intervalos-de-confianza.html#cb327-17"></a>  <span class="co"># cobertura de los posibles intervalos</span></span>
-<span id="cb327-18"><a href="intervalos-de-confianza.html#cb327-18"></a>  cover &lt;-<span class="st"> </span>(p.teor[i] <span class="op">&gt;=</span><span class="st"> </span>lcl) <span class="op">&amp;</span><span class="st"> </span>(p.teor[i] <span class="op">&lt;=</span><span class="st"> </span>ucl)  </span>
-<span id="cb327-19"><a href="intervalos-de-confianza.html#cb327-19"></a>  <span class="co"># prob. de los posibles intervalos</span></span>
-<span id="cb327-20"><a href="intervalos-de-confianza.html#cb327-20"></a>  p.rel &lt;-<span class="st"> </span><span class="kw">dbinom</span>(x[cover], n, p.teor[i])           </span>
-<span id="cb327-21"><a href="intervalos-de-confianza.html#cb327-21"></a>  <span class="co"># prob. total de cobertura</span></span>
-<span id="cb327-22"><a href="intervalos-de-confianza.html#cb327-22"></a>  p.cov[i] &lt;-<span class="st"> </span><span class="kw">sum</span>(p.rel)                            </span>
-<span id="cb327-23"><a href="intervalos-de-confianza.html#cb327-23"></a>}</span>
-<span id="cb327-24"><a href="intervalos-de-confianza.html#cb327-24"></a><span class="co"># Gráfico coberturas:</span></span>
-<span id="cb327-25"><a href="intervalos-de-confianza.html#cb327-25"></a><span class="kw">plot</span>(p.teor, p.cov, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">4</span> <span class="op">*</span><span class="st"> </span>alpha, <span class="dv">1</span>))</span>
-<span id="cb327-26"><a href="intervalos-de-confianza.html#cb327-26"></a><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha, <span class="dt">lty =</span> <span class="dv">2</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="intervalos-de-confianza.html#cb346-1"></a>n &lt;-<span class="st"> </span><span class="dv">30</span></span>
+<span id="cb346-2"><a href="intervalos-de-confianza.html#cb346-2"></a>alpha &lt;-<span class="st"> </span><span class="fl">0.05</span></span>
+<span id="cb346-3"><a href="intervalos-de-confianza.html#cb346-3"></a>adj &lt;-<span class="st"> </span><span class="dv">2</span>  <span class="co"># Agresti-Coull</span></span>
+<span id="cb346-4"><a href="intervalos-de-confianza.html#cb346-4"></a></span>
+<span id="cb346-5"><a href="intervalos-de-confianza.html#cb346-5"></a><span class="co"># Probabilidades teóricas:</span></span>
+<span id="cb346-6"><a href="intervalos-de-confianza.html#cb346-6"></a>m &lt;-<span class="st"> </span><span class="dv">1000</span></span>
+<span id="cb346-7"><a href="intervalos-de-confianza.html#cb346-7"></a>p.teor &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span><span class="op">/</span>n, <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span>n, <span class="dt">length =</span> m) </span>
+<span id="cb346-8"><a href="intervalos-de-confianza.html#cb346-8"></a><span class="co"># Posibles resultados:</span></span>
+<span id="cb346-9"><a href="intervalos-de-confianza.html#cb346-9"></a>x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span>n</span>
+<span id="cb346-10"><a href="intervalos-de-confianza.html#cb346-10"></a>p.est &lt;-<span class="st"> </span>(x <span class="op">+</span><span class="st"> </span>adj)<span class="op">/</span>(n <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>adj) </span>
+<span id="cb346-11"><a href="intervalos-de-confianza.html#cb346-11"></a>ic.err &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha<span class="op">/</span><span class="dv">2</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(p.est <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p.est)<span class="op">/</span>(n <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>adj))  </span>
+<span id="cb346-12"><a href="intervalos-de-confianza.html#cb346-12"></a>lcl &lt;-<span class="st"> </span>p.est <span class="op">-</span><span class="st"> </span>ic.err </span>
+<span id="cb346-13"><a href="intervalos-de-confianza.html#cb346-13"></a>ucl &lt;-<span class="st"> </span>p.est <span class="op">+</span><span class="st"> </span>ic.err </span>
+<span id="cb346-14"><a href="intervalos-de-confianza.html#cb346-14"></a><span class="co"># Recorrer prob. teóricas:</span></span>
+<span id="cb346-15"><a href="intervalos-de-confianza.html#cb346-15"></a>p.cov &lt;-<span class="st"> </span><span class="kw">numeric</span>(m)</span>
+<span id="cb346-16"><a href="intervalos-de-confianza.html#cb346-16"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>m) {</span>
+<span id="cb346-17"><a href="intervalos-de-confianza.html#cb346-17"></a>  <span class="co"># cobertura de los posibles intervalos</span></span>
+<span id="cb346-18"><a href="intervalos-de-confianza.html#cb346-18"></a>  cover &lt;-<span class="st"> </span>(p.teor[i] <span class="op">&gt;=</span><span class="st"> </span>lcl) <span class="op">&amp;</span><span class="st"> </span>(p.teor[i] <span class="op">&lt;=</span><span class="st"> </span>ucl)  </span>
+<span id="cb346-19"><a href="intervalos-de-confianza.html#cb346-19"></a>  <span class="co"># prob. de los posibles intervalos</span></span>
+<span id="cb346-20"><a href="intervalos-de-confianza.html#cb346-20"></a>  p.rel &lt;-<span class="st"> </span><span class="kw">dbinom</span>(x[cover], n, p.teor[i])           </span>
+<span id="cb346-21"><a href="intervalos-de-confianza.html#cb346-21"></a>  <span class="co"># prob. total de cobertura</span></span>
+<span id="cb346-22"><a href="intervalos-de-confianza.html#cb346-22"></a>  p.cov[i] &lt;-<span class="st"> </span><span class="kw">sum</span>(p.rel)                            </span>
+<span id="cb346-23"><a href="intervalos-de-confianza.html#cb346-23"></a>}</span>
+<span id="cb346-24"><a href="intervalos-de-confianza.html#cb346-24"></a><span class="co"># Gráfico coberturas:</span></span>
+<span id="cb346-25"><a href="intervalos-de-confianza.html#cb346-25"></a><span class="kw">plot</span>(p.teor, p.cov, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">4</span> <span class="op">*</span><span class="st"> </span>alpha, <span class="dv">1</span>))</span>
+<span id="cb346-26"><a href="intervalos-de-confianza.html#cb346-26"></a><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha, <span class="dt">lty =</span> <span class="dv">2</span>) </span></code></pre></div>
 <p><img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" /></p></li>
 <li><p>Repetir el apartado anterior empleando simulación para aproximar
 la cobertura.</p>
 <p>Parámetros:</p>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="intervalos-de-confianza.html#cb328-1"></a>n &lt;-<span class="st"> </span><span class="dv">30</span></span>
-<span id="cb328-2"><a href="intervalos-de-confianza.html#cb328-2"></a>alpha &lt;-<span class="st"> </span><span class="fl">0.05</span></span>
-<span id="cb328-3"><a href="intervalos-de-confianza.html#cb328-3"></a>adj &lt;-<span class="st"> </span><span class="dv">2</span>  <span class="co">#&#39; (2 para Agresti-Coull)</span></span>
-<span id="cb328-4"><a href="intervalos-de-confianza.html#cb328-4"></a></span>
-<span id="cb328-5"><a href="intervalos-de-confianza.html#cb328-5"></a><span class="kw">set.seed</span>(<span class="dv">54321</span>)</span>
-<span id="cb328-6"><a href="intervalos-de-confianza.html#cb328-6"></a>nsim &lt;-<span class="st"> </span><span class="dv">500</span> </span>
-<span id="cb328-7"><a href="intervalos-de-confianza.html#cb328-7"></a><span class="co"># Probabilidades teóricas:</span></span>
-<span id="cb328-8"><a href="intervalos-de-confianza.html#cb328-8"></a>m &lt;-<span class="st"> </span><span class="dv">1000</span></span>
-<span id="cb328-9"><a href="intervalos-de-confianza.html#cb328-9"></a>p.teor &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span><span class="op">/</span>n, <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span>n, <span class="dt">length =</span> m) </span></code></pre></div>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="intervalos-de-confianza.html#cb347-1"></a>n &lt;-<span class="st"> </span><span class="dv">30</span></span>
+<span id="cb347-2"><a href="intervalos-de-confianza.html#cb347-2"></a>alpha &lt;-<span class="st"> </span><span class="fl">0.05</span></span>
+<span id="cb347-3"><a href="intervalos-de-confianza.html#cb347-3"></a>adj &lt;-<span class="st"> </span><span class="dv">2</span>  <span class="co">#&#39; (2 para Agresti-Coull)</span></span>
+<span id="cb347-4"><a href="intervalos-de-confianza.html#cb347-4"></a></span>
+<span id="cb347-5"><a href="intervalos-de-confianza.html#cb347-5"></a><span class="kw">set.seed</span>(<span class="dv">54321</span>)</span>
+<span id="cb347-6"><a href="intervalos-de-confianza.html#cb347-6"></a>nsim &lt;-<span class="st"> </span><span class="dv">500</span> </span>
+<span id="cb347-7"><a href="intervalos-de-confianza.html#cb347-7"></a><span class="co"># Probabilidades teóricas:</span></span>
+<span id="cb347-8"><a href="intervalos-de-confianza.html#cb347-8"></a>m &lt;-<span class="st"> </span><span class="dv">1000</span></span>
+<span id="cb347-9"><a href="intervalos-de-confianza.html#cb347-9"></a>p.teor &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span><span class="op">/</span>n, <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span>n, <span class="dt">length =</span> m) </span></code></pre></div>
 <p>Recorrer prob. teóricas:</p>
-<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="intervalos-de-confianza.html#cb329-1"></a><span class="co"># m &lt;- length(p.teor)</span></span>
-<span id="cb329-2"><a href="intervalos-de-confianza.html#cb329-2"></a>p.cov &lt;-<span class="st"> </span><span class="kw">numeric</span>(m)</span>
-<span id="cb329-3"><a href="intervalos-de-confianza.html#cb329-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>m) {</span>
-<span id="cb329-4"><a href="intervalos-de-confianza.html#cb329-4"></a>  <span class="co"># Equivalente a simular nsim muestras de tamaño n</span></span>
-<span id="cb329-5"><a href="intervalos-de-confianza.html#cb329-5"></a>  <span class="co"># ry &lt;- matrix(rbinom(n*nsim, 1, p.teor[i]), ncol=n)</span></span>
-<span id="cb329-6"><a href="intervalos-de-confianza.html#cb329-6"></a>  <span class="co"># rx &lt;- apply(ry, 1, sum)</span></span>
-<span id="cb329-7"><a href="intervalos-de-confianza.html#cb329-7"></a>  rx &lt;-<span class="st"> </span><span class="kw">rbinom</span>(nsim, n, p.teor[i])</span>
-<span id="cb329-8"><a href="intervalos-de-confianza.html#cb329-8"></a>  p.est &lt;-<span class="st"> </span>(rx <span class="op">+</span><span class="st"> </span>adj)<span class="op">/</span>(n <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>adj)  </span>
-<span id="cb329-9"><a href="intervalos-de-confianza.html#cb329-9"></a>  ic.err &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha<span class="op">/</span><span class="dv">2</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(p.est <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p.est)<span class="op">/</span>(n <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>adj))</span>
-<span id="cb329-10"><a href="intervalos-de-confianza.html#cb329-10"></a>  p.cov[i] &lt;-<span class="st"> </span><span class="kw">mean</span>( <span class="kw">abs</span>(p.est <span class="op">-</span><span class="st"> </span>p.teor[i]) <span class="op">&lt;</span><span class="st"> </span>ic.err )</span>
-<span id="cb329-11"><a href="intervalos-de-confianza.html#cb329-11"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="intervalos-de-confianza.html#cb348-1"></a><span class="co"># m &lt;- length(p.teor)</span></span>
+<span id="cb348-2"><a href="intervalos-de-confianza.html#cb348-2"></a>p.cov &lt;-<span class="st"> </span><span class="kw">numeric</span>(m)</span>
+<span id="cb348-3"><a href="intervalos-de-confianza.html#cb348-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>m) {</span>
+<span id="cb348-4"><a href="intervalos-de-confianza.html#cb348-4"></a>  <span class="co"># Equivalente a simular nsim muestras de tamaño n</span></span>
+<span id="cb348-5"><a href="intervalos-de-confianza.html#cb348-5"></a>  <span class="co"># ry &lt;- matrix(rbinom(n*nsim, 1, p.teor[i]), ncol=n)</span></span>
+<span id="cb348-6"><a href="intervalos-de-confianza.html#cb348-6"></a>  <span class="co"># rx &lt;- apply(ry, 1, sum)</span></span>
+<span id="cb348-7"><a href="intervalos-de-confianza.html#cb348-7"></a>  rx &lt;-<span class="st"> </span><span class="kw">rbinom</span>(nsim, n, p.teor[i])</span>
+<span id="cb348-8"><a href="intervalos-de-confianza.html#cb348-8"></a>  p.est &lt;-<span class="st"> </span>(rx <span class="op">+</span><span class="st"> </span>adj)<span class="op">/</span>(n <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>adj)  </span>
+<span id="cb348-9"><a href="intervalos-de-confianza.html#cb348-9"></a>  ic.err &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha<span class="op">/</span><span class="dv">2</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(p.est <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p.est)<span class="op">/</span>(n <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>adj))</span>
+<span id="cb348-10"><a href="intervalos-de-confianza.html#cb348-10"></a>  p.cov[i] &lt;-<span class="st"> </span><span class="kw">mean</span>( <span class="kw">abs</span>(p.est <span class="op">-</span><span class="st"> </span>p.teor[i]) <span class="op">&lt;</span><span class="st"> </span>ic.err )</span>
+<span id="cb348-11"><a href="intervalos-de-confianza.html#cb348-11"></a>}</span></code></pre></div>
 <p>Representar:</p>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="intervalos-de-confianza.html#cb330-1"></a><span class="kw">plot</span>(p.teor, p.cov, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">4</span> <span class="op">*</span><span class="st"> </span>alpha, <span class="dv">1</span>))</span>
-<span id="cb330-2"><a href="intervalos-de-confianza.html#cb330-2"></a><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha, <span class="dt">lty =</span> <span class="dv">2</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="intervalos-de-confianza.html#cb349-1"></a><span class="kw">plot</span>(p.teor, p.cov, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">4</span> <span class="op">*</span><span class="st"> </span>alpha, <span class="dv">1</span>))</span>
+<span id="cb349-2"><a href="intervalos-de-confianza.html#cb349-2"></a><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha, <span class="dt">lty =</span> <span class="dv">2</span>) </span></code></pre></div>
 <p><img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-24-1.png" width="70%" style="display: block; margin: auto;" /></p></li>
 </ol>
 <p>Como ya se comentó, el caso de ajustar un modelo a los datos y realizar simulaciones a partir de ese modelo ajustado para aproximar las características de interés de un estadístico, se denomina también bootstrap paramétrico (Ver <a href="https://rubenfcasal.github.io/book_remuestreo/cap4-boot-par.html">Sección 4.1</a> de Cao y Fernández-Casal, 2019).</p>

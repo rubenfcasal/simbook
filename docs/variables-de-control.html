@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2021-04-14" />
+<meta name="date" content="2021-04-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -226,7 +226,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.7.2" data-path="mult-discr.html"><a href="mult-discr.html#simulación-de-una-variable-discreta-bidimensional"><i class="fa fa-check"></i><b>7.7.2</b> Simulación de una variable discreta bidimensional</a></li>
 <li class="chapter" data-level="7.7.3" data-path="mult-discr.html"><a href="mult-discr.html#simconting"><i class="fa fa-check"></i><b>7.7.3</b> Simulación de tablas de contingencia</a></li>
 </ul></li>
-<li class="chapter" data-level="7.8" data-path="ejercicios-propuestos.html"><a href="ejercicios-propuestos.html"><i class="fa fa-check"></i><b>7.8</b> Ejercicios propuestos</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="cap8.html"><a href="cap8.html"><i class="fa fa-check"></i><b>8</b> Aplicaciones en Inferencia Estadística</a><ul>
 <li class="chapter" data-level="8.1" data-path="distribución-en-el-muestreo.html"><a href="distribución-en-el-muestreo.html"><i class="fa fa-check"></i><b>8.1</b> Distribución en el muestreo</a></li>
@@ -371,32 +370,32 @@ la estimación sería:
 
 <p>Aproximar la integral anterior empleando la variable <span class="math inline">\(U\sim\mathcal{U}(0,2)\)</span> para controlar la variable <span class="math inline">\(e^{U}\)</span>.</p>
 <p>Se trata de calcular la media de <span class="math inline">\(exp(\mathcal{U}(a,b))\)</span>:</p>
-<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="variables-de-control.html#cb490-1"></a>a &lt;-<span class="st"> </span><span class="dv">0</span>; b &lt;-<span class="st"> </span><span class="dv">2</span></span>
-<span id="cb490-2"><a href="variables-de-control.html#cb490-2"></a>teor &lt;-<span class="st"> </span>(<span class="kw">exp</span>(b)<span class="op">-</span><span class="kw">exp</span>(a))<span class="op">/</span>(b<span class="op">-</span>a)</span>
-<span id="cb490-3"><a href="variables-de-control.html#cb490-3"></a>teor</span></code></pre></div>
+<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb509-1"><a href="variables-de-control.html#cb509-1"></a>a &lt;-<span class="st"> </span><span class="dv">0</span>; b &lt;-<span class="st"> </span><span class="dv">2</span></span>
+<span id="cb509-2"><a href="variables-de-control.html#cb509-2"></a>teor &lt;-<span class="st"> </span>(<span class="kw">exp</span>(b)<span class="op">-</span><span class="kw">exp</span>(a))<span class="op">/</span>(b<span class="op">-</span>a)</span>
+<span id="cb509-3"><a href="variables-de-control.html#cb509-3"></a>teor</span></code></pre></div>
 <pre><code>## [1] 3.194528</code></pre>
 <p>Aproximación clásica por simulación:</p>
-<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="variables-de-control.html#cb492-1"></a><span class="kw">set.seed</span>(<span class="dv">54321</span>)</span>
-<span id="cb492-2"><a href="variables-de-control.html#cb492-2"></a>nsim &lt;-<span class="st"> </span><span class="dv">1000</span></span>
-<span id="cb492-3"><a href="variables-de-control.html#cb492-3"></a>u &lt;-<span class="st"> </span><span class="kw">runif</span>(nsim, a, b)</span>
-<span id="cb492-4"><a href="variables-de-control.html#cb492-4"></a>expu &lt;-<span class="st"> </span><span class="kw">exp</span>(u)</span>
-<span id="cb492-5"><a href="variables-de-control.html#cb492-5"></a><span class="kw">mean</span>(expu) </span></code></pre></div>
+<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="variables-de-control.html#cb511-1"></a><span class="kw">set.seed</span>(<span class="dv">54321</span>)</span>
+<span id="cb511-2"><a href="variables-de-control.html#cb511-2"></a>nsim &lt;-<span class="st"> </span><span class="dv">1000</span></span>
+<span id="cb511-3"><a href="variables-de-control.html#cb511-3"></a>u &lt;-<span class="st"> </span><span class="kw">runif</span>(nsim, a, b)</span>
+<span id="cb511-4"><a href="variables-de-control.html#cb511-4"></a>expu &lt;-<span class="st"> </span><span class="kw">exp</span>(u)</span>
+<span id="cb511-5"><a href="variables-de-control.html#cb511-5"></a><span class="kw">mean</span>(expu) </span></code></pre></div>
 <pre><code>## [1] 3.182118</code></pre>
 <p>Con variable control:</p>
-<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="variables-de-control.html#cb494-1"></a><span class="kw">plot</span>(u, expu)</span>
-<span id="cb494-2"><a href="variables-de-control.html#cb494-2"></a>reg &lt;-<span class="st"> </span><span class="kw">lm</span>(expu <span class="op">~</span><span class="st"> </span>u)<span class="op">$</span>coef</span>
-<span id="cb494-3"><a href="variables-de-control.html#cb494-3"></a><span class="kw">abline</span>(reg, <span class="dt">col=</span><span class="st">&#39;blue&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="variables-de-control.html#cb513-1"></a><span class="kw">plot</span>(u, expu)</span>
+<span id="cb513-2"><a href="variables-de-control.html#cb513-2"></a>reg &lt;-<span class="st"> </span><span class="kw">lm</span>(expu <span class="op">~</span><span class="st"> </span>u)<span class="op">$</span>coef</span>
+<span id="cb513-3"><a href="variables-de-control.html#cb513-3"></a><span class="kw">abline</span>(reg, <span class="dt">col=</span><span class="st">&#39;blue&#39;</span>)</span></code></pre></div>
 <p><img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="variables-de-control.html#cb495-1"></a><span class="co"># summary(lm(expu ~ u)) # R-squared: 0.9392</span></span>
-<span id="cb495-2"><a href="variables-de-control.html#cb495-2"></a>reg[<span class="dv">1</span>]<span class="op">+</span>reg[<span class="dv">2</span>] <span class="co"># Coincidirá con la solución mean(expuc)</span></span></code></pre></div>
+<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="variables-de-control.html#cb514-1"></a><span class="co"># summary(lm(expu ~ u)) # R-squared: 0.9392</span></span>
+<span id="cb514-2"><a href="variables-de-control.html#cb514-2"></a>reg[<span class="dv">1</span>]<span class="op">+</span>reg[<span class="dv">2</span>] <span class="co"># Coincidirá con la solución mean(expuc)</span></span></code></pre></div>
 <pre><code>## (Intercept) 
 ##    3.204933</code></pre>
 <p>Lo siguiente ya no sería necesario:</p>
-<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="variables-de-control.html#cb497-1"></a>expuc &lt;-<span class="st"> </span>expu <span class="op">-</span><span class="st"> </span>reg[<span class="dv">2</span>]<span class="op">*</span>(u<span class="dv">-1</span>)</span>
-<span id="cb497-2"><a href="variables-de-control.html#cb497-2"></a><span class="kw">mean</span>(expuc)  </span></code></pre></div>
+<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb516-1"><a href="variables-de-control.html#cb516-1"></a>expuc &lt;-<span class="st"> </span>expu <span class="op">-</span><span class="st"> </span>reg[<span class="dv">2</span>]<span class="op">*</span>(u<span class="dv">-1</span>)</span>
+<span id="cb516-2"><a href="variables-de-control.html#cb516-2"></a><span class="kw">mean</span>(expuc)  </span></code></pre></div>
 <pre><code>## [1] 3.204933</code></pre>
 <p>Estimación del porcentaje de reducción en la varianza:</p>
-<div class="sourceCode" id="cb499"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb499-1"><a href="variables-de-control.html#cb499-1"></a><span class="dv">100</span><span class="op">*</span>(<span class="kw">var</span>(expu)<span class="op">-</span><span class="kw">var</span>(expuc))<span class="op">/</span><span class="kw">var</span>(expu)</span></code></pre></div>
+<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="variables-de-control.html#cb518-1"></a><span class="dv">100</span><span class="op">*</span>(<span class="kw">var</span>(expu)<span class="op">-</span><span class="kw">var</span>(expuc))<span class="op">/</span><span class="kw">var</span>(expu)</span></code></pre></div>
 <pre><code>## [1] 93.91555</code></pre>
 </div>
             </section>

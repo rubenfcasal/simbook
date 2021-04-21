@@ -311,11 +311,11 @@ interruptores:
 
 \begin{center}\includegraphics[width=0.5\linewidth]{images/circuito2} \end{center}
 
-Considerar que cada interruptor es una v.a. de Bernoulli independiente
+Considerar que cada interruptor es una variable aleatoria de Bernoulli independiente
 para simular 1000 valores de cada una de ellas.
     
 \BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}R maneja internamente los valores lógicos como 1 (`TRUE`) y 0 (`FALSE`).
-Recíprocamente, cualquier nº puede ser tratado como lógico (al estilo de C).
+Recíprocamente, cualquier número puede ser tratado como lógico (al estilo de C).
 El entero 0 es equivalente a `FALSE` y cualquier entero distinto de 0 a `TRUE`.</div>\EndKnitrBlock{remark}
 
 
@@ -473,10 +473,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.08    0.00    0.08 
+##    0.06    0.00    0.06 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.08    0.00    0.08
+##    0.06    0.00    0.06
 ```
 
 ```r
@@ -495,10 +495,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.01    0.00    0.02 
+##    0.02    0.00    0.02 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.09    0.00    0.10
+##    0.08    0.00    0.08
 ```
 
 ### Paquetes de R
@@ -589,7 +589,7 @@ cpu.time('\nSample median of', 1000000, 'values =', res, total = FALSE)
 ## Time of last operation: 
 ## Sample median of 1e+06 values = 0.4993323 
 ##    user  system elapsed 
-##    0.10    0.00    0.09
+##    0.08    0.00    0.07
 ```
 
 ```r
@@ -601,10 +601,10 @@ cpu.time('\nSample median of', 1000, 'values =', res)
 ## Time of last operation: 
 ## Sample median of 1000 values = 0.5126436 
 ##    user  system elapsed 
-##    0.01    0.00    0.01 
+##    0.02    0.00    0.02 
 ## Total time:
 ##    user  system elapsed 
-##    0.11    0.00    0.10
+##    0.10    0.00    0.09
 ```
 
 Otro paquete que puede ser de utilidad es

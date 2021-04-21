@@ -806,7 +806,7 @@ $$\underbrace{++++}_{1}\underbrace{---}_{2}\underbrace{+++}_{3}
 -   Bajo la hipótesis nula de aleatoriedad:
     $$R\underset{aprox.}{\sim}N\left(  1+\frac{2n_{1}n_{2}}{n},
     \frac{2n_{1}n_{2}(2n_{1}n_{2}-n)}{n^{2}(n-1)}\right)$$
-    siendo $n_{1}$ y  $n_{2}$ el nº de signos $+$ y $-$ en la muestra, 
+    siendo $n_{1}$ y  $n_{2}$ el número de signos $+$ y $-$ en la muestra, 
     respectivamente ($n_{1}+n_{2}=n$).
     Para tamaños muéstrales pequeños ($n<40$), esta aproximación
     no es buena y conviene utilizar la distribución exacta (o utilizar

@@ -143,7 +143,7 @@ system.time(u <- RANDCN(9999))  # Generar
 
 ```
 ##    user  system elapsed 
-##    0.03    0.00    0.03
+##    0.02    0.01    0.03
 ```
 
 ```r
@@ -343,7 +343,7 @@ Por ejemplo, se podría emplear la siguiente función
 #   distribution = "norm","unif", etc
 #   nclasses = floor(length(x)/5)
 #   output = TRUE
-#   nestpar = 0 = nº de parámetros estimados
+#   nestpar = 0 = número de parámetros estimados
 #   ... = parámetros distribución
 # Ejemplo:
 #   chisq.test.cont(x, distribution = "norm", nestpar = 2, 
@@ -769,7 +769,7 @@ El algoritmo está implementado en el fichero *RANDVN.R*:
 # initRANDVN(semilla,n)
 # -----------------------
 #   Inicia el generador 
-#   n número de digitos centrales, 4 por defecto (debe ser un nº par)
+#   n número de digitos centrales, 4 por defecto (debe ser un número par)
 #   Por defecto semilla del reloj
 #   OJO: No se hace ninguna verificación de los parámetros
 initRANDVN <- function(semilla = as.numeric(Sys.time()), n = 4) {
