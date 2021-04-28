@@ -703,18 +703,43 @@ par(par.old)
 ### Simulación condicional a partir de un modelo ajustado
 
 En la práctica normalmente se ajusta un modelo a los datos observados y posteriormente se obtienen las simulaciones condicionadas empleando el modelo ajustado.
-Por ejemplo, en el caso de series de tiempo, se puede emplear la función `simulate` del paquete `forecast`:
+
+En `R` se incluye una función genérica^[Se pueden implementar métodos específicos para cada tipo (clase) de objeto; en este caso para cada tipo de modelo ajustado y podemos mostrar los disponibles mediante el comando `methods(simulate)`.] `simulate()` que permite generar respuestas a partir de modelos ajustados (siempre que esté implementado el método correspondiente al tipo de modelo). 
+Los métodos para modelos lineales y modelos lineales generalizamos están implementados en el paquete base `stats`.
+Muchos otros paquetes que proporcionan modelos adicionales, implementan también los correspondientes métodos `simulate()`.
+Por ejemplo, en el caso de series de tiempo, el paquete `forecast` permite ajustar distintos tipos de modelos y generar simulaciones a partir de ellos:
 
 ```{r}
 library(forecast)
 data <- window(co2, 1990) # datos de co2 desde 1990
-plot(data, ylab = expression("Atmospheric concentration of CO"[2]), 
-     xlim=c(1990,2000), ylim=c(350, 375))
+plot(data, ylab = expression("Atmospheric concentration of CO"[2]),
+     xlim = c(1990, 2000), ylim = c(350, 375))
+# Se podrían ajustar distintos tipos de modelos
 fit <- ets(data)
-# plot(forecast(fit, h=24))
-set.seed(1)
-lines(simulate(fit, 24), col="red")
+# fit <- auto.arima(data)
 ```
+
+Podemos obtener predicciones (media de la distribución condicional) e intervalos de predicción:
+
+```{r}
+pred <- forecast(fit, h = 24, level = 95)
+pred
+```
+
+Para análisis adicionales nos puede interesar generar simulaciones (por defecto de la distribución condicional, `future = TRUE`):
+
+```{r simulate-forecast, fig.cap="Ejemplo de una serie de tiempo (datos observados de co2 en el observatorio Mauna Loa), predicciones futuras (en azul; media distribución condicional) y simulación condicional (en rojo) obtenidas a partir de un modelo ajustado."}
+set.seed(321)
+sim.cond <- simulate(fit, 24)
+
+plot(pred)
+lines(sim.cond, lwd = 2, col = "red")
+```
+
+
+
+Para más detalles ver Hyndman y Athanasopoulos (2018, secciones [4.3](https://otexts.com/fpp2/prediction-intervals.html) y [11.4](https://otexts.com/fpp2/bootstrap.html)).
+
 
 ## Simulación basada en cópulas
 
