@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2021-04-21" />
+<meta name="date" content="2021-04-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -377,11 +377,11 @@ evitar datos influyentes (inestabilidad).</p>
 (emplear <code>rexp(n)+t</code> y <code>dexp(y-t)</code>).
 Comparar <span class="math inline">\(h(x)f(x)\)</span> con <span class="math inline">\(g(x)f(4.5)\)</span> y representar gráficamente la
 aproximación en función de <span class="math inline">\(n\)</span>.</p>
-<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="muestreo-por-importancia.html#cb452-1"></a><span class="kw">curve</span>(<span class="kw">dnorm</span>(x), <span class="fl">4.5</span>, <span class="dv">6</span>, <span class="dt">ylab =</span> <span class="st">&quot;dnorm(x) y dexp(x-4.5)*k&quot;</span>)</span>
-<span id="cb452-2"><a href="muestreo-por-importancia.html#cb452-2"></a><span class="kw">abline</span>(<span class="dt">v =</span> <span class="fl">4.5</span>)</span>
-<span id="cb452-3"><a href="muestreo-por-importancia.html#cb452-3"></a><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>)</span>
-<span id="cb452-4"><a href="muestreo-por-importancia.html#cb452-4"></a>escala &lt;-<span class="st"> </span><span class="kw">dnorm</span>(<span class="fl">4.5</span>)  <span class="co"># Reescalado para comparación...</span></span>
-<span id="cb452-5"><a href="muestreo-por-importancia.html#cb452-5"></a><span class="kw">curve</span>(<span class="kw">dexp</span>(x <span class="op">-</span><span class="st"> </span><span class="fl">4.5</span>) <span class="op">*</span><span class="st"> </span>escala, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lty =</span> <span class="dv">2</span>)  </span></code></pre></div>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="muestreo-por-importancia.html#cb456-1"></a><span class="kw">curve</span>(<span class="kw">dnorm</span>(x), <span class="fl">4.5</span>, <span class="dv">6</span>, <span class="dt">ylab =</span> <span class="st">&quot;dnorm(x) y dexp(x-4.5)*k&quot;</span>)</span>
+<span id="cb456-2"><a href="muestreo-por-importancia.html#cb456-2"></a><span class="kw">abline</span>(<span class="dt">v =</span> <span class="fl">4.5</span>)</span>
+<span id="cb456-3"><a href="muestreo-por-importancia.html#cb456-3"></a><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>)</span>
+<span id="cb456-4"><a href="muestreo-por-importancia.html#cb456-4"></a>escala &lt;-<span class="st"> </span><span class="kw">dnorm</span>(<span class="fl">4.5</span>)  <span class="co"># Reescalado para comparación...</span></span>
+<span id="cb456-5"><a href="muestreo-por-importancia.html#cb456-5"></a><span class="kw">curve</span>(<span class="kw">dexp</span>(x <span class="op">-</span><span class="st"> </span><span class="fl">4.5</span>) <span class="op">*</span><span class="st"> </span>escala, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lty =</span> <span class="dv">2</span>)  </span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:mc-imp-int"></span>
 <img src="09-Monte_Carlo_files/figure-html/mc-imp-int-1.png" alt="Objetivo a integrar (densidad objetivo truncada) y densidad auxiliar reescalada." width="70%" />
 <p class="caption">
@@ -389,18 +389,18 @@ Figura 9.3: Objetivo a integrar (densidad objetivo truncada) y densidad auxiliar
 </p>
 </div>
 <p>Se generan los valores de la densidad auxiliar y se calculan los pesos:</p>
-<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="muestreo-por-importancia.html#cb453-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb453-2"><a href="muestreo-por-importancia.html#cb453-2"></a>nsim &lt;-<span class="st"> </span><span class="dv">10</span><span class="op">^</span><span class="dv">3</span></span>
-<span id="cb453-3"><a href="muestreo-por-importancia.html#cb453-3"></a>y &lt;-<span class="st"> </span><span class="kw">rexp</span>(nsim) <span class="op">+</span><span class="st"> </span><span class="fl">4.5</span>    <span class="co">#  Y ~ g</span></span>
-<span id="cb453-4"><a href="muestreo-por-importancia.html#cb453-4"></a>w &lt;-<span class="st"> </span><span class="kw">dnorm</span>(y)<span class="op">/</span><span class="kw">dexp</span>(y <span class="op">-</span><span class="st"> </span><span class="fl">4.5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="muestreo-por-importancia.html#cb457-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb457-2"><a href="muestreo-por-importancia.html#cb457-2"></a>nsim &lt;-<span class="st"> </span><span class="dv">10</span><span class="op">^</span><span class="dv">3</span></span>
+<span id="cb457-3"><a href="muestreo-por-importancia.html#cb457-3"></a>y &lt;-<span class="st"> </span><span class="kw">rexp</span>(nsim) <span class="op">+</span><span class="st"> </span><span class="fl">4.5</span>    <span class="co">#  Y ~ g</span></span>
+<span id="cb457-4"><a href="muestreo-por-importancia.html#cb457-4"></a>w &lt;-<span class="st"> </span><span class="kw">dnorm</span>(y)<span class="op">/</span><span class="kw">dexp</span>(y <span class="op">-</span><span class="st"> </span><span class="fl">4.5</span>)</span></code></pre></div>
 <p>La aproximación por simulación sería <code>mean(w * h(y))</code>:</p>
-<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="muestreo-por-importancia.html#cb454-1"></a><span class="co"># h(x) &lt;- function(x) x &gt; 4.5  # (1 si x &gt; 4.5 =&gt; h(y) = 1)</span></span>
-<span id="cb454-2"><a href="muestreo-por-importancia.html#cb454-2"></a><span class="kw">mean</span>(w) <span class="co"># mean(w*h(y))</span></span></code></pre></div>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="muestreo-por-importancia.html#cb458-1"></a><span class="co"># h(x) &lt;- function(x) x &gt; 4.5  # (1 si x &gt; 4.5 =&gt; h(y) = 1)</span></span>
+<span id="cb458-2"><a href="muestreo-por-importancia.html#cb458-2"></a><span class="kw">mean</span>(w) <span class="co"># mean(w*h(y))</span></span></code></pre></div>
 <pre><code>## [1] 3.144811e-06</code></pre>
-<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="muestreo-por-importancia.html#cb456-1"></a><span class="kw">pnorm</span>(<span class="op">-</span><span class="fl">4.5</span>)  <span class="co"># valor teórico</span></span></code></pre></div>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="muestreo-por-importancia.html#cb460-1"></a><span class="kw">pnorm</span>(<span class="op">-</span><span class="fl">4.5</span>)  <span class="co"># valor teórico</span></span></code></pre></div>
 <pre><code>## [1] 3.397673e-06</code></pre>
-<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="muestreo-por-importancia.html#cb458-1"></a><span class="kw">plot</span>(<span class="kw">cumsum</span>(w)<span class="op">/</span><span class="dv">1</span><span class="op">:</span>nsim, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Aproximación&quot;, xlab = &quot;</span>Iteraciones<span class="st">&quot;)</span></span>
-<span id="cb458-2"><a href="muestreo-por-importancia.html#cb458-2"></a><span class="st">abline(h = pnorm(-4.5), lty = 2)</span></span></code></pre></div>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="muestreo-por-importancia.html#cb462-1"></a><span class="kw">plot</span>(<span class="kw">cumsum</span>(w)<span class="op">/</span><span class="dv">1</span><span class="op">:</span>nsim, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Aproximación&quot;, xlab = &quot;</span>Iteraciones<span class="st">&quot;)</span></span>
+<span id="cb462-2"><a href="muestreo-por-importancia.html#cb462-2"></a><span class="st">abline(h = pnorm(-4.5), lty = 2)</span></span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:mc-imp-conv"></span>
 <img src="09-Monte_Carlo_files/figure-html/mc-imp-conv-1.png" alt="Convergencia de la aproximación de la integral mediante muestreo por importancia." width="70%" />
 <p class="caption">
@@ -408,13 +408,13 @@ Figura 9.4: Convergencia de la aproximación de la integral mediante muestreo po
 </p>
 </div>
 <p>El error estandar de la aproximación sería <code>sqrt(var(w * h(y))/nsim)</code>:</p>
-<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="muestreo-por-importancia.html#cb459-1"></a><span class="kw">sqrt</span>(<span class="kw">var</span>(w)<span class="op">/</span>nsim) <span class="co"># sd(w*h(y))/sqrt(nsim)   </span></span></code></pre></div>
+<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="muestreo-por-importancia.html#cb463-1"></a><span class="kw">sqrt</span>(<span class="kw">var</span>(w)<span class="op">/</span>nsim) <span class="co"># sd(w*h(y))/sqrt(nsim)   </span></span></code></pre></div>
 <pre><code>## [1] 1.371154e-07</code></pre>
 <p>Empleando la aproximación tradicional:</p>
-<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="muestreo-por-importancia.html#cb461-1"></a>est &lt;-<span class="st"> </span><span class="kw">mean</span>(<span class="kw">rnorm</span>(nsim) <span class="op">&gt;</span><span class="st"> </span><span class="fl">4.5</span>)</span>
-<span id="cb461-2"><a href="muestreo-por-importancia.html#cb461-2"></a>est</span></code></pre></div>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="muestreo-por-importancia.html#cb465-1"></a>est &lt;-<span class="st"> </span><span class="kw">mean</span>(<span class="kw">rnorm</span>(nsim) <span class="op">&gt;</span><span class="st"> </span><span class="fl">4.5</span>)</span>
+<span id="cb465-2"><a href="muestreo-por-importancia.html#cb465-2"></a>est</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="muestreo-por-importancia.html#cb463-1"></a><span class="kw">sqrt</span>(est <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>est)<span class="op">/</span>nsim)</span></code></pre></div>
+<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="muestreo-por-importancia.html#cb467-1"></a><span class="kw">sqrt</span>(est <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>est)<span class="op">/</span>nsim)</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 
 <div class="example">
@@ -429,18 +429,18 @@ como en el ejercicio siguiente).</p>
 <p>Se trata de aproximar <code>pcauchy(6) - pcauchy(2)</code>,
 i.e. <code>f(y) = dcauchy(y)</code> y <code>h(y) = (y &gt; 2) * (y &lt; 6)</code>,
 empleando muestreo por importancia con <code>g(y) = dnorm(y)</code>.</p>
-<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="muestreo-por-importancia.html#cb465-1"></a>nsim &lt;-<span class="st"> </span><span class="dv">10</span><span class="op">^</span><span class="dv">5</span></span>
-<span id="cb465-2"><a href="muestreo-por-importancia.html#cb465-2"></a><span class="kw">set.seed</span>(<span class="dv">4321</span>)</span>
-<span id="cb465-3"><a href="muestreo-por-importancia.html#cb465-3"></a>y &lt;-<span class="st"> </span><span class="kw">rnorm</span>(nsim)</span>
-<span id="cb465-4"><a href="muestreo-por-importancia.html#cb465-4"></a>w &lt;-<span class="st"> </span><span class="kw">dcauchy</span>(y)<span class="op">/</span><span class="kw">dnorm</span>(y) <span class="co"># w &lt;- w/sum(w) si alguna es una cuasidensidad</span></span></code></pre></div>
+<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="muestreo-por-importancia.html#cb469-1"></a>nsim &lt;-<span class="st"> </span><span class="dv">10</span><span class="op">^</span><span class="dv">5</span></span>
+<span id="cb469-2"><a href="muestreo-por-importancia.html#cb469-2"></a><span class="kw">set.seed</span>(<span class="dv">4321</span>)</span>
+<span id="cb469-3"><a href="muestreo-por-importancia.html#cb469-3"></a>y &lt;-<span class="st"> </span><span class="kw">rnorm</span>(nsim)</span>
+<span id="cb469-4"><a href="muestreo-por-importancia.html#cb469-4"></a>w &lt;-<span class="st"> </span><span class="kw">dcauchy</span>(y)<span class="op">/</span><span class="kw">dnorm</span>(y) <span class="co"># w &lt;- w/sum(w) si alguna es una cuasidensidad</span></span></code></pre></div>
 <p>La aproximación por simulación es <code>mean(w(y) * h(y))</code>:</p>
-<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="muestreo-por-importancia.html#cb466-1"></a><span class="kw">mean</span>(w <span class="op">*</span><span class="st"> </span>(y <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>) <span class="op">*</span><span class="st"> </span>(y <span class="op">&lt;</span><span class="st"> </span><span class="dv">6</span>)) </span></code></pre></div>
+<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="muestreo-por-importancia.html#cb470-1"></a><span class="kw">mean</span>(w <span class="op">*</span><span class="st"> </span>(y <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>) <span class="op">*</span><span class="st"> </span>(y <span class="op">&lt;</span><span class="st"> </span><span class="dv">6</span>)) </span></code></pre></div>
 <pre><code>## [1] 0.09929348</code></pre>
-<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="muestreo-por-importancia.html#cb468-1"></a><span class="kw">pcauchy</span>(<span class="dv">6</span>) <span class="op">-</span><span class="st"> </span><span class="kw">pcauchy</span>(<span class="dv">2</span>)  <span class="co"># Valor teórico</span></span></code></pre></div>
+<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="muestreo-por-importancia.html#cb472-1"></a><span class="kw">pcauchy</span>(<span class="dv">6</span>) <span class="op">-</span><span class="st"> </span><span class="kw">pcauchy</span>(<span class="dv">2</span>)  <span class="co"># Valor teórico</span></span></code></pre></div>
 <pre><code>## [1] 0.09501516</code></pre>
 <p>Si se estudia la convergencia:</p>
-<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="muestreo-por-importancia.html#cb470-1"></a><span class="kw">plot</span>(<span class="kw">cumsum</span>(w <span class="op">*</span><span class="st"> </span>(y <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>) <span class="op">*</span><span class="st"> </span>(y <span class="op">&lt;</span><span class="st"> </span><span class="dv">6</span>))<span class="op">/</span><span class="dv">1</span><span class="op">:</span>nsim, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Aproximación&quot;, xlab = &quot;</span>Iteraciones<span class="st">&quot;)</span></span>
-<span id="cb470-2"><a href="muestreo-por-importancia.html#cb470-2"></a><span class="st">abline(h = pcauchy(6) - pcauchy(2), lty = 2)</span></span></code></pre></div>
+<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="muestreo-por-importancia.html#cb474-1"></a><span class="kw">plot</span>(<span class="kw">cumsum</span>(w <span class="op">*</span><span class="st"> </span>(y <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>) <span class="op">*</span><span class="st"> </span>(y <span class="op">&lt;</span><span class="st"> </span><span class="dv">6</span>))<span class="op">/</span><span class="dv">1</span><span class="op">:</span>nsim, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Aproximación&quot;, xlab = &quot;</span>Iteraciones<span class="st">&quot;)</span></span>
+<span id="cb474-2"><a href="muestreo-por-importancia.html#cb474-2"></a><span class="st">abline(h = pcauchy(6) - pcauchy(2), lty = 2)</span></span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:mc-imp2-conv"></span>
 <img src="09-Monte_Carlo_files/figure-html/mc-imp2-conv-1.png" alt="Gráfico de convergencia de la aproximación mediante muestreo por importancia con mala densidad auxiliar." width="70%" />
 <p class="caption">
@@ -450,7 +450,7 @@ Figura 9.5: Gráfico de convergencia de la aproximación mediante muestreo por i
 <p>Lo que indica es una mala elección de la densidad auxiliar…</p>
 <p>La distribución de los pesos debería ser homogénea.
 Por ejemplo, si los reescalamos para que su suma sea el número de valores generados, deberían tomar valores en torno a uno:</p>
-<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="muestreo-por-importancia.html#cb471-1"></a><span class="kw">boxplot</span>(nsim <span class="op">*</span><span class="st"> </span>w<span class="op">/</span><span class="kw">sum</span>(w))  </span></code></pre></div>
+<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="muestreo-por-importancia.html#cb475-1"></a><span class="kw">boxplot</span>(nsim <span class="op">*</span><span class="st"> </span>w<span class="op">/</span><span class="kw">sum</span>(w))  </span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:mc-imp2-boxplot"></span>
 <img src="09-Monte_Carlo_files/figure-html/mc-imp2-boxplot-1.png" alt="Gráfico de cajas de los pesos del muestreo por importancia reescalados (de forma que su media es 1)." width="70%" />
 <p class="caption">
@@ -471,24 +471,24 @@ De hecho este estimador es empleado muchas veces en lugar del anterior ya que, a
 <p>Generar 1000 simulaciones de una distribución (aprox.) <span class="math inline">\(N(0,1)\)</span> (densidad objetivo) mediante remuestreo del muestreo por importancia de <span class="math inline">\(10^{5}\)</span> valores de una <span class="math inline">\(Cauchy(0,1)\)</span> (densidad auxiliar).</p>
 <p>Se trata de simular una normal a partir de una Cauchy (Sampling Importance Resampling).
 NOTA: En este caso <code>f(y) = dnorm(y)</code> y <code>g(y) = dcauchy(y)</code>, al revés del ejercicio anterior…</p>
-<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="muestreo-por-importancia.html#cb472-1"></a><span class="co"># Densidad objetivo</span></span>
-<span id="cb472-2"><a href="muestreo-por-importancia.html#cb472-2"></a><span class="co"># f &lt;- dnorm # f &lt;- function(x) ....</span></span>
-<span id="cb472-3"><a href="muestreo-por-importancia.html#cb472-3"></a></span>
-<span id="cb472-4"><a href="muestreo-por-importancia.html#cb472-4"></a>nsim &lt;-<span class="st"> </span><span class="dv">10</span><span class="op">^</span><span class="dv">3</span></span>
-<span id="cb472-5"><a href="muestreo-por-importancia.html#cb472-5"></a><span class="co"># El nº de simulaciones de la densidad auxiliar debe ser mucho mayor:</span></span>
-<span id="cb472-6"><a href="muestreo-por-importancia.html#cb472-6"></a>nsim2 &lt;-<span class="st"> </span><span class="dv">10</span><span class="op">^</span><span class="dv">5</span></span>
-<span id="cb472-7"><a href="muestreo-por-importancia.html#cb472-7"></a><span class="kw">set.seed</span>(<span class="dv">4321</span>)</span>
-<span id="cb472-8"><a href="muestreo-por-importancia.html#cb472-8"></a>y &lt;-<span class="st"> </span><span class="kw">rcauchy</span>(nsim2)</span>
-<span id="cb472-9"><a href="muestreo-por-importancia.html#cb472-9"></a>w &lt;-<span class="st"> </span><span class="kw">dnorm</span>(y)<span class="op">/</span><span class="kw">dcauchy</span>(y) <span class="co"># w &lt;- w/sum(w) si alguna es una cuasidensidad</span></span>
-<span id="cb472-10"><a href="muestreo-por-importancia.html#cb472-10"></a></span>
-<span id="cb472-11"><a href="muestreo-por-importancia.html#cb472-11"></a><span class="co"># Si se pidiera aproximar una integral</span></span>
-<span id="cb472-12"><a href="muestreo-por-importancia.html#cb472-12"></a><span class="co"># h(y) = y si es la media # h &lt;- function(y) y</span></span>
-<span id="cb472-13"><a href="muestreo-por-importancia.html#cb472-13"></a><span class="co"># mean(w * h(y))</span></span></code></pre></div>
+<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="muestreo-por-importancia.html#cb476-1"></a><span class="co"># Densidad objetivo</span></span>
+<span id="cb476-2"><a href="muestreo-por-importancia.html#cb476-2"></a><span class="co"># f &lt;- dnorm # f &lt;- function(x) ....</span></span>
+<span id="cb476-3"><a href="muestreo-por-importancia.html#cb476-3"></a></span>
+<span id="cb476-4"><a href="muestreo-por-importancia.html#cb476-4"></a>nsim &lt;-<span class="st"> </span><span class="dv">10</span><span class="op">^</span><span class="dv">3</span></span>
+<span id="cb476-5"><a href="muestreo-por-importancia.html#cb476-5"></a><span class="co"># El nº de simulaciones de la densidad auxiliar debe ser mucho mayor:</span></span>
+<span id="cb476-6"><a href="muestreo-por-importancia.html#cb476-6"></a>nsim2 &lt;-<span class="st"> </span><span class="dv">10</span><span class="op">^</span><span class="dv">5</span></span>
+<span id="cb476-7"><a href="muestreo-por-importancia.html#cb476-7"></a><span class="kw">set.seed</span>(<span class="dv">4321</span>)</span>
+<span id="cb476-8"><a href="muestreo-por-importancia.html#cb476-8"></a>y &lt;-<span class="st"> </span><span class="kw">rcauchy</span>(nsim2)</span>
+<span id="cb476-9"><a href="muestreo-por-importancia.html#cb476-9"></a>w &lt;-<span class="st"> </span><span class="kw">dnorm</span>(y)<span class="op">/</span><span class="kw">dcauchy</span>(y) <span class="co"># w &lt;- w/sum(w) si alguna es una cuasidensidad</span></span>
+<span id="cb476-10"><a href="muestreo-por-importancia.html#cb476-10"></a></span>
+<span id="cb476-11"><a href="muestreo-por-importancia.html#cb476-11"></a><span class="co"># Si se pidiera aproximar una integral</span></span>
+<span id="cb476-12"><a href="muestreo-por-importancia.html#cb476-12"></a><span class="co"># h(y) = y si es la media # h &lt;- function(y) y</span></span>
+<span id="cb476-13"><a href="muestreo-por-importancia.html#cb476-13"></a><span class="co"># mean(w * h(y))</span></span></code></pre></div>
 <p>Sampling Importance Resampling:</p>
-<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="muestreo-por-importancia.html#cb473-1"></a>rx &lt;-<span class="st"> </span><span class="kw">sample</span>(y, nsim, <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">prob =</span> w<span class="op">/</span><span class="kw">sum</span>(w))</span>
-<span id="cb473-2"><a href="muestreo-por-importancia.html#cb473-2"></a><span class="kw">hist</span>(rx, <span class="dt">freq =</span> <span class="ot">FALSE</span>, <span class="dt">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>))</span>
-<span id="cb473-3"><a href="muestreo-por-importancia.html#cb473-3"></a><span class="kw">lines</span>(<span class="kw">density</span>(rx))</span>
-<span id="cb473-4"><a href="muestreo-por-importancia.html#cb473-4"></a><span class="kw">curve</span>(dnorm, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="muestreo-por-importancia.html#cb477-1"></a>rx &lt;-<span class="st"> </span><span class="kw">sample</span>(y, nsim, <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">prob =</span> w<span class="op">/</span><span class="kw">sum</span>(w))</span>
+<span id="cb477-2"><a href="muestreo-por-importancia.html#cb477-2"></a><span class="kw">hist</span>(rx, <span class="dt">freq =</span> <span class="ot">FALSE</span>, <span class="dt">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>))</span>
+<span id="cb477-3"><a href="muestreo-por-importancia.html#cb477-3"></a><span class="kw">lines</span>(<span class="kw">density</span>(rx))</span>
+<span id="cb477-4"><a href="muestreo-por-importancia.html#cb477-4"></a><span class="kw">curve</span>(dnorm, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:imp-res"></span>
 <img src="09-Monte_Carlo_files/figure-html/imp-res-1.png" alt="Distribución de los valores generados mediante remuestreo por importancia y densidad objetivo." width="70%" />
 <p class="caption">

@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2021-04-21" />
+<meta name="date" content="2021-04-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -333,24 +333,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="remuestreo-bootstrap" class="section level2">
 <h2><span class="header-section-number">8.5</span> Remuestreo Bootstrap</h2>
-<p>Ver <a href="https://rubenfcasal.github.io/book_remuestreo/">Cao y Fernández-Casal (2019)</a>.</p>
+<p>El bootstrap es un procedimiento estadístico que sirve para aproximar características de la distribución en el muestreo de un estadístico.
+Para ello se emplea (normalmente) simulación, generando un gran número de muestras mediante algún tipo de remuestreo de la muestra original.
+Su ventaja principal es que no requiere hipótesis sobre el mecanismo generador de los datos.</p>
+<p>En esta sección se incluye una breve introducción al bootstrap.
+Para información adicional ver por ejemplo Davison y Hinkley (1997) o <a href="https://rubenfcasal.github.io/book_remuestreo">Cao y Fernández-Casal (2020)</a>.</p>
 <div id="idea" class="section level3">
 <h3><span class="header-section-number">8.5.1</span> Idea:</h3>
 <p>Consideramos un conjunto de datos simulado:</p>
-<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="remuestreo-bootstrap.html#cb398-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb398-2"><a href="remuestreo-bootstrap.html#cb398-2"></a>data &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">50</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="remuestreo-bootstrap.html#cb402-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb402-2"><a href="remuestreo-bootstrap.html#cb402-2"></a>data &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">50</span>)</span></code></pre></div>
 <p>La idea es aproximar características poblacionales por las correspondientes de la distribución empírica de los datos observados:</p>
-<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="remuestreo-bootstrap.html#cb399-1"></a> <span class="co"># Distribución bootstrap</span></span>
-<span id="cb399-2"><a href="remuestreo-bootstrap.html#cb399-2"></a><span class="kw">curve</span>(<span class="kw">ecdf</span>(data)(x), <span class="dt">ylab =</span> <span class="st">&quot;FD&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;s&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb399-3"><a href="remuestreo-bootstrap.html#cb399-3"></a><span class="co"># Distribución teórica</span></span>
-<span id="cb399-4"><a href="remuestreo-bootstrap.html#cb399-4"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">2</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="remuestreo-bootstrap.html#cb403-1"></a> <span class="co"># Distribución bootstrap</span></span>
+<span id="cb403-2"><a href="remuestreo-bootstrap.html#cb403-2"></a><span class="kw">curve</span>(<span class="kw">ecdf</span>(data)(x), <span class="dt">ylab =</span> <span class="st">&quot;FD&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;s&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb403-3"><a href="remuestreo-bootstrap.html#cb403-3"></a><span class="co"># Distribución teórica</span></span>
+<span id="cb403-4"><a href="remuestreo-bootstrap.html#cb403-4"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">2</span>) </span></code></pre></div>
 <p><img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-49-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Las características de la distribución empírica se pueden aproximar mediante simulación.
 En el caso i.i.d. esto puede ser implementado mediante remuestreo,
 realizando repetidamente muestreo aleatorio con reemplazamiento
 del conjunto de datos original (manteniendo el tamaño muestral):</p>
-<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="remuestreo-bootstrap.html#cb400-1"></a> <span class="co"># Muestra bootstrap</span></span>
-<span id="cb400-2"><a href="remuestreo-bootstrap.html#cb400-2"></a>xboot &lt;-<span class="st"> </span><span class="kw">sample</span>(data, <span class="dt">replace=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="remuestreo-bootstrap.html#cb404-1"></a> <span class="co"># Muestra bootstrap</span></span>
+<span id="cb404-2"><a href="remuestreo-bootstrap.html#cb404-2"></a>xboot &lt;-<span class="st"> </span><span class="kw">sample</span>(data, <span class="dt">replace=</span><span class="ot">TRUE</span>)</span></code></pre></div>
 </div>
 <div id="métodos-de-remuestreo-bootstrap" class="section level3">
 <h3><span class="header-section-number">8.5.2</span> Métodos de remuestreo Bootstrap</h3>
@@ -394,105 +398,103 @@ variabilidad de <span class="math inline">\(\hat{\theta}\)</span> en torno a <sp
 <strong>lo que la muestra bootstrap es a la muestra</strong>.</li>
 </ul>
 <p><img src="images/bootstrap.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>Para información adicional sobre bootstrap ver p.e.:
-Davison, A.C. and Hinkley, D.V. (1997). <em>Bootstrap Methods and Their Application</em>. Cambridge University Press</p>
 
 <div class="example">
 <span id="exm:mean-median-boot" class="example"><strong>Ejemplo 8.1  (Aproximación del sesgo y del error estándar mediante bootstrap)  </strong></span>
 </div>
 
 <p>Como ejemplo consideraremos una muestra de tamaño <span class="math inline">\(n=100\)</span> de una normal estándar para tratar de aproximar el sesgo y error estándar de la media y la mediana mediante bootstrap.</p>
-<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="remuestreo-bootstrap.html#cb401-1"></a><span class="co"># dat &lt;- dat.sim[, 1]</span></span>
-<span id="cb401-2"><a href="remuestreo-bootstrap.html#cb401-2"></a><span class="kw">set.seed</span>(<span class="dv">54321</span>)</span>
-<span id="cb401-3"><a href="remuestreo-bootstrap.html#cb401-3"></a>ndat &lt;-<span class="st"> </span><span class="dv">100</span></span>
-<span id="cb401-4"><a href="remuestreo-bootstrap.html#cb401-4"></a>datmed &lt;-<span class="st"> </span><span class="dv">0</span></span>
-<span id="cb401-5"><a href="remuestreo-bootstrap.html#cb401-5"></a>datsd &lt;-<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb401-6"><a href="remuestreo-bootstrap.html#cb401-6"></a>dat &lt;-<span class="st"> </span><span class="kw">rnorm</span>(ndat, <span class="dt">mean=</span>datmed, <span class="dt">sd=</span>datsd)</span></code></pre></div>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="remuestreo-bootstrap.html#cb405-1"></a><span class="co"># dat &lt;- dat.sim[, 1]</span></span>
+<span id="cb405-2"><a href="remuestreo-bootstrap.html#cb405-2"></a><span class="kw">set.seed</span>(<span class="dv">54321</span>)</span>
+<span id="cb405-3"><a href="remuestreo-bootstrap.html#cb405-3"></a>ndat &lt;-<span class="st"> </span><span class="dv">100</span></span>
+<span id="cb405-4"><a href="remuestreo-bootstrap.html#cb405-4"></a>datmed &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb405-5"><a href="remuestreo-bootstrap.html#cb405-5"></a>datsd &lt;-<span class="st"> </span><span class="dv">1</span></span>
+<span id="cb405-6"><a href="remuestreo-bootstrap.html#cb405-6"></a>dat &lt;-<span class="st"> </span><span class="kw">rnorm</span>(ndat, <span class="dt">mean=</span>datmed, <span class="dt">sd=</span>datsd)</span></code></pre></div>
 <p>Consideramos 1000 réplicas bootstrap:</p>
-<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="remuestreo-bootstrap.html#cb402-1"></a>nboot &lt;-<span class="st"> </span><span class="dv">1000</span>  </span></code></pre></div>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="remuestreo-bootstrap.html#cb406-1"></a>nboot &lt;-<span class="st"> </span><span class="dv">1000</span>  </span></code></pre></div>
 <p>Es habitual tomar <code>nboot + 1</code> entero múltiplo de 100 e.g. <code>nboot = 999</code> ó <code>1999</code>
 (facilita el cálculo de percentiles, orden <code>(nboot + 1)*p</code>)</p>
 <p>El valor del estadístico en la muestra es:</p>
-<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="remuestreo-bootstrap.html#cb403-1"></a>stat.dat &lt;-<span class="st"> </span><span class="kw">mean</span>(dat)</span></code></pre></div>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="remuestreo-bootstrap.html#cb407-1"></a>stat.dat &lt;-<span class="st"> </span><span class="kw">mean</span>(dat)</span></code></pre></div>
 <p>Generamos las réplicas bootstrap:</p>
-<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="remuestreo-bootstrap.html#cb404-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb404-2"><a href="remuestreo-bootstrap.html#cb404-2"></a>stat.boot &lt;-<span class="st"> </span><span class="kw">numeric</span>(nboot)</span>
-<span id="cb404-3"><a href="remuestreo-bootstrap.html#cb404-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nboot) {</span>
-<span id="cb404-4"><a href="remuestreo-bootstrap.html#cb404-4"></a>  dat.boot &lt;-<span class="st"> </span><span class="kw">sample</span>(dat, <span class="dt">replace=</span><span class="ot">TRUE</span>)</span>
-<span id="cb404-5"><a href="remuestreo-bootstrap.html#cb404-5"></a>  stat.boot[i] &lt;-<span class="st"> </span><span class="kw">mean</span>(dat.boot)</span>
-<span id="cb404-6"><a href="remuestreo-bootstrap.html#cb404-6"></a>}</span>
-<span id="cb404-7"><a href="remuestreo-bootstrap.html#cb404-7"></a><span class="co"># Valor esperado bootstrap del estadístico</span></span>
-<span id="cb404-8"><a href="remuestreo-bootstrap.html#cb404-8"></a>mean.boot &lt;-<span class="st"> </span><span class="kw">mean</span>(stat.boot)  </span>
-<span id="cb404-9"><a href="remuestreo-bootstrap.html#cb404-9"></a>mean.boot</span></code></pre></div>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="remuestreo-bootstrap.html#cb408-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb408-2"><a href="remuestreo-bootstrap.html#cb408-2"></a>stat.boot &lt;-<span class="st"> </span><span class="kw">numeric</span>(nboot)</span>
+<span id="cb408-3"><a href="remuestreo-bootstrap.html#cb408-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nboot) {</span>
+<span id="cb408-4"><a href="remuestreo-bootstrap.html#cb408-4"></a>  dat.boot &lt;-<span class="st"> </span><span class="kw">sample</span>(dat, <span class="dt">replace=</span><span class="ot">TRUE</span>)</span>
+<span id="cb408-5"><a href="remuestreo-bootstrap.html#cb408-5"></a>  stat.boot[i] &lt;-<span class="st"> </span><span class="kw">mean</span>(dat.boot)</span>
+<span id="cb408-6"><a href="remuestreo-bootstrap.html#cb408-6"></a>}</span>
+<span id="cb408-7"><a href="remuestreo-bootstrap.html#cb408-7"></a><span class="co"># Valor esperado bootstrap del estadístico</span></span>
+<span id="cb408-8"><a href="remuestreo-bootstrap.html#cb408-8"></a>mean.boot &lt;-<span class="st"> </span><span class="kw">mean</span>(stat.boot)  </span>
+<span id="cb408-9"><a href="remuestreo-bootstrap.html#cb408-9"></a>mean.boot</span></code></pre></div>
 <pre><code>## [1] -0.09274131</code></pre>
 <p>Bootstrap percentil:</p>
-<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="remuestreo-bootstrap.html#cb406-1"></a><span class="kw">hist</span>(stat.boot, <span class="dt">freq=</span><span class="ot">FALSE</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">4</span>))</span>
-<span id="cb406-2"><a href="remuestreo-bootstrap.html#cb406-2"></a><span class="kw">abline</span>(<span class="dt">v=</span>mean.boot, <span class="dt">lwd=</span><span class="dv">2</span>)</span>
-<span id="cb406-3"><a href="remuestreo-bootstrap.html#cb406-3"></a><span class="co"># abline(v=stat.dat)</span></span>
-<span id="cb406-4"><a href="remuestreo-bootstrap.html#cb406-4"></a></span>
-<span id="cb406-5"><a href="remuestreo-bootstrap.html#cb406-5"></a><span class="co"># Distribución poblacional</span></span>
-<span id="cb406-6"><a href="remuestreo-bootstrap.html#cb406-6"></a><span class="kw">curve</span>(<span class="kw">dnorm</span>(x, datmed, datsd<span class="op">/</span><span class="kw">sqrt</span>(ndat)), <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">add=</span><span class="ot">TRUE</span>)</span>
-<span id="cb406-7"><a href="remuestreo-bootstrap.html#cb406-7"></a><span class="kw">abline</span>(<span class="dt">v=</span>datmed, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">lty=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="remuestreo-bootstrap.html#cb410-1"></a><span class="kw">hist</span>(stat.boot, <span class="dt">freq=</span><span class="ot">FALSE</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">4</span>))</span>
+<span id="cb410-2"><a href="remuestreo-bootstrap.html#cb410-2"></a><span class="kw">abline</span>(<span class="dt">v=</span>mean.boot, <span class="dt">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb410-3"><a href="remuestreo-bootstrap.html#cb410-3"></a><span class="co"># abline(v=stat.dat)</span></span>
+<span id="cb410-4"><a href="remuestreo-bootstrap.html#cb410-4"></a></span>
+<span id="cb410-5"><a href="remuestreo-bootstrap.html#cb410-5"></a><span class="co"># Distribución poblacional</span></span>
+<span id="cb410-6"><a href="remuestreo-bootstrap.html#cb410-6"></a><span class="kw">curve</span>(<span class="kw">dnorm</span>(x, datmed, datsd<span class="op">/</span><span class="kw">sqrt</span>(ndat)), <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">add=</span><span class="ot">TRUE</span>)</span>
+<span id="cb410-7"><a href="remuestreo-bootstrap.html#cb410-7"></a><span class="kw">abline</span>(<span class="dt">v=</span>datmed, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">lty=</span><span class="dv">2</span>)</span></code></pre></div>
 <p><img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-55-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Bootstrap natural/básico:</p>
-<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="remuestreo-bootstrap.html#cb407-1"></a><span class="kw">hist</span>(stat.boot<span class="op">-</span>stat.dat, <span class="dt">freq=</span><span class="ot">FALSE</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">4</span>))</span>
-<span id="cb407-2"><a href="remuestreo-bootstrap.html#cb407-2"></a><span class="kw">abline</span>(<span class="dt">v=</span>mean.boot<span class="op">-</span>stat.dat, <span class="dt">lwd=</span><span class="dv">2</span>)</span>
-<span id="cb407-3"><a href="remuestreo-bootstrap.html#cb407-3"></a></span>
-<span id="cb407-4"><a href="remuestreo-bootstrap.html#cb407-4"></a><span class="co"># Distribución poblacional</span></span>
-<span id="cb407-5"><a href="remuestreo-bootstrap.html#cb407-5"></a><span class="co"># Distribución teórica de stat.dat - stat.teor</span></span>
-<span id="cb407-6"><a href="remuestreo-bootstrap.html#cb407-6"></a><span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dv">0</span>, datsd<span class="op">/</span><span class="kw">sqrt</span>(ndat)), <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">add=</span><span class="ot">TRUE</span>)   </span>
-<span id="cb407-7"><a href="remuestreo-bootstrap.html#cb407-7"></a><span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">0</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">lty=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="remuestreo-bootstrap.html#cb411-1"></a><span class="kw">hist</span>(stat.boot<span class="op">-</span>stat.dat, <span class="dt">freq=</span><span class="ot">FALSE</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">4</span>))</span>
+<span id="cb411-2"><a href="remuestreo-bootstrap.html#cb411-2"></a><span class="kw">abline</span>(<span class="dt">v=</span>mean.boot<span class="op">-</span>stat.dat, <span class="dt">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb411-3"><a href="remuestreo-bootstrap.html#cb411-3"></a></span>
+<span id="cb411-4"><a href="remuestreo-bootstrap.html#cb411-4"></a><span class="co"># Distribución poblacional</span></span>
+<span id="cb411-5"><a href="remuestreo-bootstrap.html#cb411-5"></a><span class="co"># Distribución teórica de stat.dat - stat.teor</span></span>
+<span id="cb411-6"><a href="remuestreo-bootstrap.html#cb411-6"></a><span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dv">0</span>, datsd<span class="op">/</span><span class="kw">sqrt</span>(ndat)), <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">add=</span><span class="ot">TRUE</span>)   </span>
+<span id="cb411-7"><a href="remuestreo-bootstrap.html#cb411-7"></a><span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">0</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">lty=</span><span class="dv">2</span>)</span></code></pre></div>
 <p><img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-56-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Sesgo y error estándar bootstrap:</p>
-<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="remuestreo-bootstrap.html#cb408-1"></a><span class="co"># sesgo (teor=0)</span></span>
-<span id="cb408-2"><a href="remuestreo-bootstrap.html#cb408-2"></a>mean.boot <span class="op">-</span><span class="st"> </span>stat.dat </span></code></pre></div>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="remuestreo-bootstrap.html#cb412-1"></a><span class="co"># sesgo (teor=0)</span></span>
+<span id="cb412-2"><a href="remuestreo-bootstrap.html#cb412-2"></a>mean.boot <span class="op">-</span><span class="st"> </span>stat.dat </span></code></pre></div>
 <pre><code>## [1] 0.0006390906</code></pre>
-<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="remuestreo-bootstrap.html#cb410-1"></a><span class="co"># error estándar</span></span>
-<span id="cb410-2"><a href="remuestreo-bootstrap.html#cb410-2"></a><span class="kw">sd</span>(stat.boot) </span></code></pre></div>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="remuestreo-bootstrap.html#cb414-1"></a><span class="co"># error estándar</span></span>
+<span id="cb414-2"><a href="remuestreo-bootstrap.html#cb414-2"></a><span class="kw">sd</span>(stat.boot) </span></code></pre></div>
 <pre><code>## [1] 0.1044501</code></pre>
-<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="remuestreo-bootstrap.html#cb412-1"></a><span class="co"># error estándar teórico</span></span>
-<span id="cb412-2"><a href="remuestreo-bootstrap.html#cb412-2"></a>datsd<span class="op">/</span><span class="kw">sqrt</span>(ndat) </span></code></pre></div>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="remuestreo-bootstrap.html#cb416-1"></a><span class="co"># error estándar teórico</span></span>
+<span id="cb416-2"><a href="remuestreo-bootstrap.html#cb416-2"></a>datsd<span class="op">/</span><span class="kw">sqrt</span>(ndat) </span></code></pre></div>
 <pre><code>## [1] 0.1</code></pre>
 <p>Versión “optimizada” para R:</p>
-<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="remuestreo-bootstrap.html#cb414-1"></a>boot.strap &lt;-<span class="st"> </span><span class="cf">function</span>(dat, <span class="dt">nboot=</span><span class="dv">1000</span>, <span class="dt">statistic=</span>mean)</span>
-<span id="cb414-2"><a href="remuestreo-bootstrap.html#cb414-2"></a>{</span>
-<span id="cb414-3"><a href="remuestreo-bootstrap.html#cb414-3"></a>  ndat &lt;-<span class="st"> </span><span class="kw">length</span>(dat)</span>
-<span id="cb414-4"><a href="remuestreo-bootstrap.html#cb414-4"></a>  dat.boot &lt;-<span class="st"> </span><span class="kw">sample</span>(dat, ndat<span class="op">*</span>nboot, <span class="dt">replace=</span>T)</span>
-<span id="cb414-5"><a href="remuestreo-bootstrap.html#cb414-5"></a>  dat.boot &lt;-<span class="st"> </span><span class="kw">matrix</span>(dat.boot, <span class="dt">ncol=</span>nboot, <span class="dt">nrow=</span>ndat)</span>
-<span id="cb414-6"><a href="remuestreo-bootstrap.html#cb414-6"></a>  stat.boot &lt;-<span class="st"> </span><span class="kw">apply</span>(dat.boot, <span class="dv">2</span>, statistic)</span>
-<span id="cb414-7"><a href="remuestreo-bootstrap.html#cb414-7"></a>}</span>
-<span id="cb414-8"><a href="remuestreo-bootstrap.html#cb414-8"></a></span>
-<span id="cb414-9"><a href="remuestreo-bootstrap.html#cb414-9"></a>fstatistic &lt;-<span class="st"> </span><span class="cf">function</span>(dat){</span>
-<span id="cb414-10"><a href="remuestreo-bootstrap.html#cb414-10"></a>  <span class="co">#  mean(dat)</span></span>
-<span id="cb414-11"><a href="remuestreo-bootstrap.html#cb414-11"></a>  <span class="kw">mean</span>(dat, <span class="dt">trim=</span><span class="fl">0.2</span>)</span>
-<span id="cb414-12"><a href="remuestreo-bootstrap.html#cb414-12"></a>  <span class="co">#  median(dat)</span></span>
-<span id="cb414-13"><a href="remuestreo-bootstrap.html#cb414-13"></a>  <span class="co">#  max(dat)</span></span>
-<span id="cb414-14"><a href="remuestreo-bootstrap.html#cb414-14"></a>}</span>
-<span id="cb414-15"><a href="remuestreo-bootstrap.html#cb414-15"></a></span>
-<span id="cb414-16"><a href="remuestreo-bootstrap.html#cb414-16"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb414-17"><a href="remuestreo-bootstrap.html#cb414-17"></a>stat.dat &lt;-<span class="st"> </span><span class="kw">fstatistic</span>(dat)</span>
-<span id="cb414-18"><a href="remuestreo-bootstrap.html#cb414-18"></a>stat.boot &lt;-<span class="st"> </span><span class="kw">boot.strap</span>(dat, nboot, fstatistic)</span>
-<span id="cb414-19"><a href="remuestreo-bootstrap.html#cb414-19"></a></span>
-<span id="cb414-20"><a href="remuestreo-bootstrap.html#cb414-20"></a>res.boot &lt;-<span class="st"> </span><span class="kw">c</span>(stat.dat, <span class="kw">mean</span>(stat.boot)<span class="op">-</span>stat.dat, <span class="kw">sd</span>(stat.boot))</span>
-<span id="cb414-21"><a href="remuestreo-bootstrap.html#cb414-21"></a><span class="kw">names</span>(res.boot) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Estadístico&quot;</span>, <span class="st">&quot;Sesgo&quot;</span>, <span class="st">&quot;Err.Std&quot;</span>)</span>
-<span id="cb414-22"><a href="remuestreo-bootstrap.html#cb414-22"></a>res.boot</span></code></pre></div>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="remuestreo-bootstrap.html#cb418-1"></a>boot.strap &lt;-<span class="st"> </span><span class="cf">function</span>(dat, <span class="dt">nboot=</span><span class="dv">1000</span>, <span class="dt">statistic=</span>mean)</span>
+<span id="cb418-2"><a href="remuestreo-bootstrap.html#cb418-2"></a>{</span>
+<span id="cb418-3"><a href="remuestreo-bootstrap.html#cb418-3"></a>  ndat &lt;-<span class="st"> </span><span class="kw">length</span>(dat)</span>
+<span id="cb418-4"><a href="remuestreo-bootstrap.html#cb418-4"></a>  dat.boot &lt;-<span class="st"> </span><span class="kw">sample</span>(dat, ndat<span class="op">*</span>nboot, <span class="dt">replace=</span>T)</span>
+<span id="cb418-5"><a href="remuestreo-bootstrap.html#cb418-5"></a>  dat.boot &lt;-<span class="st"> </span><span class="kw">matrix</span>(dat.boot, <span class="dt">ncol=</span>nboot, <span class="dt">nrow=</span>ndat)</span>
+<span id="cb418-6"><a href="remuestreo-bootstrap.html#cb418-6"></a>  stat.boot &lt;-<span class="st"> </span><span class="kw">apply</span>(dat.boot, <span class="dv">2</span>, statistic)</span>
+<span id="cb418-7"><a href="remuestreo-bootstrap.html#cb418-7"></a>}</span>
+<span id="cb418-8"><a href="remuestreo-bootstrap.html#cb418-8"></a></span>
+<span id="cb418-9"><a href="remuestreo-bootstrap.html#cb418-9"></a>fstatistic &lt;-<span class="st"> </span><span class="cf">function</span>(dat){</span>
+<span id="cb418-10"><a href="remuestreo-bootstrap.html#cb418-10"></a>  <span class="co">#  mean(dat)</span></span>
+<span id="cb418-11"><a href="remuestreo-bootstrap.html#cb418-11"></a>  <span class="kw">mean</span>(dat, <span class="dt">trim=</span><span class="fl">0.2</span>)</span>
+<span id="cb418-12"><a href="remuestreo-bootstrap.html#cb418-12"></a>  <span class="co">#  median(dat)</span></span>
+<span id="cb418-13"><a href="remuestreo-bootstrap.html#cb418-13"></a>  <span class="co">#  max(dat)</span></span>
+<span id="cb418-14"><a href="remuestreo-bootstrap.html#cb418-14"></a>}</span>
+<span id="cb418-15"><a href="remuestreo-bootstrap.html#cb418-15"></a></span>
+<span id="cb418-16"><a href="remuestreo-bootstrap.html#cb418-16"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb418-17"><a href="remuestreo-bootstrap.html#cb418-17"></a>stat.dat &lt;-<span class="st"> </span><span class="kw">fstatistic</span>(dat)</span>
+<span id="cb418-18"><a href="remuestreo-bootstrap.html#cb418-18"></a>stat.boot &lt;-<span class="st"> </span><span class="kw">boot.strap</span>(dat, nboot, fstatistic)</span>
+<span id="cb418-19"><a href="remuestreo-bootstrap.html#cb418-19"></a></span>
+<span id="cb418-20"><a href="remuestreo-bootstrap.html#cb418-20"></a>res.boot &lt;-<span class="st"> </span><span class="kw">c</span>(stat.dat, <span class="kw">mean</span>(stat.boot)<span class="op">-</span>stat.dat, <span class="kw">sd</span>(stat.boot))</span>
+<span id="cb418-21"><a href="remuestreo-bootstrap.html#cb418-21"></a><span class="kw">names</span>(res.boot) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Estadístico&quot;</span>, <span class="st">&quot;Sesgo&quot;</span>, <span class="st">&quot;Err.Std&quot;</span>)</span>
+<span id="cb418-22"><a href="remuestreo-bootstrap.html#cb418-22"></a>res.boot</span></code></pre></div>
 <pre><code>##  Estadístico        Sesgo      Err.Std 
 ## -0.144801929  0.005968729  0.119231743</code></pre>
 </div>
 <div id="paquetes-r-bootstrap-boot" class="section level3">
 <h3><span class="header-section-number">8.5.3</span> Paquetes R: bootstrap, boot</h3>
 <p>Ver <a href="https://rubenfcasal.github.io/book_remuestreo/cap1-paquetes.html">Sección 1.4</a> de Cao y Fernández-Casal (2019).</p>
-<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="remuestreo-bootstrap.html#cb416-1"></a><span class="kw">library</span>(boot)</span>
-<span id="cb416-2"><a href="remuestreo-bootstrap.html#cb416-2"></a><span class="co"># ?boot</span></span></code></pre></div>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="remuestreo-bootstrap.html#cb420-1"></a><span class="kw">library</span>(boot)</span>
+<span id="cb420-2"><a href="remuestreo-bootstrap.html#cb420-2"></a><span class="co"># ?boot</span></span></code></pre></div>
 <p>Función estadístico:</p>
-<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="remuestreo-bootstrap.html#cb417-1"></a>boot.f &lt;-<span class="st"> </span><span class="cf">function</span>(data, indices){</span>
-<span id="cb417-2"><a href="remuestreo-bootstrap.html#cb417-2"></a>  <span class="co"># data[indices] será la muestra bootstrap</span></span>
-<span id="cb417-3"><a href="remuestreo-bootstrap.html#cb417-3"></a>  <span class="kw">mean</span>(data[indices])</span>
-<span id="cb417-4"><a href="remuestreo-bootstrap.html#cb417-4"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="remuestreo-bootstrap.html#cb421-1"></a>boot.f &lt;-<span class="st"> </span><span class="cf">function</span>(data, indices){</span>
+<span id="cb421-2"><a href="remuestreo-bootstrap.html#cb421-2"></a>  <span class="co"># data[indices] será la muestra bootstrap</span></span>
+<span id="cb421-3"><a href="remuestreo-bootstrap.html#cb421-3"></a>  <span class="kw">mean</span>(data[indices])</span>
+<span id="cb421-4"><a href="remuestreo-bootstrap.html#cb421-4"></a>}</span></code></pre></div>
 <p>Generación de las muestras</p>
-<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="remuestreo-bootstrap.html#cb418-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb418-2"><a href="remuestreo-bootstrap.html#cb418-2"></a>stat.boot &lt;-<span class="st"> </span><span class="kw">boot</span>(dat, boot.f, nboot)</span>
-<span id="cb418-3"><a href="remuestreo-bootstrap.html#cb418-3"></a>stat.boot</span></code></pre></div>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="remuestreo-bootstrap.html#cb422-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb422-2"><a href="remuestreo-bootstrap.html#cb422-2"></a>stat.boot &lt;-<span class="st"> </span><span class="kw">boot</span>(dat, boot.f, nboot)</span>
+<span id="cb422-3"><a href="remuestreo-bootstrap.html#cb422-3"></a>stat.boot</span></code></pre></div>
 <pre><code>## 
 ## ORDINARY NONPARAMETRIC BOOTSTRAP
 ## 
@@ -504,22 +506,22 @@ Davison, A.C. and Hinkley, D.V. (1997). <em>Bootstrap Methods and Their Applicat
 ## Bootstrap Statistics :
 ##       original       bias    std. error
 ## t1* -0.0933804 0.0006390906   0.1049474</code></pre>
-<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="remuestreo-bootstrap.html#cb420-1"></a><span class="kw">names</span>(stat.boot)</span></code></pre></div>
+<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="remuestreo-bootstrap.html#cb424-1"></a><span class="kw">names</span>(stat.boot)</span></code></pre></div>
 <pre><code>##  [1] &quot;t0&quot;        &quot;t&quot;         &quot;R&quot;         &quot;data&quot;      &quot;seed&quot;      &quot;statistic&quot;
 ##  [7] &quot;sim&quot;       &quot;call&quot;      &quot;stype&quot;     &quot;strata&quot;    &quot;weights&quot;</code></pre>
 </div>
 <div id="gráficos" class="section level3">
 <h3><span class="header-section-number">8.5.4</span> Gráficos</h3>
-<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="remuestreo-bootstrap.html#cb422-1"></a><span class="kw">hist</span>(stat.boot<span class="op">$</span>t, <span class="dt">freq=</span><span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="remuestreo-bootstrap.html#cb426-1"></a><span class="kw">hist</span>(stat.boot<span class="op">$</span>t, <span class="dt">freq=</span><span class="ot">FALSE</span>)</span></code></pre></div>
 <p><img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-61-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="remuestreo-bootstrap.html#cb423-1"></a><span class="kw">plot</span>(stat.boot)</span></code></pre></div>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="remuestreo-bootstrap.html#cb427-1"></a><span class="kw">plot</span>(stat.boot)</span></code></pre></div>
 <p><img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-61-2.png" width="70%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="remuestreo-bootstrap.html#cb424-1"></a><span class="kw">jack.after.boot</span>(stat.boot)</span></code></pre></div>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="remuestreo-bootstrap.html#cb428-1"></a><span class="kw">jack.after.boot</span>(stat.boot)</span></code></pre></div>
 <p><img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-61-3.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="intervalos-de-confianza-bootstrap" class="section level3">
 <h3><span class="header-section-number">8.5.5</span> Intervalos de confianza bootstrap</h3>
-<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="remuestreo-bootstrap.html#cb425-1"></a><span class="kw">boot.ci</span>(stat.boot, <span class="dt">type=</span><span class="kw">c</span>(<span class="st">&quot;norm&quot;</span>, <span class="st">&quot;basic&quot;</span>, <span class="st">&quot;perc&quot;</span>, <span class="st">&quot;bca&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="remuestreo-bootstrap.html#cb429-1"></a><span class="kw">boot.ci</span>(stat.boot, <span class="dt">type=</span><span class="kw">c</span>(<span class="st">&quot;norm&quot;</span>, <span class="st">&quot;basic&quot;</span>, <span class="st">&quot;perc&quot;</span>, <span class="st">&quot;bca&quot;</span>))</span></code></pre></div>
 <pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 ## Based on 1000 bootstrap replicates
 ## 
@@ -541,12 +543,12 @@ Davison, A.C. and Hinkley, D.V. (1997). <em>Bootstrap Methods and Their Applicat
 
 <p>Repetir el Ejemplo <a href="remuestreo-bootstrap.html#exm:mean-median-boot">8.1</a> anterior considerando la media recortada al 10%
 (con parámetros adicionales).</p>
-<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="remuestreo-bootstrap.html#cb427-1"></a>boot.f &lt;-<span class="st"> </span><span class="cf">function</span>(data, indices, <span class="dt">trim =</span> <span class="fl">0.1</span>){</span>
-<span id="cb427-2"><a href="remuestreo-bootstrap.html#cb427-2"></a>  <span class="kw">mean</span>(data[indices], trim)</span>
-<span id="cb427-3"><a href="remuestreo-bootstrap.html#cb427-3"></a>}</span>
-<span id="cb427-4"><a href="remuestreo-bootstrap.html#cb427-4"></a></span>
-<span id="cb427-5"><a href="remuestreo-bootstrap.html#cb427-5"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb427-6"><a href="remuestreo-bootstrap.html#cb427-6"></a><span class="kw">boot</span>(dat, boot.f, nboot, <span class="dt">trim =</span> <span class="fl">0.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="remuestreo-bootstrap.html#cb431-1"></a>boot.f &lt;-<span class="st"> </span><span class="cf">function</span>(data, indices, <span class="dt">trim =</span> <span class="fl">0.1</span>){</span>
+<span id="cb431-2"><a href="remuestreo-bootstrap.html#cb431-2"></a>  <span class="kw">mean</span>(data[indices], trim)</span>
+<span id="cb431-3"><a href="remuestreo-bootstrap.html#cb431-3"></a>}</span>
+<span id="cb431-4"><a href="remuestreo-bootstrap.html#cb431-4"></a></span>
+<span id="cb431-5"><a href="remuestreo-bootstrap.html#cb431-5"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb431-6"><a href="remuestreo-bootstrap.html#cb431-6"></a><span class="kw">boot</span>(dat, boot.f, nboot, <span class="dt">trim =</span> <span class="fl">0.2</span>)</span></code></pre></div>
 <pre><code>## 
 ## ORDINARY NONPARAMETRIC BOOTSTRAP
 ## 

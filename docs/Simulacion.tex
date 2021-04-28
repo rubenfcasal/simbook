@@ -144,7 +144,7 @@
 
 \title{Simulación Estadística}
 \author{Rubén Fernández Casal (\href{mailto:ruben.fcasal@udc.es}{\nolinkurl{ruben.fcasal@udc.es}}), Ricardo Cao (\href{mailto:rcao@udc.es}{\nolinkurl{rcao@udc.es}})}
-\date{2021-04-21}
+\date{2021-04-28}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Teorema}[chapter]
@@ -1108,10 +1108,10 @@ Ejemplo:
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.06    0.00    0.06 
+##    0.06    0.02    0.14 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.06    0.00    0.06
+##    0.06    0.02    0.14
 \end{verbatim}
 
 \begin{Shaded}
@@ -1134,10 +1134,10 @@ Ejemplo:
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.02    0.00    0.02 
+##    0.01    0.00    0.01 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.08    0.00    0.08
+##    0.07    0.02    0.15
 \end{verbatim}
 
 \hypertarget{paquetes-de-r-1}{%
@@ -1237,7 +1237,7 @@ Ejemplo:
 ## Time of last operation: 
 ## Sample median of 1e+06 values = 0.4993323 
 ##    user  system elapsed 
-##    0.08    0.00    0.07
+##    0.08    0.03    0.12
 \end{verbatim}
 
 \begin{Shaded}
@@ -1251,10 +1251,10 @@ Ejemplo:
 ## Time of last operation: 
 ## Sample median of 1000 values = 0.5126436 
 ##    user  system elapsed 
-##    0.02    0.00    0.02 
+##       0       0       0 
 ## Total time:
 ##    user  system elapsed 
-##    0.10    0.00    0.09
+##    0.08    0.03    0.12
 \end{verbatim}
 
 Otro paquete que puede ser de utilidad es
@@ -1414,7 +1414,7 @@ Por ejemplo, el conjunto de datos \texttt{randu} contiene 400 tripletas de núme
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.02    0.01    0.03
+##    0.02    0.00    0.02
 \end{verbatim}
 
 \begin{Shaded}
@@ -2994,7 +2994,7 @@ El código para implementar este algoritmo en R podría ser el siguiente:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.02    0.00    0.02
+##    0.02    0.00    0.01
 \end{verbatim}
 
 \begin{Shaded}
@@ -3159,7 +3159,7 @@ y función de distribución:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.02    0.01    0.03
+##    0.03    0.00    0.03
 \end{verbatim}
 \item
   Representar el histograma y compararlo con la densidad teórica.
@@ -3472,7 +3472,7 @@ Para generar los valores de la densidad objetivo podríamos emplear el siguiente
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.08    0.00    0.08
+##    0.09    0.00    0.09
 \end{verbatim}
 
 \begin{Shaded}
@@ -4244,7 +4244,7 @@ Empleamos la rutina anterior para generar las simulaciones:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.08    0.00    0.07
+##    0.08    0.00    0.08
 \end{verbatim}
 
 Aproximación de la media:
@@ -4408,7 +4408,7 @@ función \texttt{sample} de R.
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.07    0.00    0.06
+##    0.05    0.02    0.08
 \end{verbatim}
 
 \begin{Shaded}
@@ -4548,7 +4548,7 @@ Repetir el Ejercicio \ref{exr:binom-cuant} anterior empleando esta rutina con \(
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.03    0.00    0.03
+##    0.05    0.00    0.05
 \end{verbatim}
 
 Análisis de los resultados:
@@ -4673,7 +4673,7 @@ Repetir el Ejercicio \ref{exr:binom-cuant} anterior empleando esta rutina.
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.01    0.02    0.03
+##    0.03    0.00    0.03
 \end{verbatim}
 
 Análisis de los resultados:
@@ -5286,10 +5286,7 @@ Partiendo de \(\mathbf{Z} \sim \mathcal{N}_d\left( \mathbf{0},I_d\right)\), se p
   \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right).\]
 \end{itemize}
 
-Desde el punto de vista de la eficiencia computacional la factorización de Cholesky
-sería la preferible. Pero en ocasiones, para evitar problemas numéricos
-(por ejemplo, en el caso de matrices no definidas positivas)
-puede ser más adecuado emplear la factorización espectral.
+Desde el punto de vista de la eficiencia computacional la factorización de Cholesky sería la preferible. Pero en ocasiones, para evitar problemas numéricos (por ejemplo, en el caso de matrices definidas positivas, i.e.~con autovalores nulos) puede ser más adecuado emplear la factorización espectral.
 En el primer caso el algoritmo sería el siguiente:
 
 \BeginKnitrBlock{conjecture}[de simulación de una normal multivariante]
@@ -5429,7 +5426,7 @@ del paquete \texttt{MASS} que emplea la factorización espectral (\texttt{eigen}
 ##         drop(X)
 ##     else t(X)
 ## }
-## <bytecode: 0x0000000028889e28>
+## <bytecode: 0x0000000027f742e0>
 ## <environment: namespace:MASS>
 \end{verbatim}
 
@@ -5938,22 +5935,90 @@ Si las representamos podemos confirmar que los valores en las posiciones \(\left
 \subsection{Simulación condicional a partir de un modelo ajustado}\label{simulaciuxf3n-condicional-a-partir-de-un-modelo-ajustado}}
 
 En la práctica normalmente se ajusta un modelo a los datos observados y posteriormente se obtienen las simulaciones condicionadas empleando el modelo ajustado.
-Por ejemplo, en el caso de series de tiempo, se puede emplear la función \texttt{simulate} del paquete \texttt{forecast}:
+
+En \texttt{R} se incluye una función genérica\footnote{Se pueden implementar métodos específicos para cada tipo (clase) de objeto; en este caso para cada tipo de modelo ajustado y podemos mostrar los disponibles mediante el comando \texttt{methods(simulate)}.} \texttt{simulate()} que permite generar respuestas a partir de modelos ajustados (siempre que esté implementado el método correspondiente al tipo de modelo).
+Los métodos para modelos lineales y modelos lineales generalizamos están implementados en el paquete base \texttt{stats}.
+Muchos otros paquetes que proporcionan modelos adicionales, implementan también los correspondientes métodos \texttt{simulate()}.
+Por ejemplo, en el caso de series de tiempo, el paquete \texttt{forecast} permite ajustar distintos tipos de modelos y generar simulaciones a partir de ellos:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(forecast)}
 \NormalTok{data <-}\StringTok{ }\KeywordTok{window}\NormalTok{(co2, }\DecValTok{1990}\NormalTok{) }\CommentTok{# datos de co2 desde 1990}
-\KeywordTok{plot}\NormalTok{(data, }\DataTypeTok{ylab =} \KeywordTok{expression}\NormalTok{(}\StringTok{"Atmospheric concentration of CO"}\NormalTok{[}\DecValTok{2}\NormalTok{]), }
-     \DataTypeTok{xlim=}\KeywordTok{c}\NormalTok{(}\DecValTok{1990}\NormalTok{,}\DecValTok{2000}\NormalTok{), }\DataTypeTok{ylim=}\KeywordTok{c}\NormalTok{(}\DecValTok{350}\NormalTok{, }\DecValTok{375}\NormalTok{))}
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{ets}\NormalTok{(data)}
-\CommentTok{# plot(forecast(fit, h=24))}
-\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
-\KeywordTok{lines}\NormalTok{(}\KeywordTok{simulate}\NormalTok{(fit, }\DecValTok{24}\NormalTok{), }\DataTypeTok{col=}\StringTok{"red"}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(data, }\DataTypeTok{ylab =} \KeywordTok{expression}\NormalTok{(}\StringTok{"Atmospheric concentration of CO"}\NormalTok{[}\DecValTok{2}\NormalTok{]),}
+     \DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\DecValTok{1990}\NormalTok{, }\DecValTok{2000}\NormalTok{), }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{350}\NormalTok{, }\DecValTok{375}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-15-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Se podrían ajustar distintos tipos de modelos}
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{ets}\NormalTok{(data)}
+\CommentTok{# fit <- auto.arima(data)}
+\end{Highlighting}
+\end{Shaded}
+
+Podemos obtener predicciones (media de la distribución condicional) e intervalos de predicción:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pred <-}\StringTok{ }\KeywordTok{forecast}\NormalTok{(fit, }\DataTypeTok{h =} \DecValTok{24}\NormalTok{, }\DataTypeTok{level =} \DecValTok{95}\NormalTok{)}
+\NormalTok{pred}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          Point Forecast    Lo 95    Hi 95
+## Jan 1998       365.1118 364.5342 365.6894
+## Feb 1998       366.1195 365.4572 366.7819
+## Mar 1998       367.0161 366.2786 367.7535
+## Apr 1998       368.2749 367.4693 369.0806
+## May 1998       368.9282 368.0596 369.7968
+## Jun 1998       368.2240 367.2967 369.1513
+## Jul 1998       366.5823 365.5997 367.5649
+## Aug 1998       364.4895 363.4546 365.5244
+## Sep 1998       362.6586 361.5738 363.7434
+## Oct 1998       362.7805 361.6479 363.9130
+## Nov 1998       364.2045 363.0262 365.3829
+## Dec 1998       365.5250 364.3025 366.7476
+## Jan 1999       366.6002 365.3349 367.8654
+## Feb 1999       367.6078 366.3013 368.9144
+## Mar 1999       368.5044 367.1578 369.8510
+## Apr 1999       369.7633 368.3777 371.1488
+## May 1999       370.4165 368.9930 371.8400
+## Jun 1999       369.7124 368.2519 371.1728
+## Jul 1999       368.0706 366.5741 369.5671
+## Aug 1999       365.9778 364.4461 367.5096
+## Sep 1999       364.1469 362.5806 365.7131
+## Oct 1999       364.2688 362.6688 365.8688
+## Nov 1999       365.6929 364.0597 367.3260
+## Dec 1999       367.0134 365.3477 368.6790
+\end{verbatim}
+
+Para análisis adicionales nos puede interesar generar simulaciones (por defecto de la distribución condicional, \texttt{future\ =\ TRUE}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{321}\NormalTok{)}
+\NormalTok{sim.cond <-}\StringTok{ }\KeywordTok{simulate}\NormalTok{(fit, }\DecValTok{24}\NormalTok{)}
+
+\KeywordTok{plot}\NormalTok{(pred)}
+\KeywordTok{lines}\NormalTok{(sim.cond, }\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{, }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/simulate-forecast-1} 
+
+}
+
+\caption{Ejemplo de una serie de tiempo (datos observados de co2 en el observatorio Mauna Loa), predicciones futuras (en azul; media distribución condicional) y simulación condicional (en rojo) obtenidas a partir de un modelo ajustado.}\label{fig:simulate-forecast}
+\end{figure}
+
+Para más detalles ver Hyndman y Athanasopoulos (2018, secciones \href{https://otexts.com/fpp2/prediction-intervals.html}{4.3} y \href{https://otexts.com/fpp2/bootstrap.html}{11.4}).
 
 \hypertarget{simulaciuxf3n-basada-en-cuxf3pulas}{%
 \section{Simulación basada en cópulas}\label{simulaciuxf3n-basada-en-cuxf3pulas}}
@@ -7464,14 +7529,14 @@ En el caso de \(a=2\) se denomina IC Agresti-Coull.
   \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-24-1} \end{center}
 \end{enumerate}
 
-Como ya se comentó, el caso de ajustar un modelo a los datos y realizar simulaciones a partir de ese modelo ajustado para aproximar las características de interés de un estadístico, se denomina también bootstrap paramétrico (Ver \href{https://rubenfcasal.github.io/book_remuestreo/cap4-boot-par.html}{Sección 4.1} de Cao y Fernández-Casal, 2019).
-
-En este libro en las secciones \href{https://rubenfcasal.github.io/book_remuestreo/cap5-ejem.html}{5.6} y \href{https://rubenfcasal.github.io/book_remuestreo/ejemplos-1.html\#estudio-de-simulaci\%C3\%B3n}{E.3.2}, se incluyen ejemplos adicionales de estudios de simulación.
+Como ya se comentó, el caso de ajustar un modelo a los datos y realizar simulaciones a partir de ese modelo ajustado para aproximar las características de interés de un estadístico, se denomina también bootstrap paramétrico.
+Para más detalles ver por ejemplo la \href{https://rubenfcasal.github.io/book_remuestreo/modunif-boot-par.html}{Sección 3.1} de Cao y Fernández-Casal (2020).
+En este libro, en las secciones \href{https://rubenfcasal.github.io/book_remuestreo/icboot-ejem.html\#estudio-sim-exp}{4.6.2} y \href{https://rubenfcasal.github.io/book_remuestreo/ejemplos-3.html\#estudio-sim-boot}{B.3.2}, se incluyen ejemplos adicionales de estudios de simulación.
 
 \hypertarget{contrastes}{%
 \section{Contrastes de hipótesis}\label{contrastes}}
 
-Ver \href{https://rubenfcasal.github.io/book_remuestreo/practica2.html}{Apéncide A} de Cao y Fernández-Casal (2019).
+Ver \href{https://rubenfcasal.github.io/book_remuestreo/contrastes.html}{Capítulo 5} de Cao y Fernández-Casal (2020).
 
 \BeginKnitrBlock{exercise}[Test de Kolmogorov-Smirnov]
 \protect\hypertarget{exr:ks-test-sim}{}{\label{exr:ks-test-sim} \iffalse (Test de Kolmogorov-Smirnov) \fi{} }
@@ -8050,7 +8115,12 @@ Función de densidad:
 \hypertarget{remuestreo-bootstrap}{%
 \section{Remuestreo Bootstrap}\label{remuestreo-bootstrap}}
 
-Ver \href{https://rubenfcasal.github.io/book_remuestreo/}{Cao y Fernández-Casal (2019)}.
+El bootstrap es un procedimiento estadístico que sirve para aproximar características de la distribución en el muestreo de un estadístico.
+Para ello se emplea (normalmente) simulación, generando un gran número de muestras mediante algún tipo de remuestreo de la muestra original.
+Su ventaja principal es que no requiere hipótesis sobre el mecanismo generador de los datos.
+
+En esta sección se incluye una breve introducción al bootstrap.
+Para información adicional ver por ejemplo Davison y Hinkley (1997) o \href{https://rubenfcasal.github.io/book_remuestreo}{Cao y Fernández-Casal (2020)}.
 
 \hypertarget{idea}{%
 \subsection{Idea:}\label{idea}}
@@ -8150,9 +8220,6 @@ En general podríamos decir que:
 \end{itemize}
 
 \begin{center}\includegraphics[width=0.7\linewidth]{images/bootstrap} \end{center}
-
-Para información adicional sobre bootstrap ver p.e.:
-Davison, A.C. and Hinkley, D.V. (1997). \emph{Bootstrap Methods and Their Application}. Cambridge University Press
 
 \BeginKnitrBlock{example}[Aproximación del sesgo y del error estándar mediante bootstrap]
 \protect\hypertarget{exm:mean-median-boot}{}{\label{exm:mean-median-boot} \iffalse (Aproximación del sesgo y del error estándar mediante bootstrap) \fi{} }
@@ -10209,11 +10276,16 @@ Bratley, P., Fox, B.L. y Schrage L.E. (1987). \emph{A guide to simulation}. Spri
 
 Cao R. y Fernández-Casal R. (2020). \emph{Técnicas de Remuestreo} \url{https://rubenfcasal.github.io/book_remuestreo}.
 
+Davison, A.C. y Hinkley, D.V. (1997). \emph{Bootstrap Methods and Their Application}. Cambridge University Press.
+
 Devroye, L. (1986). \emph{Non-uniform random variate generation}. Springer-Verlag.
 
 Evans, M. y Swartz, T. (2000). \emph{Approximating integrals via Monte Carlo and determinstic methods}. Oxford University Press.
 
 Gentle, J.E. (1998). \emph{Random number generation and Monte Carlo methods}. Springer-Verlag.
+
+Hyndman, R.J. y Athanasopoulos, G. (2018). \emph{Forecasting: principles and practice}. OTexts.
+Disponible online: \href{https://otexts.com/fpp2}{2nd edition (forecast)}, \href{https://otexts.com/fpp3}{3rd edition (fable)}.
 
 Hofert, M. (2018). \emph{Elements of Copula Modeling with R}, Springer.
 

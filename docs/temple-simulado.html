@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2021-04-21" />
+<meta name="date" content="2021-04-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -352,25 +352,25 @@ siempre “cuesta abajo”.</p></li>
 <p><img src="images/templesimulado.png" width="70%" style="display: block; margin: auto;" /></p>
 <div id="algoritmo-1" class="section level3">
 <h3><span class="header-section-number">9.4.1</span> Algoritmo:</h3>
-<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="temple-simulado.html#cb480-1"></a>temp &lt;-<span class="st"> </span>TEMP.INIT</span>
-<span id="cb480-2"><a href="temple-simulado.html#cb480-2"></a>place &lt;-<span class="st"> </span><span class="kw">INIT.PLACEMENT</span>()</span>
-<span id="cb480-3"><a href="temple-simulado.html#cb480-3"></a>cost.place &lt;-<span class="st"> </span><span class="kw">COST</span>(place)</span>
-<span id="cb480-4"><a href="temple-simulado.html#cb480-4"></a><span class="cf">while</span>(temp <span class="op">&lt;</span><span class="st"> </span>TEMP.FINAL) {</span>
-<span id="cb480-5"><a href="temple-simulado.html#cb480-5"></a>  <span class="cf">while</span>(<span class="kw">LOOP.CRITERION</span>()) {</span>
-<span id="cb480-6"><a href="temple-simulado.html#cb480-6"></a>    place.new &lt;-<span class="st"> </span><span class="kw">PERTURB</span>(place, temp)</span>
-<span id="cb480-7"><a href="temple-simulado.html#cb480-7"></a>    cost.new &lt;-<span class="st"> </span><span class="kw">COST</span>(place.new)</span>
-<span id="cb480-8"><a href="temple-simulado.html#cb480-8"></a>    cost.inc &lt;-<span class="st"> </span>cost.new <span class="op">-</span><span class="st"> </span>cost.place</span>
-<span id="cb480-9"><a href="temple-simulado.html#cb480-9"></a>    temp &lt;-<span class="st"> </span><span class="kw">SCHEDULE</span>(temp)</span>
-<span id="cb480-10"><a href="temple-simulado.html#cb480-10"></a>    <span class="cf">if</span> ((cost.inc <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">||</span><span class="st"> </span>(<span class="kw">runif</span>(<span class="dv">1</span>) <span class="op">&gt;</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>(cost.inc<span class="op">/</span>temp)))) <span class="cf">break</span></span>
-<span id="cb480-11"><a href="temple-simulado.html#cb480-11"></a>  }</span>
-<span id="cb480-12"><a href="temple-simulado.html#cb480-12"></a>  place &lt;-<span class="st"> </span>place.new</span>
-<span id="cb480-13"><a href="temple-simulado.html#cb480-13"></a>  cost.place &lt;-<span class="st"> </span>cost.new</span>
-<span id="cb480-14"><a href="temple-simulado.html#cb480-14"></a>  <span class="co"># temp &lt;- SCHEDULE(temp)</span></span>
-<span id="cb480-15"><a href="temple-simulado.html#cb480-15"></a>}</span>
-<span id="cb480-16"><a href="temple-simulado.html#cb480-16"></a>COST &lt;-<span class="st"> </span><span class="cf">function</span>(place, ...) {...}</span>
-<span id="cb480-17"><a href="temple-simulado.html#cb480-17"></a>SCHEDULE &lt;-<span class="st"> </span><span class="cf">function</span>(temp, ...) {...}</span>
-<span id="cb480-18"><a href="temple-simulado.html#cb480-18"></a>INIT.PLACEMENT &lt;-<span class="st"> </span><span class="cf">function</span>(...) {...}</span>
-<span id="cb480-19"><a href="temple-simulado.html#cb480-19"></a>LOOP.CRITERION &lt;-<span class="st"> </span><span class="cf">function</span>(...) {...}</span></code></pre></div>
+<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="temple-simulado.html#cb484-1"></a>temp &lt;-<span class="st"> </span>TEMP.INIT</span>
+<span id="cb484-2"><a href="temple-simulado.html#cb484-2"></a>place &lt;-<span class="st"> </span><span class="kw">INIT.PLACEMENT</span>()</span>
+<span id="cb484-3"><a href="temple-simulado.html#cb484-3"></a>cost.place &lt;-<span class="st"> </span><span class="kw">COST</span>(place)</span>
+<span id="cb484-4"><a href="temple-simulado.html#cb484-4"></a><span class="cf">while</span>(temp <span class="op">&lt;</span><span class="st"> </span>TEMP.FINAL) {</span>
+<span id="cb484-5"><a href="temple-simulado.html#cb484-5"></a>  <span class="cf">while</span>(<span class="kw">LOOP.CRITERION</span>()) {</span>
+<span id="cb484-6"><a href="temple-simulado.html#cb484-6"></a>    place.new &lt;-<span class="st"> </span><span class="kw">PERTURB</span>(place, temp)</span>
+<span id="cb484-7"><a href="temple-simulado.html#cb484-7"></a>    cost.new &lt;-<span class="st"> </span><span class="kw">COST</span>(place.new)</span>
+<span id="cb484-8"><a href="temple-simulado.html#cb484-8"></a>    cost.inc &lt;-<span class="st"> </span>cost.new <span class="op">-</span><span class="st"> </span>cost.place</span>
+<span id="cb484-9"><a href="temple-simulado.html#cb484-9"></a>    temp &lt;-<span class="st"> </span><span class="kw">SCHEDULE</span>(temp)</span>
+<span id="cb484-10"><a href="temple-simulado.html#cb484-10"></a>    <span class="cf">if</span> ((cost.inc <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">||</span><span class="st"> </span>(<span class="kw">runif</span>(<span class="dv">1</span>) <span class="op">&gt;</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>(cost.inc<span class="op">/</span>temp)))) <span class="cf">break</span></span>
+<span id="cb484-11"><a href="temple-simulado.html#cb484-11"></a>  }</span>
+<span id="cb484-12"><a href="temple-simulado.html#cb484-12"></a>  place &lt;-<span class="st"> </span>place.new</span>
+<span id="cb484-13"><a href="temple-simulado.html#cb484-13"></a>  cost.place &lt;-<span class="st"> </span>cost.new</span>
+<span id="cb484-14"><a href="temple-simulado.html#cb484-14"></a>  <span class="co"># temp &lt;- SCHEDULE(temp)</span></span>
+<span id="cb484-15"><a href="temple-simulado.html#cb484-15"></a>}</span>
+<span id="cb484-16"><a href="temple-simulado.html#cb484-16"></a>COST &lt;-<span class="st"> </span><span class="cf">function</span>(place, ...) {...}</span>
+<span id="cb484-17"><a href="temple-simulado.html#cb484-17"></a>SCHEDULE &lt;-<span class="st"> </span><span class="cf">function</span>(temp, ...) {...}</span>
+<span id="cb484-18"><a href="temple-simulado.html#cb484-18"></a>INIT.PLACEMENT &lt;-<span class="st"> </span><span class="cf">function</span>(...) {...}</span>
+<span id="cb484-19"><a href="temple-simulado.html#cb484-19"></a>LOOP.CRITERION &lt;-<span class="st"> </span><span class="cf">function</span>(...) {...}</span></code></pre></div>
 <p>Adaptado de <a href="http://www.ecs.umass.edu/ece/labs/vlsicad/ece665/slides/SimulatedAnnealing.ppt">Premchand Akella (ppt)</a>.</p>
 <p>Este algoritmo se puede ver como una adaptación del método de
 Metropolis-Hastings que veremos más adelante
@@ -382,21 +382,21 @@ Metropolis-Hastings que veremos más adelante
 
 <p>Repetir el Ejercicio <a href="optimización-monte-carlo.html#exr:mv-nlm">9.6</a> anterior empleando el algoritmo del temple simulado.</p>
 <p>Minimización “SANN” con optim:</p>
-<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="temple-simulado.html#cb481-1"></a><span class="co"># Representar la superficie del logaritmo de la verosimilitud</span></span>
-<span id="cb481-2"><a href="temple-simulado.html#cb481-2"></a><span class="kw">image</span>(mmu1, mmu2, <span class="op">-</span>lli, <span class="dt">xlab =</span> <span class="kw">expression</span>(mu[<span class="dv">1</span>]), <span class="dt">ylab =</span> <span class="kw">expression</span>(mu[<span class="dv">2</span>]))</span>
-<span id="cb481-3"><a href="temple-simulado.html#cb481-3"></a><span class="kw">contour</span>(mmu1, mmu2, <span class="op">-</span>lli, <span class="dt">nlevels =</span> <span class="dv">50</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb481-4"><a href="temple-simulado.html#cb481-4"></a><span class="kw">points</span>(starts, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">pch =</span> <span class="dv">19</span>)</span>
-<span id="cb481-5"><a href="temple-simulado.html#cb481-5"></a></span>
-<span id="cb481-6"><a href="temple-simulado.html#cb481-6"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb481-7"><a href="temple-simulado.html#cb481-7"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nstarts){</span>
-<span id="cb481-8"><a href="temple-simulado.html#cb481-8"></a>  <span class="co"># Normalmente llamaríamos a optim(start, like, method = &quot;SANN&quot;)</span></span>
-<span id="cb481-9"><a href="temple-simulado.html#cb481-9"></a>  <span class="co"># Note that the &quot;SANN&quot; method depends critically on the settings of the control parameters.</span></span>
-<span id="cb481-10"><a href="temple-simulado.html#cb481-10"></a>  <span class="co"># For &quot;SANN&quot; maxit gives the total number of function evaluations: there is no other stopping criterion. </span></span>
-<span id="cb481-11"><a href="temple-simulado.html#cb481-11"></a>  <span class="co"># Defaults to 10000.</span></span>
-<span id="cb481-12"><a href="temple-simulado.html#cb481-12"></a>  res &lt;-<span class="st"> </span><span class="kw">optim</span>(starts[j, ], <span class="kw">tee.optim2d</span>(like), <span class="dt">method =</span> <span class="st">&quot;SANN&quot;</span>, <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">temp =</span> <span class="dv">100</span>, <span class="dt">maxit =</span> <span class="dv">2000</span>))</span>
-<span id="cb481-13"><a href="temple-simulado.html#cb481-13"></a>  <span class="kw">points</span>(res<span class="op">$</span>par[<span class="dv">1</span>],res<span class="op">$</span>par[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">19</span>)</span>
-<span id="cb481-14"><a href="temple-simulado.html#cb481-14"></a>  <span class="kw">cat</span>(<span class="st">&quot;par = &quot;</span>, res<span class="op">$</span>par, <span class="st">&quot;value =&quot;</span>, res<span class="op">$</span>value, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb481-15"><a href="temple-simulado.html#cb481-15"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="temple-simulado.html#cb485-1"></a><span class="co"># Representar la superficie del logaritmo de la verosimilitud</span></span>
+<span id="cb485-2"><a href="temple-simulado.html#cb485-2"></a><span class="kw">image</span>(mmu1, mmu2, <span class="op">-</span>lli, <span class="dt">xlab =</span> <span class="kw">expression</span>(mu[<span class="dv">1</span>]), <span class="dt">ylab =</span> <span class="kw">expression</span>(mu[<span class="dv">2</span>]))</span>
+<span id="cb485-3"><a href="temple-simulado.html#cb485-3"></a><span class="kw">contour</span>(mmu1, mmu2, <span class="op">-</span>lli, <span class="dt">nlevels =</span> <span class="dv">50</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb485-4"><a href="temple-simulado.html#cb485-4"></a><span class="kw">points</span>(starts, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">pch =</span> <span class="dv">19</span>)</span>
+<span id="cb485-5"><a href="temple-simulado.html#cb485-5"></a></span>
+<span id="cb485-6"><a href="temple-simulado.html#cb485-6"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb485-7"><a href="temple-simulado.html#cb485-7"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nstarts){</span>
+<span id="cb485-8"><a href="temple-simulado.html#cb485-8"></a>  <span class="co"># Normalmente llamaríamos a optim(start, like, method = &quot;SANN&quot;)</span></span>
+<span id="cb485-9"><a href="temple-simulado.html#cb485-9"></a>  <span class="co"># Note that the &quot;SANN&quot; method depends critically on the settings of the control parameters.</span></span>
+<span id="cb485-10"><a href="temple-simulado.html#cb485-10"></a>  <span class="co"># For &quot;SANN&quot; maxit gives the total number of function evaluations: there is no other stopping criterion. </span></span>
+<span id="cb485-11"><a href="temple-simulado.html#cb485-11"></a>  <span class="co"># Defaults to 10000.</span></span>
+<span id="cb485-12"><a href="temple-simulado.html#cb485-12"></a>  res &lt;-<span class="st"> </span><span class="kw">optim</span>(starts[j, ], <span class="kw">tee.optim2d</span>(like), <span class="dt">method =</span> <span class="st">&quot;SANN&quot;</span>, <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">temp =</span> <span class="dv">100</span>, <span class="dt">maxit =</span> <span class="dv">2000</span>))</span>
+<span id="cb485-13"><a href="temple-simulado.html#cb485-13"></a>  <span class="kw">points</span>(res<span class="op">$</span>par[<span class="dv">1</span>],res<span class="op">$</span>par[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">19</span>)</span>
+<span id="cb485-14"><a href="temple-simulado.html#cb485-14"></a>  <span class="kw">cat</span>(<span class="st">&quot;par = &quot;</span>, res<span class="op">$</span>par, <span class="st">&quot;value =&quot;</span>, res<span class="op">$</span>value, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb485-15"><a href="temple-simulado.html#cb485-15"></a>}</span></code></pre></div>
 <p><img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre><code>## par =  0.0002023461 2.473437 value = 361.6372 
 ## par =  -0.182735 2.45585 value = 362.0255 
@@ -405,46 +405,46 @@ Metropolis-Hastings que veremos más adelante
 ## par =  0.6814165 2.370026 value = 374.839</code></pre>
 <p>Alternativa: función basada en el algoritmo empleado en el ejemplo 5.9 del libro:
 Robert y Casella, Introducing Monte Carlo Methods with R, Springer, 2010.</p>
-<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="temple-simulado.html#cb483-1"></a>SA &lt;-<span class="st"> </span><span class="cf">function</span>(fun, pini, <span class="dt">lower =</span> <span class="op">-</span><span class="ot">Inf</span>, <span class="dt">upper =</span> <span class="ot">Inf</span>, <span class="dt">tolerance =</span> <span class="dv">10</span><span class="op">^</span>(<span class="op">-</span><span class="dv">4</span>), <span class="dt">factor =</span> <span class="dv">1</span>) {</span>
-<span id="cb483-2"><a href="temple-simulado.html#cb483-2"></a>  temp &lt;-<span class="st"> </span>scale &lt;-<span class="st"> </span>iter &lt;-<span class="st"> </span>dif &lt;-<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb483-3"><a href="temple-simulado.html#cb483-3"></a>  npar &lt;-<span class="st"> </span><span class="kw">length</span>(pini) </span>
-<span id="cb483-4"><a href="temple-simulado.html#cb483-4"></a>  the &lt;-<span class="st"> </span><span class="kw">matrix</span>(pini, <span class="dt">ncol =</span> npar)</span>
-<span id="cb483-5"><a href="temple-simulado.html#cb483-5"></a>  curfun &lt;-<span class="st"> </span>hval &lt;-<span class="st"> </span><span class="kw">fun</span>(pini)</span>
-<span id="cb483-6"><a href="temple-simulado.html#cb483-6"></a>  <span class="cf">while</span> (dif <span class="op">&gt;</span><span class="st"> </span>tolerance) {</span>
-<span id="cb483-7"><a href="temple-simulado.html#cb483-7"></a>    prop &lt;-<span class="st"> </span>the[iter, ] <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(npar) <span class="op">*</span><span class="st"> </span>scale[iter]</span>
-<span id="cb483-8"><a href="temple-simulado.html#cb483-8"></a>    <span class="co"># Se decide si se acepta la propuesta</span></span>
-<span id="cb483-9"><a href="temple-simulado.html#cb483-9"></a>    <span class="cf">if</span> (<span class="kw">any</span>(prop <span class="op">&lt;</span><span class="st"> </span>lower) <span class="op">||</span><span class="st"> </span><span class="kw">any</span>(prop <span class="op">&gt;</span><span class="st"> </span>upper) <span class="op">||</span><span class="st"> </span></span>
-<span id="cb483-10"><a href="temple-simulado.html#cb483-10"></a><span class="st">        </span>(temp[iter] <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(<span class="kw">runif</span>(<span class="dv">1</span>)) <span class="op">&gt;</span><span class="st"> </span><span class="op">-</span><span class="kw">fun</span>(prop) <span class="op">+</span><span class="st"> </span>curfun))  prop &lt;-<span class="st"> </span>the[iter, ]</span>
-<span id="cb483-11"><a href="temple-simulado.html#cb483-11"></a>    curfun &lt;-<span class="st"> </span><span class="kw">fun</span>(prop)</span>
-<span id="cb483-12"><a href="temple-simulado.html#cb483-12"></a>    hval &lt;-<span class="st"> </span><span class="kw">c</span>(hval, curfun)</span>
-<span id="cb483-13"><a href="temple-simulado.html#cb483-13"></a>    the &lt;-<span class="st"> </span><span class="kw">rbind</span>(the, prop)</span>
-<span id="cb483-14"><a href="temple-simulado.html#cb483-14"></a>    iter &lt;-<span class="st"> </span>iter <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span>
-<span id="cb483-15"><a href="temple-simulado.html#cb483-15"></a>    temp &lt;-<span class="st"> </span><span class="kw">c</span>(temp, <span class="dv">1</span><span class="op">/</span><span class="kw">log</span>(iter <span class="op">+</span><span class="st"> </span><span class="dv">1</span>))  <span class="co"># Actualizar la temperatura</span></span>
-<span id="cb483-16"><a href="temple-simulado.html#cb483-16"></a>    <span class="co"># Se controla el nº de perturbaciones aceptadas</span></span>
-<span id="cb483-17"><a href="temple-simulado.html#cb483-17"></a>    ace &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(the[(iter<span class="op">/</span><span class="dv">2</span>)<span class="op">:</span>iter, <span class="dv">1</span>]))</span>
-<span id="cb483-18"><a href="temple-simulado.html#cb483-18"></a>    <span class="cf">if</span> (ace <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) </span>
-<span id="cb483-19"><a href="temple-simulado.html#cb483-19"></a>      <span class="co"># si es muy pequeño se disminuye la escala de la perturbación</span></span>
-<span id="cb483-20"><a href="temple-simulado.html#cb483-20"></a>      factor &lt;-<span class="st"> </span>factor<span class="op">/</span><span class="dv">10</span></span>
-<span id="cb483-21"><a href="temple-simulado.html#cb483-21"></a>    <span class="cf">if</span> (<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>ace <span class="op">&gt;</span><span class="st"> </span>iter) </span>
-<span id="cb483-22"><a href="temple-simulado.html#cb483-22"></a>      <span class="co"># si es muy grande se aumenta</span></span>
-<span id="cb483-23"><a href="temple-simulado.html#cb483-23"></a>      factor &lt;-<span class="st"> </span>factor <span class="op">*</span><span class="st"> </span><span class="dv">10</span></span>
-<span id="cb483-24"><a href="temple-simulado.html#cb483-24"></a>    scale &lt;-<span class="st"> </span><span class="kw">c</span>(scale, <span class="kw">max</span>(<span class="dv">2</span>, factor <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(temp[iter])))  <span class="co"># Actualizar la escala de la perturbación</span></span>
-<span id="cb483-25"><a href="temple-simulado.html#cb483-25"></a>    dif &lt;-<span class="st"> </span>(iter <span class="op">&lt;</span><span class="st"> </span><span class="dv">100</span>) <span class="op">+</span><span class="st"> </span>(ace <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span>(<span class="kw">max</span>(hval) <span class="op">-</span><span class="st"> </span><span class="kw">max</span>(hval[<span class="dv">1</span><span class="op">:</span>(iter<span class="op">/</span><span class="dv">2</span>)]))</span>
-<span id="cb483-26"><a href="temple-simulado.html#cb483-26"></a>  }</span>
-<span id="cb483-27"><a href="temple-simulado.html#cb483-27"></a>  <span class="kw">list</span>(<span class="dt">theta =</span> the, <span class="dt">val =</span> hval, <span class="dt">ite =</span> iter)</span>
-<span id="cb483-28"><a href="temple-simulado.html#cb483-28"></a>}</span>
-<span id="cb483-29"><a href="temple-simulado.html#cb483-29"></a></span>
-<span id="cb483-30"><a href="temple-simulado.html#cb483-30"></a><span class="co"># Representar la superficie del logaritmo de la verosimilitud</span></span>
-<span id="cb483-31"><a href="temple-simulado.html#cb483-31"></a><span class="kw">image</span>(mmu1, mmu2, <span class="op">-</span>lli, <span class="dt">xlab =</span> <span class="kw">expression</span>(mu[<span class="dv">1</span>]), <span class="dt">ylab =</span> <span class="kw">expression</span>(mu[<span class="dv">2</span>]))</span>
-<span id="cb483-32"><a href="temple-simulado.html#cb483-32"></a><span class="kw">contour</span>(mmu1, mmu2, <span class="op">-</span>lli, <span class="dt">nlevels =</span> <span class="dv">50</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb483-33"><a href="temple-simulado.html#cb483-33"></a><span class="kw">points</span>(starts, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">pch =</span> <span class="dv">19</span>)</span>
-<span id="cb483-34"><a href="temple-simulado.html#cb483-34"></a></span>
-<span id="cb483-35"><a href="temple-simulado.html#cb483-35"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb483-36"><a href="temple-simulado.html#cb483-36"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nstarts) {</span>
-<span id="cb483-37"><a href="temple-simulado.html#cb483-37"></a>  sar &lt;-<span class="st"> </span><span class="kw">SA</span>(like, starts[j, ])</span>
-<span id="cb483-38"><a href="temple-simulado.html#cb483-38"></a>  <span class="kw">lines</span>(sar<span class="op">$</span>the[, <span class="dv">1</span>], sar<span class="op">$</span>the[, <span class="dv">2</span>], <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
-<span id="cb483-39"><a href="temple-simulado.html#cb483-39"></a>  <span class="kw">points</span>(sar<span class="op">$</span>the[sar<span class="op">$</span>it, <span class="dv">1</span>], sar<span class="op">$</span>the[sar<span class="op">$</span>it, <span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">19</span>)</span>
-<span id="cb483-40"><a href="temple-simulado.html#cb483-40"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="temple-simulado.html#cb487-1"></a>SA &lt;-<span class="st"> </span><span class="cf">function</span>(fun, pini, <span class="dt">lower =</span> <span class="op">-</span><span class="ot">Inf</span>, <span class="dt">upper =</span> <span class="ot">Inf</span>, <span class="dt">tolerance =</span> <span class="dv">10</span><span class="op">^</span>(<span class="op">-</span><span class="dv">4</span>), <span class="dt">factor =</span> <span class="dv">1</span>) {</span>
+<span id="cb487-2"><a href="temple-simulado.html#cb487-2"></a>  temp &lt;-<span class="st"> </span>scale &lt;-<span class="st"> </span>iter &lt;-<span class="st"> </span>dif &lt;-<span class="st"> </span><span class="dv">1</span></span>
+<span id="cb487-3"><a href="temple-simulado.html#cb487-3"></a>  npar &lt;-<span class="st"> </span><span class="kw">length</span>(pini) </span>
+<span id="cb487-4"><a href="temple-simulado.html#cb487-4"></a>  the &lt;-<span class="st"> </span><span class="kw">matrix</span>(pini, <span class="dt">ncol =</span> npar)</span>
+<span id="cb487-5"><a href="temple-simulado.html#cb487-5"></a>  curfun &lt;-<span class="st"> </span>hval &lt;-<span class="st"> </span><span class="kw">fun</span>(pini)</span>
+<span id="cb487-6"><a href="temple-simulado.html#cb487-6"></a>  <span class="cf">while</span> (dif <span class="op">&gt;</span><span class="st"> </span>tolerance) {</span>
+<span id="cb487-7"><a href="temple-simulado.html#cb487-7"></a>    prop &lt;-<span class="st"> </span>the[iter, ] <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(npar) <span class="op">*</span><span class="st"> </span>scale[iter]</span>
+<span id="cb487-8"><a href="temple-simulado.html#cb487-8"></a>    <span class="co"># Se decide si se acepta la propuesta</span></span>
+<span id="cb487-9"><a href="temple-simulado.html#cb487-9"></a>    <span class="cf">if</span> (<span class="kw">any</span>(prop <span class="op">&lt;</span><span class="st"> </span>lower) <span class="op">||</span><span class="st"> </span><span class="kw">any</span>(prop <span class="op">&gt;</span><span class="st"> </span>upper) <span class="op">||</span><span class="st"> </span></span>
+<span id="cb487-10"><a href="temple-simulado.html#cb487-10"></a><span class="st">        </span>(temp[iter] <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(<span class="kw">runif</span>(<span class="dv">1</span>)) <span class="op">&gt;</span><span class="st"> </span><span class="op">-</span><span class="kw">fun</span>(prop) <span class="op">+</span><span class="st"> </span>curfun))  prop &lt;-<span class="st"> </span>the[iter, ]</span>
+<span id="cb487-11"><a href="temple-simulado.html#cb487-11"></a>    curfun &lt;-<span class="st"> </span><span class="kw">fun</span>(prop)</span>
+<span id="cb487-12"><a href="temple-simulado.html#cb487-12"></a>    hval &lt;-<span class="st"> </span><span class="kw">c</span>(hval, curfun)</span>
+<span id="cb487-13"><a href="temple-simulado.html#cb487-13"></a>    the &lt;-<span class="st"> </span><span class="kw">rbind</span>(the, prop)</span>
+<span id="cb487-14"><a href="temple-simulado.html#cb487-14"></a>    iter &lt;-<span class="st"> </span>iter <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span>
+<span id="cb487-15"><a href="temple-simulado.html#cb487-15"></a>    temp &lt;-<span class="st"> </span><span class="kw">c</span>(temp, <span class="dv">1</span><span class="op">/</span><span class="kw">log</span>(iter <span class="op">+</span><span class="st"> </span><span class="dv">1</span>))  <span class="co"># Actualizar la temperatura</span></span>
+<span id="cb487-16"><a href="temple-simulado.html#cb487-16"></a>    <span class="co"># Se controla el nº de perturbaciones aceptadas</span></span>
+<span id="cb487-17"><a href="temple-simulado.html#cb487-17"></a>    ace &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(the[(iter<span class="op">/</span><span class="dv">2</span>)<span class="op">:</span>iter, <span class="dv">1</span>]))</span>
+<span id="cb487-18"><a href="temple-simulado.html#cb487-18"></a>    <span class="cf">if</span> (ace <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) </span>
+<span id="cb487-19"><a href="temple-simulado.html#cb487-19"></a>      <span class="co"># si es muy pequeño se disminuye la escala de la perturbación</span></span>
+<span id="cb487-20"><a href="temple-simulado.html#cb487-20"></a>      factor &lt;-<span class="st"> </span>factor<span class="op">/</span><span class="dv">10</span></span>
+<span id="cb487-21"><a href="temple-simulado.html#cb487-21"></a>    <span class="cf">if</span> (<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>ace <span class="op">&gt;</span><span class="st"> </span>iter) </span>
+<span id="cb487-22"><a href="temple-simulado.html#cb487-22"></a>      <span class="co"># si es muy grande se aumenta</span></span>
+<span id="cb487-23"><a href="temple-simulado.html#cb487-23"></a>      factor &lt;-<span class="st"> </span>factor <span class="op">*</span><span class="st"> </span><span class="dv">10</span></span>
+<span id="cb487-24"><a href="temple-simulado.html#cb487-24"></a>    scale &lt;-<span class="st"> </span><span class="kw">c</span>(scale, <span class="kw">max</span>(<span class="dv">2</span>, factor <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(temp[iter])))  <span class="co"># Actualizar la escala de la perturbación</span></span>
+<span id="cb487-25"><a href="temple-simulado.html#cb487-25"></a>    dif &lt;-<span class="st"> </span>(iter <span class="op">&lt;</span><span class="st"> </span><span class="dv">100</span>) <span class="op">+</span><span class="st"> </span>(ace <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span>(<span class="kw">max</span>(hval) <span class="op">-</span><span class="st"> </span><span class="kw">max</span>(hval[<span class="dv">1</span><span class="op">:</span>(iter<span class="op">/</span><span class="dv">2</span>)]))</span>
+<span id="cb487-26"><a href="temple-simulado.html#cb487-26"></a>  }</span>
+<span id="cb487-27"><a href="temple-simulado.html#cb487-27"></a>  <span class="kw">list</span>(<span class="dt">theta =</span> the, <span class="dt">val =</span> hval, <span class="dt">ite =</span> iter)</span>
+<span id="cb487-28"><a href="temple-simulado.html#cb487-28"></a>}</span>
+<span id="cb487-29"><a href="temple-simulado.html#cb487-29"></a></span>
+<span id="cb487-30"><a href="temple-simulado.html#cb487-30"></a><span class="co"># Representar la superficie del logaritmo de la verosimilitud</span></span>
+<span id="cb487-31"><a href="temple-simulado.html#cb487-31"></a><span class="kw">image</span>(mmu1, mmu2, <span class="op">-</span>lli, <span class="dt">xlab =</span> <span class="kw">expression</span>(mu[<span class="dv">1</span>]), <span class="dt">ylab =</span> <span class="kw">expression</span>(mu[<span class="dv">2</span>]))</span>
+<span id="cb487-32"><a href="temple-simulado.html#cb487-32"></a><span class="kw">contour</span>(mmu1, mmu2, <span class="op">-</span>lli, <span class="dt">nlevels =</span> <span class="dv">50</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb487-33"><a href="temple-simulado.html#cb487-33"></a><span class="kw">points</span>(starts, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">pch =</span> <span class="dv">19</span>)</span>
+<span id="cb487-34"><a href="temple-simulado.html#cb487-34"></a></span>
+<span id="cb487-35"><a href="temple-simulado.html#cb487-35"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb487-36"><a href="temple-simulado.html#cb487-36"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nstarts) {</span>
+<span id="cb487-37"><a href="temple-simulado.html#cb487-37"></a>  sar &lt;-<span class="st"> </span><span class="kw">SA</span>(like, starts[j, ])</span>
+<span id="cb487-38"><a href="temple-simulado.html#cb487-38"></a>  <span class="kw">lines</span>(sar<span class="op">$</span>the[, <span class="dv">1</span>], sar<span class="op">$</span>the[, <span class="dv">2</span>], <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb487-39"><a href="temple-simulado.html#cb487-39"></a>  <span class="kw">points</span>(sar<span class="op">$</span>the[sar<span class="op">$</span>it, <span class="dv">1</span>], sar<span class="op">$</span>the[sar<span class="op">$</span>it, <span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">19</span>)</span>
+<span id="cb487-40"><a href="temple-simulado.html#cb487-40"></a>}</span></code></pre></div>
 <p><img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>

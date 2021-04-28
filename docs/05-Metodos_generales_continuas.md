@@ -4,7 +4,7 @@
 PENDIENTE:
 Emplear entorno algoritmo
 Usar ejemplos en lugar de ejercicios
-Ejemplo cociente de uniformes
+Ejemplo cociente de uniformes, incluir aplicación en la práctica
 -->
 
 
@@ -89,7 +89,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##    0.02    0.00    0.02
+##    0.02    0.00    0.01
 ```
 
 ```r
@@ -182,7 +182,7 @@ b)  Generar $10^{4}$ valores de la distribución doble exponencial de
     
     ```
     ##    user  system elapsed 
-    ##    0.02    0.01    0.03
+    ##    0.03    0.00    0.03
     ```
 
 
@@ -467,7 +467,7 @@ a)  Generar una muestra de $10^{4}$ observaciones empleando este
     
     ```
     ##    user  system elapsed 
-    ##    0.08    0.00    0.08
+    ##    0.09    0.00    0.09
     ```
     
     ```r

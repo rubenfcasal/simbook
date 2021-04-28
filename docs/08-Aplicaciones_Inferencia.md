@@ -636,14 +636,14 @@ c)  Repetir el apartado anterior empleando simulación para aproximar
     
     \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-24-1} \end{center}
     
-Como ya se comentó, el caso de ajustar un modelo a los datos y realizar simulaciones a partir de ese modelo ajustado para aproximar las características de interés de un estadístico, se denomina también bootstrap paramétrico (Ver [Sección 4.1](https://rubenfcasal.github.io/book_remuestreo/cap4-boot-par.html) de Cao y Fernández-Casal, 2019).
-
-En este libro en las secciones [5.6](https://rubenfcasal.github.io/book_remuestreo/cap5-ejem.html) y [E.3.2](https://rubenfcasal.github.io/book_remuestreo/ejemplos-1.html#estudio-de-simulaci%C3%B3n), se incluyen ejemplos adicionales de estudios de simulación.
+Como ya se comentó, el caso de ajustar un modelo a los datos y realizar simulaciones a partir de ese modelo ajustado para aproximar las características de interés de un estadístico, se denomina también bootstrap paramétrico.
+Para más detalles ver por ejemplo la [Sección 3.1](https://rubenfcasal.github.io/book_remuestreo/modunif-boot-par.html) de Cao y Fernández-Casal (2020).
+En este libro, en las secciones [4.6.2](https://rubenfcasal.github.io/book_remuestreo/icboot-ejem.html#estudio-sim-exp) y [B.3.2](https://rubenfcasal.github.io/book_remuestreo/ejemplos-3.html#estudio-sim-boot), se incluyen ejemplos adicionales de estudios de simulación.
 
 Contrastes de hipótesis {#contrastes}
 -----------------------
 
-Ver [Apéncide A](https://rubenfcasal.github.io/book_remuestreo/practica2.html) de Cao y Fernández-Casal (2019).
+Ver [Capítulo 5](https://rubenfcasal.github.io/book_remuestreo/contrastes.html) de Cao y Fernández-Casal (2020).
 
 \BeginKnitrBlock{exercise}\iffalse{-91-84-101-115-116-32-100-101-32-75-111-108-109-111-103-111-114-111-118-45-83-109-105-114-110-111-118-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:ks-test-sim"><strong>(\#exr:ks-test-sim)  \iffalse (Test de Kolmogorov-Smirnov) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
@@ -1193,7 +1193,13 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
 Remuestreo Bootstrap
 --------------------
 
-Ver [Cao y Fernández-Casal (2019)](https://rubenfcasal.github.io/book_remuestreo/).
+El bootstrap es un procedimiento estadístico que sirve para aproximar características de la distribución en el muestreo de un estadístico.
+Para ello se emplea (normalmente) simulación, generando un gran número de muestras mediante algún tipo de remuestreo de la muestra original.
+Su ventaja principal es que no requiere hipótesis sobre el mecanismo generador de los datos. 
+
+En esta sección se incluye una breve introducción al bootstrap.
+Para información adicional ver por ejemplo Davison y Hinkley (1997) o [Cao y Fernández-Casal (2020)](https://rubenfcasal.github.io/book_remuestreo).
+
 
 ### Idea:
 
@@ -1279,10 +1285,6 @@ En general podríamos decir que:
 
 
 \begin{center}\includegraphics[width=0.7\linewidth]{images/bootstrap} \end{center}
-
-Para información adicional sobre bootstrap ver p.e.:
-Davison, A.C. and Hinkley, D.V. (1997). *Bootstrap Methods and Their Application*. Cambridge University Press
-
 
 \BeginKnitrBlock{example}\iffalse{-91-65-112-114-111-120-105-109-97-99-105-243-110-32-100-101-108-32-115-101-115-103-111-32-121-32-100-101-108-32-101-114-114-111-114-32-101-115-116-225-110-100-97-114-32-109-101-100-105-97-110-116-101-32-98-111-111-116-115-116-114-97-112-93-}\fi{}<div class="example"><span class="example" id="exm:mean-median-boot"><strong>(\#exm:mean-median-boot)  \iffalse (Aproximación del sesgo y del error estándar mediante bootstrap) \fi{} </strong></span></div>\EndKnitrBlock{example}
 

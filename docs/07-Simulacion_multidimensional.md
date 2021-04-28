@@ -265,10 +265,7 @@ $$\mathbf{X} =\boldsymbol\mu + H\Lambda^{1/2}\mathbf{Z} \sim \mathcal{N}_d\left(
   $$\mathbf{X} =\boldsymbol\mu + L\mathbf{Z} 
   \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right).$$
 
-Desde el punto de vista de la eficiencia computacional la factorización de Cholesky
-sería la preferible. Pero en ocasiones, para evitar problemas numéricos
-(por ejemplo, en el caso de matrices no definidas positivas) 
-puede ser más adecuado emplear la factorización espectral.
+Desde el punto de vista de la eficiencia computacional la factorización de Cholesky sería la preferible. Pero en ocasiones, para evitar problemas numéricos (por ejemplo, en el caso de matrices definidas positivas, i.e. con autovalores nulos) puede ser más adecuado emplear la factorización espectral.
 En el primer caso el algoritmo sería el siguiente:
 
 \BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-110-111-114-109-97-108-32-109-117-108-116-105-118-97-114-105-97-110-116-101-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:mnorm-fact"><strong>(\#cnj:mnorm-fact)  \iffalse (de simulación de una normal multivariante) \fi{} </strong></span>
@@ -393,7 +390,7 @@ mvrnorm
 ##         drop(X)
 ##     else t(X)
 ## }
-## <bytecode: 0x0000000028889e28>
+## <bytecode: 0x0000000027f742e0>
 ## <environment: namespace:MASS>
 ```
 
@@ -864,23 +861,90 @@ par(par.old)
 ### Simulación condicional a partir de un modelo ajustado
 
 En la práctica normalmente se ajusta un modelo a los datos observados y posteriormente se obtienen las simulaciones condicionadas empleando el modelo ajustado.
-Por ejemplo, en el caso de series de tiempo, se puede emplear la función `simulate` del paquete `forecast`:
+
+En `R` se incluye una función genérica^[Se pueden implementar métodos específicos para cada tipo (clase) de objeto; en este caso para cada tipo de modelo ajustado y podemos mostrar los disponibles mediante el comando `methods(simulate)`.] `simulate()` que permite generar respuestas a partir de modelos ajustados (siempre que esté implementado el método correspondiente al tipo de modelo). 
+Los métodos para modelos lineales y modelos lineales generalizamos están implementados en el paquete base `stats`.
+Muchos otros paquetes que proporcionan modelos adicionales, implementan también los correspondientes métodos `simulate()`.
+Por ejemplo, en el caso de series de tiempo, el paquete `forecast` permite ajustar distintos tipos de modelos y generar simulaciones a partir de ellos:
 
 
 ```r
 library(forecast)
 data <- window(co2, 1990) # datos de co2 desde 1990
-plot(data, ylab = expression("Atmospheric concentration of CO"[2]), 
-     xlim=c(1990,2000), ylim=c(350, 375))
-fit <- ets(data)
-# plot(forecast(fit, h=24))
-set.seed(1)
-lines(simulate(fit, 24), col="red")
+plot(data, ylab = expression("Atmospheric concentration of CO"[2]),
+     xlim = c(1990, 2000), ylim = c(350, 375))
 ```
 
 
 
 \begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-15-1} \end{center}
+
+```r
+# Se podrían ajustar distintos tipos de modelos
+fit <- ets(data)
+# fit <- auto.arima(data)
+```
+
+Podemos obtener predicciones (media de la distribución condicional) e intervalos de predicción:
+
+
+```r
+pred <- forecast(fit, h = 24, level = 95)
+pred
+```
+
+```
+##          Point Forecast    Lo 95    Hi 95
+## Jan 1998       365.1118 364.5342 365.6894
+## Feb 1998       366.1195 365.4572 366.7819
+## Mar 1998       367.0161 366.2786 367.7535
+## Apr 1998       368.2749 367.4693 369.0806
+## May 1998       368.9282 368.0596 369.7968
+## Jun 1998       368.2240 367.2967 369.1513
+## Jul 1998       366.5823 365.5997 367.5649
+## Aug 1998       364.4895 363.4546 365.5244
+## Sep 1998       362.6586 361.5738 363.7434
+## Oct 1998       362.7805 361.6479 363.9130
+## Nov 1998       364.2045 363.0262 365.3829
+## Dec 1998       365.5250 364.3025 366.7476
+## Jan 1999       366.6002 365.3349 367.8654
+## Feb 1999       367.6078 366.3013 368.9144
+## Mar 1999       368.5044 367.1578 369.8510
+## Apr 1999       369.7633 368.3777 371.1488
+## May 1999       370.4165 368.9930 371.8400
+## Jun 1999       369.7124 368.2519 371.1728
+## Jul 1999       368.0706 366.5741 369.5671
+## Aug 1999       365.9778 364.4461 367.5096
+## Sep 1999       364.1469 362.5806 365.7131
+## Oct 1999       364.2688 362.6688 365.8688
+## Nov 1999       365.6929 364.0597 367.3260
+## Dec 1999       367.0134 365.3477 368.6790
+```
+
+Para análisis adicionales nos puede interesar generar simulaciones (por defecto de la distribución condicional, `future = TRUE`):
+
+
+```r
+set.seed(321)
+sim.cond <- simulate(fit, 24)
+
+plot(pred)
+lines(sim.cond, lwd = 2, col = "red")
+```
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/simulate-forecast-1} 
+
+}
+
+\caption{Ejemplo de una serie de tiempo (datos observados de co2 en el observatorio Mauna Loa), predicciones futuras (en azul; media distribución condicional) y simulación condicional (en rojo) obtenidas a partir de un modelo ajustado.}(\#fig:simulate-forecast)
+\end{figure}
+
+
+
+Para más detalles ver Hyndman y Athanasopoulos (2018, secciones [4.3](https://otexts.com/fpp2/prediction-intervals.html) y [11.4](https://otexts.com/fpp2/bootstrap.html)).
+
 
 ## Simulación basada en cópulas
 

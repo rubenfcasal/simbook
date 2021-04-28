@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2021-04-21" />
+<meta name="date" content="2021-04-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -545,18 +545,67 @@ Figura 7.5: Posiciones espaciales de las simulaciones condicionales (y las de lo
 </div>
 <div id="simulación-condicional-a-partir-de-un-modelo-ajustado" class="section level3">
 <h3><span class="header-section-number">7.5.2</span> Simulación condicional a partir de un modelo ajustado</h3>
-<p>En la práctica normalmente se ajusta un modelo a los datos observados y posteriormente se obtienen las simulaciones condicionadas empleando el modelo ajustado.
-Por ejemplo, en el caso de series de tiempo, se puede emplear la función <code>simulate</code> del paquete <code>forecast</code>:</p>
+<p>En la práctica normalmente se ajusta un modelo a los datos observados y posteriormente se obtienen las simulaciones condicionadas empleando el modelo ajustado.</p>
+<p>En <code>R</code> se incluye una función genérica<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a> <code>simulate()</code> que permite generar respuestas a partir de modelos ajustados (siempre que esté implementado el método correspondiente al tipo de modelo).
+Los métodos para modelos lineales y modelos lineales generalizamos están implementados en el paquete base <code>stats</code>.
+Muchos otros paquetes que proporcionan modelos adicionales, implementan también los correspondientes métodos <code>simulate()</code>.
+Por ejemplo, en el caso de series de tiempo, el paquete <code>forecast</code> permite ajustar distintos tipos de modelos y generar simulaciones a partir de ellos:</p>
 <div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="simulación-condicional-e-incondicional.html#cb233-1"></a><span class="kw">library</span>(forecast)</span>
 <span id="cb233-2"><a href="simulación-condicional-e-incondicional.html#cb233-2"></a>data &lt;-<span class="st"> </span><span class="kw">window</span>(co2, <span class="dv">1990</span>) <span class="co"># datos de co2 desde 1990</span></span>
-<span id="cb233-3"><a href="simulación-condicional-e-incondicional.html#cb233-3"></a><span class="kw">plot</span>(data, <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;Atmospheric concentration of CO&quot;</span>[<span class="dv">2</span>]), </span>
-<span id="cb233-4"><a href="simulación-condicional-e-incondicional.html#cb233-4"></a>     <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">1990</span>,<span class="dv">2000</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">350</span>, <span class="dv">375</span>))</span>
-<span id="cb233-5"><a href="simulación-condicional-e-incondicional.html#cb233-5"></a>fit &lt;-<span class="st"> </span><span class="kw">ets</span>(data)</span>
-<span id="cb233-6"><a href="simulación-condicional-e-incondicional.html#cb233-6"></a><span class="co"># plot(forecast(fit, h=24))</span></span>
-<span id="cb233-7"><a href="simulación-condicional-e-incondicional.html#cb233-7"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb233-8"><a href="simulación-condicional-e-incondicional.html#cb233-8"></a><span class="kw">lines</span>(<span class="kw">simulate</span>(fit, <span class="dv">24</span>), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<span id="cb233-3"><a href="simulación-condicional-e-incondicional.html#cb233-3"></a><span class="kw">plot</span>(data, <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;Atmospheric concentration of CO&quot;</span>[<span class="dv">2</span>]),</span>
+<span id="cb233-4"><a href="simulación-condicional-e-incondicional.html#cb233-4"></a>     <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">1990</span>, <span class="dv">2000</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">350</span>, <span class="dv">375</span>))</span></code></pre></div>
 <p><img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="simulación-condicional-e-incondicional.html#cb234-1"></a><span class="co"># Se podrían ajustar distintos tipos de modelos</span></span>
+<span id="cb234-2"><a href="simulación-condicional-e-incondicional.html#cb234-2"></a>fit &lt;-<span class="st"> </span><span class="kw">ets</span>(data)</span>
+<span id="cb234-3"><a href="simulación-condicional-e-incondicional.html#cb234-3"></a><span class="co"># fit &lt;- auto.arima(data)</span></span></code></pre></div>
+<p>Podemos obtener predicciones (media de la distribución condicional) e intervalos de predicción:</p>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="simulación-condicional-e-incondicional.html#cb235-1"></a>pred &lt;-<span class="st"> </span><span class="kw">forecast</span>(fit, <span class="dt">h =</span> <span class="dv">24</span>, <span class="dt">level =</span> <span class="dv">95</span>)</span>
+<span id="cb235-2"><a href="simulación-condicional-e-incondicional.html#cb235-2"></a>pred</span></code></pre></div>
+<pre><code>##          Point Forecast    Lo 95    Hi 95
+## Jan 1998       365.1118 364.5342 365.6894
+## Feb 1998       366.1195 365.4572 366.7819
+## Mar 1998       367.0161 366.2786 367.7535
+## Apr 1998       368.2749 367.4693 369.0806
+## May 1998       368.9282 368.0596 369.7968
+## Jun 1998       368.2240 367.2967 369.1513
+## Jul 1998       366.5823 365.5997 367.5649
+## Aug 1998       364.4895 363.4546 365.5244
+## Sep 1998       362.6586 361.5738 363.7434
+## Oct 1998       362.7805 361.6479 363.9130
+## Nov 1998       364.2045 363.0262 365.3829
+## Dec 1998       365.5250 364.3025 366.7476
+## Jan 1999       366.6002 365.3349 367.8654
+## Feb 1999       367.6078 366.3013 368.9144
+## Mar 1999       368.5044 367.1578 369.8510
+## Apr 1999       369.7633 368.3777 371.1488
+## May 1999       370.4165 368.9930 371.8400
+## Jun 1999       369.7124 368.2519 371.1728
+## Jul 1999       368.0706 366.5741 369.5671
+## Aug 1999       365.9778 364.4461 367.5096
+## Sep 1999       364.1469 362.5806 365.7131
+## Oct 1999       364.2688 362.6688 365.8688
+## Nov 1999       365.6929 364.0597 367.3260
+## Dec 1999       367.0134 365.3477 368.6790</code></pre>
+<p>Para análisis adicionales nos puede interesar generar simulaciones (por defecto de la distribución condicional, <code>future = TRUE</code>):</p>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="simulación-condicional-e-incondicional.html#cb237-1"></a><span class="kw">set.seed</span>(<span class="dv">321</span>)</span>
+<span id="cb237-2"><a href="simulación-condicional-e-incondicional.html#cb237-2"></a>sim.cond &lt;-<span class="st"> </span><span class="kw">simulate</span>(fit, <span class="dv">24</span>)</span>
+<span id="cb237-3"><a href="simulación-condicional-e-incondicional.html#cb237-3"></a></span>
+<span id="cb237-4"><a href="simulación-condicional-e-incondicional.html#cb237-4"></a><span class="kw">plot</span>(pred)</span>
+<span id="cb237-5"><a href="simulación-condicional-e-incondicional.html#cb237-5"></a><span class="kw">lines</span>(sim.cond, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:simulate-forecast"></span>
+<img src="07-Simulacion_multidimensional_files/figure-html/simulate-forecast-1.png" alt="Ejemplo de una serie de tiempo (datos observados de co2 en el observatorio Mauna Loa), predicciones futuras (en azul; media distribución condicional) y simulación condicional (en rojo) obtenidas a partir de un modelo ajustado." width="70%" />
+<p class="caption">
+Figura 7.6: Ejemplo de una serie de tiempo (datos observados de co2 en el observatorio Mauna Loa), predicciones futuras (en azul; media distribución condicional) y simulación condicional (en rojo) obtenidas a partir de un modelo ajustado.
+</p>
 </div>
+<p>Para más detalles ver Hyndman y Athanasopoulos (2018, secciones <a href="https://otexts.com/fpp2/prediction-intervals.html">4.3</a> y <a href="https://otexts.com/fpp2/bootstrap.html">11.4</a>).</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="11">
+<li id="fn11"><p>Se pueden implementar métodos específicos para cada tipo (clase) de objeto; en este caso para cada tipo de modelo ajustado y podemos mostrar los disponibles mediante el comando <code>methods(simulate)</code>.<a href="simulación-condicional-e-incondicional.html#fnref11" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 

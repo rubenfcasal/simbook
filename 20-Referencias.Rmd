@@ -31,11 +31,16 @@ Bratley, P., Fox, B.L. y Schrage L.E. (1987). *A guide to simulation*. Springer-
 
 Cao R. y Fernández-Casal R. (2020). *Técnicas de Remuestreo* <https://rubenfcasal.github.io/book_remuestreo>.
 
+Davison, A.C. y Hinkley, D.V. (1997). *Bootstrap Methods and Their Application*. Cambridge University Press.
+
 Devroye, L. (1986). *Non-uniform random variate generation*. Springer-Verlag.
 
 Evans, M. y Swartz, T. (2000). *Approximating integrals via Monte Carlo and determinstic methods*. Oxford University Press. 
 
 Gentle, J.E. (1998). *Random number generation and Monte Carlo methods*. Springer-Verlag.
+
+Hyndman, R.J. y Athanasopoulos, G. (2018). *Forecasting: principles and practice*. OTexts. 
+Disponible online: [2nd edition (forecast)](https://otexts.com/fpp2), [3rd edition (fable)](https://otexts.com/fpp3).
 
 Hofert, M. (2018). *Elements of Copula Modeling with R*, Springer.
 
