@@ -57,14 +57,10 @@ curve(f1, -3, 3, ylim = c(0, f2(-1)), ylab = "fdp")
 curve(f2, add = TRUE, lty = 2)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/normind-plot-1} 
-
-}
-
-\caption{(ref:normind-plot)}(\#fig:normind-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-Simulacion_multidimensional_files/figure-html/normind-plot-1.png" alt="(ref:normind-plot)" width="70%" />
+<p class="caption">(\#fig:normind-plot)(ref:normind-plot)</p>
+</div>
 Para simular una generación bastaría con:
 
 ```r
@@ -342,14 +338,10 @@ matplot(t, x, type = "l", ylim = c(-3.5, 3.5))
 lines(t, mu, lwd = 2)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/funcional-plot-1} 
-
-}
-
-\caption{(ref:funcional)}(\#fig:funcional-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-Simulacion_multidimensional_files/figure-html/funcional-plot-1.png" alt="(ref:funcional)" width="70%" />
+<p class="caption">(\#fig:funcional-plot)(ref:funcional)</p>
+</div>
 
 Alternativamente se podría emplear, por ejemplo, la funcion `mvrnorm`
 del paquete `MASS` que emplea la factorización espectral (`eigen`) (y que tiene en cuenta una tolerancia relativa para correguir autovalores negativos próximos a cero):
@@ -390,7 +382,7 @@ mvrnorm
 ##         drop(X)
 ##     else t(X)
 ## }
-## <bytecode: 0x0000000027f742e0>
+## <bytecode: 0x0000000028e2d6a0>
 ## <environment: namespace:MASS>
 ```
 
@@ -401,14 +393,10 @@ matplot(t, t(x), type = "l")
 lines(t, mu, lwd = 2)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/funcional-plot2-1} 
-
-}
-
-\caption{(ref:funcional2)}(\#fig:funcional-plot2)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-Simulacion_multidimensional_files/figure-html/funcional-plot2-1.png" alt="(ref:funcional2)" width="70%" />
+<p class="caption">(\#fig:funcional-plot2)(ref:funcional2)</p>
+</div>
 
 Otros métodos para variables continuas relacionados con la factorización de la matriz de covarianzas son el método FFT (transformada rápida de Fourier; e.g. Davies y Harte, 1987) o el *Circular embedding* (Dietrich and Newsam, 1997), que realmente son el mismo.
 
@@ -677,14 +665,10 @@ matplot(t[!idata], y, type = "l", add = TRUE) # simulaciones condicionales
 lines(t[!idata], kpred, lwd = 2, lty = 2) # media condicional (predicción kriging)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/funcional-cond-1} 
-
-}
-
-\caption{(ref:funcional-cond)}(\#fig:funcional-cond)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-Simulacion_multidimensional_files/figure-html/funcional-cond-1.png" alt="(ref:funcional-cond)" width="70%" />
+<p class="caption">(\#fig:funcional-cond)(ref:funcional-cond)</p>
+</div>
 
 
 \BeginKnitrBlock{example}\iffalse{-91-115-105-109-117-108-97-99-105-243-110-32-99-111-110-100-105-99-105-111-110-97-108-32-100-101-32-100-97-116-111-115-32-101-115-112-97-99-105-97-108-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-12"><strong>(\#exm:unnamed-chunk-12)  \iffalse (simulación condicional de datos espaciales) \fi{} </strong></span></div>\EndKnitrBlock{example}
@@ -801,14 +785,10 @@ plot(data.s, type = "p", pch = 20, asp = 1)
 points(new.s)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/pos-sp-simcond-1} 
-
-}
-
-\caption{Posiciones espaciales de las simulaciones condicionales (y las de los datos).}(\#fig:pos-sp-simcond)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-Simulacion_multidimensional_files/figure-html/pos-sp-simcond-1.png" alt="Posiciones espaciales de las simulaciones condicionales (y las de los datos)." width="70%" />
+<p class="caption">(\#fig:pos-sp-simcond)Posiciones espaciales de las simulaciones condicionales (y las de los datos).</p>
+</div>
 
 ```r
 # Simulación condicional
@@ -849,9 +829,7 @@ image(new.x, new.y, kc$simul[,,4], main="simul. cond. 4",
       xlab = "x", ylab = "y", zlim = zlim)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.9\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-14-1} \end{center}
+<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-14-1.png" width="90%" style="display: block; margin: auto;" />
 
 ```r
 par(par.old)
@@ -875,9 +853,7 @@ plot(data, ylab = expression("Atmospheric concentration of CO"[2]),
      xlim = c(1990, 2000), ylim = c(350, 375))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-15-1} \end{center}
+<img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 # Se podrían ajustar distintos tipos de modelos
@@ -932,14 +908,10 @@ plot(pred)
 lines(sim.cond, lwd = 2, col = "red")
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/simulate-forecast-1} 
-
-}
-
-\caption{Ejemplo de una serie de tiempo (datos observados de co2 en el observatorio Mauna Loa), predicciones futuras (en azul; media distribución condicional) y simulación condicional (en rojo) obtenidas a partir de un modelo ajustado.}(\#fig:simulate-forecast)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-Simulacion_multidimensional_files/figure-html/simulate-forecast-1.png" alt="Ejemplo de una serie de tiempo (datos observados de co2 en el observatorio Mauna Loa), predicciones futuras (en azul; media distribución condicional) y simulación condicional (en rojo) obtenidas a partir de un modelo ajustado." width="70%" />
+<p class="caption">(\#fig:simulate-forecast)Ejemplo de una serie de tiempo (datos observados de co2 en el observatorio Mauna Loa), predicciones futuras (en azul; media distribución condicional) y simulación condicional (en rojo) obtenidas a partir de un modelo ajustado.</p>
+</div>
 
 
 
@@ -1036,16 +1008,12 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     plot(rcunif, xlab = "u", ylab = "v")
     ```
     
-    \begin{figure}[!htb]
+    <div class="figure" style="text-align: center">
+    <img src="07-Simulacion_multidimensional_files/figure-html/cclayton2-dispersion-1.png" alt="Gráfico de dispersión de los valores generados con distribución bidimensional de Clayton." width="70%" />
+    <p class="caption">(\#fig:cclayton2-dispersion)Gráfico de dispersión de los valores generados con distribución bidimensional de Clayton.</p>
+    </div>
     
-    {\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/cclayton2-dispersion-1} 
-    
-    }
-    
-    \caption{Gráfico de dispersión de los valores generados con distribución bidimensional de Clayton.}(\#fig:cclayton2-dispersion)
-    \end{figure}
-    
-    Representar la densidad conjunta (con `sm::sm.density()`) y las marginales [Figuras: \@ref(fig:cclayton2b-dispersion), \@ref(fig:cclayton3-dispersion)]:
+    Representar la densidad conjunta (con `sm::sm.density()`) y las marginales:
     
     
     ```r
@@ -1058,14 +1026,10 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     ## Warning: weights overwritten by binning
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/cclayton2-conjunta-1} 
-    
-    }
-    
-    \caption{Densidad conjunta de los valores generados con distribución bidimensional de Clayton.}(\#fig:cclayton2-conjunta)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="07-Simulacion_multidimensional_files/figure-html/cclayton2-conjunta-1.png" alt="Densidad conjunta de los valores generados con distribución bidimensional de Clayton." width="70%" />
+    <p class="caption">(\#fig:cclayton2-conjunta)Densidad conjunta de los valores generados con distribución bidimensional de Clayton.</p>
+    </div>
     
     
     ```r
@@ -1077,20 +1041,16 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     abline(h = 1)
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.9\linewidth]{07-Simulacion_multidimensional_files/figure-latex/cclayton2-marginales-1} 
-    
-    }
-    
-    \caption{Distribuciones marginales de los valores generados con distribución bidimensional de Clayton.}(\#fig:cclayton2-marginales)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="07-Simulacion_multidimensional_files/figure-html/cclayton2-marginales-1.png" alt="Distribuciones marginales de los valores generados con distribución bidimensional de Clayton." width="90%" />
+    <p class="caption">(\#fig:cclayton2-marginales)Distribuciones marginales de los valores generados con distribución bidimensional de Clayton.</p>
+    </div>
     
     ```r
     par(par.old)
     ```
 
-    Empleando el paquete *copula* [Figuras: \@ref(fig:cclayton2b-dispersion), \@ref(fig:cclayton3-dispersion)]:
+    Empleando el paquete *copula*:
     
     
     ```r
@@ -1100,14 +1060,10 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     plot(y, xlab = "u", ylab = "v")
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/cclayton2b-dispersion-1} 
-    
-    }
-    
-    \caption{Gráfico de dispersión de los valores generados con distribución bidimensional de Clayton empleando el paquete `copula`.}(\#fig:cclayton2b-dispersion)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="07-Simulacion_multidimensional_files/figure-html/cclayton2b-dispersion-1.png" alt="Gráfico de dispersión de los valores generados con distribución bidimensional de Clayton empleando el paquete `copula`." width="70%" />
+    <p class="caption">(\#fig:cclayton2b-dispersion)Gráfico de dispersión de los valores generados con distribución bidimensional de Clayton empleando el paquete `copula`.</p>
+    </div>
     
     
     
@@ -1119,14 +1075,10 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
                       xlab = "u1", ylab = "u2", zlab = "u3") 
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/cclayton3-dispersion-1} 
-    
-    }
-    
-    \caption{Gráfico de dispersión de los valores generados con distribución trididimensional de Clayton empleando el paquete `copula`.}(\#fig:cclayton3-dispersion)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="07-Simulacion_multidimensional_files/figure-html/cclayton3-dispersion-1.png" alt="Gráfico de dispersión de los valores generados con distribución trididimensional de Clayton empleando el paquete `copula`." width="70%" />
+    <p class="caption">(\#fig:cclayton3-dispersion)Gráfico de dispersión de los valores generados con distribución trididimensional de Clayton empleando el paquete `copula`.</p>
+    </div>
 
 
 c)  A partir de la muestra anterior generar una muestra de una v.a.
@@ -1140,14 +1092,10 @@ c)  A partir de la muestra anterior generar una muestra de una v.a.
     plot(rcexp, xlab = "exp1", ylab = "exp2")  
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/cclayton-exp-conjunta-1} 
-    
-    }
-    
-    \caption{Gráfico de dispersión de los valores generados con distribución exponencial y dependencia definida por la cópula de Clayton.}(\#fig:cclayton-exp-conjunta)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="07-Simulacion_multidimensional_files/figure-html/cclayton-exp-conjunta-1.png" alt="Gráfico de dispersión de los valores generados con distribución exponencial y dependencia definida por la cópula de Clayton." width="70%" />
+    <p class="caption">(\#fig:cclayton-exp-conjunta)Gráfico de dispersión de los valores generados con distribución exponencial y dependencia definida por la cópula de Clayton.</p>
+    </div>
     
     
     ```r
@@ -1159,14 +1107,10 @@ c)  A partir de la muestra anterior generar una muestra de una v.a.
     curve(dexp(x, 2), add = TRUE)
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.9\linewidth]{07-Simulacion_multidimensional_files/figure-latex/cclayton-exp-marginales-1} 
-    
-    }
-    
-    \caption{Distribuciones marginales exponenciales de los valores generados con dependencia definida por la cópula de Clayton.}(\#fig:cclayton-exp-marginales)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="07-Simulacion_multidimensional_files/figure-html/cclayton-exp-marginales-1.png" alt="Distribuciones marginales exponenciales de los valores generados con dependencia definida por la cópula de Clayton." width="90%" />
+    <p class="caption">(\#fig:cclayton-exp-marginales)Distribuciones marginales exponenciales de los valores generados con dependencia definida por la cópula de Clayton.</p>
+    </div>
     
     ```r
     par(par.old)
@@ -1629,14 +1573,10 @@ hist(sim.stat, freq = FALSE, breaks = 'FD')
 curve(dchisq(x, res$parameter), col = 'blue', add = TRUE) 
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/chi2-plot-1} 
-
-}
-
-\caption{Aproximación Monte-Carlo de la distribución del estadístico chi-cuadrado bajo independencia.}(\#fig:chi2-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-Simulacion_multidimensional_files/figure-html/chi2-plot-1.png" alt="Aproximación Monte-Carlo de la distribución del estadístico chi-cuadrado bajo independencia." width="70%" />
+<p class="caption">(\#fig:chi2-plot)Aproximación Monte-Carlo de la distribución del estadístico chi-cuadrado bajo independencia.</p>
+</div>
 
 Como se mostrará en la Sección \@ref(contrastes) del siguiente capítulo, podríamos aproximar el $p$-valor del contraste de independencia a partir de esta distribución:
 

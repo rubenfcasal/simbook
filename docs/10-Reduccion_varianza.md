@@ -4,21 +4,13 @@ Técnicas de reducción de la varianza
 
 
 
-Reducción de la varianza
-------------------------
+Si el coste computacional de generar un número suficiente de simulaciones es demasiado grande (por ejemplo, cuando evaluar el estadístico de interés requiere mucho tiempo de computación), nos puede interesar emplear técnicas de reducción de la varianza que nos permitan obtener una buena aproximación con un número menor de generaciones. Éstas técnicas son aplicadas normalmente cuando se pretende ofrecer respuestas lo más precisas posibles y principalmente sobre cantidades medias.
 
-Éstas técnicas son aplicadas normalmente cuando se pretende ofrecer respuestas
-lo más precisas posibles (con menor costo computacional) y principalmente sobre cantidades medias.
-
--   Supongamos que **estamos interesados en aproximar la media** de un
-    estadístico mediante simulación y 
-    **no nos interesa aproximar su varianza**.
-
-Existe un sinfín de técnicas encaminadas a reducir la varianza en un
-estudio de simulación (respecto a una aproximación estandar). 
+En este capítulo asumiremos que **estamos interesados en aproximar la media** de un estadístico mediante simulación y **no nos interesa aproximar su varianza**.
+Existe un sinfín de técnicas encaminadas a reducir la varianza en un estudio de este tipo (respecto a una aproximación estándar). 
 Algunas de ellas son:
 
--   Muestreo por importancia.
+-   Muestreo por importancia (Sección \@ref(muestreo-importancia)).
 
 -   Variables antitéticas.
 
@@ -28,11 +20,10 @@ Algunas de ellas son:
 
 -   Números aleatorios comunes.
 
--   Métodos de remuestreo.
-
 -   Condicionamiento.
 
--   ...
+No obstante, en general, si uno de los objetivos de la simulación es precisamente estimar la variabilidad no convendría emplear estas técnicas
+(para ello hay otros métodos disponibles, como el Jackniffe o el Bootstrap; ver p.e. Cao y Fernández-Casal, [Capítulo 2](https://rubenfcasal.github.io/book_remuestreo/prec-sesgo.html)).
 
 Variables antitéticas
 ---------------------
@@ -108,9 +99,7 @@ abline(h=0,lty=2)
 abline(v=c(a,b),lty=2)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{10-Reduccion_varianza_files/figure-latex/unnamed-chunk-2-1} \end{center}
+<img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-2-1.png" width="70%" style="display: block; margin: auto;" />
 
 Se trata de calcular la media de $e^{\mathcal{U}(0,2)}$:
 
@@ -147,9 +136,7 @@ res <- mc.integral(ftn, a, b, 500)
 abline(h = teor)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{10-Reduccion_varianza_files/figure-latex/unnamed-chunk-4-1} \end{center}
+<img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-4-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 res
@@ -191,9 +178,7 @@ set.seed(54321)
 res <- mc.integrala(ftn, a, b, 500)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{10-Reduccion_varianza_files/figure-latex/unnamed-chunk-5-1} \end{center}
+<img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-5-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 res
@@ -362,9 +347,7 @@ res <- mc.integral(ftn, a, b, 500)
 abline(h = teor)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{10-Reduccion_varianza_files/figure-latex/unnamed-chunk-9-1} \end{center}
+<img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-9-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 res
@@ -490,9 +473,7 @@ reg <- lm(expu ~ u)$coef
 abline(reg, col='blue')
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{10-Reduccion_varianza_files/figure-latex/unnamed-chunk-12-1} \end{center}
+<img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```r
 # summary(lm(expu ~ u)) # R-squared: 0.9392

@@ -223,14 +223,10 @@ plot(res, ylab = "frecuencia relativa", xlab = "valores")
 points(x, fmp, pch = 4)  # Comparación teórica
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{06-Metodos_generales_discretas_files/figure-latex/comprfmp-1} 
-
-}
-
-\caption{Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas.}(\#fig:comprfmp)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-Metodos_generales_discretas_files/figure-html/comprfmp-1.png" alt="Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas." width="70%" />
+<p class="caption">(\#fig:comprfmp)Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas.</p>
+</div>
 
 ```r
 res <- as.data.frame(res)
@@ -331,7 +327,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##    0.05    0.02    0.08
+##    0.10    0.00    0.11
 ```
 
 ```r
@@ -380,8 +376,7 @@ $$g_{j}=Q_{\mathcal{I}}(u_{j})=\inf \left\{ i:F_{i}\geq u_{j}=\frac{j-1}{m}\righ
 El punto de partida para un valor $U$ será $g_{j_{0}}$ siendo:
 $$j_{0}=\left\lfloor mU\right\rfloor +1$$
 
-
-\begin{center}\includegraphics[width=0.7\linewidth]{images/tablaguia2} \end{center}
+<img src="images/tablaguia2.png" width="70%" style="display: block; margin: auto;" />
 
 En este caso, puede verse que una cota del número medio de comparaciones es:
 $$E\left( N\right) \leq 1+\frac{n}{m}$$
@@ -453,7 +448,7 @@ system.time( rx <- rfmp.tabla(x, fmp, n-1, nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.05    0.00    0.05
+##    0.03    0.00    0.03
 ```
 
 Análisis de los resultados:
@@ -464,14 +459,10 @@ plot(res, ylab = "frecuencia relativa", xlab = "valores")
 points(x, fmp, pch = 4)  # Comparación teórica
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{06-Metodos_generales_discretas_files/figure-latex/comptabla-1} 
-
-}
-
-\caption{Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas.}(\#fig:comptabla)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-Metodos_generales_discretas_files/figure-html/comptabla-1.png" alt="Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas." width="70%" />
+<p class="caption">(\#fig:comptabla)Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas.</p>
+</div>
 
 
 Método de Alias {#alias}
@@ -509,14 +500,10 @@ El algoritmo “Robin Hood” de inicialización (Kronmal y Peterson, 1979) es e
 9.  Ir al paso 3.
 
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{images/alias2} 
-
-}
-
-\caption{Pasos del algoritmo de inicialización del método Alias.}(\#fig:unnamed-chunk-20)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="images/alias2.png" alt="Pasos del algoritmo de inicialización del método Alias." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-20)Pasos del algoritmo de inicialización del método Alias.</p>
+</div>
 
 El algoritmo para generar las simulaciones es el estándar del método de composición:
 
@@ -579,14 +566,10 @@ plot(res, ylab = "frecuencia relativa", xlab = "valores")
 points(x, fmp, pch = 4)  # Comparación teórica
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{06-Metodos_generales_discretas_files/figure-latex/compalias-1} 
-
-}
-
-\caption{Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas.}(\#fig:compalias)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-Metodos_generales_discretas_files/figure-html/compalias-1.png" alt="Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas." width="70%" />
+<p class="caption">(\#fig:compalias)Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas.</p>
+</div>
 
 Simulación de una variable discreta con dominio infinito
 --------------------------------------------------------
@@ -726,9 +709,7 @@ curve(fdistr(x), from = -0.1, to = 1.1, type = 's',
 abline(h = c(1/10, 2/10, 3/10), lty = 2) 
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{06-Metodos_generales_discretas_files/figure-latex/unnamed-chunk-25-1} \end{center}
+<img src="06-Metodos_generales_discretas_files/figure-html/unnamed-chunk-25-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 **Nota**: Esta variable toma los valores 0 y 1/5 con probabilidad 1/10.
@@ -791,9 +772,7 @@ b)  Implementa el algoritmo en una función que permita generar $nsim$
     hist(simx, breaks = "FD", freq = FALSE)
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{06-Metodos_generales_discretas_files/figure-latex/unnamed-chunk-27-1} \end{center}
+    <img src="06-Metodos_generales_discretas_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" />
     
     En este caso como no es una variable absolutamente continua mejor emplear 
     la función de distribución para compararla con la teórica:
@@ -804,9 +783,7 @@ b)  Implementa el algoritmo en una función que permita generar $nsim$
     curve(fdistr(x), type = "s", lty = 2, add = TRUE)
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{06-Metodos_generales_discretas_files/figure-latex/unnamed-chunk-28-1} \end{center}
+    <img src="06-Metodos_generales_discretas_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 \BeginKnitrBlock{exercise}\iffalse{-91-112-114-111-112-117-101-115-116-111-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:hipergeom"><strong>(\#exr:hipergeom)  \iffalse (propuesto) \fi{} </strong></span></div>\EndKnitrBlock{exercise}

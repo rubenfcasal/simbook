@@ -144,7 +144,7 @@
 
 \title{Simulación Estadística}
 \author{Rubén Fernández Casal (\href{mailto:ruben.fcasal@udc.es}{\nolinkurl{ruben.fcasal@udc.es}}), Ricardo Cao (\href{mailto:rcao@udc.es}{\nolinkurl{rcao@udc.es}})}
-\date{2021-04-28}
+\date{2021-05-10}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Teorema}[chapter]
@@ -1108,10 +1108,10 @@ Ejemplo:
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.06    0.02    0.14 
+##    0.04    0.02    0.08 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.06    0.02    0.14
+##    0.04    0.02    0.08
 \end{verbatim}
 
 \begin{Shaded}
@@ -1134,10 +1134,10 @@ Ejemplo:
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.01    0.00    0.01 
+##    0.02    0.00    0.01 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.07    0.02    0.15
+##    0.06    0.02    0.09
 \end{verbatim}
 
 \hypertarget{paquetes-de-r-1}{%
@@ -1237,7 +1237,7 @@ Ejemplo:
 ## Time of last operation: 
 ## Sample median of 1e+06 values = 0.4993323 
 ##    user  system elapsed 
-##    0.08    0.03    0.12
+##    0.09    0.02    0.11
 \end{verbatim}
 
 \begin{Shaded}
@@ -1254,7 +1254,7 @@ Ejemplo:
 ##       0       0       0 
 ## Total time:
 ##    user  system elapsed 
-##    0.08    0.03    0.12
+##    0.09    0.02    0.11
 \end{verbatim}
 
 Otro paquete que puede ser de utilidad es
@@ -1414,7 +1414,7 @@ Por ejemplo, el conjunto de datos \texttt{randu} contiene 400 tripletas de núme
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.02    0.00    0.02
+##    0.03    0.00    0.03
 \end{verbatim}
 
 \begin{Shaded}
@@ -2994,7 +2994,7 @@ El código para implementar este algoritmo en R podría ser el siguiente:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.02    0.00    0.01
+##    0.01    0.00    0.02
 \end{verbatim}
 
 \begin{Shaded}
@@ -4244,7 +4244,7 @@ Empleamos la rutina anterior para generar las simulaciones:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.08    0.00    0.08
+##    0.06    0.00    0.07
 \end{verbatim}
 
 Aproximación de la media:
@@ -4408,7 +4408,7 @@ función \texttt{sample} de R.
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.05    0.02    0.08
+##    0.08    0.02    0.10
 \end{verbatim}
 
 \begin{Shaded}
@@ -4548,7 +4548,7 @@ Repetir el Ejercicio \ref{exr:binom-cuant} anterior empleando esta rutina con \(
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.05    0.00    0.05
+##    0.03    0.01    0.05
 \end{verbatim}
 
 Análisis de los resultados:
@@ -4673,7 +4673,7 @@ Repetir el Ejercicio \ref{exr:binom-cuant} anterior empleando esta rutina.
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.03    0.00    0.03
+##    0.03    0.00    0.04
 \end{verbatim}
 
 Análisis de los resultados:
@@ -5426,7 +5426,7 @@ del paquete \texttt{MASS} que emplea la factorización espectral (\texttt{eigen}
 ##         drop(X)
 ##     else t(X)
 ## }
-## <bytecode: 0x0000000027f742e0>
+## <bytecode: 0x0000000027f54698>
 ## <environment: namespace:MASS>
 \end{verbatim}
 
@@ -7936,20 +7936,16 @@ valor absoluto del correspondiente gráfico PP, y solo habría que cambiar el es
 \protect\hypertarget{exr:media-median}{}{\label{exr:media-median} \iffalse (Comparación de la eficiencia de la media muestral y de la mediana bajo contaminación) \fi{} }
 \EndKnitrBlock{exercise}
 
-Supongamos que estamos interesados en estudiar el efecto de datos
-atípicos en la estimación de la media teórica mediante la media y la mediana muestrales.
-Consideramos una variable aleatoria con distribución normal contaminada,
-en la que una observación procede de una \(N(0,1)\) con probabilidad 0.95
-y de una \(N(3,3^2)\) con probabilidad 0.05 (mixtura).
-Se puede generar una muestra de esta
-variable mediante los comandos:
+Supongamos que estamos interesados en estudiar el efecto de datos atípicos en la estimación de la media teórica mediante la media y la mediana muestrales.
+Consideramos una variable aleatoria con distribución normal contaminada, en la que una observación procede de una \(N(0,1)\) con probabilidad 0.95 y de una \(N(3,3^2)\) con probabilidad 0.05 (mixtura).
+Se puede generar una muestra de esta variable (mixtura) mediante el método de composición descrito en la Sección \ref{composicion}, por ejemplo empleando el siguiente código:
 
 \begin{verbatim}
 p.sim <- rbinom(n, 1, 0.05)
 dat.sim <- rnorm(n, 3*p.sim, 1+2*p.sim)
 \end{verbatim}
 
-Función de densidad:
+Podemos comparar la densidad objetivo con la de los valores contaminados:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7961,7 +7957,7 @@ Función de densidad:
 \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/contaminada-1} \end{center}
 
 \BeginKnitrBlock{remark}
-\iffalse{} {Nota: } \fi{}También es habitual simular este tipo de datos generando un porcentaje alto de valores (en este caso un 95\%) de la distribución base (\(N(0,1)\)) y el resto (5\%) de la distibución ``contaminadora'' (\(N(3,3^2)\)), aunque se suele considerar un porcentaje de contaminación del 1\% o inferior. En el tema 7 se describirá el método de composición para simular mixturas.
+\iffalse{} {Nota: } \fi{}Como se comentó en la Sección \ref{composicion}, también es habitual simular este tipo de datos generando un porcentaje alto de valores (en este caso un 95\%) de la distribución base (\(N(0,1)\)) y el resto (5\%) de la distibución ``contaminadora'' (\(N(3,3^2)\)), aunque se suele considerar un porcentaje de contaminación del 1\% o inferior (además, como en este caso concreto no va importar el orden, no sería necesario combinar aleatoriamente los valores).
 \EndKnitrBlock{remark}
 
 \vspace{0.5cm}
@@ -8566,8 +8562,10 @@ por lo menos utilizar una corrección por continuidad).
 \hypertarget{cap9}{%
 \chapter{Integración y Optimización Monte Carlo}\label{cap9}}
 
-Uno de los objetivos habituales de los estudios de simulación es la aproximación de una esperanza, es decir, se trataría de evaluar una integral, que en ocasiones puede ser compleja y de alta dimensión. Esto puede ser de interés en otros campos, aunque la integral no esté relacionada con procesos estocásticos.
-Adicionalmente, en muchos campos, incluido la Estadística, hay que resolver problemas de optimización. Para evitar problemas de mínimos locales se puede recurrir a herramientas que emplean búsquedas aleatorias.
+Uno de los objetivos habituales de los estudios de simulación es la aproximación de una esperanza, es decir, se trataría de evaluar una integral, que en ocasiones puede ser compleja y de alta dimensión.
+Esto puede ser de interés en otros campos, aunque la integral no esté relacionada con procesos estocásticos.
+Adicionalmente, en muchos campos, incluido la Estadística, hay que resolver problemas de optimización.
+Para evitar problemas de mínimos locales se puede recurrir a herramientas que emplean búsquedas aleatorias de los valores óptimos.
 
 \hypertarget{integraciuxf3n-monte-carlo-cluxe1sica}{%
 \section{Integración Monte Carlo (clásica)}\label{integraciuxf3n-monte-carlo-cluxe1sica}}
@@ -8839,8 +8837,8 @@ Como ya se comentó anteriormente, sería preferible generar más valores donde 
 pero en este caso \(f\) concentra la densidad en una región que no resulta de utilidad.
 Por ese motivo puede ser preferible recurrir a una densidad auxiliar que solvente este problema.
 
-\hypertarget{muestreo-por-importancia}{%
-\section{Muestreo por importancia}\label{muestreo-por-importancia}}
+\hypertarget{muestreo-importancia}{%
+\section{Muestreo por importancia}\label{muestreo-importancia}}
 
 Para aproximar la integral:
 \[\theta = E\left( h\left( X\right) \right) = \int h\left( x\right) f(x)dx,\]
@@ -9145,7 +9143,6 @@ Sampling Importance Resampling:
 
 Consideramos una variable aleatoria con densidad:
 \[f(x)\propto e^{-x}\cos^{2}(x),\text{ si }x>0.\]
-Tomando como semilla inicial el número de grupo multiplicado por 100:
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
@@ -9562,27 +9559,15 @@ Optimización con algoritmo genético implementado en \texttt{DEoptim}:
 \hypertarget{tuxe9cnicas-de-reducciuxf3n-de-la-varianza}{%
 \chapter{Técnicas de reducción de la varianza}\label{tuxe9cnicas-de-reducciuxf3n-de-la-varianza}}
 
-\hypertarget{reducciuxf3n-de-la-varianza}{%
-\section{Reducción de la varianza}\label{reducciuxf3n-de-la-varianza}}
+Cuando el coste computacional de generar un número suficiente de simulaciones es demasiado grande (por ejemplo, si evaluar el estadístico de interés requiere de mucho tiempo de computación), nos puede interesar emplear técnicas de reducción de la varianza que nos permitan obtener una buena aproximación con un número menor de generaciones. Éstas técnicas son aplicadas normalmente cuando se pretende ofrecer respuestas lo más precisas posibles (con menor costo computacional) y principalmente sobre cantidades medias.
 
-Éstas técnicas son aplicadas normalmente cuando se pretende ofrecer respuestas
-lo más precisas posibles (con menor costo computacional) y principalmente sobre cantidades medias.
-
-\begin{itemize}
-\tightlist
-\item
-  Supongamos que \textbf{estamos interesados en aproximar la media} de un
-  estadístico mediante simulación y
-  \textbf{no nos interesa aproximar su varianza}.
-\end{itemize}
-
-Existe un sinfín de técnicas encaminadas a reducir la varianza en un
-estudio de simulación (respecto a una aproximación estandar).
+En este capítulo asumiremos que \textbf{estamos interesados en aproximar la media} de un estadístico mediante simulación y \textbf{no nos interesa aproximar su varianza}.
+Existe un sinfín de técnicas encaminadas a reducir la varianza en un estudio de este tipo (respecto a una aproximación estándar).
 Algunas de ellas son:
 
 \begin{itemize}
 \item
-  Muestreo por importancia.
+  Muestreo por importancia (Sección \ref{muestreo-importancia}.
 \item
   Variables antitéticas.
 \item
@@ -9592,12 +9577,11 @@ Algunas de ellas son:
 \item
   Números aleatorios comunes.
 \item
-  Métodos de remuestreo.
-\item
   Condicionamiento.
-\item
-  \ldots{}
 \end{itemize}
+
+No obstante, en general, si uno de los objetivos de la simulación es precisamente estimar la variabilidad no convendría emplear estas técnicas
+(para ello hay otras técnicas disponibles, como el Jackniffe o el Bootstrap; ver p.e. Cao y Fernández-Casal, \href{https://rubenfcasal.github.io/book_remuestreo/prec-sesgo.html}{Capítulo 2}).
 
 \hypertarget{variables-antituxe9ticas}{%
 \section{Variables antitéticas}\label{variables-antituxe9ticas}}
@@ -11768,14 +11752,11 @@ P( 33 \leq Q \leq 39 ) = 0.15216056, \ & P( Q \geq 40 ) =0.15685380.
 \chapter{Integración numérica}\label{int-num}}
 
 En muchos casos nos puede interesar la aproximación de una integral definida.
-En estadística, además del caso de Inferencia Bayesiana (que se trató en el Capítulo 11
-empleando Integración Montecarlo y MCMC), nos puede interesar por ejemplo aproximar mediante
-simulación el error cuadrático integrado medio (MISE) de un estimador.
-En el caso de una densidad univariante sería de la forma:
-\[MISE \left\{ \hat{f} \right\} = \operatorname{E}\int (\hat{f}(x)-f(x))^2 \, dx\]
+En estadística, además del caso de Inferencia Bayesiana (que se trató en el Capítulo 11 empleando Integración Monte Carlo y MCMC), nos puede interesar por ejemplo aproximar mediante simulación el error cuadrático integrado medio (MISE) de un estimador.
+Por ejemplo, en el caso de una densidad univariante sería de la forma:
+\[MISE\left( \hat{f} \right) =\int E\left[ \left( \hat{f}(x) - f(x) \right)^2\right] dx\]
 
-Cuando el numero de dimensiones es pequeño, nos puede ineteresar emplear un método numérico
-para aproximar este tipo de integrales.
+Cuando el numero de dimensiones es pequeño, nos puede interesar emplear un método numérico para aproximar este tipo de integrales.
 
 \hypertarget{integraciuxf3n-numuxe9rica-unidimensional}{%
 \section{Integración numérica unidimensional}\label{integraciuxf3n-numuxe9rica-unidimensional}}
