@@ -85,7 +85,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##       0       0       0
+##    0.02    0.00    0.02
 ```
 
 ```r

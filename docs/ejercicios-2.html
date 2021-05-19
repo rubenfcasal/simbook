@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.2 Método de aceptación rechazo | Simulación Estadística</title>
+  <title>10.5 Ejercicios | Simulación Estadística</title>
   <meta name="description" content="Apuntes de la asignatura de Simulación Estadística del Máster en Técnicas Estadísticas." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.2 Método de aceptación rechazo | Simulación Estadística" />
+  <meta property="og:title" content="10.5 Ejercicios | Simulación Estadística" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rubenfcasal/simbook" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.2 Método de aceptación rechazo | Simulación Estadística" />
+  <meta name="twitter:title" content="10.5 Ejercicios | Simulación Estadística" />
   
   <meta name="twitter:description" content="Apuntes de la asignatura de Simulación Estadística del Máster en Técnicas Estadísticas." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="método-de-inversión.html"/>
-<link rel="next" href="modificaciones-del-método-de-aceptación-rechazo.html"/>
+<link rel="prev" href="números-aleatorios-comunes.html"/>
+<link rel="next" href="referencias.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -330,357 +330,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="AR" class="section level2">
-<h2><span class="header-section-number">5.2</span> Método de aceptación rechazo</h2>
-<p>Se trata de un método universal alternativo al de inversión para
-el caso de que no se pueda emplear la función cuantil,
-pero se dispone de una expresión (preferiblemente sencilla) para la
-función de densidad <span class="math inline">\(f\left( x \right)\)</span>.</p>
-<p>Si <span class="math inline">\(f\)</span> es la densidad objetivo, la idea es simular una variable aleatoria
-bidimensional <span class="math inline">\(\left( X, Y\right)\)</span> con distribución
-uniforme en el hipografo de <span class="math inline">\(f\)</span> (el conjunto de puntos del plano
-comprendidos entre el eje OX y <span class="math inline">\(f\)</span>):
-<span class="math display">\[A_{f}=\left\{ \left( x,y\right) \in \mathbb{R}^{2}:0\leq y\leq
-f(x) \right\}.\]</span>
-De esta forma la primera componente tendrá la distribución deseada:</p>
-<p><img src="images/rechazo.png" width="70%" style="display: block; margin: auto;" /></p>
-<p><span class="math display">\[ P\left( a&lt;X&lt;b\right) = \frac{\text{Area de }\left\{ \left( x,y\right) \in 
-\mathbb{R}^{2}:a&lt;x&lt;b;~0\leq y\leq f(x) \right\} }{\text{Area de }
-A_{f}} \\
-= \int_{a}^{b}f(x) dx \]</span></p>
-<p>El resultado anterior es también válido para una cuasi-densidad <span class="math inline">\(f^{\ast}\)</span>
-(no depende de la constante normalizadora).
-El resultado general sería en siguiente:</p>
-<ul>
-<li><p>Si <span class="math inline">\(X\)</span> es una variable aleatoria con función de densidad <span class="math inline">\(f\)</span>
-y <span class="math inline">\(U \sim \mathcal{U}(0, 1)\)</span> entonces
-<span class="math display">\[\left( X,c\cdot U\cdot f(x) \right) \sim \mathcal{U}\left(
-A_{cf}\right)\]</span>
-siendo
-<span class="math inline">\(A_{cf}=\left\{ \left( x, y \right) \in \mathbb{R}^{2} : 0 \leq y \leq cf\left( x \right) \right\}\)</span>.</p></li>
-<li><p>Recíprocamente si <span class="math inline">\(\left( X,Y\right) \sim \mathcal{U}\left(A_{cf}\right)\)</span> entonces<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> <span class="math inline">\(X\sim f\)</span>.</p></li>
-</ul>
-<p>Para generar valores de una variable aleatoria bidimensional con distribución uniforme
-en <span class="math inline">\(A_{f}\)</span> (o en <span class="math inline">\(A_{f^{\ast }}\)</span>), se emplea el resultado anterior para
-generar valores en <span class="math inline">\(A_{cg} \supset A_{f}\)</span>, siendo <span class="math inline">\(g\)</span> una densidad auxiliar
-(preferiblemente fácil de simular y similar a <span class="math inline">\(f\)</span>).
-Teniendo en cuenta además que:</p>
-<ul>
-<li>Si <span class="math inline">\(\left( X,Y\right) \sim \mathcal{U}\left( A\right)\)</span> y
-<span class="math inline">\(B \subset A\Rightarrow \left. \left( X,Y\right) \right\vert _{B} \sim \mathcal{U}\left(B\right)\)</span></li>
-</ul>
-<p>Por tanto, si <span class="math inline">\(\left( T, Y \right)\)</span> sigue una distribución
-uniforme en <span class="math inline">\(A_{cg}\)</span>, aceptando los valores de
-<span class="math inline">\(\left( T, Y\right)\)</span> que pertenezcan a <span class="math inline">\(A_{f}\)</span> (o a <span class="math inline">\(A_{f^{\ast }}\)</span>) se obtendrán
-generaciones con distribución uniforme sobre <span class="math inline">\(A_{f}\)</span> (o <span class="math inline">\(A_{f^{\ast }}\)</span>)
-y la densidad de la primera componente <span class="math inline">\(T\)</span> será <span class="math inline">\(f\)</span>.</p>
-<div id="algoritmo" class="section level3">
-<h3><span class="header-section-number">5.2.1</span> Algoritmo</h3>
-<p>Supongamos que <span class="math inline">\(f\)</span> es la densidad objetivo y <span class="math inline">\(g\)</span> es una densidad
-auxiliar (fácil de simular y similar a <span class="math inline">\(f\)</span>), de forma que
-existe una constante <span class="math inline">\(c&gt;0\)</span> tal que:
-<span class="math display">\[f(x) \leq c\cdot g(x) 
-\text{, }\forall x\in \mathbb{R}\text{.}\]</span></p>
-
-<div class="conjecture">
-<p><span id="cnj:aceptacion-rechazo" class="conjecture"><strong>Algoritmo 5.3  (Método de aceptación-rechazo; Von Neuman, 1951)  </strong></span></p>
-<ol style="list-style-type: decimal">
-<li><p>Generar <span class="math inline">\(U \sim \mathcal{U}(0, 1)\)</span>.</p></li>
-<li><p>Generar <span class="math inline">\(T\sim g\)</span>.</p></li>
-<li><p>Si <span class="math inline">\(c\cdot U\cdot g\left( T\right) \leq f\left( T\right)\)</span>
-devolver <span class="math inline">\(X=T\)</span>,</p>
-<p>en caso contrario volver al paso 1.</p></li>
-</ol>
-</div>
-
-<!-- \@ref(cnj:aceptacion-rechazo) -->
-</div>
-<div id="densidades-acotadas-en-un-intervalo-cerrado" class="section level3">
-<h3><span class="header-section-number">5.2.2</span> Densidades acotadas en un intervalo cerrado</h3>
-<p>Sea <span class="math inline">\(f\)</span> una función de densidad cualquiera con soporte en un intervalo cerrado <span class="math inline">\([a,b]\)</span> (es decir, <span class="math inline">\(\{x : f(x) &gt; 0\}=[a,b]\)</span>) de tal forma que existe una constante <span class="math inline">\(M&gt;0\)</span> tal que <span class="math inline">\(f(x) \leq M\)</span> <span class="math inline">\(\forall x\)</span> (es decir, <span class="math inline">\(f\)</span> es acotada superiormente).
-En este caso puede tomarse como densidad auxiliar <span class="math inline">\(g\)</span>, la de una <span class="math inline">\(\mathcal{U}(a,b)\)</span>.
-En efecto, tomando <span class="math inline">\(c = M\left( b-a\right)\)</span> y teniendo en cuenta que
-<span class="math display">\[g(x) = \left\{
-\begin{array}{ll}\frac{1}{b-a} &amp; \text{si } x \in [a,b]\\
-0 &amp; \text{en caso contrario}
-\end{array} \right.\]</span>
-se tiene que <span class="math inline">\(f(x) \leq M = \frac{c}{b-a}=c \cdot g(x)\)</span>,
-<span class="math inline">\(\forall x \in [a,b]\)</span>.
-Así pues, el algoritmo quedaría como sigue:</p>
-<ol style="list-style-type: decimal">
-<li><p>Generar <span class="math inline">\(U,V\sim \mathcal{U}(0, 1)\)</span>.</p></li>
-<li><p>Hacer <span class="math inline">\(T = a + \left( b-a \right) V\)</span>.</p></li>
-<li><p>Si <span class="math inline">\(M \cdot U\leq f\left( T \right)\)</span>
-devolver <span class="math inline">\(X = T\)</span>,</p>
-<p>en caso contrario volver al paso 1.</p></li>
-</ol>
-<p><strong>Nota</strong>: no confundir <span class="math inline">\(M\)</span> con <span class="math inline">\(c = M \left( b - a \right)\)</span>.</p>
-<!-- Incluir cuentas de AR para la doble exponencial -->
+<div id="ejercicios-2" class="section level2">
+<h2><span class="header-section-number">10.5</span> Ejercicios</h2>
 
 <div class="exercise">
-<span id="exr:dnorm-ddexp-ar" class="exercise"><strong>Ejercicio 5.2  (Simulación de la normal mediante la doble exponencial)  </strong></span>
+<span id="exr:mc-int-ainv" class="exercise"><strong>Ejercicio 10.5  (propuesto)  </strong></span>
 </div>
 
-<p>Desarrollar el código necesario para generar, por el método de
-aceptación-rechazo, una muestra de <span class="math inline">\(n\)</span> observaciones de una
-distribución normal estándar:
-<span class="math display">\[f(x)  =\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}}\text{, }x\in\mathbb{R}\text{, }\]</span>
-empleando como distribución auxiliar una doble exponencial con <span class="math inline">\(\lambda=1\)</span>
-(más adelante veremos que esta es la elección óptima para el parámetro de la densidad auxiliar) y que la cota óptima es:
-<span class="math display">\[c_{\text{opt}}=\sqrt{\frac{2e}{\pi}} \approx 1.3155\]</span>
-Para establecer la condición de aceptación o rechazo se puede tener en cuenta que:
-<span class="math display">\[c\cdot U\cdot\frac{g\left( T\right)  }{f\left( T\right)  }=\sqrt{\frac
-{2e}{\pi}}U\sqrt{\frac{\pi}{2}}\exp\left( \frac{T^{2}}{2}-\left\vert
-T\right\vert \right)  =U\cdot\exp\left( \frac{T^{2}}{2}-\left\vert
-T\right\vert +\frac{1}{2}\right) ,\]</span>
-aunque en general puede ser recomendable emplear
-<span class="math inline">\(c\cdot U\cdot g\left( T\right) \leq f\left( T\right)\)</span>.</p>
-<p>En el código del Ejercicio <a href="método-de-inversión.html#exr:ddexp">5.1</a> se definió la densidad auxiliar <code>ddexp(x, lambda)</code> y la función <code>rdexp(lambda)</code> para generar un valor aleatorio de esta densidad.
-Si comparamos la densidad objetivo con la auxiliar reescalada con los parámetros óptimos (Figura <a href="AR.html#fig:dnorm-ddexp-plot">5.4</a>), vemos que esta última está por encima, como debería ocurrir, pero llegan a tocarse (se está empleando la cota óptima; ver siguiente sección).</p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="AR.html#cb143-1"></a><span class="co"># densidad objetivo: dnorm</span></span>
-<span id="cb143-2"><a href="AR.html#cb143-2"></a><span class="co"># densidad auxiliar: ddexp</span></span>
-<span id="cb143-3"><a href="AR.html#cb143-3"></a>c.opt &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">2</span><span class="op">*</span><span class="kw">exp</span>(<span class="dv">1</span>)<span class="op">/</span>pi)</span>
-<span id="cb143-4"><a href="AR.html#cb143-4"></a>lambda.opt &lt;-<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb143-5"><a href="AR.html#cb143-5"></a><span class="kw">curve</span>(c.opt <span class="op">*</span><span class="st"> </span><span class="kw">ddexp</span>(x), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>), <span class="dt">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb143-6"><a href="AR.html#cb143-6"></a><span class="kw">curve</span>(<span class="kw">dnorm</span>(x), <span class="dt">add =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:dnorm-ddexp-plot"></span>
-<img src="05-Metodos_generales_continuas_files/figure-html/dnorm-ddexp-plot-1.png" alt="Densidad objetivo (normal estándar) y densidad auxiliar (doble exponencial) reescalada." width="70%" />
-<p class="caption">
-Figura 5.4: Densidad objetivo (normal estándar) y densidad auxiliar (doble exponencial) reescalada.
-</p>
-</div>
-<p>Para generar los valores de la densidad objetivo podríamos emplear el siguiente código:</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="AR.html#cb144-1"></a>ngen &lt;-<span class="st"> </span><span class="dv">0</span></span>
-<span id="cb144-2"><a href="AR.html#cb144-2"></a></span>
-<span id="cb144-3"><a href="AR.html#cb144-3"></a>rnormAR &lt;-<span class="st"> </span><span class="cf">function</span>() {</span>
-<span id="cb144-4"><a href="AR.html#cb144-4"></a><span class="co"># Simulación por aceptación-rechazo</span></span>
-<span id="cb144-5"><a href="AR.html#cb144-5"></a><span class="co"># Normal estandar a partir de doble exponencial</span></span>
-<span id="cb144-6"><a href="AR.html#cb144-6"></a>  <span class="cf">while</span> (<span class="ot">TRUE</span>) {</span>
-<span id="cb144-7"><a href="AR.html#cb144-7"></a>    U &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1</span>)</span>
-<span id="cb144-8"><a href="AR.html#cb144-8"></a>    X &lt;-<span class="st"> </span><span class="kw">rdexp</span>(lambda.opt) <span class="co"># rdexpn(1, lambda.opt)</span></span>
-<span id="cb144-9"><a href="AR.html#cb144-9"></a>    ngen &lt;&lt;-<span class="st"> </span>ngen <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="co"># Comentar esta línea para uso normal</span></span>
-<span id="cb144-10"><a href="AR.html#cb144-10"></a>    <span class="co"># if (U*exp((X^2+1)*0.5-abs(X)) &lt;= 1) return(X)</span></span>
-<span id="cb144-11"><a href="AR.html#cb144-11"></a>    <span class="cf">if</span> (c.opt <span class="op">*</span><span class="st"> </span>U <span class="op">*</span><span class="st"> </span><span class="kw">ddexp</span>(X, lambda.opt) <span class="op">&lt;=</span><span class="st"> </span><span class="kw">dnorm</span>(X)) <span class="kw">return</span>(X)</span>
-<span id="cb144-12"><a href="AR.html#cb144-12"></a>  }</span>
-<span id="cb144-13"><a href="AR.html#cb144-13"></a>}</span>
-<span id="cb144-14"><a href="AR.html#cb144-14"></a></span>
-<span id="cb144-15"><a href="AR.html#cb144-15"></a>rnormARn &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">n =</span> <span class="dv">1000</span>) {</span>
-<span id="cb144-16"><a href="AR.html#cb144-16"></a><span class="co"># Simulación n valores N(0,1)</span></span>
-<span id="cb144-17"><a href="AR.html#cb144-17"></a>    x &lt;-<span class="st"> </span><span class="kw">numeric</span>(n)</span>
-<span id="cb144-18"><a href="AR.html#cb144-18"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n) x[i] &lt;-<span class="st"> </span><span class="kw">rnormAR</span>()</span>
-<span id="cb144-19"><a href="AR.html#cb144-19"></a>    <span class="kw">return</span>(x)</span>
-<span id="cb144-20"><a href="AR.html#cb144-20"></a>}</span>
-<span id="cb144-21"><a href="AR.html#cb144-21"></a></span>
-<span id="cb144-22"><a href="AR.html#cb144-22"></a><span class="co"># Grafico</span></span></code></pre></div>
-<ol style="list-style-type: lower-alpha">
-<li><p>Generar una muestra de <span class="math inline">\(10^{4}\)</span> observaciones empleando este
-algoritmo. Obtener el tiempo de CPU y calcular el número medio
-de generaciones de la distribución auxiliar.</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="AR.html#cb145-1"></a><span class="kw">set.seed</span>(<span class="dv">54321</span>)</span>
-<span id="cb145-2"><a href="AR.html#cb145-2"></a>nsim &lt;-<span class="st"> </span><span class="dv">10</span><span class="op">^</span><span class="dv">4</span></span>
-<span id="cb145-3"><a href="AR.html#cb145-3"></a></span>
-<span id="cb145-4"><a href="AR.html#cb145-4"></a>ngen &lt;-<span class="st"> </span><span class="dv">0</span></span>
-<span id="cb145-5"><a href="AR.html#cb145-5"></a><span class="kw">system.time</span>(x &lt;-<span class="st"> </span><span class="kw">rnormARn</span>(nsim))</span></code></pre></div>
-<pre><code>##    user  system elapsed 
-##    0.08    0.00    0.08</code></pre>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="AR.html#cb147-1"></a><span class="co"># Nº generaciones</span></span>
-<span id="cb147-2"><a href="AR.html#cb147-2"></a>{</span>
-<span id="cb147-3"><a href="AR.html#cb147-3"></a><span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Número de generaciones = &quot;</span>, ngen)</span>
-<span id="cb147-4"><a href="AR.html#cb147-4"></a><span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Número medio de generaciones = &quot;</span>, ngen<span class="op">/</span>nsim)</span>
-<span id="cb147-5"><a href="AR.html#cb147-5"></a><span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Proporción de rechazos = &quot;</span>, <span class="dv">1</span><span class="op">-</span>nsim<span class="op">/</span>ngen, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb147-6"><a href="AR.html#cb147-6"></a>}</span></code></pre></div>
-<pre><code>## 
-## Número de generaciones =  13163
-## Número medio de generaciones =  1.3163
-## Proporción de rechazos =  0.2402948</code></pre></li>
-<li><p>Representar el histograma y compararlo con la densidad teórica.</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="AR.html#cb149-1"></a><span class="kw">hist</span>(x, <span class="dt">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="dt">freq =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb149-2"><a href="AR.html#cb149-2"></a><span class="kw">curve</span>(dnorm, <span class="dt">add =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:dnorm-ar"></span>
-<img src="05-Metodos_generales_continuas_files/figure-html/dnorm-ar-1.png" alt="Distribución de los valores generados mediante el método de aceptación-rechazo." width="70%" />
-<p class="caption">
-Figura 5.5: Distribución de los valores generados mediante el método de aceptación-rechazo.
-</p>
-</div>
-<p>Podemos observar que la distribución de los valores generados es la que cabría esperar de una muestra de tamaño <code>nsim</code> de la distribución objetivo (lo que nos ayudaría a confirmar que el algoritmo está bien implementado, al ser un método exacto de simulación).</p></li>
-</ol>
-</div>
-<div id="eficiencia-del-algoritmo" class="section level3">
-<h3><span class="header-section-number">5.2.3</span> Eficiencia del algoritmo</h3>
-<p>Como medida de la eficiencia del algoritmo de aceptación-rechazo
-podríamos considerar el número de iteraciones del algoritmo,
-es decir, el número de generaciones de la densidad auxiliar y
-de comparaciones para aceptar un valor de la densidad objetivo.
-Este número <span class="math inline">\(N\)</span> es aleatorio y sigue una distribución geométrica
-(número de pruebas necesarias hasta obtener el primer éxito)
-con parámetro <span class="math inline">\(p\)</span> (probabilidad de éxito) la probabilidad de aceptación
-en el paso 3:
-<span class="math display">\[p = \frac{\text{area}\left(
-        A_{f}\right) }{\text{area}\left( A_{cg}\right) }=\frac{1}{c}.\]</span>
-Por tanto:
-<span class="math display">\[E\left( N \right) = \frac1p = c\]</span>
-es el número medio de iteraciones del algoritmo
-(el número medio de pares de variables <span class="math inline">\(\left( T,U\right)\)</span>
-que se necesitan generar, y de comparaciones, para obtener
-una simulación de la densidad objetivo).</p>
-<p>Es obvio, por tanto, que cuanto más cercano a 1 sea el valor de <span class="math inline">\(c\)</span> más eficiente será el algoritmo (el caso de <span class="math inline">\(c=1\)</span> se correspondería con <span class="math inline">\(g=f\)</span> y no tendría sentido emplear este algoritmo).
-El principal problema con este método es encontrar una densidad auxiliar <span class="math inline">\(g\)</span> de forma que:
-<span class="math display">\[c_{\text{opt}}=\max_{\{x : g(x) &gt;0\}}
-\frac{f(x) }{g(x) }.\]</span>
-sea próximo a 1.
-Una solución intermedia consiste en seleccionar una familia paramétrica de densidades <span class="math inline">\(\{g_{\theta} : \theta \in \Theta\}\)</span> entre las que haya alguna que se parezca bastante a <span class="math inline">\(f\)</span>,
-encontrar el valor de <span class="math inline">\(c\)</span> óptimo para cada densidad de esa familia:
-<span class="math display">\[c_{\theta}=\max_{x}\frac{f\left(  x\right)  }{g_{\theta}(x) }\]</span>
-y, finalmente, elegir el mejor valor <span class="math inline">\(\theta_{0}\)</span> del parámetro, en el sentido de ofrecer el menor posible <span class="math inline">\(c_{\theta}\)</span>:
-<span class="math display">\[c_{\theta_{0}}=\min_{\theta\in\Theta}\max_{x}\frac{f\left(  x\right) }{g_{\theta}\left(  x\right)  }.\]</span></p>
+<p>Aproximar mediante integración Monte Carlo (clásica) la media de una distribución exponencial de parámetro <span class="math inline">\(1/2\)</span>:
+<span class="math display">\[I=\int_{0}^{\infty}\frac{x}{2}e^{-\frac{x}{2}}dx\]</span>
+y representar gráficamente la aproximación en función de <span class="math inline">\(n\)</span>.
+Comparar los resultados con los obtenidos empleando variables antitéticas,
+¿se produce una reducción en la varianza?</p>
 
-<div class="exercise">
-<span id="exr:dnorm-ddexp-arb" class="exercise"><strong>Ejercicio 5.3  (Simulación de la normal mediante la doble exponencial, continuación)  </strong></span>
+<div class="remark">
+ <span class="remark"><em>Nota: </em></span> Puede ser recomendable emplear el método de inversión para generar las
+muestras (antitéticas) de la exponencial.
 </div>
 
-<p>Continuando con el Ejercicio <a href="AR.html#exr:dnorm-ddexp-ar">5.2</a> anterior del método de aceptación-rechazo para generar observaciones de una distribución normal estándar, empleando como distribución auxiliar una doble exponencial:</p>
-<ol start="3" style="list-style-type: lower-alpha">
-<li><p>Aproximar la cota óptima numéricamente.</p>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="AR.html#cb150-1"></a><span class="co"># NOTA: Cuidado con los límites</span></span>
-<span id="cb150-2"><a href="AR.html#cb150-2"></a><span class="co"># optimize(f=function(x) dnorm(x)/ddexp(x), maximum=TRUE, interval=c(-0.5,0.5))</span></span>
-<span id="cb150-3"><a href="AR.html#cb150-3"></a><span class="kw">optimize</span>(<span class="dt">f =</span> <span class="cf">function</span>(x) <span class="kw">dnorm</span>(x)<span class="op">/</span><span class="kw">ddexp</span>(x), <span class="dt">maximum =</span> <span class="ot">TRUE</span>, <span class="dt">interval =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span>))</span></code></pre></div>
-<pre><code>## $maximum
-## [1] 1
-## 
-## $objective
-## [1] 1.315489</code></pre>
-<p>Vemos que la aproximación numérica coincide con el valor óptimo real <span class="math inline">\(c_{\text{opt}}=\sqrt{\frac{2e}{\pi}} \approx\)</span> 1.3154892 (que se alcanza en <span class="math inline">\(x = \pm 1\)</span>).</p></li>
-<li><p>Aproximar el parámetro óptimo de la densidad auxiliar
-numéricamente (normalmente comenzaríamos por este paso).</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="AR.html#cb152-1"></a><span class="co"># Obtención de valores c y lambda óptimos aproximados</span></span>
-<span id="cb152-2"><a href="AR.html#cb152-2"></a>fopt &lt;-<span class="st"> </span><span class="cf">function</span>(lambda) {</span>
-<span id="cb152-3"><a href="AR.html#cb152-3"></a>  <span class="co"># Obtiene c fijado lambda</span></span>
-<span id="cb152-4"><a href="AR.html#cb152-4"></a>  <span class="kw">optimize</span>(<span class="dt">f =</span> <span class="cf">function</span>(x) <span class="kw">dnorm</span>(x)<span class="op">/</span><span class="kw">ddexp</span>(x,lambda),</span>
-<span id="cb152-5"><a href="AR.html#cb152-5"></a>           <span class="dt">maximum =</span> <span class="ot">TRUE</span>, <span class="dt">interval =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span>))<span class="op">$</span>objective</span>
-<span id="cb152-6"><a href="AR.html#cb152-6"></a>}</span>
-<span id="cb152-7"><a href="AR.html#cb152-7"></a></span>
-<span id="cb152-8"><a href="AR.html#cb152-8"></a><span class="co"># Encontrar lambda que minimiza</span></span>
-<span id="cb152-9"><a href="AR.html#cb152-9"></a>res &lt;-<span class="st"> </span><span class="kw">optimize</span>(fopt, <span class="dt">interval =</span> <span class="kw">c</span>(<span class="fl">0.5</span>, <span class="dv">2</span>))</span>
-<span id="cb152-10"><a href="AR.html#cb152-10"></a>lambda.opt2 &lt;-<span class="st"> </span>res<span class="op">$</span>minimum</span>
-<span id="cb152-11"><a href="AR.html#cb152-11"></a>c.opt2 &lt;-<span class="st"> </span>res<span class="op">$</span>objective</span></code></pre></div></li>
-</ol>
-</div>
-<div id="ejemplo-inferencia-bayesiana" class="section level3">
-<h3><span class="header-section-number">5.2.4</span> Ejemplo: Inferencia Bayesiana</h3>
-<p>El algoritmo de Aceptación-Rechazo se emplea habitualmente en
-Inferencia Bayesiana:</p>
-<ul>
-<li><p><span class="math inline">\(f(x|\theta )\)</span> densidad muestral.</p></li>
-<li><p><span class="math inline">\(\pi (\theta )\)</span> densidad a priori.</p></li>
-<li><p><span class="math inline">\(\mathbf{x}=(x_{1},...,x_n)^{\prime }\)</span> muestra observada.</p></li>
-<li><p>La distribución a posteriori de <span class="math inline">\(\theta\)</span> es:
-<span class="math display">\[\pi (\theta |\mathbf{x})=\frac{L(\mathbf{x}|\theta )\pi (\theta )}
-{\int L(\mathbf{x}|\theta )\pi (\theta )d\theta }\]</span>
-siendo <span class="math inline">\(L(\mathbf{x}|\theta )\)</span> la función de verosimilitud
-(<span class="math inline">\(L(\mathbf{x}|\theta )=\prod\limits_{i=1}^{n}f(x_{i}|\theta)\)</span>
-suponiendo i.i.d.). Es decir:
-<span class="math display">\[\pi (\theta |\mathbf{x})\propto L(\mathbf{x}|\theta )\pi (\theta ).\]</span></p></li>
-</ul>
-<p>Para simular valores de la densidad a posteriori <span class="math inline">\(\pi (\theta | \mathbf{x})\)</span>
-a partir de la densidad a priori <span class="math inline">\(\pi (\theta )\)</span></p>
-<ul>
-<li><p><span class="math inline">\(\pi (\theta |\mathbf{x})/\pi (\theta )\propto L(\mathbf{x}|\theta )\)</span></p></li>
-<li><p><span class="math inline">\(L(\mathbf{x}|\theta )\leq c^{\prime }=L(\mathbf{x}|\hat{\theta})\)</span> siendo
-<span class="math inline">\(\hat{\theta}\)</span> el estimador MV de <span class="math inline">\(\theta\)</span>.</p></li>
-</ul>
-<p>Algoritmo:</p>
-<ol style="list-style-type: decimal">
-<li><p>Generar <span class="math inline">\(U \sim \mathcal{U}(0, 1)\)</span>.</p></li>
-<li><p>Generar <span class="math inline">\(\tilde{\theta}\sim \pi (\theta )\)</span>.</p></li>
-<li><p>Si <span class="math inline">\(L(\mathbf{x}|\hat{\theta})\cdot U \leq L(\mathbf{x}|\tilde{\theta})\)</span> devolver <span class="math inline">\(\tilde{\theta}\)</span>,</p>
-<p>en caso contrario volver al paso 1.</p></li>
-</ol>
+<p>MC clásico:</p>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="ejercicios-2.html#cb524-1"></a>nsim &lt;-<span class="st"> </span><span class="dv">1000</span></span>
+<span id="cb524-2"><a href="ejercicios-2.html#cb524-2"></a>lambda &lt;-<span class="st"> </span><span class="fl">0.5</span></span>
+<span id="cb524-3"><a href="ejercicios-2.html#cb524-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb524-4"><a href="ejercicios-2.html#cb524-4"></a>x &lt;-<span class="st"> </span><span class="op">-</span><span class="st"> </span><span class="kw">log</span>(<span class="kw">runif</span>(nsim)) <span class="op">/</span><span class="st"> </span>lambda</span>
+<span id="cb524-5"><a href="ejercicios-2.html#cb524-5"></a><span class="co"># Aprox por MC da media </span></span>
+<span id="cb524-6"><a href="ejercicios-2.html#cb524-6"></a><span class="kw">mean</span>(x) <span class="co"># valor teor 1/lambda = 2</span></span></code></pre></div>
+<pre><code>## [1] 1.97439</code></pre>
+<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="ejercicios-2.html#cb526-1"></a><span class="co"># Aprox da precisión </span></span>
+<span id="cb526-2"><a href="ejercicios-2.html#cb526-2"></a><span class="kw">var</span>(x)  </span></code></pre></div>
+<pre><code>## [1] 3.669456</code></pre>
+<p>MC con variables antitéticas:</p>
+<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="ejercicios-2.html#cb528-1"></a><span class="co"># xa &lt;-</span></span>
+<span id="cb528-2"><a href="ejercicios-2.html#cb528-2"></a><span class="co"># mean(xa) # Aprox por MC da media (valor teor 1/lambda = 2)</span></span>
+<span id="cb528-3"><a href="ejercicios-2.html#cb528-3"></a><span class="co"># var(xa)  # Aprox da precisión supoñendo independencia</span></span>
+<span id="cb528-4"><a href="ejercicios-2.html#cb528-4"></a><span class="co"># corr &lt;- cor(x1,x2)</span></span>
+<span id="cb528-5"><a href="ejercicios-2.html#cb528-5"></a><span class="co"># var(xa)*(1 + corr) # Estimación varianza supoñendo dependencia</span></span></code></pre></div>
+<p>Estimación del porcentaje de reducción en la varianza</p>
+<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="ejercicios-2.html#cb529-1"></a><span class="co"># 100*(var(x) - var(xa))/var(x)</span></span></code></pre></div>
 
-<div class="exercise">
-<span id="exr:post-pri-ar" class="exercise"><strong>Ejercicio 5.4  (Simulación de la distribución a posteriori a partir de la distribución a priori)  </strong></span>
 </div>
-
-<p>Para la estimación Bayes de la media de una normal se suele utilizar
-como distribución a priori una Cauchy.</p>
-<ol style="list-style-type: lower-alpha">
-<li><p>Generar una muestra i.i.d. <span class="math inline">\(X_{i}\sim N(\theta_{0},1)\)</span> de tamaño
-<span class="math inline">\(n=10\)</span> con <span class="math inline">\(\theta_{0}=1\)</span>. Utilizar una <span class="math inline">\(Cauchy(0,1)\)</span>
-(<code>rcauchy</code>) como distribución a priori y como densidad auxiliar
-para simular por aceptación-rechazo una muestra de la densidad a
-posteriori (emplear <code>dnorm</code> para construir la verosimilitud).
-Obtener el intervalo de probabilidad al 95%.</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="AR.html#cb153-1"></a>mu0 &lt;-<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb153-2"><a href="AR.html#cb153-2"></a>n &lt;-<span class="st"> </span><span class="dv">10</span></span>
-<span id="cb153-3"><a href="AR.html#cb153-3"></a>nsim &lt;-<span class="st"> </span><span class="dv">10</span><span class="op">^</span><span class="dv">3</span></span>
-<span id="cb153-4"><a href="AR.html#cb153-4"></a><span class="kw">set.seed</span>(<span class="dv">54321</span>)</span>
-<span id="cb153-5"><a href="AR.html#cb153-5"></a>x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean =</span> mu0)</span>
-<span id="cb153-6"><a href="AR.html#cb153-6"></a></span>
-<span id="cb153-7"><a href="AR.html#cb153-7"></a><span class="co"># Función de verosimilitud</span></span>
-<span id="cb153-8"><a href="AR.html#cb153-8"></a>lik &lt;-<span class="st"> </span><span class="cf">function</span>(mu){<span class="kw">prod</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> mu))}</span>
-<span id="cb153-9"><a href="AR.html#cb153-9"></a></span>
-<span id="cb153-10"><a href="AR.html#cb153-10"></a><span class="co"># Cota óptima</span></span>
-<span id="cb153-11"><a href="AR.html#cb153-11"></a><span class="co"># Estimación por máxima verosimilitud</span></span>
-<span id="cb153-12"><a href="AR.html#cb153-12"></a>emv &lt;-<span class="st"> </span><span class="kw">optimize</span>(<span class="dt">f =</span> lik, <span class="dt">int =</span> <span class="kw">range</span>(x), <span class="dt">maximum =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb153-13"><a href="AR.html#cb153-13"></a>emv</span></code></pre></div>
-<pre><code>## $maximum
-## [1] 0.7353805
-## 
-## $objective
-## [1] 3.303574e-08</code></pre>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="AR.html#cb155-1"></a>c &lt;-<span class="st"> </span>emv<span class="op">$</span>objective</span></code></pre></div>
-<p>En este caso concreto, ya sabríamos que el estimador máximo verosímil es la media muestral:</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="AR.html#cb156-1"></a><span class="kw">mean</span>(x)</span></code></pre></div>
-<pre><code>## [1] 0.7353958</code></pre>
-<p>y por tanto:</p>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="AR.html#cb158-1"></a>c &lt;-<span class="st"> </span><span class="kw">lik</span>(<span class="kw">mean</span>(x))</span>
-<span id="cb158-2"><a href="AR.html#cb158-2"></a>c    </span></code></pre></div>
-<pre><code>## [1] 3.303574e-08</code></pre>
-<p>Finalmente podríamos emplear el siguiente código para generar simulaciones de la distribución a posteriori mediante aceptación-rechazo a partir de la distribución de Cauchy:</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="AR.html#cb160-1"></a>ngen &lt;-<span class="st"> </span>nsim</span>
-<span id="cb160-2"><a href="AR.html#cb160-2"></a>Y &lt;-<span class="st"> </span><span class="kw">rcauchy</span>(nsim)</span>
-<span id="cb160-3"><a href="AR.html#cb160-3"></a>ind &lt;-<span class="st"> </span>(c<span class="op">*</span><span class="kw">runif</span>(nsim) <span class="op">&gt;</span><span class="st"> </span><span class="kw">sapply</span>(Y, lik)) <span class="co"># TRUE si no verifica condición</span></span>
-<span id="cb160-4"><a href="AR.html#cb160-4"></a><span class="co"># Volver a generar si no verifica condición</span></span>
-<span id="cb160-5"><a href="AR.html#cb160-5"></a><span class="cf">while</span> (<span class="kw">sum</span>(ind)<span class="op">&gt;</span><span class="dv">0</span>){</span>
-<span id="cb160-6"><a href="AR.html#cb160-6"></a>  le &lt;-<span class="st"> </span><span class="kw">sum</span>(ind)</span>
-<span id="cb160-7"><a href="AR.html#cb160-7"></a>  ngen &lt;-<span class="st"> </span>ngen <span class="op">+</span><span class="st"> </span>le</span>
-<span id="cb160-8"><a href="AR.html#cb160-8"></a>  Y[ind] &lt;-<span class="st"> </span><span class="kw">rcauchy</span>(le)</span>
-<span id="cb160-9"><a href="AR.html#cb160-9"></a>  ind[ind] &lt;-<span class="st"> </span>(c<span class="op">*</span><span class="kw">runif</span>(le) <span class="op">&gt;</span><span class="st"> </span><span class="kw">sapply</span>(Y[ind], lik)) <span class="co"># TRUE si no verifica condición</span></span>
-<span id="cb160-10"><a href="AR.html#cb160-10"></a>}</span>
-<span id="cb160-11"><a href="AR.html#cb160-11"></a></span>
-<span id="cb160-12"><a href="AR.html#cb160-12"></a>{ <span class="co"># Número generaciones</span></span>
-<span id="cb160-13"><a href="AR.html#cb160-13"></a>  <span class="kw">cat</span>(<span class="st">&quot;Número de generaciones = &quot;</span>, ngen)</span>
-<span id="cb160-14"><a href="AR.html#cb160-14"></a>  <span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Número medio de generaciones = &quot;</span>, ngen<span class="op">/</span>nsim)</span>
-<span id="cb160-15"><a href="AR.html#cb160-15"></a>  <span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Proporción de rechazos = &quot;</span>, <span class="dv">1</span><span class="op">-</span>nsim<span class="op">/</span>ngen,<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb160-16"><a href="AR.html#cb160-16"></a>}</span></code></pre></div>
-<pre><code>## Número de generaciones =  5898
-## Número medio de generaciones =  5.898
-## Proporción de rechazos =  0.830451</code></pre>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="AR.html#cb162-1"></a><span class="co"># Intervalo de probabilidad al 95% (IC Bayes)</span></span>
-<span id="cb162-2"><a href="AR.html#cb162-2"></a>q &lt;-<span class="st"> </span><span class="kw">quantile</span>(Y, <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span>
-<span id="cb162-3"><a href="AR.html#cb162-3"></a></span>
-<span id="cb162-4"><a href="AR.html#cb162-4"></a><span class="co"># Representar estimador e IC Bayes</span></span>
-<span id="cb162-5"><a href="AR.html#cb162-5"></a><span class="kw">hist</span>(Y, <span class="dt">freq=</span><span class="ot">FALSE</span>, <span class="dt">main=</span><span class="st">&quot;Distribución a posteriori&quot;</span>)</span>
-<span id="cb162-6"><a href="AR.html#cb162-6"></a><span class="co"># abline(v = mean(x), lty = 3) # Estimación frecuentista</span></span>
-<span id="cb162-7"><a href="AR.html#cb162-7"></a><span class="kw">abline</span>(<span class="dt">v =</span> <span class="kw">mean</span>(Y), <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)  <span class="co"># Estimación Bayesiana</span></span>
-<span id="cb162-8"><a href="AR.html#cb162-8"></a><span class="kw">abline</span>(<span class="dt">v =</span> q, <span class="dt">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="05-Metodos_generales_continuas_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" /></p></li>
-<li><p>Repetir el apartado anterior con <span class="math inline">\(n=100\)</span>.</p></li>
-</ol>
-</div>
-</div>
-<div class="footnotes">
-<hr />
-<ol start="8">
-<li id="fn8"><p>Emplearemos también <span class="math inline">\(X\sim f\)</span> para indicar que <span class="math inline">\(X\)</span> es una variable aleatoria con función de densidad <span class="math inline">\(f\)</span>.<a href="AR.html#fnref8" class="footnote-back">↩︎</a></p></li>
-</ol>
-</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="método-de-inversión.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="modificaciones-del-método-de-aceptación-rechazo.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="números-aleatorios-comunes.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="referencias.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -711,7 +407,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rubenfcasal/simbook/edit/master/05-Metodos_generales_continuas.Rmd",
+"link": "https://github.com/rubenfcasal/simbook/edit/master/10-Reduccion_varianza.Rmd",
 "text": "Edit"
 },
 "history": {

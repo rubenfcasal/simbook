@@ -23,7 +23,7 @@ Algunas de ellas son:
 -   Condicionamiento.
 
 No obstante, en general, si uno de los objetivos de la simulación es precisamente estimar la variabilidad no convendría emplear estas técnicas
-(para ello hay otros métodos disponibles, como el Jackniffe o el Bootstrap; ver p.e. Cao y Fernández-Casal, [Capítulo 2](https://rubenfcasal.github.io/book_remuestreo/prec-sesgo.html)).
+(para ello hay otros métodos disponibles, como el Jackniffe o el Bootstrap; ver p.e. Cao y Fernández-Casal, 2021, [Capítulo 2](https://rubenfcasal.github.io/book_remuestreo/prec-sesgo.html)).
 
 Variables antitéticas
 ---------------------
@@ -546,8 +546,8 @@ $$\overline{X}-\overline{Y}=\frac{1}{n}\sum_{i=1}^{n}\left(  X_{i}-Y_{i}\right)$
 
 En el capítulo de aplicaciones de la simulación se empleó esta técnica para comparar distribuciones de estimadores...
 
-Ejercicios fin de práctica
---------------------------
+Ejercicios
+----------
 
 \BeginKnitrBlock{exercise}\iffalse{-91-112-114-111-112-117-101-115-116-111-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:mc-int-ainv"><strong>(\#exr:mc-int-ainv)  \iffalse (propuesto) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 

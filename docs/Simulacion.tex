@@ -144,7 +144,7 @@
 
 \title{Simulación Estadística}
 \author{Rubén Fernández Casal (\href{mailto:ruben.fcasal@udc.es}{\nolinkurl{ruben.fcasal@udc.es}}), Ricardo Cao (\href{mailto:rcao@udc.es}{\nolinkurl{rcao@udc.es}})}
-\date{2021-05-10}
+\date{2021-05-19}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Teorema}[chapter]
@@ -1108,10 +1108,10 @@ Ejemplo:
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.04    0.02    0.08 
+##    0.05    0.02    0.06 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.04    0.02    0.08
+##    0.05    0.02    0.06
 \end{verbatim}
 
 \begin{Shaded}
@@ -1134,10 +1134,10 @@ Ejemplo:
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.02    0.00    0.01 
+##    0.00    0.00    0.02 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.06    0.02    0.09
+##    0.05    0.02    0.08
 \end{verbatim}
 
 \hypertarget{paquetes-de-r-1}{%
@@ -1237,7 +1237,7 @@ Ejemplo:
 ## Time of last operation: 
 ## Sample median of 1e+06 values = 0.4993323 
 ##    user  system elapsed 
-##    0.09    0.02    0.11
+##    0.09    0.00    0.09
 \end{verbatim}
 
 \begin{Shaded}
@@ -1254,7 +1254,7 @@ Ejemplo:
 ##       0       0       0 
 ## Total time:
 ##    user  system elapsed 
-##    0.09    0.02    0.11
+##    0.09    0.00    0.09
 \end{verbatim}
 
 Otro paquete que puede ser de utilidad es
@@ -2994,7 +2994,7 @@ El código para implementar este algoritmo en R podría ser el siguiente:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.01    0.00    0.02
+##       0       0       0
 \end{verbatim}
 
 \begin{Shaded}
@@ -3159,7 +3159,7 @@ y función de distribución:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.03    0.00    0.03
+##    0.02    0.00    0.02
 \end{verbatim}
 \item
   Representar el histograma y compararlo con la densidad teórica.
@@ -3472,7 +3472,7 @@ Para generar los valores de la densidad objetivo podríamos emplear el siguiente
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.09    0.00    0.09
+##    0.08    0.00    0.08
 \end{verbatim}
 
 \begin{Shaded}
@@ -4244,7 +4244,7 @@ Empleamos la rutina anterior para generar las simulaciones:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.06    0.00    0.07
+##     0.1     0.0     0.1
 \end{verbatim}
 
 Aproximación de la media:
@@ -4408,7 +4408,7 @@ función \texttt{sample} de R.
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.08    0.02    0.10
+##    0.04    0.00    0.05
 \end{verbatim}
 
 \begin{Shaded}
@@ -4548,7 +4548,7 @@ Repetir el Ejercicio \ref{exr:binom-cuant} anterior empleando esta rutina con \(
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.03    0.01    0.05
+##    0.08    0.00    0.07
 \end{verbatim}
 
 Análisis de los resultados:
@@ -4673,7 +4673,7 @@ Repetir el Ejercicio \ref{exr:binom-cuant} anterior empleando esta rutina.
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.03    0.00    0.04
+##    0.05    0.00    0.05
 \end{verbatim}
 
 Análisis de los resultados:
@@ -5426,7 +5426,7 @@ del paquete \texttt{MASS} que emplea la factorización espectral (\texttt{eigen}
 ##         drop(X)
 ##     else t(X)
 ## }
-## <bytecode: 0x0000000027f54698>
+## <bytecode: 0x000000002f9b9eb0>
 ## <environment: namespace:MASS>
 \end{verbatim}
 
@@ -9158,6 +9158,15 @@ Consideramos una variable aleatoria con densidad:
   mediante remuestreo del muestreo por importancia.
 \end{enumerate}
 
+\textbf{NOTA}: En el último apartado, para comprobar que los valores generados proceden de la distribución objetivo, si representamos la cuasidensidad \(f^{\ast}(x) = e^{-x}\cos^{2}(x)\) junto con el histograma (en escala de densidades, \texttt{freq\ =\ FALSE}), hay que tener en cuenta que faltaría dividir la cuasidensidad por una constante normalizadora para poder compararlos directamente.
+Si no se reescala la cuasidensidad, podríamos compobar si la forma es similar (si la distribución de los valores generados es proporcional a la cuasidensidad, con mayor concentración donde la cuasidensidad se aleja de 0).
+En este caso (como \(g\) es una densidad) podríamos estimar la constante normalizadora (\(f(x) = \frac{1}{c}f^{\ast}(x)\)) a partir de los pesos del muestreo por importancia (\texttt{c.approx\ \textless{}-\ mean(w)}; en este caso concreto \(c=\frac{3}{5}\)).
+---
+
+\textbf{\emph{LA MATERIA EVALUABLE EN EL CURSO 2020/2021 TERMINA AQUÍ}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
 \hypertarget{optimizaciuxf3n-monte-carlo}{%
 \section{Optimización Monte Carlo}\label{optimizaciuxf3n-monte-carlo}}
 
@@ -9559,7 +9568,7 @@ Optimización con algoritmo genético implementado en \texttt{DEoptim}:
 \hypertarget{tuxe9cnicas-de-reducciuxf3n-de-la-varianza}{%
 \chapter{Técnicas de reducción de la varianza}\label{tuxe9cnicas-de-reducciuxf3n-de-la-varianza}}
 
-Cuando el coste computacional de generar un número suficiente de simulaciones es demasiado grande (por ejemplo, si evaluar el estadístico de interés requiere de mucho tiempo de computación), nos puede interesar emplear técnicas de reducción de la varianza que nos permitan obtener una buena aproximación con un número menor de generaciones. Éstas técnicas son aplicadas normalmente cuando se pretende ofrecer respuestas lo más precisas posibles (con menor costo computacional) y principalmente sobre cantidades medias.
+Si el coste computacional de generar un número suficiente de simulaciones es demasiado grande (por ejemplo, cuando evaluar el estadístico de interés requiere mucho tiempo de computación), nos puede interesar emplear técnicas de reducción de la varianza que nos permitan obtener una buena aproximación con un número menor de generaciones. Éstas técnicas son aplicadas normalmente cuando se pretende ofrecer respuestas lo más precisas posibles y principalmente sobre cantidades medias.
 
 En este capítulo asumiremos que \textbf{estamos interesados en aproximar la media} de un estadístico mediante simulación y \textbf{no nos interesa aproximar su varianza}.
 Existe un sinfín de técnicas encaminadas a reducir la varianza en un estudio de este tipo (respecto a una aproximación estándar).
@@ -9567,7 +9576,7 @@ Algunas de ellas son:
 
 \begin{itemize}
 \item
-  Muestreo por importancia (Sección \ref{muestreo-importancia}.
+  Muestreo por importancia (Sección \ref{muestreo-importancia}).
 \item
   Variables antitéticas.
 \item
@@ -9581,7 +9590,7 @@ Algunas de ellas son:
 \end{itemize}
 
 No obstante, en general, si uno de los objetivos de la simulación es precisamente estimar la variabilidad no convendría emplear estas técnicas
-(para ello hay otras técnicas disponibles, como el Jackniffe o el Bootstrap; ver p.e. Cao y Fernández-Casal, \href{https://rubenfcasal.github.io/book_remuestreo/prec-sesgo.html}{Capítulo 2}).
+(para ello hay otros métodos disponibles, como el Jackniffe o el Bootstrap; ver p.e. Cao y Fernández-Casal, 2021, \href{https://rubenfcasal.github.io/book_remuestreo/prec-sesgo.html}{Capítulo 2}).
 
 \hypertarget{variables-antituxe9ticas}{%
 \section{Variables antitéticas}\label{variables-antituxe9ticas}}
@@ -10158,8 +10167,8 @@ Para ello se generan dos secuencias \(X_{1}\), \(X_{2}\), \(\ldots\),
 
 En el capítulo de aplicaciones de la simulación se empleó esta técnica para comparar distribuciones de estimadores\ldots{}
 
-\hypertarget{ejercicios-fin-de-pruxe1ctica}{%
-\section{Ejercicios fin de práctica}\label{ejercicios-fin-de-pruxe1ctica}}
+\hypertarget{ejercicios-2}{%
+\section{Ejercicios}\label{ejercicios-2}}
 
 \BeginKnitrBlock{exercise}[propuesto]
 \protect\hypertarget{exr:mc-int-ainv}{}{\label{exr:mc-int-ainv} \iffalse (propuesto) \fi{} }

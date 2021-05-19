@@ -1,7 +1,7 @@
 --- 
 title: "Simulación Estadística"
 author: "Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)"
-date: "2021-05-10"
+date: "2021-05-19"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
