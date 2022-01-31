@@ -14,14 +14,14 @@ Entre las herramientas en el paquete base de `R` estarían:
 
 -   `rdistribución(n,...):` genera valores aleatorios de la
     correspondiente distribución. 
-    Por ejemplo: `runif(n, min = 0, max = 1)`, generaría `n` valores de una uniforme.
+    Por ejemplo, `runif(n, min = 0, max = 1)`, generaría `n` valores de una uniforme. Se puede acceder al listado completo de las funciones disponibles en el paquete `stats` mediante el comando `?distributions`.
 
 -   `sample()`: genera muestras aleatorias de variables discretas y permutaciones (se tratará en el Capítulo \@ref(discretas)).
 
 -   `simulate()`: genera realizaciones de la respuesta de un modelo ajustado.
 
-Además están disponibles otros paquetes, como el paquete `r citepkg('distr', 'http://distr.r-forge.r-project.org')`,
-que implementan distribuciones adicionales.
+Además están disponibles otros paquetes que implementan distribuciones adicionales (ver [CRAN Task View: Probability Distributions](https://cran.r-project.org/view=Distributions)). 
+Entre ellos podríamos destacar los paquetes `r citepkg('distr', 'http://distr.r-forge.r-project.org')` (clases S4; con extensiones en otros paquetes) y `r citepkg('distr6', 'https://alan-turing-institute.github.io/distr6/index.html')` (clases R6).
 
 La semilla se almacena (en `globalenv`) en `.Random.seed`; es un vector
 de enteros cuya dimensión depende del tipo de generador:
@@ -146,7 +146,7 @@ a)  Aproximar mediante simulación $P\left(X + Y \leq 0 \right)$ y
     y <- runif(nsim, -1, 1)
     ```
 
-    La probabilidad teórica es 1/2 y la aproximación por simulación es la frecuencia relativa del suceso en los valores generados:
+    La probabilidad teórica es 1/2 y la aproximación por simulación es la frecuencia relativa del suceso en los valores generados (para calcularla podemos aprovechar que R maneja internamente los valores lógicos como 1, `TRUE`, y 0, `FALSE`):
     
     ```{r}
     indice <- (x+y < 0)
@@ -157,11 +157,6 @@ a)  Aproximar mediante simulación $P\left(X + Y \leq 0 \right)$ y
     
     ```{r}
     mean(indice)
-    ```
-
-
-    ```{remark}
-    R maneja internamente los valores lógicos como 1 (`TRUE`) y 0 (`FALSE`).
     ```
 
 
@@ -372,12 +367,14 @@ CPUtimeprint()
 
 ### Paquetes de R
 
-Por ejemplo, se puede emplear el paquete `npsp` (fichero *[cpu.time.R](https://github.com/rubenfcasal/npsp/blob/master/R/cpu.time.R)*):
+Por ejemplo, se puede emplear la función [`cpu.time()`](https://rubenfcasal.github.io/npsp/reference/cpu.time.html) del paquete `npsp`:
 
 -   Call `cpu.time(restart = TRUE)` where you want to start counting.
 
 -   Call `cpu.time()` to print/get total and/or partial (since the last call 
     to this function) real and CPU times.
+    
+Fichero *[cpu.time.R](https://github.com/rubenfcasal/npsp/blob/master/R/cpu.time.R)*:    
     
 ```{r}
 # CPU time utilities

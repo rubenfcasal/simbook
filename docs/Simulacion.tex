@@ -144,7 +144,7 @@
 
 \title{Simulación Estadística}
 \author{Rubén Fernández Casal (\href{mailto:ruben.fcasal@udc.es}{\nolinkurl{ruben.fcasal@udc.es}}), Ricardo Cao (\href{mailto:rcao@udc.es}{\nolinkurl{rcao@udc.es}})}
-\date{2021-05-19}
+\date{2022-01-31}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Teorema}[chapter]
@@ -161,7 +161,6 @@
 \theoremstyle{remark}
 \newtheorem*{remark}{Nota: }
 \newtheorem*{solution}{Solución}
-\let\BeginKnitrBlock\begin \let\EndKnitrBlock\end
 \begin{document}
 \maketitle
 
@@ -208,12 +207,18 @@ Este obra está bajo una licencia de \href{https://creativecommons.org/licenses/
 \hypertarget{cap1}{%
 \chapter{Introducción a la simulación}\label{cap1}}
 
-Podríamos definir la \emph{Simulación} como una técnica que consiste en realizar experimentos de muestreo sobre el modelo de un sistema, con el objetivo de recopilar información bajo determinadas condiciones.
+Cuando pensamos en ciencia pensamos en experimentos y en modelos.
+Se experimenta una y otra vez sobre el fenómeno real que se desea conocer mejor para, con la información así acumulada, construir un modelo teórico, que no es sino una representación simplificada (más o menos acertada) del fenómeno real.
+Como el modelo se formula en términos matemáticos, en general es susceptible de un estudio analítico del que poder sacar conclusiones.
+
+La simulación ofrece una alternativa a esa última fase del proceso, y sustituye (en parte o complementamente) el estudio analítico por más experimentación, pero esta vez sobre el propio modelo en lugar de sobre la realidad.
+
+Así, se puede definir la \emph{simulación} como una técnica que consiste en realizar experimentos sobre el modelo de un sistema (experimentos de muestreo si la simulación incorpora aleatoriedad), con el objetivo de recopilar información bajo determinadas condiciones.
 
 \hypertarget{conceptos-buxe1sicos}{%
 \section{Conceptos básicos}\label{conceptos-buxe1sicos}}
 
-La experimentación directa sobre la realidad puede tener muchos inconvenientes:
+La experimentación directa sobre la realidad puede tener muchos inconvenientes, entre otros:
 
 \begin{itemize}
 \item
@@ -239,10 +244,8 @@ La experimentación directa sobre la realidad puede tener muchos inconvenientes:
   \begin{itemize}
   \tightlist
   \item
-    Acontecimientos futuros, alternativas en el pasado, \ldots{}
+    Acontecimientos futuros, alternativas en el pasado\ldots{}
   \end{itemize}
-\item
-  \ldots{}
 \end{itemize}
 
 Además la realidad puede ser demasiado compleja como para ser estudiada directamente y resultar preferible trabajar con un modelo del sistema real.
@@ -264,16 +267,16 @@ Habría dos tipos de modelos:
   aunque hoy en día gana peso la idea de la física cuántica de que en el fondo hay una \emph{aleatoriedad intrínseca}.
 \end{itemize}
 
-La modelización es una etapa presente en la mayor parte de los trabajos de investigación (especialmente en las ciencias experimentales).
+La modelización es una etapa presente en la mayor parte de los trabajos de investigación, especialmente en las ciencias experimentales.
 El modelo debería considerar las variables más relevantes para explicar el fenómeno en estudio y las principales relaciones entre ellas.
 La inferencia estadística proporciona herramientas para estimar los parámetros y contrastar la validez de un modelo estocástico a partir de los datos observados.
 
-La idea es emplear el modelo (suponiendo que es válido) para resolver el problema de interés.
+La idea es emplear el modelo, asumiendo que es válido, para resolver el problema de interés.
 Si se puede obtener la solución de forma analítica, esta suele ser exacta (aunque en ocasiones solo se dispone de soluciones aproximadas, basadas en resultados asintóticos, o que dependen de suposiciones que pueden ser cuestionables) y a menudo la resolución también es rápida.
 Cuando la solución no se puede obtener de modo analítico (o si la aproximación disponible no es adecuada) se puede recurrir a la simulación.
 
-Nos centraremos en el caso de la \emph{Simulación Estocástica}: las conclusiones se obtienen generando repetidamente simulaciones del modelo aleatorio.
-Muchas veces se emplea la denominación de \emph{método Monte-Carlo}\footnote{Estos métodos surgieron a finales de la década de 1940 como resultado del trabajo realizado por Stanislaw Ulam y John von Neumann en el proyecto Manhattan para el desarrollo de la bomba atómica. Al parecer, como se trataba de una investigación secreta, Nicholas Metropolis sugirió emplear el nombre clave de ``Monte-Carlo'' en referencia al casino de Monte Carlo de Mónaco.} como sinónimo de simulación estocástica, pero normalmente se trata de métodos especializados que emplean simulación para resolver problemas que pueden no estar relacionados con un modelo estocástico de un sistema real. Por ejemplo, en el Capítulo \ref{cap9} se tratarán métodos de integración y optimización Monte-Carlo.
+Nos centraremos en el caso de la \emph{simulación estocástica}: las conclusiones se obtienen generando repetidamente simulaciones del modelo aleatorio.
+Muchas veces se emplea la denominación de \emph{método Monte-Carlo}\footnote{Estos métodos surgieron a finales de la década de 1940 como resultado del trabajo realizado por Stanislaw Ulam y John von Neumann en el proyecto Manhattan para el desarrollo de la bomba atómica. Al parecer, como se trataba de una investigación secreta, Nicholas Metropolis sugirió emplear el nombre clave de ``Monte-Carlo'' en referencia al casino de Monte Carlo de Mónaco.} como sinónimo de simulación estocástica, pero realmente se trata de métodos especializados que emplean simulación para resolver problemas que pueden no estar relacionados con un modelo estocástico de un sistema real. Por ejemplo, en el Capítulo \ref{cap9} se tratarán métodos de integración y optimización Monte-Carlo.
 
 \hypertarget{ventajas-e-inconvenientes-de-la-simulaciuxf3n}{%
 \subsection{Ventajas e inconvenientes de la simulación}\label{ventajas-e-inconvenientes-de-la-simulaciuxf3n}}
@@ -318,10 +321,11 @@ Además siempre están presentes los posibles problemas debidos a emplear un mod
 Otro problema de la simulación es que se obtienen resultados para unos valores concretos de los parámetros del modelo, por lo que en principio
 resultaría complicado extrapolar las conclusiones a otras situaciones.
 
-\hypertarget{generaciuxf3n-de-nuxfameros-pseudoaleatorios}{%
-\section{Generación de números (pseudo)aleatorios}\label{generaciuxf3n-de-nuxfameros-pseudoaleatorios}}
+\hypertarget{aplicaciones-de-la-simulaciuxf3n}{%
+\section{Aplicaciones de la simulación}\label{aplicaciones-de-la-simulaciuxf3n}}
 
-Aplicaciones:
+La simulación resulta de utilidad en multitud de contextos diferentes.
+Los principales campos de aplicación son:
 
 \begin{itemize}
 \item
@@ -329,30 +333,28 @@ Aplicaciones:
 
   \begin{itemize}
   \item
-    Muestreo, remuestreo, \ldots{}
+    Muestreo, remuestreo\ldots{}
   \item
-    Aproximación de distribuciones (de estadísticos, estimadores, \ldots)
+    Aproximación de distribuciones (de estadísticos, estimadores\ldots)
   \item
-    Realización de contrastes, intervalos de confianza, \ldots{}
+    Realización de contrastes, intervalos de confianza\ldots{}
   \item
-    Comparación de estimadores, contrastes, \ldots{}
+    Comparación de estimadores, contrastes\ldots{}
   \item
-    Validación teoría (distribución asintótica,\ldots)
+    Validación teoría (distribución asintótica\ldots)
   \item
     Inferencia Bayesiana
   \end{itemize}
 \item
-  Optimización: Algoritmos genéticos, \ldots{}
+  Optimización: Algoritmos genéticos, temple simulado\ldots{}
 \item
-  Análisis numérico: Aproximación de integrales, resolución de ecuaciones, \ldots{}
+  Análisis numérico: Aproximación de integrales, resolución de ecuaciones\ldots{}
 \item
-  Computación: Diseño, verificación y validación de algoritmos,\ldots{}
+  Computación: Diseño, verificación y validación de algoritmos\ldots{}
 \item
-  Criptografía: Protocolos de comunicación segura, \ldots{}
+  Criptografía: Protocolos de comunicación segura\ldots{}
 \item
-  Física: Simulación de fenómenos naturales, \ldots{}
-\item
-  \ldots{}
+  Física: Simulación de fenómenos naturales\ldots{}
 \end{itemize}
 
 En los capítulos \ref{cap8} y \ref{cap9} nos centraremos en algunas de las aplicaciones de utilidad en Estadística.
@@ -363,7 +365,7 @@ En los capítulos \ref{cap8} y \ref{cap9} nos centraremos en algunas de las apli
 Una sucesión de números aleatorios puros (\emph{true random}), se caracteriza por que no existe ninguna regla o plan que nos permita conocer sus valores.
 
 Normalmente son obtenidos por procesos físicos
-(loterías, ruletas, ruidos,\ldots) y se almacenaban en \emph{tablas de dígitos aleatorios}.
+(loterías, ruletas, ruidos\ldots) y se almacenaban en \emph{tablas de dígitos aleatorios}.
 Por ejemplo, en 1955 la Corporación RAND publicó el libro \href{https://www.rand.org/pubs/monograph_reports/MR1418.html}{A Million Random Digits with 100,000 Normal Deviates} que contenía números aleatorios generados mediante una ruleta electrónica conectada a una computadora (ver Figura \ref{fig:randbook}).
 
 \begin{figure}[!htb]
@@ -518,7 +520,7 @@ Otras propiedades de interés serían:
 \item
   Generación de sub-secuencias (computación en paralelo).
 \item
-  Parsimonia, \ldots{}
+  Parsimonia\ldots{}
 \end{itemize}
 
 \begin{quote}
@@ -531,7 +533,7 @@ Gran cantidad de algoritmos:
 
 \begin{itemize}
 \item
-  Cuadrados medios, Lehmer,\ldots{}
+  Cuadrados medios, Lehmer\ldots{}
 \item
   Congruenciales
 \item
@@ -582,15 +584,15 @@ Entre las herramientas en el paquete base de \texttt{R} estarían:
 \item
   \texttt{rdistribución(n,...):} genera valores aleatorios de la
   correspondiente distribución.
-  Por ejemplo: \texttt{runif(n,\ min\ =\ 0,\ max\ =\ 1)}, generaría \texttt{n} valores de una uniforme.
+  Por ejemplo, \texttt{runif(n,\ min\ =\ 0,\ max\ =\ 1)}, generaría \texttt{n} valores de una uniforme. Se puede acceder al listado completo de las funciones disponibles en el paquete \texttt{stats} mediante el comando \texttt{?distributions}.
 \item
   \texttt{sample()}: genera muestras aleatorias de variables discretas y permutaciones (se tratará en el Capítulo \ref{discretas}).
 \item
   \texttt{simulate()}: genera realizaciones de la respuesta de un modelo ajustado.
 \end{itemize}
 
-Además están disponibles otros paquetes, como el paquete \href{http://distr.r-forge.r-project.org}{\texttt{distr}},
-que implementan distribuciones adicionales.
+Además están disponibles otros paquetes que implementan distribuciones adicionales (ver \href{https://cran.r-project.org/view=Distributions}{CRAN Task View: Probability Distributions}).
+Entre ellos podríamos destacar los paquetes \href{http://distr.r-forge.r-project.org}{\texttt{distr}} (clases S4; con extensiones en otros paquetes) y \href{https://alan-turing-institute.github.io/distr6/index.html}{\texttt{distr6}} (clases R6).
 
 La semilla se almacena (en \texttt{globalenv}) en \texttt{.Random.seed}; es un vector
 de enteros cuya dimensión depende del tipo de generador:
@@ -604,10 +606,10 @@ de enteros cuya dimensión depende del tipo de generador:
   partir del reloj del sistema.
 \end{itemize}
 
-\BeginKnitrBlock{remark}
+\begin{remark}
 \iffalse{} {Nota: } \fi{}Puede ser recomendable (para depurar) almacenarla antes de generar simulaciones, e.g.~
 \texttt{semilla\ \textless{}-\ .Random.seed}.
-\EndKnitrBlock{remark}
+\end{remark}
 
 En la mayoría de los ejemplos de este libro se generan todos los valores de una vez,
 se guardan y se procesan vectorialmente (normalmente empleando la función \texttt{apply}).
@@ -710,9 +712,9 @@ Otros paquetes de R que pueden ser de interés:
 \hypertarget{ejercicios}{%
 \section{Ejercicios}\label{ejercicios}}
 
-\BeginKnitrBlock{exercise}
+\begin{exercise}
 \protect\hypertarget{exr:simpi}{}{\label{exr:simpi} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Sea \((X,Y)\) es un vector aleatorio con distribución uniforme en el
 cuadrado \([-1,1]\times\lbrack-1,1]\) de área 4.
@@ -735,7 +737,7 @@ cuadrado \([-1,1]\times\lbrack-1,1]\) de área 4.
 \end{Highlighting}
 \end{Shaded}
 
-  La probabilidad teórica es 1/2 y la aproximación por simulación es la frecuencia relativa del suceso en los valores generados:
+  La probabilidad teórica es 1/2 y la aproximación por simulación es la frecuencia relativa del suceso en los valores generados (para calcularla podemos aprovechar que R maneja internamente los valores lógicos como 1, \texttt{TRUE}, y 0, \texttt{FALSE}):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -759,12 +761,6 @@ cuadrado \([-1,1]\times\lbrack-1,1]\) de área 4.
 \begin{verbatim}
 ## [1] 0.4996
 \end{verbatim}
-
-  \BeginKnitrBlock{remark}
-
-  \iffalse{} {Nota: } \fi{}R maneja internamente los valores lógicos como 1 (\texttt{TRUE}) y 0 (\texttt{FALSE}).
-
-  \EndKnitrBlock{remark}
 \item
   Aproximar el valor de \(\pi\) mediante simulación a partir de
   \(P\left( X^2 +Y^2 \leq 1 \right)\).
@@ -830,10 +826,9 @@ cuadrado \([-1,1]\times\lbrack-1,1]\) de área 4.
   \end{figure}
 \end{enumerate}
 
-\BeginKnitrBlock{exercise}[Experimento de Bernoulli]
+\begin{exercise}[Experimento de Bernoulli]
 \protect\hypertarget{exr:bernouilli}{}{\label{exr:bernouilli} \iffalse (Experimento de Bernoulli) \fi{} }
-\EndKnitrBlock{exercise}
-
+\end{exercise}
 Consideramos el experimento de Bernoulli consistente en el
 lanzamiento de una moneda.
 
@@ -914,10 +909,9 @@ lanzamiento de una moneda.
   \end{figure}
 \end{enumerate}
 
-\BeginKnitrBlock{exercise}[Simulación de un circuito]
+\begin{exercise}[Simulación de un circuito]
 \protect\hypertarget{exr:circuito}{}{\label{exr:circuito} \iffalse (Simulación de un circuito) \fi{} }
-\EndKnitrBlock{exercise}
-
+\end{exercise}
 Simular el paso de corriente a través del siguiente circuito, donde
 figuran las probabilidades de que pase corriente por cada uno de los
 interruptores:
@@ -927,11 +921,11 @@ interruptores:
 Considerar que cada interruptor es una variable aleatoria de Bernoulli independiente
 para simular 1000 valores de cada una de ellas.
 
-\BeginKnitrBlock{remark}
+\begin{remark}
 \iffalse{} {Nota: } \fi{}R maneja internamente los valores lógicos como 1 (\texttt{TRUE}) y 0 (\texttt{FALSE}).
 Recíprocamente, cualquier número puede ser tratado como lógico (al estilo de C).
 El entero 0 es equivalente a \texttt{FALSE} y cualquier entero distinto de 0 a \texttt{TRUE}.
-\EndKnitrBlock{remark}
+\end{remark}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -954,10 +948,9 @@ El entero 0 es equivalente a \texttt{FALSE} y cualquier entero distinto de 0 a \
 ## [1] 0.6918
 \end{verbatim}
 
-\BeginKnitrBlock{exercise}[El problema del Caballero de Méré]
+\begin{exercise}[El problema del Caballero de Méré]
 \protect\hypertarget{exr:mere}{}{\label{exr:mere} \iffalse (El problema del Caballero de Méré) \fi{} }
-\EndKnitrBlock{exercise}
-
+\end{exercise}
 En 1651, el Caballero de Méré le planteó a Pascal una pregunta
 relacionada con las apuestas y los juegos de azar: ¿es ventajoso
 apostar a que en cuatro lanzamientos de un dado se obtiene al menos
@@ -1108,10 +1101,10 @@ Ejemplo:
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.05    0.02    0.06 
+##    0.13    0.00    0.13 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.05    0.02    0.06
+##    0.13    0.00    0.13
 \end{verbatim}
 
 \begin{Shaded}
@@ -1134,16 +1127,16 @@ Ejemplo:
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.00    0.00    0.02 
+##    0.03    0.00    0.03 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.05    0.02    0.08
+##    0.16    0.00    0.16
 \end{verbatim}
 
 \hypertarget{paquetes-de-r-1}{%
 \subsection{Paquetes de R}\label{paquetes-de-r-1}}
 
-Por ejemplo, se puede emplear el paquete \texttt{npsp} (fichero \emph{\href{https://github.com/rubenfcasal/npsp/blob/master/R/cpu.time.R}{cpu.time.R}}):
+Por ejemplo, se puede emplear la función \href{https://rubenfcasal.github.io/npsp/reference/cpu.time.html}{\texttt{cpu.time()}} del paquete \texttt{npsp}:
 
 \begin{itemize}
 \item
@@ -1152,6 +1145,8 @@ Por ejemplo, se puede emplear el paquete \texttt{npsp} (fichero \emph{\href{http
   Call \texttt{cpu.time()} to print/get total and/or partial (since the last call
   to this function) real and CPU times.
 \end{itemize}
+
+Fichero \emph{\href{https://github.com/rubenfcasal/npsp/blob/master/R/cpu.time.R}{cpu.time.R}}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1237,7 +1232,7 @@ Ejemplo:
 ## Time of last operation: 
 ## Sample median of 1e+06 values = 0.4993323 
 ##    user  system elapsed 
-##    0.09    0.00    0.09
+##    0.17    0.00    0.19
 \end{verbatim}
 
 \begin{Shaded}
@@ -1254,7 +1249,7 @@ Ejemplo:
 ##       0       0       0 
 ## Total time:
 ##    user  system elapsed 
-##    0.09    0.00    0.09
+##    0.17    0.00    0.19
 \end{verbatim}
 
 Otro paquete que puede ser de utilidad es
@@ -1354,7 +1349,7 @@ permite obtener de manera eficiente secuencias de números
 
 El procedimiento habitual solía ser escoger \(m\) de forma que la operación del módulo se pudiese realizar de forma muy eficiente, para posteriormente seleccionar \(c\) y \(a\) de forma que el período fuese lo más largo posible (o suficientemente largo).
 
-\BeginKnitrBlock{theorem}[Hull y Dobell, 1962]
+\begin{theorem}[Hull y Dobell, 1962]
 \protect\hypertarget{thm:hull-dobell}{}{\label{thm:hull-dobell} \iffalse (Hull y Dobell, 1962) \fi{} }
 Un generador congruencial tiene período máximo (\(p=m\)) si y solo si:
 
@@ -1370,8 +1365,8 @@ Un generador congruencial tiene período máximo (\(p=m\)) si y solo si:
   ser (i.e.~\(m \equiv 0 \bmod 4\Rightarrow a \equiv 1 \bmod 4\)).
 \end{enumerate}
 
-.
-\EndKnitrBlock{theorem}
+.\\
+\end{theorem}
 
 Algunas consecuencias:
 
@@ -1382,7 +1377,7 @@ Algunas consecuencias:
   Un generador multiplicativo no cumple la condición 1 (\(m.c.d.(0, m)=m\)).
 \end{itemize}
 
-\BeginKnitrBlock{theorem}
+\begin{theorem}
 \protect\hypertarget{thm:unnamed-chunk-3}{}{\label{thm:unnamed-chunk-3} }
 Un generador multiplicativo tiene período máximo (\(p=m-1\)) si:
 
@@ -1395,8 +1390,8 @@ Un generador multiplicativo tiene período máximo (\(p=m-1\)) si:
   que \(a^{q}=1 \bmod m\) es \(q=m-1\)).
 \end{enumerate}
 
-.
-\EndKnitrBlock{theorem}
+.\\
+\end{theorem}
 
 Además de preocuparse de la longitud del ciclo, las secuencias
 generadas deben aparentar muestras i.i.d. \(\mathcal{U}(0,1)\).
@@ -1414,7 +1409,7 @@ Por ejemplo, el conjunto de datos \texttt{randu} contiene 400 tripletas de núme
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.03    0.00    0.03
+##    0.05    0.00    0.05
 \end{verbatim}
 
 \begin{Shaded}
@@ -1496,9 +1491,9 @@ Otras alternativas consisten en la combinanción de varios generadores, las más
 
 El generador \emph{L'Ecuyer-CMRG} (L'Ecuyer, 1999), empleado como base para la generación de múltiples secuencias en el paquete \texttt{parallel}, combina dos generadores concruenciales lineales múltiples de orden \(k=3\) (el periodo aproximado es \(2^{191}\)).
 
-\BeginKnitrBlock{exercise}[Análisis de un generador congruencial]
+\begin{exercise}[Análisis de un generador congruencial]
 \protect\hypertarget{exr:congru512}{}{\label{exr:congru512} \iffalse (Análisis de un generador congruencial) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Considera el generador congruencial definido por:
 \[\begin{aligned}
@@ -1732,9 +1727,9 @@ Como se muestra en la Figura \ref{fig:chisq-test-unif} el histograma de la secue
 Otro contraste de bondad de ajuste muy conocido es el test de Kolmogorov-Smirnov, implementado en \texttt{ks.test} (ver Sección \ref{ks-test}).
 En la Sección \ref{gof} se describen con más detalle estos contrastes.
 
-\BeginKnitrBlock{exercise}[Análisis de un generador congruencial, continuación]
+\begin{exercise}[Análisis de un generador congruencial, continuación]
 \protect\hypertarget{exr:congru512b}{}{\label{exr:congru512b} \iffalse (Análisis de un generador congruencial, continuación) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Continuando con el generador congruencial del Ejercicio \ref{exr:congru512}:
 
@@ -1891,9 +1886,9 @@ pruebas:
 Este procedimiento es también el habitual para validar un método de
 contraste de hipótesis por simulación.
 
-\BeginKnitrBlock{example}
+\begin{example}
 \protect\hypertarget{exm:rep-test-randu}{}{\label{exm:rep-test-randu} }
-\EndKnitrBlock{example}
+\end{example}
 
 Consideramos el generador congruencial RANDU:
 
@@ -2064,10 +2059,9 @@ Para más detalles, ver por ejemplo\footnote{También puede ser de interés el e
 \hypertarget{ejercicios-1}{%
 \section{Ejercicios}\label{ejercicios-1}}
 
-\BeginKnitrBlock{exercise}[Método de los cuadrados medios]
+\begin{exercise}[Método de los cuadrados medios]
 \protect\hypertarget{exr:RANDVN}{}{\label{exr:RANDVN} \iffalse (Método de los cuadrados medios) \fi{} }
-\EndKnitrBlock{exercise}
-
+\end{exercise}
 Uno de los primeros generadores fue el denominado método de los
 cuadrados medios propuesto por Von Neumann (1946). Con este
 procedimiento se generan números pseudoaleatorios de 4 dígitos de la
@@ -2141,10 +2135,9 @@ Estudiar las características del
 generador de cuadrados medios a partir de una secuencia de 500
 valores. Emplear únicamente métodos gráficos.
 
-\BeginKnitrBlock{exercise}
+\begin{exercise}
 \protect\hypertarget{exr:parkmiller}{}{\label{exr:parkmiller} }
-\EndKnitrBlock{exercise}
-
+\end{exercise}
 Considerando el generador congruencial multiplicativo de parámetros
 \(a=7^{5}=16807\), \(c=0\) y \(m=2^{31}-1\). ¿Se observan los mismos problemas
 que con el algoritmo RANDU al considerar las tripletas \((x_{k},x_{k+1},x_{k+2})\)?
@@ -2183,10 +2176,9 @@ mediante simulación es \emph{la ley (débil) de los grandes números}:
   \emph{La ley fuerte} establece la convergencia casi segura.
 \end{itemize}
 
-\BeginKnitrBlock{example}
+\begin{example}
 \protect\hypertarget{exm:unnamed-chunk-2}{}{\label{exm:unnamed-chunk-2} }Aproximación de una probabilidad
-\EndKnitrBlock{example}
-
+\end{example}
 Simulamos una distribución de Bernoulli de parámetro \(p=0.5\):
 
 \begin{Shaded}
@@ -2319,9 +2311,9 @@ es la precisión obtenida (con nivel de confianza \(1-\alpha\)).
 La convergencia de la aproximación, además de ser aleatoria, se podría considerar lenta.
 La idea es que para doblar la precisión (disminuir el error a la mitad), necesitaríamos un número de generaciones cuatro veces mayor. Pero una ventaja, es que este error no depende del número de dimensiones (en el caso multidimensional puede ser mucho más rápida que otras alternativas numéricas).
 
-\BeginKnitrBlock{example}
+\begin{example}
 \protect\hypertarget{exm:unnamed-chunk-5}{}{\label{exm:unnamed-chunk-5} }Aproximación de la media de una distribución normal
-\EndKnitrBlock{example}
+\end{example}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2431,10 +2423,9 @@ En el caso de dependencia, la estimación de la precisión se complica:
 \[Var\left( \overline{X}\right) =\frac{1}{n^{2}}\left( 
 \sum_{i=1}^{n}Var\left( X_{i} \right) + 2\sum_{i<j}Cov\left( X_{i},X_{j}\right) \right).\]
 
-\BeginKnitrBlock{example}
+\begin{example}
 \protect\hypertarget{exm:mmc}{}{\label{exm:mmc} }Aproximación de una proporción bajo dependencia (cadena de Markov)
-\EndKnitrBlock{example}
-
+\end{example}
 Supongamos que en A Coruña llueve de media 1/3 días al año,
 y que la probabilidad de que un día llueva solo depende de lo que ocurrió el día anterior,
 siendo 0.94 si el día anterior llovió y 0.03 si no.
@@ -2783,9 +2774,9 @@ estadísticos deseados.
 
 También trataremos este tipo de problemas en la diagnosis de algoritmos MCMC.
 
-\BeginKnitrBlock{example}
+\begin{example}
 \protect\hypertarget{exm:unnamed-chunk-18}{}{\label{exm:unnamed-chunk-18} }Simulación de un proceso autorregresivo (serie de tiempo)
-\EndKnitrBlock{example}
+\end{example}
 
 \[X_t = \mu + \rho * (X_{t-1} - \mu) + \varepsilon_t\]
 Podemos tener en cuenta que en este caso la varianza es:
@@ -2927,7 +2918,7 @@ El recíproco también es cierto, si \(U \sim \mathcal{U}(0, 1)\) entonces:
 
 A partir de este resultado se deduce el siguiente algoritmo genérico para simular una variable continua con función de distribución \(F\) invertible:
 
-\BeginKnitrBlock{conjecture}[Método de inversión]
+\begin{conjecture}[Método de inversión]
 \protect\hypertarget{cnj:inversion}{}{\label{cnj:inversion} \iffalse (Método de inversión) \fi{} }
 1. Generar \(U \sim \mathcal{U}(0, 1)\).
 
@@ -2938,11 +2929,11 @@ A partir de este resultado se deduce el siguiente algoritmo genérico para simul
 \item
   Devolver \(X = F^{-1}\left( U \right)\).
 \end{enumerate}
-\EndKnitrBlock{conjecture}
+\end{conjecture}
 
-\BeginKnitrBlock{example}[Simulación de una distribución exponencial]
+\begin{example}[Simulación de una distribución exponencial]
 \protect\hypertarget{exm:exp-inv}{}{\label{exm:exp-inv} \iffalse (Simulación de una distribución exponencial) \fi{} }
-\EndKnitrBlock{example}
+\end{example}
 
 La distribución exponencial \(\exp \left( \lambda \right)\) de parámetro \(\lambda>0\)
 tiene como función de densidad \(f(x) =\lambda e^{-\lambda x}\), si \(x\geq 0\),
@@ -2994,7 +2985,7 @@ El código para implementar este algoritmo en R podría ser el siguiente:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##       0       0       0
+##    0.01    0.00    0.01
 \end{verbatim}
 
 \begin{Shaded}
@@ -3097,9 +3088,9 @@ Weibull (\(\lambda,\alpha>0\))\strut
 \bottomrule
 \end{longtable}
 
-\BeginKnitrBlock{exercise}[Distribución doble exponencial]
+\begin{exercise}[Distribución doble exponencial]
 \protect\hypertarget{exr:ddexp}{}{\label{exr:ddexp} \iffalse (Distribución doble exponencial) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 La distribución doble exponencial (o distribución de Laplace) de
 parámetro \(\lambda\) tiene función de densidad:
@@ -3159,7 +3150,7 @@ y función de distribución:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.02    0.00    0.02
+##    0.03    0.01    0.04
 \end{verbatim}
 \item
   Representar el histograma y compararlo con la densidad teórica.
@@ -3247,7 +3238,7 @@ La aproximación consiste en utilizar \(g\left( 1-u\right)\) en lugar de
 y \(-g\left( u\right)\) si \(u\in[\frac12,1-10^{-20}]\). Para \(u\notin [10^{-20},1-10^{-20}]\) (que sólo ocurre con una probabilidad de
 \(2\cdot10^{-20}\)) la aproximación no es recomendable.
 
-\BeginKnitrBlock{conjecture}[de Odeh y Evans]
+\begin{conjecture}[de Odeh y Evans]
 \protect\hypertarget{cnj:Odeh-Evans}{}{\label{cnj:Odeh-Evans} \iffalse (de Odeh y Evans) \fi{} }
 
 \begin{enumerate}
@@ -3262,7 +3253,7 @@ y \(-g\left( u\right)\) si \(u\in[\frac12,1-10^{-20}]\). Para \(u\notin [10^{-20
 \item
   Devolver \(X\).
 \end{enumerate}
-\EndKnitrBlock{conjecture}
+\end{conjecture}
 
 En manuales de funciones matemáticas, como \href{https://www.math.ubc.ca/~cbm/aands/frameindex.htm}{Abramowitz y Stegun (1964)},
 se tienen aproximaciones de la función cuantil de las principales distribuciones
@@ -3336,7 +3327,7 @@ existe una constante \(c>0\) tal que:
 \[f(x) \leq c\cdot g(x) 
 \text{, }\forall x\in \mathbb{R}\text{.}\]
 
-\BeginKnitrBlock{conjecture}[Método de aceptación-rechazo; Von Neuman, 1951]
+\begin{conjecture}[Método de aceptación-rechazo; Von Neuman, 1951]
 \protect\hypertarget{cnj:aceptacion-rechazo}{}{\label{cnj:aceptacion-rechazo} \iffalse (Método de aceptación-rechazo; Von Neuman, 1951) \fi{} }
 
 \begin{enumerate}
@@ -3351,7 +3342,7 @@ existe una constante \(c>0\) tal que:
 
   en caso contrario volver al paso 1.
 \end{enumerate}
-\EndKnitrBlock{conjecture}
+\end{conjecture}
 
 \hypertarget{densidades-acotadas-en-un-intervalo-cerrado}{%
 \subsection{Densidades acotadas en un intervalo cerrado}\label{densidades-acotadas-en-un-intervalo-cerrado}}
@@ -3382,9 +3373,9 @@ Así pues, el algoritmo quedaría como sigue:
 
 \textbf{Nota}: no confundir \(M\) con \(c = M \left( b - a \right)\).
 
-\BeginKnitrBlock{exercise}[Simulación de la normal mediante la doble exponencial]
+\begin{exercise}[Simulación de la normal mediante la doble exponencial]
 \protect\hypertarget{exr:dnorm-ddexp-ar}{}{\label{exr:dnorm-ddexp-ar} \iffalse (Simulación de la normal mediante la doble exponencial) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Desarrollar el código necesario para generar, por el método de
 aceptación-rechazo, una muestra de \(n\) observaciones de una
@@ -3472,7 +3463,7 @@ Para generar los valores de la densidad objetivo podríamos emplear el siguiente
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.08    0.00    0.08
+##    0.12    0.00    0.12
 \end{verbatim}
 
 \begin{Shaded}
@@ -3545,9 +3536,9 @@ encontrar el valor de \(c\) óptimo para cada densidad de esa familia:
 y, finalmente, elegir el mejor valor \(\theta_{0}\) del parámetro, en el sentido de ofrecer el menor posible \(c_{\theta}\):
 \[c_{\theta_{0}}=\min_{\theta\in\Theta}\max_{x}\frac{f\left(  x\right) }{g_{\theta}\left(  x\right)  }.\]
 
-\BeginKnitrBlock{exercise}[Simulación de la normal mediante la doble exponencial, continuación]
+\begin{exercise}[Simulación de la normal mediante la doble exponencial, continuación]
 \protect\hypertarget{exr:dnorm-ddexp-arb}{}{\label{exr:dnorm-ddexp-arb} \iffalse (Simulación de la normal mediante la doble exponencial, continuación) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Continuando con el Ejercicio \ref{exr:dnorm-ddexp-ar} anterior del método de aceptación-rechazo para generar observaciones de una distribución normal estándar, empleando como distribución auxiliar una doble exponencial:
 
@@ -3643,9 +3634,9 @@ Algoritmo:
   en caso contrario volver al paso 1.
 \end{enumerate}
 
-\BeginKnitrBlock{exercise}[Simulación de la distribución a posteriori a partir de la distribución a priori]
+\begin{exercise}[Simulación de la distribución a posteriori a partir de la distribución a priori]
 \protect\hypertarget{exr:post-pri-ar}{}{\label{exr:post-pri-ar} \iffalse (Simulación de la distribución a posteriori a partir de la distribución a priori) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Para la estimación Bayes de la media de una normal se suele utilizar
 como distribución a priori una Cauchy.
@@ -3658,7 +3649,7 @@ como distribución a priori una Cauchy.
   (\texttt{rcauchy}) como distribución a priori y como densidad auxiliar
   para simular por aceptación-rechazo una muestra de la densidad a
   posteriori (emplear \texttt{dnorm} para construir la verosimilitud).
-  Obtener el intervalo de probabilidad al 95\%.
+  Obtener el intervalo de probabilidad/credibilidad al 95\%.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3924,10 +3915,9 @@ Algoritmo:
   Generar \(X\sim f_J\).
 \end{enumerate}
 
-\BeginKnitrBlock{example}[Distribución doble exponencial]
+\begin{example}[Distribución doble exponencial]
 \protect\hypertarget{exm:dexp-mix}{}{\label{exm:dexp-mix} \iffalse (Distribución doble exponencial) \fi{} }
-\EndKnitrBlock{example}
-
+\end{example}
 A partir de la densidad de la distribución doble exponencial:
 \[f(x) =\frac{\lambda }{2}e^{-\lambda \left\vert x\right\vert }%
 \text{, }\forall x\in \mathbb{R},\]
@@ -3938,26 +3928,26 @@ siendo:
 \[f_{1}(x) = \left\{ 
 \begin{array}{ll}
 \lambda e^{-\lambda x} & \text{si } x\geq 0 \\ 
-0 & \text{si} x<0
+0 & \text{si } x<0
 \end{array}
 \ \right. \\
 f_{2}(x) = \left\{ 
 \begin{array}{ll}
 \lambda e^{\lambda x} & \text{si } x<0 \\ 
-0 & \text{si} x\geq 0
+0 & \text{si } x\geq 0
 \end{array}
 \ \right.\]
 
-Algoritmo:
+El algoritmo resultante sería el siguiente (empleando dos números pseudo aleatorios uniformes, el primero para seleccionar el índice y el segundo para generar un valor de la correspondiente componente mediante el método de inversión):
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
   Generar \(U,V\sim \mathcal{U}(0, 1)\).
 \item
-  Si \(U<0.5\) devolver \(X=-\ln \left( 1-V\right)\).
+  Si \(U<0.5\) devolver \(X=-\ln \left( 1-V\right)/\lambda\).
 \item
-  En caso contrario devolver \(X=\ln V\).
+  En caso contrario devolver \(X=\ln(V)/\lambda\).
 \end{enumerate}
 
 Observaciones:
@@ -3989,7 +3979,7 @@ Algoritmo:
   Generar \(X\sim g(\cdot |Y)\).
 \end{enumerate}
 
-Este algoritmo es muy empleado en Inferencia Bayesiana y en la simulación de algunas variables discretas (como la Binomial Negativa, denominada también distribución Gamma--Poisson, o la distribución Beta-Binomial; ver Sección \ref{notables-disc}),
+Este algoritmo es muy empleado en Inferencia Bayesiana y en la simulación de algunas variables discretas (como la Binomial Negativa, denominada también distribución Gamma-Poisson, o la distribución Beta-Binomial; ver Sección \ref{notables-disc}),
 ya que el resultado sería válido cambiando las funciones de densidad \(f\) y \(g\) por funciones de masa de probabilidad.
 
 \hypertarget{notables-cont}{%
@@ -4092,14 +4082,13 @@ Se define la función cuantil o inversa generalizada de una función de distribu
 u\right\} ,\ \forall u\in \left( 0,1\right).\]
 Si \(F\) es invertible \(Q=F^{-1}\).
 
-\BeginKnitrBlock{theorem}[de inversión generalizada]
+\begin{theorem}[de inversión generalizada]
 \protect\hypertarget{thm:invgen}{}{\label{thm:invgen} \iffalse (de inversión generalizada) \fi{} }
 
 Si \(U\sim \mathcal{U}\left( 0,1\right)\), la variable aleatoria \(Q\left( U\right)\)
 tiene función de distribución \(F\).
-\EndKnitrBlock{theorem}
-
-\BeginKnitrBlock{proof}
+\end{theorem}
+\begin{proof}
 \iffalse{} {Demostración. } \fi{}
 Bastaría ver que:
 \[Q\left( u\right) \leq x \Longleftrightarrow u\leq F(x).\]
@@ -4108,12 +4097,12 @@ Como \(F\) es monótona y por la definición de \(Q\):
 \[Q\left( u\right) \leq x \Rightarrow u \leq F(Q\left( u\right)) \leq F(x).\]
 Por otro lado como \(Q\) también es monótona:
 \[u \leq F(x) \Rightarrow Q\left( u\right) \leq Q(F(x)) \leq x\]
-\EndKnitrBlock{proof}
+\end{proof}
 
 A partir de este resultado se deduce el siguiente algoritmo general
 para simular una distribución de probabilidad discreta.
 
-\BeginKnitrBlock{conjecture}[de transformación cuantil]
+\begin{conjecture}[de transformación cuantil]
 \protect\hypertarget{cnj:unnamed-chunk-5}{}{\label{cnj:unnamed-chunk-5} \iffalse (de transformación cuantil) \fi{} }
 
 \begin{enumerate}
@@ -4123,7 +4112,7 @@ para simular una distribución de probabilidad discreta.
 \item
   Devolver \(X=Q\left( U\right)\).
 \end{enumerate}
-\EndKnitrBlock{conjecture}
+\end{conjecture}
 
 El principal problema es el cáculo de \(Q\left( U\right)\).
 En este caso, suponiendo por comodidad que los valores que toma la variable
@@ -4135,7 +4124,7 @@ Q\left( U\right) &=\inf \left\{ x_{j}:\sum_{i=1}^{j}p_{i}\geq U\right\} \\
 
 Para encontrar este valor se puede emplear el siguiente algoritmo:
 
-\BeginKnitrBlock{conjecture}[de transformación cuantil con búsqueda secuencial]
+\begin{conjecture}[de transformación cuantil con búsqueda secuencial]
 \protect\hypertarget{cnj:unnamed-chunk-6}{}{\label{cnj:unnamed-chunk-6} \iffalse (de transformación cuantil con búsqueda secuencial) \fi{} }
 
 \begin{enumerate}
@@ -4149,15 +4138,15 @@ Para encontrar este valor se puede emplear el siguiente algoritmo:
 \item
   Devolver \(X=x_{I}\).
 \end{enumerate}
-\EndKnitrBlock{conjecture}
+\end{conjecture}
 
 Este algoritmo no es muy eficiente, especialmente si el número de
 posibles valores de la variable es grande.
 
-\BeginKnitrBlock{remark}
+\begin{remark}
 \iffalse{} {Nota: } \fi{}El algoritmo anterior es válido independientemente de que los
 valores que tome la variable estén ordenados.
-\EndKnitrBlock{remark}
+\end{remark}
 
 Si la variable toma un número finito de valores, se podría implementar en \texttt{R}
 de la siguiente forma:
@@ -4212,9 +4201,9 @@ se puede considerar una variable global \texttt{ncomp}:
 \end{Highlighting}
 \end{Shaded}
 
-\BeginKnitrBlock{exercise}[Simulación de una binomial mediante el método de la transformación cuantil]
+\begin{exercise}[Simulación de una binomial mediante el método de la transformación cuantil]
 \protect\hypertarget{exr:binom-cuant}{}{\label{exr:binom-cuant} \iffalse (Simulación de una binomial mediante el método de la transformación cuantil) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Generar, por el método de la transformación cuantil usando
 búsqueda secuencial, una muestra de \(nsim=10^{5}\) observaciones
@@ -4244,7 +4233,7 @@ Empleamos la rutina anterior para generar las simulaciones:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##     0.1     0.0     0.1
+##    0.14    0.00    0.14
 \end{verbatim}
 
 Aproximación de la media:
@@ -4343,12 +4332,12 @@ Análisis de los resultados:
 ## [1] 0.09568
 \end{verbatim}
 
-\BeginKnitrBlock{remark}
+\begin{remark}
 \iffalse{} {Nota: } \fi{}Puede ocurrir que no todos los valores sean generados en la simulación.
 En el código anterior si \texttt{length(x)\ \textgreater{}\ length(psim)}, la sentencia
 \texttt{res\$pteor\ \textless{}-\ fmp} gererará un error.
 Una posible solución sería trabajar con factores (hacer que la función ´rfmp()´ devuelva ´factor(X, levels = x)´). Alternativamente se podría emplear por ejemplo:
-\EndKnitrBlock{remark}
+\end{remark}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4385,9 +4374,9 @@ un etiquetado \(l\) de forma que:
 \[p_{l\left( 1\right) }\geq p_{l\left( 2\right) }\geq \cdots \geq p_{l\left(
 n\right) }\geq \cdots\]
 
-\BeginKnitrBlock{exercise}[Simulación de una binomial, continuación]
+\begin{exercise}[Simulación de una binomial, continuación]
 \protect\hypertarget{exr:binom-cuantb}{}{\label{exr:binom-cuantb} \iffalse (Simulación de una binomial, continuación) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Repetir el Ejercicio \ref{exr:binom-cuant} anterior ordenando previamente las
 probabilidades en orden decreciente y también empleando la
@@ -4408,7 +4397,7 @@ función \texttt{sample} de R.
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.04    0.00    0.05
+##    0.12    0.00    0.15
 \end{verbatim}
 
 \begin{Shaded}
@@ -4443,7 +4432,7 @@ Como ya se comentó, en \texttt{R} se recomienda emplear la función \texttt{sam
 
 \begin{verbatim}
 ##    user  system elapsed 
-##       0       0       0
+##    0.02    0.00    0.02
 \end{verbatim}
 
 \hypertarget{muxe9todo-de-la-tabla-guuxeda}{%
@@ -4466,7 +4455,7 @@ El punto de partida para un valor \(U\) será \(g_{j_{0}}\) siendo:
 En este caso, puede verse que una cota del número medio de comparaciones es:
 \[E\left( N\right) \leq 1+\frac{n}{m}\]
 
-\BeginKnitrBlock{conjecture}[de simulación mediante una tabla guía]
+\begin{conjecture}[de simulación mediante una tabla guía]
 \protect\hypertarget{cnj:unnamed-chunk-18}{}{\label{cnj:unnamed-chunk-18} \iffalse (de simulación mediante una tabla guía) \fi{} }
 
 Inicialización:
@@ -4508,11 +4497,11 @@ Simulación mediante tabla guía:
 \item
   Devolver \(X=x_{i}\).
 \end{enumerate}
-\EndKnitrBlock{conjecture}
+\end{conjecture}
 
-\BeginKnitrBlock{exercise}[Simulación de una binomial mediante tabla guía]
+\begin{exercise}[Simulación de una binomial mediante tabla guía]
 \protect\hypertarget{exr:binom-tabla}{}{\label{exr:binom-tabla} \iffalse (Simulación de una binomial mediante tabla guía) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Diseñar una rutina que permita generar \(nsim\) valores de una
 distribución discreta usando una tabla guía.
@@ -4548,7 +4537,7 @@ Repetir el Ejercicio \ref{exr:binom-cuant} anterior empleando esta rutina con \(
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.08    0.00    0.07
+##    0.12    0.00    0.14
 \end{verbatim}
 
 Análisis de los resultados:
@@ -4633,9 +4622,9 @@ El algoritmo para generar las simulaciones es el estándar del método de compos
 
 Este algoritmo es muy eficiente y es el implementado en la función \texttt{sample} de R.
 
-\BeginKnitrBlock{exercise}[Simulación de una binomial mediante en método de Alias]
+\begin{exercise}[Simulación de una binomial mediante en método de Alias]
 \protect\hypertarget{exr:binom-alias}{}{\label{exr:binom-alias} \iffalse (Simulación de una binomial mediante en método de Alias) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Diseñar una rutina que permita generar \(nsim\) valores de una
 distribución discreta usando el método de Alias.
@@ -4673,7 +4662,7 @@ Repetir el Ejercicio \ref{exr:binom-cuant} anterior empleando esta rutina.
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.05    0.00    0.05
+##    0.08    0.00    0.09
 \end{verbatim}
 
 Análisis de los resultados:
@@ -4704,10 +4693,9 @@ Si la variable discreta tiene dominio infinito no se podrían
 almacenar las probabilidades acumuladas, aunque en algunos casos podrían
 calcularse de forma recursiva.
 
-\BeginKnitrBlock{example}[distribución de Poisson]
+\begin{example}[distribución de Poisson]
 \protect\hypertarget{exm:unnamed-chunk-22}{}{\label{exm:unnamed-chunk-22} \iffalse (distribución de Poisson) \fi{} }
-\EndKnitrBlock{example}
-
+\end{example}
 Una variable \(X\) con distribución de Poisson de parámetro \(\lambda\),
 toma los valores \(x_{1}=0\), \(x_{2}=1\), \(\ldots\) con probabilidades:
 \[p_{j}=P\left( X=x_{j}\right)  =P\left( X=j-1\right)  =\frac{e^{-\lambda
@@ -4748,9 +4736,9 @@ encontrar el valor de la función cuantil en cualquier \(U\),
 evitando el bucle de búsqueda.
 Normalmente se realiza mediante truncamiento de una distribución continua.
 
-\BeginKnitrBlock{example}[distribución uniforme discreta]
+\begin{example}[distribución uniforme discreta]
 \protect\hypertarget{exm:unnamed-chunk-23}{}{\label{exm:unnamed-chunk-23} \iffalse (distribución uniforme discreta) \fi{} }
-\EndKnitrBlock{example}
+\end{example}
 
 La función de masa de probabilidad de una distribución uniforme discreta
 en \(\{1,2,\ldots,n\}\) viene dada por
@@ -4767,9 +4755,9 @@ truncando la distribución uniforme:
   Devolver \(X=\left\lfloor nU\right\rfloor + 1\).
 \end{enumerate}
 
-\BeginKnitrBlock{example}[distribución geométrica]
+\begin{example}[distribución geométrica]
 \protect\hypertarget{exm:unnamed-chunk-24}{}{\label{exm:unnamed-chunk-24} \iffalse (distribución geométrica) \fi{} }
-\EndKnitrBlock{example}
+\end{example}
 
 La función de masa de probabilidad de una distribución geométrica es:
 \[P\left( X=j\right)  =P\left( I=j+1\right)  =p\left( 1-p\right)^{j}\text{,
@@ -4821,9 +4809,9 @@ De donde se obtendría el algoritmo:
   (e.g.~Cao, 2002, Sección 4.2).
 \end{itemize}
 
-\BeginKnitrBlock{exercise}[Simulación de una distribución mixta mediante el método de inversión generalizado]
+\begin{exercise}[Simulación de una distribución mixta mediante el método de inversión generalizado]
 \protect\hypertarget{exr:mixta-cuantil}{}{\label{exr:mixta-cuantil} \iffalse (Simulación de una distribución mixta mediante el método de inversión generalizado) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Considera la variable aleatoria con función
 de distribución dada por:
@@ -4943,9 +4931,9 @@ Función de distribución:
   \begin{center}\includegraphics[width=0.7\linewidth]{06-Metodos_generales_discretas_files/figure-latex/unnamed-chunk-28-1} \end{center}
 \end{enumerate}
 
-\BeginKnitrBlock{exercise}[propuesto]
+\begin{exercise}[propuesto]
 \protect\hypertarget{exr:hipergeom}{}{\label{exr:hipergeom} \iffalse (propuesto) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Se pretende simular \(nsim=10^{4}\) observaciones de una variable
 hipergeométrica (\texttt{dhyper(x,\ m,\ n,\ k)}) de parámetros \(m=\) el número
@@ -5014,9 +5002,9 @@ En la Sección \ref{mult-discr} se tratará brevemente la simulación de vectore
 Si las componentes son independientes y \(f_i\) son las correspondientes densidades marginales, bastará con generar \(X_i \sim f_i\).
 Las dificultades aparecerán cuando se quiera simular componentes con una determinada estructura de dependencia.
 
-\BeginKnitrBlock{example}[simulación de normales independientes]
+\begin{example}[simulación de normales independientes]
 \protect\hypertarget{exm:normind}{}{\label{exm:normind} \iffalse (simulación de normales independientes) \fi{} }
-\EndKnitrBlock{example}
+\end{example}
 
 Si \(\boldsymbol\mu =\left( \mu_1,\mu_2,\ldots,\mu_d\right)^t\) es un vector (de medias) y
 \(\Sigma\) es una matriz \(d \times d\) definida positiva (de varianzas-covarianzas), el vector aleatorio \(\mathbf{X}\) sigue una distribución normal multivariante con esos parámetros,
@@ -5031,7 +5019,7 @@ Si la matriz de covarianzas es diagonal \(\Sigma=diag\left( \sigma_1^2,\sigma_2^
 entonces las componentes \(X_i \sim \mathcal{N}\left( \mu_i,\sigma_i^2\right)\)
 son independientes y podemos simular el vector aleatorio de forma trivial, por ejemplo mediante el siguiente algoritmo:
 
-\BeginKnitrBlock{conjecture}[de simulación de normales independientes]
+\begin{conjecture}[de simulación de normales independientes]
 \protect\hypertarget{cnj:mnorm-indep}{}{\label{cnj:mnorm-indep} \iffalse (de simulación de normales independientes) \fi{} }
 
 \begin{enumerate}
@@ -5041,7 +5029,7 @@ son independientes y podemos simular el vector aleatorio de forma trivial, por e
 \item
   Para \(i = 1, 2, \ldots, d\) hacer \(X_i = \mu_i + \sigma_i Z_i\).
 \end{enumerate}
-\EndKnitrBlock{conjecture}
+\end{conjecture}
 
 Las funciones implementadas en el paquete base de \texttt{R} permiten simular fácilmente en el caso independiente ya que admiten vectores como parámetros.
 Por ejemplo en el caso bidimensional con \(X_1 \sim \mathcal{N}\left( 0, 1\right)\) y \(X_2 \sim \mathcal{N}\left( -1, 0.5^2 \right)\):
@@ -5128,9 +5116,9 @@ Por ejemplo, de forma análoga al caso unidimensional, en el caso de una densida
 acotada en un hipercubo (intervalo cerrado multidimensional) siempre podríamos considerar
 una uniforme como densidad auxiliar.
 
-\BeginKnitrBlock{example}[distribución bidimensional acotada]
+\begin{example}[distribución bidimensional acotada]
 \protect\hypertarget{exm:ar-bidim}{}{\label{exm:ar-bidim} \iffalse (distribución bidimensional acotada) \fi{} }
-\EndKnitrBlock{example}
+\end{example}
 
 Supongamos que estamos interesados en generar valores de una variable aleatoria bidimensional
 \(\left( X,Y\right)\) con función de densidad:
@@ -5169,9 +5157,9 @@ tendríamos que \(f(x,y) \leq cg(x,y) = M\) y el algoritmo sería:
 En este caso, la condición de aceptación del paso 3 simplificada sería:
 \(U \leq 1 - \left( T_1^2 + T_2^2 \right) / 2\).
 
-\BeginKnitrBlock{example}[distribución uniforme en la esfera]
+\begin{example}[distribución uniforme en la esfera]
 \protect\hypertarget{exm:ar-esfera}{}{\label{exm:ar-esfera} \iffalse (distribución uniforme en la esfera) \fi{} }
-\EndKnitrBlock{example}
+\end{example}
 
 Supongamos que el objetivo es simular puntos uniformemente distribuídos sobre la ``esfera'' unitaria \(d\)-dimensional (ver Figura \ref{fig:simpiplot}):
 \[C_d=\left\{  \left( x_1, x_2, \ldots, x_d \right) \in \mathbb{R}^d
@@ -5259,12 +5247,12 @@ distribuciones como la \(t\)-multivariante.
 
 En el caso de normalidad, el resultado general es el siguiente.
 
-\BeginKnitrBlock{proposition}
+\begin{proposition}
 \protect\hypertarget{prp:unnamed-chunk-4}{}{\label{prp:unnamed-chunk-4} }
 Si \(\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right)\) y \(A\) es una matriz \(p\times d\), de
 rango máximo, con \(p\leq d\), entonces:
 \[A\mathbf{X} \sim \mathcal{N}_{p}\left(A\boldsymbol\mu,A\Sigma A^t\right).\]
-\EndKnitrBlock{proposition}
+\end{proposition}
 
 Partiendo de \(\mathbf{Z} \sim \mathcal{N}_d\left( \mathbf{0},I_d\right)\), se podrían considerar distintas factorizaciones de la matriz de covarianzas:
 
@@ -5289,7 +5277,7 @@ Partiendo de \(\mathbf{Z} \sim \mathcal{N}_d\left( \mathbf{0},I_d\right)\), se p
 Desde el punto de vista de la eficiencia computacional la factorización de Cholesky sería la preferible. Pero en ocasiones, para evitar problemas numéricos (por ejemplo, en el caso de matrices definidas positivas, i.e.~con autovalores nulos) puede ser más adecuado emplear la factorización espectral.
 En el primer caso el algoritmo sería el siguiente:
 
-\BeginKnitrBlock{conjecture}[de simulación de una normal multivariante]
+\begin{conjecture}[de simulación de una normal multivariante]
 \protect\hypertarget{cnj:mnorm-fact}{}{\label{cnj:mnorm-fact} \iffalse (de simulación de una normal multivariante) \fi{} }
 
 \begin{enumerate}
@@ -5304,15 +5292,15 @@ En el primer caso el algoritmo sería el siguiente:
 \item
   Repetir los pasos 2 y 3 las veces necesarias.
 \end{enumerate}
-\EndKnitrBlock{conjecture}
+\end{conjecture}
 
 \textbf{Nota}: Hay que tener en cuenta el resultado del algoritmo empleado
 para la factorización de Cholesky. Por ejemplo si se obtiene \(\Sigma=U^tU\),
 hará que emplear \(L=U^t.\)
 
-\BeginKnitrBlock{example}[simulación de datos funcionales o temporales]
+\begin{example}[simulación de datos funcionales o temporales]
 \protect\hypertarget{exm:funcional}{}{\label{exm:funcional} \iffalse (simulación de datos funcionales o temporales) \fi{} }
-\EndKnitrBlock{example}
+\end{example}
 
 Supongamos que el objetivo es generar una muestra de tamaño \texttt{nsim} de la variable funcional:
 \[X(t)=\sin\left(  2\pi t\right)  +\varepsilon\left(  t\right)\]
@@ -5426,7 +5414,7 @@ del paquete \texttt{MASS} que emplea la factorización espectral (\texttt{eigen}
 ##         drop(X)
 ##     else t(X)
 ## }
-## <bytecode: 0x000000002f9b9eb0>
+## <bytecode: 0x000000001588e090>
 ## <environment: namespace:MASS>
 \end{verbatim}
 
@@ -5464,7 +5452,7 @@ x_1,x_2,\ldots,x_{i-1}\right)},\]
 
 se obtiene el siguiente algoritmo general:
 
-\BeginKnitrBlock{conjecture}[de simulación mediante distribuciones condicionadas]
+\begin{conjecture}[de simulación mediante distribuciones condicionadas]
 \protect\hypertarget{cnj:mult-distrcond}{}{\label{cnj:mult-distrcond} \iffalse (de simulación mediante distribuciones condicionadas) \fi{} }
 
 \begin{enumerate}
@@ -5477,14 +5465,14 @@ se obtiene el siguiente algoritmo general:
 \item
   Devolver \(\mathbf{X} =\left( X_1,X_2,\ldots,X_d\right)\).
 \end{enumerate}
-\EndKnitrBlock{conjecture}
+\end{conjecture}
 
 \textbf{Nota}: En las simulaciones unidimensionales se puede tener en cuenta que
 \(f_i\left( x_i|x_1,x_2,\ldots,x_{i-1}\right) \propto f_{1,\ldots,i}\left( x_1,x_2,\ldots,x_i\right)\).
 
-\BeginKnitrBlock{example}[distribución uniforme en el círculo unitario]
+\begin{example}[distribución uniforme en el círculo unitario]
 \protect\hypertarget{exm:unnamed-chunk-8}{}{\label{exm:unnamed-chunk-8} \iffalse (distribución uniforme en el círculo unitario) \fi{} }
-\EndKnitrBlock{example}
+\end{example}
 
 Se trata de la distribución bidimensional continua con densidad
 constante en el círculo:
@@ -5532,9 +5520,9 @@ Para el paso 1 puede utilizarse, por ejemplo, el método de
 aceptación/rechazo, pues se trata de una densidad acotada definida en un
 intervalo acotado.
 
-\BeginKnitrBlock{example}[distribución normal bidimensional]
+\begin{example}[distribución normal bidimensional]
 \protect\hypertarget{exm:unnamed-chunk-9}{}{\label{exm:unnamed-chunk-9} \iffalse (distribución normal bidimensional) \fi{} }
-\EndKnitrBlock{example}
+\end{example}
 
 En el caso de una distribución normal bidimensional:
 \[\mathbf{X} = \begin{pmatrix}
@@ -5577,7 +5565,7 @@ X_2 | X_1 &\sim \mathcal{N} \left( \mu_2 + \frac{\sigma_2}{\sigma_1}\rho( X_1 - 
 
 y el algoritmo sería el siguiente:
 
-\BeginKnitrBlock{conjecture}[de simulación de una normal bidimensional]
+\begin{conjecture}[de simulación de una normal bidimensional]
 \protect\hypertarget{cnj:norm-bidim-cond}{}{\label{cnj:norm-bidim-cond} \iffalse (de simulación de una normal bidimensional) \fi{} }
 
 \begin{enumerate}
@@ -5589,7 +5577,7 @@ y el algoritmo sería el siguiente:
 \item
   Hacer \(X_2 =\mu_2 + \sigma_2 \rho Z_1 + \sigma_2 \sqrt{1-\rho^2} Z_2\).
 \end{enumerate}
-\EndKnitrBlock{conjecture}
+\end{conjecture}
 
 Este algoritmo es el mismo que obtendríamos con la factorización de la matrix de covarianzas
 ya que \(\Sigma = L L^t\) con:
@@ -5600,9 +5588,9 @@ ya que \(\Sigma = L L^t\) con:
 
 Además, esta aproximación puede generalizarse al caso multidimensional, ver Sección \ref{condnormal}.
 
-\BeginKnitrBlock{exercise}
+\begin{exercise}
 \protect\hypertarget{exr:cond2d}{}{\label{exr:cond2d} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Considerando la variable aleatoria bidimensional del Ejemplo \ref{exm:ar-bidim} y teniendo en cuenta que la densidad marginal de la
 variable \(X\) es:
@@ -5622,7 +5610,7 @@ observaciones de las distribuciones unidimensionales de interés).
 
 En ocasiones en inferencia estadística interesa la simulación condicional de nuevos valores de forma que se preserven los datos observados, para lo que se suele emplear el algoritmo anterior partiendo de la muestra observada:
 
-\BeginKnitrBlock{conjecture}[de simulación condicional]
+\begin{conjecture}[de simulación condicional]
 \protect\hypertarget{cnj:cond-incond}{}{\label{cnj:cond-incond} \iffalse (de simulación condicional) \fi{} }
 
 \begin{enumerate}
@@ -5636,7 +5624,7 @@ En ocasiones en inferencia estadística interesa la simulación condicional de n
 \item
   Agregar este valor al conjunto de datos y volver al paso 1.
 \end{enumerate}
-\EndKnitrBlock{conjecture}
+\end{conjecture}
 
 En el caso de normalidad, en lugar de simular punto a punto,
 podemos obtener fácilmente la distribución condicionada
@@ -5679,9 +5667,9 @@ Cov \left( \mathbf{X}_2 | \mathbf{X}_1 \right) =
 \textbf{Nota}: La ecuación \eqref{eq:mediacond} coincide con la expresión de la predicción lineal óptima de \(\mathbf{X}_2\)
 a partir de \(\mathbf{X}_1\) con media y varianzas conocidas (denominado predictor del kriging simple en estadística espacial, y la diagonal de \eqref{eq:varcond} son las correspondientes varianzas kriging).
 
-\BeginKnitrBlock{example}[simulación condicional de datos funcionales o temporales]
+\begin{example}[simulación condicional de datos funcionales o temporales]
 \protect\hypertarget{exm:funcionalcond}{}{\label{exm:funcionalcond} \iffalse (simulación condicional de datos funcionales o temporales) \fi{} }
-\EndKnitrBlock{example}
+\end{example}
 
 Continuando con el Ejemplo \ref{exm:funcional} anterior, consideramos los primeros
 valores de una simulación incondicional como los datos:
@@ -5747,9 +5735,9 @@ Las simulaciones condicionales se obtendrán de forma análoga (Figura \ref{fig:
 \caption{Realizaciones condicionales del proceso funcional del Ejemplo \ref{exm:funcionalcond}.}\label{fig:funcional-cond}
 \end{figure}
 
-\BeginKnitrBlock{example}[simulación condicional de datos espaciales]
+\begin{example}[simulación condicional de datos espaciales]
 \protect\hypertarget{exm:unnamed-chunk-12}{}{\label{exm:unnamed-chunk-12} \iffalse (simulación condicional de datos espaciales) \fi{} }
-\EndKnitrBlock{example}
+\end{example}
 
 Consideramos un proceso espacial bidimensional normal
 \(Z(\mathbf{s})\equiv Z(x,y)\) de media 0 y covariograma
@@ -6029,14 +6017,14 @@ Se emplean principalmente para la construcción de distribuciones multivariantes
 Por simplicidad nos centraremos en el caso bidimensional.
 El teorema central en la teoría de cópulas es el teorema de Sklar (1959), que en este caso es:
 
-\BeginKnitrBlock{theorem}[de Sklar, caso bidimensional]
+\begin{theorem}[de Sklar, caso bidimensional]
 \protect\hypertarget{thm:sklar}{}{\label{thm:sklar} \iffalse (de Sklar, caso bidimensional) \fi{} }
 
 Si \((X,Y)\) es una variable aleatoria bidimensional con función de distribución conjunta \(F(\cdot,\cdot)\) y distribuciones marginales \(F_1(\cdot)\) y \(F_2(\cdot)\) respectivamente, entonces existe una cópula \(C(\cdot,\cdot)\) tal que:
 \[F(x,y)=C\left( F_1(x),F_2(y)\right) ,\quad \forall x,y\in\mathbb{R}.\]
 Además, si \(F_1(\cdot)\) y \(F_2(\cdot)\) son continuas entonces \(C(\cdot,\cdot)\) es única.
 Siendo el recíproco también cierto.
-\EndKnitrBlock{theorem}
+\end{theorem}
 
 \hypertarget{cuxf3pulas-arquimedianas}{%
 \subsection{Cópulas Arquimedianas}\label{cuxf3pulas-arquimedianas}}
@@ -6073,7 +6061,7 @@ Si \((U,V)\sim C(\cdot,\cdot)\) (marginales uniformes):
 
 En la mayoría de los casos se dispone de expresiones explicitas de \(C_{u}(v)\equiv C_2\left( \left. v\right \vert u\right)\) y de su inversa \(C_{u}^{-1}(w)\), por lo que se puede generar \((U,V)\) fácilmente mediante el método secuencial de distribuciones condicionadas descrito en la Sección \ref{distrcond}.
 
-\BeginKnitrBlock{conjecture}[de simulación bidimensional mediante cópulas]
+\begin{conjecture}[de simulación bidimensional mediante cópulas]
 \protect\hypertarget{cnj:copula-bidim}{}{\label{cnj:copula-bidim} \iffalse (de simulación bidimensional mediante cópulas) \fi{} }
 
 \begin{enumerate}
@@ -6085,11 +6073,11 @@ En la mayoría de los casos se dispone de expresiones explicitas de \(C_{u}(v)\e
 \item
   Devolver \(\left( F_1^{-1}(U),F_2^{-1}(V)\right)\)
 \end{enumerate}
-\EndKnitrBlock{conjecture}
+\end{conjecture}
 
-\BeginKnitrBlock{exercise}[Cópula bidimensional de Clayton]
+\begin{exercise}[Cópula bidimensional de Clayton]
 \protect\hypertarget{exr:clayton2d}{}{\label{exr:clayton2d} \iffalse (Cópula bidimensional de Clayton) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Consideramos una variable aleatoria bidimensional con distribuciones marginales uniformes y distribución bidimensional determinada por la cópula de Clayton.
 
@@ -6754,9 +6742,9 @@ Para realizar el contraste de independencia:
 ## X-squared = 60.124, df = 1, p-value = 8.907e-15
 \end{verbatim}
 
-\BeginKnitrBlock{exercise}[Distribución del estadístico chi-cuadrado de independencia]
+\begin{exercise}[Distribución del estadístico chi-cuadrado de independencia]
 \protect\hypertarget{exr:chicuadind}{}{\label{exr:chicuadind} \iffalse (Distribución del estadístico chi-cuadrado de independencia) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Aproximar por simulación la distribución (exacta) del estadístico chi-cuadrado bajo independencia.
 
@@ -6885,9 +6873,9 @@ Como ya se comentó en el Capítulo \ref{rrng}, en problemas mas complejos, en l
 \hypertarget{distribuciuxf3n-en-el-muestreo}{%
 \section{Distribución en el muestreo}\label{distribuciuxf3n-en-el-muestreo}}
 
-\BeginKnitrBlock{exercise}[Distribución de la media muestral]
+\begin{exercise}[Distribución de la media muestral]
 \protect\hypertarget{exr:distr-media}{}{\label{exr:distr-media} \iffalse (Distribución de la media muestral) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Si \(X_{1},\ldots,X_{n}\) es una muestra aleatoria simple de una
 variable aleatoria \(X \sim N\left( \mu, \sigma \right)\), la
@@ -6958,12 +6946,8 @@ Confirmar este resultado mediante simulación, para ello:
 \end{Highlighting}
 \end{Shaded}
 
-  \BeginKnitrBlock{remark}
-
-  \iffalse{} {Nota: } \fi{}La fila \texttt{muestras{[}i,{]}} contiene las observaciones de la i-ésima muestra y
+  La fila \texttt{muestras{[}i,{]}} contiene las observaciones de la i-ésima muestra y
   la correspondiente media y desviación típica.
-
-  \EndKnitrBlock{remark}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7019,9 +7003,9 @@ Normalmente emplearemos sin embargo una ordenación por columnas (cada fila se c
 
 \vspace{0.5cm}
 
-\BeginKnitrBlock{exercise}[Distribución de la media muestral, continuación]
+\begin{exercise}[Distribución de la media muestral, continuación]
 \protect\hypertarget{exr:distr-mediab}{}{\label{exr:distr-mediab} \iffalse (Distribución de la media muestral, continuación) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Si \(X_{1},\ldots,X_{n}\) es una m.a.s. de una variable aleatoria
 \(X\) (cualquiera) con \(E\left( X \right) = \mu\) y
@@ -7121,9 +7105,9 @@ aunque dependerá de las características de la distribución de \(X\).
 \hypertarget{intervalos-de-confianza}{%
 \section{Intervalos de confianza}\label{intervalos-de-confianza}}
 
-\BeginKnitrBlock{exercise}[Intervalo de confianza para la media]
+\begin{exercise}[Intervalo de confianza para la media]
 \protect\hypertarget{exr:ic-media}{}{\label{exr:ic-media} \iffalse (Intervalo de confianza para la media) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 A partir del enunciado del Ejercicio \ref{exr:distr-media}, se deduce que el intervalo de confianza (de nivel \(1-\alpha\)) para la media \(\mu\) de una población normal con varianza conocida es:
 \[IC_{1-\alpha}\left(  \mu\right)  = 
@@ -7345,19 +7329,19 @@ con el bootstrap percentil; en este caso el estimador es insesgado\ldots):
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
-\BeginKnitrBlock{remark}
+\begin{remark}
 \iffalse{} {Nota: } \fi{}Estimaciones puntuales, por intervalo de confianza y contrastes de hipótesis
 para la media con varianza desconocida bajo normalidad
 se pueden obtener con la función \texttt{t.test}.
-\EndKnitrBlock{remark}
+\end{remark}
 
 \vspace{0.5cm}
 
-\BeginKnitrBlock{exercise}[Intervalo de confianza Agresti-Coull para una proporción]
+\begin{exercise}[Intervalo de confianza Agresti-Coull para una proporción]
 \protect\hypertarget{exr:ic-agresti-coull}{}{\label{exr:ic-agresti-coull} \iffalse (Intervalo de confianza Agresti-Coull para una proporción) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 El Intervalo de confianza para una proporción construido usando la
 aproximación normal tiene un mal comportamiento cuando el tamaño de
@@ -7438,7 +7422,7 @@ En el caso de \(a=2\) se denomina IC Agresti-Coull.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-20-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
   Fuente \href{http://www.springer.com/gp/book/9780387402734}{Suess y Trumbo (2010)}.
 \item
@@ -7478,7 +7462,7 @@ En el caso de \(a=2\) se denomina IC Agresti-Coull.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-21-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-20-1} \end{center}
 \item
   Repetir el apartado anterior empleando simulación para aproximar
   la cobertura.
@@ -7526,7 +7510,7 @@ En el caso de \(a=2\) se denomina IC Agresti-Coull.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-24-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-23-1} \end{center}
 \end{enumerate}
 
 Como ya se comentó, el caso de ajustar un modelo a los datos y realizar simulaciones a partir de ese modelo ajustado para aproximar las características de interés de un estadístico, se denomina también bootstrap paramétrico.
@@ -7538,9 +7522,9 @@ En este libro, en las secciones \href{https://rubenfcasal.github.io/book_remuest
 
 Ver \href{https://rubenfcasal.github.io/book_remuestreo/contrastes.html}{Capítulo 5} de Cao y Fernández-Casal (2020).
 
-\BeginKnitrBlock{exercise}[Test de Kolmogorov-Smirnov]
+\begin{exercise}[Test de Kolmogorov-Smirnov]
 \protect\hypertarget{exr:ks-test-sim}{}{\label{exr:ks-test-sim} \iffalse (Test de Kolmogorov-Smirnov) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 En la Sección \ref{calgen} del Tema \ref{cap3} se propuso el análisis de la bondad de ajuste de un generador de números pseudo-aleatorios mediante el test de Kolmogorov-Smirnov (ver Sección \ref{ks-test}).
 Sin embargo, si \(H_{0}\) es compuesta (los parámetros desconocidos se estiman por máxima verosimilitud y se trabaja con \(\hat{F}_{0}\)) los cuantiles de la distribución (asintótica) de \(D_{n}\) pueden ser demasiado conservativos y sería preferible utilizar la distribución exacta.
@@ -7610,7 +7594,7 @@ Sin embargo, si \(H_{0}\) es compuesta (los parámetros desconocidos se estiman 
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-27-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-26-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7622,7 +7606,7 @@ Sin embargo, si \(H_{0}\) es compuesta (los parámetros desconocidos se estiman 
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-27-2} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-26-2} \end{center}
 \item
   Repetir el apartado anterior considerando el test de Lilliefors
   (rutina \texttt{lillie.test} del paquete \texttt{nortest}).
@@ -7689,7 +7673,7 @@ Sin embargo, si \(H_{0}\) es compuesta (los parámetros desconocidos se estiman 
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-32-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-31-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7700,7 +7684,7 @@ Sin embargo, si \(H_{0}\) es compuesta (los parámetros desconocidos se estiman 
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-32-2} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-31-2} \end{center}
 \item
   Repetir el apartado a) contrastando una distribución exponencial
   y considerando 500 pruebas con muestras de tamaño 30 de una \(Exp(1)\).
@@ -7759,7 +7743,7 @@ Sin embargo, si \(H_{0}\) es compuesta (los parámetros desconocidos se estiman 
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-36-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-35-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7771,7 +7755,7 @@ Sin embargo, si \(H_{0}\) es compuesta (los parámetros desconocidos se estiman 
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-36-2} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-35-2} \end{center}
 \item
   Diseñar una rutina que permita realizar el contraste KS de
   bondad de ajuste de una variable exponencial aproximando el
@@ -7864,7 +7848,7 @@ Sin embargo, si \(H_{0}\) es compuesta (los parámetros desconocidos se estiman 
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-40-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-39-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7876,7 +7860,7 @@ Sin embargo, si \(H_{0}\) es compuesta (los parámetros desconocidos se estiman 
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-40-2} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-39-2} \end{center}
 \item
   Estudiar la potencia de los contrastes de los apartados c) y d),
   considerando como alternativa una distribución Weibull.
@@ -7932,9 +7916,9 @@ valor absoluto del correspondiente gráfico PP, y solo habría que cambiar el es
 \hypertarget{comparaciuxf3n-de-estimadores}{%
 \section{Comparación de estimadores}\label{comparaciuxf3n-de-estimadores}}
 
-\BeginKnitrBlock{exercise}[Comparación de la eficiencia de la media muestral y de la mediana bajo contaminación]
+\begin{exercise}[Comparación de la eficiencia de la media muestral y de la mediana bajo contaminación]
 \protect\hypertarget{exr:media-median}{}{\label{exr:media-median} \iffalse (Comparación de la eficiencia de la media muestral y de la mediana bajo contaminación) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Supongamos que estamos interesados en estudiar el efecto de datos atípicos en la estimación de la media teórica mediante la media y la mediana muestrales.
 Consideramos una variable aleatoria con distribución normal contaminada, en la que una observación procede de una \(N(0,1)\) con probabilidad 0.95 y de una \(N(3,3^2)\) con probabilidad 0.05 (mixtura).
@@ -7956,9 +7940,9 @@ Podemos comparar la densidad objetivo con la de los valores contaminados:
 
 \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/contaminada-1} \end{center}
 
-\BeginKnitrBlock{remark}
+\begin{remark}
 \iffalse{} {Nota: } \fi{}Como se comentó en la Sección \ref{composicion}, también es habitual simular este tipo de datos generando un porcentaje alto de valores (en este caso un 95\%) de la distribución base (\(N(0,1)\)) y el resto (5\%) de la distibución ``contaminadora'' (\(N(3,3^2)\)), aunque se suele considerar un porcentaje de contaminación del 1\% o inferior (además, como en este caso concreto no va importar el orden, no sería necesario combinar aleatoriamente los valores).
-\EndKnitrBlock{remark}
+\end{remark}
 
 \vspace{0.5cm}
 
@@ -8005,7 +7989,7 @@ Podemos comparar la densidad objetivo con la de los valores contaminados:
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-43-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-42-1} \end{center}
 
   Calculamos los estimadores:
 
@@ -8068,7 +8052,7 @@ Podemos comparar la densidad objetivo con la de los valores contaminados:
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-46-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-45-1} \end{center}
 
   Error cuadrático:
 
@@ -8079,7 +8063,7 @@ Podemos comparar la densidad objetivo con la de los valores contaminados:
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-47-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-46-1} \end{center}
 
   Estadísticos error cuadrático:
 
@@ -8141,7 +8125,7 @@ La idea es aproximar características poblacionales por las correspondientes de 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-49-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-48-1} \end{center}
 
 Las características de la distribución empírica se pueden aproximar mediante simulación.
 En el caso i.i.d. esto puede ser implementado mediante remuestreo,
@@ -8217,9 +8201,9 @@ En general podríamos decir que:
 
 \begin{center}\includegraphics[width=0.7\linewidth]{images/bootstrap} \end{center}
 
-\BeginKnitrBlock{example}[Aproximación del sesgo y del error estándar mediante bootstrap]
+\begin{example}[Aproximación del sesgo y del error estándar mediante bootstrap]
 \protect\hypertarget{exm:mean-median-boot}{}{\label{exm:mean-median-boot} \iffalse (Aproximación del sesgo y del error estándar mediante bootstrap) \fi{} }
-\EndKnitrBlock{example}
+\end{example}
 
 Como ejemplo consideraremos una muestra de tamaño \(n=100\) de una normal estándar para tratar de aproximar el sesgo y error estándar de la media y la mediana mediante bootstrap.
 
@@ -8287,7 +8271,7 @@ Bootstrap percentil:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-55-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-54-1} \end{center}
 
 Bootstrap natural/básico:
 
@@ -8303,7 +8287,7 @@ Bootstrap natural/básico:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-56-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-55-1} \end{center}
 
 Sesgo y error estándar bootstrap:
 
@@ -8441,7 +8425,7 @@ Generación de las muestras
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-61-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-60-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8449,7 +8433,7 @@ Generación de las muestras
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-61-2} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-60-2} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8457,7 +8441,7 @@ Generación de las muestras
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-61-3} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{08-Aplicaciones_Inferencia_files/figure-latex/unnamed-chunk-60-3} \end{center}
 
 \hypertarget{intervalos-de-confianza-bootstrap}{%
 \subsection{Intervalos de confianza bootstrap}\label{intervalos-de-confianza-bootstrap}}
@@ -8485,9 +8469,9 @@ Generación de las muestras
 ## Calculations and Intervals on Original Scale
 \end{verbatim}
 
-\BeginKnitrBlock{exercise}
+\begin{exercise}
 \protect\hypertarget{exr:mean-trim-boot}{}{\label{exr:mean-trim-boot} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Repetir el Ejemplo \ref{exm:mean-median-boot} anterior considerando la media recortada al 10\%
 (con parámetros adicionales).
@@ -8519,9 +8503,9 @@ Repetir el Ejemplo \ref{exm:mean-median-boot} anterior considerando la media rec
 
 \vspace{0.5cm}
 
-\BeginKnitrBlock{exercise}[propuesto]
+\begin{exercise}[propuesto]
 \protect\hypertarget{exr:rachas-sim}{}{\label{exr:rachas-sim} \iffalse (propuesto) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 En el tema 2 se propuso el análisis de la aleatoriedad de un
 generador de números pseudo-aleatorios mediante el test de rachas,
@@ -8591,7 +8575,7 @@ Si \(x_1,x_2,\ldots ,x_n\) \emph{i.i.d.}
 \(\mathcal{U}\left( a, b\right)\):
 \[I\approx \frac{1}{n}\sum\limits_{i=1}^nh\left( x_i\right) (b-a)\]
 
-\BeginKnitrBlock{exercise}
+\begin{exercise}
 \protect\hypertarget{exr:mc-integral-clas}{}{\label{exr:mc-integral-clas} }
 
 Crear una función que implemente la integración Monte Carlo clásica
@@ -8599,8 +8583,8 @@ para aproximar integrales del tipo:
 \[I = \int_a^b h(x)  dx.\]
 Emplearla para aproximar:
 \[\int_0^1 4x^4 dx = \frac{4}{5},\]
-y representar gráficamente la aproximación en función de \(n\).\\
-\EndKnitrBlock{exercise}
+y representar gráficamente la aproximación en función de \(n\).
+\end{exercise}
 
 Como primera aproximación podríamos considerar:
 
@@ -8787,9 +8771,9 @@ ya que \(F(x) = x^4\) si \(0<x<1\).
 ## [1] 0.004728174
 \end{verbatim}
 
-\BeginKnitrBlock{exercise}
+\begin{exercise}
 \protect\hypertarget{exr:mc-intinf}{}{\label{exr:mc-intinf} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Aproximar:
 \[\phi(t)=\int_{t}^{\infty}\frac1{\sqrt{2\pi}}e^{-\frac{x^2}2}dx,\]
@@ -8881,9 +8865,9 @@ ver Sección \ref{convergencia} en el Tema \ref{cap4} de Análisis de resultados
 La distribución de los pesos \(w(y_i)\) debería ser homogénea para
 evitar datos influyentes (inestabilidad).
 
-\BeginKnitrBlock{exercise}
+\begin{exercise}
 \protect\hypertarget{exr:mc-imp}{}{\label{exr:mc-imp} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Aproximar la integral del Ejercicio \ref{exr:mc-intinf} anterior empleando muestreo por importancia considerando como densidad auxiliar una exponencial de parámetro \(\lambda=1\) truncada en \(t\):
 \[g\left(  x\right)  =\lambda e^{-\lambda\left(  x-t\right)  }\text{, }x>t,\]
@@ -8995,9 +8979,9 @@ Empleando la aproximación tradicional:
 ## [1] 0
 \end{verbatim}
 
-\BeginKnitrBlock{example}[Muestro por importancia con mala densidad auxiliar]
+\begin{example}[Muestro por importancia con mala densidad auxiliar]
 \protect\hypertarget{exm:mc-imp2}{}{\label{exm:mc-imp2} \iffalse (Muestro por importancia con mala densidad auxiliar) \fi{} }
-\EndKnitrBlock{example}
+\end{example}
 
 Supongamos que se pretende aproximar \(P\left(2<X<6\right)\) siendo \(X\sim Cauchy(0,1)\) empleando muestreo por importancia y considerando como densidad auxiliar la normal estandar \(Y\sim N(0,1)\). Representaremos gráficamente la aproximación y estudiaremos los pesos \(w(y_i)\).
 
@@ -9088,9 +9072,9 @@ De hecho este estimador es empleado muchas veces en lugar del anterior ya que, a
 
 Adicionalmente, puede verse que con un muestreo de \(\left\{y_1, y_2, \ldots, y_n \right\}\) ponderado por \(w(y_i)\) (prob. \(=w(y_i)\left/ \sum\nolimits_{i=1}^n w(y_i) \right.\) ) se obtiene una simulación aproximada de \(f\) (\emph{Sample importance resampling}, Rubin, 1987).
 
-\BeginKnitrBlock{exercise}
+\begin{exercise}
 \protect\hypertarget{exr:mc-imp-sample}{}{\label{exr:mc-imp-sample} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Generar 1000 simulaciones de una distribución (aprox.) \(N(0,1)\) (densidad objetivo) mediante remuestreo del muestreo por importancia de \(10^{5}\) valores de una \(Cauchy(0,1)\) (densidad auxiliar).
 
@@ -9137,9 +9121,9 @@ Sampling Importance Resampling:
 
 \textbf{NOTA}: Si f o g fuesen cuasidensidades y se pidiese aproximar la integral, habría que reescalar los pesos \texttt{w\ \textless{}-\ f(y)/g(y)} en la aproximación por simulación, resultando \texttt{sum(w\ *\ h(y))/sum(w)} (media ponderada) y en el análisis de convergencia se emplearía \texttt{cumsum(w\ *\ h(y))/cumsum(w)}.
 
-\BeginKnitrBlock{exercise}[propuesto]
+\begin{exercise}[propuesto]
 \protect\hypertarget{exr:mc-imp-sample2}{}{\label{exr:mc-imp-sample2} \iffalse (propuesto) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Consideramos una variable aleatoria con densidad:
 \[f(x)\propto e^{-x}\cos^{2}(x),\text{ si }x>0.\]
@@ -9161,7 +9145,8 @@ Consideramos una variable aleatoria con densidad:
 \textbf{NOTA}: En el último apartado, para comprobar que los valores generados proceden de la distribución objetivo, si representamos la cuasidensidad \(f^{\ast}(x) = e^{-x}\cos^{2}(x)\) junto con el histograma (en escala de densidades, \texttt{freq\ =\ FALSE}), hay que tener en cuenta que faltaría dividir la cuasidensidad por una constante normalizadora para poder compararlos directamente.
 Si no se reescala la cuasidensidad, podríamos compobar si la forma es similar (si la distribución de los valores generados es proporcional a la cuasidensidad, con mayor concentración donde la cuasidensidad se aleja de 0).
 En este caso (como \(g\) es una densidad) podríamos estimar la constante normalizadora (\(f(x) = \frac{1}{c}f^{\ast}(x)\)) a partir de los pesos del muestreo por importancia (\texttt{c.approx\ \textless{}-\ mean(w)}; en este caso concreto \(c=\frac{3}{5}\)).
----
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \textbf{\emph{LA MATERIA EVALUABLE EN EL CURSO 2020/2021 TERMINA AQUÍ}}
 
@@ -9183,9 +9168,9 @@ Estos métodos normalmente funcionan muy bien cuando la función objetivo no tie
 Los resultados obtenidos pueden ser muy malos en caso contrario (especialmente en el caso multidimensional) y dependen en gran medida del punto inicial\footnote{Este tipo de algoritmos se denominan \emph{codiciosos} o \emph{voraces}, porque buscan la mejor opción a ``corto plazo''.}
 Un ejemplo donde es habitual que aparezcan este tipo de problemas es en la estimación por máxima verosimilitud (la función objetivo puede ser multimodal).
 
-\BeginKnitrBlock{exercise}[Estimación por máxima verosimilitud mediante un algoritmo de Newton]
+\begin{exercise}[Estimación por máxima verosimilitud mediante un algoritmo de Newton]
 \protect\hypertarget{exr:mv-nlm}{}{\label{exr:mv-nlm} \iffalse (Estimación por máxima verosimilitud mediante un algoritmo de Newton) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 La mixtura de distribuciones normales:
 \[\frac1{4}N(\mu_1,1)+\frac{3}{4}N(\mu_2,1),\]
@@ -9399,10 +9384,9 @@ Este algoritmo se puede ver como una adaptación del método de
 Metropolis-Hastings que veremos más adelante
 (Tema 11 Introducción a los métodos de cadenas de Markov Monte Carlo).
 
-\BeginKnitrBlock{exercise}[Estimación máximo-verosimil empleando temple simulado]
+\begin{exercise}[Estimación máximo-verosimil empleando temple simulado]
 \protect\hypertarget{exr:mv-sann}{}{\label{exr:mv-sann} \iffalse (Estimación máximo-verosimil empleando temple simulado) \fi{} }
-\EndKnitrBlock{exercise}
-
+\end{exercise}
 Repetir el Ejercicio \ref{exr:mv-nlm} anterior empleando el algoritmo del temple simulado.
 
 Minimización ``SANN'' con optim:
@@ -9517,9 +9501,9 @@ evolución biológica:
 Los paquetes de R \texttt{DEOptim} y \texttt{gafit} implementan algunos de estos
 tipos de algoritmos.
 
-\BeginKnitrBlock{exercise}[Estimación máximo-verosimil empleando un algoritmo genético]
+\begin{exercise}[Estimación máximo-verosimil empleando un algoritmo genético]
 \protect\hypertarget{exr:mv-DEoptim}{}{\label{exr:mv-DEoptim} \iffalse (Estimación máximo-verosimil empleando un algoritmo genético) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Repetir el ejercicio anterior empleando la función \texttt{DEOptim}.
 
@@ -9651,9 +9635,9 @@ En general esto es válido para cualquier variable
 simétrica repecto a un parámetro \(\mu\).
 (e.g.~\(X\sim \mathcal{U}(a,b)\) e \(Y=a+b-X\)).
 
-\BeginKnitrBlock{exercise}
+\begin{exercise}
 \protect\hypertarget{exr:mc-integrala}{}{\label{exr:mc-integrala} }Variables antitéticas en integración Monte Carlo
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Crear una función que implemente la técnica de variables antitéticas para aproximar integrales del tipo:
 \[I=\int_{a}^{b}h\left(  x\right)  dx.\]
@@ -9852,9 +9836,9 @@ Si en el número de obsevaciones se tiene en cuenta la
 variabilidad en el estrato se puede obtener una reducción
 significativa de la varianza.
 
-\BeginKnitrBlock{example}[Muestreo estratificado de una exponencial]
+\begin{example}[Muestreo estratificado de una exponencial]
 \protect\hypertarget{exm:estr-exp}{}{\label{exm:estr-exp} \iffalse (Muestreo estratificado de una exponencial) \fi{} }
-\EndKnitrBlock{example}
+\end{example}
 
 Supóngase el siguiente problema (absolutamente artificial pero ilustrativo para comprender esta técnica).
 Dada una muestra de tamaño 10 de una población con distribución:
@@ -9923,9 +9907,9 @@ Como consecuencia:
 Var\left( X_{i} \right)  = 0.022338\]
 que es bastante menor que 1 (la varianza en el caso de muestreo aleatorio simple no estratificado).
 
-\BeginKnitrBlock{exercise}[Integración Monte Carlo con estratificación]
+\begin{exercise}[Integración Monte Carlo con estratificación]
 \protect\hypertarget{exr:mc-integrale}{}{\label{exr:mc-integrale} \iffalse (Integración Monte Carlo con estratificación) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Aproximar la integral anterior empleando la técnica de estratificación, considerando \(k\) subintervalos regularmente espaciados en el intervalo \(\left[ 0, 2 \right]\).
 ¿Como varía la reducción en la varianza dependiendo del valor de \(k\)?
@@ -9997,10 +9981,9 @@ Aproximar la integral anterior empleando la técnica de estratificación, consid
 De esta forma no se tiene en cuenta la variabilidad en el estrato.
 El tamaño de las submuestras debería incrementarse hacia el extremo superior.
 
-\BeginKnitrBlock{exercise}
+\begin{exercise}
 \protect\hypertarget{exr:mc-integraleb}{}{\label{exr:mc-integraleb} }
-\EndKnitrBlock{exercise}
-
+\end{exercise}
 Repetir el ejemplo anterior considerando intervalos regularmente espaciados en escala exponencial.
 
 \hypertarget{variables-de-control}{%
@@ -10042,9 +10025,9 @@ Para estimarlo se puede realizar ajuste lineal de \(X\) sobre \(Y\)
   Si \(\mu_{Y}=0\Rightarrow \hat{\theta}=\overline{X}^{\ast}=\hat{\beta}_{0}\).
 \end{itemize}
 
-\BeginKnitrBlock{exercise}[Integración Monte Carlo con variables de control]
+\begin{exercise}[Integración Monte Carlo con variables de control]
 \protect\hypertarget{exr:mc-integral-contr}{}{\label{exr:mc-integral-contr} \iffalse (Integración Monte Carlo con variables de control) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Aproximar la integral anterior empleando la variable \(U\sim\mathcal{U}(0,2)\) para controlar la variable \(e^{U}\).
 
@@ -10170,9 +10153,9 @@ En el capítulo de aplicaciones de la simulación se empleó esta técnica para 
 \hypertarget{ejercicios-2}{%
 \section{Ejercicios}\label{ejercicios-2}}
 
-\BeginKnitrBlock{exercise}[propuesto]
+\begin{exercise}[propuesto]
 \protect\hypertarget{exr:mc-int-ainv}{}{\label{exr:mc-int-ainv} \iffalse (propuesto) \fi{} }
-\EndKnitrBlock{exercise}
+\end{exercise}
 
 Aproximar mediante integración Monte Carlo (clásica) la media de una distribución exponencial de parámetro \(1/2\):
 \[I=\int_{0}^{\infty}\frac{x}{2}e^{-\frac{x}{2}}dx\]
@@ -10180,10 +10163,10 @@ y representar gráficamente la aproximación en función de \(n\).
 Comparar los resultados con los obtenidos empleando variables antitéticas,
 ¿se produce una reducción en la varianza?
 
-\BeginKnitrBlock{remark}
+\begin{remark}
 \iffalse{} {Nota: } \fi{}Puede ser recomendable emplear el método de inversión para generar las
 muestras (antitéticas) de la exponencial.
-\EndKnitrBlock{remark}
+\end{remark}
 
 MC clásico:
 
@@ -12003,13 +11986,11 @@ del paquete \texttt{npsp}).
 \NormalTok{persp3D.f2d <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(f2d, }\DataTypeTok{ax=}\OperatorTok{-}\DecValTok{1}\NormalTok{, }\DataTypeTok{bx=}\DecValTok{1}\NormalTok{, }\DataTypeTok{ay=}\OperatorTok{-}\DecValTok{1}\NormalTok{, }\DataTypeTok{by=}\DecValTok{1}\NormalTok{, }\DataTypeTok{nx=}\DecValTok{21}\NormalTok{, }\DataTypeTok{ny=}\DecValTok{21}\NormalTok{, ...) \{ }
 \NormalTok{  x <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(ax, bx, }\DataTypeTok{length =}\NormalTok{ nx)}
 \NormalTok{  y <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(ay, by, }\DataTypeTok{length =}\NormalTok{ ny)}
-\NormalTok{  hx <-}\StringTok{ }\NormalTok{x[}\DecValTok{2}\NormalTok{]}\OperatorTok{-}\NormalTok{x[}\DecValTok{1}\NormalTok{]}
-\NormalTok{  hy <-}\StringTok{ }\NormalTok{y[}\DecValTok{2}\NormalTok{]}\OperatorTok{-}\NormalTok{y[}\DecValTok{1}\NormalTok{]}
 \NormalTok{  z <-}\StringTok{ }\KeywordTok{outer}\NormalTok{(x, y, f2d)}
   \KeywordTok{persp3D}\NormalTok{(x, y, z, ...)}
 \NormalTok{\}}
 
-\KeywordTok{persp3D.f2d}\NormalTok{(f2d, }\DecValTok{-1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{-1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DataTypeTok{ticktype =} \StringTok{"detailed"}\NormalTok{) }
+\KeywordTok{persp3D.f2d}\NormalTok{(f2d, }\DecValTok{-1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{-1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DataTypeTok{ticktype =} \StringTok{"detailed"}\NormalTok{) }
 \end{Highlighting}
 \end{Shaded}
 

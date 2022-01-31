@@ -569,7 +569,7 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     (`rcauchy`) como distribución a priori y como densidad auxiliar
     para simular por aceptación-rechazo una muestra de la densidad a
     posteriori (emplear `dnorm` para construir la verosimilitud).
-    Obtener el intervalo de probabilidad al 95%.
+    Obtener el intervalo de probabilidad/credibilidad al 95%.
 
 
     ```{r }
@@ -784,23 +784,23 @@ siendo:
 $$f_{1}(x) = \left\{ 
 \begin{array}{ll}
 \lambda e^{-\lambda x} & \text{si } x\geq 0 \\ 
-0 & \text{si} x<0
+0 & \text{si } x<0
 \end{array}
 \ \right. \\
 f_{2}(x) = \left\{ 
 \begin{array}{ll}
 \lambda e^{\lambda x} & \text{si } x<0 \\ 
-0 & \text{si} x\geq 0
+0 & \text{si } x\geq 0
 \end{array}
 \ \right.$$
 
-Algoritmo:
+El algoritmo resultante sería el siguiente (empleando dos números pseudo aleatorios uniformes, el primero para seleccionar el índice y el segundo para generar un valor de la correspondiente componente mediante el método de inversión):
 
 1. Generar $U,V\sim \mathcal{U}(0, 1)$.
 
-2. Si $U<0.5$ devolver $X=-\ln \left( 1-V\right)$.
+2. Si $U<0.5$ devolver $X=-\ln \left( 1-V\right)/\lambda$.
 
-3.  En caso contrario devolver $X=\ln V$.
+3. En caso contrario devolver $X=\ln(V)/\lambda$.
 
 Observaciones:
 
@@ -825,7 +825,7 @@ Algoritmo:
 
 2. Generar $X\sim g(\cdot |Y)$.
 
-Este algoritmo es muy empleado en Inferencia Bayesiana y en la simulación de algunas variables discretas (como la Binomial Negativa, denominada también distribución Gamma–Poisson, o la distribución Beta-Binomial; ver Sección \@ref(notables-disc)),
+Este algoritmo es muy empleado en Inferencia Bayesiana y en la simulación de algunas variables discretas (como la Binomial Negativa, denominada también distribución Gamma-Poisson, o la distribución Beta-Binomial; ver Sección \@ref(notables-disc)),
 ya que el resultado sería válido cambiando las funciones de densidad $f$ y $g$ por funciones de masa de probabilidad.
 
 ## Métodos específicos para la generación de algunas distribuciones notables {#notables-cont}

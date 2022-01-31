@@ -3,11 +3,17 @@
 
 
 
-Podríamos definir la *Simulación* como una técnica que consiste en realizar experimentos de muestreo sobre el modelo de un sistema, con el objetivo de recopilar información bajo determinadas condiciones. 
+Cuando pensamos en ciencia pensamos en experimentos y en modelos. 
+Se experimenta una y otra vez sobre el fenómeno real que se desea conocer mejor para, con la información así acumulada, construir un modelo teórico, que no es sino una representación simplificada (más o menos acertada) del fenómeno real.
+Como el modelo se formula en términos matemáticos, en general es susceptible de un estudio analítico del que poder sacar conclusiones.
+
+La simulación ofrece una alternativa a esa última fase del proceso, y sustituye (en parte o complementamente) el estudio analítico por más experimentación, pero esta vez sobre el propio modelo en lugar de sobre la realidad.
+
+Así, se puede definir la *simulación* como una técnica que consiste en realizar experimentos sobre el modelo de un sistema (experimentos de muestreo si la simulación incorpora aleatoriedad), con el objetivo de recopilar información bajo determinadas condiciones. 
 
 ## Conceptos básicos
 
-La experimentación directa sobre la realidad puede tener muchos inconvenientes:
+La experimentación directa sobre la realidad puede tener muchos inconvenientes, entre otros:
 
 -   Coste elevado.
 
@@ -21,9 +27,8 @@ La experimentación directa sobre la realidad puede tener muchos inconvenientes:
 
 -   Puede resultar imposible.
 
-    -   Acontecimientos futuros, alternativas en el pasado, ...
+    -   Acontecimientos futuros, alternativas en el pasado...
 
--   ...
 
 Además la realidad puede ser demasiado compleja como para ser estudiada directamente y resultar preferible trabajar con un modelo del sistema real. 
 Un modelo no es más que un conjunto de variables junto con ecuaciones matemáticas que las relacionan y restricciones sobre dichas variables. 
@@ -39,16 +44,16 @@ Habría dos tipos de modelos:
     
     aunque hoy en día gana peso la idea de la física cuántica de que en el fondo hay una *aleatoriedad intrínseca*.
 
-La modelización es una etapa presente en la mayor parte de los trabajos de investigación (especialmente en las ciencias experimentales).
+La modelización es una etapa presente en la mayor parte de los trabajos de investigación, especialmente en las ciencias experimentales.
 El modelo debería considerar las variables más relevantes para explicar el fenómeno en estudio y las principales relaciones entre ellas.
 La inferencia estadística proporciona herramientas para estimar los parámetros y contrastar la validez de un modelo estocástico a partir de los datos observados.
 
-La idea es emplear el modelo (suponiendo que es válido) para resolver el problema de interés. 
+La idea es emplear el modelo, asumiendo que es válido, para resolver el problema de interés. 
 Si se puede obtener la solución de forma analítica, esta suele ser exacta (aunque en ocasiones solo se dispone de soluciones aproximadas, basadas en resultados asintóticos, o que dependen de suposiciones que pueden ser cuestionables) y a menudo la resolución también es rápida.
 Cuando la solución no se puede obtener de modo analítico (o si la aproximación disponible no es adecuada) se puede recurrir a la simulación.
 
-Nos centraremos en el caso de la *Simulación Estocástica*: las conclusiones se obtienen generando repetidamente simulaciones del modelo aleatorio.
-Muchas veces se emplea la denominación de *método Monte-Carlo*^[Estos métodos surgieron a finales de la década de 1940 como resultado del trabajo realizado por Stanislaw Ulam y John von Neumann en el proyecto Manhattan para el desarrollo de la bomba atómica. Al parecer, como se trataba de una investigación secreta, Nicholas Metropolis sugirió emplear el nombre clave de "Monte-Carlo" en referencia al casino de Monte Carlo de Mónaco.] como sinónimo de simulación estocástica, pero normalmente se trata de métodos especializados que emplean simulación para resolver problemas que pueden no estar relacionados con un modelo estocástico de un sistema real. Por ejemplo, en el Capítulo \@ref(cap9) se tratarán métodos de integración y optimización Monte-Carlo.
+Nos centraremos en el caso de la *simulación estocástica*: las conclusiones se obtienen generando repetidamente simulaciones del modelo aleatorio.
+Muchas veces se emplea la denominación de *método Monte-Carlo*^[Estos métodos surgieron a finales de la década de 1940 como resultado del trabajo realizado por Stanislaw Ulam y John von Neumann en el proyecto Manhattan para el desarrollo de la bomba atómica. Al parecer, como se trataba de una investigación secreta, Nicholas Metropolis sugirió emplear el nombre clave de "Monte-Carlo" en referencia al casino de Monte Carlo de Mónaco.] como sinónimo de simulación estocástica, pero realmente se trata de métodos especializados que emplean simulación para resolver problemas que pueden no estar relacionados con un modelo estocástico de un sistema real. Por ejemplo, en el Capítulo \@ref(cap9) se tratarán métodos de integración y optimización Monte-Carlo.
 
 <!-- 
 Ejemplo: caballero de Meré 
@@ -95,35 +100,34 @@ Otro problema de la simulación es que se obtienen resultados para unos valores 
 resultaría complicado extrapolar las conclusiones a otras situaciones.
 
 
-## Generación de números (pseudo)aleatorios
+## Aplicaciones de la simulación
 
-Aplicaciones:
+La simulación resulta de utilidad en multitud de contextos diferentes.
+Los principales campos de aplicación son:
 
 -   Estadística:
 
-    -   Muestreo, remuestreo, ...
+    -   Muestreo, remuestreo...
     
-    -   Aproximación de distribuciones (de estadísticos, estimadores, ...)
+    -   Aproximación de distribuciones (de estadísticos, estimadores...)
     
-    -   Realización de contrastes, intervalos de confianza, ...
+    -   Realización de contrastes, intervalos de confianza...
     
-    -   Comparación de estimadores, contrastes, ...
+    -   Comparación de estimadores, contrastes...
     
-    -   Validación teoría (distribución asintótica,...)
+    -   Validación teoría (distribución asintótica...)
     
     -   Inferencia Bayesiana
 
--   Optimización: Algoritmos genéticos, ...
+-   Optimización: Algoritmos genéticos, temple simulado...
 
--   Análisis numérico: Aproximación de integrales, resolución de ecuaciones, ...
+-   Análisis numérico: Aproximación de integrales, resolución de ecuaciones...
 
--   Computación: Diseño, verificación y validación de algoritmos,...
+-   Computación: Diseño, verificación y validación de algoritmos...
 
--   Criptografía: Protocolos de comunicación segura, ...
+-   Criptografía: Protocolos de comunicación segura...
 
--   Física: Simulación de fenómenos naturales, ...
-
--   ...
+-   Física: Simulación de fenómenos naturales...
 
 
 En los capítulos \@ref(cap8) y \@ref(cap9) nos centraremos en algunas de las aplicaciones de utilidad en Estadística.
@@ -134,14 +138,18 @@ En los capítulos \@ref(cap8) y \@ref(cap9) nos centraremos en algunas de las ap
 Una sucesión de números aleatorios puros (*true random*), se caracteriza por que no existe ninguna regla o plan que nos permita conocer sus valores.
 
 Normalmente son obtenidos por procesos físicos
-(loterías, ruletas, ruidos,...) y se almacenaban en *tablas de dígitos aleatorios*. 
+(loterías, ruletas, ruidos...) y se almacenaban en *tablas de dígitos aleatorios*. 
 Por ejemplo, en 1955 la Corporación RAND publicó el libro [A Million Random Digits with 100,000 Normal Deviates](https://www.rand.org/pubs/monograph_reports/MR1418.html) que contenía números aleatorios generados mediante una ruleta electrónica conectada a una computadora (ver Figura \@ref(fig:randbook)).
 
 
-<div class="figure" style="text-align: center">
-<img src="images/RAND.png" alt="Líneas 10580-10594, columnas 21-40, del libro *A Million Random Digits with 100,000 Normal Deviates*." width="30%" />
-<p class="caption">(\#fig:randbook)Líneas 10580-10594, columnas 21-40, del libro *A Million Random Digits with 100,000 Normal Deviates*.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.3\linewidth]{images/RAND} 
+
+}
+
+\caption{Líneas 10580-10594, columnas 21-40, del libro *A Million Random Digits with 100,000 Normal Deviates*.}(\#fig:randbook)
+\end{figure}
 
 El procedimiento para generar de forma manual números aleatorios 
 en un rango de 1 a *m* era el siguiente:
@@ -199,10 +207,14 @@ plot(sobol(n, dim = 2), xlab = 'x1', ylab = 'x2')
 plot(torus(n, dim = 2), xlab = 'x1', ylab = 'x2')
 ```
 
-<div class="figure" style="text-align: center">
-<img src="01-Introduccion_files/figure-html/randtoolbox-1.png" alt="Secuencias cuasi-aleatorias bidimensionales obtenidas con los métodos de Halton (izquierda), Sobol (centro) y Torus (derecha)." width="100%" />
-<p class="caption">(\#fig:randtoolbox)Secuencias cuasi-aleatorias bidimensionales obtenidas con los métodos de Halton (izquierda), Sobol (centro) y Torus (derecha).</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=1\linewidth]{01-Introduccion_files/figure-latex/randtoolbox-1} 
+
+}
+
+\caption{Secuencias cuasi-aleatorias bidimensionales obtenidas con los métodos de Halton (izquierda), Sobol (centro) y Torus (derecha).}(\#fig:randtoolbox)
+\end{figure}
 
 ```r
 par(par.old)
@@ -259,7 +271,7 @@ Otras propiedades de interés serían:
 
 -   Generación de sub-secuencias (computación en paralelo).
 
--   Parsimonia, ...
+-   Parsimonia...
 
 
 > "... random numbers should not be generated with a method chosen at random." 
@@ -270,7 +282,7 @@ Otras propiedades de interés serían:
 
 Gran cantidad de algoritmos:
 
--   Cuadrados medios, Lehmer,...
+-   Cuadrados medios, Lehmer...
 
 -   Congruenciales
 

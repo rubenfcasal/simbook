@@ -14,14 +14,14 @@ Entre las herramientas en el paquete base de `R` estarían:
 
 -   `rdistribución(n,...):` genera valores aleatorios de la
     correspondiente distribución. 
-    Por ejemplo: `runif(n, min = 0, max = 1)`, generaría `n` valores de una uniforme.
+    Por ejemplo, `runif(n, min = 0, max = 1)`, generaría `n` valores de una uniforme. Se puede acceder al listado completo de las funciones disponibles en el paquete `stats` mediante el comando `?distributions`.
 
 -   `sample()`: genera muestras aleatorias de variables discretas y permutaciones (se tratará en el Capítulo \@ref(discretas)).
 
 -   `simulate()`: genera realizaciones de la respuesta de un modelo ajustado.
 
-Además están disponibles otros paquetes, como el paquete [`distr`](http://distr.r-forge.r-project.org),
-que implementan distribuciones adicionales.
+Además están disponibles otros paquetes que implementan distribuciones adicionales (ver [CRAN Task View: Probability Distributions](https://cran.r-project.org/view=Distributions)). 
+Entre ellos podríamos destacar los paquetes [`distr`](http://distr.r-forge.r-project.org) (clases S4; con extensiones en otros paquetes) y [`distr6`](https://alan-turing-institute.github.io/distr6/index.html) (clases R6).
 
 La semilla se almacena (en `globalenv`) en `.Random.seed`; es un vector
 de enteros cuya dimensión depende del tipo de generador:
@@ -33,8 +33,10 @@ de enteros cuya dimensión depende del tipo de generador:
     partir del reloj del sistema.
 
 
-\BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}Puede ser recomendable (para depurar) almacenarla antes de generar simulaciones, e.g. 
-`semilla <- .Random.seed`.</div>\EndKnitrBlock{remark}
+\BeginKnitrBlock{remark}
+\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}Puede ser recomendable (para depurar) almacenarla antes de generar simulaciones, e.g. 
+`semilla <- .Random.seed`.
+\EndKnitrBlock{remark}
 
 
 En la mayoría de los ejemplos de este libro se generan todos los valores de una vez,
@@ -127,7 +129,9 @@ Otros paquetes de R que pueden ser de interés:
 
 ## Ejercicios
 
-\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:simpi"><strong>(\#exr:simpi) </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}
+<span class="exercise" id="exr:simpi"><strong>(\#exr:simpi) </strong></span>
+\EndKnitrBlock{exercise}
 
 Sea $(X,Y)$ es un vector aleatorio con distribución uniforme en el
 cuadrado $[-1,1]\times\lbrack-1,1]$ de área 4.
@@ -146,7 +150,7 @@ a)  Aproximar mediante simulación $P\left(X + Y \leq 0 \right)$ y
     y <- runif(nsim, -1, 1)
     ```
 
-    La probabilidad teórica es 1/2 y la aproximación por simulación es la frecuencia relativa del suceso en los valores generados:
+    La probabilidad teórica es 1/2 y la aproximación por simulación es la frecuencia relativa del suceso en los valores generados (para calcularla podemos aprovechar que R maneja internamente los valores lógicos como 1, `TRUE`, y 0, `FALSE`):
     
     
     ```r
@@ -168,9 +172,6 @@ a)  Aproximar mediante simulación $P\left(X + Y \leq 0 \right)$ y
     ```
     ## [1] 0.4996
     ```
-
-
-    \BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}R maneja internamente los valores lógicos como 1 (`TRUE`) y 0 (`FALSE`).</div>\EndKnitrBlock{remark}
 
 
 b)  Aproximar el valor de $\pi$ mediante simulación a partir de
@@ -221,13 +222,19 @@ b)  Aproximar el valor de $\pi$ mediante simulación a partir de
     symbols(0, 0, squares = 2, inches = FALSE, add = TRUE)
     ```
     
-    <div class="figure" style="text-align: center">
-    <img src="02-Numeros_aleatorios_R_files/figure-html/simpiplot-1.png" alt="Valores generados con distribución uniforme bidimensional, con colores y símbolos indicando si están dentro del círculo unidad." width="70%" />
-    <p class="caption">(\#fig:simpiplot)Valores generados con distribución uniforme bidimensional, con colores y símbolos indicando si están dentro del círculo unidad.</p>
-    </div>
+    \begin{figure}[!htb]
+    
+    {\centering \includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/simpiplot-1} 
+    
+    }
+    
+    \caption{Valores generados con distribución uniforme bidimensional, con colores y símbolos indicando si están dentro del círculo unidad.}(\#fig:simpiplot)
+    \end{figure}
     
 
-\BeginKnitrBlock{exercise}\iffalse{-91-69-120-112-101-114-105-109-101-110-116-111-32-100-101-32-66-101-114-110-111-117-108-108-105-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:bernouilli"><strong>(\#exr:bernouilli)  \iffalse (Experimento de Bernoulli) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-69-120-112-101-114-105-109-101-110-116-111-32-100-101-32-66-101-114-110-111-117-108-108-105-93-}\fi{}
+<span class="exercise" id="exr:bernouilli"><strong>(\#exr:bernouilli)  \iffalse (Experimento de Bernoulli) \fi{} </strong></span>
+\EndKnitrBlock{exercise}
 Consideramos el experimento de Bernoulli consistente en el
 lanzamiento de una moneda.
 
@@ -252,10 +259,14 @@ a)  Empleando la función `sample`, obtener 1000 simulaciones del
     barplot(100*table(x)/nsim, ylab = "Porcentaje") # Representar porcentajes 
     ```
     
-    <div class="figure" style="text-align: center">
-    <img src="02-Numeros_aleatorios_R_files/figure-html/simberplot-1.png" alt="Frecuencias relativas de los valores generados con distribución Bernoulli (aproximaciones por simulación de las probabilidades teóricas)." width="70%" />
-    <p class="caption">(\#fig:simberplot)Frecuencias relativas de los valores generados con distribución Bernoulli (aproximaciones por simulación de las probabilidades teóricas).</p>
-    </div>
+    \begin{figure}[!htb]
+    
+    {\centering \includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/simberplot-1} 
+    
+    }
+    
+    \caption{Frecuencias relativas de los valores generados con distribución Bernoulli (aproximaciones por simulación de las probabilidades teóricas).}(\#fig:simberplot)
+    \end{figure}
 
 b)  En R pueden generarse valores de la distribución de Bernoulli
     mediante la función `rbinom(nsim, size=1, prob)`. Generar un
@@ -285,25 +296,34 @@ b)  En R pueden generarse valores de la distribución de Bernoulli
     abline(h=p, lty=2, col="red")
     ```
     
-    <div class="figure" style="text-align: center">
-    <img src="02-Numeros_aleatorios_R_files/figure-html/simberconv-1.png" alt="Gráfico de convergencia de la aproximación por simulación a la probabilidad teórica." width="70%" />
-    <p class="caption">(\#fig:simberconv)Gráfico de convergencia de la aproximación por simulación a la probabilidad teórica.</p>
-    </div>
+    \begin{figure}[!htb]
+    
+    {\centering \includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/simberconv-1} 
+    
+    }
+    
+    \caption{Gráfico de convergencia de la aproximación por simulación a la probabilidad teórica.}(\#fig:simberconv)
+    \end{figure}
 
 
-\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-32-99-105-114-99-117-105-116-111-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:circuito"><strong>(\#exr:circuito)  \iffalse (Simulación de un circuito) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-32-99-105-114-99-117-105-116-111-93-}\fi{}
+<span class="exercise" id="exr:circuito"><strong>(\#exr:circuito)  \iffalse (Simulación de un circuito) \fi{} </strong></span>
+\EndKnitrBlock{exercise}
 Simular el paso de corriente a través del siguiente circuito, donde
 figuran las probabilidades de que pase corriente por cada uno de los
 interruptores:
 
-<img src="images/circuito2.png" width="50%" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics[width=0.5\linewidth]{images/circuito2} \end{center}
 
 Considerar que cada interruptor es una variable aleatoria de Bernoulli independiente
 para simular 1000 valores de cada una de ellas.
     
-\BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}R maneja internamente los valores lógicos como 1 (`TRUE`) y 0 (`FALSE`).
+\BeginKnitrBlock{remark}
+\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}R maneja internamente los valores lógicos como 1 (`TRUE`) y 0 (`FALSE`).
 Recíprocamente, cualquier número puede ser tratado como lógico (al estilo de C).
-El entero 0 es equivalente a `FALSE` y cualquier entero distinto de 0 a `TRUE`.</div>\EndKnitrBlock{remark}
+El entero 0 es equivalente a `FALSE` y cualquier entero distinto de 0 a `TRUE`.
+\EndKnitrBlock{remark}
 
 
 ```r
@@ -326,7 +346,9 @@ mean(fin)
 ```
 
 
-\BeginKnitrBlock{exercise}\iffalse{-91-69-108-32-112-114-111-98-108-101-109-97-32-100-101-108-32-67-97-98-97-108-108-101-114-111-32-100-101-32-77-233-114-233-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:mere"><strong>(\#exr:mere)  \iffalse (El problema del Caballero de Méré) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-69-108-32-112-114-111-98-108-101-109-97-32-100-101-108-32-67-97-98-97-108-108-101-114-111-32-100-101-32-77-233-114-233-93-}\fi{}
+<span class="exercise" id="exr:mere"><strong>(\#exr:mere)  \iffalse (El problema del Caballero de Méré) \fi{} </strong></span>
+\EndKnitrBlock{exercise}
 En 1651, el Caballero de Méré le planteó a Pascal una pregunta
 relacionada con las apuestas y los juegos de azar: ¿es ventajoso
 apostar a que en cuatro lanzamientos de un dado se obtiene al menos
@@ -460,10 +482,10 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.08    0.00    0.07 
+##    0.13    0.00    0.13 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.08    0.00    0.07
+##    0.13    0.00    0.13
 ```
 
 ```r
@@ -482,20 +504,22 @@ CPUtimeprint()
 ## 
 ## Tiempo última operación:
 ##    user  system elapsed 
-##       0       0       0 
+##    0.03    0.00    0.03 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.08    0.00    0.07
+##    0.16    0.00    0.16
 ```
 
 ### Paquetes de R
 
-Por ejemplo, se puede emplear el paquete `npsp` (fichero *[cpu.time.R](https://github.com/rubenfcasal/npsp/blob/master/R/cpu.time.R)*):
+Por ejemplo, se puede emplear la función [`cpu.time()`](https://rubenfcasal.github.io/npsp/reference/cpu.time.html) del paquete `npsp`:
 
 -   Call `cpu.time(restart = TRUE)` where you want to start counting.
 
 -   Call `cpu.time()` to print/get total and/or partial (since the last call 
     to this function) real and CPU times.
+    
+Fichero *[cpu.time.R](https://github.com/rubenfcasal/npsp/blob/master/R/cpu.time.R)*:    
     
 
 ```r
@@ -576,7 +600,7 @@ cpu.time('\nSample median of', 1000000, 'values =', res, total = FALSE)
 ## Time of last operation: 
 ## Sample median of 1e+06 values = 0.4993323 
 ##    user  system elapsed 
-##    0.06    0.00    0.08
+##    0.17    0.00    0.19
 ```
 
 ```r
@@ -591,7 +615,7 @@ cpu.time('\nSample median of', 1000, 'values =', res)
 ##       0       0       0 
 ## Total time:
 ##    user  system elapsed 
-##    0.06    0.00    0.08
+##    0.17    0.00    0.19
 ```
 
 Otro paquete que puede ser de utilidad es

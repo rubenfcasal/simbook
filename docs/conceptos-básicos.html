@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1.1 Conceptos básicos | Simulación Estadística</title>
   <meta name="description" content="Apuntes de la asignatura de Simulación Estadística del Máster en Técnicas Estadísticas." />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1.1 Conceptos básicos | Simulación Estadística" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2021-05-19" />
+<meta name="date" content="2022-01-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="cap1.html"/>
-<link rel="next" href="generación-de-números-pseudoaleatorios.html"/>
+<link rel="next" href="aplicaciones-de-la-simulación.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -139,7 +139,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.1" data-path="conceptos-básicos.html"><a href="conceptos-básicos.html"><i class="fa fa-check"></i><b>1.1</b> Conceptos básicos</a><ul>
 <li class="chapter" data-level="1.1.1" data-path="conceptos-básicos.html"><a href="conceptos-básicos.html#ventajas-e-inconvenientes-de-la-simulación"><i class="fa fa-check"></i><b>1.1.1</b> Ventajas e inconvenientes de la simulación</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="generación-de-números-pseudoaleatorios.html"><a href="generación-de-números-pseudoaleatorios.html"><i class="fa fa-check"></i><b>1.2</b> Generación de números (pseudo)aleatorios</a></li>
+<li class="chapter" data-level="1.2" data-path="aplicaciones-de-la-simulación.html"><a href="aplicaciones-de-la-simulación.html"><i class="fa fa-check"></i><b>1.2</b> Aplicaciones de la simulación</a></li>
 <li class="chapter" data-level="1.3" data-path="números-aleatorios-puros.html"><a href="números-aleatorios-puros.html"><i class="fa fa-check"></i><b>1.3</b> Números aleatorios puros</a><ul>
 <li class="chapter" data-level="1.3.1" data-path="números-aleatorios-puros.html"><a href="números-aleatorios-puros.html#alternativas"><i class="fa fa-check"></i><b>1.3.1</b> Alternativas:</a></li>
 </ul></li>
@@ -332,7 +332,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="conceptos-básicos" class="section level2">
 <h2><span class="header-section-number">1.1</span> Conceptos básicos</h2>
-<p>La experimentación directa sobre la realidad puede tener muchos inconvenientes:</p>
+<p>La experimentación directa sobre la realidad puede tener muchos inconvenientes, entre otros:</p>
 <ul>
 <li><p>Coste elevado.</p>
 <ul>
@@ -345,9 +345,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li><p>Puede resultar imposible.</p>
 <ul>
-<li>Acontecimientos futuros, alternativas en el pasado, …</li>
+<li>Acontecimientos futuros, alternativas en el pasado…</li>
 </ul></li>
-<li><p>…</p></li>
 </ul>
 <p>Además la realidad puede ser demasiado compleja como para ser estudiada directamente y resultar preferible trabajar con un modelo del sistema real.
 Un modelo no es más que un conjunto de variables junto con ecuaciones matemáticas que las relacionan y restricciones sobre dichas variables.
@@ -361,14 +360,14 @@ Habría dos tipos de modelos:</p>
 </blockquote>
 <p>aunque hoy en día gana peso la idea de la física cuántica de que en el fondo hay una <em>aleatoriedad intrínseca</em>.</p></li>
 </ul>
-<p>La modelización es una etapa presente en la mayor parte de los trabajos de investigación (especialmente en las ciencias experimentales).
+<p>La modelización es una etapa presente en la mayor parte de los trabajos de investigación, especialmente en las ciencias experimentales.
 El modelo debería considerar las variables más relevantes para explicar el fenómeno en estudio y las principales relaciones entre ellas.
 La inferencia estadística proporciona herramientas para estimar los parámetros y contrastar la validez de un modelo estocástico a partir de los datos observados.</p>
-<p>La idea es emplear el modelo (suponiendo que es válido) para resolver el problema de interés.
+<p>La idea es emplear el modelo, asumiendo que es válido, para resolver el problema de interés.
 Si se puede obtener la solución de forma analítica, esta suele ser exacta (aunque en ocasiones solo se dispone de soluciones aproximadas, basadas en resultados asintóticos, o que dependen de suposiciones que pueden ser cuestionables) y a menudo la resolución también es rápida.
 Cuando la solución no se puede obtener de modo analítico (o si la aproximación disponible no es adecuada) se puede recurrir a la simulación.</p>
-<p>Nos centraremos en el caso de la <em>Simulación Estocástica</em>: las conclusiones se obtienen generando repetidamente simulaciones del modelo aleatorio.
-Muchas veces se emplea la denominación de <em>método Monte-Carlo</em><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> como sinónimo de simulación estocástica, pero normalmente se trata de métodos especializados que emplean simulación para resolver problemas que pueden no estar relacionados con un modelo estocástico de un sistema real. Por ejemplo, en el Capítulo <a href="cap9.html#cap9">9</a> se tratarán métodos de integración y optimización Monte-Carlo.</p>
+<p>Nos centraremos en el caso de la <em>simulación estocástica</em>: las conclusiones se obtienen generando repetidamente simulaciones del modelo aleatorio.
+Muchas veces se emplea la denominación de <em>método Monte-Carlo</em><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> como sinónimo de simulación estocástica, pero realmente se trata de métodos especializados que emplean simulación para resolver problemas que pueden no estar relacionados con un modelo estocástico de un sistema real. Por ejemplo, en el Capítulo <a href="cap9.html#cap9">9</a> se tratarán métodos de integración y optimización Monte-Carlo.</p>
 <!-- 
 Ejemplo: caballero de Meré 
 Experimentación directa sobre la realidad
@@ -417,7 +416,7 @@ resultaría complicado extrapolar las conclusiones a otras situaciones.</p>
         </div>
       </div>
 <a href="cap1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="generación-de-números-pseudoaleatorios.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="aplicaciones-de-la-simulación.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
