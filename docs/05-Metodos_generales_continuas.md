@@ -35,18 +35,14 @@ $$F^{-1}\left( U \right) \sim X$$
 
 A partir de este resultado se deduce el siguiente algoritmo genérico para simular una variable continua con función de distribución $F$ invertible:
 
-\BeginKnitrBlock{conjecture}\iffalse{-91-77-233-116-111-100-111-32-100-101-32-105-110-118-101-114-115-105-243-110-93-}\fi{}
-<span class="conjecture" id="cnj:inversion"><strong>(\#cnj:inversion)  \iffalse (Método de inversión) \fi{} </strong></span>
+\BeginKnitrBlock{conjecture}\iffalse{-91-77-233-116-111-100-111-32-100-101-32-105-110-118-101-114-115-105-243-110-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:inversion"><strong>(\#cnj:inversion)  \iffalse (Método de inversión) \fi{} </strong></span>
 1. Generar $U \sim \mathcal{U}(0, 1)$.
 
 2. Devolver $X = F^{-1}\left( U \right)$.
-
-\EndKnitrBlock{conjecture}
+</div>\EndKnitrBlock{conjecture}
 <!-- \@ref(cnj:inversion) -->
 
-\BeginKnitrBlock{example}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-100-105-115-116-114-105-98-117-99-105-243-110-32-101-120-112-111-110-101-110-99-105-97-108-93-}\fi{}
-<span class="example" id="exm:exp-inv"><strong>(\#exm:exp-inv)  \iffalse (Simulación de una distribución exponencial) \fi{} </strong></span>
-\EndKnitrBlock{example}
+\BeginKnitrBlock{example}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-100-105-115-116-114-105-98-117-99-105-243-110-32-101-120-112-111-110-101-110-99-105-97-108-93-}\fi{}<div class="example"><span class="example" id="exm:exp-inv"><strong>(\#exm:exp-inv)  \iffalse (Simulación de una distribución exponencial) \fi{} </strong></span></div>\EndKnitrBlock{example}
 
 La distribución exponencial $\exp \left( \lambda \right)$ de parámetro $\lambda>0$
 tiene como función de densidad $f(x) =\lambda e^{-\lambda x}$, si $x\geq 0$,
@@ -66,14 +62,10 @@ el algoritmo para simular esta variable mediante el método de inversión es:
 En el último paso podemos emplear directamente $U$ en lugar de $1-U$, ya que $1 - U \sim \mathcal{U}(0, 1)$.
 Esta última expresión para acelerar los cálculos es la que denominaremos *forma simplificada*. 
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/inv-movie-1} 
-
-}
-
-\caption{Ilustración de la simulación de una distribución exponencial por el método de inversión.}(\#fig:inv-movie)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="images/inv-movie.gif" alt="Ilustración de la simulación de una distribución exponencial por el método de inversión." width="70%" />
+<p class="caption">(\#fig:inv-movie)Ilustración de la simulación de una distribución exponencial por el método de inversión.</p>
+</div>
 
 
 El código para implementar este algoritmo en R podría ser el siguiente:
@@ -93,7 +85,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##    0.01    0.00    0.01
+##    0.02    0.00    0.02
 ```
 
 ```r
@@ -102,14 +94,10 @@ hist(X, breaks = "FD", freq = FALSE,
 curve(dexp(x, lambda), lwd = 2, add = TRUE)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/exp-inv-plot-1} 
-
-}
-
-\caption{Distribución de los valores generados de una exponencial mediante el método de inversión.}(\#fig:exp-inv-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="05-Metodos_generales_continuas_files/figure-html/exp-inv-plot-1.png" alt="Distribución de los valores generados de una exponencial mediante el método de inversión." width="70%" />
+<p class="caption">(\#fig:exp-inv-plot)Distribución de los valores generados de una exponencial mediante el método de inversión.</p>
+</div>
 
 Como se observa en la Figura \@ref(fig:exp-inv-plot) se trata de un método exacto (si está bien implementado) y la distribución de los valores generados se aproxima a la distribución teórica como cabría esperar con una muestra de ese tamaño.
 
@@ -130,9 +118,7 @@ Pareto ($a,b>0$)  | $\dfrac{ab^{a}}{x^{a+1}}$, si $x\geq b$  | $1-\left( \dfrac 
 Weibull ($\lambda,\alpha>0$) | $\alpha\lambda^{\alpha}x^{\alpha-1}e^{-\left( \lambda x\right)  ^{\alpha}}$, si $x\geq0$  | $1-e^{-\left( \lambda x\right)  ^{\alpha}}$  | $\dfrac{\left( -\ln\left(1-U\right)  \right)  ^{1/\alpha}}\lambda$   | $\dfrac{\left( -\ln U\right)^{1/\alpha}}\lambda$\
 
 
-\BeginKnitrBlock{exercise}\iffalse{-91-68-105-115-116-114-105-98-117-99-105-243-110-32-100-111-98-108-101-32-101-120-112-111-110-101-110-99-105-97-108-93-}\fi{}
-<span class="exercise" id="exr:ddexp"><strong>(\#exr:ddexp)  \iffalse (Distribución doble exponencial) \fi{} </strong></span>
-\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-68-105-115-116-114-105-98-117-99-105-243-110-32-100-111-98-108-101-32-101-120-112-111-110-101-110-99-105-97-108-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:ddexp"><strong>(\#exr:ddexp)  \iffalse (Distribución doble exponencial) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
 La distribución doble exponencial (o distribución de Laplace) de
 parámetro $\lambda$ tiene función de densidad:
@@ -188,7 +174,7 @@ b)  Generar $10^{4}$ valores de la distribución doble exponencial de
     
     ```
     ##    user  system elapsed 
-    ##    0.03    0.01    0.04
+    ##    0.03    0.02    0.05
     ```
 
 
@@ -201,14 +187,10 @@ c)  Representar el histograma y compararlo con la densidad teórica.
     curve(ddexp(x, 2), add = TRUE)
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/dexp-inv-1} 
-    
-    }
-    
-    \caption{Distribución de los valores generados de una doble exponencial mediante el método de inversión.}(\#fig:dexp-inv)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="05-Metodos_generales_continuas_files/figure-html/dexp-inv-1.png" alt="Distribución de los valores generados de una doble exponencial mediante el método de inversión." width="70%" />
+    <p class="caption">(\#fig:dexp-inv)Distribución de los valores generados de una doble exponencial mediante el método de inversión.</p>
+    </div>
     Como se trata de un método exacto de simulación, si está bien implementado, la distribución de los valores generados debería comportarse como una muestra genuina de la distribución objetivo.
     
 
@@ -266,8 +248,7 @@ y $-g\left( u\right)$ si $u\in[\frac12,1-10^{-20}]$. Para $u\notin
 $2\cdot10^{-20}$) la aproximación no es recomendable.
 
 
-\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-79-100-101-104-32-121-32-69-118-97-110-115-93-}\fi{}
-<span class="conjecture" id="cnj:Odeh-Evans"><strong>(\#cnj:Odeh-Evans)  \iffalse (de Odeh y Evans) \fi{} </strong></span>
+\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-79-100-101-104-32-121-32-69-118-97-110-115-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:Odeh-Evans"><strong>(\#cnj:Odeh-Evans)  \iffalse (de Odeh y Evans) \fi{} </strong></span>
 
 1. Generar $U \sim U(0, 1)$.
 
@@ -277,8 +258,7 @@ $2\cdot10^{-20}$) la aproximación no es recomendable.
    en caso contrario hacer $X=-g\left( U\right)$.
 
 4. Devolver $X$.
-
-\EndKnitrBlock{conjecture}
+</div>\EndKnitrBlock{conjecture}
 <!-- \@ref(cnj:Odeh-Evans) -->
 
 
@@ -303,8 +283,7 @@ $$A_{f}=\left\{ \left( x,y\right) \in \mathbb{R}^{2}:0\leq y\leq
 f(x) \right\}.$$
 De esta forma la primera componente tendrá la distribución deseada:
 
-
-\begin{center}\includegraphics[width=0.7\linewidth]{images/rechazo} \end{center}
+<img src="images/rechazo.png" width="70%" style="display: block; margin: auto;" />
 
 $$ P\left( a<X<b\right) = \frac{\text{Area de }\left\{ \left( x,y\right) \in 
 \mathbb{R}^{2}:a<x<b;~0\leq y\leq f(x) \right\} }{\text{Area de }
@@ -349,8 +328,7 @@ existe una constante $c>0$ tal que:
 $$f(x) \leq c\cdot g(x) 
 \text{, }\forall x\in \mathbb{R}\text{.}$$
 
-\BeginKnitrBlock{conjecture}\iffalse{-91-77-233-116-111-100-111-32-100-101-32-97-99-101-112-116-97-99-105-243-110-45-114-101-99-104-97-122-111-59-32-86-111-110-32-78-101-117-109-97-110-44-32-49-57-53-49-93-}\fi{}
-<span class="conjecture" id="cnj:aceptacion-rechazo"><strong>(\#cnj:aceptacion-rechazo)  \iffalse (Método de aceptación-rechazo; Von Neuman, 1951) \fi{} </strong></span>
+\BeginKnitrBlock{conjecture}\iffalse{-91-77-233-116-111-100-111-32-100-101-32-97-99-101-112-116-97-99-105-243-110-45-114-101-99-104-97-122-111-59-32-86-111-110-32-78-101-117-109-97-110-44-32-49-57-53-49-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:aceptacion-rechazo"><strong>(\#cnj:aceptacion-rechazo)  \iffalse (Método de aceptación-rechazo; Von Neuman, 1951) \fi{} </strong></span>
 
 1.  Generar $U \sim \mathcal{U}(0, 1)$.
 
@@ -360,8 +338,7 @@ $$f(x) \leq c\cdot g(x)
     devolver $X=T$,
 
     en caso contrario volver al paso 1.
-
-\EndKnitrBlock{conjecture}
+</div>\EndKnitrBlock{conjecture}
 <!-- \@ref(cnj:aceptacion-rechazo) -->
 
 
@@ -394,9 +371,7 @@ Así pues, el algoritmo quedaría como sigue:
 
 <!-- Incluir cuentas de AR para la doble exponencial -->
 
-\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-108-97-32-110-111-114-109-97-108-32-109-101-100-105-97-110-116-101-32-108-97-32-100-111-98-108-101-32-101-120-112-111-110-101-110-99-105-97-108-93-}\fi{}
-<span class="exercise" id="exr:dnorm-ddexp-ar"><strong>(\#exr:dnorm-ddexp-ar)  \iffalse (Simulación de la normal mediante la doble exponencial) \fi{} </strong></span>
-\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-108-97-32-110-111-114-109-97-108-32-109-101-100-105-97-110-116-101-32-108-97-32-100-111-98-108-101-32-101-120-112-111-110-101-110-99-105-97-108-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:dnorm-ddexp-ar"><strong>(\#exr:dnorm-ddexp-ar)  \iffalse (Simulación de la normal mediante la doble exponencial) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
 Desarrollar el código necesario para generar, por el método de
 aceptación-rechazo, una muestra de $n$ observaciones de una
@@ -426,14 +401,10 @@ curve(c.opt * ddexp(x), xlim = c(-4, 4), lty = 2)
 curve(dnorm(x), add = TRUE)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/dnorm-ddexp-plot-1} 
-
-}
-
-\caption{Densidad objetivo (normal estándar) y densidad auxiliar (doble exponencial) reescalada.}(\#fig:dnorm-ddexp-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="05-Metodos_generales_continuas_files/figure-html/dnorm-ddexp-plot-1.png" alt="Densidad objetivo (normal estándar) y densidad auxiliar (doble exponencial) reescalada." width="70%" />
+<p class="caption">(\#fig:dnorm-ddexp-plot)Densidad objetivo (normal estándar) y densidad auxiliar (doble exponencial) reescalada.</p>
+</div>
 
 Para generar los valores de la densidad objetivo podríamos emplear el siguiente código:
 
@@ -479,7 +450,7 @@ a)  Generar una muestra de $10^{4}$ observaciones empleando este
     
     ```
     ##    user  system elapsed 
-    ##    0.12    0.00    0.12
+    ##    0.08    0.00    0.08
     ```
     
     ```r
@@ -507,14 +478,10 @@ b)  Representar el histograma y compararlo con la densidad teórica.
     curve(dnorm, add = TRUE)
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/dnorm-ar-1} 
-    
-    }
-    
-    \caption{Distribución de los valores generados mediante el método de aceptación-rechazo.}(\#fig:dnorm-ar)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="05-Metodos_generales_continuas_files/figure-html/dnorm-ar-1.png" alt="Distribución de los valores generados mediante el método de aceptación-rechazo." width="70%" />
+    <p class="caption">(\#fig:dnorm-ar)Distribución de los valores generados mediante el método de aceptación-rechazo.</p>
+    </div>
     Podemos observar que la distribución de los valores generados es la que cabría esperar de una muestra de tamaño `nsim` de la distribución objetivo (lo que nos ayudaría a confirmar que el algoritmo está bien implementado, al ser un método exacto de simulación).
 
 
@@ -549,9 +516,7 @@ y, finalmente, elegir el mejor valor $\theta_{0}$ del parámetro, en el sentido 
 $$c_{\theta_{0}}=\min_{\theta\in\Theta}\max_{x}\frac{f\left(  x\right) }{g_{\theta}\left(  x\right)  }.$$
 
 
-\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-108-97-32-110-111-114-109-97-108-32-109-101-100-105-97-110-116-101-32-108-97-32-100-111-98-108-101-32-101-120-112-111-110-101-110-99-105-97-108-44-32-99-111-110-116-105-110-117-97-99-105-243-110-93-}\fi{}
-<span class="exercise" id="exr:dnorm-ddexp-arb"><strong>(\#exr:dnorm-ddexp-arb)  \iffalse (Simulación de la normal mediante la doble exponencial, continuación) \fi{} </strong></span>
-\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-108-97-32-110-111-114-109-97-108-32-109-101-100-105-97-110-116-101-32-108-97-32-100-111-98-108-101-32-101-120-112-111-110-101-110-99-105-97-108-44-32-99-111-110-116-105-110-117-97-99-105-243-110-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:dnorm-ddexp-arb"><strong>(\#exr:dnorm-ddexp-arb)  \iffalse (Simulación de la normal mediante la doble exponencial, continuación) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
 Continuando con el Ejercicio \@ref(exr:dnorm-ddexp-ar) anterior del método de aceptación-rechazo para generar observaciones de una distribución normal estándar, empleando como distribución auxiliar una doble exponencial:
 
@@ -631,9 +596,7 @@ Algoritmo:
 
     en caso contrario volver al paso 1.
 
-\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-108-97-32-100-105-115-116-114-105-98-117-99-105-243-110-32-97-32-112-111-115-116-101-114-105-111-114-105-32-97-32-112-97-114-116-105-114-32-100-101-32-108-97-32-100-105-115-116-114-105-98-117-99-105-243-110-32-97-32-112-114-105-111-114-105-93-}\fi{}
-<span class="exercise" id="exr:post-pri-ar"><strong>(\#exr:post-pri-ar)  \iffalse (Simulación de la distribución a posteriori a partir de la distribución a priori) \fi{} </strong></span>
-\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-108-97-32-100-105-115-116-114-105-98-117-99-105-243-110-32-97-32-112-111-115-116-101-114-105-111-114-105-32-97-32-112-97-114-116-105-114-32-100-101-32-108-97-32-100-105-115-116-114-105-98-117-99-105-243-110-32-97-32-112-114-105-111-114-105-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:post-pri-ar"><strong>(\#exr:post-pri-ar)  \iffalse (Simulación de la distribución a posteriori a partir de la distribución a priori) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
 Para la estimación Bayes de la media de una normal se suele utilizar
 como distribución a priori una Cauchy.
@@ -731,9 +694,7 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     abline(v = q, lty = 2)
     ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-12-1} \end{center}
+    <img src="05-Metodos_generales_continuas_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" />
 
 b)  Repetir el apartado anterior con $n=100$.
 
@@ -768,8 +729,7 @@ Algoritmo:
 
 
 
-
-\begin{center}\includegraphics[width=0.7\linewidth]{images/squeeze} \end{center}
+<img src="images/squeeze.png" width="70%" style="display: block; margin: auto;" />
 
 Cuanto mayor sea el área bajo $s(x)$ (más próxima a 1)
 más efectivo será el algoritmo.
@@ -878,9 +838,7 @@ Algoritmo:
 
 2. Generar $X\sim f_J$.
 
-\BeginKnitrBlock{example}\iffalse{-91-68-105-115-116-114-105-98-117-99-105-243-110-32-100-111-98-108-101-32-101-120-112-111-110-101-110-99-105-97-108-93-}\fi{}
-<span class="example" id="exm:dexp-mix"><strong>(\#exm:dexp-mix)  \iffalse (Distribución doble exponencial) \fi{} </strong></span>
-\EndKnitrBlock{example}
+\BeginKnitrBlock{example}\iffalse{-91-68-105-115-116-114-105-98-117-99-105-243-110-32-100-111-98-108-101-32-101-120-112-111-110-101-110-99-105-97-108-93-}\fi{}<div class="example"><span class="example" id="exm:dexp-mix"><strong>(\#exm:dexp-mix)  \iffalse (Distribución doble exponencial) \fi{} </strong></span></div>\EndKnitrBlock{example}
 A partir de la densidad de la distribución doble exponencial:
 $$f(x) =\frac{\lambda }{2}e^{-\lambda \left\vert x\right\vert }%
 \text{, }\forall x\in \mathbb{R},$$

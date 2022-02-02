@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>8.1 Distribución en el muestreo | Simulación Estadística</title>
   <meta name="description" content="Apuntes de la asignatura de Simulación Estadística del Máster en Técnicas Estadísticas." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="8.1 Distribución en el muestreo | Simulación Estadística" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-01-30" />
+<meta name="date" content="2022-02-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,9 @@
   
 <link rel="prev" href="cap8.html"/>
 <link rel="next" href="intervalos-de-confianza.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,23 +51,23 @@
 
 
 
-
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -85,7 +87,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -118,6 +120,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -135,70 +138,86 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
-<li class="chapter" data-level="1" data-path="cap1.html"><a href="cap1.html"><i class="fa fa-check"></i><b>1</b> Introducción a la simulación</a><ul>
-<li class="chapter" data-level="1.1" data-path="conceptos-básicos.html"><a href="conceptos-básicos.html"><i class="fa fa-check"></i><b>1.1</b> Conceptos básicos</a><ul>
+<li class="chapter" data-level="1" data-path="cap1.html"><a href="cap1.html"><i class="fa fa-check"></i><b>1</b> Introducción a la simulación</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="conceptos-básicos.html"><a href="conceptos-básicos.html"><i class="fa fa-check"></i><b>1.1</b> Conceptos básicos</a>
+<ul>
 <li class="chapter" data-level="1.1.1" data-path="conceptos-básicos.html"><a href="conceptos-básicos.html#ventajas-e-inconvenientes-de-la-simulación"><i class="fa fa-check"></i><b>1.1.1</b> Ventajas e inconvenientes de la simulación</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="aplicaciones-de-la-simulación.html"><a href="aplicaciones-de-la-simulación.html"><i class="fa fa-check"></i><b>1.2</b> Aplicaciones de la simulación</a></li>
-<li class="chapter" data-level="1.3" data-path="números-aleatorios-puros.html"><a href="números-aleatorios-puros.html"><i class="fa fa-check"></i><b>1.3</b> Números aleatorios puros</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="números-aleatorios-puros.html"><a href="números-aleatorios-puros.html#alternativas"><i class="fa fa-check"></i><b>1.3.1</b> Alternativas:</a></li>
+<li class="chapter" data-level="1.3" data-path="números-aleatorios-puros.html"><a href="números-aleatorios-puros.html"><i class="fa fa-check"></i><b>1.3</b> Números aleatorios puros</a></li>
+<li class="chapter" data-level="1.4" data-path="generación-de-números-aleatorios-mediante-software.html"><a href="generación-de-números-aleatorios-mediante-software.html"><i class="fa fa-check"></i><b>1.4</b> Generación de números “aleatorios” mediante software</a></li>
+<li class="chapter" data-level="1.5" data-path="números-pseudoaleatorios.html"><a href="números-pseudoaleatorios.html"><i class="fa fa-check"></i><b>1.5</b> Números pseudoaleatorios</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="números-pseudoaleatorios.html"><a href="números-pseudoaleatorios.html"><i class="fa fa-check"></i><b>1.4</b> Números pseudoaleatorios</a></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="rrng.html"><a href="rrng.html"><i class="fa fa-check"></i><b>2</b> Números aleatorios en R</a><ul>
+<li class="chapter" data-level="2" data-path="rrng.html"><a href="rrng.html"><i class="fa fa-check"></i><b>2</b> Números aleatorios en R</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="opciones.html"><a href="opciones.html"><i class="fa fa-check"></i><b>2.1</b> Opciones</a></li>
 <li class="chapter" data-level="2.2" data-path="paquetes-de-r.html"><a href="paquetes-de-r.html"><i class="fa fa-check"></i><b>2.2</b> Paquetes de R</a></li>
 <li class="chapter" data-level="2.3" data-path="ejercicios.html"><a href="ejercicios.html"><i class="fa fa-check"></i><b>2.3</b> Ejercicios</a></li>
-<li class="chapter" data-level="2.4" data-path="tiempo-de-cpu.html"><a href="tiempo-de-cpu.html"><i class="fa fa-check"></i><b>2.4</b> Tiempo de CPU</a><ul>
+<li class="chapter" data-level="2.4" data-path="tiempo-de-cpu.html"><a href="tiempo-de-cpu.html"><i class="fa fa-check"></i><b>2.4</b> Tiempo de CPU</a>
+<ul>
 <li class="chapter" data-level="2.4.1" data-path="tiempo-de-cpu.html"><a href="tiempo-de-cpu.html#utilidades-tiempo-de-cpu"><i class="fa fa-check"></i><b>2.4.1</b> Utilidades tiempo de CPU</a></li>
 <li class="chapter" data-level="2.4.2" data-path="tiempo-de-cpu.html"><a href="tiempo-de-cpu.html#paquetes-de-r-1"><i class="fa fa-check"></i><b>2.4.2</b> Paquetes de R</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="cap3.html"><a href="cap3.html"><i class="fa fa-check"></i><b>3</b> Generación de números pseudoaleatorios</a><ul>
-<li class="chapter" data-level="3.1" data-path="gen-cong.html"><a href="gen-cong.html"><i class="fa fa-check"></i><b>3.1</b> Generadores congruenciales</a><ul>
+<li class="chapter" data-level="3" data-path="cap3.html"><a href="cap3.html"><i class="fa fa-check"></i><b>3</b> Generación de números pseudoaleatorios</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="gen-cong.html"><a href="gen-cong.html"><i class="fa fa-check"></i><b>3.1</b> Generadores congruenciales</a>
+<ul>
 <li class="chapter" data-level="3.1.1" data-path="gen-cong.html"><a href="gen-cong.html#otros-generadores"><i class="fa fa-check"></i><b>3.1.1</b> Otros generadores</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="calgen.html"><a href="calgen.html"><i class="fa fa-check"></i><b>3.2</b> Análisis de la calidad de un generador</a><ul>
+<li class="chapter" data-level="3.2" data-path="calgen.html"><a href="calgen.html"><i class="fa fa-check"></i><b>3.2</b> Análisis de la calidad de un generador</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="calgen.html"><a href="calgen.html#repetición-de-contrastes"><i class="fa fa-check"></i><b>3.2.1</b> Repetición de contrastes</a></li>
 <li class="chapter" data-level="3.2.2" data-path="calgen.html"><a href="calgen.html#baterias"><i class="fa fa-check"></i><b>3.2.2</b> Baterías de contrastes</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="ejercicios-1.html"><a href="ejercicios-1.html"><i class="fa fa-check"></i><b>3.3</b> Ejercicios</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="cap4.html"><a href="cap4.html"><i class="fa fa-check"></i><b>4</b> Análisis de resultados de simulación</a><ul>
-<li class="chapter" data-level="4.1" data-path="convergencia.html"><a href="convergencia.html"><i class="fa fa-check"></i><b>4.1</b> Convergencia</a><ul>
+<li class="chapter" data-level="4" data-path="cap4.html"><a href="cap4.html"><i class="fa fa-check"></i><b>4</b> Análisis de resultados de simulación</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="convergencia.html"><a href="convergencia.html"><i class="fa fa-check"></i><b>4.1</b> Convergencia</a>
+<ul>
 <li class="chapter" data-level="4.1.1" data-path="convergencia.html"><a href="convergencia.html#detección-de-problemas-de-convergencia"><i class="fa fa-check"></i><b>4.1.1</b> Detección de problemas de convergencia</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="estimación-de-la-precisión.html"><a href="estimación-de-la-precisión.html"><i class="fa fa-check"></i><b>4.2</b> Estimación de la precisión</a></li>
 <li class="chapter" data-level="4.3" data-path="teorema-central-del-límite.html"><a href="teorema-central-del-límite.html"><i class="fa fa-check"></i><b>4.3</b> Teorema central del límite</a></li>
 <li class="chapter" data-level="4.4" data-path="determinación-del-número-de-generaciones.html"><a href="determinación-del-número-de-generaciones.html"><i class="fa fa-check"></i><b>4.4</b> Determinación del número de generaciones</a></li>
-<li class="chapter" data-level="4.5" data-path="el-problema-de-la-dependencia.html"><a href="el-problema-de-la-dependencia.html"><i class="fa fa-check"></i><b>4.5</b> El problema de la dependencia</a><ul>
+<li class="chapter" data-level="4.5" data-path="el-problema-de-la-dependencia.html"><a href="el-problema-de-la-dependencia.html"><i class="fa fa-check"></i><b>4.5</b> El problema de la dependencia</a>
+<ul>
 <li class="chapter" data-level="4.5.1" data-path="el-problema-de-la-dependencia.html"><a href="el-problema-de-la-dependencia.html#periodo-de-calentamiento"><i class="fa fa-check"></i><b>4.5.1</b> Periodo de calentamiento</a></li>
 </ul></li>
 <li class="chapter" data-level="4.6" data-path="observaciones.html"><a href="observaciones.html"><i class="fa fa-check"></i><b>4.6</b> Observaciones</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="sim-con.html"><a href="sim-con.html"><i class="fa fa-check"></i><b>5</b> Simulación de variables continuas</a><ul>
-<li class="chapter" data-level="5.1" data-path="método-de-inversión.html"><a href="método-de-inversión.html"><i class="fa fa-check"></i><b>5.1</b> Método de inversión</a><ul>
+<li class="chapter" data-level="5" data-path="sim-con.html"><a href="sim-con.html"><i class="fa fa-check"></i><b>5</b> Simulación de variables continuas</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="método-de-inversión.html"><a href="método-de-inversión.html"><i class="fa fa-check"></i><b>5.1</b> Método de inversión</a>
+<ul>
 <li class="chapter" data-level="5.1.1" data-path="método-de-inversión.html"><a href="método-de-inversión.html#algunas-distribuciones-que-pueden-simularse-por-el-método-de-inversión"><i class="fa fa-check"></i><b>5.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
 <li class="chapter" data-level="5.1.2" data-path="método-de-inversión.html"><a href="método-de-inversión.html#ventajas-e-inconvenientes"><i class="fa fa-check"></i><b>5.1.2</b> Ventajas e inconvenientes</a></li>
 <li class="chapter" data-level="5.1.3" data-path="método-de-inversión.html"><a href="método-de-inversión.html#inversión-aproximada"><i class="fa fa-check"></i><b>5.1.3</b> Inversión aproximada</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>5.2</b> Método de aceptación rechazo</a><ul>
+<li class="chapter" data-level="5.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>5.2</b> Método de aceptación rechazo</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="AR.html"><a href="AR.html#algoritmo"><i class="fa fa-check"></i><b>5.2.1</b> Algoritmo</a></li>
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.4</b> Ejemplo: Inferencia Bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a><ul>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
+<ul>
 <li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
-<li class="chapter" data-level="5.5" data-path="notables-cont.html"><a href="notables-cont.html"><i class="fa fa-check"></i><b>5.5</b> Métodos específicos para la generación de algunas distribuciones notables</a><ul>
+<li class="chapter" data-level="5.5" data-path="notables-cont.html"><a href="notables-cont.html"><i class="fa fa-check"></i><b>5.5</b> Métodos específicos para la generación de algunas distribuciones notables</a>
+<ul>
 <li class="chapter" data-level="5.5.1" data-path="notables-cont.html"><a href="notables-cont.html#método-de-box-müller"><i class="fa fa-check"></i><b>5.5.1</b> Método de Box-Müller</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="discretas.html"><a href="discretas.html"><i class="fa fa-check"></i><b>6</b> Simulación de variables discretas</a><ul>
-<li class="chapter" data-level="6.1" data-path="método-de-la-transformación-cuantil.html"><a href="método-de-la-transformación-cuantil.html"><i class="fa fa-check"></i><b>6.1</b> Método de la transformación cuantil</a><ul>
+<li class="chapter" data-level="6" data-path="discretas.html"><a href="discretas.html"><i class="fa fa-check"></i><b>6</b> Simulación de variables discretas</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="método-de-la-transformación-cuantil.html"><a href="método-de-la-transformación-cuantil.html"><i class="fa fa-check"></i><b>6.1</b> Método de la transformación cuantil</a>
+<ul>
 <li class="chapter" data-level="6.1.1" data-path="método-de-la-transformación-cuantil.html"><a href="método-de-la-transformación-cuantil.html#eficiencia-del-algoritmo-1"><i class="fa fa-check"></i><b>6.1.1</b> Eficiencia del algoritmo</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="método-de-la-tabla-guía.html"><a href="método-de-la-tabla-guía.html"><i class="fa fa-check"></i><b>6.2</b> Método de la tabla guía</a></li>
@@ -208,31 +227,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>6.6</b> Otros métodos</a></li>
 <li class="chapter" data-level="6.7" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>6.7</b> Métodos específicos para generación de distribuciones notables</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="simulación-de-distribuciones-multivariantes.html"><a href="simulación-de-distribuciones-multivariantes.html"><i class="fa fa-check"></i><b>7</b> Simulación de distribuciones multivariantes</a><ul>
+<li class="chapter" data-level="7" data-path="simulación-de-distribuciones-multivariantes.html"><a href="simulación-de-distribuciones-multivariantes.html"><i class="fa fa-check"></i><b>7</b> Simulación de distribuciones multivariantes</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="simulación-de-componentes-independientes.html"><a href="simulación-de-componentes-independientes.html"><i class="fa fa-check"></i><b>7.1</b> Simulación de componentes independientes</a></li>
 <li class="chapter" data-level="7.2" data-path="el-método-de-aceptaciónrechazo.html"><a href="el-método-de-aceptaciónrechazo.html"><i class="fa fa-check"></i><b>7.2</b> El método de aceptación/rechazo</a></li>
 <li class="chapter" data-level="7.3" data-path="fact-cov.html"><a href="fact-cov.html"><i class="fa fa-check"></i><b>7.3</b> Factorización de la matriz de covarianzas</a></li>
 <li class="chapter" data-level="7.4" data-path="distrcond.html"><a href="distrcond.html"><i class="fa fa-check"></i><b>7.4</b> Método de las distribuciones condicionadas</a></li>
-<li class="chapter" data-level="7.5" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html"><i class="fa fa-check"></i><b>7.5</b> Simulación condicional e incondicional</a><ul>
+<li class="chapter" data-level="7.5" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html"><i class="fa fa-check"></i><b>7.5</b> Simulación condicional e incondicional</a>
+<ul>
 <li class="chapter" data-level="7.5.1" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html#condnormal"><i class="fa fa-check"></i><b>7.5.1</b> Simulación condicional de una normal multivariante</a></li>
 <li class="chapter" data-level="7.5.2" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html#simulación-condicional-a-partir-de-un-modelo-ajustado"><i class="fa fa-check"></i><b>7.5.2</b> Simulación condicional a partir de un modelo ajustado</a></li>
 </ul></li>
-<li class="chapter" data-level="7.6" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html"><i class="fa fa-check"></i><b>7.6</b> Simulación basada en cópulas</a><ul>
+<li class="chapter" data-level="7.6" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html"><i class="fa fa-check"></i><b>7.6</b> Simulación basada en cópulas</a>
+<ul>
 <li class="chapter" data-level="7.6.1" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html#cópulas-arquimedianas"><i class="fa fa-check"></i><b>7.6.1</b> Cópulas Arquimedianas</a></li>
 <li class="chapter" data-level="7.6.2" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html#simulación"><i class="fa fa-check"></i><b>7.6.2</b> Simulación</a></li>
 </ul></li>
-<li class="chapter" data-level="7.7" data-path="mult-discr.html"><a href="mult-discr.html"><i class="fa fa-check"></i><b>7.7</b> Simulación de distribuciones multivariantes discretas</a><ul>
+<li class="chapter" data-level="7.7" data-path="mult-discr.html"><a href="mult-discr.html"><i class="fa fa-check"></i><b>7.7</b> Simulación de distribuciones multivariantes discretas</a>
+<ul>
 <li class="chapter" data-level="7.7.1" data-path="mult-discr.html"><a href="mult-discr.html#métodos-de-codificación-o-etiquetado-para-variables-discretas"><i class="fa fa-check"></i><b>7.7.1</b> Métodos de codificación o etiquetado para variables discretas</a></li>
 <li class="chapter" data-level="7.7.2" data-path="mult-discr.html"><a href="mult-discr.html#simulación-de-una-variable-discreta-bidimensional"><i class="fa fa-check"></i><b>7.7.2</b> Simulación de una variable discreta bidimensional</a></li>
 <li class="chapter" data-level="7.7.3" data-path="mult-discr.html"><a href="mult-discr.html#simconting"><i class="fa fa-check"></i><b>7.7.3</b> Simulación de tablas de contingencia</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="cap8.html"><a href="cap8.html"><i class="fa fa-check"></i><b>8</b> Aplicaciones en Inferencia Estadística</a><ul>
+<li class="chapter" data-level="8" data-path="cap8.html"><a href="cap8.html"><i class="fa fa-check"></i><b>8</b> Aplicaciones en Inferencia Estadística</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="distribución-en-el-muestreo.html"><a href="distribución-en-el-muestreo.html"><i class="fa fa-check"></i><b>8.1</b> Distribución en el muestreo</a></li>
 <li class="chapter" data-level="8.2" data-path="intervalos-de-confianza.html"><a href="intervalos-de-confianza.html"><i class="fa fa-check"></i><b>8.2</b> Intervalos de confianza</a></li>
 <li class="chapter" data-level="8.3" data-path="contrastes.html"><a href="contrastes.html"><i class="fa fa-check"></i><b>8.3</b> Contrastes de hipótesis</a></li>
 <li class="chapter" data-level="8.4" data-path="comparación-de-estimadores.html"><a href="comparación-de-estimadores.html"><i class="fa fa-check"></i><b>8.4</b> Comparación de estimadores</a></li>
-<li class="chapter" data-level="8.5" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html"><i class="fa fa-check"></i><b>8.5</b> Remuestreo Bootstrap</a><ul>
+<li class="chapter" data-level="8.5" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html"><i class="fa fa-check"></i><b>8.5</b> Remuestreo Bootstrap</a>
+<ul>
 <li class="chapter" data-level="8.5.1" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#idea"><i class="fa fa-check"></i><b>8.5.1</b> Idea:</a></li>
 <li class="chapter" data-level="8.5.2" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#métodos-de-remuestreo-bootstrap"><i class="fa fa-check"></i><b>8.5.2</b> Métodos de remuestreo Bootstrap</a></li>
 <li class="chapter" data-level="8.5.3" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#paquetes-r-bootstrap-boot"><i class="fa fa-check"></i><b>8.5.3</b> Paquetes R: bootstrap, boot</a></li>
@@ -240,23 +265,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.5.5" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#intervalos-de-confianza-bootstrap"><i class="fa fa-check"></i><b>8.5.5</b> Intervalos de confianza bootstrap</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="cap9.html"><a href="cap9.html"><i class="fa fa-check"></i><b>9</b> Integración y Optimización Monte Carlo</a><ul>
-<li class="chapter" data-level="9.1" data-path="integración-monte-carlo-clásica.html"><a href="integración-monte-carlo-clásica.html"><i class="fa fa-check"></i><b>9.1</b> Integración Monte Carlo (clásica)</a><ul>
+<li class="chapter" data-level="9" data-path="cap9.html"><a href="cap9.html"><i class="fa fa-check"></i><b>9</b> Integración y Optimización Monte Carlo</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="integración-monte-carlo-clásica.html"><a href="integración-monte-carlo-clásica.html"><i class="fa fa-check"></i><b>9.1</b> Integración Monte Carlo (clásica)</a>
+<ul>
 <li class="chapter" data-level="9.1.1" data-path="integración-monte-carlo-clásica.html"><a href="integración-monte-carlo-clásica.html#caso-general"><i class="fa fa-check"></i><b>9.1.1</b> Caso general</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="muestreo-importancia.html"><a href="muestreo-importancia.html"><i class="fa fa-check"></i><b>9.2</b> Muestreo por importancia</a><ul>
+<li class="chapter" data-level="9.2" data-path="muestreo-importancia.html"><a href="muestreo-importancia.html"><i class="fa fa-check"></i><b>9.2</b> Muestreo por importancia</a>
+<ul>
 <li class="chapter" data-level="9.2.1" data-path="muestreo-importancia.html"><a href="muestreo-importancia.html#remuestreo-del-muestreo-por-importancia"><i class="fa fa-check"></i><b>9.2.1</b> Remuestreo (del muestreo) por importancia</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="optimización-monte-carlo.html"><a href="optimización-monte-carlo.html"><i class="fa fa-check"></i><b>9.3</b> Optimización Monte Carlo</a><ul>
+<li class="chapter" data-level="9.3" data-path="optimización-monte-carlo.html"><a href="optimización-monte-carlo.html"><i class="fa fa-check"></i><b>9.3</b> Optimización Monte Carlo</a>
+<ul>
 <li class="chapter" data-level="9.3.1" data-path="optimización-monte-carlo.html"><a href="optimización-monte-carlo.html#algoritmos-de-optimización-monte-carlo"><i class="fa fa-check"></i><b>9.3.1</b> Algoritmos de optimización Monte Carlo</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="temple-simulado.html"><a href="temple-simulado.html"><i class="fa fa-check"></i><b>9.4</b> Temple simulado</a><ul>
+<li class="chapter" data-level="9.4" data-path="temple-simulado.html"><a href="temple-simulado.html"><i class="fa fa-check"></i><b>9.4</b> Temple simulado</a>
+<ul>
 <li class="chapter" data-level="9.4.1" data-path="temple-simulado.html"><a href="temple-simulado.html#algoritmo-1"><i class="fa fa-check"></i><b>9.4.1</b> Algoritmo:</a></li>
 </ul></li>
 <li class="chapter" data-level="9.5" data-path="algoritmos-genéticos.html"><a href="algoritmos-genéticos.html"><i class="fa fa-check"></i><b>9.5</b> Algoritmos genéticos</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="técnicas-de-reducción-de-la-varianza.html"><a href="técnicas-de-reducción-de-la-varianza.html"><i class="fa fa-check"></i><b>10</b> Técnicas de reducción de la varianza</a><ul>
-<li class="chapter" data-level="10.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html"><i class="fa fa-check"></i><b>10.1</b> Variables antitéticas</a><ul>
+<li class="chapter" data-level="10" data-path="técnicas-de-reducción-de-la-varianza.html"><a href="técnicas-de-reducción-de-la-varianza.html"><i class="fa fa-check"></i><b>10</b> Técnicas de reducción de la varianza</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html"><i class="fa fa-check"></i><b>10.1</b> Variables antitéticas</a>
+<ul>
 <li class="chapter" data-level="10.1.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html#ejemplo-integración-monte-carlo"><i class="fa fa-check"></i><b>10.1.1</b> Ejemplo: Integración Monte Carlo</a></li>
 <li class="chapter" data-level="10.1.2" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html#generación-de-variables-antitéticas"><i class="fa fa-check"></i><b>10.1.2</b> Generación de variables antitéticas</a></li>
 </ul></li>
@@ -265,24 +297,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.4" data-path="números-aleatorios-comunes.html"><a href="números-aleatorios-comunes.html"><i class="fa fa-check"></i><b>10.4</b> Números aleatorios comunes</a></li>
 <li class="chapter" data-level="10.5" data-path="ejercicios-2.html"><a href="ejercicios-2.html"><i class="fa fa-check"></i><b>10.5</b> Ejercicios</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
+<ul>
 <li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a><ul>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a>
+<ul>
 <li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#libros"><i class="fa fa-check"></i>Libros</a></li>
 <li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#artículos"><i class="fa fa-check"></i>Artículos</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Apendices</b></span></li>
 <li class="chapter" data-level="A" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i><b>A</b> Enlaces</a></li>
-<li class="chapter" data-level="B" data-path="gof-aleat.html"><a href="gof-aleat.html"><i class="fa fa-check"></i><b>B</b> Bondad de Ajuste y Aleatoriedad</a><ul>
-<li class="chapter" data-level="B.1" data-path="gof.html"><a href="gof.html"><i class="fa fa-check"></i><b>B.1</b> Métodos de bondad de ajuste</a><ul>
+<li class="chapter" data-level="B" data-path="gof-aleat.html"><a href="gof-aleat.html"><i class="fa fa-check"></i><b>B</b> Bondad de Ajuste y Aleatoriedad</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="gof.html"><a href="gof.html"><i class="fa fa-check"></i><b>B.1</b> Métodos de bondad de ajuste</a>
+<ul>
 <li class="chapter" data-level="B.1.1" data-path="gof.html"><a href="gof.html#histograma"><i class="fa fa-check"></i><b>B.1.1</b> Histograma</a></li>
 <li class="chapter" data-level="B.1.2" data-path="gof.html"><a href="gof.html#empdistr"><i class="fa fa-check"></i><b>B.1.2</b> Función de distribución empírica</a></li>
 <li class="chapter" data-level="B.1.3" data-path="gof.html"><a href="gof.html#gráficos-p-p-y-q-q"><i class="fa fa-check"></i><b>B.1.3</b> Gráficos P-P y Q-Q</a></li>
 <li class="chapter" data-level="B.1.4" data-path="gof.html"><a href="gof.html#chi2test"><i class="fa fa-check"></i><b>B.1.4</b> Contraste ji-cuadrado de Pearson</a></li>
 <li class="chapter" data-level="B.1.5" data-path="gof.html"><a href="gof.html#ks-test"><i class="fa fa-check"></i><b>B.1.5</b> Contraste de Kolmogorov-Smirnov</a></li>
 </ul></li>
-<li class="chapter" data-level="B.2" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html"><i class="fa fa-check"></i><b>B.2</b> Diagnosis de la independencia</a><ul>
+<li class="chapter" data-level="B.2" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html"><i class="fa fa-check"></i><b>B.2</b> Diagnosis de la independencia</a>
+<ul>
 <li class="chapter" data-level="B.2.1" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>B.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="B.2.2" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#gráfico-secuencial"><i class="fa fa-check"></i><b>B.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="B.2.3" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>B.2.3</b> Gráfico de dispersion retardado</a></li>
@@ -290,21 +327,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="B.2.5" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#test-de-rachas"><i class="fa fa-check"></i><b>B.2.5</b> Test de rachas</a></li>
 <li class="chapter" data-level="B.2.6" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>B.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
-<li class="chapter" data-level="B.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>B.3</b> Contrastes específicos para generadores aleatorios</a><ul>
+<li class="chapter" data-level="B.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>B.3</b> Contrastes específicos para generadores aleatorios</a>
+<ul>
 <li class="chapter" data-level="B.3.1" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#contraste-de-frecuencias"><i class="fa fa-check"></i><b>B.3.1</b> Contraste de frecuencias</a></li>
 <li class="chapter" data-level="B.3.2" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#contraste-de-series"><i class="fa fa-check"></i><b>B.3.2</b> Contraste de series</a></li>
 <li class="chapter" data-level="B.3.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#el-contraste-del-poker"><i class="fa fa-check"></i><b>B.3.3</b> El contraste del poker</a></li>
 <li class="chapter" data-level="B.3.4" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#el-contraste-del-coleccionista"><i class="fa fa-check"></i><b>B.3.4</b> El contraste del coleccionista</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="C" data-path="int-num.html"><a href="int-num.html"><i class="fa fa-check"></i><b>C</b> Integración numérica</a><ul>
-<li class="chapter" data-level="C.1" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html"><i class="fa fa-check"></i><b>C.1</b> Integración numérica unidimensional</a><ul>
+<li class="chapter" data-level="C" data-path="int-num.html"><a href="int-num.html"><i class="fa fa-check"></i><b>C</b> Integración numérica</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html"><i class="fa fa-check"></i><b>C.1</b> Integración numérica unidimensional</a>
+<ul>
 <li class="chapter" data-level="C.1.1" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#método-del-trapezoide"><i class="fa fa-check"></i><b>C.1.1</b> Método del trapezoide</a></li>
 <li class="chapter" data-level="C.1.2" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#regla-de-simpson"><i class="fa fa-check"></i><b>C.1.2</b> Regla de Simpson</a></li>
 <li class="chapter" data-level="C.1.3" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#cuadratura-adaptativa"><i class="fa fa-check"></i><b>C.1.3</b> Cuadratura adaptativa</a></li>
 <li class="chapter" data-level="C.1.4" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#comandos-de-r"><i class="fa fa-check"></i><b>C.1.4</b> Comandos de <code>R</code></a></li>
 </ul></li>
-<li class="chapter" data-level="C.2" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html"><i class="fa fa-check"></i><b>C.2</b> Integración numérica bidimensional</a><ul>
+<li class="chapter" data-level="C.2" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html"><i class="fa fa-check"></i><b>C.2</b> Integración numérica bidimensional</a>
+<ul>
 <li class="chapter" data-level="C.2.1" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#representación-gráfica"><i class="fa fa-check"></i><b>C.2.1</b> Representación gráfica</a></li>
 <li class="chapter" data-level="C.2.2" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#método-del-trapezoide-1"><i class="fa fa-check"></i><b>C.2.2</b> Método del trapezoide</a></li>
 <li class="chapter" data-level="C.2.3" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#comandos-de-r-1"><i class="fa fa-check"></i><b>C.2.3</b> Comandos de <code>R</code></a></li>
@@ -330,13 +371,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="distribución-en-el-muestreo" class="section level2">
+<div id="distribución-en-el-muestreo" class="section level2" number="8.1">
 <h2><span class="header-section-number">8.1</span> Distribución en el muestreo</h2>
 
 <div class="exercise">
 <span id="exr:distr-media" class="exercise"><strong>Ejercicio 8.1  (Distribución de la media muestral)  </strong></span>
 </div>
-
 <p>Si <span class="math inline">\(X_{1},\ldots,X_{n}\)</span> es una muestra aleatoria simple de una
 variable aleatoria <span class="math inline">\(X \sim N\left( \mu, \sigma \right)\)</span>, la
 distribución en el muestreo de:
@@ -350,17 +390,17 @@ Confirmar este resultado mediante simulación, para ello:</p>
 estimaciones de la media y desviación típica obtenidas con cada
 una de las muestras.</p>
 <p>Valores iniciales:</p>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="distribución-en-el-muestreo.html#cb313-1"></a><span class="kw">set.seed</span>(<span class="dv">54321</span>) <span class="co"># Fijar semilla para reproductibilidad</span></span>
-<span id="cb313-2"><a href="distribución-en-el-muestreo.html#cb313-2"></a>nsim &lt;-<span class="st"> </span><span class="dv">500</span></span>
-<span id="cb313-3"><a href="distribución-en-el-muestreo.html#cb313-3"></a>nx &lt;-<span class="st"> </span><span class="dv">10</span></span></code></pre></div>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="distribución-en-el-muestreo.html#cb311-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>) <span class="co"># Fijar semilla para reproductibilidad</span></span>
+<span id="cb311-2"><a href="distribución-en-el-muestreo.html#cb311-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb311-3"><a href="distribución-en-el-muestreo.html#cb311-3" aria-hidden="true" tabindex="-1"></a>nx <span class="ot">&lt;-</span> <span class="dv">10</span></span></code></pre></div>
 <p>Valores teóricos:</p>
-<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="distribución-en-el-muestreo.html#cb314-1"></a>mux &lt;-<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb314-2"><a href="distribución-en-el-muestreo.html#cb314-2"></a>sdx &lt;-<span class="st"> </span><span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="distribución-en-el-muestreo.html#cb312-1" aria-hidden="true" tabindex="-1"></a>mux <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb312-2"><a href="distribución-en-el-muestreo.html#cb312-2" aria-hidden="true" tabindex="-1"></a>sdx <span class="ot">&lt;-</span> <span class="dv">2</span></span></code></pre></div>
 <p>Simulación de las muestras (al estilo <code>Rcmdr</code>):</p>
-<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="distribución-en-el-muestreo.html#cb315-1"></a>muestras &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">matrix</span>(<span class="kw">rnorm</span>(nsim<span class="op">*</span>nx, <span class="dt">mean=</span>mux, <span class="dt">sd=</span>sdx), <span class="dt">ncol=</span>nx))</span>
-<span id="cb315-2"><a href="distribución-en-el-muestreo.html#cb315-2"></a><span class="kw">rownames</span>(muestras) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;muestra&quot;</span>, <span class="dv">1</span><span class="op">:</span>nsim, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb315-3"><a href="distribución-en-el-muestreo.html#cb315-3"></a><span class="kw">colnames</span>(muestras) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;obs&quot;</span>, <span class="dv">1</span><span class="op">:</span>nx, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb315-4"><a href="distribución-en-el-muestreo.html#cb315-4"></a><span class="kw">str</span>(muestras)</span></code></pre></div>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="distribución-en-el-muestreo.html#cb313-1" aria-hidden="true" tabindex="-1"></a>muestras <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">matrix</span>(<span class="fu">rnorm</span>(nsim<span class="sc">*</span>nx, <span class="at">mean=</span>mux, <span class="at">sd=</span>sdx), <span class="at">ncol=</span>nx))</span>
+<span id="cb313-2"><a href="distribución-en-el-muestreo.html#cb313-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(muestras) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;muestra&quot;</span>, <span class="dv">1</span><span class="sc">:</span>nsim, <span class="at">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb313-3"><a href="distribución-en-el-muestreo.html#cb313-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(muestras) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;obs&quot;</span>, <span class="dv">1</span><span class="sc">:</span>nx, <span class="at">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb313-4"><a href="distribución-en-el-muestreo.html#cb313-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(muestras)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    500 obs. of  10 variables:
 ##  $ obs1 : num  0.642 -0.856 -0.568 -2.301 0.184 ...
 ##  $ obs2 : num  3.483 2.216 1.1 4.305 0.677 ...
@@ -373,14 +413,11 @@ una de las muestras.</p>
 ##  $ obs9 : num  0.4904 -0.6713 0.5451 -0.6517 0.0168 ...
 ##  $ obs10: num  2.79 2.84 1.27 3.93 2.17 ...</code></pre>
 <p>Estimaciones:</p>
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="distribución-en-el-muestreo.html#cb317-1"></a>muestras<span class="op">$</span>mean &lt;-<span class="st"> </span><span class="kw">rowMeans</span>(muestras[,<span class="dv">1</span><span class="op">:</span>nx])</span>
-<span id="cb317-2"><a href="distribución-en-el-muestreo.html#cb317-2"></a>muestras<span class="op">$</span>sd &lt;-<span class="st"> </span><span class="kw">apply</span>(muestras[,<span class="dv">1</span><span class="op">:</span>nx], <span class="dv">1</span>, sd)</span></code></pre></div>
-<p></p>
-<div class="remark">
- <span class="remark"><em>Nota: </em></span> La fila <code>muestras[i,]</code> contiene las observaciones de la i-ésima muestra y
-la correspondiente media y desviación típica.
-</div>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="distribución-en-el-muestreo.html#cb318-1"></a>muestras[<span class="dv">1</span>,]</span></code></pre></div>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="distribución-en-el-muestreo.html#cb315-1" aria-hidden="true" tabindex="-1"></a>muestras<span class="sc">$</span>mean <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(muestras[,<span class="dv">1</span><span class="sc">:</span>nx])</span>
+<span id="cb315-2"><a href="distribución-en-el-muestreo.html#cb315-2" aria-hidden="true" tabindex="-1"></a>muestras<span class="sc">$</span>sd <span class="ot">&lt;-</span> <span class="fu">apply</span>(muestras[,<span class="dv">1</span><span class="sc">:</span>nx], <span class="dv">1</span>, sd)</span></code></pre></div>
+<p>La fila <code>muestras[i,]</code> contiene las observaciones de la i-ésima muestra y
+la correspondiente media y desviación típica.</p>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="distribución-en-el-muestreo.html#cb316-1" aria-hidden="true" tabindex="-1"></a>muestras[<span class="dv">1</span>,]</span></code></pre></div>
 <pre><code>##               obs1     obs2     obs3    obs4     obs5     obs6      obs7
 ## muestra1 0.6421985 3.482661 1.242483 3.28559 3.766896 -2.04443 0.6186323
 ##                obs8      obs9    obs10     mean       sd
@@ -393,17 +430,17 @@ la correspondiente media y desviación típica.
 <li><p>Generar el histograma (en escala de densidades) de las medias
 muestrales y compararlo con la densidad teórica.</p>
 <p>Distribución de la media muestral:</p>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="distribución-en-el-muestreo.html#cb320-1"></a><span class="kw">hist</span>(muestras<span class="op">$</span>mean, <span class="dt">freq =</span> <span class="ot">FALSE</span>, <span class="dt">breaks =</span> <span class="st">&quot;FD&quot;</span>, </span>
-<span id="cb320-2"><a href="distribución-en-el-muestreo.html#cb320-2"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Medias&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Densidad&quot;</span>)</span>
-<span id="cb320-3"><a href="distribución-en-el-muestreo.html#cb320-3"></a><span class="co"># Densidad observada (estimación)</span></span>
-<span id="cb320-4"><a href="distribución-en-el-muestreo.html#cb320-4"></a><span class="kw">lines</span>(<span class="kw">density</span>(muestras<span class="op">$</span>mean)) </span>
-<span id="cb320-5"><a href="distribución-en-el-muestreo.html#cb320-5"></a><span class="co"># Densidad teórica (bajo normalidad)</span></span>
-<span id="cb320-6"><a href="distribución-en-el-muestreo.html#cb320-6"></a><span class="kw">curve</span>(<span class="kw">dnorm</span>(x, mux, sdx<span class="op">/</span><span class="kw">sqrt</span>(nx)), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) </span>
-<span id="cb320-7"><a href="distribución-en-el-muestreo.html#cb320-7"></a><span class="co"># Aproximación del valor esperado de la media muestral mediante simulación</span></span>
-<span id="cb320-8"><a href="distribución-en-el-muestreo.html#cb320-8"></a><span class="kw">abline</span>(<span class="dt">v =</span> <span class="kw">mean</span>(muestras<span class="op">$</span>mean), <span class="dt">lty =</span> <span class="dv">2</span>)  </span>
-<span id="cb320-9"><a href="distribución-en-el-muestreo.html#cb320-9"></a><span class="co"># Valor esperado de la media muestral (teórico)</span></span>
-<span id="cb320-10"><a href="distribución-en-el-muestreo.html#cb320-10"></a><span class="kw">abline</span>(<span class="dt">v =</span> mux, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:mednorm"></span>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="distribución-en-el-muestreo.html#cb318-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(muestras<span class="sc">$</span>mean, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, </span>
+<span id="cb318-2"><a href="distribución-en-el-muestreo.html#cb318-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Medias&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Densidad&quot;</span>)</span>
+<span id="cb318-3"><a href="distribución-en-el-muestreo.html#cb318-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Densidad observada (estimación)</span></span>
+<span id="cb318-4"><a href="distribución-en-el-muestreo.html#cb318-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(muestras<span class="sc">$</span>mean)) </span>
+<span id="cb318-5"><a href="distribución-en-el-muestreo.html#cb318-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Densidad teórica (bajo normalidad)</span></span>
+<span id="cb318-6"><a href="distribución-en-el-muestreo.html#cb318-6" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, mux, sdx<span class="sc">/</span><span class="fu">sqrt</span>(nx)), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>) </span>
+<span id="cb318-7"><a href="distribución-en-el-muestreo.html#cb318-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Aproximación del valor esperado de la media muestral mediante simulación</span></span>
+<span id="cb318-8"><a href="distribución-en-el-muestreo.html#cb318-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">mean</span>(muestras<span class="sc">$</span>mean), <span class="at">lty =</span> <span class="dv">2</span>)  </span>
+<span id="cb318-9"><a href="distribución-en-el-muestreo.html#cb318-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Valor esperado de la media muestral (teórico)</span></span>
+<span id="cb318-10"><a href="distribución-en-el-muestreo.html#cb318-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> mux, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:mednorm"></span>
 <img src="08-Aplicaciones_Inferencia_files/figure-html/mednorm-1.png" alt="Distribución de la media muestral de una distribución normal." width="70%" />
 <p class="caption">
 Figura 8.1: Distribución de la media muestral de una distribución normal.
@@ -416,7 +453,6 @@ Figura 8.1: Distribución de la media muestral de una distribución normal.
 <div class="exercise">
 <span id="exr:distr-mediab" class="exercise"><strong>Ejercicio 8.2  (Distribución de la media muestral, continuación)  </strong></span>
 </div>
-
 <p>Si <span class="math inline">\(X_{1},\ldots,X_{n}\)</span> es una m.a.s. de una variable aleatoria
 <span class="math inline">\(X\)</span> (cualquiera) con <span class="math inline">\(E\left( X \right) = \mu\)</span> y
 <span class="math inline">\(Var\left( X \right) = \sigma^{2}\)</span>, por el Teorema Central del Límite,
@@ -430,33 +466,33 @@ aunque dependerá de las características de la distribución de <span class="ma
 <ol style="list-style-type: lower-alpha">
 <li><p>Repetir el Ejercicio <a href="distribución-en-el-muestreo.html#exr:distr-media">8.1</a> anterior considerando muestras de una <span class="math inline">\(Exp(1)\)</span> (tener en cuenta que <span class="math inline">\(X\sim Exp(\lambda)\Rightarrow\mu_{X}=\sigma_{X}=1/\lambda\)</span>).
 ¿Qué ocurre con la distribución de la media muestral?</p>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="distribución-en-el-muestreo.html#cb321-1"></a><span class="kw">set.seed</span>(<span class="dv">54321</span>) <span class="co"># Fijar semilla para reproductibilidad</span></span>
-<span id="cb321-2"><a href="distribución-en-el-muestreo.html#cb321-2"></a>nsim &lt;-<span class="st"> </span><span class="dv">500</span></span>
-<span id="cb321-3"><a href="distribución-en-el-muestreo.html#cb321-3"></a>nx &lt;-<span class="st"> </span><span class="dv">10</span>    </span>
-<span id="cb321-4"><a href="distribución-en-el-muestreo.html#cb321-4"></a><span class="co"># nx &lt;- 50</span></span></code></pre></div>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="distribución-en-el-muestreo.html#cb319-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>) <span class="co"># Fijar semilla para reproductibilidad</span></span>
+<span id="cb319-2"><a href="distribución-en-el-muestreo.html#cb319-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb319-3"><a href="distribución-en-el-muestreo.html#cb319-3" aria-hidden="true" tabindex="-1"></a>nx <span class="ot">&lt;-</span> <span class="dv">10</span>    </span>
+<span id="cb319-4"><a href="distribución-en-el-muestreo.html#cb319-4" aria-hidden="true" tabindex="-1"></a><span class="co"># nx &lt;- 50</span></span></code></pre></div>
 <p>Valores teóricos:</p>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="distribución-en-el-muestreo.html#cb322-1"></a>lambda &lt;-<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb322-2"><a href="distribución-en-el-muestreo.html#cb322-2"></a>muexp &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">/</span>lambda</span>
-<span id="cb322-3"><a href="distribución-en-el-muestreo.html#cb322-3"></a>sdexp &lt;-<span class="st"> </span>muexp</span></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="distribución-en-el-muestreo.html#cb320-1" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb320-2"><a href="distribución-en-el-muestreo.html#cb320-2" aria-hidden="true" tabindex="-1"></a>muexp <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>lambda</span>
+<span id="cb320-3"><a href="distribución-en-el-muestreo.html#cb320-3" aria-hidden="true" tabindex="-1"></a>sdexp <span class="ot">&lt;-</span> muexp</span></code></pre></div>
 <p>Simulación de las muestras:</p>
-<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="distribución-en-el-muestreo.html#cb323-1"></a>muestras2 &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">matrix</span>(<span class="kw">rexp</span>(nsim<span class="op">*</span>nx, <span class="dt">rate=</span>lambda), <span class="dt">ncol=</span>nx))</span>
-<span id="cb323-2"><a href="distribución-en-el-muestreo.html#cb323-2"></a><span class="kw">rownames</span>(muestras2) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;muestra&quot;</span>, <span class="dv">1</span><span class="op">:</span>nsim, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb323-3"><a href="distribución-en-el-muestreo.html#cb323-3"></a><span class="kw">colnames</span>(muestras2) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;obs&quot;</span>, <span class="dv">1</span><span class="op">:</span>nx, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="distribución-en-el-muestreo.html#cb321-1" aria-hidden="true" tabindex="-1"></a>muestras2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">matrix</span>(<span class="fu">rexp</span>(nsim<span class="sc">*</span>nx, <span class="at">rate=</span>lambda), <span class="at">ncol=</span>nx))</span>
+<span id="cb321-2"><a href="distribución-en-el-muestreo.html#cb321-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(muestras2) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;muestra&quot;</span>, <span class="dv">1</span><span class="sc">:</span>nsim, <span class="at">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb321-3"><a href="distribución-en-el-muestreo.html#cb321-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(muestras2) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;obs&quot;</span>, <span class="dv">1</span><span class="sc">:</span>nx, <span class="at">sep=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p>Estimaciones:</p>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="distribución-en-el-muestreo.html#cb324-1"></a>muestras2<span class="op">$</span>mean &lt;-<span class="st"> </span><span class="kw">rowMeans</span>(muestras2[,<span class="dv">1</span><span class="op">:</span>nx])</span>
-<span id="cb324-2"><a href="distribución-en-el-muestreo.html#cb324-2"></a>muestras2<span class="op">$</span>sd &lt;-<span class="st"> </span><span class="kw">apply</span>(muestras2[,<span class="dv">1</span><span class="op">:</span>nx], <span class="dv">1</span>, sd)</span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="distribución-en-el-muestreo.html#cb322-1" aria-hidden="true" tabindex="-1"></a>muestras2<span class="sc">$</span>mean <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(muestras2[,<span class="dv">1</span><span class="sc">:</span>nx])</span>
+<span id="cb322-2"><a href="distribución-en-el-muestreo.html#cb322-2" aria-hidden="true" tabindex="-1"></a>muestras2<span class="sc">$</span>sd <span class="ot">&lt;-</span> <span class="fu">apply</span>(muestras2[,<span class="dv">1</span><span class="sc">:</span>nx], <span class="dv">1</span>, sd)</span></code></pre></div>
 <p>Distribución de la media muestral:</p>
-<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="distribución-en-el-muestreo.html#cb325-1"></a><span class="kw">hist</span>(muestras2<span class="op">$</span>mean, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.1</span>, <span class="fl">2.5</span>), <span class="dt">freq =</span> <span class="ot">FALSE</span>, <span class="dt">breaks =</span> <span class="st">&quot;FD&quot;</span>, </span>
-<span id="cb325-2"><a href="distribución-en-el-muestreo.html#cb325-2"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Medias&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Densidad&quot;</span>)</span>
-<span id="cb325-3"><a href="distribución-en-el-muestreo.html#cb325-3"></a><span class="co"># Densidad observada (estimación)</span></span>
-<span id="cb325-4"><a href="distribución-en-el-muestreo.html#cb325-4"></a><span class="kw">lines</span>(<span class="kw">density</span>(muestras2<span class="op">$</span>mean)) </span>
-<span id="cb325-5"><a href="distribución-en-el-muestreo.html#cb325-5"></a><span class="co"># Distribución asintótica (TCL)</span></span>
-<span id="cb325-6"><a href="distribución-en-el-muestreo.html#cb325-6"></a><span class="kw">curve</span>(<span class="kw">dnorm</span>(x,muexp,sdexp<span class="op">/</span><span class="kw">sqrt</span>(nx)), <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">add=</span><span class="ot">TRUE</span>) </span>
-<span id="cb325-7"><a href="distribución-en-el-muestreo.html#cb325-7"></a><span class="co"># Aproximación del valor esperado de la media muestral mediante simulación</span></span>
-<span id="cb325-8"><a href="distribución-en-el-muestreo.html#cb325-8"></a><span class="kw">abline</span>(<span class="dt">v=</span><span class="kw">mean</span>(muestras2<span class="op">$</span>mean),<span class="dt">lty=</span><span class="dv">2</span>)  </span>
-<span id="cb325-9"><a href="distribución-en-el-muestreo.html#cb325-9"></a><span class="co"># Valor esperado de la media muestral (teórico)</span></span>
-<span id="cb325-10"><a href="distribución-en-el-muestreo.html#cb325-10"></a><span class="kw">abline</span>(<span class="dt">v=</span>muexp, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:medexp"></span>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="distribución-en-el-muestreo.html#cb323-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(muestras2<span class="sc">$</span>mean, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.1</span>, <span class="fl">2.5</span>), <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, </span>
+<span id="cb323-2"><a href="distribución-en-el-muestreo.html#cb323-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Medias&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Densidad&quot;</span>)</span>
+<span id="cb323-3"><a href="distribución-en-el-muestreo.html#cb323-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Densidad observada (estimación)</span></span>
+<span id="cb323-4"><a href="distribución-en-el-muestreo.html#cb323-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(muestras2<span class="sc">$</span>mean)) </span>
+<span id="cb323-5"><a href="distribución-en-el-muestreo.html#cb323-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribución asintótica (TCL)</span></span>
+<span id="cb323-6"><a href="distribución-en-el-muestreo.html#cb323-6" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x,muexp,sdexp<span class="sc">/</span><span class="fu">sqrt</span>(nx)), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">add=</span><span class="cn">TRUE</span>) </span>
+<span id="cb323-7"><a href="distribución-en-el-muestreo.html#cb323-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Aproximación del valor esperado de la media muestral mediante simulación</span></span>
+<span id="cb323-8"><a href="distribución-en-el-muestreo.html#cb323-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="fu">mean</span>(muestras2<span class="sc">$</span>mean),<span class="at">lty=</span><span class="dv">2</span>)  </span>
+<span id="cb323-9"><a href="distribución-en-el-muestreo.html#cb323-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Valor esperado de la media muestral (teórico)</span></span>
+<span id="cb323-10"><a href="distribución-en-el-muestreo.html#cb323-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>muexp, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:medexp"></span>
 <img src="08-Aplicaciones_Inferencia_files/figure-html/medexp-1.png" alt="Distribución de la media muestral de una distribución exponencial y distribución asintótica." width="70%" />
 <p class="caption">
 Figura 8.2: Distribución de la media muestral de una distribución exponencial y distribución asintótica.
@@ -482,7 +518,6 @@ normalidad?</p>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -501,6 +536,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -521,6 +557,10 @@ gitbook.start({
 "text": null
 },
 "download": ["Simulacion.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

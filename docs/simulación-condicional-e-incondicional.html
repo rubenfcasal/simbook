@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>7.5 Simulación condicional e incondicional | Simulación Estadística</title>
   <meta name="description" content="Apuntes de la asignatura de Simulación Estadística del Máster en Técnicas Estadísticas." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="7.5 Simulación condicional e incondicional | Simulación Estadística" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-01-30" />
+<meta name="date" content="2022-02-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,9 @@
   
 <link rel="prev" href="distrcond.html"/>
 <link rel="next" href="simulación-basada-en-cópulas.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,23 +51,23 @@
 
 
 
-
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -85,7 +87,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -118,6 +120,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -135,70 +138,86 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
-<li class="chapter" data-level="1" data-path="cap1.html"><a href="cap1.html"><i class="fa fa-check"></i><b>1</b> Introducción a la simulación</a><ul>
-<li class="chapter" data-level="1.1" data-path="conceptos-básicos.html"><a href="conceptos-básicos.html"><i class="fa fa-check"></i><b>1.1</b> Conceptos básicos</a><ul>
+<li class="chapter" data-level="1" data-path="cap1.html"><a href="cap1.html"><i class="fa fa-check"></i><b>1</b> Introducción a la simulación</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="conceptos-básicos.html"><a href="conceptos-básicos.html"><i class="fa fa-check"></i><b>1.1</b> Conceptos básicos</a>
+<ul>
 <li class="chapter" data-level="1.1.1" data-path="conceptos-básicos.html"><a href="conceptos-básicos.html#ventajas-e-inconvenientes-de-la-simulación"><i class="fa fa-check"></i><b>1.1.1</b> Ventajas e inconvenientes de la simulación</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="aplicaciones-de-la-simulación.html"><a href="aplicaciones-de-la-simulación.html"><i class="fa fa-check"></i><b>1.2</b> Aplicaciones de la simulación</a></li>
-<li class="chapter" data-level="1.3" data-path="números-aleatorios-puros.html"><a href="números-aleatorios-puros.html"><i class="fa fa-check"></i><b>1.3</b> Números aleatorios puros</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="números-aleatorios-puros.html"><a href="números-aleatorios-puros.html#alternativas"><i class="fa fa-check"></i><b>1.3.1</b> Alternativas:</a></li>
+<li class="chapter" data-level="1.3" data-path="números-aleatorios-puros.html"><a href="números-aleatorios-puros.html"><i class="fa fa-check"></i><b>1.3</b> Números aleatorios puros</a></li>
+<li class="chapter" data-level="1.4" data-path="generación-de-números-aleatorios-mediante-software.html"><a href="generación-de-números-aleatorios-mediante-software.html"><i class="fa fa-check"></i><b>1.4</b> Generación de números “aleatorios” mediante software</a></li>
+<li class="chapter" data-level="1.5" data-path="números-pseudoaleatorios.html"><a href="números-pseudoaleatorios.html"><i class="fa fa-check"></i><b>1.5</b> Números pseudoaleatorios</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="números-pseudoaleatorios.html"><a href="números-pseudoaleatorios.html"><i class="fa fa-check"></i><b>1.4</b> Números pseudoaleatorios</a></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="rrng.html"><a href="rrng.html"><i class="fa fa-check"></i><b>2</b> Números aleatorios en R</a><ul>
+<li class="chapter" data-level="2" data-path="rrng.html"><a href="rrng.html"><i class="fa fa-check"></i><b>2</b> Números aleatorios en R</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="opciones.html"><a href="opciones.html"><i class="fa fa-check"></i><b>2.1</b> Opciones</a></li>
 <li class="chapter" data-level="2.2" data-path="paquetes-de-r.html"><a href="paquetes-de-r.html"><i class="fa fa-check"></i><b>2.2</b> Paquetes de R</a></li>
 <li class="chapter" data-level="2.3" data-path="ejercicios.html"><a href="ejercicios.html"><i class="fa fa-check"></i><b>2.3</b> Ejercicios</a></li>
-<li class="chapter" data-level="2.4" data-path="tiempo-de-cpu.html"><a href="tiempo-de-cpu.html"><i class="fa fa-check"></i><b>2.4</b> Tiempo de CPU</a><ul>
+<li class="chapter" data-level="2.4" data-path="tiempo-de-cpu.html"><a href="tiempo-de-cpu.html"><i class="fa fa-check"></i><b>2.4</b> Tiempo de CPU</a>
+<ul>
 <li class="chapter" data-level="2.4.1" data-path="tiempo-de-cpu.html"><a href="tiempo-de-cpu.html#utilidades-tiempo-de-cpu"><i class="fa fa-check"></i><b>2.4.1</b> Utilidades tiempo de CPU</a></li>
 <li class="chapter" data-level="2.4.2" data-path="tiempo-de-cpu.html"><a href="tiempo-de-cpu.html#paquetes-de-r-1"><i class="fa fa-check"></i><b>2.4.2</b> Paquetes de R</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="cap3.html"><a href="cap3.html"><i class="fa fa-check"></i><b>3</b> Generación de números pseudoaleatorios</a><ul>
-<li class="chapter" data-level="3.1" data-path="gen-cong.html"><a href="gen-cong.html"><i class="fa fa-check"></i><b>3.1</b> Generadores congruenciales</a><ul>
+<li class="chapter" data-level="3" data-path="cap3.html"><a href="cap3.html"><i class="fa fa-check"></i><b>3</b> Generación de números pseudoaleatorios</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="gen-cong.html"><a href="gen-cong.html"><i class="fa fa-check"></i><b>3.1</b> Generadores congruenciales</a>
+<ul>
 <li class="chapter" data-level="3.1.1" data-path="gen-cong.html"><a href="gen-cong.html#otros-generadores"><i class="fa fa-check"></i><b>3.1.1</b> Otros generadores</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="calgen.html"><a href="calgen.html"><i class="fa fa-check"></i><b>3.2</b> Análisis de la calidad de un generador</a><ul>
+<li class="chapter" data-level="3.2" data-path="calgen.html"><a href="calgen.html"><i class="fa fa-check"></i><b>3.2</b> Análisis de la calidad de un generador</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="calgen.html"><a href="calgen.html#repetición-de-contrastes"><i class="fa fa-check"></i><b>3.2.1</b> Repetición de contrastes</a></li>
 <li class="chapter" data-level="3.2.2" data-path="calgen.html"><a href="calgen.html#baterias"><i class="fa fa-check"></i><b>3.2.2</b> Baterías de contrastes</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="ejercicios-1.html"><a href="ejercicios-1.html"><i class="fa fa-check"></i><b>3.3</b> Ejercicios</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="cap4.html"><a href="cap4.html"><i class="fa fa-check"></i><b>4</b> Análisis de resultados de simulación</a><ul>
-<li class="chapter" data-level="4.1" data-path="convergencia.html"><a href="convergencia.html"><i class="fa fa-check"></i><b>4.1</b> Convergencia</a><ul>
+<li class="chapter" data-level="4" data-path="cap4.html"><a href="cap4.html"><i class="fa fa-check"></i><b>4</b> Análisis de resultados de simulación</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="convergencia.html"><a href="convergencia.html"><i class="fa fa-check"></i><b>4.1</b> Convergencia</a>
+<ul>
 <li class="chapter" data-level="4.1.1" data-path="convergencia.html"><a href="convergencia.html#detección-de-problemas-de-convergencia"><i class="fa fa-check"></i><b>4.1.1</b> Detección de problemas de convergencia</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="estimación-de-la-precisión.html"><a href="estimación-de-la-precisión.html"><i class="fa fa-check"></i><b>4.2</b> Estimación de la precisión</a></li>
 <li class="chapter" data-level="4.3" data-path="teorema-central-del-límite.html"><a href="teorema-central-del-límite.html"><i class="fa fa-check"></i><b>4.3</b> Teorema central del límite</a></li>
 <li class="chapter" data-level="4.4" data-path="determinación-del-número-de-generaciones.html"><a href="determinación-del-número-de-generaciones.html"><i class="fa fa-check"></i><b>4.4</b> Determinación del número de generaciones</a></li>
-<li class="chapter" data-level="4.5" data-path="el-problema-de-la-dependencia.html"><a href="el-problema-de-la-dependencia.html"><i class="fa fa-check"></i><b>4.5</b> El problema de la dependencia</a><ul>
+<li class="chapter" data-level="4.5" data-path="el-problema-de-la-dependencia.html"><a href="el-problema-de-la-dependencia.html"><i class="fa fa-check"></i><b>4.5</b> El problema de la dependencia</a>
+<ul>
 <li class="chapter" data-level="4.5.1" data-path="el-problema-de-la-dependencia.html"><a href="el-problema-de-la-dependencia.html#periodo-de-calentamiento"><i class="fa fa-check"></i><b>4.5.1</b> Periodo de calentamiento</a></li>
 </ul></li>
 <li class="chapter" data-level="4.6" data-path="observaciones.html"><a href="observaciones.html"><i class="fa fa-check"></i><b>4.6</b> Observaciones</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="sim-con.html"><a href="sim-con.html"><i class="fa fa-check"></i><b>5</b> Simulación de variables continuas</a><ul>
-<li class="chapter" data-level="5.1" data-path="método-de-inversión.html"><a href="método-de-inversión.html"><i class="fa fa-check"></i><b>5.1</b> Método de inversión</a><ul>
+<li class="chapter" data-level="5" data-path="sim-con.html"><a href="sim-con.html"><i class="fa fa-check"></i><b>5</b> Simulación de variables continuas</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="método-de-inversión.html"><a href="método-de-inversión.html"><i class="fa fa-check"></i><b>5.1</b> Método de inversión</a>
+<ul>
 <li class="chapter" data-level="5.1.1" data-path="método-de-inversión.html"><a href="método-de-inversión.html#algunas-distribuciones-que-pueden-simularse-por-el-método-de-inversión"><i class="fa fa-check"></i><b>5.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
 <li class="chapter" data-level="5.1.2" data-path="método-de-inversión.html"><a href="método-de-inversión.html#ventajas-e-inconvenientes"><i class="fa fa-check"></i><b>5.1.2</b> Ventajas e inconvenientes</a></li>
 <li class="chapter" data-level="5.1.3" data-path="método-de-inversión.html"><a href="método-de-inversión.html#inversión-aproximada"><i class="fa fa-check"></i><b>5.1.3</b> Inversión aproximada</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>5.2</b> Método de aceptación rechazo</a><ul>
+<li class="chapter" data-level="5.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>5.2</b> Método de aceptación rechazo</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="AR.html"><a href="AR.html#algoritmo"><i class="fa fa-check"></i><b>5.2.1</b> Algoritmo</a></li>
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.4</b> Ejemplo: Inferencia Bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a><ul>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
+<ul>
 <li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
-<li class="chapter" data-level="5.5" data-path="notables-cont.html"><a href="notables-cont.html"><i class="fa fa-check"></i><b>5.5</b> Métodos específicos para la generación de algunas distribuciones notables</a><ul>
+<li class="chapter" data-level="5.5" data-path="notables-cont.html"><a href="notables-cont.html"><i class="fa fa-check"></i><b>5.5</b> Métodos específicos para la generación de algunas distribuciones notables</a>
+<ul>
 <li class="chapter" data-level="5.5.1" data-path="notables-cont.html"><a href="notables-cont.html#método-de-box-müller"><i class="fa fa-check"></i><b>5.5.1</b> Método de Box-Müller</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="discretas.html"><a href="discretas.html"><i class="fa fa-check"></i><b>6</b> Simulación de variables discretas</a><ul>
-<li class="chapter" data-level="6.1" data-path="método-de-la-transformación-cuantil.html"><a href="método-de-la-transformación-cuantil.html"><i class="fa fa-check"></i><b>6.1</b> Método de la transformación cuantil</a><ul>
+<li class="chapter" data-level="6" data-path="discretas.html"><a href="discretas.html"><i class="fa fa-check"></i><b>6</b> Simulación de variables discretas</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="método-de-la-transformación-cuantil.html"><a href="método-de-la-transformación-cuantil.html"><i class="fa fa-check"></i><b>6.1</b> Método de la transformación cuantil</a>
+<ul>
 <li class="chapter" data-level="6.1.1" data-path="método-de-la-transformación-cuantil.html"><a href="método-de-la-transformación-cuantil.html#eficiencia-del-algoritmo-1"><i class="fa fa-check"></i><b>6.1.1</b> Eficiencia del algoritmo</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="método-de-la-tabla-guía.html"><a href="método-de-la-tabla-guía.html"><i class="fa fa-check"></i><b>6.2</b> Método de la tabla guía</a></li>
@@ -208,31 +227,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>6.6</b> Otros métodos</a></li>
 <li class="chapter" data-level="6.7" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>6.7</b> Métodos específicos para generación de distribuciones notables</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="simulación-de-distribuciones-multivariantes.html"><a href="simulación-de-distribuciones-multivariantes.html"><i class="fa fa-check"></i><b>7</b> Simulación de distribuciones multivariantes</a><ul>
+<li class="chapter" data-level="7" data-path="simulación-de-distribuciones-multivariantes.html"><a href="simulación-de-distribuciones-multivariantes.html"><i class="fa fa-check"></i><b>7</b> Simulación de distribuciones multivariantes</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="simulación-de-componentes-independientes.html"><a href="simulación-de-componentes-independientes.html"><i class="fa fa-check"></i><b>7.1</b> Simulación de componentes independientes</a></li>
 <li class="chapter" data-level="7.2" data-path="el-método-de-aceptaciónrechazo.html"><a href="el-método-de-aceptaciónrechazo.html"><i class="fa fa-check"></i><b>7.2</b> El método de aceptación/rechazo</a></li>
 <li class="chapter" data-level="7.3" data-path="fact-cov.html"><a href="fact-cov.html"><i class="fa fa-check"></i><b>7.3</b> Factorización de la matriz de covarianzas</a></li>
 <li class="chapter" data-level="7.4" data-path="distrcond.html"><a href="distrcond.html"><i class="fa fa-check"></i><b>7.4</b> Método de las distribuciones condicionadas</a></li>
-<li class="chapter" data-level="7.5" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html"><i class="fa fa-check"></i><b>7.5</b> Simulación condicional e incondicional</a><ul>
+<li class="chapter" data-level="7.5" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html"><i class="fa fa-check"></i><b>7.5</b> Simulación condicional e incondicional</a>
+<ul>
 <li class="chapter" data-level="7.5.1" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html#condnormal"><i class="fa fa-check"></i><b>7.5.1</b> Simulación condicional de una normal multivariante</a></li>
 <li class="chapter" data-level="7.5.2" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html#simulación-condicional-a-partir-de-un-modelo-ajustado"><i class="fa fa-check"></i><b>7.5.2</b> Simulación condicional a partir de un modelo ajustado</a></li>
 </ul></li>
-<li class="chapter" data-level="7.6" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html"><i class="fa fa-check"></i><b>7.6</b> Simulación basada en cópulas</a><ul>
+<li class="chapter" data-level="7.6" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html"><i class="fa fa-check"></i><b>7.6</b> Simulación basada en cópulas</a>
+<ul>
 <li class="chapter" data-level="7.6.1" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html#cópulas-arquimedianas"><i class="fa fa-check"></i><b>7.6.1</b> Cópulas Arquimedianas</a></li>
 <li class="chapter" data-level="7.6.2" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html#simulación"><i class="fa fa-check"></i><b>7.6.2</b> Simulación</a></li>
 </ul></li>
-<li class="chapter" data-level="7.7" data-path="mult-discr.html"><a href="mult-discr.html"><i class="fa fa-check"></i><b>7.7</b> Simulación de distribuciones multivariantes discretas</a><ul>
+<li class="chapter" data-level="7.7" data-path="mult-discr.html"><a href="mult-discr.html"><i class="fa fa-check"></i><b>7.7</b> Simulación de distribuciones multivariantes discretas</a>
+<ul>
 <li class="chapter" data-level="7.7.1" data-path="mult-discr.html"><a href="mult-discr.html#métodos-de-codificación-o-etiquetado-para-variables-discretas"><i class="fa fa-check"></i><b>7.7.1</b> Métodos de codificación o etiquetado para variables discretas</a></li>
 <li class="chapter" data-level="7.7.2" data-path="mult-discr.html"><a href="mult-discr.html#simulación-de-una-variable-discreta-bidimensional"><i class="fa fa-check"></i><b>7.7.2</b> Simulación de una variable discreta bidimensional</a></li>
 <li class="chapter" data-level="7.7.3" data-path="mult-discr.html"><a href="mult-discr.html#simconting"><i class="fa fa-check"></i><b>7.7.3</b> Simulación de tablas de contingencia</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="cap8.html"><a href="cap8.html"><i class="fa fa-check"></i><b>8</b> Aplicaciones en Inferencia Estadística</a><ul>
+<li class="chapter" data-level="8" data-path="cap8.html"><a href="cap8.html"><i class="fa fa-check"></i><b>8</b> Aplicaciones en Inferencia Estadística</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="distribución-en-el-muestreo.html"><a href="distribución-en-el-muestreo.html"><i class="fa fa-check"></i><b>8.1</b> Distribución en el muestreo</a></li>
 <li class="chapter" data-level="8.2" data-path="intervalos-de-confianza.html"><a href="intervalos-de-confianza.html"><i class="fa fa-check"></i><b>8.2</b> Intervalos de confianza</a></li>
 <li class="chapter" data-level="8.3" data-path="contrastes.html"><a href="contrastes.html"><i class="fa fa-check"></i><b>8.3</b> Contrastes de hipótesis</a></li>
 <li class="chapter" data-level="8.4" data-path="comparación-de-estimadores.html"><a href="comparación-de-estimadores.html"><i class="fa fa-check"></i><b>8.4</b> Comparación de estimadores</a></li>
-<li class="chapter" data-level="8.5" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html"><i class="fa fa-check"></i><b>8.5</b> Remuestreo Bootstrap</a><ul>
+<li class="chapter" data-level="8.5" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html"><i class="fa fa-check"></i><b>8.5</b> Remuestreo Bootstrap</a>
+<ul>
 <li class="chapter" data-level="8.5.1" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#idea"><i class="fa fa-check"></i><b>8.5.1</b> Idea:</a></li>
 <li class="chapter" data-level="8.5.2" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#métodos-de-remuestreo-bootstrap"><i class="fa fa-check"></i><b>8.5.2</b> Métodos de remuestreo Bootstrap</a></li>
 <li class="chapter" data-level="8.5.3" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#paquetes-r-bootstrap-boot"><i class="fa fa-check"></i><b>8.5.3</b> Paquetes R: bootstrap, boot</a></li>
@@ -240,23 +265,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.5.5" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#intervalos-de-confianza-bootstrap"><i class="fa fa-check"></i><b>8.5.5</b> Intervalos de confianza bootstrap</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="cap9.html"><a href="cap9.html"><i class="fa fa-check"></i><b>9</b> Integración y Optimización Monte Carlo</a><ul>
-<li class="chapter" data-level="9.1" data-path="integración-monte-carlo-clásica.html"><a href="integración-monte-carlo-clásica.html"><i class="fa fa-check"></i><b>9.1</b> Integración Monte Carlo (clásica)</a><ul>
+<li class="chapter" data-level="9" data-path="cap9.html"><a href="cap9.html"><i class="fa fa-check"></i><b>9</b> Integración y Optimización Monte Carlo</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="integración-monte-carlo-clásica.html"><a href="integración-monte-carlo-clásica.html"><i class="fa fa-check"></i><b>9.1</b> Integración Monte Carlo (clásica)</a>
+<ul>
 <li class="chapter" data-level="9.1.1" data-path="integración-monte-carlo-clásica.html"><a href="integración-monte-carlo-clásica.html#caso-general"><i class="fa fa-check"></i><b>9.1.1</b> Caso general</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="muestreo-importancia.html"><a href="muestreo-importancia.html"><i class="fa fa-check"></i><b>9.2</b> Muestreo por importancia</a><ul>
+<li class="chapter" data-level="9.2" data-path="muestreo-importancia.html"><a href="muestreo-importancia.html"><i class="fa fa-check"></i><b>9.2</b> Muestreo por importancia</a>
+<ul>
 <li class="chapter" data-level="9.2.1" data-path="muestreo-importancia.html"><a href="muestreo-importancia.html#remuestreo-del-muestreo-por-importancia"><i class="fa fa-check"></i><b>9.2.1</b> Remuestreo (del muestreo) por importancia</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="optimización-monte-carlo.html"><a href="optimización-monte-carlo.html"><i class="fa fa-check"></i><b>9.3</b> Optimización Monte Carlo</a><ul>
+<li class="chapter" data-level="9.3" data-path="optimización-monte-carlo.html"><a href="optimización-monte-carlo.html"><i class="fa fa-check"></i><b>9.3</b> Optimización Monte Carlo</a>
+<ul>
 <li class="chapter" data-level="9.3.1" data-path="optimización-monte-carlo.html"><a href="optimización-monte-carlo.html#algoritmos-de-optimización-monte-carlo"><i class="fa fa-check"></i><b>9.3.1</b> Algoritmos de optimización Monte Carlo</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="temple-simulado.html"><a href="temple-simulado.html"><i class="fa fa-check"></i><b>9.4</b> Temple simulado</a><ul>
+<li class="chapter" data-level="9.4" data-path="temple-simulado.html"><a href="temple-simulado.html"><i class="fa fa-check"></i><b>9.4</b> Temple simulado</a>
+<ul>
 <li class="chapter" data-level="9.4.1" data-path="temple-simulado.html"><a href="temple-simulado.html#algoritmo-1"><i class="fa fa-check"></i><b>9.4.1</b> Algoritmo:</a></li>
 </ul></li>
 <li class="chapter" data-level="9.5" data-path="algoritmos-genéticos.html"><a href="algoritmos-genéticos.html"><i class="fa fa-check"></i><b>9.5</b> Algoritmos genéticos</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="técnicas-de-reducción-de-la-varianza.html"><a href="técnicas-de-reducción-de-la-varianza.html"><i class="fa fa-check"></i><b>10</b> Técnicas de reducción de la varianza</a><ul>
-<li class="chapter" data-level="10.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html"><i class="fa fa-check"></i><b>10.1</b> Variables antitéticas</a><ul>
+<li class="chapter" data-level="10" data-path="técnicas-de-reducción-de-la-varianza.html"><a href="técnicas-de-reducción-de-la-varianza.html"><i class="fa fa-check"></i><b>10</b> Técnicas de reducción de la varianza</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html"><i class="fa fa-check"></i><b>10.1</b> Variables antitéticas</a>
+<ul>
 <li class="chapter" data-level="10.1.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html#ejemplo-integración-monte-carlo"><i class="fa fa-check"></i><b>10.1.1</b> Ejemplo: Integración Monte Carlo</a></li>
 <li class="chapter" data-level="10.1.2" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html#generación-de-variables-antitéticas"><i class="fa fa-check"></i><b>10.1.2</b> Generación de variables antitéticas</a></li>
 </ul></li>
@@ -265,24 +297,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.4" data-path="números-aleatorios-comunes.html"><a href="números-aleatorios-comunes.html"><i class="fa fa-check"></i><b>10.4</b> Números aleatorios comunes</a></li>
 <li class="chapter" data-level="10.5" data-path="ejercicios-2.html"><a href="ejercicios-2.html"><i class="fa fa-check"></i><b>10.5</b> Ejercicios</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
+<ul>
 <li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a><ul>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a>
+<ul>
 <li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#libros"><i class="fa fa-check"></i>Libros</a></li>
 <li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#artículos"><i class="fa fa-check"></i>Artículos</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Apendices</b></span></li>
 <li class="chapter" data-level="A" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i><b>A</b> Enlaces</a></li>
-<li class="chapter" data-level="B" data-path="gof-aleat.html"><a href="gof-aleat.html"><i class="fa fa-check"></i><b>B</b> Bondad de Ajuste y Aleatoriedad</a><ul>
-<li class="chapter" data-level="B.1" data-path="gof.html"><a href="gof.html"><i class="fa fa-check"></i><b>B.1</b> Métodos de bondad de ajuste</a><ul>
+<li class="chapter" data-level="B" data-path="gof-aleat.html"><a href="gof-aleat.html"><i class="fa fa-check"></i><b>B</b> Bondad de Ajuste y Aleatoriedad</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="gof.html"><a href="gof.html"><i class="fa fa-check"></i><b>B.1</b> Métodos de bondad de ajuste</a>
+<ul>
 <li class="chapter" data-level="B.1.1" data-path="gof.html"><a href="gof.html#histograma"><i class="fa fa-check"></i><b>B.1.1</b> Histograma</a></li>
 <li class="chapter" data-level="B.1.2" data-path="gof.html"><a href="gof.html#empdistr"><i class="fa fa-check"></i><b>B.1.2</b> Función de distribución empírica</a></li>
 <li class="chapter" data-level="B.1.3" data-path="gof.html"><a href="gof.html#gráficos-p-p-y-q-q"><i class="fa fa-check"></i><b>B.1.3</b> Gráficos P-P y Q-Q</a></li>
 <li class="chapter" data-level="B.1.4" data-path="gof.html"><a href="gof.html#chi2test"><i class="fa fa-check"></i><b>B.1.4</b> Contraste ji-cuadrado de Pearson</a></li>
 <li class="chapter" data-level="B.1.5" data-path="gof.html"><a href="gof.html#ks-test"><i class="fa fa-check"></i><b>B.1.5</b> Contraste de Kolmogorov-Smirnov</a></li>
 </ul></li>
-<li class="chapter" data-level="B.2" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html"><i class="fa fa-check"></i><b>B.2</b> Diagnosis de la independencia</a><ul>
+<li class="chapter" data-level="B.2" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html"><i class="fa fa-check"></i><b>B.2</b> Diagnosis de la independencia</a>
+<ul>
 <li class="chapter" data-level="B.2.1" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>B.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="B.2.2" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#gráfico-secuencial"><i class="fa fa-check"></i><b>B.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="B.2.3" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>B.2.3</b> Gráfico de dispersion retardado</a></li>
@@ -290,21 +327,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="B.2.5" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#test-de-rachas"><i class="fa fa-check"></i><b>B.2.5</b> Test de rachas</a></li>
 <li class="chapter" data-level="B.2.6" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>B.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
-<li class="chapter" data-level="B.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>B.3</b> Contrastes específicos para generadores aleatorios</a><ul>
+<li class="chapter" data-level="B.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>B.3</b> Contrastes específicos para generadores aleatorios</a>
+<ul>
 <li class="chapter" data-level="B.3.1" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#contraste-de-frecuencias"><i class="fa fa-check"></i><b>B.3.1</b> Contraste de frecuencias</a></li>
 <li class="chapter" data-level="B.3.2" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#contraste-de-series"><i class="fa fa-check"></i><b>B.3.2</b> Contraste de series</a></li>
 <li class="chapter" data-level="B.3.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#el-contraste-del-poker"><i class="fa fa-check"></i><b>B.3.3</b> El contraste del poker</a></li>
 <li class="chapter" data-level="B.3.4" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#el-contraste-del-coleccionista"><i class="fa fa-check"></i><b>B.3.4</b> El contraste del coleccionista</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="C" data-path="int-num.html"><a href="int-num.html"><i class="fa fa-check"></i><b>C</b> Integración numérica</a><ul>
-<li class="chapter" data-level="C.1" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html"><i class="fa fa-check"></i><b>C.1</b> Integración numérica unidimensional</a><ul>
+<li class="chapter" data-level="C" data-path="int-num.html"><a href="int-num.html"><i class="fa fa-check"></i><b>C</b> Integración numérica</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html"><i class="fa fa-check"></i><b>C.1</b> Integración numérica unidimensional</a>
+<ul>
 <li class="chapter" data-level="C.1.1" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#método-del-trapezoide"><i class="fa fa-check"></i><b>C.1.1</b> Método del trapezoide</a></li>
 <li class="chapter" data-level="C.1.2" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#regla-de-simpson"><i class="fa fa-check"></i><b>C.1.2</b> Regla de Simpson</a></li>
 <li class="chapter" data-level="C.1.3" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#cuadratura-adaptativa"><i class="fa fa-check"></i><b>C.1.3</b> Cuadratura adaptativa</a></li>
 <li class="chapter" data-level="C.1.4" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#comandos-de-r"><i class="fa fa-check"></i><b>C.1.4</b> Comandos de <code>R</code></a></li>
 </ul></li>
-<li class="chapter" data-level="C.2" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html"><i class="fa fa-check"></i><b>C.2</b> Integración numérica bidimensional</a><ul>
+<li class="chapter" data-level="C.2" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html"><i class="fa fa-check"></i><b>C.2</b> Integración numérica bidimensional</a>
+<ul>
 <li class="chapter" data-level="C.2.1" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#representación-gráfica"><i class="fa fa-check"></i><b>C.2.1</b> Representación gráfica</a></li>
 <li class="chapter" data-level="C.2.2" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#método-del-trapezoide-1"><i class="fa fa-check"></i><b>C.2.2</b> Método del trapezoide</a></li>
 <li class="chapter" data-level="C.2.3" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#comandos-de-r-1"><i class="fa fa-check"></i><b>C.2.3</b> Comandos de <code>R</code></a></li>
@@ -330,7 +371,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="simulación-condicional-e-incondicional" class="section level2">
+<div id="simulación-condicional-e-incondicional" class="section level2" number="7.5">
 <h2><span class="header-section-number">7.5</span> Simulación condicional e incondicional</h2>
 <p>En ocasiones en inferencia estadística interesa la simulación condicional de nuevos valores de forma que se preserven los datos observados, para lo que se suele emplear el algoritmo anterior partiendo de la muestra observada:</p>
 
@@ -345,11 +386,10 @@ anteriormente.</p></li>
 <li><p>Agregar este valor al conjunto de datos y volver al paso 1.</p></li>
 </ol>
 </div>
-
 <p>En el caso de normalidad, en lugar de simular punto a punto,
 podemos obtener fácilmente la distribución condicionada
 para simular los valores de forma conjunta.</p>
-<div id="condnormal" class="section level3">
+<div id="condnormal" class="section level3" number="7.5.1">
 <h3><span class="header-section-number">7.5.1</span> Simulación condicional de una normal multivariante</h3>
 <p>Si <span class="math inline">\(\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right)\)</span> es tal que <span class="math inline">\(\mathbf{X}\)</span>, <span class="math inline">\(\boldsymbol\mu\)</span> y <span class="math inline">\(\boldsymbol\Sigma\)</span> se particionan de la forma:
 <span class="math display">\[\mathbf{X} =
@@ -385,44 +425,43 @@ a partir de <span class="math inline">\(\mathbf{X}_1\)</span> con media y varian
 <div class="example">
 <span id="exm:funcionalcond" class="example"><strong>Ejemplo 7.7  (simulación condicional de datos funcionales o temporales)  </strong></span>
 </div>
-
 <p>Continuando con el Ejemplo <a href="fact-cov.html#exm:funcional">7.4</a> anterior, consideramos los primeros
 valores de una simulación incondicional como los datos:</p>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="simulación-condicional-e-incondicional.html#cb215-1"></a>idata &lt;-<span class="st"> </span>t <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.5</span></span>
-<span id="cb215-2"><a href="simulación-condicional-e-incondicional.html#cb215-2"></a><span class="co"># idata &lt;- t &lt; 0.2 | t &gt; 0.8</span></span>
-<span id="cb215-3"><a href="simulación-condicional-e-incondicional.html#cb215-3"></a>mu1 &lt;-<span class="st"> </span>mu[idata]</span>
-<span id="cb215-4"><a href="simulación-condicional-e-incondicional.html#cb215-4"></a>n1 &lt;-<span class="st"> </span><span class="kw">length</span>(mu1)</span>
-<span id="cb215-5"><a href="simulación-condicional-e-incondicional.html#cb215-5"></a>cov.data &lt;-<span class="st"> </span>x.cov[idata, idata]</span>
-<span id="cb215-6"><a href="simulación-condicional-e-incondicional.html#cb215-6"></a>U &lt;-<span class="st"> </span><span class="kw">chol</span>(cov.data)</span>
-<span id="cb215-7"><a href="simulación-condicional-e-incondicional.html#cb215-7"></a><span class="co"># Simulación (incondicional):</span></span>
-<span id="cb215-8"><a href="simulación-condicional-e-incondicional.html#cb215-8"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb215-9"><a href="simulación-condicional-e-incondicional.html#cb215-9"></a>data &lt;-<span class="st"> </span><span class="kw">drop</span>(mu1 <span class="op">+</span><span class="st"> </span><span class="kw">t</span>(U) <span class="op">%*%</span><span class="st"> </span><span class="kw">rnorm</span>(n1))</span></code></pre></div>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="simulación-condicional-e-incondicional.html#cb214-1" aria-hidden="true" tabindex="-1"></a>idata <span class="ot">&lt;-</span> t <span class="sc">&lt;</span> <span class="fl">0.5</span></span>
+<span id="cb214-2"><a href="simulación-condicional-e-incondicional.html#cb214-2" aria-hidden="true" tabindex="-1"></a><span class="co"># idata &lt;- t &lt; 0.2 | t &gt; 0.8</span></span>
+<span id="cb214-3"><a href="simulación-condicional-e-incondicional.html#cb214-3" aria-hidden="true" tabindex="-1"></a>mu1 <span class="ot">&lt;-</span> mu[idata]</span>
+<span id="cb214-4"><a href="simulación-condicional-e-incondicional.html#cb214-4" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="fu">length</span>(mu1)</span>
+<span id="cb214-5"><a href="simulación-condicional-e-incondicional.html#cb214-5" aria-hidden="true" tabindex="-1"></a>cov.data <span class="ot">&lt;-</span> x.cov[idata, idata]</span>
+<span id="cb214-6"><a href="simulación-condicional-e-incondicional.html#cb214-6" aria-hidden="true" tabindex="-1"></a>U <span class="ot">&lt;-</span> <span class="fu">chol</span>(cov.data)</span>
+<span id="cb214-7"><a href="simulación-condicional-e-incondicional.html#cb214-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulación (incondicional):</span></span>
+<span id="cb214-8"><a href="simulación-condicional-e-incondicional.html#cb214-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb214-9"><a href="simulación-condicional-e-incondicional.html#cb214-9" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">drop</span>(mu1 <span class="sc">+</span> <span class="fu">t</span>(U) <span class="sc">%*%</span> <span class="fu">rnorm</span>(n1))</span></code></pre></div>
 <p>Para obtener la simulación condicional en los puntos de predicción, calculamos la correspondiente media y matriz de covarianzas condicionadas:</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="simulación-condicional-e-incondicional.html#cb216-1"></a>mu2 &lt;-<span class="st"> </span>mu[<span class="op">!</span>idata]</span>
-<span id="cb216-2"><a href="simulación-condicional-e-incondicional.html#cb216-2"></a>n2 &lt;-<span class="st"> </span><span class="kw">length</span>(mu2)</span>
-<span id="cb216-3"><a href="simulación-condicional-e-incondicional.html#cb216-3"></a>cov.pred &lt;-<span class="st"> </span>x.cov[<span class="op">!</span>idata, <span class="op">!</span>idata]</span>
-<span id="cb216-4"><a href="simulación-condicional-e-incondicional.html#cb216-4"></a>cov.preddat &lt;-<span class="st"> </span>x.cov[<span class="op">!</span>idata, idata]</span>
-<span id="cb216-5"><a href="simulación-condicional-e-incondicional.html#cb216-5"></a><span class="co"># Cálculo de los pesos kriging:</span></span>
-<span id="cb216-6"><a href="simulación-condicional-e-incondicional.html#cb216-6"></a>cov.data.inv &lt;-<span class="st"> </span><span class="kw">chol2inv</span>(U)</span>
-<span id="cb216-7"><a href="simulación-condicional-e-incondicional.html#cb216-7"></a>lambda &lt;-<span class="st"> </span>cov.preddat <span class="op">%*%</span><span class="st"> </span>cov.data.inv</span>
-<span id="cb216-8"><a href="simulación-condicional-e-incondicional.html#cb216-8"></a><span class="co"># La media serán las predicciones del kriging simple:</span></span>
-<span id="cb216-9"><a href="simulación-condicional-e-incondicional.html#cb216-9"></a>kpred &lt;-<span class="st"> </span>mu2 <span class="op">+</span><span class="st"> </span><span class="kw">drop</span>(lambda <span class="op">%*%</span><span class="st"> </span>(data <span class="op">-</span><span class="st"> </span>mu1))</span>
-<span id="cb216-10"><a href="simulación-condicional-e-incondicional.html#cb216-10"></a><span class="co"># Varianza de la distribución condicional</span></span>
-<span id="cb216-11"><a href="simulación-condicional-e-incondicional.html#cb216-11"></a>kcov &lt;-<span class="st"> </span>cov.pred <span class="op">-</span><span class="st">  </span>lambda <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(cov.preddat)</span>
-<span id="cb216-12"><a href="simulación-condicional-e-incondicional.html#cb216-12"></a><span class="co"># (La diagonal serán las varianzas kriging). </span></span></code></pre></div>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="simulación-condicional-e-incondicional.html#cb215-1" aria-hidden="true" tabindex="-1"></a>mu2 <span class="ot">&lt;-</span> mu[<span class="sc">!</span>idata]</span>
+<span id="cb215-2"><a href="simulación-condicional-e-incondicional.html#cb215-2" aria-hidden="true" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="fu">length</span>(mu2)</span>
+<span id="cb215-3"><a href="simulación-condicional-e-incondicional.html#cb215-3" aria-hidden="true" tabindex="-1"></a>cov.pred <span class="ot">&lt;-</span> x.cov[<span class="sc">!</span>idata, <span class="sc">!</span>idata]</span>
+<span id="cb215-4"><a href="simulación-condicional-e-incondicional.html#cb215-4" aria-hidden="true" tabindex="-1"></a>cov.preddat <span class="ot">&lt;-</span> x.cov[<span class="sc">!</span>idata, idata]</span>
+<span id="cb215-5"><a href="simulación-condicional-e-incondicional.html#cb215-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Cálculo de los pesos kriging:</span></span>
+<span id="cb215-6"><a href="simulación-condicional-e-incondicional.html#cb215-6" aria-hidden="true" tabindex="-1"></a>cov.data.inv <span class="ot">&lt;-</span> <span class="fu">chol2inv</span>(U)</span>
+<span id="cb215-7"><a href="simulación-condicional-e-incondicional.html#cb215-7" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> cov.preddat <span class="sc">%*%</span> cov.data.inv</span>
+<span id="cb215-8"><a href="simulación-condicional-e-incondicional.html#cb215-8" aria-hidden="true" tabindex="-1"></a><span class="co"># La media serán las predicciones del kriging simple:</span></span>
+<span id="cb215-9"><a href="simulación-condicional-e-incondicional.html#cb215-9" aria-hidden="true" tabindex="-1"></a>kpred <span class="ot">&lt;-</span> mu2 <span class="sc">+</span> <span class="fu">drop</span>(lambda <span class="sc">%*%</span> (data <span class="sc">-</span> mu1))</span>
+<span id="cb215-10"><a href="simulación-condicional-e-incondicional.html#cb215-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Varianza de la distribución condicional</span></span>
+<span id="cb215-11"><a href="simulación-condicional-e-incondicional.html#cb215-11" aria-hidden="true" tabindex="-1"></a>kcov <span class="ot">&lt;-</span> cov.pred <span class="sc">-</span>  lambda <span class="sc">%*%</span> <span class="fu">t</span>(cov.preddat)</span>
+<span id="cb215-12"><a href="simulación-condicional-e-incondicional.html#cb215-12" aria-hidden="true" tabindex="-1"></a><span class="co"># (La diagonal serán las varianzas kriging). </span></span></code></pre></div>
 <p>Las simulaciones condicionales se obtendrán de forma análoga (Figura <a href="simulación-condicional-e-incondicional.html#fig:funcional-cond">7.4</a>):</p>
 
-<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="simulación-condicional-e-incondicional.html#cb217-1"></a>z &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(nsim <span class="op">*</span><span class="st"> </span>n2), <span class="dt">nrow =</span> n2)</span>
-<span id="cb217-2"><a href="simulación-condicional-e-incondicional.html#cb217-2"></a>y &lt;-<span class="st"> </span>kpred <span class="op">+</span><span class="st"> </span><span class="kw">t</span>(<span class="kw">chol</span>(kcov)) <span class="op">%*%</span><span class="st"> </span>z</span>
-<span id="cb217-3"><a href="simulación-condicional-e-incondicional.html#cb217-3"></a><span class="co"># Representación gráfica:</span></span>
-<span id="cb217-4"><a href="simulación-condicional-e-incondicional.html#cb217-4"></a><span class="kw">plot</span>(t, mu, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">3.5</span>, <span class="fl">3.5</span>)) <span class="co"># media teórica</span></span>
-<span id="cb217-5"><a href="simulación-condicional-e-incondicional.html#cb217-5"></a><span class="kw">lines</span>(t[idata], data) <span class="co"># datos</span></span>
-<span id="cb217-6"><a href="simulación-condicional-e-incondicional.html#cb217-6"></a><span class="co"># y &lt;- rep(NA, n)</span></span>
-<span id="cb217-7"><a href="simulación-condicional-e-incondicional.html#cb217-7"></a><span class="co"># y[idata] &lt;- data</span></span>
-<span id="cb217-8"><a href="simulación-condicional-e-incondicional.html#cb217-8"></a><span class="co"># lines(t, y)</span></span>
-<span id="cb217-9"><a href="simulación-condicional-e-incondicional.html#cb217-9"></a><span class="kw">matplot</span>(t[<span class="op">!</span>idata], y, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="co"># simulaciones condicionales</span></span>
-<span id="cb217-10"><a href="simulación-condicional-e-incondicional.html#cb217-10"></a><span class="kw">lines</span>(t[<span class="op">!</span>idata], kpred, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>) <span class="co"># media condicional (predicción kriging)</span></span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:funcional-cond"></span>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="simulación-condicional-e-incondicional.html#cb216-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(nsim <span class="sc">*</span> n2), <span class="at">nrow =</span> n2)</span>
+<span id="cb216-2"><a href="simulación-condicional-e-incondicional.html#cb216-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> kpred <span class="sc">+</span> <span class="fu">t</span>(<span class="fu">chol</span>(kcov)) <span class="sc">%*%</span> z</span>
+<span id="cb216-3"><a href="simulación-condicional-e-incondicional.html#cb216-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Representación gráfica:</span></span>
+<span id="cb216-4"><a href="simulación-condicional-e-incondicional.html#cb216-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t, mu, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">3.5</span>, <span class="fl">3.5</span>)) <span class="co"># media teórica</span></span>
+<span id="cb216-5"><a href="simulación-condicional-e-incondicional.html#cb216-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t[idata], data) <span class="co"># datos</span></span>
+<span id="cb216-6"><a href="simulación-condicional-e-incondicional.html#cb216-6" aria-hidden="true" tabindex="-1"></a><span class="co"># y &lt;- rep(NA, n)</span></span>
+<span id="cb216-7"><a href="simulación-condicional-e-incondicional.html#cb216-7" aria-hidden="true" tabindex="-1"></a><span class="co"># y[idata] &lt;- data</span></span>
+<span id="cb216-8"><a href="simulación-condicional-e-incondicional.html#cb216-8" aria-hidden="true" tabindex="-1"></a><span class="co"># lines(t, y)</span></span>
+<span id="cb216-9"><a href="simulación-condicional-e-incondicional.html#cb216-9" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(t[<span class="sc">!</span>idata], y, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>) <span class="co"># simulaciones condicionales</span></span>
+<span id="cb216-10"><a href="simulación-condicional-e-incondicional.html#cb216-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t[<span class="sc">!</span>idata], kpred, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="co"># media condicional (predicción kriging)</span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:funcional-cond"></span>
 <img src="07-Simulacion_multidimensional_files/figure-html/funcional-cond-1.png" alt="Realizaciones condicionales del proceso funcional del Ejemplo 7.7." width="70%" />
 <p class="caption">
 Figura 7.4: Realizaciones condicionales del proceso funcional del Ejemplo <a href="simulación-condicional-e-incondicional.html#exm:funcionalcond">7.7</a>.
@@ -432,7 +471,6 @@ Figura 7.4: Realizaciones condicionales del proceso funcional del Ejemplo <a hre
 <div class="example">
 <span id="exm:unnamed-chunk-12" class="example"><strong>Ejemplo 7.8  (simulación condicional de datos espaciales)  </strong></span>
 </div>
-
 <p>Consideramos un proceso espacial bidimensional normal
 <span class="math inline">\(Z(\mathbf{s})\equiv Z(x,y)\)</span> de media 0 y covariograma
 exponencial:
@@ -445,52 +483,52 @@ como los datos observados.
 Empleando las herramientas del paquete <code>geoR</code>, resulta muy fácil obtener
 una simulación incondicional en una rejilla en el cuadrado unidad
 mediante la función <code>grf</code>:</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="simulación-condicional-e-incondicional.html#cb218-1"></a><span class="kw">library</span>(geoR)</span>
-<span id="cb218-2"><a href="simulación-condicional-e-incondicional.html#cb218-2"></a>n &lt;-<span class="st"> </span><span class="dv">4</span></span>
-<span id="cb218-3"><a href="simulación-condicional-e-incondicional.html#cb218-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb218-4"><a href="simulación-condicional-e-incondicional.html#cb218-4"></a>z &lt;-<span class="st"> </span><span class="kw">grf</span>(n, <span class="dt">grid =</span> <span class="st">&quot;reg&quot;</span>, <span class="dt">cov.pars =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="simulación-condicional-e-incondicional.html#cb217-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geoR)</span>
+<span id="cb217-2"><a href="simulación-condicional-e-incondicional.html#cb217-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb217-3"><a href="simulación-condicional-e-incondicional.html#cb217-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb217-4"><a href="simulación-condicional-e-incondicional.html#cb217-4" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">grf</span>(n, <span class="at">grid =</span> <span class="st">&quot;reg&quot;</span>, <span class="at">cov.pars =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
 <pre><code>## grf: generating grid  2  *  2  with  4  points
 ## grf: process with  1  covariance structure(s)
 ## grf: nugget effect is: tausq= 0 
 ## grf: covariance model 1 is: exponential(sigmasq=1, phi=1)
 ## grf: decomposition algorithm used is:  cholesky 
 ## grf: End of simulation procedure. Number of realizations: 1</code></pre>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="simulación-condicional-e-incondicional.html#cb220-1"></a><span class="co"># names(z)</span></span>
-<span id="cb220-2"><a href="simulación-condicional-e-incondicional.html#cb220-2"></a>z<span class="op">$</span>coords</span></code></pre></div>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="simulación-condicional-e-incondicional.html#cb219-1" aria-hidden="true" tabindex="-1"></a><span class="co"># names(z)</span></span>
+<span id="cb219-2"><a href="simulación-condicional-e-incondicional.html#cb219-2" aria-hidden="true" tabindex="-1"></a>z<span class="sc">$</span>coords</span></code></pre></div>
 <pre><code>##      x y
 ## [1,] 0 0
 ## [2,] 1 0
 ## [3,] 0 1
 ## [4,] 1 1</code></pre>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="simulación-condicional-e-incondicional.html#cb222-1"></a>z<span class="op">$</span>data</span></code></pre></div>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="simulación-condicional-e-incondicional.html#cb221-1" aria-hidden="true" tabindex="-1"></a>z<span class="sc">$</span>data</span></code></pre></div>
 <pre><code>## [1] -0.62645381 -0.05969442 -0.98014198  1.09215113</code></pre>
 <p>La <code>grf</code> función emplea por defecto el método de la factorización de la matriz de covarianzas,
 sin embargo, si se desean obtener múltiples realizaciones, en lugar de llamar repetidamente a esta función (lo que implicaría factorizar repetidamente la matriz de covarianzas),
 puede ser preferible emplear un código similar al siguiente (de forma que solo se realiza una vez dicha factorización, y suponiendo además que no es necesario conservar las distintas realizaciones):</p>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="simulación-condicional-e-incondicional.html#cb224-1"></a><span class="co"># Posiciones datos</span></span>
-<span id="cb224-2"><a href="simulación-condicional-e-incondicional.html#cb224-2"></a>nx &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)</span>
-<span id="cb224-3"><a href="simulación-condicional-e-incondicional.html#cb224-3"></a>data.s &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">x =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">len =</span> nx[<span class="dv">1</span>]), <span class="dt">y =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">len =</span> nx[<span class="dv">2</span>]))</span>
-<span id="cb224-4"><a href="simulación-condicional-e-incondicional.html#cb224-4"></a><span class="co"># plot(data.s, type = &quot;p&quot;, pch = 20, asp = 1) # Representar posiciones</span></span>
-<span id="cb224-5"><a href="simulación-condicional-e-incondicional.html#cb224-5"></a></span>
-<span id="cb224-6"><a href="simulación-condicional-e-incondicional.html#cb224-6"></a><span class="co"># Matriz de varianzas covarianzas</span></span>
-<span id="cb224-7"><a href="simulación-condicional-e-incondicional.html#cb224-7"></a>cov.matrix &lt;-<span class="st"> </span><span class="kw">varcov.spatial</span>(<span class="dt">coords=</span>data.s, <span class="dt">cov.pars=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))<span class="op">$</span>varcov</span>
-<span id="cb224-8"><a href="simulación-condicional-e-incondicional.html#cb224-8"></a>cov.matrix</span></code></pre></div>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="simulación-condicional-e-incondicional.html#cb223-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Posiciones datos</span></span>
+<span id="cb223-2"><a href="simulación-condicional-e-incondicional.html#cb223-2" aria-hidden="true" tabindex="-1"></a>nx <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb223-3"><a href="simulación-condicional-e-incondicional.html#cb223-3" aria-hidden="true" tabindex="-1"></a>data.s <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">len =</span> nx[<span class="dv">1</span>]), <span class="at">y =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">len =</span> nx[<span class="dv">2</span>]))</span>
+<span id="cb223-4"><a href="simulación-condicional-e-incondicional.html#cb223-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(data.s, type = &quot;p&quot;, pch = 20, asp = 1) # Representar posiciones</span></span>
+<span id="cb223-5"><a href="simulación-condicional-e-incondicional.html#cb223-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb223-6"><a href="simulación-condicional-e-incondicional.html#cb223-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de varianzas covarianzas</span></span>
+<span id="cb223-7"><a href="simulación-condicional-e-incondicional.html#cb223-7" aria-hidden="true" tabindex="-1"></a>cov.matrix <span class="ot">&lt;-</span> <span class="fu">varcov.spatial</span>(<span class="at">coords=</span>data.s, <span class="at">cov.pars=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))<span class="sc">$</span>varcov</span>
+<span id="cb223-8"><a href="simulación-condicional-e-incondicional.html#cb223-8" aria-hidden="true" tabindex="-1"></a>cov.matrix</span></code></pre></div>
 <pre><code>##           [,1]      [,2]      [,3]      [,4]
 ## [1,] 1.0000000 0.3678794 0.3678794 0.2431167
 ## [2,] 0.3678794 1.0000000 0.2431167 0.3678794
 ## [3,] 0.3678794 0.2431167 1.0000000 0.3678794
 ## [4,] 0.2431167 0.3678794 0.3678794 1.0000000</code></pre>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="simulación-condicional-e-incondicional.html#cb226-1"></a><span class="co"># Simular valores</span></span>
-<span id="cb226-2"><a href="simulación-condicional-e-incondicional.html#cb226-2"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb226-3"><a href="simulación-condicional-e-incondicional.html#cb226-3"></a>L &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">chol</span>(cov.matrix))</span>
-<span id="cb226-4"><a href="simulación-condicional-e-incondicional.html#cb226-4"></a></span>
-<span id="cb226-5"><a href="simulación-condicional-e-incondicional.html#cb226-5"></a><span class="co"># Bucle simulación</span></span>
-<span id="cb226-6"><a href="simulación-condicional-e-incondicional.html#cb226-6"></a>nsim &lt;-<span class="st"> </span><span class="dv">1</span> <span class="co"># 1000</span></span>
-<span id="cb226-7"><a href="simulación-condicional-e-incondicional.html#cb226-7"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim) {</span>
-<span id="cb226-8"><a href="simulación-condicional-e-incondicional.html#cb226-8"></a>  y &lt;-<span class="st"> </span>L <span class="op">%*%</span><span class="st"> </span><span class="kw">rnorm</span>(n)</span>
-<span id="cb226-9"><a href="simulación-condicional-e-incondicional.html#cb226-9"></a>  <span class="co"># calcular estadísticos, errores,...</span></span>
-<span id="cb226-10"><a href="simulación-condicional-e-incondicional.html#cb226-10"></a>}</span>
-<span id="cb226-11"><a href="simulación-condicional-e-incondicional.html#cb226-11"></a>y</span></code></pre></div>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="simulación-condicional-e-incondicional.html#cb225-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simular valores</span></span>
+<span id="cb225-2"><a href="simulación-condicional-e-incondicional.html#cb225-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb225-3"><a href="simulación-condicional-e-incondicional.html#cb225-3" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">chol</span>(cov.matrix))</span>
+<span id="cb225-4"><a href="simulación-condicional-e-incondicional.html#cb225-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb225-5"><a href="simulación-condicional-e-incondicional.html#cb225-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Bucle simulación</span></span>
+<span id="cb225-6"><a href="simulación-condicional-e-incondicional.html#cb225-6" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># 1000</span></span>
+<span id="cb225-7"><a href="simulación-condicional-e-incondicional.html#cb225-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
+<span id="cb225-8"><a href="simulación-condicional-e-incondicional.html#cb225-8" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> L <span class="sc">%*%</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb225-9"><a href="simulación-condicional-e-incondicional.html#cb225-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># calcular estadísticos, errores,...</span></span>
+<span id="cb225-10"><a href="simulación-condicional-e-incondicional.html#cb225-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb225-11"><a href="simulación-condicional-e-incondicional.html#cb225-11" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div>
 <pre><code>##             [,1]
 ## [1,] -0.62645381
 ## [2,] -0.05969442
@@ -498,68 +536,68 @@ puede ser preferible emplear un código similar al siguiente (de forma que solo 
 ## [4,]  1.09215113</code></pre>
 <p>Para generar simulaciones condicionales podemos emplear la función <code>krige.conv</code>.
 Por ejemplo, para generar 4 simulaciones en la rejilla regular <span class="math inline">\(10\times10\)</span> en el cuadrado unidad <span class="math inline">\([0,1] \times [0,1]\)</span> condicionadas a los valores generados en el apartado anterior podríamos emplear el siguiente código:</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="simulación-condicional-e-incondicional.html#cb228-1"></a><span class="co"># Posiciones simulación condicional</span></span>
-<span id="cb228-2"><a href="simulación-condicional-e-incondicional.html#cb228-2"></a>new.nx &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">20</span>, <span class="dv">20</span>)</span>
-<span id="cb228-3"><a href="simulación-condicional-e-incondicional.html#cb228-3"></a>new.x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">len =</span> new.nx[<span class="dv">1</span>])</span>
-<span id="cb228-4"><a href="simulación-condicional-e-incondicional.html#cb228-4"></a>new.y &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">len =</span> new.nx[<span class="dv">2</span>])</span>
-<span id="cb228-5"><a href="simulación-condicional-e-incondicional.html#cb228-5"></a>new.s &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">x =</span> new.x, <span class="dt">y =</span> new.y)</span>
-<span id="cb228-6"><a href="simulación-condicional-e-incondicional.html#cb228-6"></a><span class="kw">plot</span>(data.s, <span class="dt">type =</span> <span class="st">&quot;p&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">asp =</span> <span class="dv">1</span>)</span>
-<span id="cb228-7"><a href="simulación-condicional-e-incondicional.html#cb228-7"></a><span class="kw">points</span>(new.s)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:pos-sp-simcond"></span>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="simulación-condicional-e-incondicional.html#cb227-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Posiciones simulación condicional</span></span>
+<span id="cb227-2"><a href="simulación-condicional-e-incondicional.html#cb227-2" aria-hidden="true" tabindex="-1"></a>new.nx <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">20</span>)</span>
+<span id="cb227-3"><a href="simulación-condicional-e-incondicional.html#cb227-3" aria-hidden="true" tabindex="-1"></a>new.x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">len =</span> new.nx[<span class="dv">1</span>])</span>
+<span id="cb227-4"><a href="simulación-condicional-e-incondicional.html#cb227-4" aria-hidden="true" tabindex="-1"></a>new.y <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">len =</span> new.nx[<span class="dv">2</span>])</span>
+<span id="cb227-5"><a href="simulación-condicional-e-incondicional.html#cb227-5" aria-hidden="true" tabindex="-1"></a>new.s <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> new.x, <span class="at">y =</span> new.y)</span>
+<span id="cb227-6"><a href="simulación-condicional-e-incondicional.html#cb227-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(data.s, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">asp =</span> <span class="dv">1</span>)</span>
+<span id="cb227-7"><a href="simulación-condicional-e-incondicional.html#cb227-7" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(new.s)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:pos-sp-simcond"></span>
 <img src="07-Simulacion_multidimensional_files/figure-html/pos-sp-simcond-1.png" alt="Posiciones espaciales de las simulaciones condicionales (y las de los datos)." width="70%" />
 <p class="caption">
 Figura 7.5: Posiciones espaciales de las simulaciones condicionales (y las de los datos).
 </p>
 </div>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="simulación-condicional-e-incondicional.html#cb229-1"></a><span class="co"># Simulación condicional</span></span>
-<span id="cb229-2"><a href="simulación-condicional-e-incondicional.html#cb229-2"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb229-3"><a href="simulación-condicional-e-incondicional.html#cb229-3"></a>nsim.cond &lt;-<span class="st"> </span><span class="dv">4</span></span>
-<span id="cb229-4"><a href="simulación-condicional-e-incondicional.html#cb229-4"></a>s.out &lt;-<span class="st"> </span><span class="kw">output.control</span>(<span class="dt">n.predictive =</span> nsim.cond)</span>
-<span id="cb229-5"><a href="simulación-condicional-e-incondicional.html#cb229-5"></a>kc &lt;-<span class="st"> </span><span class="kw">krige.conv</span>(z, <span class="dt">loc =</span> new.s, <span class="dt">output =</span> s.out,</span>
-<span id="cb229-6"><a href="simulación-condicional-e-incondicional.html#cb229-6"></a>                 <span class="dt">krige =</span> <span class="kw">krige.control</span>(<span class="dt">type.krige=</span><span class="st">&quot;SK&quot;</span>, <span class="dt">beta =</span> <span class="dv">0</span>, <span class="dt">cov.pars =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="simulación-condicional-e-incondicional.html#cb228-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulación condicional</span></span>
+<span id="cb228-2"><a href="simulación-condicional-e-incondicional.html#cb228-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb228-3"><a href="simulación-condicional-e-incondicional.html#cb228-3" aria-hidden="true" tabindex="-1"></a>nsim.cond <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb228-4"><a href="simulación-condicional-e-incondicional.html#cb228-4" aria-hidden="true" tabindex="-1"></a>s.out <span class="ot">&lt;-</span> <span class="fu">output.control</span>(<span class="at">n.predictive =</span> nsim.cond)</span>
+<span id="cb228-5"><a href="simulación-condicional-e-incondicional.html#cb228-5" aria-hidden="true" tabindex="-1"></a>kc <span class="ot">&lt;-</span> <span class="fu">krige.conv</span>(z, <span class="at">loc =</span> new.s, <span class="at">output =</span> s.out,</span>
+<span id="cb228-6"><a href="simulación-condicional-e-incondicional.html#cb228-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">krige =</span> <span class="fu">krige.control</span>(<span class="at">type.krige=</span><span class="st">&quot;SK&quot;</span>, <span class="at">beta =</span> <span class="dv">0</span>, <span class="at">cov.pars =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)))</span></code></pre></div>
 <pre><code>## krige.conv: results will be returned only for prediction locations inside the borders
 ## krige.conv: model with constant mean
 ## krige.conv: sampling from the predictive distribution (conditional simulations)
 ## krige.conv: Kriging performed using global neighbourhood</code></pre>
 <p>Si las representamos podemos confirmar que los valores en las posiciones <span class="math inline">\(\left\{(0,0),(0,1),(1,0),(1,1)\right\}\)</span> coinciden con los generados anteriormente.</p>
-<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="simulación-condicional-e-incondicional.html#cb231-1"></a><span class="co"># Generar gráficos</span></span>
-<span id="cb231-2"><a href="simulación-condicional-e-incondicional.html#cb231-2"></a>par.old &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="fl">3.5</span>, <span class="fl">3.5</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">mgp =</span> <span class="kw">c</span>(<span class="fl">1.5</span>, <span class="fl">.5</span>, <span class="dv">0</span>))</span>
-<span id="cb231-3"><a href="simulación-condicional-e-incondicional.html#cb231-3"></a>zlim &lt;-<span class="st"> </span><span class="kw">range</span>(kc<span class="op">$</span>simul)     <span class="co"># Escala común</span></span>
-<span id="cb231-4"><a href="simulación-condicional-e-incondicional.html#cb231-4"></a><span class="co"># La versión actual de geoR::image.kriging() no admite múltiples gráficos en una ventana</span></span>
-<span id="cb231-5"><a href="simulación-condicional-e-incondicional.html#cb231-5"></a><span class="co"># image(kc, val=kc$simul[,1], main=&quot;simul. cond. 1&quot;, zlim=zlim)</span></span>
-<span id="cb231-6"><a href="simulación-condicional-e-incondicional.html#cb231-6"></a><span class="co"># image(kc, val=kc$simul[,2], main=&quot;simul. cond. 2&quot;, zlim=zlim)</span></span>
-<span id="cb231-7"><a href="simulación-condicional-e-incondicional.html#cb231-7"></a><span class="co"># image(kc, val=kc$simul[,3], main=&quot;simul. cond. 3&quot;, zlim=zlim)</span></span>
-<span id="cb231-8"><a href="simulación-condicional-e-incondicional.html#cb231-8"></a><span class="co"># image(kc, val=kc$simul[,4], main=&quot;simul. cond. 4&quot;, zlim=zlim)</span></span>
-<span id="cb231-9"><a href="simulación-condicional-e-incondicional.html#cb231-9"></a><span class="kw">dim</span>(kc<span class="op">$</span>simul) &lt;-<span class="st"> </span><span class="kw">c</span>(new.nx, nsim.cond)</span>
-<span id="cb231-10"><a href="simulación-condicional-e-incondicional.html#cb231-10"></a><span class="kw">image</span>(new.x, new.y, kc<span class="op">$</span>simul[,,<span class="dv">1</span>], <span class="dt">main=</span><span class="st">&quot;simul. cond. 1&quot;</span>,</span>
-<span id="cb231-11"><a href="simulación-condicional-e-incondicional.html#cb231-11"></a>      <span class="dt">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">zlim =</span> zlim)</span>
-<span id="cb231-12"><a href="simulación-condicional-e-incondicional.html#cb231-12"></a><span class="kw">image</span>(new.x, new.y, kc<span class="op">$</span>simul[,,<span class="dv">2</span>], <span class="dt">main=</span><span class="st">&quot;simul. cond. 2&quot;</span>,</span>
-<span id="cb231-13"><a href="simulación-condicional-e-incondicional.html#cb231-13"></a>      <span class="dt">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">zlim =</span> zlim)</span>
-<span id="cb231-14"><a href="simulación-condicional-e-incondicional.html#cb231-14"></a><span class="kw">image</span>(new.x, new.y, kc<span class="op">$</span>simul[,,<span class="dv">3</span>], <span class="dt">main=</span><span class="st">&quot;simul. cond. 3&quot;</span>,</span>
-<span id="cb231-15"><a href="simulación-condicional-e-incondicional.html#cb231-15"></a>      <span class="dt">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">zlim =</span> zlim)</span>
-<span id="cb231-16"><a href="simulación-condicional-e-incondicional.html#cb231-16"></a><span class="kw">image</span>(new.x, new.y, kc<span class="op">$</span>simul[,,<span class="dv">4</span>], <span class="dt">main=</span><span class="st">&quot;simul. cond. 4&quot;</span>,</span>
-<span id="cb231-17"><a href="simulación-condicional-e-incondicional.html#cb231-17"></a>      <span class="dt">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">zlim =</span> zlim)</span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="simulación-condicional-e-incondicional.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generar gráficos</span></span>
+<span id="cb230-2"><a href="simulación-condicional-e-incondicional.html#cb230-2" aria-hidden="true" tabindex="-1"></a>par.old <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">3.5</span>, <span class="fl">3.5</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">mgp =</span> <span class="fu">c</span>(<span class="fl">1.5</span>, .<span class="dv">5</span>, <span class="dv">0</span>))</span>
+<span id="cb230-3"><a href="simulación-condicional-e-incondicional.html#cb230-3" aria-hidden="true" tabindex="-1"></a>zlim <span class="ot">&lt;-</span> <span class="fu">range</span>(kc<span class="sc">$</span>simul)     <span class="co"># Escala común</span></span>
+<span id="cb230-4"><a href="simulación-condicional-e-incondicional.html#cb230-4" aria-hidden="true" tabindex="-1"></a><span class="co"># La versión actual de geoR::image.kriging() no admite múltiples gráficos en una ventana</span></span>
+<span id="cb230-5"><a href="simulación-condicional-e-incondicional.html#cb230-5" aria-hidden="true" tabindex="-1"></a><span class="co"># image(kc, val=kc$simul[,1], main=&quot;simul. cond. 1&quot;, zlim=zlim)</span></span>
+<span id="cb230-6"><a href="simulación-condicional-e-incondicional.html#cb230-6" aria-hidden="true" tabindex="-1"></a><span class="co"># image(kc, val=kc$simul[,2], main=&quot;simul. cond. 2&quot;, zlim=zlim)</span></span>
+<span id="cb230-7"><a href="simulación-condicional-e-incondicional.html#cb230-7" aria-hidden="true" tabindex="-1"></a><span class="co"># image(kc, val=kc$simul[,3], main=&quot;simul. cond. 3&quot;, zlim=zlim)</span></span>
+<span id="cb230-8"><a href="simulación-condicional-e-incondicional.html#cb230-8" aria-hidden="true" tabindex="-1"></a><span class="co"># image(kc, val=kc$simul[,4], main=&quot;simul. cond. 4&quot;, zlim=zlim)</span></span>
+<span id="cb230-9"><a href="simulación-condicional-e-incondicional.html#cb230-9" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(kc<span class="sc">$</span>simul) <span class="ot">&lt;-</span> <span class="fu">c</span>(new.nx, nsim.cond)</span>
+<span id="cb230-10"><a href="simulación-condicional-e-incondicional.html#cb230-10" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(new.x, new.y, kc<span class="sc">$</span>simul[,,<span class="dv">1</span>], <span class="at">main=</span><span class="st">&quot;simul. cond. 1&quot;</span>,</span>
+<span id="cb230-11"><a href="simulación-condicional-e-incondicional.html#cb230-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">zlim =</span> zlim)</span>
+<span id="cb230-12"><a href="simulación-condicional-e-incondicional.html#cb230-12" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(new.x, new.y, kc<span class="sc">$</span>simul[,,<span class="dv">2</span>], <span class="at">main=</span><span class="st">&quot;simul. cond. 2&quot;</span>,</span>
+<span id="cb230-13"><a href="simulación-condicional-e-incondicional.html#cb230-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">zlim =</span> zlim)</span>
+<span id="cb230-14"><a href="simulación-condicional-e-incondicional.html#cb230-14" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(new.x, new.y, kc<span class="sc">$</span>simul[,,<span class="dv">3</span>], <span class="at">main=</span><span class="st">&quot;simul. cond. 3&quot;</span>,</span>
+<span id="cb230-15"><a href="simulación-condicional-e-incondicional.html#cb230-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">zlim =</span> zlim)</span>
+<span id="cb230-16"><a href="simulación-condicional-e-incondicional.html#cb230-16" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(new.x, new.y, kc<span class="sc">$</span>simul[,,<span class="dv">4</span>], <span class="at">main=</span><span class="st">&quot;simul. cond. 4&quot;</span>,</span>
+<span id="cb230-17"><a href="simulación-condicional-e-incondicional.html#cb230-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">zlim =</span> zlim)</span></code></pre></div>
 <p><img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-14-1.png" width="90%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="simulación-condicional-e-incondicional.html#cb232-1"></a><span class="kw">par</span>(par.old)</span></code></pre></div>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="simulación-condicional-e-incondicional.html#cb231-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(par.old)</span></code></pre></div>
 </div>
-<div id="simulación-condicional-a-partir-de-un-modelo-ajustado" class="section level3">
+<div id="simulación-condicional-a-partir-de-un-modelo-ajustado" class="section level3" number="7.5.2">
 <h3><span class="header-section-number">7.5.2</span> Simulación condicional a partir de un modelo ajustado</h3>
 <p>En la práctica normalmente se ajusta un modelo a los datos observados y posteriormente se obtienen las simulaciones condicionadas empleando el modelo ajustado.</p>
-<p>En <code>R</code> se incluye una función genérica<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a> <code>simulate()</code> que permite generar respuestas a partir de modelos ajustados (siempre que esté implementado el método correspondiente al tipo de modelo).
+<p>En <code>R</code> se incluye una función genérica<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a> <code>simulate()</code> que permite generar respuestas a partir de modelos ajustados (siempre que esté implementado el método correspondiente al tipo de modelo).
 Los métodos para modelos lineales y modelos lineales generalizamos están implementados en el paquete base <code>stats</code>.
 Muchos otros paquetes que proporcionan modelos adicionales, implementan también los correspondientes métodos <code>simulate()</code>.
 Por ejemplo, en el caso de series de tiempo, el paquete <code>forecast</code> permite ajustar distintos tipos de modelos y generar simulaciones a partir de ellos:</p>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="simulación-condicional-e-incondicional.html#cb233-1"></a><span class="kw">library</span>(forecast)</span>
-<span id="cb233-2"><a href="simulación-condicional-e-incondicional.html#cb233-2"></a>data &lt;-<span class="st"> </span><span class="kw">window</span>(co2, <span class="dv">1990</span>) <span class="co"># datos de co2 desde 1990</span></span>
-<span id="cb233-3"><a href="simulación-condicional-e-incondicional.html#cb233-3"></a><span class="kw">plot</span>(data, <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;Atmospheric concentration of CO&quot;</span>[<span class="dv">2</span>]),</span>
-<span id="cb233-4"><a href="simulación-condicional-e-incondicional.html#cb233-4"></a>     <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">1990</span>, <span class="dv">2000</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">350</span>, <span class="dv">375</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="simulación-condicional-e-incondicional.html#cb232-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forecast)</span>
+<span id="cb232-2"><a href="simulación-condicional-e-incondicional.html#cb232-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">window</span>(co2, <span class="dv">1990</span>) <span class="co"># datos de co2 desde 1990</span></span>
+<span id="cb232-3"><a href="simulación-condicional-e-incondicional.html#cb232-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(data, <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;Atmospheric concentration of CO&quot;</span>[<span class="dv">2</span>]),</span>
+<span id="cb232-4"><a href="simulación-condicional-e-incondicional.html#cb232-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1990</span>, <span class="dv">2000</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">350</span>, <span class="dv">375</span>))</span></code></pre></div>
 <p><img src="07-Simulacion_multidimensional_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="simulación-condicional-e-incondicional.html#cb234-1"></a><span class="co"># Se podrían ajustar distintos tipos de modelos</span></span>
-<span id="cb234-2"><a href="simulación-condicional-e-incondicional.html#cb234-2"></a>fit &lt;-<span class="st"> </span><span class="kw">ets</span>(data)</span>
-<span id="cb234-3"><a href="simulación-condicional-e-incondicional.html#cb234-3"></a><span class="co"># fit &lt;- auto.arima(data)</span></span></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="simulación-condicional-e-incondicional.html#cb233-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Se podrían ajustar distintos tipos de modelos</span></span>
+<span id="cb233-2"><a href="simulación-condicional-e-incondicional.html#cb233-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">ets</span>(data)</span>
+<span id="cb233-3"><a href="simulación-condicional-e-incondicional.html#cb233-3" aria-hidden="true" tabindex="-1"></a><span class="co"># fit &lt;- auto.arima(data)</span></span></code></pre></div>
 <p>Podemos obtener predicciones (media de la distribución condicional) e intervalos de predicción:</p>
-<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="simulación-condicional-e-incondicional.html#cb235-1"></a>pred &lt;-<span class="st"> </span><span class="kw">forecast</span>(fit, <span class="dt">h =</span> <span class="dv">24</span>, <span class="dt">level =</span> <span class="dv">95</span>)</span>
-<span id="cb235-2"><a href="simulación-condicional-e-incondicional.html#cb235-2"></a>pred</span></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="simulación-condicional-e-incondicional.html#cb234-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> <span class="dv">24</span>, <span class="at">level =</span> <span class="dv">95</span>)</span>
+<span id="cb234-2"><a href="simulación-condicional-e-incondicional.html#cb234-2" aria-hidden="true" tabindex="-1"></a>pred</span></code></pre></div>
 <pre><code>##          Point Forecast    Lo 95    Hi 95
 ## Jan 1998       365.1118 364.5342 365.6894
 ## Feb 1998       366.1195 365.4572 366.7819
@@ -586,12 +624,12 @@ Por ejemplo, en el caso de series de tiempo, el paquete <code>forecast</code> pe
 ## Nov 1999       365.6929 364.0597 367.3260
 ## Dec 1999       367.0134 365.3477 368.6790</code></pre>
 <p>Para análisis adicionales nos puede interesar generar simulaciones (por defecto de la distribución condicional, <code>future = TRUE</code>):</p>
-<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="simulación-condicional-e-incondicional.html#cb237-1"></a><span class="kw">set.seed</span>(<span class="dv">321</span>)</span>
-<span id="cb237-2"><a href="simulación-condicional-e-incondicional.html#cb237-2"></a>sim.cond &lt;-<span class="st"> </span><span class="kw">simulate</span>(fit, <span class="dv">24</span>)</span>
-<span id="cb237-3"><a href="simulación-condicional-e-incondicional.html#cb237-3"></a></span>
-<span id="cb237-4"><a href="simulación-condicional-e-incondicional.html#cb237-4"></a><span class="kw">plot</span>(pred)</span>
-<span id="cb237-5"><a href="simulación-condicional-e-incondicional.html#cb237-5"></a><span class="kw">lines</span>(sim.cond, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:simulate-forecast"></span>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="simulación-condicional-e-incondicional.html#cb236-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">321</span>)</span>
+<span id="cb236-2"><a href="simulación-condicional-e-incondicional.html#cb236-2" aria-hidden="true" tabindex="-1"></a>sim.cond <span class="ot">&lt;-</span> <span class="fu">simulate</span>(fit, <span class="dv">24</span>)</span>
+<span id="cb236-3"><a href="simulación-condicional-e-incondicional.html#cb236-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb236-4"><a href="simulación-condicional-e-incondicional.html#cb236-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pred)</span>
+<span id="cb236-5"><a href="simulación-condicional-e-incondicional.html#cb236-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(sim.cond, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:simulate-forecast"></span>
 <img src="07-Simulacion_multidimensional_files/figure-html/simulate-forecast-1.png" alt="Ejemplo de una serie de tiempo (datos observados de co2 en el observatorio Mauna Loa), predicciones futuras (en azul; media distribución condicional) y simulación condicional (en rojo) obtenidas a partir de un modelo ajustado." width="70%" />
 <p class="caption">
 Figura 7.6: Ejemplo de una serie de tiempo (datos observados de co2 en el observatorio Mauna Loa), predicciones futuras (en azul; media distribución condicional) y simulación condicional (en rojo) obtenidas a partir de un modelo ajustado.
@@ -602,8 +640,8 @@ Figura 7.6: Ejemplo de una serie de tiempo (datos observados de co2 en el observ
 </div>
 <div class="footnotes">
 <hr />
-<ol start="11">
-<li id="fn11"><p>Se pueden implementar métodos específicos para cada tipo (clase) de objeto; en este caso para cada tipo de modelo ajustado y podemos mostrar los disponibles mediante el comando <code>methods(simulate)</code>.<a href="simulación-condicional-e-incondicional.html#fnref11" class="footnote-back">↩︎</a></p></li>
+<ol start="13">
+<li id="fn13"><p>Se pueden implementar métodos específicos para cada tipo (clase) de objeto; en este caso para cada tipo de modelo ajustado y podemos mostrar los disponibles mediante el comando <code>methods(simulate)</code>.<a href="simulación-condicional-e-incondicional.html#fnref13" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -616,7 +654,6 @@ Figura 7.6: Ejemplo de una serie de tiempo (datos observados de co2 en el observ
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -635,6 +672,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -655,6 +693,10 @@ gitbook.start({
 "text": null
 },
 "download": ["Simulacion.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

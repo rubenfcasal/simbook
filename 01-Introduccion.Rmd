@@ -34,7 +34,7 @@ Además la realidad puede ser demasiado compleja como para ser estudiada directa
 Un modelo no es más que un conjunto de variables junto con ecuaciones matemáticas que las relacionan y restricciones sobre dichas variables. 
 Habría dos tipos de modelos:
 
--   Modelos deterministas.
+-   Modelos deterministas: en los que bajo las mismas condiciones (fijados los valores de las variables explicativas) se obtienen siempre los mismos resultados.
 
 -   Modelos estocásticos (con componente aleatoria): tienen en cuenta la incertidumbre asociada al modelo. Tradicionalmente se supone que esta incertidumbre es debida a que no se dispone de toda la información sobre las variables que influyen en el fenómeno en estudio (puede ser debida simplemente a que haya errores de medida), lo que se conoce como *aleatoriedad aparente*:
 
@@ -42,7 +42,7 @@ Habría dos tipos de modelos:
     >
     > --- Spinoza, Baruch (Ethics, 1677)
     
-    aunque hoy en día gana peso la idea de la física cuántica de que en el fondo hay una *aleatoriedad intrínseca*.
+    aunque hoy en día gana peso la idea de la física cuántica de que en el fondo hay una *aleatoriedad intrínseca*^[Como ejemplo, en física cuántica, la [ecuación de Schrödinger](https://es.wikipedia.org/wiki/Ecuaci%C3%B3n_de_Schr%C3%B6dinger) es un modelo determinista que describe la evolución en el tiempo de la función de onda de un sistema. Sin embargo, como las funciones de onda pueden cambiar de forma aleatoria al realizar una medición, se emplea la [regla de Born](https://en.wikipedia.org/wiki/Born_rule) para modelar las probabilidades de las distintas posibilidades (algo que inicialmente generó rechazo, dió lugar a la famosa frase de Einstein "Dios no juega a los dados", pero experimentos posteriores parecen confirmar). Por tanto en la práctica se emplea un modelo estocástico.].
 
 La modelización es una etapa presente en la mayor parte de los trabajos de investigación, especialmente en las ciencias experimentales.
 El modelo debería considerar las variables más relevantes para explicar el fenómeno en estudio y las principales relaciones entre ellas.
@@ -135,19 +135,23 @@ En los capítulos \@ref(cap8) y \@ref(cap9) nos centraremos en algunas de las ap
 
 ## Números aleatorios puros
 
-Una sucesión de números aleatorios puros (*true random*), se caracteriza por que no existe ninguna regla o plan que nos permita conocer sus valores.
+El primer requisito para poder realizar simulación estocástica sería disponer de números aleatorios.
+Una sucesión de números aleatorios puros (*true random*) se caracteriza porque no existe ninguna regla o plan que nos permita conocer sus valores.
 
-Normalmente son obtenidos por procesos físicos
-(loterías, ruletas, ruidos...) y se almacenaban en *tablas de dígitos aleatorios*. 
-Por ejemplo, en 1955 la Corporación RAND publicó el libro [A Million Random Digits with 100,000 Normal Deviates](https://www.rand.org/pubs/monograph_reports/MR1418.html) que contenía números aleatorios generados mediante una ruleta electrónica conectada a una computadora `r citefig("randbook")`.
+Normalmente son obtenidos por procesos físicos (loterías, ruletas, ruidos...) y, hasta hace una décadas, se almacenaban en *tablas de dígitos aleatorios*. 
+Por ejemplo, en 1955 la Corporación RAND publicó el libro [*A Million Random Digits with 100,000 Normal Deviates*](https://www.rand.org/pubs/monograph_reports/MR1418.html) que contenía números aleatorios generados mediante una ruleta electrónica conectada a una computadora `r citefig("randbook")`.
 
+<!-- 
+Pendiente:
+Leyenda markdown
+-->
 
 ```{r randbook, echo=FALSE, fig.cap='Líneas 10580-10594, columnas 21-40, del libro *A Million Random Digits with 100,000 Normal Deviates*.', out.width="30%"}
 #  ![RAND](images/RAND.png)
 knitr::include_graphics(paste0(fig.path, "RAND.png"))
 ```
 
-El procedimiento para generar de forma manual números aleatorios 
+El procedimiento que se utilizaba para seleccionar de una tabla, de forma manual, números aleatorios 
 en un rango de 1 a *m* era el siguiente:
 
 -   Se selecciona al azar un punto de inicio en la tabla 
@@ -164,7 +168,7 @@ Hoy en día están disponibles generadores de números aleatorios “online”, 
 
 -   [HotBits](http://www.fourmilab.ch/hotbits): desintegración radiactiva.
 
-Aunque para un uso profesional puede ser recomendable emplear generadores implementados mediante hardware:
+Aunque para un uso profesional es recomendable emplear generadores implementados mediante hardware:
 
 -   [Intel Digital Random Number Generator](http://software.intel.com/en-us/articles/intel-digital-random-number-generator-drng-software-implementation-guide)
 
@@ -173,25 +177,31 @@ Aunque para un uso profesional puede ser recomendable emplear generadores implem
 
 Sus principales aplicaciones hoy en día son en criptografía y juegos de azar, donde resulta especialmente importante su impredecibilidad.
 
-El principal inconveniente para su aplicación en el campo de la Estadística (y en otros casos) es que los valores generados deberían ser independientes e idénticamente distribuidos con distribución conocida, algo que resulta difícil (o imposible) de garantizar.
+El uso de números aleatorios puros presenta dos grandes incovenientes. 
+El principal para su aplicación en el campo de la Estadística (y en otros casos) es que los valores generados deberían ser independientes e idénticamente distribuidos con distribución conocida, algo que resulta difícil (o imposible) de garantizar.
 Siempre está presente la posible aparición de sesgos, principalmente debidos a fallos del sistema o interferencias. 
 Por ejemplo, en el caso de la máquina RAND, fallos mecánicos en el sistema de grabación de los datos causaron problemas de aleatoriedad (Hacking, 1965, p. 129).
 
-Otro inconveniente estaría relacionado con su reproducibilidad, por lo que habría que almacenarlos en tablas si se quieren volver a reproducir los resultados.
+El otro inconveniente estaría relacionado con su reproducibilidad, por lo que habría que almacenarlos en tablas si se quieren volver a reproducir los resultados.
 
 
-### Alternativas:
+## Generación de números "aleatorios" mediante software
 
 A partir de la década de 1960, al disponer de computadoras de mayor velocidad, empezó a resultar más eficiente generar valores mediante software en lugar de leerlos de las tablas. 
 Se distingue entre dos tipos de secuencias:
 
--   *números pseudo-aleatorios*: simulan realizaciones de una variable aleatoria (uniforme).
+-   *números pseudo-aleatorios*: simulan realizaciones de una variable aleatoria (uniforme),
 
--   números cuasi-aleatorios: secuencias determinísticas con una distribución más uniforme en el rango considerado (se podría pensar que son una única generación de una variable aleatoria).
+-   *números cuasi-aleatorios*: secuencias deterministas con una distribución más regular en el rango considerado.
+
+<!-- 
+Pendiente 
+*números cuasi-aleatorios*: ... (se podría pensar que son una única generación de una variable aleatoria)?
+-->
 
 Algunos problemas, como la integración numérica (en el Capítulo \@ref(cap9) se tratarán métodos de integración Monte Carlo), no dependen realmente de la aleatoriedad de la secuencia. Para evitar generaciones poco probables, se puede recurrir a secuencias cuasi-aleatorias, también denominadas *sucesiones de baja discrepancia* (hablaríamos entonces de métodos cuasi-Monte Carlo). La idea sería que la proporción de valores en una región cualquiera sea siempre aproximadamente proporcional a la medida de la región (como sucedería en media con la distribución uniforme, aunque no necesariamente para una realización concreta).
 
-Por ejemplo, el paquete `r citepkg("randtoolbox")` implementa métodos para la generación de secuencias cuasi-aleatorias `r citefig("randtoolbox")`.
+Por ejemplo, el paquete `r citepkg("randtoolbox")` de R implementa métodos para la generación de secuencias cuasi-aleatorias `r citefig("randtoolbox")`.
 
 ```{r randtoolbox, fig.cap='Secuencias cuasi-aleatorias bidimensionales obtenidas con los métodos de Halton (izquierda), Sobol (centro) y Torus (derecha).', out.width="100%", fig.width=12, fig.height=4.5, message=FALSE}
 library(randtoolbox)
@@ -206,12 +216,11 @@ par(par.old)
 En este libro sólo consideraremos los números pseudoaleatorios y por comodidad se eliminará el prefijo "pseudo" en algunos casos.
 
 
-Números pseudoaleatorios
-------------------------
+## Números pseudoaleatorios
 
-La mayoría de los métodos de simulación se basan en la posibilidad de generar números pseudoaleatorios que imiten las propiedades de generaciones independientes de una distribución $\mathcal{U}(0,1)$. 
+La mayoría de los métodos de simulación se basan en la posibilidad de generar números pseudoaleatorios que imiten las propiedades de valores independientes de una distribución $\mathcal{U}(0,1)$, es decir, que imiten las propiedades de una muestra aleatoria simple^[Aunque hay que distinguir entre secuencia y muestra. En un problema de inferencia, en principio estamos interesados en una característica desconocida de la población. En cambio, en un problema de simulación "la población" es el modelo y lo conocemos por completo (no obstante el problema de simulación puede surgir como solución de un problema de inferencia).]. 
 
-El procedimiento habitual para obtiener estas secuencias es emplear un algoritmo recursivo denominado *generador*:
+El procedimiento habitual para obtener estas secuencias es emplear un algoritmo recursivo denominado *generador*:
 
 $$x_{i} = f\left( x_{i-1}, x_{i-2}, \cdots, x_{i-k}\right)$$
 
@@ -225,24 +234,20 @@ donde:
 El *periodo* o *longitud del ciclo* es la longitud de la secuencia antes de que vuelva a repetirse. Lo denotaremos por $p$.
 
 
-Los números de la sucesión serán predecibles, conociendo el algoritmo y la semilla.
-
--   Sin embargo, si no se conociesen, *no se debería poder distinguir* una serie de números pseudoaleatorios *de una sucesión de números verdaderamente aleatoria* (utilizando recursos computacionales razonables).
-
--   En caso contrario esta predecibilidad puede dar lugar a serios
+Los números de la sucesión son predecibles, conociendo el algoritmo y la semilla.
+Sin embargo, si no se conociesen, *no se debería poder distinguir* una serie de números pseudoaleatorios *de una sucesión de números verdaderamente aleatoria* (utilizando recursos computacionales razonables).
+En caso contrario esta predecibilidad puede dar lugar a serios
 problemas (e.g. [http://eprint.iacr.org/2007/419](http://eprint.iacr.org/2007/419)).
 
 Como regla general, por lo menos mientras se está desarrollando un
 programa, interesa *fijar la semilla de aleatorización*.
 
--   Permite la reproductibilidad de los resultados.
+-   Permite la reproducibilidad de los resultados.
 
 -   Facilita la depuración del código.
 
-Todo generador de números pseudoaleatorios mínimamente aceptable
-debe comportarse como si se tratase de una muestra genuina de datos
-independientes de una $\mathcal{U}(0,1)$.
-Otras propiedades de interés serían:
+Todo generador de números pseudoaleatorios mínimamente aceptable debe comportarse como si proporcionase muestras genuinas de datos independientes de una $\mathcal{U}(0,1)$.
+Otras propiedades de interés son:
 
 -   Reproducibilidad a partir de la semilla.
 
@@ -254,28 +259,28 @@ Otras propiedades de interés serían:
 
 -   Generación de sub-secuencias (computación en paralelo).
 
--   Parsimonia...
+-   Parsimonia.
 
+Es importante asegurarse de que el generador empleado es adecuado:
 
-> "... random numbers should not be generated with a method chosen at random." 
+> "Random numbers should not be generated with a method chosen at random." 
 >
 >
 > --- Knuth, D.E. (TAOCP, 2002)
 
 
-Gran cantidad de algoritmos:
+Se dispone de una gran cantidad de algoritmos, entre otros:
 
--   Cuadrados medios, Lehmer...
+-   Primeros intentos (obsoletos): Cuadrados medios, Lehmer...
 
--   Congruenciales
+-   Congruenciales.
 
--   Registros desfasados
+-   Registros desfasados.
 
--   Combinaciones
+-   Combinaciones de distintos algoritmos.
 
--   ...
 
-Código fuente disponible en múltiples librerias:
+El código fuente está disponible en múltiples librerías:
 
 -   GNU Scientific Library (GSL):
     [http://www.gnu.org/software/gsl/manual](http://www.gnu.org/software/gsl/manual/html\_node/Random-Number-Generation.html)
@@ -294,4 +299,4 @@ Código fuente disponible en múltiples librerias:
 
 -   ...
   
-Nos centraremos en los generadores congruenciales, descritos en la Sección \@ref(gen-cong).
+En este libro nos centraremos en los generadores congruenciales, descritos en la Sección \@ref(gen-cong).
