@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3.2 Análisis de la calidad de un generador | Simulación Estadística</title>
   <meta name="description" content="Apuntes de la asignatura de Simulación Estadística del Máster en Técnicas Estadísticas." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3.2 Análisis de la calidad de un generador | Simulación Estadística" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-02-02" />
+<meta name="date" content="2022-02-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,9 +33,7 @@
   
 <link rel="prev" href="gen-cong.html"/>
 <link rel="next" href="ejercicios-1.html"/>
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -51,23 +49,23 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -87,7 +85,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -120,7 +118,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -138,10 +135,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
-<li class="chapter" data-level="1" data-path="cap1.html"><a href="cap1.html"><i class="fa fa-check"></i><b>1</b> Introducción a la simulación</a>
-<ul>
-<li class="chapter" data-level="1.1" data-path="conceptos-básicos.html"><a href="conceptos-básicos.html"><i class="fa fa-check"></i><b>1.1</b> Conceptos básicos</a>
-<ul>
+<li class="chapter" data-level="1" data-path="cap1.html"><a href="cap1.html"><i class="fa fa-check"></i><b>1</b> Introducción a la simulación</a><ul>
+<li class="chapter" data-level="1.1" data-path="conceptos-básicos.html"><a href="conceptos-básicos.html"><i class="fa fa-check"></i><b>1.1</b> Conceptos básicos</a><ul>
 <li class="chapter" data-level="1.1.1" data-path="conceptos-básicos.html"><a href="conceptos-básicos.html#ventajas-e-inconvenientes-de-la-simulación"><i class="fa fa-check"></i><b>1.1.1</b> Ventajas e inconvenientes de la simulación</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="aplicaciones-de-la-simulación.html"><a href="aplicaciones-de-la-simulación.html"><i class="fa fa-check"></i><b>1.2</b> Aplicaciones de la simulación</a></li>
@@ -149,75 +144,60 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.4" data-path="generación-de-números-aleatorios-mediante-software.html"><a href="generación-de-números-aleatorios-mediante-software.html"><i class="fa fa-check"></i><b>1.4</b> Generación de números “aleatorios” mediante software</a></li>
 <li class="chapter" data-level="1.5" data-path="números-pseudoaleatorios.html"><a href="números-pseudoaleatorios.html"><i class="fa fa-check"></i><b>1.5</b> Números pseudoaleatorios</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="rrng.html"><a href="rrng.html"><i class="fa fa-check"></i><b>2</b> Números aleatorios en R</a>
-<ul>
+<li class="chapter" data-level="2" data-path="rrng.html"><a href="rrng.html"><i class="fa fa-check"></i><b>2</b> Números aleatorios en R</a><ul>
 <li class="chapter" data-level="2.1" data-path="opciones.html"><a href="opciones.html"><i class="fa fa-check"></i><b>2.1</b> Opciones</a></li>
 <li class="chapter" data-level="2.2" data-path="paquetes-de-r.html"><a href="paquetes-de-r.html"><i class="fa fa-check"></i><b>2.2</b> Paquetes de R</a></li>
 <li class="chapter" data-level="2.3" data-path="ejercicios.html"><a href="ejercicios.html"><i class="fa fa-check"></i><b>2.3</b> Ejercicios</a></li>
-<li class="chapter" data-level="2.4" data-path="tiempo-de-cpu.html"><a href="tiempo-de-cpu.html"><i class="fa fa-check"></i><b>2.4</b> Tiempo de CPU</a>
-<ul>
+<li class="chapter" data-level="2.4" data-path="tiempo-de-cpu.html"><a href="tiempo-de-cpu.html"><i class="fa fa-check"></i><b>2.4</b> Tiempo de CPU</a><ul>
 <li class="chapter" data-level="2.4.1" data-path="tiempo-de-cpu.html"><a href="tiempo-de-cpu.html#utilidades-tiempo-de-cpu"><i class="fa fa-check"></i><b>2.4.1</b> Utilidades tiempo de CPU</a></li>
 <li class="chapter" data-level="2.4.2" data-path="tiempo-de-cpu.html"><a href="tiempo-de-cpu.html#paquetes-de-r-1"><i class="fa fa-check"></i><b>2.4.2</b> Paquetes de R</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="cap3.html"><a href="cap3.html"><i class="fa fa-check"></i><b>3</b> Generación de números pseudoaleatorios</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="gen-cong.html"><a href="gen-cong.html"><i class="fa fa-check"></i><b>3.1</b> Generadores congruenciales</a>
-<ul>
+<li class="chapter" data-level="3" data-path="cap3.html"><a href="cap3.html"><i class="fa fa-check"></i><b>3</b> Generación de números pseudoaleatorios</a><ul>
+<li class="chapter" data-level="3.1" data-path="gen-cong.html"><a href="gen-cong.html"><i class="fa fa-check"></i><b>3.1</b> Generadores congruenciales</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="gen-cong.html"><a href="gen-cong.html#otros-generadores"><i class="fa fa-check"></i><b>3.1.1</b> Otros generadores</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="calgen.html"><a href="calgen.html"><i class="fa fa-check"></i><b>3.2</b> Análisis de la calidad de un generador</a>
-<ul>
+<li class="chapter" data-level="3.2" data-path="calgen.html"><a href="calgen.html"><i class="fa fa-check"></i><b>3.2</b> Análisis de la calidad de un generador</a><ul>
 <li class="chapter" data-level="3.2.1" data-path="calgen.html"><a href="calgen.html#repetición-de-contrastes"><i class="fa fa-check"></i><b>3.2.1</b> Repetición de contrastes</a></li>
 <li class="chapter" data-level="3.2.2" data-path="calgen.html"><a href="calgen.html#baterias"><i class="fa fa-check"></i><b>3.2.2</b> Baterías de contrastes</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="ejercicios-1.html"><a href="ejercicios-1.html"><i class="fa fa-check"></i><b>3.3</b> Ejercicios</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="cap4.html"><a href="cap4.html"><i class="fa fa-check"></i><b>4</b> Análisis de resultados de simulación</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="convergencia.html"><a href="convergencia.html"><i class="fa fa-check"></i><b>4.1</b> Convergencia</a>
-<ul>
+<li class="chapter" data-level="4" data-path="cap4.html"><a href="cap4.html"><i class="fa fa-check"></i><b>4</b> Análisis de resultados de simulación</a><ul>
+<li class="chapter" data-level="4.1" data-path="convergencia.html"><a href="convergencia.html"><i class="fa fa-check"></i><b>4.1</b> Convergencia</a><ul>
 <li class="chapter" data-level="4.1.1" data-path="convergencia.html"><a href="convergencia.html#detección-de-problemas-de-convergencia"><i class="fa fa-check"></i><b>4.1.1</b> Detección de problemas de convergencia</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="estimación-de-la-precisión.html"><a href="estimación-de-la-precisión.html"><i class="fa fa-check"></i><b>4.2</b> Estimación de la precisión</a></li>
 <li class="chapter" data-level="4.3" data-path="teorema-central-del-límite.html"><a href="teorema-central-del-límite.html"><i class="fa fa-check"></i><b>4.3</b> Teorema central del límite</a></li>
 <li class="chapter" data-level="4.4" data-path="determinación-del-número-de-generaciones.html"><a href="determinación-del-número-de-generaciones.html"><i class="fa fa-check"></i><b>4.4</b> Determinación del número de generaciones</a></li>
-<li class="chapter" data-level="4.5" data-path="el-problema-de-la-dependencia.html"><a href="el-problema-de-la-dependencia.html"><i class="fa fa-check"></i><b>4.5</b> El problema de la dependencia</a>
-<ul>
+<li class="chapter" data-level="4.5" data-path="el-problema-de-la-dependencia.html"><a href="el-problema-de-la-dependencia.html"><i class="fa fa-check"></i><b>4.5</b> El problema de la dependencia</a><ul>
 <li class="chapter" data-level="4.5.1" data-path="el-problema-de-la-dependencia.html"><a href="el-problema-de-la-dependencia.html#periodo-de-calentamiento"><i class="fa fa-check"></i><b>4.5.1</b> Periodo de calentamiento</a></li>
 </ul></li>
 <li class="chapter" data-level="4.6" data-path="observaciones.html"><a href="observaciones.html"><i class="fa fa-check"></i><b>4.6</b> Observaciones</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="sim-con.html"><a href="sim-con.html"><i class="fa fa-check"></i><b>5</b> Simulación de variables continuas</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="método-de-inversión.html"><a href="método-de-inversión.html"><i class="fa fa-check"></i><b>5.1</b> Método de inversión</a>
-<ul>
+<li class="chapter" data-level="5" data-path="sim-con.html"><a href="sim-con.html"><i class="fa fa-check"></i><b>5</b> Simulación de variables continuas</a><ul>
+<li class="chapter" data-level="5.1" data-path="método-de-inversión.html"><a href="método-de-inversión.html"><i class="fa fa-check"></i><b>5.1</b> Método de inversión</a><ul>
 <li class="chapter" data-level="5.1.1" data-path="método-de-inversión.html"><a href="método-de-inversión.html#algunas-distribuciones-que-pueden-simularse-por-el-método-de-inversión"><i class="fa fa-check"></i><b>5.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
 <li class="chapter" data-level="5.1.2" data-path="método-de-inversión.html"><a href="método-de-inversión.html#ventajas-e-inconvenientes"><i class="fa fa-check"></i><b>5.1.2</b> Ventajas e inconvenientes</a></li>
 <li class="chapter" data-level="5.1.3" data-path="método-de-inversión.html"><a href="método-de-inversión.html#inversión-aproximada"><i class="fa fa-check"></i><b>5.1.3</b> Inversión aproximada</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>5.2</b> Método de aceptación rechazo</a>
-<ul>
+<li class="chapter" data-level="5.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>5.2</b> Método de aceptación rechazo</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="AR.html"><a href="AR.html#algoritmo"><i class="fa fa-check"></i><b>5.2.1</b> Algoritmo</a></li>
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.4</b> Ejemplo: Inferencia Bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
-<ul>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a><ul>
 <li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
-<li class="chapter" data-level="5.5" data-path="notables-cont.html"><a href="notables-cont.html"><i class="fa fa-check"></i><b>5.5</b> Métodos específicos para la generación de algunas distribuciones notables</a>
-<ul>
+<li class="chapter" data-level="5.5" data-path="notables-cont.html"><a href="notables-cont.html"><i class="fa fa-check"></i><b>5.5</b> Métodos específicos para la generación de algunas distribuciones notables</a><ul>
 <li class="chapter" data-level="5.5.1" data-path="notables-cont.html"><a href="notables-cont.html#método-de-box-müller"><i class="fa fa-check"></i><b>5.5.1</b> Método de Box-Müller</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="discretas.html"><a href="discretas.html"><i class="fa fa-check"></i><b>6</b> Simulación de variables discretas</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="método-de-la-transformación-cuantil.html"><a href="método-de-la-transformación-cuantil.html"><i class="fa fa-check"></i><b>6.1</b> Método de la transformación cuantil</a>
-<ul>
+<li class="chapter" data-level="6" data-path="discretas.html"><a href="discretas.html"><i class="fa fa-check"></i><b>6</b> Simulación de variables discretas</a><ul>
+<li class="chapter" data-level="6.1" data-path="método-de-la-transformación-cuantil.html"><a href="método-de-la-transformación-cuantil.html"><i class="fa fa-check"></i><b>6.1</b> Método de la transformación cuantil</a><ul>
 <li class="chapter" data-level="6.1.1" data-path="método-de-la-transformación-cuantil.html"><a href="método-de-la-transformación-cuantil.html#eficiencia-del-algoritmo-1"><i class="fa fa-check"></i><b>6.1.1</b> Eficiencia del algoritmo</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="método-de-la-tabla-guía.html"><a href="método-de-la-tabla-guía.html"><i class="fa fa-check"></i><b>6.2</b> Método de la tabla guía</a></li>
@@ -227,37 +207,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>6.6</b> Otros métodos</a></li>
 <li class="chapter" data-level="6.7" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>6.7</b> Métodos específicos para generación de distribuciones notables</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="simulación-de-distribuciones-multivariantes.html"><a href="simulación-de-distribuciones-multivariantes.html"><i class="fa fa-check"></i><b>7</b> Simulación de distribuciones multivariantes</a>
-<ul>
+<li class="chapter" data-level="7" data-path="simulación-de-distribuciones-multivariantes.html"><a href="simulación-de-distribuciones-multivariantes.html"><i class="fa fa-check"></i><b>7</b> Simulación de distribuciones multivariantes</a><ul>
 <li class="chapter" data-level="7.1" data-path="simulación-de-componentes-independientes.html"><a href="simulación-de-componentes-independientes.html"><i class="fa fa-check"></i><b>7.1</b> Simulación de componentes independientes</a></li>
 <li class="chapter" data-level="7.2" data-path="el-método-de-aceptaciónrechazo.html"><a href="el-método-de-aceptaciónrechazo.html"><i class="fa fa-check"></i><b>7.2</b> El método de aceptación/rechazo</a></li>
 <li class="chapter" data-level="7.3" data-path="fact-cov.html"><a href="fact-cov.html"><i class="fa fa-check"></i><b>7.3</b> Factorización de la matriz de covarianzas</a></li>
 <li class="chapter" data-level="7.4" data-path="distrcond.html"><a href="distrcond.html"><i class="fa fa-check"></i><b>7.4</b> Método de las distribuciones condicionadas</a></li>
-<li class="chapter" data-level="7.5" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html"><i class="fa fa-check"></i><b>7.5</b> Simulación condicional e incondicional</a>
-<ul>
+<li class="chapter" data-level="7.5" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html"><i class="fa fa-check"></i><b>7.5</b> Simulación condicional e incondicional</a><ul>
 <li class="chapter" data-level="7.5.1" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html#condnormal"><i class="fa fa-check"></i><b>7.5.1</b> Simulación condicional de una normal multivariante</a></li>
 <li class="chapter" data-level="7.5.2" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html#simulación-condicional-a-partir-de-un-modelo-ajustado"><i class="fa fa-check"></i><b>7.5.2</b> Simulación condicional a partir de un modelo ajustado</a></li>
 </ul></li>
-<li class="chapter" data-level="7.6" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html"><i class="fa fa-check"></i><b>7.6</b> Simulación basada en cópulas</a>
-<ul>
+<li class="chapter" data-level="7.6" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html"><i class="fa fa-check"></i><b>7.6</b> Simulación basada en cópulas</a><ul>
 <li class="chapter" data-level="7.6.1" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html#cópulas-arquimedianas"><i class="fa fa-check"></i><b>7.6.1</b> Cópulas Arquimedianas</a></li>
 <li class="chapter" data-level="7.6.2" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html#simulación"><i class="fa fa-check"></i><b>7.6.2</b> Simulación</a></li>
 </ul></li>
-<li class="chapter" data-level="7.7" data-path="mult-discr.html"><a href="mult-discr.html"><i class="fa fa-check"></i><b>7.7</b> Simulación de distribuciones multivariantes discretas</a>
-<ul>
+<li class="chapter" data-level="7.7" data-path="mult-discr.html"><a href="mult-discr.html"><i class="fa fa-check"></i><b>7.7</b> Simulación de distribuciones multivariantes discretas</a><ul>
 <li class="chapter" data-level="7.7.1" data-path="mult-discr.html"><a href="mult-discr.html#métodos-de-codificación-o-etiquetado-para-variables-discretas"><i class="fa fa-check"></i><b>7.7.1</b> Métodos de codificación o etiquetado para variables discretas</a></li>
 <li class="chapter" data-level="7.7.2" data-path="mult-discr.html"><a href="mult-discr.html#simulación-de-una-variable-discreta-bidimensional"><i class="fa fa-check"></i><b>7.7.2</b> Simulación de una variable discreta bidimensional</a></li>
 <li class="chapter" data-level="7.7.3" data-path="mult-discr.html"><a href="mult-discr.html#simconting"><i class="fa fa-check"></i><b>7.7.3</b> Simulación de tablas de contingencia</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="cap8.html"><a href="cap8.html"><i class="fa fa-check"></i><b>8</b> Aplicaciones en Inferencia Estadística</a>
-<ul>
+<li class="chapter" data-level="8" data-path="cap8.html"><a href="cap8.html"><i class="fa fa-check"></i><b>8</b> Aplicaciones en Inferencia Estadística</a><ul>
 <li class="chapter" data-level="8.1" data-path="distribución-en-el-muestreo.html"><a href="distribución-en-el-muestreo.html"><i class="fa fa-check"></i><b>8.1</b> Distribución en el muestreo</a></li>
 <li class="chapter" data-level="8.2" data-path="intervalos-de-confianza.html"><a href="intervalos-de-confianza.html"><i class="fa fa-check"></i><b>8.2</b> Intervalos de confianza</a></li>
 <li class="chapter" data-level="8.3" data-path="contrastes.html"><a href="contrastes.html"><i class="fa fa-check"></i><b>8.3</b> Contrastes de hipótesis</a></li>
 <li class="chapter" data-level="8.4" data-path="comparación-de-estimadores.html"><a href="comparación-de-estimadores.html"><i class="fa fa-check"></i><b>8.4</b> Comparación de estimadores</a></li>
-<li class="chapter" data-level="8.5" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html"><i class="fa fa-check"></i><b>8.5</b> Remuestreo Bootstrap</a>
-<ul>
+<li class="chapter" data-level="8.5" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html"><i class="fa fa-check"></i><b>8.5</b> Remuestreo Bootstrap</a><ul>
 <li class="chapter" data-level="8.5.1" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#idea"><i class="fa fa-check"></i><b>8.5.1</b> Idea:</a></li>
 <li class="chapter" data-level="8.5.2" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#métodos-de-remuestreo-bootstrap"><i class="fa fa-check"></i><b>8.5.2</b> Métodos de remuestreo Bootstrap</a></li>
 <li class="chapter" data-level="8.5.3" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#paquetes-r-bootstrap-boot"><i class="fa fa-check"></i><b>8.5.3</b> Paquetes R: bootstrap, boot</a></li>
@@ -265,30 +239,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.5.5" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#intervalos-de-confianza-bootstrap"><i class="fa fa-check"></i><b>8.5.5</b> Intervalos de confianza bootstrap</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="cap9.html"><a href="cap9.html"><i class="fa fa-check"></i><b>9</b> Integración y Optimización Monte Carlo</a>
-<ul>
-<li class="chapter" data-level="9.1" data-path="integración-monte-carlo-clásica.html"><a href="integración-monte-carlo-clásica.html"><i class="fa fa-check"></i><b>9.1</b> Integración Monte Carlo (clásica)</a>
-<ul>
+<li class="chapter" data-level="9" data-path="cap9.html"><a href="cap9.html"><i class="fa fa-check"></i><b>9</b> Integración y Optimización Monte Carlo</a><ul>
+<li class="chapter" data-level="9.1" data-path="integración-monte-carlo-clásica.html"><a href="integración-monte-carlo-clásica.html"><i class="fa fa-check"></i><b>9.1</b> Integración Monte Carlo (clásica)</a><ul>
 <li class="chapter" data-level="9.1.1" data-path="integración-monte-carlo-clásica.html"><a href="integración-monte-carlo-clásica.html#caso-general"><i class="fa fa-check"></i><b>9.1.1</b> Caso general</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="muestreo-importancia.html"><a href="muestreo-importancia.html"><i class="fa fa-check"></i><b>9.2</b> Muestreo por importancia</a>
-<ul>
+<li class="chapter" data-level="9.2" data-path="muestreo-importancia.html"><a href="muestreo-importancia.html"><i class="fa fa-check"></i><b>9.2</b> Muestreo por importancia</a><ul>
 <li class="chapter" data-level="9.2.1" data-path="muestreo-importancia.html"><a href="muestreo-importancia.html#remuestreo-del-muestreo-por-importancia"><i class="fa fa-check"></i><b>9.2.1</b> Remuestreo (del muestreo) por importancia</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="optimización-monte-carlo.html"><a href="optimización-monte-carlo.html"><i class="fa fa-check"></i><b>9.3</b> Optimización Monte Carlo</a>
-<ul>
+<li class="chapter" data-level="9.3" data-path="optimización-monte-carlo.html"><a href="optimización-monte-carlo.html"><i class="fa fa-check"></i><b>9.3</b> Optimización Monte Carlo</a><ul>
 <li class="chapter" data-level="9.3.1" data-path="optimización-monte-carlo.html"><a href="optimización-monte-carlo.html#algoritmos-de-optimización-monte-carlo"><i class="fa fa-check"></i><b>9.3.1</b> Algoritmos de optimización Monte Carlo</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="temple-simulado.html"><a href="temple-simulado.html"><i class="fa fa-check"></i><b>9.4</b> Temple simulado</a>
-<ul>
+<li class="chapter" data-level="9.4" data-path="temple-simulado.html"><a href="temple-simulado.html"><i class="fa fa-check"></i><b>9.4</b> Temple simulado</a><ul>
 <li class="chapter" data-level="9.4.1" data-path="temple-simulado.html"><a href="temple-simulado.html#algoritmo-1"><i class="fa fa-check"></i><b>9.4.1</b> Algoritmo:</a></li>
 </ul></li>
 <li class="chapter" data-level="9.5" data-path="algoritmos-genéticos.html"><a href="algoritmos-genéticos.html"><i class="fa fa-check"></i><b>9.5</b> Algoritmos genéticos</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="técnicas-de-reducción-de-la-varianza.html"><a href="técnicas-de-reducción-de-la-varianza.html"><i class="fa fa-check"></i><b>10</b> Técnicas de reducción de la varianza</a>
-<ul>
-<li class="chapter" data-level="10.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html"><i class="fa fa-check"></i><b>10.1</b> Variables antitéticas</a>
-<ul>
+<li class="chapter" data-level="10" data-path="técnicas-de-reducción-de-la-varianza.html"><a href="técnicas-de-reducción-de-la-varianza.html"><i class="fa fa-check"></i><b>10</b> Técnicas de reducción de la varianza</a><ul>
+<li class="chapter" data-level="10.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html"><i class="fa fa-check"></i><b>10.1</b> Variables antitéticas</a><ul>
 <li class="chapter" data-level="10.1.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html#ejemplo-integración-monte-carlo"><i class="fa fa-check"></i><b>10.1.1</b> Ejemplo: Integración Monte Carlo</a></li>
 <li class="chapter" data-level="10.1.2" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html#generación-de-variables-antitéticas"><i class="fa fa-check"></i><b>10.1.2</b> Generación de variables antitéticas</a></li>
 </ul></li>
@@ -297,29 +264,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.4" data-path="números-aleatorios-comunes.html"><a href="números-aleatorios-comunes.html"><i class="fa fa-check"></i><b>10.4</b> Números aleatorios comunes</a></li>
 <li class="chapter" data-level="10.5" data-path="ejercicios-2.html"><a href="ejercicios-2.html"><i class="fa fa-check"></i><b>10.5</b> Ejercicios</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
-<ul>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
 <li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a>
-<ul>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a><ul>
 <li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#libros"><i class="fa fa-check"></i>Libros</a></li>
 <li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#artículos"><i class="fa fa-check"></i>Artículos</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Apendices</b></span></li>
 <li class="chapter" data-level="A" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i><b>A</b> Enlaces</a></li>
-<li class="chapter" data-level="B" data-path="gof-aleat.html"><a href="gof-aleat.html"><i class="fa fa-check"></i><b>B</b> Bondad de Ajuste y Aleatoriedad</a>
-<ul>
-<li class="chapter" data-level="B.1" data-path="gof.html"><a href="gof.html"><i class="fa fa-check"></i><b>B.1</b> Métodos de bondad de ajuste</a>
-<ul>
+<li class="chapter" data-level="B" data-path="gof-aleat.html"><a href="gof-aleat.html"><i class="fa fa-check"></i><b>B</b> Bondad de Ajuste y Aleatoriedad</a><ul>
+<li class="chapter" data-level="B.1" data-path="gof.html"><a href="gof.html"><i class="fa fa-check"></i><b>B.1</b> Métodos de bondad de ajuste</a><ul>
 <li class="chapter" data-level="B.1.1" data-path="gof.html"><a href="gof.html#histograma"><i class="fa fa-check"></i><b>B.1.1</b> Histograma</a></li>
 <li class="chapter" data-level="B.1.2" data-path="gof.html"><a href="gof.html#empdistr"><i class="fa fa-check"></i><b>B.1.2</b> Función de distribución empírica</a></li>
 <li class="chapter" data-level="B.1.3" data-path="gof.html"><a href="gof.html#gráficos-p-p-y-q-q"><i class="fa fa-check"></i><b>B.1.3</b> Gráficos P-P y Q-Q</a></li>
 <li class="chapter" data-level="B.1.4" data-path="gof.html"><a href="gof.html#chi2test"><i class="fa fa-check"></i><b>B.1.4</b> Contraste ji-cuadrado de Pearson</a></li>
 <li class="chapter" data-level="B.1.5" data-path="gof.html"><a href="gof.html#ks-test"><i class="fa fa-check"></i><b>B.1.5</b> Contraste de Kolmogorov-Smirnov</a></li>
 </ul></li>
-<li class="chapter" data-level="B.2" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html"><i class="fa fa-check"></i><b>B.2</b> Diagnosis de la independencia</a>
-<ul>
+<li class="chapter" data-level="B.2" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html"><i class="fa fa-check"></i><b>B.2</b> Diagnosis de la independencia</a><ul>
 <li class="chapter" data-level="B.2.1" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>B.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="B.2.2" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#gráfico-secuencial"><i class="fa fa-check"></i><b>B.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="B.2.3" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>B.2.3</b> Gráfico de dispersion retardado</a></li>
@@ -327,25 +289,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="B.2.5" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#test-de-rachas"><i class="fa fa-check"></i><b>B.2.5</b> Test de rachas</a></li>
 <li class="chapter" data-level="B.2.6" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>B.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
-<li class="chapter" data-level="B.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>B.3</b> Contrastes específicos para generadores aleatorios</a>
-<ul>
+<li class="chapter" data-level="B.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>B.3</b> Contrastes específicos para generadores aleatorios</a><ul>
 <li class="chapter" data-level="B.3.1" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#contraste-de-frecuencias"><i class="fa fa-check"></i><b>B.3.1</b> Contraste de frecuencias</a></li>
 <li class="chapter" data-level="B.3.2" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#contraste-de-series"><i class="fa fa-check"></i><b>B.3.2</b> Contraste de series</a></li>
 <li class="chapter" data-level="B.3.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#el-contraste-del-poker"><i class="fa fa-check"></i><b>B.3.3</b> El contraste del poker</a></li>
 <li class="chapter" data-level="B.3.4" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#el-contraste-del-coleccionista"><i class="fa fa-check"></i><b>B.3.4</b> El contraste del coleccionista</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="C" data-path="int-num.html"><a href="int-num.html"><i class="fa fa-check"></i><b>C</b> Integración numérica</a>
-<ul>
-<li class="chapter" data-level="C.1" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html"><i class="fa fa-check"></i><b>C.1</b> Integración numérica unidimensional</a>
-<ul>
+<li class="chapter" data-level="C" data-path="int-num.html"><a href="int-num.html"><i class="fa fa-check"></i><b>C</b> Integración numérica</a><ul>
+<li class="chapter" data-level="C.1" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html"><i class="fa fa-check"></i><b>C.1</b> Integración numérica unidimensional</a><ul>
 <li class="chapter" data-level="C.1.1" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#método-del-trapezoide"><i class="fa fa-check"></i><b>C.1.1</b> Método del trapezoide</a></li>
 <li class="chapter" data-level="C.1.2" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#regla-de-simpson"><i class="fa fa-check"></i><b>C.1.2</b> Regla de Simpson</a></li>
 <li class="chapter" data-level="C.1.3" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#cuadratura-adaptativa"><i class="fa fa-check"></i><b>C.1.3</b> Cuadratura adaptativa</a></li>
 <li class="chapter" data-level="C.1.4" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#comandos-de-r"><i class="fa fa-check"></i><b>C.1.4</b> Comandos de <code>R</code></a></li>
 </ul></li>
-<li class="chapter" data-level="C.2" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html"><i class="fa fa-check"></i><b>C.2</b> Integración numérica bidimensional</a>
-<ul>
+<li class="chapter" data-level="C.2" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html"><i class="fa fa-check"></i><b>C.2</b> Integración numérica bidimensional</a><ul>
 <li class="chapter" data-level="C.2.1" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#representación-gráfica"><i class="fa fa-check"></i><b>C.2.1</b> Representación gráfica</a></li>
 <li class="chapter" data-level="C.2.2" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#método-del-trapezoide-1"><i class="fa fa-check"></i><b>C.2.2</b> Método del trapezoide</a></li>
 <li class="chapter" data-level="C.2.3" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#comandos-de-r-1"><i class="fa fa-check"></i><b>C.2.3</b> Comandos de <code>R</code></a></li>
@@ -371,7 +329,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="calgen" class="section level2" number="3.2">
+<div id="calgen" class="section level2">
 <h2><span class="header-section-number">3.2</span> Análisis de la calidad de un generador</h2>
 <p>Para verificar si un generador tiene las propiedades estadísticas deseadas hay disponibles una gran cantidad de test de hipótesis y métodos gráficos,
 incluyendo métodos genéricos (de bondad de ajuste y aleatoriedad) y contrastes específicos para generadores aleatorios.
@@ -394,67 +352,67 @@ Aunque si la variable de interés es continua, habría que discretizarla
 (con la correspondiente perdida de información).
 Por ejemplo, se podría emplear la siguiente función
 (que imita a las incluídas en <code>R</code>):</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="calgen.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
-<span id="cb63-2"><a href="calgen.html#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="co"># chisq.test.cont(x, distribution, nclasses, output, nestpar,...)</span></span>
-<span id="cb63-3"><a href="calgen.html#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="co">#-----------------------------------------------------------------------</span></span>
-<span id="cb63-4"><a href="calgen.html#cb63-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Realiza el test ji-cuadrado de bondad de ajuste para una distribución </span></span>
-<span id="cb63-5"><a href="calgen.html#cb63-5" aria-hidden="true" tabindex="-1"></a><span class="co"># continua discretizando en intervalos equiprobables.</span></span>
-<span id="cb63-6"><a href="calgen.html#cb63-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Parámetros:</span></span>
-<span id="cb63-7"><a href="calgen.html#cb63-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   distribution = &quot;norm&quot;,&quot;unif&quot;, etc</span></span>
-<span id="cb63-8"><a href="calgen.html#cb63-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   nclasses = floor(length(x)/5)</span></span>
-<span id="cb63-9"><a href="calgen.html#cb63-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   output = TRUE</span></span>
-<span id="cb63-10"><a href="calgen.html#cb63-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   nestpar = 0 = número de parámetros estimados</span></span>
-<span id="cb63-11"><a href="calgen.html#cb63-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   ... = parámetros distribución</span></span>
-<span id="cb63-12"><a href="calgen.html#cb63-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejemplo:</span></span>
-<span id="cb63-13"><a href="calgen.html#cb63-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   chisq.test.cont(x, distribution = &quot;norm&quot;, nestpar = 2, </span></span>
-<span id="cb63-14"><a href="calgen.html#cb63-14" aria-hidden="true" tabindex="-1"></a><span class="co">#                   mean = mean(x), sd = sqrt((nx - 1) / nx) * sd(x))</span></span>
-<span id="cb63-15"><a href="calgen.html#cb63-15" aria-hidden="true" tabindex="-1"></a><span class="co">#-----------------------------------------------------------------------</span></span>
-<span id="cb63-16"><a href="calgen.html#cb63-16" aria-hidden="true" tabindex="-1"></a>chisq.test.cont <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">distribution =</span> <span class="st">&quot;norm&quot;</span>, </span>
-<span id="cb63-17"><a href="calgen.html#cb63-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">nclasses =</span> <span class="fu">floor</span>(<span class="fu">length</span>(x)<span class="sc">/</span><span class="dv">5</span>), <span class="at">output =</span> <span class="cn">TRUE</span>, <span class="at">nestpar =</span> <span class="dv">0</span>, ...) {</span>
-<span id="cb63-18"><a href="calgen.html#cb63-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Funciones distribución</span></span>
-<span id="cb63-19"><a href="calgen.html#cb63-19" aria-hidden="true" tabindex="-1"></a>    q.distrib <span class="ot">&lt;-</span> <span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text =</span> <span class="fu">paste</span>(<span class="st">&quot;q&quot;</span>, distribution, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)))</span>
-<span id="cb63-20"><a href="calgen.html#cb63-20" aria-hidden="true" tabindex="-1"></a>    d.distrib <span class="ot">&lt;-</span> <span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text =</span> <span class="fu">paste</span>(<span class="st">&quot;d&quot;</span>, distribution, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)))</span>
-<span id="cb63-21"><a href="calgen.html#cb63-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Puntos de corte</span></span>
-<span id="cb63-22"><a href="calgen.html#cb63-22" aria-hidden="true" tabindex="-1"></a>    q <span class="ot">&lt;-</span> <span class="fu">q.distrib</span>((<span class="dv">1</span><span class="sc">:</span>(nclasses <span class="sc">-</span> <span class="dv">1</span>))<span class="sc">/</span>nclasses, ...)</span>
-<span id="cb63-23"><a href="calgen.html#cb63-23" aria-hidden="true" tabindex="-1"></a>    tol <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(.Machine<span class="sc">$</span>double.eps)</span>
-<span id="cb63-24"><a href="calgen.html#cb63-24" aria-hidden="true" tabindex="-1"></a>    xbreaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">min</span>(x) <span class="sc">-</span> tol, q, <span class="fu">max</span>(x) <span class="sc">+</span> tol)</span>
-<span id="cb63-25"><a href="calgen.html#cb63-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Gráficos y frecuencias</span></span>
-<span id="cb63-26"><a href="calgen.html#cb63-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (output) {</span>
-<span id="cb63-27"><a href="calgen.html#cb63-27" aria-hidden="true" tabindex="-1"></a>        xhist <span class="ot">&lt;-</span> <span class="fu">hist</span>(x, <span class="at">breaks =</span> xbreaks, <span class="at">freq =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb63-28"><a href="calgen.html#cb63-28" aria-hidden="true" tabindex="-1"></a>                      <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">border =</span> <span class="st">&quot;grey50&quot;</span>)</span>
-<span id="cb63-29"><a href="calgen.html#cb63-29" aria-hidden="true" tabindex="-1"></a>        <span class="fu">curve</span>(<span class="fu">d.distrib</span>(x, ...), <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb63-30"><a href="calgen.html#cb63-30" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
-<span id="cb63-31"><a href="calgen.html#cb63-31" aria-hidden="true" tabindex="-1"></a>        xhist <span class="ot">&lt;-</span> <span class="fu">hist</span>(x, <span class="at">breaks =</span> xbreaks, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb63-32"><a href="calgen.html#cb63-32" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb63-33"><a href="calgen.html#cb63-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Cálculo estadístico y p-valor</span></span>
-<span id="cb63-34"><a href="calgen.html#cb63-34" aria-hidden="true" tabindex="-1"></a>    O <span class="ot">&lt;-</span> xhist<span class="sc">$</span>counts  <span class="co"># Equivalente a table(cut(x, xbreaks)) pero más eficiente</span></span>
-<span id="cb63-35"><a href="calgen.html#cb63-35" aria-hidden="true" tabindex="-1"></a>    E <span class="ot">&lt;-</span> <span class="fu">length</span>(x)<span class="sc">/</span>nclasses</span>
-<span id="cb63-36"><a href="calgen.html#cb63-36" aria-hidden="true" tabindex="-1"></a>    DNAME <span class="ot">&lt;-</span> <span class="fu">deparse</span>(<span class="fu">substitute</span>(x))</span>
-<span id="cb63-37"><a href="calgen.html#cb63-37" aria-hidden="true" tabindex="-1"></a>    METHOD <span class="ot">&lt;-</span> <span class="st">&quot;Pearson&#39;s Chi-squared test&quot;</span></span>
-<span id="cb63-38"><a href="calgen.html#cb63-38" aria-hidden="true" tabindex="-1"></a>    STATISTIC <span class="ot">&lt;-</span> <span class="fu">sum</span>((O <span class="sc">-</span> E)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>E)</span>
-<span id="cb63-39"><a href="calgen.html#cb63-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">names</span>(STATISTIC) <span class="ot">&lt;-</span> <span class="st">&quot;X-squared&quot;</span></span>
-<span id="cb63-40"><a href="calgen.html#cb63-40" aria-hidden="true" tabindex="-1"></a>    PARAMETER <span class="ot">&lt;-</span> nclasses <span class="sc">-</span> nestpar <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb63-41"><a href="calgen.html#cb63-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">names</span>(PARAMETER) <span class="ot">&lt;-</span> <span class="st">&quot;df&quot;</span></span>
-<span id="cb63-42"><a href="calgen.html#cb63-42" aria-hidden="true" tabindex="-1"></a>    PVAL <span class="ot">&lt;-</span> <span class="fu">pchisq</span>(STATISTIC, PARAMETER, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb63-43"><a href="calgen.html#cb63-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Preparar resultados</span></span>
-<span id="cb63-44"><a href="calgen.html#cb63-44" aria-hidden="true" tabindex="-1"></a>    classes <span class="ot">&lt;-</span> <span class="fu">format</span>(xbreaks)</span>
-<span id="cb63-45"><a href="calgen.html#cb63-45" aria-hidden="true" tabindex="-1"></a>    classes <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;(&quot;</span>, classes[<span class="sc">-</span>(nclasses <span class="sc">+</span> <span class="dv">1</span>)], <span class="st">&quot;,&quot;</span>, classes[<span class="sc">-</span><span class="dv">1</span>], <span class="st">&quot;]&quot;</span>, </span>
-<span id="cb63-46"><a href="calgen.html#cb63-46" aria-hidden="true" tabindex="-1"></a>        <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb63-47"><a href="calgen.html#cb63-47" aria-hidden="true" tabindex="-1"></a>    RESULTS <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">classes =</span> classes, <span class="at">observed =</span> O, <span class="at">expected =</span> E, <span class="at">residuals =</span> (O <span class="sc">-</span> </span>
-<span id="cb63-48"><a href="calgen.html#cb63-48" aria-hidden="true" tabindex="-1"></a>        E)<span class="sc">/</span><span class="fu">sqrt</span>(E))</span>
-<span id="cb63-49"><a href="calgen.html#cb63-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (output) {</span>
-<span id="cb63-50"><a href="calgen.html#cb63-50" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Pearson&#39;s Chi-squared test table</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb63-51"><a href="calgen.html#cb63-51" aria-hidden="true" tabindex="-1"></a>        <span class="fu">print</span>(<span class="fu">as.data.frame</span>(RESULTS))</span>
-<span id="cb63-52"><a href="calgen.html#cb63-52" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb63-53"><a href="calgen.html#cb63-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">any</span>(E <span class="sc">&lt;</span> <span class="dv">5</span>)) </span>
-<span id="cb63-54"><a href="calgen.html#cb63-54" aria-hidden="true" tabindex="-1"></a>        <span class="fu">warning</span>(<span class="st">&quot;Chi-squared approximation may be incorrect&quot;</span>)</span>
-<span id="cb63-55"><a href="calgen.html#cb63-55" aria-hidden="true" tabindex="-1"></a>    <span class="fu">structure</span>(<span class="fu">c</span>(<span class="fu">list</span>(<span class="at">statistic =</span> STATISTIC, <span class="at">parameter =</span> PARAMETER, <span class="at">p.value =</span> PVAL, </span>
-<span id="cb63-56"><a href="calgen.html#cb63-56" aria-hidden="true" tabindex="-1"></a>        <span class="at">method =</span> METHOD, <span class="at">data.name =</span> DNAME), RESULTS), <span class="at">class =</span> <span class="st">&quot;htest&quot;</span>)</span>
-<span id="cb63-57"><a href="calgen.html#cb63-57" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="calgen.html#cb64-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
+<span id="cb64-2"><a href="calgen.html#cb64-2"></a><span class="co"># chisq.test.cont(x, distribution, nclasses, output, nestpar,...)</span></span>
+<span id="cb64-3"><a href="calgen.html#cb64-3"></a><span class="co">#-----------------------------------------------------------------------</span></span>
+<span id="cb64-4"><a href="calgen.html#cb64-4"></a><span class="co"># Realiza el test ji-cuadrado de bondad de ajuste para una distribución </span></span>
+<span id="cb64-5"><a href="calgen.html#cb64-5"></a><span class="co"># continua discretizando en intervalos equiprobables.</span></span>
+<span id="cb64-6"><a href="calgen.html#cb64-6"></a><span class="co"># Parámetros:</span></span>
+<span id="cb64-7"><a href="calgen.html#cb64-7"></a><span class="co">#   distribution = &quot;norm&quot;,&quot;unif&quot;, etc</span></span>
+<span id="cb64-8"><a href="calgen.html#cb64-8"></a><span class="co">#   nclasses = floor(length(x)/5)</span></span>
+<span id="cb64-9"><a href="calgen.html#cb64-9"></a><span class="co">#   output = TRUE</span></span>
+<span id="cb64-10"><a href="calgen.html#cb64-10"></a><span class="co">#   nestpar = 0 = número de parámetros estimados</span></span>
+<span id="cb64-11"><a href="calgen.html#cb64-11"></a><span class="co">#   ... = parámetros distribución</span></span>
+<span id="cb64-12"><a href="calgen.html#cb64-12"></a><span class="co"># Ejemplo:</span></span>
+<span id="cb64-13"><a href="calgen.html#cb64-13"></a><span class="co">#   chisq.test.cont(x, distribution = &quot;norm&quot;, nestpar = 2, </span></span>
+<span id="cb64-14"><a href="calgen.html#cb64-14"></a><span class="co">#                   mean = mean(x), sd = sqrt((nx - 1) / nx) * sd(x))</span></span>
+<span id="cb64-15"><a href="calgen.html#cb64-15"></a><span class="co">#-----------------------------------------------------------------------</span></span>
+<span id="cb64-16"><a href="calgen.html#cb64-16"></a>chisq.test.cont &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">distribution =</span> <span class="st">&quot;norm&quot;</span>, </span>
+<span id="cb64-17"><a href="calgen.html#cb64-17"></a>    <span class="dt">nclasses =</span> <span class="kw">floor</span>(<span class="kw">length</span>(x)<span class="op">/</span><span class="dv">5</span>), <span class="dt">output =</span> <span class="ot">TRUE</span>, <span class="dt">nestpar =</span> <span class="dv">0</span>, ...) {</span>
+<span id="cb64-18"><a href="calgen.html#cb64-18"></a>    <span class="co"># Funciones distribución</span></span>
+<span id="cb64-19"><a href="calgen.html#cb64-19"></a>    q.distrib &lt;-<span class="st"> </span><span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> <span class="kw">paste</span>(<span class="st">&quot;q&quot;</span>, distribution, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)))</span>
+<span id="cb64-20"><a href="calgen.html#cb64-20"></a>    d.distrib &lt;-<span class="st"> </span><span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> <span class="kw">paste</span>(<span class="st">&quot;d&quot;</span>, distribution, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)))</span>
+<span id="cb64-21"><a href="calgen.html#cb64-21"></a>    <span class="co"># Puntos de corte</span></span>
+<span id="cb64-22"><a href="calgen.html#cb64-22"></a>    q &lt;-<span class="st"> </span><span class="kw">q.distrib</span>((<span class="dv">1</span><span class="op">:</span>(nclasses <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))<span class="op">/</span>nclasses, ...)</span>
+<span id="cb64-23"><a href="calgen.html#cb64-23"></a>    tol &lt;-<span class="st"> </span><span class="kw">sqrt</span>(.Machine<span class="op">$</span>double.eps)</span>
+<span id="cb64-24"><a href="calgen.html#cb64-24"></a>    xbreaks &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">min</span>(x) <span class="op">-</span><span class="st"> </span>tol, q, <span class="kw">max</span>(x) <span class="op">+</span><span class="st"> </span>tol)</span>
+<span id="cb64-25"><a href="calgen.html#cb64-25"></a>    <span class="co"># Gráficos y frecuencias</span></span>
+<span id="cb64-26"><a href="calgen.html#cb64-26"></a>    <span class="cf">if</span> (output) {</span>
+<span id="cb64-27"><a href="calgen.html#cb64-27"></a>        xhist &lt;-<span class="st"> </span><span class="kw">hist</span>(x, <span class="dt">breaks =</span> xbreaks, <span class="dt">freq =</span> <span class="ot">FALSE</span>, </span>
+<span id="cb64-28"><a href="calgen.html#cb64-28"></a>                      <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">border =</span> <span class="st">&quot;grey50&quot;</span>)</span>
+<span id="cb64-29"><a href="calgen.html#cb64-29"></a>        <span class="kw">curve</span>(<span class="kw">d.distrib</span>(x, ...), <span class="dt">add =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb64-30"><a href="calgen.html#cb64-30"></a>    } <span class="cf">else</span> {</span>
+<span id="cb64-31"><a href="calgen.html#cb64-31"></a>        xhist &lt;-<span class="st"> </span><span class="kw">hist</span>(x, <span class="dt">breaks =</span> xbreaks, <span class="dt">plot =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb64-32"><a href="calgen.html#cb64-32"></a>    }</span>
+<span id="cb64-33"><a href="calgen.html#cb64-33"></a>    <span class="co"># Cálculo estadístico y p-valor</span></span>
+<span id="cb64-34"><a href="calgen.html#cb64-34"></a>    O &lt;-<span class="st"> </span>xhist<span class="op">$</span>counts  <span class="co"># Equivalente a table(cut(x, xbreaks)) pero más eficiente</span></span>
+<span id="cb64-35"><a href="calgen.html#cb64-35"></a>    E &lt;-<span class="st"> </span><span class="kw">length</span>(x)<span class="op">/</span>nclasses</span>
+<span id="cb64-36"><a href="calgen.html#cb64-36"></a>    DNAME &lt;-<span class="st"> </span><span class="kw">deparse</span>(<span class="kw">substitute</span>(x))</span>
+<span id="cb64-37"><a href="calgen.html#cb64-37"></a>    METHOD &lt;-<span class="st"> &quot;Pearson&#39;s Chi-squared test&quot;</span></span>
+<span id="cb64-38"><a href="calgen.html#cb64-38"></a>    STATISTIC &lt;-<span class="st"> </span><span class="kw">sum</span>((O <span class="op">-</span><span class="st"> </span>E)<span class="op">^</span><span class="dv">2</span><span class="op">/</span>E)</span>
+<span id="cb64-39"><a href="calgen.html#cb64-39"></a>    <span class="kw">names</span>(STATISTIC) &lt;-<span class="st"> &quot;X-squared&quot;</span></span>
+<span id="cb64-40"><a href="calgen.html#cb64-40"></a>    PARAMETER &lt;-<span class="st"> </span>nclasses <span class="op">-</span><span class="st"> </span>nestpar <span class="op">-</span><span class="st"> </span><span class="dv">1</span></span>
+<span id="cb64-41"><a href="calgen.html#cb64-41"></a>    <span class="kw">names</span>(PARAMETER) &lt;-<span class="st"> &quot;df&quot;</span></span>
+<span id="cb64-42"><a href="calgen.html#cb64-42"></a>    PVAL &lt;-<span class="st"> </span><span class="kw">pchisq</span>(STATISTIC, PARAMETER, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb64-43"><a href="calgen.html#cb64-43"></a>    <span class="co"># Preparar resultados</span></span>
+<span id="cb64-44"><a href="calgen.html#cb64-44"></a>    classes &lt;-<span class="st"> </span><span class="kw">format</span>(xbreaks)</span>
+<span id="cb64-45"><a href="calgen.html#cb64-45"></a>    classes &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;(&quot;</span>, classes[<span class="op">-</span>(nclasses <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)], <span class="st">&quot;,&quot;</span>, classes[<span class="op">-</span><span class="dv">1</span>], <span class="st">&quot;]&quot;</span>, </span>
+<span id="cb64-46"><a href="calgen.html#cb64-46"></a>        <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb64-47"><a href="calgen.html#cb64-47"></a>    RESULTS &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">classes =</span> classes, <span class="dt">observed =</span> O, <span class="dt">expected =</span> E, <span class="dt">residuals =</span> (O <span class="op">-</span><span class="st"> </span></span>
+<span id="cb64-48"><a href="calgen.html#cb64-48"></a><span class="st">        </span>E)<span class="op">/</span><span class="kw">sqrt</span>(E))</span>
+<span id="cb64-49"><a href="calgen.html#cb64-49"></a>    <span class="cf">if</span> (output) {</span>
+<span id="cb64-50"><a href="calgen.html#cb64-50"></a>        <span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Pearson&#39;s Chi-squared test table</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb64-51"><a href="calgen.html#cb64-51"></a>        <span class="kw">print</span>(<span class="kw">as.data.frame</span>(RESULTS))</span>
+<span id="cb64-52"><a href="calgen.html#cb64-52"></a>    }</span>
+<span id="cb64-53"><a href="calgen.html#cb64-53"></a>    <span class="cf">if</span> (<span class="kw">any</span>(E <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>)) </span>
+<span id="cb64-54"><a href="calgen.html#cb64-54"></a>        <span class="kw">warning</span>(<span class="st">&quot;Chi-squared approximation may be incorrect&quot;</span>)</span>
+<span id="cb64-55"><a href="calgen.html#cb64-55"></a>    <span class="kw">structure</span>(<span class="kw">c</span>(<span class="kw">list</span>(<span class="dt">statistic =</span> STATISTIC, <span class="dt">parameter =</span> PARAMETER, <span class="dt">p.value =</span> PVAL, </span>
+<span id="cb64-56"><a href="calgen.html#cb64-56"></a>        <span class="dt">method =</span> METHOD, <span class="dt">data.name =</span> DNAME), RESULTS), <span class="dt">class =</span> <span class="st">&quot;htest&quot;</span>)</span>
+<span id="cb64-57"><a href="calgen.html#cb64-57"></a>}</span></code></pre></div>
 <p>Continuando con el generador congruencial anterior, obtendríamos:</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="calgen.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test.cont</span>(u, <span class="at">distribution =</span> <span class="st">&quot;unif&quot;</span>, </span>
-<span id="cb64-2"><a href="calgen.html#cb64-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">nclasses =</span> <span class="dv">10</span>, <span class="at">nestpar =</span> <span class="dv">0</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">1</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:chisq-test-unif"></span>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="calgen.html#cb65-1"></a><span class="kw">chisq.test.cont</span>(u, <span class="dt">distribution =</span> <span class="st">&quot;unif&quot;</span>, </span>
+<span id="cb65-2"><a href="calgen.html#cb65-2"></a>                <span class="dt">nclasses =</span> <span class="dv">10</span>, <span class="dt">nestpar =</span> <span class="dv">0</span>, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:chisq-test-unif"></span>
 <img src="03-Generacion_numeros_aleatorios_files/figure-html/chisq-test-unif-1.png" alt="Gráfico resultante de aplicar la función `chisq.test.cont()` comparando el histograma de los valores generados con la densidad uniforme." width="70%" />
 <p class="caption">
 Figura 3.3: Gráfico resultante de aplicar la función <code>chisq.test.cont()</code> comparando el histograma de los valores generados con la densidad uniforme.
@@ -485,26 +443,27 @@ En la Sección <a href="gof.html#gof">B.1</a> se describen con más detalle esto
 <div class="exercise">
 <span id="exr:congru512b" class="exercise"><strong>Ejercicio 3.2  (Análisis de un generador congruencial, continuación)  </strong></span>
 </div>
+
 <p>Continuando con el generador congruencial del Ejercicio <a href="gen-cong.html#exr:congru512">3.1</a>:</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="calgen.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">initRANDC</span>(<span class="dv">321</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">512</span>)</span>
-<span id="cb67-2"><a href="calgen.html#cb67-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">500</span></span>
-<span id="cb67-3"><a href="calgen.html#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(u <span class="ot">&lt;-</span> <span class="fu">RANDCN</span>(nsim))</span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="calgen.html#cb68-1"></a><span class="kw">initRANDC</span>(<span class="dv">321</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">512</span>)</span>
+<span id="cb68-2"><a href="calgen.html#cb68-2"></a>nsim &lt;-<span class="st"> </span><span class="dv">500</span></span>
+<span id="cb68-3"><a href="calgen.html#cb68-3"></a><span class="kw">system.time</span>(u &lt;-<span class="st"> </span><span class="kw">RANDCN</span>(nsim))</span></code></pre></div>
 <ol style="list-style-type: lower-alpha">
 <li><p>Realizar el contraste de Kolmogorov-Smirnov para estudiar el
 ajuste a una <span class="math inline">\(\mathcal{U}(0,1)\)</span>.</p>
 <p>Este contraste de hipótesis compara la función de distribución bajo la hipótesis nula con la función de distribución empírica (ver Sección <a href="gof.html#empdistr">B.1.2</a>), representadas en la Figura <a href="calgen.html#fig:empdistrunif">3.4</a>:</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="calgen.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribución empírica</span></span>
-<span id="cb68-2"><a href="calgen.html#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">ecdf</span>(u)(x), <span class="at">type =</span> <span class="st">&quot;s&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb68-3"><a href="calgen.html#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">punif</span>(x, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:empdistrunif"></span>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="calgen.html#cb69-1"></a><span class="co"># Distribución empírica</span></span>
+<span id="cb69-2"><a href="calgen.html#cb69-2"></a><span class="kw">curve</span>(<span class="kw">ecdf</span>(u)(x), <span class="dt">type =</span> <span class="st">&quot;s&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb69-3"><a href="calgen.html#cb69-3"></a><span class="kw">curve</span>(<span class="kw">punif</span>(x, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">add =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:empdistrunif"></span>
 <img src="03-Generacion_numeros_aleatorios_files/figure-html/empdistrunif-1.png" alt="Comparación de la distribución empírica de la secuencia generada con la función de distribución uniforme." width="70%" />
 <p class="caption">
 Figura 3.4: Comparación de la distribución empírica de la secuencia generada con la función de distribución uniforme.
 </p>
 </div>
 <p>Podemos realizar el contraste con el siguiente código:</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="calgen.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test de Kolmogorov-Smirnov</span></span>
-<span id="cb69-2"><a href="calgen.html#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(u, <span class="st">&quot;punif&quot;</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="calgen.html#cb70-1"></a><span class="co"># Test de Kolmogorov-Smirnov</span></span>
+<span id="cb70-2"><a href="calgen.html#cb70-2"></a><span class="kw">ks.test</span>(u, <span class="st">&quot;punif&quot;</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## 
 ##  One-sample Kolmogorov-Smirnov test
 ## 
@@ -514,16 +473,16 @@ Figura 3.4: Comparación de la distribución empírica de la secuencia generada 
 <li><p>Obtener el gráfico secuencial y el de dispersión retardado, ¿se
 observa algún problema?</p>
 <p>Gráfico secuencial:</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="calgen.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">as.ts</span>(u))</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:plot-sec"></span>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="calgen.html#cb72-1"></a><span class="kw">plot</span>(<span class="kw">as.ts</span>(u))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:plot-sec"></span>
 <img src="03-Generacion_numeros_aleatorios_files/figure-html/plot-sec-1.png" alt="Gráfico secuencial de los valores generados." width="70%" />
 <p class="caption">
 Figura 3.5: Gráfico secuencial de los valores generados.
 </p>
 </div>
 <p>Gráfico de dispersión retardado:</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="calgen.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(u[<span class="sc">-</span>nsim],u[<span class="sc">-</span><span class="dv">1</span>])</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:plot-ret"></span>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="calgen.html#cb73-1"></a><span class="kw">plot</span>(u[<span class="op">-</span>nsim],u[<span class="op">-</span><span class="dv">1</span>])</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:plot-ret"></span>
 <img src="03-Generacion_numeros_aleatorios_files/figure-html/plot-ret-1.png" alt="Gráfico de dispersión retardado de los valores generados." width="70%" />
 <p class="caption">
 Figura 3.6: Gráfico de dispersión retardado de los valores generados.
@@ -532,22 +491,22 @@ Figura 3.6: Gráfico de dispersión retardado de los valores generados.
 <li><p>Estudiar las correlaciones del vector <span class="math inline">\((u_{i},u_{i+k})\)</span>, con
 <span class="math inline">\(k=1,\ldots,10\)</span>. Contrastar si son nulas.</p>
 <p>Correlaciones:</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="calgen.html#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(u)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:plot-acf"></span>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="calgen.html#cb74-1"></a><span class="kw">acf</span>(u)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:plot-acf"></span>
 <img src="03-Generacion_numeros_aleatorios_files/figure-html/plot-acf-1.png" alt="Autocorrelaciones de los valores generados." width="70%" />
 <p class="caption">
 Figura 3.7: Autocorrelaciones de los valores generados.
 </p>
 </div>
 <p>Test de Ljung-Box:</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="calgen.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Box.test</span>(u, <span class="at">lag =</span> <span class="dv">10</span>, <span class="at">type =</span> <span class="st">&quot;Ljung&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="calgen.html#cb75-1"></a><span class="kw">Box.test</span>(u, <span class="dt">lag =</span> <span class="dv">10</span>, <span class="dt">type =</span> <span class="st">&quot;Ljung&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Box-Ljung test
 ## 
 ## data:  u
 ## X-squared = 22.533, df = 10, p-value = 0.01261</code></pre></li>
 </ol>
-<div id="repetición-de-contrastes" class="section level3" number="3.2.1">
+<div id="repetición-de-contrastes" class="section level3">
 <h3><span class="header-section-number">3.2.1</span> Repetición de contrastes</h3>
 <p>Los contrastes se plantean habitualmente desde el punto de vista de
 la inferencia estadística en la práctica: se realiza una prueba
@@ -572,44 +531,45 @@ contraste de hipótesis por simulación.</p>
 <div class="example">
 <span id="exm:rep-test-randu" class="example"><strong>Ejemplo 3.1  </strong></span>
 </div>
+
 <p>Consideramos el generador congruencial RANDU:</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="calgen.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Valores iniciales</span></span>
-<span id="cb76-2"><a href="calgen.html#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">initRANDC</span>(<span class="dv">543210</span>)   <span class="co"># Fijar semilla para reproductibilidad</span></span>
-<span id="cb76-3"><a href="calgen.html#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="co"># set.seed(543210)</span></span>
-<span id="cb76-4"><a href="calgen.html#cb76-4" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">500</span></span>
-<span id="cb76-5"><a href="calgen.html#cb76-5" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb76-6"><a href="calgen.html#cb76-6" aria-hidden="true" tabindex="-1"></a>estadistico <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nsim)</span>
-<span id="cb76-7"><a href="calgen.html#cb76-7" aria-hidden="true" tabindex="-1"></a>pvalor <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nsim)</span>
-<span id="cb76-8"><a href="calgen.html#cb76-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-9"><a href="calgen.html#cb76-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Realizar contrastes</span></span>
-<span id="cb76-10"><a href="calgen.html#cb76-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(isim <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
-<span id="cb76-11"><a href="calgen.html#cb76-11" aria-hidden="true" tabindex="-1"></a>  u <span class="ot">&lt;-</span> <span class="fu">RANDCN</span>(n)    <span class="co"># Generar</span></span>
-<span id="cb76-12"><a href="calgen.html#cb76-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># u &lt;- runif(n)</span></span>
-<span id="cb76-13"><a href="calgen.html#cb76-13" aria-hidden="true" tabindex="-1"></a>  tmp <span class="ot">&lt;-</span> <span class="fu">chisq.test.cont</span>(u, <span class="at">distribution=</span><span class="st">&quot;unif&quot;</span>, </span>
-<span id="cb76-14"><a href="calgen.html#cb76-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">nclasses=</span><span class="dv">100</span>, <span class="at">output=</span><span class="cn">FALSE</span>, <span class="at">nestpar=</span><span class="dv">0</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1</span>)</span>
-<span id="cb76-15"><a href="calgen.html#cb76-15" aria-hidden="true" tabindex="-1"></a>  estadistico[isim] <span class="ot">&lt;-</span> tmp<span class="sc">$</span>statistic</span>
-<span id="cb76-16"><a href="calgen.html#cb76-16" aria-hidden="true" tabindex="-1"></a>  pvalor[isim] <span class="ot">&lt;-</span> tmp<span class="sc">$</span>p.value</span>
-<span id="cb76-17"><a href="calgen.html#cb76-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="calgen.html#cb77-1"></a><span class="co"># Valores iniciales</span></span>
+<span id="cb77-2"><a href="calgen.html#cb77-2"></a><span class="kw">initRANDC</span>(<span class="dv">543210</span>)   <span class="co"># Fijar semilla para reproductibilidad</span></span>
+<span id="cb77-3"><a href="calgen.html#cb77-3"></a><span class="co"># set.seed(543210)</span></span>
+<span id="cb77-4"><a href="calgen.html#cb77-4"></a>n &lt;-<span class="st"> </span><span class="dv">500</span></span>
+<span id="cb77-5"><a href="calgen.html#cb77-5"></a>nsim &lt;-<span class="st"> </span><span class="dv">1000</span></span>
+<span id="cb77-6"><a href="calgen.html#cb77-6"></a>estadistico &lt;-<span class="st"> </span><span class="kw">numeric</span>(nsim)</span>
+<span id="cb77-7"><a href="calgen.html#cb77-7"></a>pvalor &lt;-<span class="st"> </span><span class="kw">numeric</span>(nsim)</span>
+<span id="cb77-8"><a href="calgen.html#cb77-8"></a></span>
+<span id="cb77-9"><a href="calgen.html#cb77-9"></a><span class="co"># Realizar contrastes</span></span>
+<span id="cb77-10"><a href="calgen.html#cb77-10"></a><span class="cf">for</span>(isim <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim) {</span>
+<span id="cb77-11"><a href="calgen.html#cb77-11"></a>  u &lt;-<span class="st"> </span><span class="kw">RANDCN</span>(n)    <span class="co"># Generar</span></span>
+<span id="cb77-12"><a href="calgen.html#cb77-12"></a>  <span class="co"># u &lt;- runif(n)</span></span>
+<span id="cb77-13"><a href="calgen.html#cb77-13"></a>  tmp &lt;-<span class="st"> </span><span class="kw">chisq.test.cont</span>(u, <span class="dt">distribution=</span><span class="st">&quot;unif&quot;</span>, </span>
+<span id="cb77-14"><a href="calgen.html#cb77-14"></a>            <span class="dt">nclasses=</span><span class="dv">100</span>, <span class="dt">output=</span><span class="ot">FALSE</span>, <span class="dt">nestpar=</span><span class="dv">0</span>, <span class="dt">min=</span><span class="dv">0</span>, <span class="dt">max=</span><span class="dv">1</span>)</span>
+<span id="cb77-15"><a href="calgen.html#cb77-15"></a>  estadistico[isim] &lt;-<span class="st"> </span>tmp<span class="op">$</span>statistic</span>
+<span id="cb77-16"><a href="calgen.html#cb77-16"></a>  pvalor[isim] &lt;-<span class="st"> </span>tmp<span class="op">$</span>p.value</span>
+<span id="cb77-17"><a href="calgen.html#cb77-17"></a>}</span></code></pre></div>
 <p>Proporción de rechazos:</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="calgen.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cat(&quot;\nProporción de rechazos al 1% =&quot;, sum(pvalor &lt; 0.01)/nsim, &quot;\n&quot;)</span></span>
-<span id="cb77-2"><a href="calgen.html#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Proporción de rechazos al 1% =&quot;</span>, <span class="fu">mean</span>(pvalor <span class="sc">&lt;</span> <span class="fl">0.01</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="calgen.html#cb78-1"></a><span class="co"># cat(&quot;\nProporción de rechazos al 1% =&quot;, sum(pvalor &lt; 0.01)/nsim, &quot;\n&quot;)</span></span>
+<span id="cb78-2"><a href="calgen.html#cb78-2"></a><span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Proporción de rechazos al 1% =&quot;</span>, <span class="kw">mean</span>(pvalor <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.01</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ## Proporción de rechazos al 1% = 0.014</code></pre>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="calgen.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cat(&quot;Proporción de rechazos al 5% =&quot;, sum(pvalor &lt; 0.05)/nsim, &quot;\n&quot;)</span></span>
-<span id="cb79-2"><a href="calgen.html#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Proporción de rechazos al 5% =&quot;</span>, <span class="fu">mean</span>(pvalor <span class="sc">&lt;</span> <span class="fl">0.05</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="calgen.html#cb80-1"></a><span class="co"># cat(&quot;Proporción de rechazos al 5% =&quot;, sum(pvalor &lt; 0.05)/nsim, &quot;\n&quot;)</span></span>
+<span id="cb80-2"><a href="calgen.html#cb80-2"></a><span class="kw">cat</span>(<span class="st">&quot;Proporción de rechazos al 5% =&quot;</span>, <span class="kw">mean</span>(pvalor <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## Proporción de rechazos al 5% = 0.051</code></pre>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="calgen.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cat(&quot;Proporción de rechazos al 10% =&quot;, sum(pvalor &lt; 0.1)/nsim, &quot;\n&quot;)</span></span>
-<span id="cb81-2"><a href="calgen.html#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Proporción de rechazos al 10% =&quot;</span>, <span class="fu">mean</span>(pvalor <span class="sc">&lt;</span> <span class="fl">0.1</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="calgen.html#cb82-1"></a><span class="co"># cat(&quot;Proporción de rechazos al 10% =&quot;, sum(pvalor &lt; 0.1)/nsim, &quot;\n&quot;)</span></span>
+<span id="cb82-2"><a href="calgen.html#cb82-2"></a><span class="kw">cat</span>(<span class="st">&quot;Proporción de rechazos al 10% =&quot;</span>, <span class="kw">mean</span>(pvalor <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.1</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## Proporción de rechazos al 10% = 0.112</code></pre>
 <p>Análisis del estadístico contraste:</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="calgen.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Histograma</span></span>
-<span id="cb83-2"><a href="calgen.html#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(estadistico, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq=</span><span class="cn">FALSE</span>)</span>
-<span id="cb83-3"><a href="calgen.html#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dchisq</span>(x,<span class="dv">99</span>), <span class="at">add=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="calgen.html#cb84-1"></a><span class="co"># Histograma</span></span>
+<span id="cb84-2"><a href="calgen.html#cb84-2"></a><span class="kw">hist</span>(estadistico, <span class="dt">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="dt">freq=</span><span class="ot">FALSE</span>)</span>
+<span id="cb84-3"><a href="calgen.html#cb84-3"></a><span class="kw">curve</span>(<span class="kw">dchisq</span>(x,<span class="dv">99</span>), <span class="dt">add=</span><span class="ot">TRUE</span>)</span></code></pre></div>
 <p><img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="calgen.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test ji-cuadrado</span></span>
-<span id="cb84-2"><a href="calgen.html#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="co"># chisq.test.cont(estadistico, distribution=&quot;chisq&quot;, nclasses=20, nestpar=0, df=99)</span></span>
-<span id="cb84-3"><a href="calgen.html#cb84-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Test de Kolmogorov-Smirnov</span></span>
-<span id="cb84-4"><a href="calgen.html#cb84-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(estadistico, <span class="st">&quot;pchisq&quot;</span>, <span class="at">df=</span><span class="dv">99</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="calgen.html#cb85-1"></a><span class="co"># Test ji-cuadrado</span></span>
+<span id="cb85-2"><a href="calgen.html#cb85-2"></a><span class="co"># chisq.test.cont(estadistico, distribution=&quot;chisq&quot;, nclasses=20, nestpar=0, df=99)</span></span>
+<span id="cb85-3"><a href="calgen.html#cb85-3"></a><span class="co"># Test de Kolmogorov-Smirnov</span></span>
+<span id="cb85-4"><a href="calgen.html#cb85-4"></a><span class="kw">ks.test</span>(estadistico, <span class="st">&quot;pchisq&quot;</span>, <span class="dt">df=</span><span class="dv">99</span>)</span></code></pre></div>
 <pre><code>## 
 ##  One-sample Kolmogorov-Smirnov test
 ## 
@@ -617,14 +577,14 @@ contraste de hipótesis por simulación.</p>
 ## D = 0.023499, p-value = 0.6388
 ## alternative hypothesis: two-sided</code></pre>
 <p>Análisis de los <em>p</em>-valores:</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="calgen.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Histograma</span></span>
-<span id="cb86-2"><a href="calgen.html#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pvalor, <span class="at">freq=</span><span class="cn">FALSE</span>)</span>
-<span id="cb86-3"><a href="calgen.html#cb86-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">1</span>) <span class="co"># curve(dunif(x,0,1), add=TRUE)</span></span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="calgen.html#cb87-1"></a><span class="co"># Histograma</span></span>
+<span id="cb87-2"><a href="calgen.html#cb87-2"></a><span class="kw">hist</span>(pvalor, <span class="dt">freq=</span><span class="ot">FALSE</span>)</span>
+<span id="cb87-3"><a href="calgen.html#cb87-3"></a><span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">1</span>) <span class="co"># curve(dunif(x,0,1), add=TRUE)</span></span></code></pre></div>
 <p><img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="calgen.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test ji-cuadrado</span></span>
-<span id="cb87-2"><a href="calgen.html#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="co"># chisq.test.cont(pvalor, distribution=&quot;unif&quot;, nclasses=20, nestpar=0, min=0, max=1)</span></span>
-<span id="cb87-3"><a href="calgen.html#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Test de Kolmogorov-Smirnov</span></span>
-<span id="cb87-4"><a href="calgen.html#cb87-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(pvalor, <span class="st">&quot;punif&quot;</span>,  <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="calgen.html#cb88-1"></a><span class="co"># Test ji-cuadrado</span></span>
+<span id="cb88-2"><a href="calgen.html#cb88-2"></a><span class="co"># chisq.test.cont(pvalor, distribution=&quot;unif&quot;, nclasses=20, nestpar=0, min=0, max=1)</span></span>
+<span id="cb88-3"><a href="calgen.html#cb88-3"></a><span class="co"># Test de Kolmogorov-Smirnov</span></span>
+<span id="cb88-4"><a href="calgen.html#cb88-4"></a><span class="kw">ks.test</span>(pvalor, <span class="st">&quot;punif&quot;</span>,  <span class="dt">min=</span><span class="dv">0</span>, <span class="dt">max=</span><span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## 
 ##  One-sample Kolmogorov-Smirnov test
 ## 
@@ -632,13 +592,13 @@ contraste de hipótesis por simulación.</p>
 ## D = 0.023499, p-value = 0.6388
 ## alternative hypothesis: two-sided</code></pre>
 <p>Adicionalmente, si queremos estudiar la proporción de rechazos (el <em>tamaño del contraste</em>) para los posibles valores de <span class="math inline">\(\alpha\)</span>, podemos emplear la distribución empírica del <span class="math inline">\(p\)</span>-valor (proporción de veces que resultó menor que un determinado valor):</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="calgen.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribución empírica</span></span>
-<span id="cb89-2"><a href="calgen.html#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">ecdf</span>(pvalor)(x), <span class="at">type =</span> <span class="st">&quot;s&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, </span>
-<span id="cb89-3"><a href="calgen.html#cb89-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&#39;Nivel de significación&#39;</span>, <span class="at">ylab =</span> <span class="st">&#39;Proporción de rechazos&#39;</span>)</span>
-<span id="cb89-4"><a href="calgen.html#cb89-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">2</span>)   <span class="co"># curve(punif(x, 0, 1), add = TRUE)</span></span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="calgen.html#cb90-1"></a><span class="co"># Distribución empírica</span></span>
+<span id="cb90-2"><a href="calgen.html#cb90-2"></a><span class="kw">curve</span>(<span class="kw">ecdf</span>(pvalor)(x), <span class="dt">type =</span> <span class="st">&quot;s&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, </span>
+<span id="cb90-3"><a href="calgen.html#cb90-3"></a>      <span class="dt">xlab =</span> <span class="st">&#39;Nivel de significación&#39;, ylab = &#39;</span>Proporción de rechazos<span class="st">&#39;)</span></span>
+<span id="cb90-4"><a href="calgen.html#cb90-4"></a><span class="st">abline(a = 0, b = 1, lty = 2)   # curve(punif(x, 0, 1), add = TRUE)</span></span></code></pre></div>
 <p><img src="03-Generacion_numeros_aleatorios_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="baterias" class="section level3" number="3.2.2">
+<div id="baterias" class="section level3">
 <h3><span class="header-section-number">3.2.2</span> Baterías de contrastes</h3>
 <p>Hay numerosos ejemplos de generadores que pasaron diferentes test de uniformidad y aleatoriedad pero que fallaron estrepitosamente al considerar nuevos contrastes diseñados específicamente para generadores aleatorios (ver Marsaglia <em>et al.</em>, 1990).
 Por este motivo, el procedimiento habitual en la práctica es aplicar un número más o menos elevado de contrastes (de distinto tipo y difíciles de pasar, e.g. Marsaglia y Tsang, 2002), de forma que si el generador los pasa tendremos mayor confianza en que sus propiedades son las adecuadas.
@@ -678,6 +638,7 @@ The R Journal, 8(1), 233-247.</p></li>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -696,7 +657,6 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -717,10 +677,6 @@ gitbook.start({
 "text": null
 },
 "download": ["Simulacion.pdf"],
-"search": {
-"engine": "fuse",
-"options": null
-},
 "toc": {
 "collapse": "subsection"
 }

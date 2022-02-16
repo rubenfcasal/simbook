@@ -146,10 +146,14 @@ Pendiente:
 Leyenda markdown
 -->
 
-<div class="figure" style="text-align: center">
-<img src="images/RAND.png" alt="Líneas 10580-10594, columnas 21-40, del libro *A Million Random Digits with 100,000 Normal Deviates*." width="30%" />
-<p class="caption">(\#fig:randbook)Líneas 10580-10594, columnas 21-40, del libro *A Million Random Digits with 100,000 Normal Deviates*.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.3\linewidth]{images/RAND} 
+
+}
+
+\caption{Líneas 10580-10594, columnas 21-40, del libro *A Million Random Digits with 100,000 Normal Deviates*.}(\#fig:randbook)
+\end{figure}
 
 El procedimiento que se utilizaba para seleccionar de una tabla, de forma manual, números aleatorios 
 en un rango de 1 a *m* era el siguiente:
@@ -213,10 +217,14 @@ plot(sobol(n, dim = 2), xlab = 'x1', ylab = 'x2')
 plot(torus(n, dim = 2), xlab = 'x1', ylab = 'x2')
 ```
 
-<div class="figure" style="text-align: center">
-<img src="01-Introduccion_files/figure-html/randtoolbox-1.png" alt="Secuencias cuasi-aleatorias bidimensionales obtenidas con los métodos de Halton (izquierda), Sobol (centro) y Torus (derecha)." width="100%" />
-<p class="caption">(\#fig:randtoolbox)Secuencias cuasi-aleatorias bidimensionales obtenidas con los métodos de Halton (izquierda), Sobol (centro) y Torus (derecha).</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=1\linewidth]{01-Introduccion_files/figure-latex/randtoolbox-1} 
+
+}
+
+\caption{Secuencias cuasi-aleatorias bidimensionales obtenidas con los métodos de Halton (izquierda), Sobol (centro) y Torus (derecha).}(\#fig:randtoolbox)
+\end{figure}
 
 ```r
 par(par.old)
@@ -278,18 +286,19 @@ Es importante asegurarse de que el generador empleado es adecuado:
 > --- Knuth, D.E. (TAOCP, 2002)
 
 
-Se dispone de una gran cantidad de algoritmos, entre otros:
+Se dispone de una gran cantidad de algoritmos. 
+Los primeros intentos (cuadrados medios, método de Lehmer...) resultaron infructuosos, pero al poco tiempo ya se propusieron métodos que podían ser ampliamente utilizados (estableciendo adecuadamente sus parámetros).
+Entre ellas podríamos destacar:
 
--   Primeros intentos (obsoletos): Cuadrados medios, Lehmer...
-
--   Congruenciales.
+-   Generadores congruenciales.
 
 -   Registros desfasados.
 
 -   Combinaciones de distintos algoritmos.
 
 
-El código fuente está disponible en múltiples librerías:
+La recomendación sería emplear un algoritmo conocido y que haya sido estudiado en profundidad (por ejemplo el generador *Mersenne-Twister* empleado por defecto en R, propuesto por Matsumoto y Nishimura, 1998).
+Además, sería recomendable utilizar alguna de las implementaciones disponibles en múltiples librerías, por ejemplo:
 
 -   GNU Scientific Library (GSL):
     [http://www.gnu.org/software/gsl/manual](http://www.gnu.org/software/gsl/manual/html\_node/Random-Number-Generation.html)
@@ -298,14 +307,18 @@ El código fuente está disponible en múltiples librerías:
 
 -   Numerical recipes: [http://www.nrbook.com/nr3](http://www.nrbook.com/nr3)
 
+-   UNU.RAN (paquete `Runuran`):
+    [http://statmath.wu.ac.at/unuran](http://statmath.wu.ac.at/unuran)
+
+<!-- 
 -   [http://random.mat.sbg.ac.at/software](http://random.mat.sbg.ac.at/software)
 
 -   KISS (Keep It Simple Stupid / Small and Simple):
     [http://www.fortran.com/kiss.f90](http://www.fortran.com/kiss.f90)
-
--   UNU.RAN (paquete `Runuran`):
-    [http://statmath.wu.ac.at/unuran](http://statmath.wu.ac.at/unuran)
-
--   ...
+-->
   
 En este libro nos centraremos en los generadores congruenciales, descritos en la Sección \@ref(gen-cong).
+Estos métodos son muy simples, aunque con las opciones adecuadas podrían ser utilizados en pequeños estudios de simulación. Sin embargo, su principal interés es que constituyen la base de los generadores avanzados habitualmente considerados.
+
+
+

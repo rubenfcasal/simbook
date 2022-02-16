@@ -5,15 +5,13 @@
 
 La generación de números pseudoaleatorios en R es una de las mejores
 disponibles en paquetes estadísticos. 
-Entre las herramientas en el paquete base de `R` estarían:
+En el paquete base de `R` están implementadas las siguientes herramientas:
 
--   `set.seed(entero)`: permite establecer la semilla (y el
-    generador).
+-   `set.seed(entero)`: permite establecer la semilla (y el generador).
 
 -   `RNGkind()`: selecciona el generador.
 
--   `rdistribución(n,...):` genera valores aleatorios de la
-    correspondiente distribución. 
+-   `rdistribución(n,...):` genera valores aleatorios de la correspondiente distribución. 
     Por ejemplo, `runif(n, min = 0, max = 1)`, generaría `n` valores de una uniforme. Se puede acceder al listado completo de las funciones disponibles en el paquete `stats` mediante el comando `?distributions`.
 
 -   `sample()`: genera muestras aleatorias de variables discretas y permutaciones (se tratará en el Capítulo \@ref(discretas)).
@@ -26,18 +24,12 @@ Entre ellos podríamos destacar los paquetes `r citepkg('distr', 'http://distr.r
 La semilla se almacena (en `globalenv`) en `.Random.seed`; es un vector
 de enteros cuya dimensión depende del tipo de generador:
 
--   No debe ser modificado manualmente; se guarda con el entorno
-    de trabajo.
+-   No debe ser modificado manualmente; se guarda con el entorno de trabajo.
 
--   Si no se especifica con `set.seed` (o no existe) se genera a
-    partir del reloj del sistema.
+-   Si no se especifica con `set.seed` (o no existe) se genera a partir del reloj del sistema.
 
-
-```{remark}
-Puede ser recomendable (para depurar) almacenarla antes de generar simulaciones, e.g. 
-`semilla <- .Random.seed`.
-```
-
+-   Puede ser recomendable almacenarla antes de generar simulaciones, e.g. `seed <- .Random.seed`. 
+    Esto permite reproducir los resultados y facilita la depuración de posibles errores.
 
 En la mayoría de los ejemplos de este libro se generan todos los valores de una vez,
 se guardan y se procesan vectorialmente (normalmente empleando la función `apply`).
@@ -125,6 +117,10 @@ Otros paquetes de R que pueden ser de interés:
     `fOptions`, ...
 
 
+<!-- 
+PENDIENTE: Paquetes de simulación 
+-->
+
 ## Ejercicios
 
 ```{exercise, label="simpi"}
@@ -187,7 +183,8 @@ b)  Aproximar el valor de $\pi$ mediante simulación a partir de
     symbols(0, 0, circles = 1, inches = FALSE, add = TRUE)
     symbols(0, 0, squares = 2, inches = FALSE, add = TRUE)
     ```
-    
+
+---    
 
 ```{exercise, label="bernouilli", name="Experimento de Bernoulli"}
 ```
@@ -227,6 +224,7 @@ b)  En R pueden generarse valores de la distribución de Bernoulli
     abline(h=p, lty=2, col="red")
     ```
 
+---
 
 ```{exercise, label="circuito", name="Simulación de un circuito"}
 ```
@@ -263,6 +261,7 @@ fin <- z3 & x5  # Operador lógico "Y"
 mean(fin)
 ```
 
+---
 
 ```{exercise, label="mere", name="El problema del Caballero de Méré"}
 ```
@@ -304,6 +303,20 @@ b)  Utilizar la función anterior para simular $nsim=10000$ jugadas
     mean(replicate(nsim, deMere(n)))
     1-(5/6)^n
     ```
+
+---
+
+
+```{exercise, label="album", name="variación del problema del coleccionista"}
+```
+
+Supongamos que tenemos un álbum con $n = 75$ cromos y para completarlo hay que comprar sobres con $m = 6$ cromos. A partir de $nsim=1000$ simulaciones de coleccionistas de cromos, obtener una aproximación por simulación a la respuesta de las siguientes cuestiones:
+
+a)  ¿Cuál será en media el número de sobres que hay que comprar para completar la colección? 
+    ¿Cuál sería el gasto medio si cada sobre cuesta 0.8€? 
+    
+b)  ¿Cuál sería el número mínimo de sobres para asegurar de que se completa la colección un 95% de las veces?
+
 
 Tiempo de CPU
 -------------
