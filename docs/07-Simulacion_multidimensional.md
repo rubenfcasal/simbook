@@ -48,7 +48,7 @@ son independientes y podemos simular el vector aleatorio de forma trivial, por e
 
 <br>
 
-Las funciones implementadas en el paquete base de `R` permiten simular fácilmente en el caso independiente ya que admiten vectores como parámetros. 
+Las funciones implementadas en el paquete base de R permiten simular fácilmente en el caso independiente ya que admiten vectores como parámetros. 
 Por ejemplo en el caso bidimensional con $X_1 \sim \mathcal{N}\left( 0, 1\right)$ y $X_2 \sim \mathcal{N}\left( -1, 0.5^2 \right)$:
 
 (ref:normind-plot) Densidades marginales de las componentes del Ejemplo \@ref(exm:normind). 
@@ -404,7 +404,7 @@ mvrnorm
 ##         drop(X)
 ##     else t(X)
 ## }
-## <bytecode: 0x000000001312abf0>
+## <bytecode: 0x000000002fcceed8>
 ## <environment: namespace:MASS>
 ```
 
@@ -892,7 +892,7 @@ par(par.old)
 
 En la práctica normalmente se ajusta un modelo a los datos observados y posteriormente se obtienen las simulaciones condicionadas empleando el modelo ajustado.
 
-En `R` se incluye una función genérica^[Se pueden implementar métodos específicos para cada tipo (clase) de objeto; en este caso para cada tipo de modelo ajustado y podemos mostrar los disponibles mediante el comando `methods(simulate)`.] `simulate()` que permite generar respuestas a partir de modelos ajustados (siempre que esté implementado el método correspondiente al tipo de modelo). 
+En R se incluye una función genérica^[Se pueden implementar métodos específicos para cada tipo (clase) de objeto; en este caso para cada tipo de modelo ajustado y podemos mostrar los disponibles mediante el comando `methods(simulate)`.] `simulate()` que permite generar respuestas a partir de modelos ajustados (siempre que esté implementado el método correspondiente al tipo de modelo). 
 Los métodos para modelos lineales y modelos lineales generalizamos están implementados en el paquete base `stats`.
 Muchos otros paquetes que proporcionan modelos adicionales, implementan también los correspondientes métodos `simulate()`.
 Por ejemplo, en el caso de series de tiempo, el paquete `forecast` permite ajustar distintos tipos de modelos y generar simulaciones a partir de ellos:
@@ -985,9 +985,7 @@ Por simplicidad nos centraremos en el caso bidimensional.
 El teorema central en la teoría de cópulas es el teorema de Sklar (1959), que en este caso es:
 
 \BeginKnitrBlock{theorem}\iffalse{-91-100-101-32-83-107-108-97-114-44-32-99-97-115-111-32-98-105-100-105-109-101-110-115-105-111-110-97-108-93-}\fi{}
-<span class="theorem" id="thm:sklar"><strong>(\#thm:sklar)  \iffalse (de Sklar, caso bidimensional) \fi{} </strong></span>
-<br> 
-
+<span class="theorem" id="thm:sklar"><strong>(\#thm:sklar)  \iffalse (de Sklar, caso bidimensional) \fi{} </strong></span><br> 
 Si $(X,Y)$ es una variable aleatoria bidimensional con función de distribución conjunta $F(\cdot,\cdot)$ y distribuciones marginales $F_1(\cdot)$ y $F_2(\cdot)$ respectivamente, entonces existe una cópula $C(\cdot,\cdot)$ tal que:
 $$F(x,y)=C\left( F_1(x),F_2(y)\right) ,\quad \forall x,y\in\mathbb{R}.$$
 Además, si $F_1(\cdot)$ y $F_2(\cdot)$ son continuas entonces $C(\cdot,\cdot)$ es única. 
@@ -1088,10 +1086,6 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     # Densidad conjunta
     # if(!require(sm)) stop('Required pakage `sm` not installed.')
     sm::sm.density(rcunif, xlab = "u", ylab = "v", zlab = "Density")    
-    ```
-    
-    ```
-    ## Warning: weights overwritten by binning
     ```
     
     \begin{figure}[!htb]
@@ -1220,7 +1214,7 @@ indice unidimensional equivalente al indice multidimensional,
 mediante una función de etiquetado 
 $l(\mathbf{i}) = l\left(i_1, i_2, \ldots,i_d \right) \in \mathbb{N}$.
 
-Si la variable discreta multidimensional tiene soporte finito, este tipo de recodificación se puede hacer de forma automática en `R` cambiando simplemente el indexado^[En `R` podemos obtener el índice multidimensional empleando la función `arrayInd(ind, .dim, ...)`, siendo `ind` un vector de índices unidimensionales.] (empleando la función `as.vector()` para cambiar a un indexado unidimensional  y posteriormente las funciones `as.matrix()`, o `as.array()`,  para reconstruir el indexado multidimensional).
+Si la variable discreta multidimensional tiene soporte finito, este tipo de recodificación se puede hacer de forma automática en R cambiando simplemente el indexado^[En R podemos obtener el índice multidimensional empleando la función `arrayInd(ind, .dim, ...)`, siendo `ind` un vector de índices unidimensionales.] (empleando la función `as.vector()` para cambiar a un indexado unidimensional  y posteriormente las funciones `as.matrix()`, o `as.array()`,  para reconstruir el indexado multidimensional).
 
 Como ejemplo ilustrativo (en el caso bidimensional) podríamos emplear el siguiente código:
 
@@ -1321,7 +1315,7 @@ z[i1d]
 ## [1] 11 12 13 14 15 16 17 18
 ```
 
-Realmente lo que ocurre es que internamente un objeto `matrix` o `array` está almacenado como un vector y `R` admite un indexado multidimensional si está presente un atributo `dim`:
+Realmente lo que ocurre es que internamente un objeto `matrix` o `array` está almacenado como un vector y R admite un indexado multidimensional si está presente un atributo `dim`:
 
 
 ```r
@@ -1663,7 +1657,7 @@ Aproximar por simulación la distribución (exacta) del estadístico chi-cuadrad
 sim.stat <- apply(rtablas, 2, function(x){chisq.test(matrix(x,nrow=nrow(tabla)))$statistic})
 hist(sim.stat, freq = FALSE, breaks = 'FD')
 # lines(density(sim.stat))
-# Distribución asintótica (aproximación ji-cuadrado)
+# Distribución asintótica (aproximación chi-cuadrado)
 curve(dchisq(x, res$parameter), col = 'blue', add = TRUE) 
 ```
 

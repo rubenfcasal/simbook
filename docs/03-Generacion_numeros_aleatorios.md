@@ -15,7 +15,7 @@ Como ya se comentó, los distintos métodos de simulación requieren disponer de
 En primer lugar nos centraremos en el caso de los generadores congruenciales. A pesar de su simplicidad, podrían ser adecuados en muchos casos y constituyen la base de los generadores avanzados habitualmente considerados.
 Posteriormente se dará una visión de las diferentes herramientas para estudiar la calidad de un generador de números pseudoaleatorios.
 
-## Generadores congruenciales {#gen-cong}
+## Generadores congruenciales lineales {#gen-cong}
 
 <!-- 
 Pendiente: Incluir nota sobre generadores implementados en ordenadores que trabajan con números enteros o bits
@@ -72,7 +72,7 @@ RANDCN <- function(n=1000) {
     # return(replicate(n,RANDC()))  # Alternativa más rápida    
 }
 
-initRANDC(543210)       # Fijar semilla 543210 para reproductibilidad
+initRANDC(543210)       # Fijar semilla 543210 para reproducibilidad
 ```
 
 
@@ -98,7 +98,7 @@ El procedimiento habitual solía ser escoger $m$ de forma que la operación del 
 
 
 \BeginKnitrBlock{theorem}\iffalse{-91-72-117-108-108-32-121-32-68-111-98-101-108-108-44-32-49-57-54-50-93-}\fi{}
-<span class="theorem" id="thm:hull-dobell"><strong>(\#thm:hull-dobell)  \iffalse (Hull y Dobell, 1962) \fi{} </strong></span>
+<span class="theorem" id="thm:hull-dobell"><strong>(\#thm:hull-dobell)  \iffalse (Hull y Dobell, 1962) \fi{} </strong></span><br>
 Un generador congruencial tiene período máximo ($p=m$) si y solo si:
 
 1.  $c$ y $m$ son primos relativos (i.e. $m.c.d.(c, m) = 1$).
@@ -121,7 +121,7 @@ Algunas consecuencias:
 
 
 \BeginKnitrBlock{theorem}
-<span class="theorem" id="thm:unnamed-chunk-3"><strong>(\#thm:unnamed-chunk-3) </strong></span>
+<span class="theorem" id="thm:unnamed-chunk-3"><strong>(\#thm:unnamed-chunk-3) </strong></span><br>
 Un generador multiplicativo tiene período máximo ($p=m-1$) si:
 
 1.  $m$ es primo.
@@ -147,15 +147,17 @@ system.time(u <- RANDCN(9999))  # Generar
 
 ```
 ##    user  system elapsed 
-##    0.09    0.00    0.09
+##    0.02    0.00    0.02
 ```
 
 ```r
-xyz <- matrix(u, ncol = 3, byrow = TRUE)
-# xyz <- stats::embed(u, 3)
+# xyz <- matrix(u, ncol = 3, byrow = TRUE)
+xyz <- stats::embed(u, 3)
 
 library(plot3D)
-points3D(xyz[,1], xyz[,2], xyz[,3], colvar = NULL, phi = 60, 
+# points3D(xyz[,1], xyz[,2], xyz[,3], colvar = NULL, phi = 60, 
+#          theta = -50, pch = 21, cex = 0.2)
+points3D(xyz[,3], xyz[,2], xyz[,1], colvar = NULL, phi = 60, 
          theta = -50, pch = 21, cex = 0.2)
 ```
 
@@ -184,45 +186,10 @@ Miller, 1988, estudiaron que parámetros son adecuados para $m=2^{31}-1$).
     producir secuencias muy largas de números i.i.d. $\mathcal{U}(0,1)$,
     es un elemento básico en generadores más avanzados.
 
-
-### Otros generadores
-
-Se han considerado diversas extensiones del generador congruencial lineal simple:
-
--   Lineal múltiple: 
-    $x_{i}= a_0 + a_1 x_{i-1} + a_2 x_{i-2} + \cdots + a_{k} x_{i-k} \bmod m$,
-    con periodo $p\leq m^{k}-1$.
-
--   No lineal: 
-    $x_{i} = f\left(  x_{i-1}, x_{i-2}, \cdots, x_{i-k} \right) \bmod m$. 
-    Por ejemplo $x_{i} = a_0 + a_1 x_{i-1} + a_2 x_{i-1}^2 \bmod m$.
-
--   Matricial: 
-    $\boldsymbol{x}_{i} = A_0 + A_1\boldsymbol{x}_{i-1} 
-    + A_2\boldsymbol{x}_{i-2} + \cdots 
-    + A_{k}\boldsymbol{x}_{i-k} \bmod m$.
-
-Un ejemplo de generador congruencia lineal múltiple es el denominado *generador de Fibonacci retardado* (Fibonacci-lagged generator; Knuth, 1969):
-$$x_n = (x_{n-37} + x_{n-100}) \bmod 2^{30},$$
-con un período aproximado de $2^{129}$ y que puede ser empleado en R (lo cual no sería en principio recomendable; ver [Knuth Recent News 2002](https://www-cs-faculty.stanford.edu/~knuth/news02.html#rng)) estableciendo `kind` a `"Knuth-TAOCP-2002"` o `"Knuth-TAOCP"` en la llamada a `set.seed()` o `RNGkind()`.
     
-El generador *Mersenne-Twister* (Matsumoto y Nishimura, 1998), empleado por defecto en R, de periodo $2^{19937}-1$ y equidistribution en 623 dimensiones, se puede expresar como un generador congruencial matricial lineal.
-
-Un caso particular del generador lineal múltiple son los denominados *generadores de registros desfasados* (más relacionados con la Criptografía).
-Se generan bits de forma secuencial considerando $m=2$ y $a_{i} \in \left \{ 0,1\right \}$ y se van combinando $l$ bits para obtener valores en el intervalo $(0, 1)$, por ejemplo $u_i = 0 . x_{it+1} x_{it+2} \ldots x_{it+l}$, siendo $t$ un parámetro denominado *aniquilación* (Tausworthe, 1965). 
-Los cálculos se pueden realizar rápidamente mediante operaciones lógicas (los sumandos de la combinación lineal se traducen en un "o" exclusivo XOR), empleando directamente los registros del procesador (ver por ejemplo, Ripley, 1987, Algoritmo 2.1).
-
-Otras alternativas consisten en la combinanción de varios generadores, las más empleadas son:
-
--   Combinar las salidas: por ejemplo $u_{i}=\sum_{l=1}^L u_{i}^{(l)} \bmod 1$, donde $u_{i}^{(l)}$ es el $i$-ésimo valor obtenido con el generador $l$.
-
--   Barajar las salidas: por ejemplo se crea una tabla empleando un generador y se utiliza otro para seleccionar el índice del valor que se va a devolver y posteriormente actualizar.
-
-El generador *L'Ecuyer-CMRG* (L'Ecuyer, 1999), empleado como base para la generación de múltiples secuencias en el paquete `parallel`, combina dos generadores concruenciales lineales múltiples de orden $k=3$ (el periodo aproximado es $2^{191}$).
-    
-\BeginKnitrBlock{exercise}\iffalse{-91-65-110-225-108-105-115-105-115-32-100-101-32-117-110-32-103-101-110-101-114-97-100-111-114-32-99-111-110-103-114-117-101-110-99-105-97-108-93-}\fi{}
-<span class="exercise" id="exr:congru512"><strong>(\#exr:congru512)  \iffalse (Análisis de un generador congruencial) \fi{} </strong></span>
-\EndKnitrBlock{exercise}
+\BeginKnitrBlock{example}
+<span class="example" id="exm:congru512"><strong>(\#exm:congru512) </strong></span>
+\EndKnitrBlock{example}
 
 Considera el generador congruencial definido por: 
 $$\begin{aligned}
@@ -231,7 +198,6 @@ u_{n+1}  & =\frac{x_{n+1}}{512},\ n=0,1,\dots\nonumber
 \end{aligned}$$
 (de ciclo máximo).
 
-NOTA: El algoritmo está implementado en el fichero *RANDC.R* y se muestra en la Sección \@ref(gen-cong).
 
 a)  Generar 500 valores de este generador, obtener el tiempo de CPU,
     representar su distribución mediante un histograma (en escala
@@ -263,7 +229,7 @@ a)  Generar 500 valores de este generador, obtener el tiempo de CPU,
     \caption{Histograma de los valores generados}(\#fig:ejcona)
     \end{figure}
 
-    En este caso concreto la distribución de los valores generados es aparentemente más uniforme de lo que cabría esperar, lo que induciría a sospechar de la calidad de este generador.
+    En este caso concreto la distribución de los valores generados es aparentemente más uniforme de lo que cabría esperar, lo que induciría a sospechar de la calidad de este generador (ver Ejemplo \@ref(exm:congru512b) en Sección \@ref(calgen)).
 
 b)  Calcular la media de las simulaciones (`mean`) y compararla con
     la teórica.
@@ -306,6 +272,91 @@ c)  Aproximar (mediante simulación) la probabilidad del intervalo
     ## [1] 0.402
     ```
 
+## Extensiones
+
+Se han considerado diversas extensiones del generador congruencial lineal simple:
+
+-   Lineal múltiple: 
+    $x_{i}= a_0 + a_1 x_{i-1} + a_2 x_{i-2} + \cdots + a_{k} x_{i-k} \bmod m$,
+    con periodo $p\leq m^{k}-1$.
+
+-   No lineal: 
+    $x_{i} = f\left(  x_{i-1}, x_{i-2}, \cdots, x_{i-k} \right) \bmod m$. 
+    Por ejemplo $x_{i} = a_0 + a_1 x_{i-1} + a_2 x_{i-1}^2 \bmod m$.
+
+-   Matricial: 
+    $\boldsymbol{x}_{i} = A_0 + A_1\boldsymbol{x}_{i-1} 
+    + A_2\boldsymbol{x}_{i-2} + \cdots 
+    + A_{k}\boldsymbol{x}_{i-k} \bmod m$.
+
+Un ejemplo de generador congruencia lineal múltiple es el denominado *generador de Fibonacci retardado* (Fibonacci-lagged generator; Knuth, 1969):
+$$x_n = (x_{n-37} + x_{n-100}) \bmod 2^{30},$$
+con un período aproximado de $2^{129}$ y que puede ser empleado en R (lo cual no sería en principio recomendable; ver [Knuth Recent News 2002](https://www-cs-faculty.stanford.edu/~knuth/news02.html#rng)) estableciendo `kind` a `"Knuth-TAOCP-2002"` o `"Knuth-TAOCP"` en la llamada a `set.seed()` o `RNGkind()`.
+    
+El generador *Mersenne-Twister* (Matsumoto y Nishimura, 1998), empleado por defecto en R, de periodo $2^{19937}-1$ y equidistribution en 623 dimensiones, se puede expresar como un generador congruencial matricial lineal.
+En cada iteración (*twist*) genera 624 valores (los últimos componentes de la semilla son los 624 enteros de 32 bits correspondientes, el segundo componente es el índice/posición correspondiente al último valor devuelto; el conjunto de enteros solo cambia cada 624 uniformes).
+
+
+```r
+set.seed(1)
+u <- runif(1)
+seed <- .Random.seed
+u <- runif(623)
+sum(seed != .Random.seed) 
+```
+
+```
+## [1] 1
+```
+
+```r
+# Solo cambia el índice: 
+seed[2]; .Random.seed[2]
+```
+
+```
+## [1] 1
+```
+
+```
+## [1] 624
+```
+
+```r
+u <- runif(1)
+# Cada 624 generaciones cambia el conjunto de enteros y el índice se inicializa...
+sum(seed != .Random.seed)
+```
+
+```
+## [1] 624
+```
+
+```r
+seed[2]; .Random.seed[2]
+```
+
+```
+## [1] 1
+```
+
+```
+## [1] 1
+```
+
+
+Un caso particular del generador lineal múltiple son los denominados *generadores de registros desfasados* (más relacionados con la criptografía).
+Se generan bits de forma secuencial considerando $m=2$ y $a_{i} \in \left \{ 0,1\right \}$ y se van combinando $l$ bits para obtener valores en el intervalo $(0, 1)$, por ejemplo $u_i = 0 . x_{it+1} x_{it+2} \ldots x_{it+l}$, siendo $t$ un parámetro denominado *aniquilación* (Tausworthe, 1965). 
+Los cálculos se pueden realizar rápidamente mediante operaciones lógicas (los sumandos de la combinación lineal se traducen en un "o" exclusivo XOR), empleando directamente los registros del procesador (ver por ejemplo, Ripley, 1987, Algoritmo 2.1).
+
+Otras alternativas consisten en la combinanción de varios generadores, las más empleadas son:
+
+-   Combinar las salidas: por ejemplo $u_{i}=\sum_{l=1}^L u_{i}^{(l)} \bmod 1$, donde $u_{i}^{(l)}$ es el $i$-ésimo valor obtenido con el generador $l$.
+
+-   Barajar las salidas: por ejemplo se crea una tabla empleando un generador y se utiliza otro para seleccionar el índice del valor que se va a devolver y posteriormente actualizar.
+
+El generador *L'Ecuyer-CMRG* (L'Ecuyer, 1999), empleado como base para la generación de múltiples secuencias en el paquete `parallel`, combina dos generadores concruenciales lineales múltiples de orden $k=3$ (el periodo aproximado es $2^{191}$).
+
 
 Análisis de la calidad de un generador {#calgen}
 --------------------------------------
@@ -330,12 +381,12 @@ En este caso además, también se sospecha si se ajusta demasiado
 bien a la distribución teórica ($p$-valor $\geq1-\alpha$),
 lo que indicaría que no reproduce adecuadamente la variabilidad.
 
-Uno de los contrastes más conocidos es el test ji-cuadrado de bondad de ajuste
+Uno de los contrastes más conocidos es el test chi-cuadrado de bondad de ajuste
 (`chisq.test` para el caso discreto). 
 Aunque si la variable de interés es continua, habría que discretizarla 
 (con la correspondiente perdida de información). 
 Por ejemplo, se podría emplear la siguiente función 
-(que imita a las incluídas en `R`):
+(que imita a las incluidas en R):
 
 
 
@@ -343,7 +394,7 @@ Por ejemplo, se podría emplear la siguiente función
 #-------------------------------------------------------------------------------
 # chisq.test.cont(x, distribution, nclasses, output, nestpar,...)
 #-----------------------------------------------------------------------
-# Realiza el test ji-cuadrado de bondad de ajuste para una distribución 
+# Realiza el test chi-cuadrado de bondad de ajuste para una distribución 
 # continua discretizando en intervalos equiprobables.
 # Parámetros:
 #   distribution = "norm","unif", etc
@@ -398,7 +449,26 @@ chisq.test.cont <- function(x, distribution = "norm",
         method = METHOD, data.name = DNAME), RESULTS), class = "htest")
 }
 ```
-Continuando con el generador congruencial anterior, obtendríamos:
+
+\BeginKnitrBlock{example}\iffalse{-91-65-110-225-108-105-115-105-115-32-100-101-32-117-110-32-103-101-110-101-114-97-100-111-114-32-99-111-110-103-114-117-101-110-99-105-97-108-44-32-99-111-110-116-105-110-117-97-99-105-243-110-93-}\fi{}
+<span class="example" id="exm:congru512b"><strong>(\#exm:congru512b)  \iffalse (Análisis de un generador congruencial, continuación) \fi{} </strong></span>
+\EndKnitrBlock{example}
+
+Continuando con el generador congruencial del Ejemplo \@ref(exm:congru512): 
+
+
+```r
+initRANDC(321, 5, 1, 512)
+nsim <- 500
+system.time(u <- RANDCN(nsim))
+```
+
+```
+##    user  system elapsed 
+##       0       0       0
+```
+
+Al aplicar el test chi-cuadrado obtendríamos:
 
 
 ```r
@@ -439,144 +509,117 @@ chisq.test.cont(u, distribution = "unif",
 ## X-squared = 0.12, df = 9, p-value = 1
 ```
 
-Como se muestra en la Figura \@ref(fig:chisq-test-unif) el histograma de la secuencia generada es muy plano (comparado con lo que cabría esperar de una muestra de tamaño 500 de una uniforme), y consecuentemente el $p$-valor del contraste ji-cuadrado es prácticamente 1, lo que indicaría que este generador no reproduce adecuadamente la variabilidad de una distribución uniforme.   
+Como se muestra en la Figura \@ref(fig:chisq-test-unif) el histograma de la secuencia generada es muy plano (comparado con lo que cabría esperar de una muestra de tamaño 500 de una uniforme), y consecuentemente el $p$-valor del contraste chi-cuadrado es prácticamente 1, lo que indicaría que este generador no reproduce adecuadamente la variabilidad de una distribución uniforme.   
 
 Otro contraste de bondad de ajuste muy conocido es el test de Kolmogorov-Smirnov, implementado en `ks.test` (ver Sección \@ref(ks-test)). 
-En la Sección \@ref(gof) se describen con más detalle estos contrastes.
+Este contraste de hipótesis compara la función de distribución bajo la hipótesis nula con la función de distribución empírica (ver Sección \@ref(empdistr)), representadas en la Figura \@ref(fig:empdistrunif):
+    
 
-\BeginKnitrBlock{exercise}\iffalse{-91-65-110-225-108-105-115-105-115-32-100-101-32-117-110-32-103-101-110-101-114-97-100-111-114-32-99-111-110-103-114-117-101-110-99-105-97-108-44-32-99-111-110-116-105-110-117-97-99-105-243-110-93-}\fi{}
-<span class="exercise" id="exr:congru512b"><strong>(\#exr:congru512b)  \iffalse (Análisis de un generador congruencial, continuación) \fi{} </strong></span>
-\EndKnitrBlock{exercise}
+```r
+# Distribución empírica
+curve(ecdf(u)(x), type = "s", lwd = 2)
+curve(punif(x, 0, 1), add = TRUE)
+```
 
-Continuando con el generador congruencial del Ejercicio \@ref(exr:congru512): 
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/empdistrunif-1} 
+
+}
+
+\caption{Comparación de la distribución empírica de la secuencia generada con la función de distribución uniforme.}(\#fig:empdistrunif)
+\end{figure}
+Podemos realizar el contraste con el siguiente código:
+
+```r
+# Test de Kolmogorov-Smirnov
+ks.test(u, "punif", 0, 1)
+```
+
+```
+## 
+## 	One-sample Kolmogorov-Smirnov test
+## 
+## data:  u
+## D = 0.0033281, p-value = 1
+## alternative hypothesis: two-sided
+```
+
+En la Sección \@ref(gof) se describen con más detalle estos contrastes de bondad de ajuste.
+
+Adicionalmente podríamos estudiar la aleatoriedad de los valores generados (ver Sección \@ref(diag-aleat)), por ejemplo mediante un gráfico secuencial y el de dispersión retardado.
 
 
 ```r
-initRANDC(321, 5, 1, 512)
-nsim <- 500
-system.time(u <- RANDCN(nsim))
+plot(as.ts(u))
 ```
 
-a)  Realizar el contraste de Kolmogorov-Smirnov para estudiar el
-    ajuste a una $\mathcal{U}(0,1)$.
-    
-    Este contraste de hipótesis compara la función de distribución bajo la hipótesis nula con la función de distribución empírica (ver Sección \@ref(empdistr)), representadas en la Figura \@ref(fig:empdistrunif):
-    
-    ```r
-    # Distribución empírica
-    curve(ecdf(u)(x), type = "s", lwd = 2)
-    curve(punif(x, 0, 1), add = TRUE)
-    ```
-    
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/empdistrunif-1} 
-    
-    }
-    
-    \caption{Comparación de la distribución empírica de la secuencia generada con la función de distribución uniforme.}(\#fig:empdistrunif)
-    \end{figure}
-    Podemos realizar el contraste con el siguiente código:
-    
-    ```r
-    # Test de Kolmogorov-Smirnov
-    ks.test(u, "punif", 0, 1)
-    ```
-    
-    ```
-    ## 
-    ## 	One-sample Kolmogorov-Smirnov test
-    ## 
-    ## data:  u
-    ## D = 0.0033281, p-value = 1
-    ## alternative hypothesis: two-sided
-    ```
-    
-b)  Obtener el gráfico secuencial y el de dispersión retardado, ¿se
-    observa algún problema?
+\begin{figure}[!htb]
 
-    Gráfico secuencial:
-    
-    
-    ```r
-    plot(as.ts(u))
-    ```
-    
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/plot-sec-1} 
-    
-    }
-    
-    \caption{Gráfico secuencial de los valores generados.}(\#fig:plot-sec)
-    \end{figure}
-    
-    Gráfico de dispersión retardado:
-    
-    
-    ```r
-    plot(u[-nsim],u[-1])
-    ```
-    
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/plot-ret-1} 
-    
-    }
-    
-    \caption{Gráfico de dispersión retardado de los valores generados.}(\#fig:plot-ret)
-    \end{figure}
+{\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/plot-sec-1} 
 
-c)  Estudiar las correlaciones del vector $(u_{i},u_{i+k})$, con
-    $k=1,\ldots,10$. Contrastar si son nulas.
+}
 
-    Correlaciones:
+\caption{Gráfico secuencial de los valores generados.}(\#fig:plot-sec)
+\end{figure}
+
+
+```r
+plot(u[-nsim],u[-1])
+```
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/plot-ret-1} 
+
+}
+
+\caption{Gráfico de dispersión retardado de los valores generados.}(\#fig:plot-ret)
+\end{figure}
+
+También podemos analizar las autocorrelaciones (las correlaciones de $(u_{i},u_{i+k})$, con $k=1,\ldots,K$): 
+
+
+```r
+acf(u)
+```
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/plot-acf-1} 
+
+}
+
+\caption{Autocorrelaciones de los valores generados.}(\#fig:plot-acf)
+\end{figure}
     
+Por ejemplo, para contrastar si las diez primeras son nulas podríamos emplear el test de Ljung-Box:
     
-    ```r
-    acf(u)
-    ```
-    
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/plot-acf-1} 
-    
-    }
-    
-    \caption{Autocorrelaciones de los valores generados.}(\#fig:plot-acf)
-    \end{figure}
-    
-    Test de Ljung-Box:
-    
-    
-    ```r
-    Box.test(u, lag = 10, type = "Ljung")
-    ```
-    
-    ```
-    ## 
-    ## 	Box-Ljung test
-    ## 
-    ## data:  u
-    ## X-squared = 22.533, df = 10, p-value = 0.01261
-    ```
+
+```r
+Box.test(u, lag = 10, type = "Ljung")
+```
+
+```
+## 
+## 	Box-Ljung test
+## 
+## data:  u
+## X-squared = 22.533, df = 10, p-value = 0.01261
+```
 
 
 ### Repetición de contrastes
 
-Los contrastes se plantean habitualmente desde el punto de vista de
-la inferencia estadística en la práctica: se realiza una prueba
-sobre la única muestra disponible. Si se realiza una única prueba, 
-en las condiciones de $H_0$ hay
-una probabilidad $\alpha$ de rechazarla.
-En simulación tiene mucho más sentido realizar un gran número de
-pruebas:
+Los contrastes se plantean habitualmente desde el punto de vista de la inferencia estadística en la práctica: se realiza una prueba sobre la única muestra disponible. 
+Si se realiza una única prueba, en las condiciones de $H_0$ hay una probabilidad $\alpha$ de rechazarla.
+En simulación tiene mucho más sentido realizar un gran número de pruebas:
 
 -   La proporción de rechazos debería aproximarse al valor de
-    $\alpha$(se puede comprobar para distintos valores de $\alpha$).
+    $\alpha$ (se puede comprobar para distintos valores de $\alpha$).
 
 -   La distribución del estadístico debería ajustarse a la teórica
-    bajo $H_0$(se podría realizar un nuevo contraste de bondad
+    bajo $H_0$ (se podría realizar un nuevo contraste de bondad
     de ajuste).
 
 -   Los *p*-valores obtenidos deberían ajustarse a una
@@ -584,18 +627,18 @@ pruebas:
     contraste de bondad de ajuste).
 
 Este procedimiento es también el habitual para validar un método de
-contraste de hipótesis por simulación.
+contraste de hipótesis por simulación (ver Sección \@ref(contrastes)).
 
 \BeginKnitrBlock{example}
 <span class="example" id="exm:rep-test-randu"><strong>(\#exm:rep-test-randu) </strong></span>
 \EndKnitrBlock{example}
 
-Consideramos el generador congruencial RANDU:
+Continuando con el generador congruencial RANDU, podemos pensar en estudiar la uniformidad de los valores generados empleando repetidamente el test chi-cuadrado:
 
 
 ```r
 # Valores iniciales
-initRANDC(543210)   # Fijar semilla para reproductibilidad
+initRANDC(543210)   # Fijar semilla para reproducibilidad
 # set.seed(543210)
 n <- 500
 nsim <- 1000
@@ -613,38 +656,28 @@ for(isim in 1:nsim) {
 }
 ```
 
-Proporción de rechazos:
+Por ejemplo, podemos comparar la proporción de rechazos observados con los que cabría esperar con los niveles de significación habituales:
 
 
 ```r
-# cat("\nProporción de rechazos al 1% =", sum(pvalor < 0.01)/nsim, "\n")
-cat("\nProporción de rechazos al 1% =", mean(pvalor < 0.01), "\n")
+{
+cat("Proporción de rechazos al 1% =", mean(pvalor < 0.01), "\n") # sum(pvalor < 0.01)/nsim
+cat("Proporción de rechazos al 5% =", mean(pvalor < 0.05), "\n")   # sum(pvalor < 0.05)/nsim
+cat("Proporción de rechazos al 10% =", mean(pvalor < 0.1), "\n")   # sum(pvalor < 0.1)/nsim
+}
 ```
 
 ```
-## 
-## Proporción de rechazos al 1% = 0.014
-```
-
-```r
-# cat("Proporción de rechazos al 5% =", sum(pvalor < 0.05)/nsim, "\n")
-cat("Proporción de rechazos al 5% =", mean(pvalor < 0.05), "\n")
-```
-
-```
-## Proporción de rechazos al 5% = 0.051
-```
-
-```r
-# cat("Proporción de rechazos al 10% =", sum(pvalor < 0.1)/nsim, "\n")
-cat("Proporción de rechazos al 10% =", mean(pvalor < 0.1), "\n")
-```
-
-```
+## Proporción de rechazos al 1% = 0.014 
+## Proporción de rechazos al 5% = 0.051 
 ## Proporción de rechazos al 10% = 0.112
 ```
 
-Análisis del estadístico contraste:
+Las proporciones de rechazo obtenidas deberían comportarse como una aproximación por simulación de los niveles teóricos.
+En este caso no se observa nada extraño, por lo que no habría motivos para sospechar de la uniformidad de los valores generados (aparentemente no hay problemas con la uniformidad de este generador).
+
+También podemos estudiar la distribución del estadístico contraste.
+En este caso, como la distribución bajo la hipótesis nula está implementada en R, podemos compararla fácilmente con la de los valores generados (debería ser una aproximación por simulación de la distribución teórica):
 
 
 ```r
@@ -655,10 +688,13 @@ curve(dchisq(x,99), add=TRUE)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-12-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-13-1} \end{center}
+
+Además de la comparación gráfica, podríamos emplear un test de bondad de ajuste para contrastar si la distribución del estadístico es la teórica bajo la hipótesis nula:
+
 
 ```r
-# Test ji-cuadrado
+# Test chi-cuadrado (chi-cuadrado sobre chi-cuadrado)
 # chisq.test.cont(estadistico, distribution="chisq", nclasses=20, nestpar=0, df=99)
 # Test de Kolmogorov-Smirnov
 ks.test(estadistico, "pchisq", df=99)
@@ -673,7 +709,10 @@ ks.test(estadistico, "pchisq", df=99)
 ## alternative hypothesis: two-sided
 ```
 
-Análisis de los *p*-valores:
+En este caso la distribución observada del estadístico es la que cabría esperar de una muestra de este tamaño de la distribución teórica, por tanto, según este criterio, aparentemente no habría problemas con la uniformidad de este generador (hay que recordar que estamos utilizando contrastes de hipótesis como herramienta para ver si hay algún problema con el generador, no tiene mucho sentido hablar de aceptar o rechazar una hipótesis).
+
+En lugar de estudiar la distribución del estadístico de contraste  siempre podemos analizar la distribución del *p*-valor.
+Mientras que la distribución teórica del estadístico depende del contraste y puede ser complicada, la del *p*-valor es siempre una uniforme.
 
 
 ```r
@@ -684,10 +723,10 @@ abline(h=1) # curve(dunif(x,0,1), add=TRUE)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-13-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
 ```r
-# Test ji-cuadrado
+# Test chi-cuadrado
 # chisq.test.cont(pvalor, distribution="unif", nclasses=20, nestpar=0, min=0, max=1)
 # Test de Kolmogorov-Smirnov
 ks.test(pvalor, "punif",  min=0, max=1)
@@ -702,6 +741,8 @@ ks.test(pvalor, "punif",  min=0, max=1)
 ## alternative hypothesis: two-sided
 ```
 
+Como podemos observar, obtendríamos los mismos resultados que al analizar la distribución del estadístico. 
+
 Adicionalmente, si queremos estudiar la proporción de rechazos (el *tamaño del contraste*) para los posibles valores de $\alpha$, podemos emplear la distribución empírica del $p$-valor (proporción de veces que resultó menor que un determinado valor):
 
 
@@ -714,7 +755,7 @@ abline(a = 0, b = 1, lty = 2)   # curve(punif(x, 0, 1), add = TRUE)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-16-1} \end{center}
 
 
 ### Baterías de contrastes {#baterias}
@@ -741,9 +782,11 @@ Para más detalles, ver por ejemplo^[También puede ser de interés el enlace [R
 
 -  Marsaglia, G. y Tsang, W.W. (2002). [Some difficult-to-pass tests of randomness](http://www.jstatsoft.org/v07/i03). Journal of Statistical Software, 7(3), 1-9.    
   
--  Demirhan, H. y Bitirim, N. (2016). [CryptRndTest: an R package for testing the cryptographic randomness](https://journal.r-project.org/archive/2016/RJ-2016-016/index.html). 
-  The R Journal, 8(1), 233-247.
+-  Demirhan, H. y Bitirim, N. (2016). [CryptRndTest: an R package for testing the cryptographic randomness](https://journal.r-project.org/archive/2016/RJ-2016-016/index.html). The R Journal, 8(1), 233-247.
 
+
+Estas baterías de contrastes se suelen emplear si el generador va a ser utilizado en criptografía o si es muy importante la impredecibilidad (normalmente con generadores de números "verdaderamente aleatorios" por hardware).
+Si el objetivo es únicamente obtener resultados estadísticos (como en nuestro caso) no sería tan importante que el generador no superase alguno de estos test.
 
 
 Ejercicios
@@ -816,13 +859,11 @@ RANDVNN <- function(n = 1000) {
 }
 ```
 
-Estudiar las características del
-generador de cuadrados medios a partir de una secuencia de 500
-valores. Emplear únicamente métodos gráficos.
+Estudiar las características del generador de cuadrados medios a partir de una secuencia de 500 valores. 
+Emplear únicamente métodos gráficos.
 
 \BeginKnitrBlock{exercise}
 <span class="exercise" id="exr:parkmiller"><strong>(\#exr:parkmiller) </strong></span>
 \EndKnitrBlock{exercise}
-Considerando el generador congruencial multiplicativo de parámetros
-$a=7^{5}=16807$, $c=0$ y $m=2^{31}-1$. ¿Se observan los mismos problemas 
-que con el algoritmo RANDU al considerar las tripletas $(x_{k},x_{k+1},x_{k+2})$?
+Considerando el generador congruencial multiplicativo de parámetros $a=7^{5}=16807$, $c=0$ y $m=2^{31}-1$ (*minimal standar* de Park y Miller, 1988). 
+¿Se observan los mismos problemas que con el algoritmo RANDU al considerar las tripletas $(x_{k},x_{k+1},x_{k+2})$?

@@ -177,7 +177,7 @@ quadrature(fun, 0, 1)
 Fuente: [r-blogger Guangchuang Yu](https://www.r-bloggers.com/one-dimensional-integrals)
 
 
-### Comandos de `R`
+### Comandos de R
 
 
 ```r
@@ -297,7 +297,7 @@ trapezoid.f2d(f2d, -1, 1, -1, 1, 101, 101)
 ```
 
 
-### Comandos de `R`
+### Comandos de R
 
 Suponiendo que la función es vectorial, podemos emplear:
 
@@ -329,4 +329,4 @@ integrate(function(y) {
 
 Fuente: [tolstoy.newcastle.edu.au](http://tolstoy.newcastle.edu.au/R/help/04/10/5951.html).
 
-Alternativamente se podría emplear la función `adaptIntegrate` del paquete `cubature`.
+Alternativamente se podría emplear la función `adaptIntegrate()` del paquete `cubature`.

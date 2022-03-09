@@ -91,7 +91,7 @@ a)  Crear un conjunto de datos `muestras` con 500 muestras de tamaño
     
     
     ```r
-    set.seed(54321) # Fijar semilla para reproductibilidad
+    set.seed(54321) # Fijar semilla para reproducibilidad
     nsim <- 500
     nx <- 10
     ```
@@ -208,7 +208,7 @@ a)  Repetir el Ejercicio \@ref(exr:distr-media) anterior considerando muestras d
     
     
     ```r
-    set.seed(54321) # Fijar semilla para reproductibilidad
+    set.seed(54321) # Fijar semilla para reproducibilidad
     nsim <- 500
     nx <- 10    
     # nx <- 50
@@ -1214,8 +1214,7 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
     ```
 
 
-Remuestreo Bootstrap
---------------------
+## Remuestreo Bootstrap {#bootstrap}
 
 El bootstrap es un procedimiento estadístico que sirve para aproximar características de la distribución en el muestreo de un estadístico.
 Para ello se emplea (normalmente) simulación, generando un gran número de muestras mediante algún tipo de remuestreo de la muestra original.

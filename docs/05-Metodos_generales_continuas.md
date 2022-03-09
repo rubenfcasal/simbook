@@ -93,7 +93,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##    0.01    0.00    0.01
+##       0       0       0
 ```
 
 ```r
@@ -188,7 +188,7 @@ b)  Generar $10^{4}$ valores de la distribución doble exponencial de
     
     ```
     ##    user  system elapsed 
-    ##    0.05    0.00    0.04
+    ##    0.03    0.00    0.03
     ```
 
 
@@ -479,7 +479,7 @@ a)  Generar una muestra de $10^{4}$ observaciones empleando este
     
     ```
     ##    user  system elapsed 
-    ##    0.12    0.00    0.13
+    ##    0.10    0.00    0.09
     ```
     
     ```r
@@ -976,7 +976,7 @@ La_distribucion_beta.Rmd
 Densidad \operatorname{Beta}(a, b)$
 
 Existen multitud de algoritmos para simular la distribución $\operatorname{Beta}(a, b)$. 
-Probablemente, el más simple es el que se obtiene a partir de la distribución gamma (o de la ji-cuadrado), si se dispone de un algoritmo para generar esta distribución:
+Probablemente, el más simple es el que se obtiene a partir de la distribución gamma (o de la chi-cuadrado), si se dispone de un algoritmo para generar esta distribución:
 
 * Si $X \sim \operatorname{Gamma}(a, s)$ e $Y \sim  \operatorname{Gamma}(b, s) son independientes, entonces $$\tfrac{X}{X+Y} \sim \operatorname{Beta}(a, b)$$.
 

@@ -23,7 +23,7 @@ x <- runif(nsim) < p
 ```
 para simular una distribución $Bernoulli(p)$.
 
-Para generar variables discretas con dominio finito en `R`,
+Para generar variables discretas con dominio finito en R,
 si no se dispone de un algoritmo específico más eficiente, 
 es recomendable emplear:
 
@@ -52,9 +52,7 @@ Si $F$ es invertible $Q=F^{-1}$.
 
  
 \BeginKnitrBlock{theorem}\iffalse{-91-100-101-32-105-110-118-101-114-115-105-243-110-32-103-101-110-101-114-97-108-105-122-97-100-97-93-}\fi{}
-<span class="theorem" id="thm:invgen"><strong>(\#thm:invgen)  \iffalse (de inversión generalizada) \fi{} </strong></span>
-<br>
-
+<span class="theorem" id="thm:invgen"><strong>(\#thm:invgen)  \iffalse (de inversión generalizada) \fi{} </strong></span><br>
 Si $U\sim \mathcal{U}\left( 0,1\right)$, la variable aleatoria $Q\left( U\right)$
 tiene función de distribución $F$.
 \EndKnitrBlock{theorem}
@@ -117,7 +115,7 @@ valores que tome la variable estén ordenados.
 
 \EndKnitrBlock{remark}
 
-Si la variable toma un número finito de valores, se podría implementar en `R` 
+Si la variable toma un número finito de valores, se podría implementar en R 
 de la siguiente forma:
 
 
@@ -199,7 +197,7 @@ system.time( rx <- rfmp(x, fmp, nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.06    0.00    0.06
+##    0.07    0.00    0.07
 ```
 
 Aproximación de la media:
@@ -347,7 +345,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##    0.05    0.00    0.05
+##    0.04    0.01    0.05
 ```
 
 ```r
@@ -367,7 +365,7 @@ sum((1:length(x))*fmp[ind]) # Valor teórico
 ## [1] 3.083984
 ```
 
-Como ya se comentó, en `R` se recomienda emplear la función `sample` 
+Como ya se comentó, en R se recomienda emplear la función `sample` 
 (implementa eficientemente el método de Alias descrito en la Sección \@ref(alias)):
 
 
@@ -473,7 +471,7 @@ system.time( rx <- rfmp.tabla(x, fmp, n-1, nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.08    0.00    0.08
+##    0.03    0.00    0.04
 ```
 
 Análisis de los resultados:
@@ -590,7 +588,7 @@ system.time( rx <- rfmp.alias(x,fmp,nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.03    0.00    0.04
+##    0.03    0.00    0.03
 ```
 
 Análisis de los resultados:

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2.3 Ejercicios | Simulación Estadística</title>
   <meta name="description" content="Apuntes de la asignatura de Simulación Estadística del Máster en Técnicas Estadísticas." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2.3 Ejercicios | Simulación Estadística" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-02-16" />
+<meta name="date" content="2022-03-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,9 @@
   
 <link rel="prev" href="paquetes-de-r.html"/>
 <link rel="next" href="tiempo-de-cpu.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,23 +51,23 @@
 
 
 
-
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -85,7 +87,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -118,6 +120,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -135,8 +138,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
-<li class="chapter" data-level="1" data-path="cap1.html"><a href="cap1.html"><i class="fa fa-check"></i><b>1</b> Introducción a la simulación</a><ul>
-<li class="chapter" data-level="1.1" data-path="conceptos-básicos.html"><a href="conceptos-básicos.html"><i class="fa fa-check"></i><b>1.1</b> Conceptos básicos</a><ul>
+<li class="chapter" data-level="1" data-path="cap1.html"><a href="cap1.html"><i class="fa fa-check"></i><b>1</b> Introducción a la simulación</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="conceptos-básicos.html"><a href="conceptos-básicos.html"><i class="fa fa-check"></i><b>1.1</b> Conceptos básicos</a>
+<ul>
 <li class="chapter" data-level="1.1.1" data-path="conceptos-básicos.html"><a href="conceptos-básicos.html#ventajas-e-inconvenientes-de-la-simulación"><i class="fa fa-check"></i><b>1.1.1</b> Ventajas e inconvenientes de la simulación</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="aplicaciones-de-la-simulación.html"><a href="aplicaciones-de-la-simulación.html"><i class="fa fa-check"></i><b>1.2</b> Aplicaciones de la simulación</a></li>
@@ -144,60 +149,69 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.4" data-path="generación-de-números-aleatorios-mediante-software.html"><a href="generación-de-números-aleatorios-mediante-software.html"><i class="fa fa-check"></i><b>1.4</b> Generación de números “aleatorios” mediante software</a></li>
 <li class="chapter" data-level="1.5" data-path="números-pseudoaleatorios.html"><a href="números-pseudoaleatorios.html"><i class="fa fa-check"></i><b>1.5</b> Números pseudoaleatorios</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="rrng.html"><a href="rrng.html"><i class="fa fa-check"></i><b>2</b> Números aleatorios en R</a><ul>
+<li class="chapter" data-level="2" data-path="rrng.html"><a href="rrng.html"><i class="fa fa-check"></i><b>2</b> Números aleatorios en R</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="opciones.html"><a href="opciones.html"><i class="fa fa-check"></i><b>2.1</b> Opciones</a></li>
 <li class="chapter" data-level="2.2" data-path="paquetes-de-r.html"><a href="paquetes-de-r.html"><i class="fa fa-check"></i><b>2.2</b> Paquetes de R</a></li>
 <li class="chapter" data-level="2.3" data-path="ejercicios.html"><a href="ejercicios.html"><i class="fa fa-check"></i><b>2.3</b> Ejercicios</a></li>
-<li class="chapter" data-level="2.4" data-path="tiempo-de-cpu.html"><a href="tiempo-de-cpu.html"><i class="fa fa-check"></i><b>2.4</b> Tiempo de CPU</a><ul>
-<li class="chapter" data-level="2.4.1" data-path="tiempo-de-cpu.html"><a href="tiempo-de-cpu.html#utilidades-tiempo-de-cpu"><i class="fa fa-check"></i><b>2.4.1</b> Utilidades tiempo de CPU</a></li>
-<li class="chapter" data-level="2.4.2" data-path="tiempo-de-cpu.html"><a href="tiempo-de-cpu.html#paquetes-de-r-1"><i class="fa fa-check"></i><b>2.4.2</b> Paquetes de R</a></li>
+<li class="chapter" data-level="2.4" data-path="tiempo-de-cpu.html"><a href="tiempo-de-cpu.html"><i class="fa fa-check"></i><b>2.4</b> Tiempo de CPU</a></li>
 </ul></li>
+<li class="chapter" data-level="3" data-path="cap3.html"><a href="cap3.html"><i class="fa fa-check"></i><b>3</b> Generación de números pseudoaleatorios</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="gen-cong.html"><a href="gen-cong.html"><i class="fa fa-check"></i><b>3.1</b> Generadores congruenciales lineales</a></li>
+<li class="chapter" data-level="3.2" data-path="extensiones.html"><a href="extensiones.html"><i class="fa fa-check"></i><b>3.2</b> Extensiones</a></li>
+<li class="chapter" data-level="3.3" data-path="calgen.html"><a href="calgen.html"><i class="fa fa-check"></i><b>3.3</b> Análisis de la calidad de un generador</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="calgen.html"><a href="calgen.html#repetición-de-contrastes"><i class="fa fa-check"></i><b>3.3.1</b> Repetición de contrastes</a></li>
+<li class="chapter" data-level="3.3.2" data-path="calgen.html"><a href="calgen.html#baterias"><i class="fa fa-check"></i><b>3.3.2</b> Baterías de contrastes</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="cap3.html"><a href="cap3.html"><i class="fa fa-check"></i><b>3</b> Generación de números pseudoaleatorios</a><ul>
-<li class="chapter" data-level="3.1" data-path="gen-cong.html"><a href="gen-cong.html"><i class="fa fa-check"></i><b>3.1</b> Generadores congruenciales</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="gen-cong.html"><a href="gen-cong.html#otros-generadores"><i class="fa fa-check"></i><b>3.1.1</b> Otros generadores</a></li>
+<li class="chapter" data-level="3.4" data-path="ejercicios-1.html"><a href="ejercicios-1.html"><i class="fa fa-check"></i><b>3.4</b> Ejercicios</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="calgen.html"><a href="calgen.html"><i class="fa fa-check"></i><b>3.2</b> Análisis de la calidad de un generador</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="calgen.html"><a href="calgen.html#repetición-de-contrastes"><i class="fa fa-check"></i><b>3.2.1</b> Repetición de contrastes</a></li>
-<li class="chapter" data-level="3.2.2" data-path="calgen.html"><a href="calgen.html#baterias"><i class="fa fa-check"></i><b>3.2.2</b> Baterías de contrastes</a></li>
-</ul></li>
-<li class="chapter" data-level="3.3" data-path="ejercicios-1.html"><a href="ejercicios-1.html"><i class="fa fa-check"></i><b>3.3</b> Ejercicios</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="cap4.html"><a href="cap4.html"><i class="fa fa-check"></i><b>4</b> Análisis de resultados de simulación</a><ul>
-<li class="chapter" data-level="4.1" data-path="convergencia.html"><a href="convergencia.html"><i class="fa fa-check"></i><b>4.1</b> Convergencia</a><ul>
+<li class="chapter" data-level="4" data-path="cap4.html"><a href="cap4.html"><i class="fa fa-check"></i><b>4</b> Análisis de resultados de simulación</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="convergencia.html"><a href="convergencia.html"><i class="fa fa-check"></i><b>4.1</b> Convergencia</a>
+<ul>
 <li class="chapter" data-level="4.1.1" data-path="convergencia.html"><a href="convergencia.html#detección-de-problemas-de-convergencia"><i class="fa fa-check"></i><b>4.1.1</b> Detección de problemas de convergencia</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="estimación-de-la-precisión.html"><a href="estimación-de-la-precisión.html"><i class="fa fa-check"></i><b>4.2</b> Estimación de la precisión</a></li>
 <li class="chapter" data-level="4.3" data-path="teorema-central-del-límite.html"><a href="teorema-central-del-límite.html"><i class="fa fa-check"></i><b>4.3</b> Teorema central del límite</a></li>
 <li class="chapter" data-level="4.4" data-path="determinación-del-número-de-generaciones.html"><a href="determinación-del-número-de-generaciones.html"><i class="fa fa-check"></i><b>4.4</b> Determinación del número de generaciones</a></li>
-<li class="chapter" data-level="4.5" data-path="el-problema-de-la-dependencia.html"><a href="el-problema-de-la-dependencia.html"><i class="fa fa-check"></i><b>4.5</b> El problema de la dependencia</a><ul>
+<li class="chapter" data-level="4.5" data-path="el-problema-de-la-dependencia.html"><a href="el-problema-de-la-dependencia.html"><i class="fa fa-check"></i><b>4.5</b> El problema de la dependencia</a>
+<ul>
 <li class="chapter" data-level="4.5.1" data-path="el-problema-de-la-dependencia.html"><a href="el-problema-de-la-dependencia.html#periodo-de-calentamiento"><i class="fa fa-check"></i><b>4.5.1</b> Periodo de calentamiento</a></li>
 </ul></li>
 <li class="chapter" data-level="4.6" data-path="observaciones.html"><a href="observaciones.html"><i class="fa fa-check"></i><b>4.6</b> Observaciones</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="sim-con.html"><a href="sim-con.html"><i class="fa fa-check"></i><b>5</b> Simulación de variables continuas</a><ul>
-<li class="chapter" data-level="5.1" data-path="método-de-inversión.html"><a href="método-de-inversión.html"><i class="fa fa-check"></i><b>5.1</b> Método de inversión</a><ul>
+<li class="chapter" data-level="5" data-path="sim-con.html"><a href="sim-con.html"><i class="fa fa-check"></i><b>5</b> Simulación de variables continuas</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="método-de-inversión.html"><a href="método-de-inversión.html"><i class="fa fa-check"></i><b>5.1</b> Método de inversión</a>
+<ul>
 <li class="chapter" data-level="5.1.1" data-path="método-de-inversión.html"><a href="método-de-inversión.html#algunas-distribuciones-que-pueden-simularse-por-el-método-de-inversión"><i class="fa fa-check"></i><b>5.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
 <li class="chapter" data-level="5.1.2" data-path="método-de-inversión.html"><a href="método-de-inversión.html#ventajas-e-inconvenientes"><i class="fa fa-check"></i><b>5.1.2</b> Ventajas e inconvenientes</a></li>
 <li class="chapter" data-level="5.1.3" data-path="método-de-inversión.html"><a href="método-de-inversión.html#inversión-aproximada"><i class="fa fa-check"></i><b>5.1.3</b> Inversión aproximada</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>5.2</b> Método de aceptación rechazo</a><ul>
+<li class="chapter" data-level="5.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>5.2</b> Método de aceptación rechazo</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="AR.html"><a href="AR.html#algoritmo"><i class="fa fa-check"></i><b>5.2.1</b> Algoritmo</a></li>
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.4</b> Ejemplo: Inferencia Bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a><ul>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
+<ul>
 <li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
-<li class="chapter" data-level="5.5" data-path="notables-cont.html"><a href="notables-cont.html"><i class="fa fa-check"></i><b>5.5</b> Métodos específicos para la generación de algunas distribuciones notables</a><ul>
+<li class="chapter" data-level="5.5" data-path="notables-cont.html"><a href="notables-cont.html"><i class="fa fa-check"></i><b>5.5</b> Métodos específicos para la generación de algunas distribuciones notables</a>
+<ul>
 <li class="chapter" data-level="5.5.1" data-path="notables-cont.html"><a href="notables-cont.html#método-de-box-müller"><i class="fa fa-check"></i><b>5.5.1</b> Método de Box-Müller</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="discretas.html"><a href="discretas.html"><i class="fa fa-check"></i><b>6</b> Simulación de variables discretas</a><ul>
-<li class="chapter" data-level="6.1" data-path="método-de-la-transformación-cuantil.html"><a href="método-de-la-transformación-cuantil.html"><i class="fa fa-check"></i><b>6.1</b> Método de la transformación cuantil</a><ul>
+<li class="chapter" data-level="6" data-path="discretas.html"><a href="discretas.html"><i class="fa fa-check"></i><b>6</b> Simulación de variables discretas</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="método-de-la-transformación-cuantil.html"><a href="método-de-la-transformación-cuantil.html"><i class="fa fa-check"></i><b>6.1</b> Método de la transformación cuantil</a>
+<ul>
 <li class="chapter" data-level="6.1.1" data-path="método-de-la-transformación-cuantil.html"><a href="método-de-la-transformación-cuantil.html#eficiencia-del-algoritmo-1"><i class="fa fa-check"></i><b>6.1.1</b> Eficiencia del algoritmo</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="método-de-la-tabla-guía.html"><a href="método-de-la-tabla-guía.html"><i class="fa fa-check"></i><b>6.2</b> Método de la tabla guía</a></li>
@@ -207,55 +221,68 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>6.6</b> Otros métodos</a></li>
 <li class="chapter" data-level="6.7" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>6.7</b> Métodos específicos para generación de distribuciones notables</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="simulación-de-distribuciones-multivariantes.html"><a href="simulación-de-distribuciones-multivariantes.html"><i class="fa fa-check"></i><b>7</b> Simulación de distribuciones multivariantes</a><ul>
+<li class="chapter" data-level="7" data-path="simulación-de-distribuciones-multivariantes.html"><a href="simulación-de-distribuciones-multivariantes.html"><i class="fa fa-check"></i><b>7</b> Simulación de distribuciones multivariantes</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="simulación-de-componentes-independientes.html"><a href="simulación-de-componentes-independientes.html"><i class="fa fa-check"></i><b>7.1</b> Simulación de componentes independientes</a></li>
 <li class="chapter" data-level="7.2" data-path="el-método-de-aceptaciónrechazo.html"><a href="el-método-de-aceptaciónrechazo.html"><i class="fa fa-check"></i><b>7.2</b> El método de aceptación/rechazo</a></li>
 <li class="chapter" data-level="7.3" data-path="fact-cov.html"><a href="fact-cov.html"><i class="fa fa-check"></i><b>7.3</b> Factorización de la matriz de covarianzas</a></li>
 <li class="chapter" data-level="7.4" data-path="distrcond.html"><a href="distrcond.html"><i class="fa fa-check"></i><b>7.4</b> Método de las distribuciones condicionadas</a></li>
-<li class="chapter" data-level="7.5" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html"><i class="fa fa-check"></i><b>7.5</b> Simulación condicional e incondicional</a><ul>
+<li class="chapter" data-level="7.5" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html"><i class="fa fa-check"></i><b>7.5</b> Simulación condicional e incondicional</a>
+<ul>
 <li class="chapter" data-level="7.5.1" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html#condnormal"><i class="fa fa-check"></i><b>7.5.1</b> Simulación condicional de una normal multivariante</a></li>
 <li class="chapter" data-level="7.5.2" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html#simulación-condicional-a-partir-de-un-modelo-ajustado"><i class="fa fa-check"></i><b>7.5.2</b> Simulación condicional a partir de un modelo ajustado</a></li>
 </ul></li>
-<li class="chapter" data-level="7.6" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html"><i class="fa fa-check"></i><b>7.6</b> Simulación basada en cópulas</a><ul>
+<li class="chapter" data-level="7.6" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html"><i class="fa fa-check"></i><b>7.6</b> Simulación basada en cópulas</a>
+<ul>
 <li class="chapter" data-level="7.6.1" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html#cópulas-arquimedianas"><i class="fa fa-check"></i><b>7.6.1</b> Cópulas Arquimedianas</a></li>
 <li class="chapter" data-level="7.6.2" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html#simulación"><i class="fa fa-check"></i><b>7.6.2</b> Simulación</a></li>
 </ul></li>
-<li class="chapter" data-level="7.7" data-path="mult-discr.html"><a href="mult-discr.html"><i class="fa fa-check"></i><b>7.7</b> Simulación de distribuciones multivariantes discretas</a><ul>
+<li class="chapter" data-level="7.7" data-path="mult-discr.html"><a href="mult-discr.html"><i class="fa fa-check"></i><b>7.7</b> Simulación de distribuciones multivariantes discretas</a>
+<ul>
 <li class="chapter" data-level="7.7.1" data-path="mult-discr.html"><a href="mult-discr.html#métodos-de-codificación-o-etiquetado-para-variables-discretas"><i class="fa fa-check"></i><b>7.7.1</b> Métodos de codificación o etiquetado para variables discretas</a></li>
 <li class="chapter" data-level="7.7.2" data-path="mult-discr.html"><a href="mult-discr.html#simulación-de-una-variable-discreta-bidimensional"><i class="fa fa-check"></i><b>7.7.2</b> Simulación de una variable discreta bidimensional</a></li>
 <li class="chapter" data-level="7.7.3" data-path="mult-discr.html"><a href="mult-discr.html#simconting"><i class="fa fa-check"></i><b>7.7.3</b> Simulación de tablas de contingencia</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="cap8.html"><a href="cap8.html"><i class="fa fa-check"></i><b>8</b> Aplicaciones en Inferencia Estadística</a><ul>
+<li class="chapter" data-level="8" data-path="cap8.html"><a href="cap8.html"><i class="fa fa-check"></i><b>8</b> Aplicaciones en Inferencia Estadística</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="distribución-en-el-muestreo.html"><a href="distribución-en-el-muestreo.html"><i class="fa fa-check"></i><b>8.1</b> Distribución en el muestreo</a></li>
 <li class="chapter" data-level="8.2" data-path="intervalos-de-confianza.html"><a href="intervalos-de-confianza.html"><i class="fa fa-check"></i><b>8.2</b> Intervalos de confianza</a></li>
 <li class="chapter" data-level="8.3" data-path="contrastes.html"><a href="contrastes.html"><i class="fa fa-check"></i><b>8.3</b> Contrastes de hipótesis</a></li>
 <li class="chapter" data-level="8.4" data-path="comparación-de-estimadores.html"><a href="comparación-de-estimadores.html"><i class="fa fa-check"></i><b>8.4</b> Comparación de estimadores</a></li>
-<li class="chapter" data-level="8.5" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html"><i class="fa fa-check"></i><b>8.5</b> Remuestreo Bootstrap</a><ul>
-<li class="chapter" data-level="8.5.1" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#idea"><i class="fa fa-check"></i><b>8.5.1</b> Idea:</a></li>
-<li class="chapter" data-level="8.5.2" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#métodos-de-remuestreo-bootstrap"><i class="fa fa-check"></i><b>8.5.2</b> Métodos de remuestreo Bootstrap</a></li>
-<li class="chapter" data-level="8.5.3" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#paquetes-r-bootstrap-boot"><i class="fa fa-check"></i><b>8.5.3</b> Paquetes R: bootstrap, boot</a></li>
-<li class="chapter" data-level="8.5.4" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#gráficos"><i class="fa fa-check"></i><b>8.5.4</b> Gráficos</a></li>
-<li class="chapter" data-level="8.5.5" data-path="remuestreo-bootstrap.html"><a href="remuestreo-bootstrap.html#intervalos-de-confianza-bootstrap"><i class="fa fa-check"></i><b>8.5.5</b> Intervalos de confianza bootstrap</a></li>
+<li class="chapter" data-level="8.5" data-path="bootstrap.html"><a href="bootstrap.html"><i class="fa fa-check"></i><b>8.5</b> Remuestreo Bootstrap</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="bootstrap.html"><a href="bootstrap.html#idea"><i class="fa fa-check"></i><b>8.5.1</b> Idea:</a></li>
+<li class="chapter" data-level="8.5.2" data-path="bootstrap.html"><a href="bootstrap.html#métodos-de-remuestreo-bootstrap"><i class="fa fa-check"></i><b>8.5.2</b> Métodos de remuestreo Bootstrap</a></li>
+<li class="chapter" data-level="8.5.3" data-path="bootstrap.html"><a href="bootstrap.html#paquetes-r-bootstrap-boot"><i class="fa fa-check"></i><b>8.5.3</b> Paquetes R: bootstrap, boot</a></li>
+<li class="chapter" data-level="8.5.4" data-path="bootstrap.html"><a href="bootstrap.html#gráficos"><i class="fa fa-check"></i><b>8.5.4</b> Gráficos</a></li>
+<li class="chapter" data-level="8.5.5" data-path="bootstrap.html"><a href="bootstrap.html#intervalos-de-confianza-bootstrap"><i class="fa fa-check"></i><b>8.5.5</b> Intervalos de confianza bootstrap</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="cap9.html"><a href="cap9.html"><i class="fa fa-check"></i><b>9</b> Integración y Optimización Monte Carlo</a><ul>
-<li class="chapter" data-level="9.1" data-path="integración-monte-carlo-clásica.html"><a href="integración-monte-carlo-clásica.html"><i class="fa fa-check"></i><b>9.1</b> Integración Monte Carlo (clásica)</a><ul>
+<li class="chapter" data-level="9" data-path="cap9.html"><a href="cap9.html"><i class="fa fa-check"></i><b>9</b> Integración y Optimización Monte Carlo</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="integración-monte-carlo-clásica.html"><a href="integración-monte-carlo-clásica.html"><i class="fa fa-check"></i><b>9.1</b> Integración Monte Carlo (clásica)</a>
+<ul>
 <li class="chapter" data-level="9.1.1" data-path="integración-monte-carlo-clásica.html"><a href="integración-monte-carlo-clásica.html#caso-general"><i class="fa fa-check"></i><b>9.1.1</b> Caso general</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="muestreo-importancia.html"><a href="muestreo-importancia.html"><i class="fa fa-check"></i><b>9.2</b> Muestreo por importancia</a><ul>
+<li class="chapter" data-level="9.2" data-path="muestreo-importancia.html"><a href="muestreo-importancia.html"><i class="fa fa-check"></i><b>9.2</b> Muestreo por importancia</a>
+<ul>
 <li class="chapter" data-level="9.2.1" data-path="muestreo-importancia.html"><a href="muestreo-importancia.html#remuestreo-del-muestreo-por-importancia"><i class="fa fa-check"></i><b>9.2.1</b> Remuestreo (del muestreo) por importancia</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="optimización-monte-carlo.html"><a href="optimización-monte-carlo.html"><i class="fa fa-check"></i><b>9.3</b> Optimización Monte Carlo</a><ul>
+<li class="chapter" data-level="9.3" data-path="optimización-monte-carlo.html"><a href="optimización-monte-carlo.html"><i class="fa fa-check"></i><b>9.3</b> Optimización Monte Carlo</a>
+<ul>
 <li class="chapter" data-level="9.3.1" data-path="optimización-monte-carlo.html"><a href="optimización-monte-carlo.html#algoritmos-de-optimización-monte-carlo"><i class="fa fa-check"></i><b>9.3.1</b> Algoritmos de optimización Monte Carlo</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="temple-simulado.html"><a href="temple-simulado.html"><i class="fa fa-check"></i><b>9.4</b> Temple simulado</a><ul>
+<li class="chapter" data-level="9.4" data-path="temple-simulado.html"><a href="temple-simulado.html"><i class="fa fa-check"></i><b>9.4</b> Temple simulado</a>
+<ul>
 <li class="chapter" data-level="9.4.1" data-path="temple-simulado.html"><a href="temple-simulado.html#algoritmo-1"><i class="fa fa-check"></i><b>9.4.1</b> Algoritmo:</a></li>
 </ul></li>
 <li class="chapter" data-level="9.5" data-path="algoritmos-genéticos.html"><a href="algoritmos-genéticos.html"><i class="fa fa-check"></i><b>9.5</b> Algoritmos genéticos</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="técnicas-de-reducción-de-la-varianza.html"><a href="técnicas-de-reducción-de-la-varianza.html"><i class="fa fa-check"></i><b>10</b> Técnicas de reducción de la varianza</a><ul>
-<li class="chapter" data-level="10.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html"><i class="fa fa-check"></i><b>10.1</b> Variables antitéticas</a><ul>
+<li class="chapter" data-level="10" data-path="técnicas-de-reducción-de-la-varianza.html"><a href="técnicas-de-reducción-de-la-varianza.html"><i class="fa fa-check"></i><b>10</b> Técnicas de reducción de la varianza</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html"><i class="fa fa-check"></i><b>10.1</b> Variables antitéticas</a>
+<ul>
 <li class="chapter" data-level="10.1.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html#ejemplo-integración-monte-carlo"><i class="fa fa-check"></i><b>10.1.1</b> Ejemplo: Integración Monte Carlo</a></li>
 <li class="chapter" data-level="10.1.2" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html#generación-de-variables-antitéticas"><i class="fa fa-check"></i><b>10.1.2</b> Generación de variables antitéticas</a></li>
 </ul></li>
@@ -264,49 +291,58 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.4" data-path="números-aleatorios-comunes.html"><a href="números-aleatorios-comunes.html"><i class="fa fa-check"></i><b>10.4</b> Números aleatorios comunes</a></li>
 <li class="chapter" data-level="10.5" data-path="ejercicios-2.html"><a href="ejercicios-2.html"><i class="fa fa-check"></i><b>10.5</b> Ejercicios</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a><ul>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
+<ul>
 <li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a><ul>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a>
+<ul>
 <li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#libros"><i class="fa fa-check"></i>Libros</a></li>
 <li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html#artículos"><i class="fa fa-check"></i>Artículos</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Apendices</b></span></li>
 <li class="chapter" data-level="A" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i><b>A</b> Enlaces</a></li>
-<li class="chapter" data-level="B" data-path="gof-aleat.html"><a href="gof-aleat.html"><i class="fa fa-check"></i><b>B</b> Bondad de Ajuste y Aleatoriedad</a><ul>
-<li class="chapter" data-level="B.1" data-path="gof.html"><a href="gof.html"><i class="fa fa-check"></i><b>B.1</b> Métodos de bondad de ajuste</a><ul>
+<li class="chapter" data-level="B" data-path="gof-aleat.html"><a href="gof-aleat.html"><i class="fa fa-check"></i><b>B</b> Bondad de Ajuste y Aleatoriedad</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="gof.html"><a href="gof.html"><i class="fa fa-check"></i><b>B.1</b> Métodos de bondad de ajuste</a>
+<ul>
 <li class="chapter" data-level="B.1.1" data-path="gof.html"><a href="gof.html#histograma"><i class="fa fa-check"></i><b>B.1.1</b> Histograma</a></li>
 <li class="chapter" data-level="B.1.2" data-path="gof.html"><a href="gof.html#empdistr"><i class="fa fa-check"></i><b>B.1.2</b> Función de distribución empírica</a></li>
 <li class="chapter" data-level="B.1.3" data-path="gof.html"><a href="gof.html#gráficos-p-p-y-q-q"><i class="fa fa-check"></i><b>B.1.3</b> Gráficos P-P y Q-Q</a></li>
-<li class="chapter" data-level="B.1.4" data-path="gof.html"><a href="gof.html#chi2test"><i class="fa fa-check"></i><b>B.1.4</b> Contraste ji-cuadrado de Pearson</a></li>
+<li class="chapter" data-level="B.1.4" data-path="gof.html"><a href="gof.html#chi2test"><i class="fa fa-check"></i><b>B.1.4</b> Contraste chi-cuadrado de Pearson</a></li>
 <li class="chapter" data-level="B.1.5" data-path="gof.html"><a href="gof.html#ks-test"><i class="fa fa-check"></i><b>B.1.5</b> Contraste de Kolmogorov-Smirnov</a></li>
 </ul></li>
-<li class="chapter" data-level="B.2" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html"><i class="fa fa-check"></i><b>B.2</b> Diagnosis de la independencia</a><ul>
-<li class="chapter" data-level="B.2.1" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>B.2.1</b> Métodos para detectar dependencia</a></li>
-<li class="chapter" data-level="B.2.2" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#gráfico-secuencial"><i class="fa fa-check"></i><b>B.2.2</b> Gráfico secuencial</a></li>
-<li class="chapter" data-level="B.2.3" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>B.2.3</b> Gráfico de dispersion retardado</a></li>
-<li class="chapter" data-level="B.2.4" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#el-correlograma"><i class="fa fa-check"></i><b>B.2.4</b> El correlograma</a></li>
-<li class="chapter" data-level="B.2.5" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#test-de-rachas"><i class="fa fa-check"></i><b>B.2.5</b> Test de rachas</a></li>
-<li class="chapter" data-level="B.2.6" data-path="diagnosis-de-la-independencia.html"><a href="diagnosis-de-la-independencia.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>B.2.6</b> El contraste de Ljung-Box</a></li>
+<li class="chapter" data-level="B.2" data-path="diag-aleat.html"><a href="diag-aleat.html"><i class="fa fa-check"></i><b>B.2</b> Diagnosis de la independencia</a>
+<ul>
+<li class="chapter" data-level="B.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>B.2.1</b> Métodos para detectar dependencia</a></li>
+<li class="chapter" data-level="B.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>B.2.2</b> Gráfico secuencial</a></li>
+<li class="chapter" data-level="B.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>B.2.3</b> Gráfico de dispersion retardado</a></li>
+<li class="chapter" data-level="B.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>B.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="B.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>B.2.5</b> Test de rachas</a></li>
+<li class="chapter" data-level="B.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>B.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
-<li class="chapter" data-level="B.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>B.3</b> Contrastes específicos para generadores aleatorios</a><ul>
+<li class="chapter" data-level="B.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>B.3</b> Contrastes específicos para generadores aleatorios</a>
+<ul>
 <li class="chapter" data-level="B.3.1" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#contraste-de-frecuencias"><i class="fa fa-check"></i><b>B.3.1</b> Contraste de frecuencias</a></li>
 <li class="chapter" data-level="B.3.2" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#contraste-de-series"><i class="fa fa-check"></i><b>B.3.2</b> Contraste de series</a></li>
 <li class="chapter" data-level="B.3.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#el-contraste-del-poker"><i class="fa fa-check"></i><b>B.3.3</b> El contraste del poker</a></li>
 <li class="chapter" data-level="B.3.4" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#el-contraste-del-coleccionista"><i class="fa fa-check"></i><b>B.3.4</b> El contraste del coleccionista</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="C" data-path="int-num.html"><a href="int-num.html"><i class="fa fa-check"></i><b>C</b> Integración numérica</a><ul>
-<li class="chapter" data-level="C.1" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html"><i class="fa fa-check"></i><b>C.1</b> Integración numérica unidimensional</a><ul>
+<li class="chapter" data-level="C" data-path="int-num.html"><a href="int-num.html"><i class="fa fa-check"></i><b>C</b> Integración numérica</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html"><i class="fa fa-check"></i><b>C.1</b> Integración numérica unidimensional</a>
+<ul>
 <li class="chapter" data-level="C.1.1" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#método-del-trapezoide"><i class="fa fa-check"></i><b>C.1.1</b> Método del trapezoide</a></li>
 <li class="chapter" data-level="C.1.2" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#regla-de-simpson"><i class="fa fa-check"></i><b>C.1.2</b> Regla de Simpson</a></li>
 <li class="chapter" data-level="C.1.3" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#cuadratura-adaptativa"><i class="fa fa-check"></i><b>C.1.3</b> Cuadratura adaptativa</a></li>
-<li class="chapter" data-level="C.1.4" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#comandos-de-r"><i class="fa fa-check"></i><b>C.1.4</b> Comandos de <code>R</code></a></li>
+<li class="chapter" data-level="C.1.4" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#comandos-de-r"><i class="fa fa-check"></i><b>C.1.4</b> Comandos de R</a></li>
 </ul></li>
-<li class="chapter" data-level="C.2" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html"><i class="fa fa-check"></i><b>C.2</b> Integración numérica bidimensional</a><ul>
+<li class="chapter" data-level="C.2" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html"><i class="fa fa-check"></i><b>C.2</b> Integración numérica bidimensional</a>
+<ul>
 <li class="chapter" data-level="C.2.1" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#representación-gráfica"><i class="fa fa-check"></i><b>C.2.1</b> Representación gráfica</a></li>
 <li class="chapter" data-level="C.2.2" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#método-del-trapezoide-1"><i class="fa fa-check"></i><b>C.2.2</b> Método del trapezoide</a></li>
-<li class="chapter" data-level="C.2.3" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#comandos-de-r-1"><i class="fa fa-check"></i><b>C.2.3</b> Comandos de <code>R</code></a></li>
+<li class="chapter" data-level="C.2.3" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#comandos-de-r-1"><i class="fa fa-check"></i><b>C.2.3</b> Comandos de R</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -329,13 +365,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="ejercicios" class="section level2">
+<div id="ejercicios" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> Ejercicios</h2>
 
 <div class="exercise">
 <span id="exr:simpi" class="exercise"><strong>Ejercicio 2.1  </strong></span>
 </div>
-
 <p>Sea <span class="math inline">\((X,Y)\)</span> es un vector aleatorio con distribución uniforme en el
 cuadrado <span class="math inline">\([-1,1]\times\lbrack-1,1]\)</span> de área 4.</p>
 <ol style="list-style-type: lower-alpha">
@@ -343,41 +378,41 @@ cuadrado <span class="math inline">\([-1,1]\times\lbrack-1,1]\)</span> de área 
 compararla con la probabilidad teórica (obtenida aplicando la
 regla de Laplace <span class="math inline">\(\frac{\text{área favorable}}{\text{área posible}}\)</span>).</p>
 <p>Generamos <code>nsim = 10000</code> valores del proceso bidimensional:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="ejercicios.html#cb6-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb6-2"><a href="ejercicios.html#cb6-2"></a>nsim &lt;-<span class="st"> </span><span class="dv">10000</span></span>
-<span id="cb6-3"><a href="ejercicios.html#cb6-3"></a>x &lt;-<span class="st"> </span><span class="kw">runif</span>(nsim, <span class="dv">-1</span>, <span class="dv">1</span>)</span>
-<span id="cb6-4"><a href="ejercicios.html#cb6-4"></a>y &lt;-<span class="st"> </span><span class="kw">runif</span>(nsim, <span class="dv">-1</span>, <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="ejercicios.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb8-2"><a href="ejercicios.html#cb8-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb8-3"><a href="ejercicios.html#cb8-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(nsim, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb8-4"><a href="ejercicios.html#cb8-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">runif</span>(nsim, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span></code></pre></div>
 <p>La probabilidad teórica es 1/2 y la aproximación por simulación es la frecuencia relativa del suceso en los valores generados (para calcularla podemos aprovechar que R maneja internamente los valores lógicos como 1, <code>TRUE</code>, y 0, <code>FALSE</code>):</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="ejercicios.html#cb7-1"></a>indice &lt;-<span class="st"> </span>(x<span class="op">+</span>y <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>)</span>
-<span id="cb7-2"><a href="ejercicios.html#cb7-2"></a><span class="kw">sum</span>(indice)<span class="op">/</span>nsim</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="ejercicios.html#cb9-1" aria-hidden="true" tabindex="-1"></a>indice <span class="ot">&lt;-</span> (x<span class="sc">+</span>y <span class="sc">&lt;</span> <span class="dv">0</span>)</span>
+<span id="cb9-2"><a href="ejercicios.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(indice)<span class="sc">/</span>nsim</span></code></pre></div>
 <pre><code>## [1] 0.4996</code></pre>
 <p>Alternativamente (la frecuencia relativa es un caso particular de la media) se puede obtener de forma más simple como:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="ejercicios.html#cb9-1"></a><span class="kw">mean</span>(indice)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="ejercicios.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(indice)</span></code></pre></div>
 <pre><code>## [1] 0.4996</code></pre></li>
 <li><p>Aproximar el valor de <span class="math inline">\(\pi\)</span> mediante simulación a partir de
 <span class="math inline">\(P\left( X^2 +Y^2 \leq 1 \right)\)</span>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="ejercicios.html#cb11-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb11-2"><a href="ejercicios.html#cb11-2"></a>n &lt;-<span class="st"> </span><span class="dv">10000</span></span>
-<span id="cb11-3"><a href="ejercicios.html#cb11-3"></a>x &lt;-<span class="st"> </span><span class="kw">runif</span>(n, <span class="dv">-1</span>, <span class="dv">1</span>)</span>
-<span id="cb11-4"><a href="ejercicios.html#cb11-4"></a>y &lt;-<span class="st"> </span><span class="kw">runif</span>(n, <span class="dv">-1</span>, <span class="dv">1</span>)</span>
-<span id="cb11-5"><a href="ejercicios.html#cb11-5"></a>indice &lt;-<span class="st"> </span>(x<span class="op">^</span><span class="dv">2</span><span class="op">+</span>y<span class="op">^</span><span class="dv">2</span> <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span>)</span>
-<span id="cb11-6"><a href="ejercicios.html#cb11-6"></a><span class="kw">mean</span>(indice)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="ejercicios.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb13-2"><a href="ejercicios.html#cb13-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb13-3"><a href="ejercicios.html#cb13-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb13-4"><a href="ejercicios.html#cb13-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb13-5"><a href="ejercicios.html#cb13-5" aria-hidden="true" tabindex="-1"></a>indice <span class="ot">&lt;-</span> (x<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>y<span class="sc">^</span><span class="dv">2</span> <span class="sc">&lt;</span> <span class="dv">1</span>)</span>
+<span id="cb13-6"><a href="ejercicios.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(indice)</span></code></pre></div>
 <pre><code>## [1] 0.7806</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="ejercicios.html#cb13-1"></a>pi<span class="op">/</span><span class="dv">4</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="ejercicios.html#cb15-1" aria-hidden="true" tabindex="-1"></a>pi<span class="sc">/</span><span class="dv">4</span></span></code></pre></div>
 <pre><code>## [1] 0.7853982</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="ejercicios.html#cb15-1"></a>pi_aprox &lt;-<span class="st"> </span><span class="dv">4</span><span class="op">*</span><span class="kw">mean</span>(indice)</span>
-<span id="cb15-2"><a href="ejercicios.html#cb15-2"></a>pi_aprox</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="ejercicios.html#cb17-1" aria-hidden="true" tabindex="-1"></a>pi_aprox <span class="ot">&lt;-</span> <span class="dv">4</span><span class="sc">*</span><span class="fu">mean</span>(indice)</span>
+<span id="cb17-2"><a href="ejercicios.html#cb17-2" aria-hidden="true" tabindex="-1"></a>pi_aprox</span></code></pre></div>
 <pre><code>## [1] 3.1224</code></pre>
-<p>Generamos el correspondiente gráfico (ver Figura <a href="ejercicios.html#fig:simpiplot">2.1</a>) (los puntos con color negro tienen distribución uniforme en el círculo unidad; esto está relacionado con el método de aceptación-rechazo, ver <a href="el-método-de-aceptaciónrechazo.html#exm:ar-esfera">7.3</a>, o con el denominado método <em>hit-or-miss</em>).</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="ejercicios.html#cb17-1"></a><span class="co"># Colores y símbolos dependiendo de si el índice correspondiente es verdadero:</span></span>
-<span id="cb17-2"><a href="ejercicios.html#cb17-2"></a>color &lt;-<span class="st"> </span><span class="kw">ifelse</span>(indice, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>) </span>
-<span id="cb17-3"><a href="ejercicios.html#cb17-3"></a>simbolo &lt;-<span class="st"> </span><span class="kw">ifelse</span>(indice, <span class="dv">1</span>, <span class="dv">4</span>)</span>
-<span id="cb17-4"><a href="ejercicios.html#cb17-4"></a><span class="kw">plot</span>(x, y, <span class="dt">pch =</span> simbolo, <span class="dt">col =</span> color, </span>
-<span id="cb17-5"><a href="ejercicios.html#cb17-5"></a>     <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">xlab=</span><span class="st">&quot;X&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Y&quot;</span>, <span class="dt">asp =</span> <span class="dv">1</span>) </span>
-<span id="cb17-6"><a href="ejercicios.html#cb17-6"></a>     <span class="co"># asp = 1 para dibujar circulo</span></span>
-<span id="cb17-7"><a href="ejercicios.html#cb17-7"></a><span class="kw">symbols</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dt">circles =</span> <span class="dv">1</span>, <span class="dt">inches =</span> <span class="ot">FALSE</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb17-8"><a href="ejercicios.html#cb17-8"></a><span class="kw">symbols</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dt">squares =</span> <span class="dv">2</span>, <span class="dt">inches =</span> <span class="ot">FALSE</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:simpiplot"></span>
+<p>Generamos el correspondiente gráfico (ver Figura <a href="ejercicios.html#fig:simpiplot">2.1</a>) (los puntos con color negro tienen distribución uniforme en el círculo unidad; esto está relacionado con el método de aceptación-rechazo, ver Ejemplo <a href="el-método-de-aceptaciónrechazo.html#exm:ar-esfera">7.3</a>, o con el denominado método <em>hit-or-miss</em>).</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="ejercicios.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colores y símbolos dependiendo de si el índice correspondiente es verdadero:</span></span>
+<span id="cb19-2"><a href="ejercicios.html#cb19-2" aria-hidden="true" tabindex="-1"></a>color <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(indice, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>) </span>
+<span id="cb19-3"><a href="ejercicios.html#cb19-3" aria-hidden="true" tabindex="-1"></a>simbolo <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(indice, <span class="dv">1</span>, <span class="dv">4</span>)</span>
+<span id="cb19-4"><a href="ejercicios.html#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">pch =</span> simbolo, <span class="at">col =</span> color, </span>
+<span id="cb19-5"><a href="ejercicios.html#cb19-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">xlab=</span><span class="st">&quot;X&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Y&quot;</span>, <span class="at">asp =</span> <span class="dv">1</span>) </span>
+<span id="cb19-6"><a href="ejercicios.html#cb19-6" aria-hidden="true" tabindex="-1"></a>     <span class="co"># asp = 1 para dibujar circulo</span></span>
+<span id="cb19-7"><a href="ejercicios.html#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="fu">symbols</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="at">circles =</span> <span class="dv">1</span>, <span class="at">inches =</span> <span class="cn">FALSE</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-8"><a href="ejercicios.html#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="fu">symbols</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="at">squares =</span> <span class="dv">2</span>, <span class="at">inches =</span> <span class="cn">FALSE</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:simpiplot"></span>
 <img src="02-Numeros_aleatorios_R_files/figure-html/simpiplot-1.png" alt="Valores generados con distribución uniforme bidimensional, con colores y símbolos indicando si están dentro del círculo unidad." width="70%" />
 <p class="caption">
 Figura 2.1: Valores generados con distribución uniforme bidimensional, con colores y símbolos indicando si están dentro del círculo unidad.
@@ -389,7 +424,6 @@ Figura 2.1: Valores generados con distribución uniforme bidimensional, con colo
 <div class="exercise">
 <span id="exr:bernouilli" class="exercise"><strong>Ejercicio 2.2  (Experimento de Bernoulli)  </strong></span>
 </div>
-
 <p>Consideramos el experimento de Bernoulli consistente en el
 lanzamiento de una moneda.</p>
 <ol style="list-style-type: lower-alpha">
@@ -397,13 +431,13 @@ lanzamiento de una moneda.</p>
 lanzamiento de una moneda <code>(0 = cruz, 1 = cara)</code>, suponiendo que
 no está trucada. Aproximar la probabilidad de cara a partir de
 las simulaciones.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="ejercicios.html#cb18-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb18-2"><a href="ejercicios.html#cb18-2"></a>nsim &lt;-<span class="st"> </span><span class="dv">10000</span></span>
-<span id="cb18-3"><a href="ejercicios.html#cb18-3"></a>x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dt">cara =</span> <span class="dv">1</span>, <span class="dt">cruz =</span> <span class="dv">0</span>), nsim, <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">prob =</span> <span class="kw">c</span>(<span class="fl">0.5</span>,<span class="fl">0.5</span>))</span>
-<span id="cb18-4"><a href="ejercicios.html#cb18-4"></a><span class="kw">mean</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="ejercicios.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb20-2"><a href="ejercicios.html#cb20-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb20-3"><a href="ejercicios.html#cb20-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="at">cara =</span> <span class="dv">1</span>, <span class="at">cruz =</span> <span class="dv">0</span>), nsim, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.5</span>,<span class="fl">0.5</span>))</span>
+<span id="cb20-4"><a href="ejercicios.html#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div>
 <pre><code>## [1] 0.4953</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="ejercicios.html#cb20-1"></a><span class="kw">barplot</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">table</span>(x)<span class="op">/</span>nsim, <span class="dt">ylab =</span> <span class="st">&quot;Porcentaje&quot;</span>) <span class="co"># Representar porcentajes </span></span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:simberplot"></span>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="ejercicios.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">table</span>(x)<span class="sc">/</span>nsim, <span class="at">ylab =</span> <span class="st">&quot;Porcentaje&quot;</span>) <span class="co"># Representar porcentajes </span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:simberplot"></span>
 <img src="02-Numeros_aleatorios_R_files/figure-html/simberplot-1.png" alt="Frecuencias relativas de los valores generados con distribución Bernoulli (aproximaciones por simulación de las probabilidades teóricas)." width="70%" />
 <p class="caption">
 Figura 2.2: Frecuencias relativas de los valores generados con distribución Bernoulli (aproximaciones por simulación de las probabilidades teóricas).
@@ -415,18 +449,18 @@ gráfico de lineas considerando en el eje <span class="math inline">\(X\)</span>
 lanzamientos (de 1 a 10000) y en el eje <span class="math inline">\(Y\)</span> la frecuencia
 relativa del suceso cara (puede ser recomendable emplear la
 función <code>cumsum</code>).</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="ejercicios.html#cb21-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb21-2"><a href="ejercicios.html#cb21-2"></a>nsim &lt;-<span class="st"> </span><span class="dv">1000</span></span>
-<span id="cb21-3"><a href="ejercicios.html#cb21-3"></a>p &lt;-<span class="st"> </span><span class="fl">0.4</span></span>
-<span id="cb21-4"><a href="ejercicios.html#cb21-4"></a>x &lt;-<span class="st"> </span><span class="kw">rbinom</span>(nsim, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">prob =</span> p) <span class="co"># Simulamos una Bernouilli</span></span>
-<span id="cb21-5"><a href="ejercicios.html#cb21-5"></a>n &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span>nsim</span>
-<span id="cb21-6"><a href="ejercicios.html#cb21-6"></a><span class="co"># Alternativa programación: x &lt;- runif(nsim) &lt; p</span></span>
-<span id="cb21-7"><a href="ejercicios.html#cb21-7"></a><span class="kw">mean</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="ejercicios.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb23-2"><a href="ejercicios.html#cb23-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb23-3"><a href="ejercicios.html#cb23-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
+<span id="cb23-4"><a href="ejercicios.html#cb23-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> p) <span class="co"># Simulamos una Bernouilli</span></span>
+<span id="cb23-5"><a href="ejercicios.html#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternativa programación: x &lt;- runif(nsim) &lt; p</span></span>
+<span id="cb23-6"><a href="ejercicios.html#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div>
 <pre><code>## [1] 0.394</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="ejercicios.html#cb23-1"></a><span class="kw">plot</span>(n, <span class="kw">cumsum</span>(x)<span class="op">/</span>n, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Proporción de caras&quot;</span>, </span>
-<span id="cb23-2"><a href="ejercicios.html#cb23-2"></a>     <span class="dt">xlab=</span><span class="st">&quot;Número de lanzamientos&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span>
-<span id="cb23-3"><a href="ejercicios.html#cb23-3"></a><span class="kw">abline</span>(<span class="dt">h=</span>p, <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:simberconv"></span>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="ejercicios.html#cb25-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>nsim</span>
+<span id="cb25-2"><a href="ejercicios.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(n, <span class="fu">cumsum</span>(x)<span class="sc">/</span>n, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Proporción de caras&quot;</span>, </span>
+<span id="cb25-3"><a href="ejercicios.html#cb25-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Número de lanzamientos&quot;</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb25-4"><a href="ejercicios.html#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span>p, <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:simberconv"></span>
 <img src="02-Numeros_aleatorios_R_files/figure-html/simberconv-1.png" alt="Gráfico de convergencia de la aproximación por simulación a la probabilidad teórica." width="70%" />
 <p class="caption">
 Figura 2.3: Gráfico de convergencia de la aproximación por simulación a la probabilidad teórica.
@@ -438,7 +472,6 @@ Figura 2.3: Gráfico de convergencia de la aproximación por simulación a la pr
 <div class="exercise">
 <span id="exr:circuito" class="exercise"><strong>Ejercicio 2.3  (Simulación de un circuito)  </strong></span>
 </div>
-
 <p>Simular el paso de corriente a través del siguiente circuito, donde
 figuran las probabilidades de que pase corriente por cada uno de los
 interruptores:</p>
@@ -451,26 +484,24 @@ para simular 1000 valores de cada una de ellas.</p>
 Recíprocamente, cualquier número puede ser tratado como lógico (al estilo de C).
 El entero 0 es equivalente a <code>FALSE</code> y cualquier entero distinto de 0 a <code>TRUE</code>.
 </div>
-
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="ejercicios.html#cb24-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb24-2"><a href="ejercicios.html#cb24-2"></a>nsim &lt;-<span class="st"> </span><span class="dv">10000</span></span>
-<span id="cb24-3"><a href="ejercicios.html#cb24-3"></a>x1 &lt;-<span class="st"> </span><span class="kw">rbinom</span>(nsim, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">prob=</span><span class="fl">0.9</span>)</span>
-<span id="cb24-4"><a href="ejercicios.html#cb24-4"></a>x2 &lt;-<span class="st"> </span><span class="kw">rbinom</span>(nsim, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">prob=</span><span class="fl">0.8</span>)</span>
-<span id="cb24-5"><a href="ejercicios.html#cb24-5"></a>z1 &lt;-<span class="st"> </span>x1 <span class="op">|</span><span class="st"> </span>x2   <span class="co"># Operador lógico &quot;O&quot;</span></span>
-<span id="cb24-6"><a href="ejercicios.html#cb24-6"></a>x3 &lt;-<span class="st"> </span><span class="kw">rbinom</span>(nsim, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">prob=</span><span class="fl">0.6</span>)</span>
-<span id="cb24-7"><a href="ejercicios.html#cb24-7"></a>x4 &lt;-<span class="st"> </span><span class="kw">rbinom</span>(nsim, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">prob=</span><span class="fl">0.5</span>)</span>
-<span id="cb24-8"><a href="ejercicios.html#cb24-8"></a>z2 &lt;-<span class="st"> </span>x3 <span class="op">|</span><span class="st"> </span>x4</span>
-<span id="cb24-9"><a href="ejercicios.html#cb24-9"></a>z3 &lt;-<span class="st"> </span>z1 <span class="op">|</span><span class="st"> </span>z2</span>
-<span id="cb24-10"><a href="ejercicios.html#cb24-10"></a>x5 &lt;-<span class="st"> </span><span class="kw">rbinom</span>(nsim, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">prob=</span><span class="fl">0.7</span>)</span>
-<span id="cb24-11"><a href="ejercicios.html#cb24-11"></a>fin &lt;-<span class="st"> </span>z3 <span class="op">&amp;</span><span class="st"> </span>x5  <span class="co"># Operador lógico &quot;Y&quot;</span></span>
-<span id="cb24-12"><a href="ejercicios.html#cb24-12"></a><span class="kw">mean</span>(fin)</span></code></pre></div>
-<pre><code>## [1] 0.6918</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="ejercicios.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb26-2"><a href="ejercicios.html#cb26-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb26-3"><a href="ejercicios.html#cb26-3" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="at">size=</span><span class="dv">1</span>, <span class="at">prob=</span><span class="fl">0.8</span>)</span>
+<span id="cb26-4"><a href="ejercicios.html#cb26-4" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="at">size=</span><span class="dv">1</span>, <span class="at">prob=</span><span class="fl">0.9</span>)</span>
+<span id="cb26-5"><a href="ejercicios.html#cb26-5" aria-hidden="true" tabindex="-1"></a>z1 <span class="ot">&lt;-</span> x1 <span class="sc">|</span> x2   <span class="co"># Operador lógico &quot;O&quot;</span></span>
+<span id="cb26-6"><a href="ejercicios.html#cb26-6" aria-hidden="true" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="at">size=</span><span class="dv">1</span>, <span class="at">prob=</span><span class="fl">0.6</span>)</span>
+<span id="cb26-7"><a href="ejercicios.html#cb26-7" aria-hidden="true" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="at">size=</span><span class="dv">1</span>, <span class="at">prob=</span><span class="fl">0.5</span>)</span>
+<span id="cb26-8"><a href="ejercicios.html#cb26-8" aria-hidden="true" tabindex="-1"></a>z2 <span class="ot">&lt;-</span> x3 <span class="sc">|</span> x4</span>
+<span id="cb26-9"><a href="ejercicios.html#cb26-9" aria-hidden="true" tabindex="-1"></a>z3 <span class="ot">&lt;-</span> z1 <span class="sc">|</span> z2</span>
+<span id="cb26-10"><a href="ejercicios.html#cb26-10" aria-hidden="true" tabindex="-1"></a>x5 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="at">size=</span><span class="dv">1</span>, <span class="at">prob=</span><span class="fl">0.7</span>)</span>
+<span id="cb26-11"><a href="ejercicios.html#cb26-11" aria-hidden="true" tabindex="-1"></a>fin <span class="ot">&lt;-</span> z3 <span class="sc">&amp;</span> x5  <span class="co"># Operador lógico &quot;Y&quot;</span></span>
+<span id="cb26-12"><a href="ejercicios.html#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(fin)</span></code></pre></div>
+<pre><code>## [1] 0.692</code></pre>
 <hr />
 
 <div class="exercise">
 <span id="exr:mere" class="exercise"><strong>Ejercicio 2.4  (El problema del Caballero de Méré)  </strong></span>
 </div>
-
 <p>En 1651, el Caballero de Méré le planteó a Pascal una pregunta
 relacionada con las apuestas y los juegos de azar: ¿es ventajoso
 apostar a que en cuatro lanzamientos de un dado se obtiene al menos
@@ -482,28 +513,28 @@ del Cálculo de Probabilidades.</p>
 parámetro de entrada es el número de lanzamientos <span class="math inline">\(n\)</span>, que toma
 el valor 4 por defecto, y la salida debe ser <code>TRUE</code> si se
 obtiene al menos un 6 y <code>FALSE</code> en caso contrario.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="ejercicios.html#cb26-1"></a>deMere &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">n =</span> <span class="dv">4</span>){</span>
-<span id="cb26-2"><a href="ejercicios.html#cb26-2"></a>  lanz &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">size=</span>n)</span>
-<span id="cb26-3"><a href="ejercicios.html#cb26-3"></a>  <span class="kw">return</span>(<span class="dv">6</span> <span class="op">%in%</span><span class="st"> </span>lanz)</span>
-<span id="cb26-4"><a href="ejercicios.html#cb26-4"></a>}</span>
-<span id="cb26-5"><a href="ejercicios.html#cb26-5"></a></span>
-<span id="cb26-6"><a href="ejercicios.html#cb26-6"></a>n &lt;-<span class="st"> </span><span class="dv">4</span></span>
-<span id="cb26-7"><a href="ejercicios.html#cb26-7"></a>lanz &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">size=</span>n)</span>
-<span id="cb26-8"><a href="ejercicios.html#cb26-8"></a>lanz</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="ejercicios.html#cb28-1" aria-hidden="true" tabindex="-1"></a>deMere <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">4</span>){</span>
+<span id="cb28-2"><a href="ejercicios.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  lanz <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">replace=</span><span class="cn">TRUE</span>, <span class="at">size=</span>n)</span>
+<span id="cb28-3"><a href="ejercicios.html#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="dv">6</span> <span class="sc">%in%</span> lanz)</span>
+<span id="cb28-4"><a href="ejercicios.html#cb28-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-5"><a href="ejercicios.html#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="ejercicios.html#cb28-6" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb28-7"><a href="ejercicios.html#cb28-7" aria-hidden="true" tabindex="-1"></a>lanz <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">replace=</span><span class="cn">TRUE</span>, <span class="at">size=</span>n)</span>
+<span id="cb28-8"><a href="ejercicios.html#cb28-8" aria-hidden="true" tabindex="-1"></a>lanz</span></code></pre></div>
 <pre><code>## [1] 3 5 1 6</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="ejercicios.html#cb28-1"></a><span class="dv">6</span> <span class="op">%in%</span><span class="st"> </span>lanz</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="ejercicios.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> <span class="sc">%in%</span> lanz</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre></li>
 <li><p>Utilizar la función anterior para simular <span class="math inline">\(nsim=10000\)</span> jugadas
 de este juego y calcular la proporción de veces que se gana la
 apuesta (obtener al menos un 6 en <span class="math inline">\(n\)</span> lanzamientos), usando
 <span class="math inline">\(n=4\)</span>. Comparar el resultado con la probabilidad teórica
 <span class="math inline">\(1-(5/6)^{n}\)</span>.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="ejercicios.html#cb30-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb30-2"><a href="ejercicios.html#cb30-2"></a>n &lt;-<span class="st"> </span><span class="dv">4</span></span>
-<span id="cb30-3"><a href="ejercicios.html#cb30-3"></a>nsim &lt;-<span class="st"> </span><span class="dv">10000</span></span>
-<span id="cb30-4"><a href="ejercicios.html#cb30-4"></a><span class="kw">mean</span>(<span class="kw">replicate</span>(nsim, <span class="kw">deMere</span>(n)))</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="ejercicios.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb32-2"><a href="ejercicios.html#cb32-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb32-3"><a href="ejercicios.html#cb32-3" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb32-4"><a href="ejercicios.html#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">replicate</span>(nsim, <span class="fu">deMere</span>(n)))</span></code></pre></div>
 <pre><code>## [1] 0.5148</code></pre>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="ejercicios.html#cb32-1"></a><span class="dv">1</span><span class="op">-</span>(<span class="dv">5</span><span class="op">/</span><span class="dv">6</span>)<span class="op">^</span>n</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="ejercicios.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span>(<span class="dv">5</span><span class="sc">/</span><span class="dv">6</span>)<span class="sc">^</span>n</span></code></pre></div>
 <pre><code>## [1] 0.5177469</code></pre></li>
 </ol>
 <hr />
@@ -511,7 +542,6 @@ apuesta (obtener al menos un 6 en <span class="math inline">\(n\)</span> lanzami
 <div class="exercise">
 <span id="exr:album" class="exercise"><strong>Ejercicio 2.5  (variación del problema del coleccionista)  </strong></span>
 </div>
-
 <p>Supongamos que tenemos un álbum con <span class="math inline">\(n = 75\)</span> cromos y para completarlo hay que comprar sobres con <span class="math inline">\(m = 6\)</span> cromos. A partir de <span class="math inline">\(nsim=1000\)</span> simulaciones de coleccionistas de cromos, obtener una aproximación por simulación a la respuesta de las siguientes cuestiones:</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>¿Cuál será en media el número de sobres que hay que comprar para completar la colección?
@@ -529,7 +559,6 @@ apuesta (obtener al menos un 6 en <span class="math inline">\(n\)</span> lanzami
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -548,6 +577,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -568,6 +598,10 @@ gitbook.start({
 "text": null
 },
 "download": ["Simulacion.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

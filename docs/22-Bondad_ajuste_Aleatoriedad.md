@@ -4,7 +4,7 @@ Bondad de Ajuste y Aleatoriedad {#gof-aleat}
 
 
 
-En los métodos clásicos de inferencia estadística es habitual asumir que los valores observados $X_1,\ldots, X_n$ (o los errores de un modelo) consituyen una muestra aleatoria simple de una variable aleatoria $X$.
+En los métodos clásicos de inferencia estadística es habitual asumir que los valores observados $X_1,\ldots, X_n$ (o los errores de un modelo) constituyen una muestra aleatoria simple de una variable aleatoria $X$.
 Se están asumiendo por tanto dos hipótesis estructurales: la independencia (aleatoriedad) y la homogeneidad (misma distribución) de las observaciones (o de los errores).
 Adicionalmente, en inferencia paramétrica se supone que la distribución se ajusta a un modelo
 paramétrico específico $F_{\theta}(x)$, siendo $\theta$ un parámetro que normalmente es desconocido.
@@ -55,7 +55,7 @@ Además de los específicos de normalidad ($H_0:F= \mathcal{N}(\mu,\sigma^2)$): 
 Se agrupan los datos en intervalos $I_{k}=\left[  L_{k-1},L_{k}\right)$ con $k=1, \ldots, K$ y a cada intervalo se le asocia un valor (altura de la barra) igual a la frecuencia absoluta de ese intervalo $n_k = \sum_{i=1}^{n}\mathbf{1}\left( X_i \in [L_{k-1},L_{k}) \right)$, si la longitud de los intervalos es constante, o proporcional a dicha frecuencia (de forma que el área coincida con la frecuencia relativa y pueda ser comparado con una función de densidad):
 $$\hat{f}_n(x)=\frac{n_{i}}{n\left(  L_{k}-L_{k-1}\right)}$$
 
-Como ya se ha visto anteriormente, en `R` podemos generar este gráfico con la función `hist()` del paquete base. 
+Como ya se ha visto anteriormente, en R podemos generar este gráfico con la función `hist()` del paquete base. 
 Algunos de los principales parámetros (con los valores por defecto) son los siguientes:
 
 ```r
@@ -172,7 +172,7 @@ qqPlot(datos, "norm")
 ```
 
 
-### Contraste ji-cuadrado de Pearson {#chi2test}
+### Contraste chi-cuadrado de Pearson {#chi2test}
 
 
 Se trata de un contraste de bondad de ajuste:
@@ -216,7 +216,7 @@ Cuando $H_0$ es cierta el estadístico tiende a tomar valores pequeños y grande
 Por tanto se rechaza $H_0$, para un nivel de significación $\alpha$, si: 
 $$\sum_{i=1}^{k}\frac{(n_{i}-e_{i})^2}{e_{i}}\geq \chi_{k-r-1,1-\alpha}^2$$
 
-<!-- Gráfico ji-cuadrado -->
+<!-- Gráfico chi-cuadrado -->
 
 Si realizamos el contraste a partir del p-valor o nivel crítico:
 $$p=P\left(  {\chi_{k-r-1}^2\geq \sum \limits_{i=1}^{k}{\frac{(n_{i}-e_{i})^2}{e_{i}}}}\right)$$
@@ -267,14 +267,14 @@ frecuencia esperada $\geq5$:
 Si la variable de interés es continua, una forma de garantizar que $e_{i}\geq5$ consiste en tomar un número de intervalos $k\leq \lfloor n/5 \rfloor$ y de forma que sean equiprobables $p_{i}=1/k$,
 considerando los puntos críticos $x_{i/k}$ de la distribución bajo $H_0$.
 
-Por ejemplo, se podría emplear la siguiente función (que imita a las incluídas en `R`):
+Por ejemplo, se podría emplear la siguiente función (que imita a las incluídas en R):
 
 
 ```r
 #-------------------------------------------------------------------------------
 # chisq.test.cont(x, distribution, nclasses, output, nestpar,...)
 #-------------------------------------------------------------------------------
-# Realiza el test ji-cuadrado de bondad de ajuste para una distribución continua
+# Realiza el test chi-cuadrado de bondad de ajuste para una distribución continua
 # discretizando en intervalos equiprobables.
 # Parámetros:
 #   distribution = "norm","unif",etc
@@ -444,7 +444,7 @@ lillie.test(datos)
 ## D = 0.097809, p-value = 0.4162
 ```
 
-## Diagnosis de la independencia
+## Diagnosis de la independencia {#diag-aleat}
 
 
 Los métodos "clásicos" de inferencia estadística se basan en
@@ -921,7 +921,7 @@ $$X_i = \left\lfloor K\cdot U_{i}\right\rfloor + 1 ,$$
 donde $\left\lfloor u\right\rfloor$ denota la parte entera de $u$.
 De esta forma se consigue una sucesión de enteros aleatorios supuestamente independientes con distribución uniforme en $\{1, \ldots, K\}$.
 
-En está sección se describirán algunos de los métodos tradicionales en este campo con fines ilustrativos. Si realmente el objetivo es diagnosticar la calidad de un generador, la recomendación sería emplear las baterías de contrastes más recientes descritas en la Sección \@ref(baterias).
+En esta sección se describirán algunos de los métodos tradicionales en este campo con fines ilustrativos. Si realmente el objetivo es diagnosticar la calidad de un generador, la recomendación sería emplear las baterías de contrastes más recientes descritas en la Sección \@ref(baterias).
 
 ### Contraste de frecuencias
 
@@ -959,15 +959,18 @@ chisq.test(f)
 
 El contraste anterior se puede generalizar a contrastar la uniformidad de las $d$-uplas $(X_{t+1},X_{t+2},\ldots,X_{t+d})$ con $t=(i-1)d$, $i=1,\ldots,m$ siendo $m=\lfloor n/d \rfloor$. 
 La idea es que troceamos el hipercubo $[0, 1]^d$ en $K^d$ celdas equiprobables.
-Considerando como categorías todos los posibles valores de las $d$-uplas, podemos emplear el estadístico chi-cuadrado para medir la discrepancia entre las frecuencias observadas en y las esperadas, iguales todas a $\frac{m}{K^d}$. La elecciones más frecuentes son $d=2$ (contraste de pares seriados) y $K=8$, $10$ ó $20$. 
+Considerando como categorías todos los posibles valores de las $d$-uplas, podemos emplear el estadístico chi-cuadrado para medir la discrepancia entre las frecuencias observadas y las esperadas, iguales todas a $\frac{m}{K^d}$. 
+Las elecciones más frecuentes son $d=2$ (contraste de pares seriados) y $K=8$, $10$ ó $20$. 
 Por ejemplo, la función `serial.test()` del paquete `randtoolbox` implementa este contraste para $d=2$.
 
-Para que la prueba chi-cuadrado sea fiable el valor de $n$ debería ser grande en comparación con el número de categorías $K^d$ (e.g. $n \geq 5dK^d$). Si se considera un valor $d \geq 3$ puede ser necesario reducir considerablemente el valor de $K$ para evitar considerar demasiadas categorías. Alternativamente se podrían emplear pruebas menos precisas como el contraste del poker o del coleccionista descritos a continuación.
+Para que la prueba chi-cuadrado sea fiable el valor de $n$ debería ser grande en comparación con el número de categorías $K^d$ (e.g. $n \geq 5dK^d$). 
+Si se considera un valor $d \geq 3$ puede ser necesario reducir considerablemente el valor de $K$ para evitar considerar demasiadas categorías. 
+Alternativamente se podrían considerar distintas técnicas para agrupar estas categorías, por ejemplo como se hace en el contraste del poker o del coleccionista descritos a continuación.
 
 
 ### El contraste del poker
 
-En el contrate del poker "clásico" se consideran conjuntos sucesivos de cinco enteros y, para cada uno, se determina cuál de las siguientes posibilidades se da:
+En el contrate del poker "clásico" se consideran conjuntos sucesivos de cinco enteros ($d=5$) y, para cada uno, se determina cuál de las siguientes posibilidades se da:
 
 1.  Un mismo entero se repite cinco veces (abreviadamente, $AAAAA$).
 
@@ -1018,9 +1021,6 @@ donde $S(d,c)$ es el número de Stirling de segunda clase, definido como el núm
 $$S(d,c) = \frac{1}{c!}\sum_{i=0}^{c} (-1)^{i} \binom{c}{i} (c-i)^d.$$
 Por ejemplo, la función `poker.test()` del paquete `randtoolbox` implementa este contraste para el caso de $d=K$.
 
-<!-- 
-$S(d,c) = \genfrac{\{}{\}}{0pt}{}{d}{c}$
--->
 
 
 ### El contraste del coleccionista
@@ -1071,7 +1071,5 @@ Test de rachas
 El contraste de permutaciones
 
 Aplicando el test a partir de la tercera cifra decimal
-Esto equivale a considerar
-$100\cdot U_{i}-\left\lfloor 100\cdot U_{i}\right\rfloor $ en lugar de
-$U_{i}$ en los contrastes anteriores.
+Esto equivale a considerar $100\cdot U_{i}-\left\lfloor 100\cdot U_{i}\right\rfloor $ en lugar de $U_{i}$ en los contrastes anteriores.
 -->

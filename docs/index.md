@@ -1,7 +1,7 @@
 --- 
 title: "Simulación Estadística"
 author: "Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)"
-date: "2022-02-16"
+date: "2022-03-09"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
@@ -26,8 +26,8 @@ donde puede descargarse en formato [pdf](https://rubenfcasal.github.io/simbook/S
 Para instalar los paquetes necesarios para poder ejecutar los ejemplos mostrados en el libro se puede emplear el siguiente comando:
 
 ```r
-pkgs <- c('boot', 'randtoolbox', 'MASS', 'DEoptim', 'nortest', 'geoR', 'copula', 'sm',
-          'car', 'tseries', 'forecast', 'plot3D', 'rgl', 'rngWELL', 'randtoolbox')
+pkgs <- c('tictoc', 'boot', 'randtoolbox', 'MASS', 'DEoptim', 'nortest', 'geoR', 'copula',
+          'sm', 'car', 'tseries', 'forecast', 'plot3D', 'rgl', 'rngWELL', 'randtoolbox')
 install.packages(setdiff(pkgs, installed.packages()[,"Package"]), 
                  dependencies = TRUE)
 

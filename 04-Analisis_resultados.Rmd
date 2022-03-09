@@ -1,10 +1,7 @@
-Análisis de resultados de simulación {#cap4}
-====================================
+# Análisis de resultados de simulación {#cap4}
 
 ```{r , child = '_global_options.Rmd'}
 ```
-
-Work in progress...
 
 En este capítulo nos centraremos en la aproximación mediante simulación de la media teórica de un estadístico a partir de la media muestral de una secuencia de simulaciones de dicho estadístico.
 La aproximación de una probabilidad sería un caso particular considerando una variable de Bernouilli.
@@ -13,8 +10,8 @@ En primer lugar se tratará el análisis de la convergencia y la precisión de l
 Al final del capítulo se incluye una breve introducción a los problemas de estabilización y dependencia (con los que nos solemos encontrar en simulación dinámica y MCMC).
 
 
-Convergencia {#convergencia}
-------------
+## Convergencia {#convergencia}
+
 
 Supongamos que estamos interesados en aproximar la media teórica 
 $\mu = E\left( X\right)$ a partir de una secuencia i.i.d. $X_{1}$,
@@ -83,8 +80,7 @@ boxplot(rx)
 ```
 
 
-Estimación de la precisión
---------------------------
+## Estimación de la precisión
 
 En el caso de la media muestral $\overline{X}_{n}$, un estimador
 insesgado de $Var\left( \overline{X}_{n}\right) =\sigma ^{2}/n$ es la cuasi-varianza muestral:
@@ -98,12 +94,10 @@ $$\widehat{Var}\left( \hat{p}_{n}\right)
 =\frac{\hat{p}_{n}(1-\hat{p}_{n})}{n-1},$$
 aunque se suele emplear la varianza muestral.
 
-Los valores obtenidos servirían como medidas básicas de la precisión
-de la aproximación, aunque su principal aplicación es la
-construcción de intervalos de confianza.
+Los valores obtenidos servirían como medidas básicas de la precisión de la aproximación, aunque su principal aplicación es la construcción de intervalos de confianza.
+Para ello podemos emplear el resultado mostrado a continuación.
 
-Teorema central del límite
---------------------------
+## Teorema central del límite
 
 Si $X_{1}$, $X_{2}$, $\cdots$ es una secuencia de variables aleatorias
 independientes con $E\left( X_{i}\right) =\mu$ y
@@ -474,10 +468,8 @@ rx <- x[-seq_len(nburn)]
 
 
 
-Para simular una serie de tiempo en `R`
-se puede emplear la función `arima.sim` del paquete base `stats`.
-En este caso el periodo de calentamiento se establece mediante el
-parámetro `n.start` (que se fija automáticamente a un valor adecuado).
+Para simular una serie de tiempo en R se puede emplear la función `arima.sim` del paquete base `stats`.
+En este caso el periodo de calentamiento se establece mediante el parámetro `n.start` (que se fija automáticamente a un valor adecuado).
 
 Por ejemplo, podemos generar este serie autoregressiva con:
 ```{r}
@@ -491,6 +483,8 @@ resultados considerando distintos parámetros de dependencia.
 Observaciones
 -------------
 
+Como comentarios finales, podríamos añadir que:
+
 -   En el caso de que la característica de interés de la
     distribución de $X$ no sea la media, los resultados anteriores
     no serían en principio aplicables.
@@ -500,7 +494,8 @@ Observaciones
     secuencias de simulación es muy probable que no
     estén contenidas).
 
--   En muchos casos (p.e. la generación de múltiples secuencias de
-    simulación puede suponer un coste computacional importante),
-    puede ser preferible emplear un método de remuestreo.
+-   En muchos casos (por ejemplo, cuando la generación de múltiples secuencias de
+    simulación supone un coste computacional importante),
+    puede ser preferible emplear un método de remuestreo para aproximar 
+    la precisión de la aproximación (ver Sección \@ref(bootstrap)).
 
