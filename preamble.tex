@@ -4,15 +4,19 @@
 %\usepackage{fontspec}
 %\setmainfont{Arial}
 % Espacio después de teorema
-% https://tex.stackexchange.com/questions/37797/theorem-environment-line-break-after-label
+% Basado en https://tex.stackexchange.com/questions/37797/theorem-environment-line-break-after-label
 \newtheoremstyle{break}
-  {\topsep}{\topsep}%
-  {\itshape}{}%
-  {\bfseries}{}%
-  {\newline}%
-  {}%
+  {\topsep}{\topsep}% Space above and below
+  {\itshape}{}%       Body font, Indent amoun
+  {\bfseries}{\vspace{\topsep}}%      Theorem head font, Punctuation after theorem head
+  {\newline}%         Space after theorem head
+  {}%                 Theorem head spec (can be left empty, meaning ‘normal’ )
 
 \theoremstyle{break}
+\newtheorem{thm}{Theorem}[section]
+
+% \usepackage{ntheorem}
+% \theoremstyle{break}
 
 \ifxetex
   \usepackage{polyglossia}
@@ -25,7 +29,7 @@
   \usepackage[spanish,es-tabla]{babel}
 \fi
 \makeatletter
-\def\thm@space@setup{
+\def\thm@space@setup{%
   \thm@preskip=8pt plus 2pt minus 4pt
   \thm@postskip=\thm@preskip
 }
