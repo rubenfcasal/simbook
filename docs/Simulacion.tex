@@ -124,6 +124,9 @@
 
 \theoremstyle{break}
 \newtheorem{thm}{Theorem}[section]
+\newtheorem{cnj}{Conjecture}[section]
+\newtheorem{exm}{Example}[section]
+\newtheorem{exr}{Exercise}[section]
 
 % \usepackage{ntheorem}
 % \theoremstyle{break}
@@ -152,7 +155,7 @@
 
 \title{Simulación Estadística}
 \author{Rubén Fernández Casal (\href{mailto:ruben.fcasal@udc.es}{\nolinkurl{ruben.fcasal@udc.es}}), Ricardo Cao (\href{mailto:rcao@udc.es}{\nolinkurl{rcao@udc.es}})}
-\date{2022-03-09}
+\date{2022-03-16}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Teorema}[chapter]
@@ -638,8 +641,8 @@ o alternativamente fijar la semilla en cada iteración, por ejemplo:
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{opciones}{%
-\section{Opciones}\label{opciones}}
+\hypertarget{oprrng}{%
+\section{Opciones}\label{oprrng}}
 
 Normalmente no nos va a interesar cambiar las opciones por defecto de R para la generación de números pseudoaleatorios.
 Para establecer estas opciones podemos emplear los argumentos \texttt{kind\ =\ NULL}, \texttt{normal.kind\ =\ NULL} y \texttt{sample.kind\ =\ NULL} en las funciones \texttt{RNGkind()} o \texttt{set.seed()}.
@@ -1114,10 +1117,10 @@ Ejemplo:
 \begin{verbatim}
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.15    0.00    0.16 
+##    0.12    0.01    0.14 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.15    0.00    0.16
+##    0.12    0.01    0.14
 \end{verbatim}
 
 \begin{Shaded}
@@ -1130,10 +1133,10 @@ Ejemplo:
 \begin{verbatim}
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.17    0.00    0.17 
+##       0       0       0 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.32    0.00    0.33
+##    0.12    0.01    0.14
 \end{verbatim}
 
 Hay diversos paquetes que implementan herramientas similares, por ejemplo:
@@ -1184,7 +1187,7 @@ Hay diversos paquetes que implementan herramientas similares, por ejemplo:
 \end{Shaded}
 
 \begin{verbatim}
-## middle: 0.02 sec elapsed
+## middle: 0 sec elapsed
 \end{verbatim}
 
 \begin{Shaded}
@@ -1194,7 +1197,7 @@ Hay diversos paquetes que implementan herramientas similares, por ejemplo:
 \end{Shaded}
 
 \begin{verbatim}
-## outer: 0.1 sec elapsed
+## outer: 0.21 sec elapsed
 \end{verbatim}
 
 \begin{Shaded}
@@ -1216,8 +1219,8 @@ Hay diversos paquetes que implementan herramientas similares, por ejemplo:
 
 \begin{verbatim}
 ## 'data.frame':    10 obs. of  3 variables:
-##  $ tic: num  5.14 5.14 5.14 5.14 5.15 5.15 5.15 5.15 5.15 5.15
-##  $ toc: num  5.14 5.14 5.14 5.15 5.15 5.15 5.15 5.15 5.15 5.15
+##  $ tic: num  5.98 5.98 5.98 5.98 5.98 5.98 5.98 5.98 5.98 5.98
+##  $ toc: num  5.98 5.98 5.98 5.98 5.98 5.98 5.98 5.98 5.98 5.98
 ##  $ msg: chr  "1" "2" "3" "4" ...
 \end{verbatim}
 
@@ -1233,7 +1236,7 @@ Hay diversos paquetes que implementan herramientas similares, por ejemplo:
 
 \begin{verbatim}
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   0.000   0.000   0.000   0.001   0.000   0.010
+##       0       0       0       0       0       0
 \end{verbatim}
 
 Hay que tener en cuenta que, por construcción, aunque se realicen en la mismas condiciones (en el mismo equipo), los tiempos de CPU en R pueden variar ``ligeramente'' entre ejecuciones.
@@ -1394,7 +1397,7 @@ Por ejemplo, el conjunto de datos \texttt{randu} contiene 400 tripletas de núme
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.02    0.00    0.02
+##    0.03    0.00    0.03
 \end{verbatim}
 
 \begin{Shaded}
@@ -1737,7 +1740,7 @@ Continuando con el generador congruencial del Ejemplo \ref{exm:congru512}:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##       0       0       0
+##    0.02    0.00    0.02
 \end{verbatim}
 
 Al aplicar el test chi-cuadrado obtendríamos:
@@ -2922,9 +2925,8 @@ disponer de un método de generación de números pseudoaleatorios uniformes en 
 Se trataría del método preferible para la simulación de una variable continua (siempre que se disponga de la función cuantil).
 Está basado en los siguientes resultados:
 
-Si \(X\) es una variable aleatoria con función de distribución \(F\) continua y estrictamente monótona
-(invertible), entonces:
-\[U=F\left( X \right) \sim \mathcal{U}(0, 1)\]
+Si \(X\) es una variable aleatoria con función de distribución \(F\) continua y estrictamente monótona (invertible), entonces:
+\[U = F\left( X \right) \sim \mathcal{U}(0, 1)\]
 ya que:
 \[G\left( u \right) = P\left( Y \leq u \right) 
 = P\left( F(X) \leq u \right) \\
@@ -2938,12 +2940,11 @@ A partir de este resultado se deduce el siguiente algoritmo genérico para simul
 
 \begin{conjecture}[Método de inversión]
 \protect\hypertarget{cnj:inversion}{}{\label{cnj:inversion} \iffalse (Método de inversión) \fi{} }
-1. Generar \(U \sim \mathcal{U}(0, 1)\).
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{1}
-\tightlist
+\item
+  Generar \(U \sim \mathcal{U}(0, 1)\).
 \item
   Devolver \(X = F^{-1}\left( U \right)\).
 \end{enumerate}
@@ -3003,7 +3004,7 @@ El código para implementar este algoritmo en R podría ser el siguiente:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##       0       0       0
+##    0.00    0.02    0.01
 \end{verbatim}
 
 \begin{Shaded}
@@ -3113,7 +3114,7 @@ y función de distribución:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.03    0.00    0.03
+##    0.02    0.01    0.03
 \end{verbatim}
 \item
   Representar el histograma y compararlo con la densidad teórica.
@@ -3141,37 +3142,13 @@ y función de distribución:
 \hypertarget{ventajas-e-inconvenientes}{%
 \subsection{Ventajas e inconvenientes}\label{ventajas-e-inconvenientes}}
 
-Ventajas:
+La principal ventaja de este método es que, en general, sería aplicable a cualquier distribución continua (como se muestra en la Sección \ref{transcuant}, se puede extender al caso de que la función de distribución no sea invertible, incluyendo distribuciones discretas).
 
-\begin{itemize}
-\tightlist
-\item
-  Aplicable, en principio, a cualquier distribución continua.
-\end{itemize}
+Uno de los principales problemas es que puede no ser posible encontrar una expresión explícita para \(F^{-1}\left( u\right)\) (en ocasiones, como en el caso de la distribución normal, ni siquiera se dispone de una expresión explícita para la función de distribución).
+Además, aún disponiendo de una expresión explícita para \(F^{-1}\left( u\right)\), su evaluación directa puede requerir de mucho tiempo de computación.
 
-Inconvenientes:
-
-\begin{itemize}
-\item
-  Puede no ser posible encontrar una expresión explícita para
-  \(F^{-1}\left( u\right).\)
-\item
-  Aún disponiendo de una expresión explícita para
-  \(F^{-1}\left( u\right)\), su evaluación directa puede requerir
-  mucho tiempo de computación.
-\end{itemize}
-
-Alternativas:
-
-\begin{itemize}
-\item
-  Emplear métodos numéricos para resolver \(F(x) - u=0\)
-  (requeriría resolver numéricamente esta ecuación para cada
-  valor aleatorio que se desee generar).
-\item
-  Utilizar una aproximación a \(F^{-1}\left( u\right)\)
-  (inversión aproximada).
-\end{itemize}
+Como alternativa a estos inconvenientes se podrían emplear métodos numéricos para resolver \(F(x) - u = 0\) de forma aproximada, aunque habría que resolver numéricamente esta ecuación para cada valor aleatorio que se desea generar.
+Otra posibilidad, en principio preferible, sería emplear una aproximación a \(F^{-1}\left( u\right)\), dando lugar al \emph{método de inversión aproximada} (como se indicó en la Sección \ref{oprrng}, R emplea por defecto este método para la generación de la distribución normal).
 
 \hypertarget{inversiuxf3n-aproximada}{%
 \subsection{Inversión aproximada}\label{inversiuxf3n-aproximada}}
@@ -3229,25 +3206,27 @@ las correspondientes a la normal estándar).
 Se trata de un método universal alternativo al de inversión para
 el caso de que no se pueda emplear la función cuantil,
 pero se dispone de una expresión (preferiblemente sencilla) para la
-función de densidad \(f\left( x \right)\).
+función de densidad objetivo \(f\left( x \right)\).
 
-Si \(f\) es la densidad objetivo, la idea es simular una variable aleatoria
-bidimensional \(\left( X, Y\right)\) con distribución
-uniforme en el hipografo de \(f\) (el conjunto de puntos del plano
-comprendidos entre el eje OX y \(f\)):
-\[A_{f}=\left\{ \left( x,y\right) \in \mathbb{R}^{2}:0\leq y\leq
-f(x) \right\}.\]
-De esta forma la primera componente tendrá la distribución deseada:
+La idea es simular una variable aleatoria bidimensional \(\left( X, Y\right)\) con distribución uniforme en el hipografo de \(f\) (el conjunto de puntos del plano comprendidos entre el eje OX y \(f\)):
+\[A_{f}=\left\{ \left( x,y\right) \in \mathbb{R}^{2}:0\leq y\leq f(x) \right\}.\]
+De esta forma la primera componente tendrá la distribución deseada (Figura \ref{fig:var-gen}):
 
-\begin{center}\includegraphics[width=0.7\linewidth]{images/rechazo} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{05-Metodos_generales_continuas_files/figure-latex/var-gen-1} 
+
+}
+
+\caption{Puntos con distribución uniforme en el hipografo de una función de densidad.}\label{fig:var-gen}
+\end{figure}
 
 \[ P\left( a<X<b\right) = \frac{\text{Area de }\left\{ \left( x,y\right) \in 
 \mathbb{R}^{2}:a<x<b;~0\leq y\leq f(x) \right\} }{\text{Area de }
 A_{f}} \\
 = \int_{a}^{b}f(x) dx \]
 
-El resultado anterior es también válido para una cuasi-densidad \(f^{\ast}\)
-(no depende de la constante normalizadora).
+El resultado anterior es también válido para una cuasi-densidad \(f^{\ast}\) (no depende de la constante normalizadora).
 El resultado general sería en siguiente:
 
 \begin{itemize}
@@ -3275,11 +3254,7 @@ Teniendo en cuenta además que:
   \(B \subset A\Rightarrow \left. \left( X,Y\right) \right\vert _{B} \sim \mathcal{U}\left(B\right)\)
 \end{itemize}
 
-Por tanto, si \(\left( T, Y \right)\) sigue una distribución
-uniforme en \(A_{cg}\), aceptando los valores de
-\(\left( T, Y\right)\) que pertenezcan a \(A_{f}\) (o a \(A_{f^{\ast }}\)) se obtendrán
-generaciones con distribución uniforme sobre \(A_{f}\) (o \(A_{f^{\ast }}\))
-y la densidad de la primera componente \(T\) será \(f\).
+Por tanto, si \(\left( T, Y \right)\) sigue una distribución uniforme en \(A_{cg}\), aceptando los valores de \(\left( T, Y\right)\) que pertenezcan a \(A_{f}\) (o a \(A_{f^{\ast }}\)) se obtendrán generaciones con distribución uniforme sobre \(A_{f}\) (o \(A_{f^{\ast }}\)) y la densidad de la primera componente \(T\) será \(f\).
 
 \hypertarget{algoritmo}{%
 \subsection{Algoritmo}\label{algoritmo}}
@@ -3288,7 +3263,8 @@ Supongamos que \(f\) es la densidad objetivo y \(g\) es una densidad
 auxiliar (fácil de simular y similar a \(f\)), de forma que
 existe una constante \(c>0\) tal que:
 \[f(x) \leq c\cdot g(x) 
-\text{, }\forall x\in \mathbb{R}\text{.}\]
+\text{, }\forall x\in \mathbb{R},\]
+(de donde se deduce que el soporte de \(g\) debe contener el de \(f\)).
 
 \begin{conjecture}[Método de aceptación-rechazo; Von Neuman, 1951]
 \protect\hypertarget{cnj:aceptacion-rechazo}{}{\label{cnj:aceptacion-rechazo} \iffalse (Método de aceptación-rechazo; Von Neuman, 1951) \fi{} }
@@ -3336,27 +3312,169 @@ Así pues, el algoritmo quedaría como sigue:
 
 \textbf{Nota}: no confundir \(M\) con \(c = M \left( b - a \right)\).
 
-\begin{exercise}[Simulación de la normal mediante la doble exponencial]
-\protect\hypertarget{exr:dnorm-ddexp-ar}{}{\label{exr:dnorm-ddexp-ar} \iffalse (Simulación de la normal mediante la doble exponencial) \fi{} }
+\begin{example}[Simulación de distribución beta a partir de la uniforme]
+\protect\hypertarget{exm:dbeta-dunif-ar}{}{\label{exm:dbeta-dunif-ar} \iffalse (Simulación de distribución beta a partir de la uniforme) \fi{} }
+\end{example}
+
+Para simular una variable con función de densidad \(\mathcal{Beta}(\alpha, \beta)\):
+\[f(x)=\frac{\Gamma (\alpha + \beta )}{\Gamma (\alpha )\Gamma (\beta )}
+x^{\alpha -1}(1-x)^{\beta -1}\text{ si }0 \leq x \leq 1,\]
+(siguiendo la notación de la función \texttt{dbeta(x,\ shape1,\ shape2)} de \texttt{R}), podemos considerar como distribución auxiliar una \(\mathcal{U}(0,1)\),
+con \(g(x) = 1\) si \(0 \leq x \leq 1\).
+
+Esta distribución está acotada y es unimodal, si \(\alpha\) y \(\beta\) son mayores que 1, y su moda es \(\frac{\alpha - 1} {\alpha + \beta - 2}\), por lo que:
+\[c = M = \max_{0 \leq x \leq 1}f(x) = f\left( \frac{\alpha - 1} {\alpha + \beta - 2} \right).\]
+
+Por ejemplo, considerando \(\alpha = 2\) y \(\beta = 4\), si comparamos la densidad objetivo con la auxiliar reescalada (Figura \ref{fig:dbeta-dunif-plot}), confirmamos que esta última está por encima (y llegan a tocarse, por lo que se está empleando la cota óptima; ver siguiente sección).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# densidad objetivo: dbeta}
+\CommentTok{\# densidad auxiliar: dunif}
+\NormalTok{s1 }\OtherTok{\textless{}{-}} \DecValTok{2}
+\NormalTok{s2 }\OtherTok{\textless{}{-}} \DecValTok{4}
+\FunctionTok{curve}\NormalTok{(}\FunctionTok{dbeta}\NormalTok{(x, s1, s2), }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{c }\OtherTok{\textless{}{-}} \FunctionTok{dbeta}\NormalTok{((s1 }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\NormalTok{(s1 }\SpecialCharTok{+}\NormalTok{ s2 }\SpecialCharTok{{-}} \DecValTok{2}\NormalTok{), s1, s2)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =}\NormalTok{ c, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/dbeta-dunif-plot-1} 
+
+}
+
+\caption{Densidad objetivo beta (línea continua) y densidad auxiliar unifome reescalada (línea discontinua).}\label{fig:dbeta-dunif-plot}
+\end{figure}
+
+El siguiente código implementa el método de aceptación-rechazo para simular valores de la densidad objetivo (se incluye una variable ``global'' \texttt{ngen} para contar el número de generaciones de la distribución auxiliar):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ngen }\OtherTok{\textless{}{-}} \DecValTok{0} 
+
+\NormalTok{rbeta2 }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{s1 =} \DecValTok{2}\NormalTok{, }\AttributeTok{s2 =} \DecValTok{2}\NormalTok{) \{}
+  \CommentTok{\# Simulación por aceptación{-}rechazo}
+  \CommentTok{\# Beta a partir de uniforme}
+\NormalTok{  c }\OtherTok{\textless{}{-}} \FunctionTok{dbeta}\NormalTok{((s1 }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\NormalTok{(s1 }\SpecialCharTok{+}\NormalTok{ s2 }\SpecialCharTok{{-}} \DecValTok{2}\NormalTok{), s1, s2)}
+  \ControlFlowTok{while}\NormalTok{ (}\ConstantTok{TRUE}\NormalTok{) \{}
+\NormalTok{    U }\OtherTok{\textless{}{-}} \FunctionTok{runif}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{    X }\OtherTok{\textless{}{-}} \FunctionTok{runif}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{    ngen }\OtherTok{\textless{}\textless{}{-}}\NormalTok{ ngen}\SpecialCharTok{+}\DecValTok{1}
+    \ControlFlowTok{if}\NormalTok{ (c}\SpecialCharTok{*}\NormalTok{U }\SpecialCharTok{\textless{}=} \FunctionTok{dbeta}\NormalTok{(X, s1, s2)) }\FunctionTok{return}\NormalTok{(X)}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\NormalTok{rbeta2n }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{n =} \DecValTok{1000}\NormalTok{, }\AttributeTok{s1 =} \DecValTok{2}\NormalTok{, }\AttributeTok{s2 =} \DecValTok{2}\NormalTok{) \{}
+  \CommentTok{\# Simulación n valores Beta(s1, s2)}
+\NormalTok{  x }\OtherTok{\textless{}{-}} \FunctionTok{numeric}\NormalTok{(n)}
+  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{n) x[i]}\OtherTok{\textless{}{-}}\FunctionTok{rbeta2}\NormalTok{(s1, s2)}
+  \FunctionTok{return}\NormalTok{(x)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Empleando estas funciones podemos generar una muestra de \(10^3\) observaciones de una \(\mathcal{Beta}(2, 4)\) (calculando de paso el tiempo de CPU):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{nsim }\OtherTok{\textless{}{-}} \DecValTok{1000}
+\NormalTok{ngen }\OtherTok{\textless{}{-}} \DecValTok{0}
+\FunctionTok{system.time}\NormalTok{(x }\OtherTok{\textless{}{-}} \FunctionTok{rbeta2n}\NormalTok{(nsim, s1, s2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    user  system elapsed 
+##    0.02    0.00    0.02
+\end{verbatim}
+
+Para analizar la eficiencia podemos emplear el número de generaciones de la distribución auxiliar (siguiente sección):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\{}\FunctionTok{cat}\NormalTok{(}\StringTok{"Número de generaciones = "}\NormalTok{, ngen)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{Número medio de generaciones = "}\NormalTok{, ngen}\SpecialCharTok{/}\NormalTok{nsim)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{Proporción de rechazos = "}\NormalTok{, }\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{nsim}\SpecialCharTok{/}\NormalTok{ngen, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Número de generaciones =  2121
+## Número medio de generaciones =  2.121
+## Proporción de rechazos =  0.5285243
+\end{verbatim}
+
+Finalmente podemos representar la distribución de los valores generados y compararla con la densidad teórica:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hist}\NormalTok{(x, }\AttributeTok{breaks =} \StringTok{"FD"}\NormalTok{, }\AttributeTok{freq =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{main =} \StringTok{""}\NormalTok{)}
+\FunctionTok{curve}\NormalTok{(}\FunctionTok{dbeta}\NormalTok{(x, s1, s2), }\AttributeTok{col =} \DecValTok{2}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{, }\AttributeTok{add =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/dbeta-ar-1} 
+
+}
+
+\caption{Distribución de los valores generados mediante el método de aceptación-rechazo.}\label{fig:dbeta-ar}
+\end{figure}
+
+Al ser un método exacto de simulación (si está bien implementado), la distribución de los valores generados debería comportarse como una muestra genuina de la distribución objetivo.
+
+\begin{exercise}
+\protect\hypertarget{exr:dacotada-ar}{}{\label{exr:dacotada-ar} }
 \end{exercise}
+Dar un algoritmo para simular la función de densidad dada por
+\(f\left(x\right) = \frac{1}{16} \left( 3x^{2}+2x+2 \right)\) si
+\(0 \le x \le 2\), cero en otro caso. Estudiar su eficiencia.
 
-Desarrollar el código necesario para generar, por el método de
-aceptación-rechazo, una muestra de \(n\) observaciones de una
-distribución normal estándar:
-\[f(x)  =\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}}\text{, }x\in\mathbb{R}\text{, }\]
-empleando como distribución auxiliar una doble exponencial con \(\lambda=1\)
-(más adelante veremos que esta es la elección óptima para el parámetro de la densidad auxiliar) y que la cota óptima es:
-\[c_{\text{opt}}=\sqrt{\frac{2e}{\pi}} \approx 1.3155\]
-Para establecer la condición de aceptación o rechazo se puede tener en cuenta que:
-\[c\cdot U\cdot\frac{g\left( T\right)  }{f\left( T\right)  }=\sqrt{\frac
-{2e}{\pi}}U\sqrt{\frac{\pi}{2}}\exp\left( \frac{T^{2}}{2}-\left\vert
-T\right\vert \right)  =U\cdot\exp\left( \frac{T^{2}}{2}-\left\vert
-T\right\vert +\frac{1}{2}\right) ,\]
-aunque en general puede ser recomendable emplear
-\(c\cdot U\cdot g\left( T\right) \leq f\left( T\right)\).
+\hypertarget{eficiencia-del-algoritmo}{%
+\subsection{Eficiencia del algoritmo}\label{eficiencia-del-algoritmo}}
 
-En el código del Ejercicio \ref{exr:ddexp} se definió la densidad auxiliar \texttt{ddexp(x,\ lambda)} y la función \texttt{rdexp(lambda)} para generar un valor aleatorio de esta densidad.
-Si comparamos la densidad objetivo con la auxiliar reescalada con los parámetros óptimos (Figura \ref{fig:dnorm-ddexp-plot}), vemos que esta última está por encima, como debería ocurrir, pero llegan a tocarse (se está empleando la cota óptima; ver siguiente sección).
+Como medida de la eficiencia del algoritmo de aceptación-rechazo podríamos considerar el número de iteraciones del algoritmo, es decir, el número de generaciones de la densidad auxiliar y de comparaciones para aceptar un valor de la densidad objetivo.
+Este número \(N\) es aleatorio y sigue una distribución geométrica (número de pruebas necesarias hasta obtener el primer éxito) con parámetro \(p\) (probabilidad de éxito) la probabilidad de aceptación en el paso 3:
+\[p = \frac{\text{area}\left(A_{f}\right)}{\text{area}\left( A_{cg}\right)} = \frac{1}{c}.\]
+Por tanto:
+\[E\left( N \right) = \frac1p = c\]
+es el número medio de iteraciones del algoritmo (el número medio de pares de variables \(\left( T,U\right)\) que se necesitan generar, y de comparaciones, para obtener una simulación de la densidad objetivo).
+
+Es obvio, por tanto, que cuanto más cercano a 1 sea el valor de \(c\) más eficiente será el algoritmo (el caso de \(c=1\) se correspondería con \(g=f\) y no tendría sentido emplear este método).
+Una vez fijada la densidad \(g\), el valor óptimo será:
+\[c_{\text{opt}}=\max_{\{x : g(x) > 0\}} \frac{f(x)}{g(x)}.\]
+
+\begin{example}[Simulación de la normal a partir de la doble exponencial]
+\protect\hypertarget{exm:dnorm-ddexp-ar}{}{\label{exm:dnorm-ddexp-ar} \iffalse (Simulación de la normal a partir de la doble exponencial) \fi{} }
+\end{example}
+
+Se trata de simular la distribución normal estándar, con función de densidad:
+\[f(x)  =\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}} \text{, } x\in\mathbb{R}\text{, }\]
+empleando el método de aceptación-rechazo considerando como distribución auxiliar una doble exponencial con \(\lambda=1\) (o distribución de Laplace):
+\[g(x)  =\frac{1}{2}e^{-\left| x \right|} \text{, } x\in\mathbb{R}.\]
+Esta distribución se utilizó en el Ejercicio \ref{exr:ddexp}, donde se definió la densidad auxiliar \texttt{ddexp(x,\ lambda)} y la función \texttt{rdexp(lambda)} para generar un valor aleatorio de esta distribución.
+
+En este caso el soporte de ambas densidades es la recta real y el valor óptimo para \(c\) es:
+\[c_{\text{opt}} = \max_{x\in\mathbb{R}}\frac{f(x)}{g(x) } = \max_{x\in\mathbb{R}} \frac{\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}}}{\frac{1}{2}e^{-\left| x\right|  }} = \sqrt{\frac{2}{\pi}}\max_{x\in\mathbb{R}}e^{\varphi(x)} = \sqrt{\frac{2}{\pi}}e^{\max_{x\in\mathbb{R}}\varphi(x)},\]
+donde \(\varphi(x) = -\frac{x^{2}}{2}+\left| x \right|\).
+Dado que esta función es simétrica, continua en toda la recta real y diferenciable tantas veces como se desee salvo en \(x=0\), bastará encontrar su máximo absoluto en el intervalo \([0,\infty]\):
+\[\begin{aligned}
+x  & >0\Rightarrow\varphi^{\prime}(x)  =-x+1,\varphi
+^{\prime\prime}(x)  =-1;\\
+\{x  & >0,\varphi^{\prime}(x)  =0\}\Leftrightarrow x=1.
+\end{aligned}\]
+Por tanto, como \(\varphi^{\prime\prime}(1) <0\), \(\varphi\) alcanza un máximo relativo en \(x=1\) y otro de idéntico valor en \(x=-1\).
+Resulta fácil demostrar que ambos son máximos absolutos
+(por los intervalos de crecimiento y decrecimiento de la función).
+Como consecuencia:
+\[c_{\text{opt}} = \sqrt{\frac{2}{\pi}}e^{\varphi(1)}
+=\sqrt{\frac{2}{\pi}}e^{1/2} =\sqrt{\frac{2e}{\pi}} \approx 1.3155.\]
+
+Si comparamos la densidad objetivo con la auxiliar reescalada con los parámetros óptimos (Figura \ref{fig:dnorm-ddexp-plot}), vemos que esta última está por encima, como debería ocurrir, pero llegan a tocarse (lo que validaría el cálculo para la obtención de la cota óptima).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3375,10 +3493,38 @@ Si comparamos la densidad objetivo con la auxiliar reescalada con los parámetro
 
 }
 
-\caption{Densidad objetivo (normal estándar) y densidad auxiliar (doble exponencial) reescalada.}\label{fig:dnorm-ddexp-plot}
+\caption{Densidad objetivo (normal estándar, línea continua) y densidad auxiliar (doble exponencial, línea discontinua) reescalada.}\label{fig:dnorm-ddexp-plot}
 \end{figure}
 
-Para generar los valores de la densidad objetivo podríamos emplear el siguiente código:
+Alternativamente, en lugar de obtener la cota óptima de modo analítico, podríamos aproximarla numéricamente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# NOTA: Cuidado con los límites}
+\CommentTok{\# optimize(f = function(x) dnorm(x)/ddexp(x), maximum = TRUE, interval = c({-}0.5,0.5))}
+\FunctionTok{optimize}\NormalTok{(}\AttributeTok{f =} \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{dnorm}\NormalTok{(x)}\SpecialCharTok{/}\FunctionTok{ddexp}\NormalTok{(x), }\AttributeTok{maximum =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{interval =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $maximum
+## [1] 1
+## 
+## $objective
+## [1] 1.315489
+\end{verbatim}
+
+Vemos que la aproximación numérica coincide con el valor óptimo real \(c_{\text{opt}} \approx\) 1.3154892 (que se alcanza en \(x = \pm 1\)).
+
+Para establecer la condición de aceptación o rechazo se puede tener en cuenta que:
+\[c\cdot U\cdot\frac{g\left( T\right)  }{f\left( T\right)  }=\sqrt{\frac
+{2e}{\pi}}U\sqrt{\frac{\pi}{2}}\exp\left( \frac{T^{2}}{2}-\left\vert
+T\right\vert \right)  =U\cdot\exp\left( \frac{T^{2}}{2}-\left\vert
+T\right\vert +\frac{1}{2}\right),\]
+aunque en general puede ser recomendable emplear
+\(c\cdot U\cdot g\left( T\right) \leq f\left( T\right)\).
+
+Teniendo en cuenta los resultados anteriores, podríamos emplear el siguiente código para generar los valores de la densidad objetivo:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3402,23 +3548,15 @@ Para generar los valores de la densidad objetivo podríamos emplear el siguiente
     \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{n) x[i] }\OtherTok{\textless{}{-}} \FunctionTok{rnormAR}\NormalTok{()}
     \FunctionTok{return}\NormalTok{(x)}
 \NormalTok{\}}
-
-\CommentTok{\# Grafico}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{enumerate}
-\def\labelenumi{\alph{enumi})}
-\item
-  Generar una muestra de \(10^{4}\) observaciones empleando este
-  algoritmo. Obtener el tiempo de CPU y calcular el número medio
-  de generaciones de la distribución auxiliar.
+Generamos una muestra de \(10^4\) observaciones:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{set.seed}\NormalTok{(}\DecValTok{54321}\NormalTok{)}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
 \NormalTok{nsim }\OtherTok{\textless{}{-}} \DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{4}
-
 \NormalTok{ngen }\OtherTok{\textless{}{-}} \DecValTok{0}
 \FunctionTok{system.time}\NormalTok{(x }\OtherTok{\textless{}{-}} \FunctionTok{rnormARn}\NormalTok{(nsim))}
 \end{Highlighting}
@@ -3426,111 +3564,108 @@ Para generar los valores de la densidad objetivo podríamos emplear el siguiente
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.10    0.00    0.09
+##    0.09    0.00    0.09
 \end{verbatim}
+
+Evaluamos la eficiencia:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Nº generaciones}
-\NormalTok{\{}
-\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{Número de generaciones = "}\NormalTok{, ngen)}
+\NormalTok{\{}\FunctionTok{cat}\NormalTok{(}\StringTok{"Número de generaciones = "}\NormalTok{, ngen)}
 \FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{Número medio de generaciones = "}\NormalTok{, ngen}\SpecialCharTok{/}\NormalTok{nsim)}
-\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{Proporción de rechazos = "}\NormalTok{, }\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{nsim}\SpecialCharTok{/}\NormalTok{ngen, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\NormalTok{\}}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{Proporción de rechazos = "}\NormalTok{, }\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{nsim}\SpecialCharTok{/}\NormalTok{ngen, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)\}}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## 
-## Número de generaciones =  13163
-## Número medio de generaciones =  1.3163
-## Proporción de rechazos =  0.2402948
+## Número de generaciones =  13178
+## Número medio de generaciones =  1.3178
+## Proporción de rechazos =  0.2411595
 \end{verbatim}
-\item
-  Representar el histograma y compararlo con la densidad teórica.
+
+Estos valores serían aproximaciones por simulación de los correspondientes valores teóricos (valor medio \(c \approx 1.3155\) y probabilidad de rechazo \(1 - p = 1 - 1/c \approx 0.23983\)).
+A partir de ellos podríamos decir que el algoritmo es bastante eficiente.
+
+Finalmente comparamos la distribución de los valores generados con la densidad teórica:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{hist}\NormalTok{(x, }\AttributeTok{breaks =} \StringTok{"FD"}\NormalTok{, }\AttributeTok{freq =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{hist}\NormalTok{(x, }\AttributeTok{breaks =} \StringTok{"FD"}\NormalTok{, }\AttributeTok{freq =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{main =} \StringTok{""}\NormalTok{)}
 \FunctionTok{curve}\NormalTok{(dnorm, }\AttributeTok{add =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{figure}[!htb]
+\begin{figure}[!htb]
 
-  {\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/dnorm-ar-1} 
+{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/dnorm-ar-1} 
 
-  }
+}
 
-  \caption{Distribución de los valores generados mediante el método de aceptación-rechazo.}\label{fig:dnorm-ar}
-  \end{figure}
+\caption{Distribución de los valores generados mediante el método de aceptación-rechazo.}\label{fig:dnorm-ar}
+\end{figure}
 
-  Podemos observar que la distribución de los valores generados es la que cabría esperar de una muestra de tamaño \texttt{nsim} de la distribución objetivo (lo que nos ayudaría a confirmar que el algoritmo está bien implementado, al ser un método exacto de simulación).
-\end{enumerate}
+Podemos observar que la distribución de los valores generados es la que cabría esperar de una muestra de tamaño \texttt{nsim} de la distribución objetivo (lo que nos ayudaría a confirmar que el algoritmo está bien implementado, al ser un método exacto de simulación).
 
-\hypertarget{eficiencia-del-algoritmo}{%
-\subsection{Eficiencia del algoritmo}\label{eficiencia-del-algoritmo}}
+\hypertarget{elecciuxf3n-de-la-densidad-auxiliar}{%
+\subsection{Elección de la densidad auxiliar}\label{elecciuxf3n-de-la-densidad-auxiliar}}
 
-Como medida de la eficiencia del algoritmo de aceptación-rechazo
-podríamos considerar el número de iteraciones del algoritmo,
-es decir, el número de generaciones de la densidad auxiliar y
-de comparaciones para aceptar un valor de la densidad objetivo.
-Este número \(N\) es aleatorio y sigue una distribución geométrica
-(número de pruebas necesarias hasta obtener el primer éxito)
-con parámetro \(p\) (probabilidad de éxito) la probabilidad de aceptación
-en el paso 3:
-\[p = \frac{\text{area}\left(
-        A_{f}\right) }{\text{area}\left( A_{cg}\right) }=\frac{1}{c}.\]
-Por tanto:
-\[E\left( N \right) = \frac1p = c\]
-es el número medio de iteraciones del algoritmo
-(el número medio de pares de variables \(\left( T,U\right)\)
-que se necesitan generar, y de comparaciones, para obtener
-una simulación de la densidad objetivo).
-
-Es obvio, por tanto, que cuanto más cercano a 1 sea el valor de \(c\) más eficiente será el algoritmo (el caso de \(c=1\) se correspondería con \(g=f\) y no tendría sentido emplear este algoritmo).
-El principal problema con este método es encontrar una densidad auxiliar \(g\) de forma que:
-\[c_{\text{opt}}=\max_{\{x : g(x) >0\}}
-\frac{f(x) }{g(x) }.\]
-sea próximo a 1.
+El principal problema con este método es encontrar una densidad auxiliar \(g\) de forma que \(c_{\text{opt}}\) sea próximo a 1.
 Una solución intermedia consiste en seleccionar una familia paramétrica de densidades \(\{g_{\theta} : \theta \in \Theta\}\) entre las que haya alguna que se parezca bastante a \(f\),
 encontrar el valor de \(c\) óptimo para cada densidad de esa familia:
-\[c_{\theta}=\max_{x}\frac{f\left(  x\right)  }{g_{\theta}(x) }\]
+\[c_{\theta}=\max_{x}\frac{f(x)  }{g_{\theta}(x) }\]
 y, finalmente, elegir el mejor valor \(\theta_{0}\) del parámetro, en el sentido de ofrecer el menor posible \(c_{\theta}\):
-\[c_{\theta_{0}}=\min_{\theta\in\Theta}\max_{x}\frac{f\left(  x\right) }{g_{\theta}\left(  x\right)  }.\]
+\[c_{\theta_{0}}=\min_{\theta\in\Theta}\max_{x}\frac{f(x) }{g_{\theta}(x)}.\]
 
-\begin{exercise}[Simulación de la normal mediante la doble exponencial, continuación]
-\protect\hypertarget{exr:dnorm-ddexp-arb}{}{\label{exr:dnorm-ddexp-arb} \iffalse (Simulación de la normal mediante la doble exponencial, continuación) \fi{} }
-\end{exercise}
+\begin{example}[Simulación de la normal mediante la doble exponencial, continuación]
+\protect\hypertarget{exm:dnorm-ddexp-arb}{}{\label{exm:dnorm-ddexp-arb} \iffalse (Simulación de la normal mediante la doble exponencial, continuación) \fi{} }
+\end{example}
 
-Continuando con el Ejercicio \ref{exr:dnorm-ddexp-ar} anterior del método de aceptación-rechazo para generar observaciones de una distribución normal estándar, empleando como distribución auxiliar una doble exponencial:
+Continuando con el Ejemplo \ref{exm:dnorm-ddexp-ar} anterior sobre la simulación de una normal estándar mediante el método de aceptación-rechazo, en lugar de fijar la densidad auxiliar a una doble exponencial con \(\lambda=1\), consideraremos el caso general de \(\lambda>0\):
+\[g_{\lambda}(x)  = \frac{\lambda}{2}e^{-\lambda\left| x \right|} \text{, } x\in\mathbb{R}.\]
 
-\begin{enumerate}
-\def\labelenumi{\alph{enumi})}
-\setcounter{enumi}{2}
-\item
-  Aproximar la cota óptima numéricamente.
+Si pretendemos encontrar el mejor valor de \(\lambda\), en términos de eficiencia del algoritmo, debemos calcular:
+\[c_{\lambda_{0}} = \min_{\lambda>0}\max_{x\in\mathbb{R}}\frac{f(x)}{g_{\lambda(x)}}
+=\min_{\lambda>0}\max_{x\in\mathbb{R}}\frac{\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}}}{\frac{\lambda}{2}e^{-\lambda \left| x \right| }}.\]
+De forma totalmente análoga a la vista para el caso \(\lambda=1\), se tiene que:
+\[c_{\lambda}=\max_{x\in\mathbb{R}}\frac{\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}}}{\frac{\lambda}{2}e^{-\lambda \left| x \right|  }}=\frac{1}{\lambda}\sqrt{\frac{2}{\pi}}\max_{x\in\mathbb{R}}e^{\varphi
+_{\lambda(x)}}=\frac{1}{\lambda}\sqrt{\frac{2}{\pi}}e^{\max_{x\in\mathbb{R}}\varphi_{\lambda(x)} },\]
+donde \(\varphi_{\lambda}(x) =-\frac{x^{2}}{2}+\lambda\left| x \right|\).
+De forma totalmente similar también puede probarse que \(\varphi_{\lambda}\) alcanza su máximo absoluto en los puntos \(x=\pm\lambda\), siendo dicho valor máximo
+\(\varphi_{\lambda}\left( \pm\lambda \right) = \frac{\lambda^{2}}{2}\).
+Como consecuencia:
+\[c_{\lambda}=\frac{1}{\lambda}\sqrt{\frac{2}{\pi}}e^{\varphi_{\lambda}\left( \pm\lambda \right)} =\frac{e^{\frac{\lambda^{2}}{2}}}{\lambda}\sqrt{\frac{2}{\pi}}.\]
+
+Finalmente debemos encontrar \(\lambda_{0}\) tal que \(c_{\lambda_{0}}=\min_{\lambda>0}c_{\lambda}\).
+Como:
+\[\frac{\partial c_{\lambda}}{\partial \lambda} =\sqrt{\frac{2}{\pi}}\frac{e^{\frac{\lambda^{2}}{2}}\left( \lambda^{2}-1\right)  }{\lambda^{2}},\]
+entonces \(\frac{\partial c_{\lambda}}{\partial \lambda} = 0\Leftrightarrow\lambda=1\), ya que \(\lambda>0\).
+Además:
+\[\left. \frac{\partial ^{2}c_{\lambda}}{\partial \lambda^{2}}\right|_{\lambda=1} =\left.\sqrt{\frac
+{2}{\pi}}\frac{e^{\frac{\lambda^{2}}{2}}\left(  \lambda^{5}-\lambda
+^{3}+2\lambda\right)  }{\lambda^{4}}\right|_{\lambda=1}=2\sqrt{\frac{2e}{\pi}}>0,\]
+luego en \(\lambda=1\) se alcanza el mínimo.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# NOTA: Cuidado con los límites}
-\CommentTok{\# optimize(f=function(x) dnorm(x)/ddexp(x), maximum=TRUE, interval=c({-}0.5,0.5))}
-\FunctionTok{optimize}\NormalTok{(}\AttributeTok{f =} \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{dnorm}\NormalTok{(x)}\SpecialCharTok{/}\FunctionTok{ddexp}\NormalTok{(x), }\AttributeTok{maximum =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{interval =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\FunctionTok{curve}\NormalTok{(}\FunctionTok{exp}\NormalTok{(x}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{x}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\NormalTok{pi), }\FloatTok{0.1}\NormalTok{, }\FloatTok{2.5}\NormalTok{,}
+       \AttributeTok{xlab =} \FunctionTok{expression}\NormalTok{(lambda), }\AttributeTok{ylab =} \FunctionTok{expression}\NormalTok{(c[lambda]))}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v =} \DecValTok{1}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## $maximum
-## [1] 1
-## 
-## $objective
-## [1] 1.315489
-\end{verbatim}
+\begin{figure}[!htb]
 
-  Vemos que la aproximación numérica coincide con el valor óptimo real \(c_{\text{opt}}=\sqrt{\frac{2e}{\pi}} \approx\) 1.3154892 (que se alcanza en \(x = \pm 1\)).
-\item
-  Aproximar el parámetro óptimo de la densidad auxiliar
-  numéricamente (normalmente comenzaríamos por este paso).
+{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/cop-lambda-1} 
+
+}
+
+\caption{Representación de la cota óptima dependiedo del valor del parámetro.}\label{fig:cop-lambda}
+\end{figure}
+
+De esto se deduce que la mejor densidad auxiliar doble exponencial es la correspondiente a \(\lambda=1\).
+Por tanto el algoritmo más eficiente, con esta familia de densidades auxiliares, es el expuesto en el Ejemplo \ref{exm:dnorm-ddexp-ar}.
+
+Alternativamente también podríamos aproximar simultáneamente el parámetro óptimo y la cota óptima de la densidad auxiliar numéricamente:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3545,9 +3680,23 @@ Continuando con el Ejercicio \ref{exr:dnorm-ddexp-ar} anterior del método de ac
 \NormalTok{res }\OtherTok{\textless{}{-}} \FunctionTok{optimize}\NormalTok{(fopt, }\AttributeTok{interval =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\DecValTok{2}\NormalTok{))}
 \NormalTok{lambda.opt2 }\OtherTok{\textless{}{-}}\NormalTok{ res}\SpecialCharTok{$}\NormalTok{minimum}
 \NormalTok{c.opt2 }\OtherTok{\textless{}{-}}\NormalTok{ res}\SpecialCharTok{$}\NormalTok{objective}
+\NormalTok{lambda.opt2 }
 \end{Highlighting}
 \end{Shaded}
-\end{enumerate}
+
+\begin{verbatim}
+## [1] 0.9999987
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{c.opt2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.315489
+\end{verbatim}
 
 \hypertarget{ejemplo-inferencia-bayesiana}{%
 \subsection{Ejemplo: Inferencia Bayesiana}\label{ejemplo-inferencia-bayesiana}}
@@ -3702,7 +3851,7 @@ como distribución a priori una Cauchy.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Intervalo de probabilidad al 95\% (IC Bayes)}
+\CommentTok{\# Intervalo de probabilidad al 95\% (intervalo de credibilidad bayesiano)}
 \NormalTok{q }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(Y, }\FunctionTok{c}\NormalTok{(}\FloatTok{0.025}\NormalTok{, }\FloatTok{0.975}\NormalTok{))}
 
 \CommentTok{\# Representar estimador e IC Bayes}
@@ -3713,7 +3862,7 @@ como distribución a priori una Cauchy.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-12-1} \end{center}
+  \begin{center}\includegraphics[width=0.7\linewidth]{05-Metodos_generales_continuas_files/figure-latex/unnamed-chunk-15-1} \end{center}
 \item
   Repetir el apartado anterior con \(n=100\).
 \end{enumerate}
@@ -3813,7 +3962,7 @@ Algoritmo (Gilks, 1992):
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  Inizializar \(n\) y \(s_n\).
+  Inicializar \(n\) y \(s_n\).
 \item
   Generar \(U \sim \mathcal{U}(0, 1)\) y
   \(T\sim g_n\).
@@ -3832,7 +3981,7 @@ Algoritmo (Gilks, 1992):
   Volver al paso 2.
 \end{enumerate}
 
-Gilks y Wild (1992) propusieron una ligera modificación empleando tangentes para construir la cota superior, de esta forma se obtiene un método más eficiente pero habrí que especificar la derivada de la densidad objetivo.
+Gilks y Wild (1992) propusieron una ligera modificación empleando tangentes para construir la cota superior, de esta forma se obtiene un método más eficiente pero requiere especificar la derivada de la densidad objetivo.
 
 La mayoría de las densidades de la familia de distribuciones exponencial son log-cóncavas.
 Hörmann (1995) extendió esta aproximación al caso de densidades \(T_{c}\)-cóncavas:
@@ -3959,7 +4108,7 @@ Entre los distintos métodos disponibles para la generación de las distribucion
 \item
   Método de Box-Müller para la generación de normales independientes (pero que se puede generalizar para otras distribuciones y dependencia).
 \item
-  Algoritmos de Jöhnk (1963) y Cheng (1978) para la generación de la distribución Beta (como ejemplo de las eficiencias de los métodos de aceptación-rechazo).
+  Algoritmos de Jöhnk (1963) y Cheng (1978) para la generación de la distribución beta (como ejemplo de las eficiencias de los métodos de aceptación-rechazo).
 \end{itemize}
 
 \hypertarget{muxe9todo-de-box-muxfcller}{%
@@ -3970,23 +4119,111 @@ Se basa en la siguiente propiedad. Dadas dos variables aleatorias independientes
 \(\sqrt{2E} \cos 2\pi U\) y \(\sqrt{2E}\operatorname{sen} 2\pi U\) son
 \(\mathcal{N}( 0, 1 )\) independientes.
 
-\textbf{Algoritmo de Box-Müller}
+\begin{conjecture}[de Box-Müller, 1958]
+\protect\hypertarget{cnj:box-muller}{}{\label{cnj:box-muller} \iffalse (de Box-Müller, 1958) \fi{} }
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  Generar \(U,V\sim \mathcal{U}( 0, 1 )\).
+  Generar \(U,V\sim \mathcal{U}(0, 1)\).
 \item
   Hacer \(W_1=\sqrt{-2\ln U}\) y \(W_2=2\pi V\).
 \item
   Devolver \(X_1=W_1\cos W_2\), \(X_2=W_1\operatorname{sen}W_2\).
 \end{enumerate}
+\end{conjecture}
 
 Podemos hacer que la función \texttt{rnorm()} de R emplee este algoritmo estableciendo el parámetro \texttt{normal.kind} a \texttt{"Box-Muller"} en una llamada previa a \texttt{set.seed()} o \texttt{RNGkind()}.
 
 Este método está relacionado con el denominado \emph{método FFT} (transformada de Fourier; e.g.~Davies y Harte, 1987) para la generación de una normal multidimensional con dependencia, que resulta ser equivalente al \emph{Circular embedding} (Dietrich and Newsam, 1997).
 La idea de estos métodos es que, considerando módulos exponenciales y fases uniformes generamos normales independientes, pero cambiando la varianza de los módulos (\(W_1\)) podemos inducir dependencia.
 Adicionalmente, cambiando la distribución de las fases (\(W_2\)) se generan distribuciones distintas de la normal.
+
+\hypertarget{simulaciuxf3n-de-la-distribuciuxf3n-beta}{%
+\subsection{Simulación de la distribución beta}\label{simulaciuxf3n-de-la-distribuciuxf3n-beta}}
+
+Existen multitud de algoritmos para simular la distribución \(\mathcal{Beta}(a, b)\).
+Probablemente, el más sencillo de todos es el que se obtiene a partir de la distribución gamma o de la chi-cuadrado, si se dispone de un algoritmo para generar estas distribuciones, empleando la definición habitual de la distribución beta:
+
+Si \(Y \sim \mathcal{Gamma}(a, s)\) y \(Z \sim \mathcal{Gamma}(b, s)\) son independientes, entonces \[X=\frac{Y}{Y+Z} \sim \mathcal{Beta}(a, b).\]
+
+Como la distribución resultante no depende de \(s\) y \(\chi^2_{n} \overset{d}{=} \mathcal{Gamma}\left(\tfrac{n}{2}, \tfrac{1}{2}\right)\), se podría considerar \(Y \sim \chi^2_{2a}\) y \(Z \sim \chi^2_{2b}\) independientes.
+
+También se podrían emplear resultado conocidos relacionados con esta distribución, como por ejemplo que la distribución del estadístico de orden \(k\) de una muestra de tamaño \(n\) de una distribución uniforme tiene una distribución beta:
+\[U_{(k)} \sim \mathcal{Beta}(k,n+1-k).\]
+El resultado es el algoritmo de Fox (1963), que podría ser adecuado para simular esta distribución cuando \(a, b \in \mathbb{N}\) y son valores pequeños.
+
+\begin{conjecture}[de Fox, 1963]
+\protect\hypertarget{cnj:fox}{}{\label{cnj:fox} \iffalse (de Fox, 1963) \fi{} }
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Generar \(U_1, U_2, \ldots, U_{a+b-1} \sim \mathcal{U}(0, 1)\).
+\item
+  Ordenar: \(U_{(1)}\leq U_{(2)}\leq\cdots\leq U_{(a+b-1)}\).
+\item
+  Devolver \(X=U_{(a)}\).
+\end{enumerate}
+\end{conjecture}
+
+Es obvio que este algoritmo puede resultar muy lento si alguno de los dos parámetros es elevado (pues habrá que simular muchas uniformes para conseguir un valor simulado de la beta).
+Además, en función de cuál de los dos parámetros, \(a\) ó \(b\), sea mayor, resultará más eficiente, en el paso 2, comenzar a ordenar por el mayor, luego el segundo mayor, y así sucesivamente, o hacerlo empezando por el menor.
+En cualquier caso, es obvio que no es necesario ordenar todos los valores \(U_{i}\) generados, sino tan sólo encontrar el que ocupa el lugar \(a\)-ésimo.
+
+Un método válido aunque \(a\) ó \(b\) no sean enteros es el dado por el
+algoritmo de Jöhnk (1964).
+
+\begin{conjecture}[de Jöhnk, 1964]
+\protect\hypertarget{cnj:johnk}{}{\label{cnj:johnk} \iffalse (de Jöhnk, 1964) \fi{} }
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Generar \(U_1, U_2\sim \mathcal{U}(0, 1)\).
+\item
+  Hacer \(V = U_1^{\frac1a}\), \(W = U_2^{\frac1b}\) y \(S = V+W\).
+\item
+  Si \(S \leq 1\) devolver \(X = \frac VS\),
+
+  en caso contrario volver al paso 1.
+\end{enumerate}
+\end{conjecture}
+
+El método resulta extremadamente ineficiente para \(a\) ó \(b\) mayores que 1.
+Esto es debido a que la condición \(S\leq1\) del paso 3 puede tardar muchísimo en verificarse.
+Por este motivo, el algoritmo de Jöhnk sólo es recomendable para \(a<1\) y \(b<1\).
+Como remedio a esto puede usarse el algoritmo de Cheng (1978) que es algo más complicado de implementar\footnote{R implementa este algoritmo en el fichero fuente \href{https://svn.r-project.org/R/trunk/src/nmath/rbeta.c}{rbeta.c}.} pero mucho más eficiente.
+
+\begin{conjecture}[de Cheng, 1978]
+\protect\hypertarget{cnj:cheng}{}{\label{cnj:cheng} \iffalse (de Cheng, 1978) \fi{} }
+
+Inicialización:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Hacer \(\alpha = a + b\).
+\item
+  Si \(\min(a,b) \leq1\) entonces hacer \(\beta=\frac1{\min( a,b)}\), en otro caso hacer \(\beta=\sqrt{\frac{\alpha-2}{2pq-\alpha}}\).
+\item
+  Hacer \(\gamma=a+\frac1\beta\).
+\end{enumerate}
+
+Simulación:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Generar \(U_1, U_2\sim \mathcal{U}(0, 1)\).
+\item
+  Hacer \(V=\beta\cdot\ln\left( \frac{U_1}{1-U_1}\right)\) y \(W=a\cdot e^{V}\).
+\item
+  Si \(\alpha\cdot\ln\left( \frac\alpha{b+W}\right) +\gamma V-\ln4 \ge \ln\left( U_1^{2}U_2\right)\) devolver \(X=\frac W{b+W}\),
+
+  en caso contrario volver al paso 1.
+\end{enumerate}
+\end{conjecture}
 
 \hypertarget{discretas}{%
 \chapter{Simulación de variables discretas}\label{discretas}}
@@ -4027,8 +4264,8 @@ es recomendable emplear:
 Esta función del paquete base implementa eficientemente el método ``alias''
 que describiremos más adelante en la Sección \ref{alias}.
 
-\hypertarget{muxe9todo-de-la-transformaciuxf3n-cuantil}{%
-\section{Método de la transformación cuantil}\label{muxe9todo-de-la-transformaciuxf3n-cuantil}}
+\hypertarget{transcuant}{%
+\section{Método de la transformación cuantil}\label{transcuant}}
 
 Este método es una adaptación del método de inversión (válido para el
 caso continuo) a distribuciones discretas. En este caso,
@@ -4195,7 +4432,7 @@ Empleamos la rutina anterior para generar las simulaciones:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.07    0.00    0.07
+##    0.04    0.00    0.05
 \end{verbatim}
 
 Aproximación de la media:
@@ -4359,7 +4596,7 @@ función \texttt{sample} de R.
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.04    0.01    0.05
+##    0.05    0.00    0.04
 \end{verbatim}
 
 \begin{Shaded}
@@ -4394,7 +4631,7 @@ Como ya se comentó, en R se recomienda emplear la función \texttt{sample}
 
 \begin{verbatim}
 ##    user  system elapsed 
-##       0       0       0
+##    0.01    0.00    0.02
 \end{verbatim}
 
 \hypertarget{muxe9todo-de-la-tabla-guuxeda}{%
@@ -5376,7 +5613,7 @@ del paquete \texttt{MASS} que emplea la factorización espectral (\texttt{eigen}
 ##         drop(X)
 ##     else t(X)
 ## }
-## <bytecode: 0x000000002fcceed8>
+## <bytecode: 0x000000002ab70f98>
 ## <environment: namespace:MASS>
 \end{verbatim}
 
@@ -6092,6 +6329,10 @@ Consideramos una variable aleatoria bidimensional con distribuciones marginales 
 \NormalTok{sm}\SpecialCharTok{::}\FunctionTok{sm.density}\NormalTok{(rcunif, }\AttributeTok{xlab =} \StringTok{"u"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"v"}\NormalTok{, }\AttributeTok{zlab =} \StringTok{"Density"}\NormalTok{)    }
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## Warning: weights overwritten by binning
+\end{verbatim}
 
   \begin{figure}[!htb]
 

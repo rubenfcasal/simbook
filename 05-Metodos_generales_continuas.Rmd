@@ -21,9 +21,8 @@ disponer de un método de generación de números pseudoaleatorios uniformes en 
 Se trataría del método preferible para la simulación de una variable continua (siempre que se disponga de la función cuantil). 
 Está basado en los siguientes resultados:
 
-Si $X$ es una variable aleatoria con función de distribución $F$ continua y estrictamente monótona 
-(invertible), entonces:
-$$U=F\left( X \right) \sim \mathcal{U}(0, 1)$$
+Si $X$ es una variable aleatoria con función de distribución $F$ continua y estrictamente monótona (invertible), entonces:
+$$U = F\left( X \right) \sim \mathcal{U}(0, 1)$$
 ya que:
 $$G\left( u \right) = P\left( Y \leq u \right) 
 = P\left( F(X) \leq u \right) \\
@@ -36,7 +35,8 @@ $$F^{-1}\left( U \right) \sim X$$
 A partir de este resultado se deduce el siguiente algoritmo genérico para simular una variable continua con función de distribución $F$ invertible:
 
 ```{conjecture, label="inversion", name="Método de inversión"}
-
+<br>
+  
 1. Generar $U \sim \mathcal{U}(0, 1)$.
 
 2. Devolver $X = F^{-1}\left( U \right)$.
@@ -65,8 +65,8 @@ el algoritmo para simular esta variable mediante el método de inversión es:
 En el último paso podemos emplear directamente $U$ en lugar de $1-U$, ya que $1 - U \sim \mathcal{U}(0, 1)$.
 Esta última expresión para acelerar los cálculos es la que denominaremos *forma simplificada*. 
 
-```{r inv-movie, echo=FALSE, fig.cap="Ilustración de la simulación de una distribución exponencial por el método de inversión."}
-if (knitr:::is_latex_output()) {
+```{r inv-movie, echo=FALSE, out.width = if(is_latex()) "70%" else "90%", fig.cap="Ilustración de la simulación de una distribución exponencial por el método de inversión."}
+if (is_latex()) {
   set.seed(2)
   nsim <- 3
   U <- runif(nsim)
@@ -187,27 +187,13 @@ c)  Representar el histograma y compararlo con la densidad teórica.
 
 ### Ventajas e inconvenientes
 
-Ventajas:
+La principal ventaja de este método es que, en general, sería aplicable a cualquier distribución continua (como se muestra en la Sección \@ref(transcuant), se puede extender al caso de que la función de distribución no sea invertible, incluyendo distribuciones discretas).
 
-* Aplicable, en principio, a cualquier distribución continua.
+Uno de los principales problemas es que puede no ser posible encontrar una expresión explícita para $F^{-1}\left( u\right)$ (en ocasiones, como en el caso de la distribución normal, ni siquiera se dispone de una expresión explícita para la función de distribución).
+Además, aún disponiendo de una expresión explícita para $F^{-1}\left( u\right)$, su evaluación directa puede requerir de mucho tiempo de computación.
 
-Inconvenientes:
-
-* Puede no ser posible encontrar una expresión explícita para 
-  $F^{-1}\left( u\right).$
-
-* Aún disponiendo de una expresión explícita para 
-  $F^{-1}\left( u\right)$, su evaluación directa puede requerir
-  mucho tiempo de computación.
-
-Alternativas:
-
-* Emplear métodos numéricos para resolver $F(x) - u=0$
-  (requeriría resolver numéricamente esta ecuación para cada
-  valor aleatorio que se desee generar).
-
-* Utilizar una aproximación a $F^{-1}\left( u\right)$
-  (inversión aproximada).
+Como alternativa a estos inconvenientes se podrían emplear métodos numéricos para resolver $F(x) - u = 0$ de forma aproximada, aunque habría que resolver numéricamente esta ecuación para cada valor aleatorio que se desea generar.
+Otra posibilidad, en principio preferible, sería emplear una aproximación a $F^{-1}\left( u\right)$, dando lugar al *método de inversión aproximada* (como se indicó en la Sección \@ref(oprrng), R emplea por defecto este método para la generación de la distribución normal).
   
 
 ### Inversión aproximada
@@ -240,7 +226,7 @@ $2\cdot10^{-20}$) la aproximación no es recomendable.
 
 
 ```{conjecture, label="Odeh-Evans", name="de Odeh y Evans"}
-
+<br>
 
 1. Generar $U \sim U(0, 1)$.
 
@@ -266,20 +252,53 @@ las correspondientes a la normal estándar).
 Se trata de un método universal alternativo al de inversión para
 el caso de que no se pueda emplear la función cuantil, 
 pero se dispone de una expresión (preferiblemente sencilla) para la
-función de densidad $f\left( x \right)$. 
+función de densidad objetivo $f\left( x \right)$. 
 
-Si $f$ es la densidad objetivo, la idea es simular una variable aleatoria
-bidimensional $\left( X, Y\right)$ con distribución
-uniforme en el hipografo de $f$ (el conjunto de puntos del plano 
-comprendidos entre el eje OX y $f$):
-$$A_{f}=\left\{ \left( x,y\right) \in \mathbb{R}^{2}:0\leq y\leq
-f(x) \right\}.$$
-De esta forma la primera componente tendrá la distribución deseada:
+La idea es simular una variable aleatoria bidimensional $\left( X, Y\right)$ con distribución uniforme en el hipografo de $f$ (el conjunto de puntos del plano comprendidos entre el eje OX y $f$):
+$$A_{f}=\left\{ \left( x,y\right) \in \mathbb{R}^{2}:0\leq y\leq f(x) \right\}.$$
+De esta forma la primera componente tendrá la distribución deseada (Figura \@ref(fig:var-gen)):
 
-```{r echo=FALSE, fig.align = 'center'}
-#+ echo=FALSE, fig.align = 'center'
-# ![](rechazo.png)
-knitr::include_graphics(paste0(fig.path,"rechazo.png"))
+```{r var-gen, echo=FALSE, fig.dim = c(9, 6), out.width = "80%", fig.cap="Puntos con distribución uniforme en el hipografo de una función de densidad."}
+# --------------------------------
+# Simulación por aceptación-rechazo
+# Beta s1 partir de uniforme
+# --------------------------------
+# Parámetros 
+s1 <- 2
+s2 <- 4
+
+old.par <- par(mar = c(bottom = 5, left = 6, top = 1, right = 1))
+# Representación de distribución Beta e uniforme con parámetros óptimos
+nx <- 200
+xx <- seq(-0.1, 1.1, len = nx)
+fx <- dbeta(xx, s1, s2)
+plot(xx, fx, type = 'l', lwd = 2, 
+     xlab = "", ylab = "", xaxt="n", yaxt="n")
+mtext(expression(f(x)), side = 2, las = 1, line = 3, cex = 1.2)
+mtext("x", side = 1, line = 3, cex = 1.2)
+
+a <- xx[round(0.4*nx)]
+b <- xx[round(0.6*nx)]
+axis(1, c(a, b), c("a", "b"))
+mode <- (s1 - 1)/(s1 + s2 - 2)
+m <- dbeta(mode, s1, s2)
+axis(2, c(0, m), expression(0, M == c*g(x)), las = 2)
+abline(h = m, lty = 3)
+lines(c(0, 1), c(m, m))
+abline(h = 0, lty = 3)
+abline(v = 0, lty = 3)
+abline(v = 1, lty = 3)
+
+ii <- xx >= a & xx <= b
+polygon(c(xx[ii], b, a), c(fx[ii], 0, 0), lty = 2, col="lightgray")
+lines(xx[ii], fx[ii], lwd = 2)
+
+nsim <- 400
+set.seed(1)
+y <- m*runif(nsim)
+x <- runif(nsim)
+points(x, y, col = ifelse(y <= dbeta(x, s1, s2), "black", "lightgray"))
+par(old.par)
 ```
 
 $$ P\left( a<X<b\right) = \frac{\text{Area de }\left\{ \left( x,y\right) \in 
@@ -287,8 +306,7 @@ $$ P\left( a<X<b\right) = \frac{\text{Area de }\left\{ \left( x,y\right) \in
 A_{f}} \\
 = \int_{a}^{b}f(x) dx $$
 
-El resultado anterior es también válido para una cuasi-densidad $f^{\ast}$
-(no depende de la constante normalizadora). 
+El resultado anterior es también válido para una cuasi-densidad $f^{\ast}$ (no depende de la constante normalizadora). 
 El resultado general sería en siguiente:
 
 * Si $X$ es una variable aleatoria con función de densidad $f$ 
@@ -311,11 +329,7 @@ Teniendo en cuenta además que:
   $B \subset A\Rightarrow \left. \left( X,Y\right) \right\vert _{B}
   \sim \mathcal{U}\left(B\right)$
   
-Por tanto, si $\left( T, Y \right)$ sigue una distribución
-uniforme en $A_{cg}$, aceptando los valores de
-$\left( T, Y\right)$ que pertenezcan a $A_{f}$ (o a $A_{f^{\ast }}$) se obtendrán 
-generaciones con distribución uniforme sobre $A_{f}$ (o $A_{f^{\ast }}$) 
-y la densidad de la primera componente $T$ será $f$.
+Por tanto, si $\left( T, Y \right)$ sigue una distribución uniforme en $A_{cg}$, aceptando los valores de $\left( T, Y\right)$ que pertenezcan a $A_{f}$ (o a $A_{f^{\ast }}$) se obtendrán generaciones con distribución uniforme sobre $A_{f}$ (o $A_{f^{\ast }}$) y la densidad de la primera componente $T$ será $f$.
 
 ### Algoritmo
 
@@ -323,10 +337,11 @@ Supongamos que $f$ es la densidad objetivo y $g$ es una densidad
 auxiliar (fácil de simular y similar a $f$), de forma que
 existe una constante $c>0$ tal que:
 $$f(x) \leq c\cdot g(x) 
-\text{, }\forall x\in \mathbb{R}\text{.}$$
+\text{, }\forall x\in \mathbb{R},$$
+(de donde se deduce que el soporte de $g$ debe contener el de $f$).
 
 ```{conjecture, label="aceptacion-rechazo", name="Método de aceptación-rechazo; Von Neuman, 1951"}
-
+<br>
 
 1.  Generar $U \sim \mathcal{U}(0, 1)$.
 
@@ -355,9 +370,9 @@ $\forall x \in [a,b]$.
 Así pues, el algoritmo quedaría como sigue:
 
 
-1. Generar $U,V\sim \mathcal{U}(0, 1)$.
+1.  Generar $U,V\sim \mathcal{U}(0, 1)$.
 
-2. Hacer $T = a + \left( b-a \right) V$.
+2.  Hacer $T = a + \left( b-a \right) V$.
 
 3.  Si $M \cdot U\leq f\left( T \right)$
     devolver $X = T$,
@@ -367,31 +382,139 @@ Así pues, el algoritmo quedaría como sigue:
 
 **Nota**: no confundir $M$ con $c = M \left( b - a \right)$.
 
+<!-- 
+Pendiente: cambiar beta por triangular en [0, 2] 
+Emplear código dtri?
+-->
 
-<!-- Incluir cuentas de AR para la doble exponencial -->
-
-```{exercise, label="dnorm-ddexp-ar", name = "Simulación de la normal mediante la doble exponencial"}
+```{example, label="dbeta-dunif-ar", name = "Simulación de distribución beta a partir de la uniforme"}
 ```
 
-Desarrollar el código necesario para generar, por el método de
-aceptación-rechazo, una muestra de $n$ observaciones de una
-distribución normal estándar:
-$$f(x)  =\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}}\text{, }x\in\mathbb{R}\text{, }$$
-empleando como distribución auxiliar una doble exponencial con $\lambda=1$ 
-(más adelante veremos que esta es la elección óptima para el parámetro de la densidad auxiliar) y que la cota óptima es:
-$$c_{\text{opt}}=\sqrt{\frac{2e}{\pi}} \approx 1.3155$$ 
-Para establecer la condición de aceptación o rechazo se puede tener en cuenta que:
-$$c\cdot U\cdot\frac{g\left( T\right)  }{f\left( T\right)  }=\sqrt{\frac
-{2e}{\pi}}U\sqrt{\frac{\pi}{2}}\exp\left( \frac{T^{2}}{2}-\left\vert
-T\right\vert \right)  =U\cdot\exp\left( \frac{T^{2}}{2}-\left\vert
-T\right\vert +\frac{1}{2}\right) ,$$
-aunque en general puede ser recomendable emplear 
-$c\cdot U\cdot g\left( T\right) \leq f\left( T\right)$.
+Para simular una variable con función de densidad $\mathcal{Beta}(\alpha, \beta)$:
+$$f(x)=\frac{\Gamma (\alpha + \beta )}{\Gamma (\alpha )\Gamma (\beta )}
+x^{\alpha -1}(1-x)^{\beta -1}\text{ si }0 \leq x \leq 1,$$
+(siguiendo la notación de la función `dbeta(x, shape1, shape2)` de `R`), podemos considerar como distribución auxiliar una $\mathcal{U}(0,1)$,
+con $g(x) = 1$ si $0 \leq x \leq 1$.
 
-En el código del Ejercicio \@ref(exr:ddexp) se definió la densidad auxiliar `ddexp(x, lambda)` y la función `rdexp(lambda)` para generar un valor aleatorio de esta densidad.
-Si comparamos la densidad objetivo con la auxiliar reescalada con los parámetros óptimos (Figura \@ref(fig:dnorm-ddexp-plot)), vemos que esta última está por encima, como debería ocurrir, pero llegan a tocarse (se está empleando la cota óptima; ver siguiente sección).
+Esta distribución está acotada y es unimodal, si $\alpha$ y $\beta$ son mayores que 1, y su moda es $\frac{\alpha - 1} {\alpha + \beta - 2}$, por lo que: 
+$$c = M = \max_{0 \leq x \leq 1}f(x) = f\left( \frac{\alpha - 1} {\alpha + \beta - 2} \right).$$
 
-```{r dnorm-ddexp-plot, fig.cap="Densidad objetivo (normal estándar) y densidad auxiliar (doble exponencial) reescalada."}
+Por ejemplo, considerando $\alpha = 2$ y $\beta = 4$, si comparamos la densidad objetivo con la auxiliar reescalada (Figura \@ref(fig:dbeta-dunif-plot)), confirmamos que esta última está por encima (y llegan a tocarse, por lo que se está empleando la cota óptima; ver siguiente sección).
+
+```{r dbeta-dunif-plot, fig.cap="Densidad objetivo beta (línea continua) y densidad auxiliar unifome reescalada (línea discontinua)."}
+# densidad objetivo: dbeta
+# densidad auxiliar: dunif
+s1 <- 2
+s2 <- 4
+curve(dbeta(x, s1, s2), -0.1, 1.1, lwd = 2)
+c <- dbeta((s1 - 1)/(s1 + s2 - 2), s1, s2)
+# abline(h = c, lty = 2)
+segments(0, c, 1, c, lty = 2, lwd = 2)
+abline(v = 0, lty = 3)
+abline(v = 1, lty = 3)
+abline(h = 0, lty = 3)
+```
+
+El siguiente código implementa el método de aceptación-rechazo para simular valores de la densidad objetivo (se incluye una variable "global" `ngen` para contar el número de generaciones de la distribución auxiliar):
+
+```{r}
+ngen <- 0 
+
+rbeta2 <- function(s1 = 2, s2 = 2) {
+  # Simulación por aceptación-rechazo
+  # Beta a partir de uniforme
+  c <- dbeta((s1 - 1)/(s1 + s2 - 2), s1, s2)
+  while (TRUE) {
+    U <- runif(1)
+    X <- runif(1)
+    ngen <<- ngen+1
+    if (c*U <= dbeta(X, s1, s2)) return(X)
+  }
+}
+
+rbeta2n <- function(n = 1000, s1 = 2, s2 = 2) {
+  # Simulación n valores Beta(s1, s2)
+  x <- numeric(n)
+  for(i in 1:n) x[i]<-rbeta2(s1, s2)
+  return(x)
+}
+```
+
+Empleando estas funciones podemos generar una muestra de $10^3$ observaciones de una $\mathcal{Beta}(2, 4)$ (calculando de paso el tiempo de CPU):
+
+```{r}
+set.seed(1)
+nsim <- 1000
+ngen <- 0
+system.time(x <- rbeta2n(nsim, s1, s2))
+```
+
+Para analizar la eficiencia podemos emplear el número de generaciones de la distribución auxiliar (siguiente sección):
+
+```{r}
+{cat("Número de generaciones = ", ngen)
+cat("\nNúmero medio de generaciones = ", ngen/nsim)
+cat("\nProporción de rechazos = ", 1-nsim/ngen, "\n")}
+```
+
+Finalmente podemos representar la distribución de los valores generados y compararla con la densidad teórica:
+
+```{r dbeta-ar, fig.cap="Distribución de los valores generados mediante el método de aceptación-rechazo."}
+hist(x, breaks = "FD", freq = FALSE, main = "")
+curve(dbeta(x, s1, s2), col = 2, lwd = 2, add = TRUE)
+```
+
+Al ser un método exacto de simulación (si está bien implementado), la distribución de los valores generados debería comportarse como una muestra genuina de la distribución objetivo.
+
+```{exercise, label="dacotada-ar"}
+```
+Dar un algoritmo para simular la función de densidad dada por 
+$f\left(x\right) = \frac{1}{16} \left( 3x^{2}+2x+2 \right)$ si
+$0 \le x \le 2$, cero en otro caso. Estudiar su eficiencia.
+
+
+### Eficiencia del algoritmo
+
+Como medida de la eficiencia del algoritmo de aceptación-rechazo podríamos considerar el número de iteraciones del algoritmo, es decir, el número de generaciones de la densidad auxiliar y de comparaciones para aceptar un valor de la densidad objetivo.
+Este número $N$ es aleatorio y sigue una distribución geométrica (número de pruebas necesarias hasta obtener el primer éxito) con parámetro $p$ (probabilidad de éxito) la probabilidad de aceptación en el paso 3:
+$$p = \frac{\text{area}\left(A_{f}\right)}{\text{area}\left( A_{cg}\right)} = \frac{1}{c}.$$
+Por tanto:
+$$E\left( N \right) = \frac1p = c$$ 
+es el número medio de iteraciones del algoritmo (el número medio de pares de variables $\left( T,U\right)$ que se necesitan generar, y de comparaciones, para obtener una simulación de la densidad objetivo).
+
+Es obvio, por tanto, que cuanto más cercano a 1 sea el valor de $c$ más eficiente será el algoritmo (el caso de $c=1$ se correspondería con $g=f$ y no tendría sentido emplear este método).
+Una vez fijada la densidad $g$, el valor óptimo será:
+$$c_{\text{opt}}=\max_{\{x : g(x) > 0\}} \frac{f(x)}{g(x)}.$$
+
+
+```{example, label="dnorm-ddexp-ar", name = "Simulación de la normal a partir de la doble exponencial"}
+```
+
+Se trata de simular la distribución normal estándar, con función de densidad:
+$$f(x)  =\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}} \text{, } x\in\mathbb{R}\text{, }$$
+empleando el método de aceptación-rechazo considerando como distribución auxiliar una doble exponencial con $\lambda=1$ (o distribución de Laplace):
+$$g(x)  =\frac{1}{2}e^{-\left| x \right|} \text{, } x\in\mathbb{R}.$$
+Esta distribución se utilizó en el Ejercicio \@ref(exr:ddexp), donde se definió la densidad auxiliar `ddexp(x, lambda)` y la función `rdexp(lambda)` para generar un valor aleatorio de esta distribución.
+
+En este caso el soporte de ambas densidades es la recta real y el valor óptimo para $c$ es:
+$$c_{\text{opt}} = \max_{x\in\mathbb{R}}\frac{f(x)}{g(x) } = \max_{x\in\mathbb{R}} \frac{\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}}}{\frac{1}{2}e^{-\left| x\right|  }} = \sqrt{\frac{2}{\pi}}\max_{x\in\mathbb{R}}e^{\varphi(x)} = \sqrt{\frac{2}{\pi}}e^{\max_{x\in\mathbb{R}}\varphi(x)},$$
+donde $\varphi(x) = -\frac{x^{2}}{2}+\left| x \right|$.
+Dado que esta función es simétrica, continua en toda la recta real y diferenciable tantas veces como se desee salvo en $x=0$, bastará encontrar su máximo absoluto en el intervalo $[0,\infty]$:
+$$\begin{aligned}
+x  & >0\Rightarrow\varphi^{\prime}(x)  =-x+1,\varphi
+^{\prime\prime}(x)  =-1;\\
+\{x  & >0,\varphi^{\prime}(x)  =0\}\Leftrightarrow x=1.
+\end{aligned}$$ 
+Por tanto, como $\varphi^{\prime\prime}(1) <0$, $\varphi$ alcanza un máximo relativo en $x=1$ y otro de idéntico valor en $x=-1$. 
+Resulta fácil demostrar que ambos son máximos absolutos
+(por los intervalos de crecimiento y decrecimiento de la función).
+Como consecuencia:
+$$c_{\text{opt}} = \sqrt{\frac{2}{\pi}}e^{\varphi(1)}
+=\sqrt{\frac{2}{\pi}}e^{1/2} =\sqrt{\frac{2e}{\pi}} \approx 1.3155.$$ 
+
+Si comparamos la densidad objetivo con la auxiliar reescalada con los parámetros óptimos (Figura \@ref(fig:dnorm-ddexp-plot)), vemos que esta última está por encima, como debería ocurrir, pero llegan a tocarse (lo que validaría el cálculo para la obtención de la cota óptima).
+
+```{r dnorm-ddexp-plot, fig.cap="Densidad objetivo (normal estándar, línea continua) y densidad auxiliar (doble exponencial, línea discontinua) reescalada."}
 # densidad objetivo: dnorm
 # densidad auxiliar: ddexp
 c.opt <- sqrt(2*exp(1)/pi)
@@ -400,7 +523,25 @@ curve(c.opt * ddexp(x), xlim = c(-4, 4), lty = 2)
 curve(dnorm(x), add = TRUE)
 ```
 
-Para generar los valores de la densidad objetivo podríamos emplear el siguiente código:
+Alternativamente, en lugar de obtener la cota óptima de modo analítico, podríamos aproximarla numéricamente:
+
+```{r }
+# NOTA: Cuidado con los límites
+# optimize(f = function(x) dnorm(x)/ddexp(x), maximum = TRUE, interval = c(-0.5,0.5))
+optimize(f = function(x) dnorm(x)/ddexp(x), maximum = TRUE, interval = c(0, 2))
+```
+
+Vemos que la aproximación numérica coincide con el valor óptimo real $c_{\text{opt}} \approx$  `r c.opt` (que se alcanza en $x = \pm 1$).
+
+Para establecer la condición de aceptación o rechazo se puede tener en cuenta que:
+$$c\cdot U\cdot\frac{g\left( T\right)  }{f\left( T\right)  }=\sqrt{\frac
+{2e}{\pi}}U\sqrt{\frac{\pi}{2}}\exp\left( \frac{T^{2}}{2}-\left\vert
+T\right\vert \right)  =U\cdot\exp\left( \frac{T^{2}}{2}-\left\vert
+T\right\vert +\frac{1}{2}\right),$$
+aunque en general puede ser recomendable emplear 
+$c\cdot U\cdot g\left( T\right) \leq f\left( T\right)$.
+
+Teniendo en cuenta los resultados anteriores, podríamos emplear el siguiente código para generar los valores de la densidad objetivo:
 
 ```{r}
 ngen <- 0
@@ -408,6 +549,8 @@ ngen <- 0
 rnormAR <- function() {
 # Simulación por aceptación-rechazo
 # Normal estandar a partir de doble exponencial
+  c.opt <- sqrt(2*exp(1)/pi)
+  lambda.opt <- 1
   while (TRUE) {
     U <- runif(1)
     X <- rdexp(lambda.opt) # rdexpn(1, lambda.opt)
@@ -423,100 +566,103 @@ rnormARn <- function(n = 1000) {
     for(i in 1:n) x[i] <- rnormAR()
     return(x)
 }
-
-# Grafico
 ```
 
 
-a)  Generar una muestra de $10^{4}$ observaciones empleando este
-    algoritmo. Obtener el tiempo de CPU y calcular el número medio
-    de generaciones de la distribución auxiliar.
+Generamos una muestra de $10^4$ observaciones:
 
-    ```{r }
-    set.seed(54321)
-    nsim <- 10^4
+```{r }
+set.seed(1)
+nsim <- 10^4
+ngen <- 0
+system.time(x <- rnormARn(nsim))
+```
+
+Evaluamos la eficiencia:
+
+```{r}
+{cat("Número de generaciones = ", ngen)
+cat("\nNúmero medio de generaciones = ", ngen/nsim)
+cat("\nProporción de rechazos = ", 1-nsim/ngen, "\n")}
+```
+
+Estos valores serían aproximaciones por simulación de los correspondientes valores teóricos (valor medio $c \approx 1.3155$ y probabilidad de rechazo $1 - p = 1 - 1/c \approx 0.23983$). 
+A partir de ellos podríamos decir que el algoritmo es bastante eficiente.
+
+Finalmente comparamos la distribución de los valores generados con la densidad teórica:
     
-    ngen <- 0
-    system.time(x <- rnormARn(nsim))
-    # Nº generaciones
-    {
-    cat("\nNúmero de generaciones = ", ngen)
-    cat("\nNúmero medio de generaciones = ", ngen/nsim)
-    cat("\nProporción de rechazos = ", 1-nsim/ngen, "\n")
-    }
-    ```
+```{r dnorm-ar, fig.cap="Distribución de los valores generados mediante el método de aceptación-rechazo."}
+hist(x, breaks = "FD", freq = FALSE, main = "")
+curve(dnorm, add = TRUE)
+```
+
+Podemos observar que la distribución de los valores generados es la que cabría esperar de una muestra de tamaño `nsim` de la distribución objetivo (lo que nos ayudaría a confirmar que el algoritmo está bien implementado, al ser un método exacto de simulación).
 
 
-b)  Representar el histograma y compararlo con la densidad teórica.
-    
-    ```{r dnorm-ar, fig.cap="Distribución de los valores generados mediante el método de aceptación-rechazo."}
-    hist(x, breaks = "FD", freq = FALSE)
-    curve(dnorm, add = TRUE)
-    ```
-    Podemos observar que la distribución de los valores generados es la que cabría esperar de una muestra de tamaño `nsim` de la distribución objetivo (lo que nos ayudaría a confirmar que el algoritmo está bien implementado, al ser un método exacto de simulación).
+### Elección de la densidad auxiliar
 
-
-### Eficiencia del algoritmo
-
-Como medida de la eficiencia del algoritmo de aceptación-rechazo
-podríamos considerar el número de iteraciones del algoritmo, 
-es decir, el número de generaciones de la densidad auxiliar y
-de comparaciones para aceptar un valor de la densidad objetivo.
-Este número $N$ es aleatorio y sigue una distribución geométrica 
-(número de pruebas necesarias hasta obtener el primer éxito) 
-con parámetro $p$ (probabilidad de éxito) la probabilidad de aceptación 
-en el paso 3:
-$$p = \frac{\text{area}\left(
-        A_{f}\right) }{\text{area}\left( A_{cg}\right) }=\frac{1}{c}.$$
-Por tanto:
-$$E\left( N \right) = \frac1p = c$$ 
-es el número medio de iteraciones del algoritmo 
-(el número medio de pares de variables $\left( T,U\right)$ 
-que se necesitan generar, y de comparaciones, para obtener
-una simulación de la densidad objetivo).
-
-Es obvio, por tanto, que cuanto más cercano a 1 sea el valor de $c$ más eficiente será el algoritmo (el caso de $c=1$ se correspondería con $g=f$ y no tendría sentido emplear este algoritmo).
-El principal problema con este método es encontrar una densidad auxiliar $g$ de forma que:
-$$c_{\text{opt}}=\max_{\{x : g(x) >0\}}
-\frac{f(x) }{g(x) }.$$
-sea próximo a 1.
+El principal problema con este método es encontrar una densidad auxiliar $g$ de forma que $c_{\text{opt}}$ sea próximo a 1.
 Una solución intermedia consiste en seleccionar una familia paramétrica de densidades $\{g_{\theta} : \theta \in \Theta\}$ entre las que haya alguna que se parezca bastante a $f$, 
 encontrar el valor de $c$ óptimo para cada densidad de esa familia:
-$$c_{\theta}=\max_{x}\frac{f\left(  x\right)  }{g_{\theta}(x) }$$ 
+$$c_{\theta}=\max_{x}\frac{f(x)  }{g_{\theta}(x) }$$ 
 y, finalmente, elegir el mejor valor $\theta_{0}$ del parámetro, en el sentido de ofrecer el menor posible $c_{\theta}$:
-$$c_{\theta_{0}}=\min_{\theta\in\Theta}\max_{x}\frac{f\left(  x\right) }{g_{\theta}\left(  x\right)  }.$$
+$$c_{\theta_{0}}=\min_{\theta\in\Theta}\max_{x}\frac{f(x) }{g_{\theta}(x)}.$$
 
 
-```{exercise, label="dnorm-ddexp-arb", name = "Simulación de la normal mediante la doble exponencial, continuación"}
+```{example, label="dnorm-ddexp-arb", name = "Simulación de la normal mediante la doble exponencial, continuación"}
 ```
 
-Continuando con el Ejercicio \@ref(exr:dnorm-ddexp-ar) anterior del método de aceptación-rechazo para generar observaciones de una distribución normal estándar, empleando como distribución auxiliar una doble exponencial:
+Continuando con el Ejemplo \@ref(exm:dnorm-ddexp-ar) anterior sobre la simulación de una normal estándar mediante el método de aceptación-rechazo, en lugar de fijar la densidad auxiliar a una doble exponencial con $\lambda=1$, consideraremos el caso general de $\lambda>0$:
+$$g_{\lambda}(x)  = \frac{\lambda}{2}e^{-\lambda\left| x \right|} \text{, } x\in\mathbb{R}.$$
 
-c)  Aproximar la cota óptima numéricamente.
+Si pretendemos encontrar el mejor valor de $\lambda$, en términos de eficiencia del algoritmo, debemos calcular:
+$$c_{\lambda_{0}} = \min_{\lambda>0}\max_{x\in\mathbb{R}}\frac{f(x)}{g_{\lambda(x)}}
+=\min_{\lambda>0}\max_{x\in\mathbb{R}}\frac{\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}}}{\frac{\lambda}{2}e^{-\lambda \left| x \right| }}.$$
+De forma totalmente análoga a la vista para el caso $\lambda=1$, se tiene que:
+$$c_{\lambda}=\max_{x\in\mathbb{R}}\frac{\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}}}{\frac{\lambda}{2}e^{-\lambda \left| x \right|  }}=\frac{1}{\lambda}\sqrt{\frac{2}{\pi}}\max_{x\in\mathbb{R}}e^{\varphi
+_{\lambda(x)}}=\frac{1}{\lambda}\sqrt{\frac{2}{\pi}}e^{\max_{x\in\mathbb{R}}\varphi_{\lambda(x)} },$$
+donde $\varphi_{\lambda}(x)  =-\frac{x^{2}}{2}+\lambda\left| x \right|$.
+De forma totalmente similar también puede probarse que $\varphi_{\lambda}$ alcanza su máximo absoluto en los puntos $x=\pm\lambda$, siendo dicho valor máximo
+$\varphi_{\lambda}\left( \pm\lambda \right) = \frac{\lambda^{2}}{2}$.
+Como consecuencia:
+$$c_{\lambda}=\frac{1}{\lambda}\sqrt{\frac{2}{\pi}}e^{\varphi_{\lambda}\left( \pm\lambda \right)} =\frac{e^{\frac{\lambda^{2}}{2}}}{\lambda}\sqrt{\frac{2}{\pi}}.$$
 
-    ```{r }
-    # NOTA: Cuidado con los límites
-    # optimize(f=function(x) dnorm(x)/ddexp(x), maximum=TRUE, interval=c(-0.5,0.5))
-    optimize(f = function(x) dnorm(x)/ddexp(x), maximum = TRUE, interval = c(0, 2))
-    ```
-    Vemos que la aproximación numérica coincide con el valor óptimo real $c_{\text{opt}}=\sqrt{\frac{2e}{\pi}} \approx$  `r c.opt` (que se alcanza en $x = \pm 1$).
-    
-d)  Aproximar el parámetro óptimo de la densidad auxiliar
-    numéricamente (normalmente comenzaríamos por este paso).
+Finalmente debemos encontrar $\lambda_{0}$ tal que $c_{\lambda_{0}}=\min_{\lambda>0}c_{\lambda}$.
+Como: 
+$$\frac{\partial c_{\lambda}}{\partial \lambda} =\sqrt{\frac{2}{\pi}}\frac{e^{\frac{\lambda^{2}}{2}}\left( \lambda^{2}-1\right)  }{\lambda^{2}},$$
+entonces $\frac{\partial c_{\lambda}}{\partial \lambda} = 0\Leftrightarrow\lambda=1$, ya que $\lambda>0$.
+Además:
+$$\left. \frac{\partial ^{2}c_{\lambda}}{\partial \lambda^{2}}\right|_{\lambda=1} =\left.\sqrt{\frac
+{2}{\pi}}\frac{e^{\frac{\lambda^{2}}{2}}\left(  \lambda^{5}-\lambda
+^{3}+2\lambda\right)  }{\lambda^{4}}\right|_{\lambda=1}=2\sqrt{\frac{2e}{\pi}}>0,$$
+luego en $\lambda=1$ se alcanza el mínimo.
 
-    ```{r }
-    # Obtención de valores c y lambda óptimos aproximados
-    fopt <- function(lambda) {
-      # Obtiene c fijado lambda
-      optimize(f = function(x) dnorm(x)/ddexp(x,lambda),
-               maximum = TRUE, interval = c(0, 2))$objective
-    }
-    
-    # Encontrar lambda que minimiza
-    res <- optimize(fopt, interval = c(0.5, 2))
-    lambda.opt2 <- res$minimum
-    c.opt2 <- res$objective
-    ```
+```{r cop-lambda, fig.cap="Representación de la cota óptima dependiedo del valor del parámetro."}
+curve(exp(x^2/2)/x*sqrt(2/pi), 0.1, 2.5,
+       xlab = expression(lambda), ylab = expression(c[lambda]))
+abline(v = 1, lty = 2)
+```
+
+De esto se deduce que la mejor densidad auxiliar doble exponencial es la correspondiente a $\lambda=1$. 
+Por tanto el algoritmo más eficiente, con esta familia de densidades auxiliares, es el expuesto en el Ejemplo \@ref(exm:dnorm-ddexp-ar).
+
+Alternativamente también podríamos aproximar simultáneamente el parámetro óptimo y la cota óptima de la densidad auxiliar numéricamente:
+
+```{r }
+# Obtención de valores c y lambda óptimos aproximados
+fopt <- function(lambda) {
+  # Obtiene c fijado lambda
+  optimize(f = function(x) dnorm(x)/ddexp(x,lambda),
+           maximum = TRUE, interval = c(0, 2))$objective
+}
+
+# Encontrar lambda que minimiza
+res <- optimize(fopt, interval = c(0.5, 2))
+lambda.opt2 <- res$minimum
+c.opt2 <- res$objective
+lambda.opt2 
+c.opt2
+```
 
 
 ### Ejemplo: Inferencia Bayesiana
@@ -616,7 +762,7 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
       cat("\nProporción de rechazos = ", 1-nsim/ngen,"\n")
     }
     
-    # Intervalo de probabilidad al 95% (IC Bayes)
+    # Intervalo de probabilidad al 95% (intervalo de credibilidad bayesiano)
     q <- quantile(Y, c(0.025, 0.975))
     
     # Representar estimador e IC Bayes
@@ -713,7 +859,7 @@ que se puede simular fácilmente mediante el método de inversión.
 
 Algoritmo (Gilks, 1992):
 
-1.  Inizializar $n$ y $s_n$.
+1.  Inicializar $n$ y $s_n$.
 
 2.  Generar $U \sim \mathcal{U}(0, 1)$ y
     $T\sim g_n$.
@@ -732,7 +878,7 @@ Algoritmo (Gilks, 1992):
 4.  Volver al paso 2.
 
 
-Gilks y Wild (1992) propusieron una ligera modificación empleando tangentes para construir la cota superior, de esta forma se obtiene un método más eficiente pero habrí que especificar la derivada de la densidad objetivo.
+Gilks y Wild (1992) propusieron una ligera modificación empleando tangentes para construir la cota superior, de esta forma se obtiene un método más eficiente pero requiere especificar la derivada de la densidad objetivo.
 
 La mayoría de las densidades de la familia de distribuciones exponencial son log-cóncavas.
 Hörmann (1995) extendió esta aproximación al caso de densidades $T_{c}$-cóncavas:
@@ -839,7 +985,7 @@ Entre los distintos métodos disponibles para la generación de las distribucion
 
 * Método de Box-Müller para la generación de normales independientes (pero que se puede generalizar para otras distribuciones y dependencia).
 
-* Algoritmos de Jöhnk (1963) y Cheng (1978) para la generación de la distribución Beta (como ejemplo de las eficiencias de los métodos de aceptación-rechazo).
+* Algoritmos de Jöhnk (1963) y Cheng (1978) para la generación de la distribución beta (como ejemplo de las eficiencias de los métodos de aceptación-rechazo).
 
 ### Método de Box-Müller
 
@@ -848,13 +994,16 @@ $U \sim \mathcal{U}( 0, 1 )$, las variables
 $\sqrt{2E} \cos 2\pi U$ y $\sqrt{2E}\operatorname{sen} 2\pi U$ son
 $\mathcal{N}( 0, 1 )$ independientes.
 
-**Algoritmo de Box-Müller**
+```{conjecture, label="box-muller", name="de Box-Müller, 1958"}
+<br>
 
-1. Generar $U,V\sim \mathcal{U}( 0, 1 )$.
+1. Generar $U,V\sim \mathcal{U}(0, 1)$.
 
 2. Hacer $W_1=\sqrt{-2\ln U}$ y $W_2=2\pi V$.
 
 3. Devolver $X_1=W_1\cos W_2$, $X_2=W_1\operatorname{sen}W_2$.
+
+```
 
 Podemos hacer que la función `rnorm()` de R emplee este algoritmo estableciendo el parámetro `normal.kind` a `"Box-Muller"` en una llamada previa a `set.seed()` o `RNGkind()`.
 
@@ -862,27 +1011,75 @@ Este método está relacionado con el denominado *método FFT* (transformada de 
 La idea de estos métodos es que, considerando módulos exponenciales y fases uniformes generamos normales independientes, pero cambiando la varianza de los módulos ($W_1$) podemos inducir dependencia.
 Adicionalmente, cambiando la distribución de las fases ($W_2$) se generan distribuciones distintas de la normal.
 
-<!-- 
-Pendiente: Incluir subsección de la distribución Beta del libro de Ricardo
-La_distribucion_beta.Rmd
+### Simulación de la distribución beta
 
-Densidad \operatorname{Beta}(a, b)$
+Existen multitud de algoritmos para simular la distribución $\mathcal{Beta}(a, b)$. 
+Probablemente, el más sencillo de todos es el que se obtiene a partir de la distribución gamma o de la chi-cuadrado, si se dispone de un algoritmo para generar estas distribuciones,  empleando la definición habitual de la distribución beta:
 
-Existen multitud de algoritmos para simular la distribución $\operatorname{Beta}(a, b)$. 
-Probablemente, el más simple es el que se obtiene a partir de la distribución gamma (o de la chi-cuadrado), si se dispone de un algoritmo para generar esta distribución:
+Si $Y \sim \mathcal{Gamma}(a, s)$ y $Z \sim  \mathcal{Gamma}(b, s)$ son independientes, entonces $$X=\frac{Y}{Y+Z} \sim \mathcal{Beta}(a, b).$$
 
-* Si $X \sim \operatorname{Gamma}(a, s)$ e $Y \sim  \operatorname{Gamma}(b, s) son independientes, entonces $$\tfrac{X}{X+Y} \sim \operatorname{Beta}(a, b)$$.
+Como la distribución resultante no depende de $s$  y $\chi^2_{n} \overset{d}{=} \mathcal{Gamma}\left(\tfrac{n}{2}, \tfrac{1}{2}\right)$, se podría considerar $Y \sim \chi^2_{2a}$ y $Z \sim \chi^2_{2b}$ independientes.
 
-* Como caso particular ($\chi^2_{n} = \operatorname{Gamma}(tfrac{n}{2}, tfrac{1}{2})$), si $X \sim \chi^2_{2a}$$ e $Y \sim \chi^2_{2b}$ son independientes, entonces $$\tfrac{X}{X+Y} \sim \operatorname{Beta}(a, b)$$.
+También se podrían emplear resultado conocidos relacionados con esta distribución, como por ejemplo que la distribución del estadístico de orden $k$ de una muestra de tamaño $n$ de una distribución uniforme tiene una distribución beta:
+$$U_{(k)} \sim \mathcal{Beta}(k,n+1-k).$$
+El resultado es el algoritmo de Fox (1963), que podría ser adecuado para simular esta distribución cuando $a, b \in \mathbb{N}$ y son valores pequeños.
 
-Alternativamente se puede emplear el algoritmo de Jöhnk, aunque sólo sería recomendable para $a<1$ y $b<1$.
+```{conjecture, label="fox", name="de Fox, 1963"}
+<br>
+  
+1. Generar $U_1, U_2, \ldots, U_{a+b-1} \sim \mathcal{U}(0, 1)$.
 
-Algoritmo de Jöhnk
+2. Ordenar: $U_{(1)}\leq U_{(2)}\leq\cdots\leq U_{(a+b-1)}$.
 
-Este método resulta extremadamente ineficiente para $a$ ó $b$ mayores que 1, ya que la probabilidad de aceptar la condición $S\leq1$ del paso 2 puede ser muy próxima a cero. 
-Para evitar este problema se puede usar el algoritmo de Cheng (1978) que, aunque puede resultar bastante más complicado de implementar^[Referencia código de R], es mucho más eficiente.
+3. Devolver $X=U_{(a)}$.
 
-Algoritmo de Cheng
+```
 
--->
+Es obvio que este algoritmo puede resultar muy lento si alguno de los dos parámetros es elevado (pues habrá que simular muchas uniformes para conseguir un valor simulado de la beta). 
+Además, en función de cuál de los dos parámetros, $a$ ó $b$, sea mayor, resultará más eficiente, en el paso 2, comenzar a ordenar por el mayor, luego el segundo mayor, y así sucesivamente, o hacerlo empezando por el menor. 
+En cualquier caso, es obvio que no es necesario ordenar todos los valores $U_{i}$ generados, sino tan sólo encontrar el que ocupa el lugar $a$-ésimo.
+
+Un método válido aunque $a$ ó $b$ no sean enteros es el dado por el
+algoritmo de Jöhnk (1964).
+
+```{conjecture, label="johnk", name="de Jöhnk, 1964"}
+<br>
+  
+1. Generar $U_1, U_2\sim \mathcal{U}(0, 1)$.
+    
+2. Hacer $V = U_1^{\frac1a}$, $W = U_2^{\frac1b}$ y $S = V+W$.
+
+3. Si $S \leq 1$ devolver $X = \frac VS$,
+
+    en caso contrario volver al paso 1.
+
+```
+
+El método resulta extremadamente ineficiente para $a$ ó $b$ mayores que 1. 
+Esto es debido a que la condición $S\leq1$ del paso 3 puede tardar muchísimo en verificarse. 
+Por este motivo, el algoritmo de Jöhnk sólo es recomendable para $a<1$ y $b<1$. 
+Como remedio a esto puede usarse el algoritmo de Cheng (1978) que es algo más complicado de implementar^[R implementa este algoritmo en el fichero fuente [rbeta.c](https://svn.r-project.org/R/trunk/src/nmath/rbeta.c).] pero mucho más eficiente.
+
+```{conjecture, label="cheng", name="de Cheng, 1978"}
+<br>
+  
+Inicialización:
+
+1. Hacer $\alpha = a + b$.
+
+2. Si $\min(a,b) \leq1$ entonces hacer $\beta=\frac1{\min(  a,b)}$, en otro caso hacer $\beta=\sqrt{\frac{\alpha-2}{2pq-\alpha}}$.
+
+3. Hacer $\gamma=a+\frac1\beta$.
+
+Simulación:
+
+1. Generar $U_1, U_2\sim \mathcal{U}(0, 1)$.
+
+2. Hacer $V=\beta\cdot\ln\left(  \frac{U_1}{1-U_1}\right)$ y $W=a\cdot e^{V}$.
+
+3. Si $\alpha\cdot\ln\left( \frac\alpha{b+W}\right) +\gamma V-\ln4 \ge \ln\left(  U_1^{2}U_2\right)$ devolver $X=\frac W{b+W}$,
+
+    en caso contrario volver al paso 1.
+
+```
 

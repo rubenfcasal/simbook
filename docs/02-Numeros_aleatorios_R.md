@@ -64,7 +64,7 @@ for (isim in 1:nsim) {
 ```
 
 
-##  Opciones
+##  Opciones {#oprrng}
 
 Normalmente no nos va a interesar cambiar las opciones por defecto de R para la generación de números pseudoaleatorios.
 Para establecer estas opciones podemos emplear los argumentos `kind = NULL`, `normal.kind = NULL` y  `sample.kind = NULL` en las funciones `RNGkind()` o `set.seed()`.
@@ -138,9 +138,7 @@ PENDIENTE: Paquetes de simulación
 
 ## Ejercicios
 
-\BeginKnitrBlock{exercise}
-<span class="exercise" id="exr:simpi"><strong>(\#exr:simpi) </strong></span>
-\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}<div class="exercise"><span class="exercise" id="exr:simpi"><strong>(\#exr:simpi) </strong></span></div>\EndKnitrBlock{exercise}
 
 Sea $(X,Y)$ es un vector aleatorio con distribución uniforme en el
 cuadrado $[-1,1]\times\lbrack-1,1]$ de área 4.
@@ -231,20 +229,14 @@ b)  Aproximar el valor de $\pi$ mediante simulación a partir de
     symbols(0, 0, squares = 2, inches = FALSE, add = TRUE)
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/simpiplot-1} 
-    
-    }
-    
-    \caption{Valores generados con distribución uniforme bidimensional, con colores y símbolos indicando si están dentro del círculo unidad.}(\#fig:simpiplot)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="02-Numeros_aleatorios_R_files/figure-html/simpiplot-1.png" alt="Valores generados con distribución uniforme bidimensional, con colores y símbolos indicando si están dentro del círculo unidad." width="70%" />
+    <p class="caption">(\#fig:simpiplot)Valores generados con distribución uniforme bidimensional, con colores y símbolos indicando si están dentro del círculo unidad.</p>
+    </div>
 
 ---    
 
-\BeginKnitrBlock{exercise}\iffalse{-91-69-120-112-101-114-105-109-101-110-116-111-32-100-101-32-66-101-114-110-111-117-108-108-105-93-}\fi{}
-<span class="exercise" id="exr:bernouilli"><strong>(\#exr:bernouilli)  \iffalse (Experimento de Bernoulli) \fi{} </strong></span>
-\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-69-120-112-101-114-105-109-101-110-116-111-32-100-101-32-66-101-114-110-111-117-108-108-105-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:bernouilli"><strong>(\#exr:bernouilli)  \iffalse (Experimento de Bernoulli) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 Consideramos el experimento de Bernoulli consistente en el
 lanzamiento de una moneda.
 
@@ -269,14 +261,10 @@ a)  Empleando la función `sample`, obtener 1000 simulaciones del
     barplot(100*table(x)/nsim, ylab = "Porcentaje") # Representar porcentajes 
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/simberplot-1} 
-    
-    }
-    
-    \caption{Frecuencias relativas de los valores generados con distribución Bernoulli (aproximaciones por simulación de las probabilidades teóricas).}(\#fig:simberplot)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="02-Numeros_aleatorios_R_files/figure-html/simberplot-1.png" alt="Frecuencias relativas de los valores generados con distribución Bernoulli (aproximaciones por simulación de las probabilidades teóricas)." width="70%" />
+    <p class="caption">(\#fig:simberplot)Frecuencias relativas de los valores generados con distribución Bernoulli (aproximaciones por simulación de las probabilidades teóricas).</p>
+    </div>
 
 b)  En R pueden generarse valores de la distribución de Bernoulli
     mediante la función `rbinom(nsim, size=1, prob)`. Generar un
@@ -306,35 +294,26 @@ b)  En R pueden generarse valores de la distribución de Bernoulli
     abline(h=p, lty=2, col="red")
     ```
     
-    \begin{figure}[!htb]
-    
-    {\centering \includegraphics[width=0.7\linewidth]{02-Numeros_aleatorios_R_files/figure-latex/simberconv-1} 
-    
-    }
-    
-    \caption{Gráfico de convergencia de la aproximación por simulación a la probabilidad teórica.}(\#fig:simberconv)
-    \end{figure}
+    <div class="figure" style="text-align: center">
+    <img src="02-Numeros_aleatorios_R_files/figure-html/simberconv-1.png" alt="Gráfico de convergencia de la aproximación por simulación a la probabilidad teórica." width="70%" />
+    <p class="caption">(\#fig:simberconv)Gráfico de convergencia de la aproximación por simulación a la probabilidad teórica.</p>
+    </div>
 
 ---
 
-\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-32-99-105-114-99-117-105-116-111-93-}\fi{}
-<span class="exercise" id="exr:circuito"><strong>(\#exr:circuito)  \iffalse (Simulación de un circuito) \fi{} </strong></span>
-\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-32-99-105-114-99-117-105-116-111-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:circuito"><strong>(\#exr:circuito)  \iffalse (Simulación de un circuito) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 Simular el paso de corriente a través del siguiente circuito, donde
 figuran las probabilidades de que pase corriente por cada uno de los
 interruptores:
 
-
-\begin{center}\includegraphics[width=0.5\linewidth]{images/circuito2} \end{center}
+<img src="images/circuito2.png" width="50%" style="display: block; margin: auto;" />
 
 Considerar que cada interruptor es una variable aleatoria de Bernoulli independiente
 para simular 1000 valores de cada una de ellas.
     
-\BeginKnitrBlock{remark}
-\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}R maneja internamente los valores lógicos como 1 (`TRUE`) y 0 (`FALSE`).
+\BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}R maneja internamente los valores lógicos como 1 (`TRUE`) y 0 (`FALSE`).
 Recíprocamente, cualquier número puede ser tratado como lógico (al estilo de C).
-El entero 0 es equivalente a `FALSE` y cualquier entero distinto de 0 a `TRUE`.
-\EndKnitrBlock{remark}
+El entero 0 es equivalente a `FALSE` y cualquier entero distinto de 0 a `TRUE`.</div>\EndKnitrBlock{remark}
 
 
 ```r
@@ -358,9 +337,7 @@ mean(fin)
 
 ---
 
-\BeginKnitrBlock{exercise}\iffalse{-91-69-108-32-112-114-111-98-108-101-109-97-32-100-101-108-32-67-97-98-97-108-108-101-114-111-32-100-101-32-77-233-114-233-93-}\fi{}
-<span class="exercise" id="exr:mere"><strong>(\#exr:mere)  \iffalse (El problema del Caballero de Méré) \fi{} </strong></span>
-\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-69-108-32-112-114-111-98-108-101-109-97-32-100-101-108-32-67-97-98-97-108-108-101-114-111-32-100-101-32-77-233-114-233-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:mere"><strong>(\#exr:mere)  \iffalse (El problema del Caballero de Méré) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 En 1651, el Caballero de Méré le planteó a Pascal una pregunta
 relacionada con las apuestas y los juegos de azar: ¿es ventajoso
 apostar a que en cuatro lanzamientos de un dado se obtiene al menos
@@ -427,9 +404,7 @@ b)  Utilizar la función anterior para simular $nsim=10000$ jugadas
 ---
 
 
-\BeginKnitrBlock{exercise}\iffalse{-91-118-97-114-105-97-99-105-243-110-32-100-101-108-32-112-114-111-98-108-101-109-97-32-100-101-108-32-99-111-108-101-99-99-105-111-110-105-115-116-97-93-}\fi{}
-<span class="exercise" id="exr:album"><strong>(\#exr:album)  \iffalse (variación del problema del coleccionista) \fi{} </strong></span>
-\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-118-97-114-105-97-99-105-243-110-32-100-101-108-32-112-114-111-98-108-101-109-97-32-100-101-108-32-99-111-108-101-99-99-105-111-110-105-115-116-97-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:album"><strong>(\#exr:album)  \iffalse (variación del problema del coleccionista) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 
 Supongamos que tenemos un álbum con $n = 75$ cromos y para completarlo hay que comprar sobres con $m = 6$ cromos. A partir de $nsim=1000$ simulaciones de coleccionistas de cromos, obtener una aproximación por simulación a la respuesta de las siguientes cuestiones:
 
@@ -494,10 +469,10 @@ CPUtimeprint()
 ```
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.15    0.00    0.16 
+##    0.27    0.01    0.29 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.15    0.00    0.16
+##    0.27    0.01    0.29
 ```
 
 ```r
@@ -508,10 +483,10 @@ CPUtimeprint()
 ```
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.17    0.00    0.17 
+##    0.02    0.00    0.01 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.32    0.00    0.33
+##    0.29    0.01    0.30
 ```
 
 
@@ -553,7 +528,7 @@ tic("outer")
 ```
 
 ```
-## middle: 0.02 sec elapsed
+## middle: 0 sec elapsed
 ```
 
 ```r
@@ -561,7 +536,7 @@ toc() # outer
 ```
 
 ```
-## outer: 0.1 sec elapsed
+## outer: 0.11 sec elapsed
 ```
 
 ```r
@@ -581,8 +556,8 @@ str(log.times)
 
 ```
 ## 'data.frame':	10 obs. of  3 variables:
-##  $ tic: num  5.14 5.14 5.14 5.14 5.15 5.15 5.15 5.15 5.15 5.15
-##  $ toc: num  5.14 5.14 5.14 5.15 5.15 5.15 5.15 5.15 5.15 5.15
+##  $ tic: num  7.54 7.54 7.54 7.54 7.54 7.56 7.56 7.56 7.56 7.56
+##  $ toc: num  7.54 7.54 7.54 7.54 7.56 7.56 7.56 7.56 7.56 7.56
 ##  $ msg: chr  "1" "2" "3" "4" ...
 ```
 
@@ -596,7 +571,7 @@ summary(log.times$timings)
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   0.000   0.000   0.000   0.001   0.000   0.010
+##   0.000   0.000   0.000   0.002   0.000   0.020
 ```
 
 
