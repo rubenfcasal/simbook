@@ -8,8 +8,7 @@ Esto puede ser de interés en otros campos, aunque la integral no esté relacion
 Adicionalmente, en muchos campos, incluido la Estadística, hay que resolver problemas de optimización. 
 Para evitar problemas de mínimos locales se puede recurrir a herramientas que emplean búsquedas aleatorias de los valores óptimos.  
 
-Integración Monte Carlo (clásica)
------------------------
+## Integración Monte Carlo (clásica)
 
 La integración Monte Carlo se emplea principalmente para aproximar integrales multidimensionales:
 $$I = \int \cdots \int h\left( x_1,\ldots ,x_d\right) dx_1 \cdots dx_d$$ 
@@ -33,8 +32,8 @@ $\mathcal{U}\left( a, b\right)$:
 $$I\approx \frac{1}{n}\sum\limits_{i=1}^nh\left( x_i\right) (b-a)$$
 
 
-```{exercise, label="mc-integral-clas"}
-
+```{exercise, label="mc-integral-clas", name="integración Monte Carlo clásica"}
+```
 
 Crear una función que implemente la integración Monte Carlo clásica
 para aproximar integrales del tipo:
@@ -42,8 +41,6 @@ $$I = \int_a^b h(x)  dx.$$
 Emplearla para aproximar: 
 $$\int_0^1 4x^4 dx = \frac{4}{5},$$ 
 y representar gráficamente la aproximación en función de $n$.  
-  
-```
 
 Como primera aproximación podríamos considerar:
 
@@ -172,8 +169,7 @@ pero en este caso $f$ concentra la densidad en una región que no resulta de uti
 Por ese motivo puede ser preferible recurrir a una densidad auxiliar que solvente este problema.
 
 
-Muestreo por importancia {#muestreo-importancia}
-------------------------
+## Muestreo por importancia {#muestreo-importancia}
 
 Para aproximar la integral:
 $$\theta = E\left( h\left( X\right) \right) = \int h\left( x\right) f(x)dx,$$
@@ -271,7 +267,7 @@ sqrt(est * (1 - est)/nsim)
 ```
 
 
-```{example, label="mc-imp2", name="Muestro por importancia con mala densidad auxiliar"}
+```{example, label="mc-imp2", name="muestreo por importancia con mala densidad auxiliar"}
 ```
 
 Supongamos que se pretende aproximar $P\left(2<X<6\right)$ siendo $X\sim Cauchy(0,1)$ empleando muestreo por importancia y considerando como densidad auxiliar la normal estandar $Y\sim N(0,1)$. Representaremos gráficamente la aproximación y estudiaremos los pesos $w(y_i)$.
@@ -380,15 +376,17 @@ b.  Generar 500 simulaciones (aprox.) de la distribución de interés
 Si no se reescala la cuasidensidad, podríamos compobar si la forma es similar (si la distribución de los valores generados es proporcional a la cuasidensidad, con mayor concentración donde la cuasidensidad se aleja de 0). 
 En este caso (como $g$ es una densidad) podríamos estimar la constante normalizadora ($f(x) = \frac{1}{c}f^{\ast}(x)$) a partir de los pesos del muestreo por importancia (`c.approx <- mean(w)`; en este caso concreto $c=\frac{3}{5}$).
 
----
+<!-- 
+
+--- 
 
 ***LA MATERIA EVALUABLE EN EL CURSO 2020/2021 TERMINA AQUÍ***
 
 --- 
 
+-->
 
-Optimización Monte Carlo
-------------------------
+## Optimización Monte Carlo
 
 Supongamos que estamos interesados en la minimización de una función:
 $$\underset{\mathbf{x}\in D}{\min }f(\mathbf{x}).$$
@@ -537,8 +535,7 @@ Entre los métodos de optimización Monte Carlo podríamos destacar:
 
 -   ...
 
-Temple simulado
----------------
+## Temple simulado
 
 Método inspirado en el templado de un metal (se calienta el metal a
 alta temperatura y se va enfriando lentamente).
@@ -670,8 +667,7 @@ for (j in 1:nstarts) {
 ```
 
 
-Algoritmos genéticos
---------------------
+## Algoritmos genéticos
 
 Los algoritmos genéticos tratan de encontrar la mejor solución
 (entre un conjunto de soluciones posibles) imitando los procesos de

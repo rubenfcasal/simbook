@@ -3,6 +3,28 @@
 ```{r , child = '_global_options.Rmd'}
 ```
 
+<!-- 
+---
+title: "Simulación de variables discretas"
+author: "Simulación Estadística (UDC)"
+date: "Máster en Técnicas Estadísticas"
+output: 
+  bookdown::html_document2:
+    pandoc_args: ["--number-offset", "5,0"]
+    toc: yes 
+    # mathjax: local            # copia local de MathJax, hay que establecer:
+    # self_contained: false     # las dependencias se guardan en ficheros externos 
+  bookdown::pdf_document2:
+    keep_tex: yes
+    toc: yes 
+---
+
+bookdown::preview_chapter("06-Metodos_generales_discretas.Rmd")
+knitr::purl("06-Metodos_generales_discretas.Rmd", documentation = 2)
+knitr::spin("06-Metodos_generales_discretas.R",knit = FALSE)
+-->
+
+
 Se trata de simular una variable aleatoria discreta $X$ con función de masa de
 probabilidad (f.m.p.):
 $$\begin{array}{l|ccccc}
@@ -51,9 +73,11 @@ Si $F$ es invertible $Q=F^{-1}$.
  
 ```{theorem, invgen, name="de inversión generalizada"}
 <br>
-Si $U\sim \mathcal{U}\left( 0,1\right)$, la variable aleatoria $Q\left( U\right)$
-tiene función de distribución $F$.
+  
+Si $U\sim \mathcal{U}\left( 0,1\right)$, la variable aleatoria $Q\left( U\right)$ tiene función de distribución $F$.
+
 ```
+
 ```{proof}
 
 Bastaría ver que: 
@@ -67,8 +91,7 @@ $$u \leq F(x) \Rightarrow Q\left( u\right) \leq Q(F(x)) \leq x$$
 ```
 
 
-A partir de este resultado se deduce el siguiente algoritmo general 
-para simular una distribución de probabilidad discreta.
+A partir de este resultado se deduce el siguiente algoritmo general para simular una distribución de probabilidad discreta.
 
 ```{conjecture, name="de transformación cuantil" }
 <br>
@@ -105,9 +128,18 @@ Para encontrar este valor se puede emplear el siguiente algoritmo:
 Este algoritmo no es muy eficiente, especialmente si el número de
 posibles valores de la variable es grande.
 
+
+```{r cuantil-movie, echo=FALSE, out.width = "80%", fig.cap="Ilustración de la simulación de una distribución discreta mediante transformación cuantil."}
+if (is_latex()) {
+  knitr::include_graphics(paste0(fig.path, "cuantil-sim.png"))
+} else {
+  knitr::include_graphics(paste0(fig.path, "cuantil-movie.gif"))
+}
+```
+
 ```{remark}
 El algoritmo anterior es válido independientemente de que los 
-valores que tome la variable estén ordenados.
+valores que toma la variable estén ordenados.
 
 ```
 
@@ -178,7 +210,7 @@ medio de comparaciones para generar cada observación.
 
 Empleamos la rutina anterior para generar las simulaciones:
 ```{r}
-set.seed(54321)
+set.seed(1)
 n <- 10
 p <- 0.5
 nsim <- 10^5
@@ -203,8 +235,9 @@ ncomp/nsim
 ```
 
 Análisis de los resultados:
-```{r comprfmp, fig.align='center', fig.cap='Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas.'}
+```{r comprfmp, fig.align='center', fig.cap='Comparación de las frecuencias relativas de los valores generados, mediante el método de la transformación cuantil, con las probabilidades teóricas.'}
 res <- table(rx)/nsim
+# res <- table(factor(rx, levels = x))/nsim
 plot(res, ylab = "frecuencia relativa", xlab = "valores")
 points(x, fmp, pch = 4)  # Comparación teórica
 
@@ -222,14 +255,17 @@ max(abs(res$psim - res$pteor) / res$pteor)
 Puede ocurrir que no todos los valores sean generados en la simulación.
 En el código anterior si `length(x) > length(psim)`, la sentencia
 `res$pteor <- fmp` gererará un error.
-Una posible solución sería trabajar con factores (hacer que la función ´rfmp()´ devuelva ´factor(X, levels = x)´). Alternativamente se podría emplear por ejemplo:
+Una posible solución sería trabajar con factores (hacer que la función `rfmp()` devuelva `factor(X, levels = x)` o emplear `res <- table(factor(rx, levels = x))/nsim`). 
+
 ```
-```{r}
+
+<!-- 
+# Alternativamente se podría emplear `match()`: 
 res <- data.frame(x = x, pteor = fmp, psim = 0)
 res.sim <- table(rx)/nsim
 index <- match(names(res.sim), x)
-res$psim[index] <- res.sim
-```
+res$psim[index] <- res.sim 
+-->
 
 
 ### Eficiencia del algoritmo
@@ -267,6 +303,7 @@ probabilidades en orden decreciente y también empleando la
 función `sample` de R.
 
 ```{r }
+set.seed(1)
 tini <- proc.time()
 
 ncomp <- 0
@@ -289,11 +326,10 @@ system.time( rx <- sample(x, nsim, replace = TRUE, prob = fmp) )
 ```
 
 
-Método de la tabla guía
------------------------
+## Método de la tabla guía
 
 La idea consiste en construir $m$ subintervalos equiespaciados
-contenidos en $[0,1]$ de la forma
+contenidos en $[0,1]$ de la forma:
 $$I_{j}=\left[ u_{j},u_{j+1}\right) =\left[ \frac{j-1}{m},\frac{j}{m}\right) 
 \text{ para }j=1,2,\ldots ,m$$
 y utilizarlos como punto de partida para la búsqueda.
@@ -304,9 +340,13 @@ $$g_{j}=Q_{\mathcal{I}}(u_{j})=\inf \left\{ i:F_{i}\geq u_{j}=\frac{j-1}{m}\righ
 El punto de partida para un valor $U$ será $g_{j_{0}}$ siendo:
 $$j_{0}=\left\lfloor mU\right\rfloor +1$$
 
-```{r echo=FALSE, fig.align = 'center'}
-# ![](tablaguia2.png)
-knitr::include_graphics(paste0(fig.path,"tablaguia2.png"))
+
+```{r tabla-movie, echo=FALSE, out.width = "80%", fig.cap="Ilustración de la simulación de una distribución discreta mediante tabla guía."}
+if (is_latex()) {
+  knitr::include_graphics(paste0(fig.path, "tabla-sim.png"))
+} else {
+  knitr::include_graphics(paste0(fig.path, "tabla-movie.gif"))
+}
 ```
 
 En este caso, puede verse que una cota del número medio de comparaciones es:
@@ -375,20 +415,20 @@ rfmp.tabla <- function(x, prob = 1/length(x), m, nsim = 1000) {
   return(X)
 }
 
+set.seed(1)
 system.time( rx <- rfmp.tabla(x, fmp, n-1, nsim) )
 
 ```
 
 Análisis de los resultados:
-```{r comptabla, fig.align='center', fig.cap='Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas.'}
+```{r comptabla, fig.align='center', fig.cap='Comparación de las frecuencias relativas de los valores generados, mediante el método de la tabla guía, con las probabilidades teóricas.'}
 res <- table(rx)/nsim
 plot(res, ylab = "frecuencia relativa", xlab = "valores")
 points(x, fmp, pch = 4)  # Comparación teórica
 ```
 
 
-Método de Alias {#alias}
----------------
+## Método de Alias {#alias}
 
 Se basa en representar la distribución de $X$ como una mixtura
 (uniforme) de variables dicotómicas (Walker, 1977):
@@ -399,8 +439,13 @@ x_{a_{i}} & \text{con prob. } 1-q_{i}
 \end{array}
 \ \right.$$
 
-La idea para construir estas variables es "tomar prestada" parte de la probabilidad de los valores más probables (ricos) para asignársela a los valores menos probables (pobres), almacenando en $a_i$ el índice del valor de donde procede. 
-El algoritmo “Robin Hood” de inicialización (Kronmal y Peterson, 1979) es el siguiente:
+Hay varias formas de construir las tablas de probabilidades $q_i$ y de alias $a_i$.
+Se suele emplear el denominado algoritmo “Robin Hood” de inicialización (Kronmal y Peterson, 1979).
+La idea es "tomar prestada" parte de la probabilidad de los valores más probables (ricos) para asignársela a los valores menos probables (pobres), recordando el valor de donde procede (almacenando el índice en $a_i$). 
+
+
+```{conjecture, name='"Robin Hood" de inicialización; Kronmal y Peterson, 1979', label="robin-hood" }
+<br>
 
 1.  Desde $i=1$ hasta $n$ hacer $q_{i}=np_{i}$.
 
@@ -421,14 +466,65 @@ El algoritmo “Robin Hood” de inicialización (Kronmal y Peterson, 1979) es e
 
 9.  Ir al paso 3.
 
+```
 
-```{r echo=FALSE, fig.align='center', fig.cap='Pasos del algoritmo de inicialización del método Alias.'}
-# ![](alias2.png)
-knitr::include_graphics(paste0(fig.path,"alias2.png"))
+```{r echo=FALSE, out.width="90%", fig.align='center', fig.cap='Pasos del algoritmo de inicialización del método Alias.'}
+# Consideramos como ejemplo una binomial
+n <- 5
+p <- 0.4
+nsim <- 1000
+
+x <- 0:n
+prob <- dbinom(x, n, p)
+
+# Inicializar tablas
+#-------------------
+
+a <- numeric(length(x))
+q <- prob*length(x)
+# Se reescalan las probabilidades para que la media sea 1
+
+oldpar <- par(mfrow = c(2,3))
+
+ylim <- c(0, max(q)*1.1)
+col <- gray.colors(2)
+barx <- barplot(q, names.arg = x, ylim = ylim, col = col[1])
+abline(h = 1, lty =2)
+
+low <- q < 1
+high <- which(!low)
+low <- which(low)
+while (length(high) && length(low)) {
+  l <- low[1]
+  h <- high[1]
+  text(barx[l], q[l] + 0.1, "L")
+  text(barx[h], q[h] + 0.1, "H")
+
+  a[l] <- h
+  q[h] <- q[h] - (1 - q[l])
+  if (q[h] < 1) {
+    high <- high[-1]
+    low[1] <- h
+  } else low <- low[-1]
+
+  bardata <- rbind(q, (a!=0)*(1-q))
+  colnames(bardata) <- x
+  bartext <- sapply(a, function(a) if(a) format(x[a]) else "")
+
+  barplot(bardata, ylim = ylim, col = col)
+  abline(h = 1, lty = 2)
+  text(barx, bardata[1, ] + bardata[2, ]/2, bartext)
+
+} # while
+
+par(oldpar)
 ```
 
 El algoritmo para generar las simulaciones es el estándar del método de composición:
 
+```{conjecture, name="método alias de simulación; Walker, 1977", label="walker"}
+<br>
+  
 1.  Generar $U,V\sim \mathcal{U}\left( 0,1\right)$.
 
 2.  Hacer $i=\left\lfloor nU\right\rfloor +1$.
@@ -437,7 +533,9 @@ El algoritmo para generar las simulaciones es el estándar del método de compos
 
 4.  En caso contrario devolver $X=x_{a_{i}}$.
 
-Este algoritmo es muy eficiente y es el implementado en la función `sample` de R.
+```
+
+Este algoritmo es muy eficiente y es el empleado en la función `sample()` de R^[R implementa este algoritmo en el fichero fuente [random.c](https://svn.r-project.org/R/trunk/src/main/random.c) (para muestreo probabilístico con reemplazamiento, función C `walker_ProbSampleReplace()`), aunque el paso 2 del algoritmo de simulación empleado por defecto cambió ligeramente a partir de la versión 3.6.0 para evitar posibles problemas de redondeo (ver Sección \@ref(oprrng)).].
 
 ```{exercise, label="binom-alias", name="Simulación de una binomial mediante en método de Alias"}
 ```
@@ -471,20 +569,24 @@ rfmp.alias <- function(x, prob = 1/length(x), nsim = 1000) {
   return( x[ ifelse( V < q[i], i, a[i]) ] )
 }
 
-
-system.time( rx <- rfmp.alias(x,fmp,nsim) )
+n <- 10
+p <- 0.5
+nsim <- 10^5
+x <- 0:n
+fmp <- dbinom(x, n, p)
+set.seed(1)
+system.time( rx <- rfmp.alias(x, fmp, nsim) )
 
 ```
 
 Análisis de los resultados:
-```{r compalias, fig.align='center', fig.cap='Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas.'}
+```{r compalias, fig.align='center', fig.cap='Comparación de las frecuencias relativas de los valores generados, mediante el método de alias, con las probabilidades teóricas.'}
 res <- table(rx)/nsim
 plot(res, ylab = "frecuencia relativa", xlab = "valores")
 points(x, fmp, pch = 4)  # Comparación teórica
 ```
 
-Simulación de una variable discreta con dominio infinito
---------------------------------------------------------
+## Simulación de una variable discreta con dominio infinito
 
 Los métodos anteriores están pensados para variables que toman
 un número finito de valores.
@@ -519,11 +621,10 @@ estos casos.
 Como alternativa, siempre se puede pensar en truncar la distribución,
 eliminando los valores muy poco probables (teniendo en
 cuenta el número de generaciones que se pretenden realizar), 
-de esta forma la distribución de las simulaciones sería aproximada.
+de esta forma la distribución de las simulaciones será aproximada.
 
 
-Cálculo directo de la función cuantil
--------------------------------------
+## Cálculo directo de la función cuantil
 
 En ocasiones el método de la transformación cuantil puede acelerarse
 computacionalmente porque, mediante cálculos directos, es posible
@@ -577,8 +678,7 @@ De donde se obtendría el algoritmo:
 3. Devolver $X=\left\lfloor T\right\rfloor$.
 
 
-Otros métodos
--------------
+## Otros métodos
 
 * Aceptación-Rechazo: Este método también sería directamente aplicable al
   caso discreto. En principio habría que considerar una variable
@@ -728,7 +828,7 @@ se puede deducir el siguiente método específico de simulación.
 
 3. Devolver $X$.
 
-Por este motivo se denominada también a esta distribución *Gamma–Poisson*. Empleando una aproximación similar podríamos generar otras distribuciones, como la *Beta-Binomial*, empleadas habitualmente en Inferencia Bayesiana.
+Por este motivo se denominada también a esta distribución *Gamma-Poisson*. Empleando una aproximación similar podríamos generar otras distribuciones, como la *Beta-Binomial*, empleadas habitualmente en inferencia bayesiana.
 
 
 

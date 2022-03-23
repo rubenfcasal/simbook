@@ -1,25 +1,50 @@
 \usepackage{booktabs}
-\usepackage{amsthm}
 \usepackage[a4paper, top=3.25cm, bottom=2.5cm, left=3cm, right=2.5cm]{geometry}
-%\usepackage{fontspec}
-%\setmainfont{Arial}
+% \usepackage{fontspec}
+% \setmainfont{Arial}
+% \usepackage{amsthm}
 % Espacio después de teorema
 % Basado en https://tex.stackexchange.com/questions/37797/theorem-environment-line-break-after-label
-\newtheoremstyle{break}
-  {\topsep}{\topsep}% Space above and below
-  {\itshape}{}%       Body font, Indent amoun
-  {\bfseries}{\vspace{\topsep}}%      Theorem head font, Punctuation after theorem head
-  {\newline}%         Space after theorem head
-  {}%                 Theorem head spec (can be left empty, meaning ‘normal’ )
+% \newtheoremstyle{break}
+%   {\topsep}{\topsep}% Space above and below
+%   {\itshape}{}%       Body font, Indent amoun
+%   {\bfseries}{}%      Theorem head font, Punctuation after theorem head
+%   {\newline}%         Space after theorem head
+%   {}%                 Theorem head spec (can be left empty, meaning ‘normal’ )
+% Problemas con listas  https://tex.stackexchange.com/questions/8110/is-it-possible-to-skip-the-first-line-in-a-theorem-environment
 
+\usepackage{ntheorem}
 \theoremstyle{break}
-\newtheorem{thm}{Theorem}[section]
-\newtheorem{cnj}{Conjecture}[section]
-\newtheorem{exm}{Example}[section]
-\newtheorem{exr}{Exercise}[section]
+\theoremheaderfont{\normalfont\bfseries}
+\theorembodyfont{\normalfont}
+\theorempreskip{\smallskipamount}
+\theorempostskip{\smallskipamount}
+\theoremprework{\bigskip\hrule\leavevmode}
+\theoremseparator{\smallskip}
+\theorempostwork{\bigskip\hrule\bigskip}
+\newtheorem{theorem}{Teorema}[chapter]
+\theoremprework{\bigskip\hrule\leavevmode}
+\theorempostwork{\bigskip\hrule\bigskip}
+\newtheorem{conjecture}{Algoritmo}[chapter]
+\newtheorem{lemma}{Lema}[chapter]
+\newtheorem{corollary}{Corolario}[chapter]
+\newtheorem{proposition}{Proposición}[chapter]
+\newtheorem{definition}{Definición}[chapter]
+\newtheorem{hypothesis}{Hipótesis}[chapter]
+\theoremprework{\bigskip\leavevmode}
+\theorempostwork{\vspace*{-\bigskipamount}\vspace*{-\medskipamount}}
+\newtheorem{example}{Ejemplo}[chapter]
+\theoremprework{\bigskip\leavevmode}
+\theorempostwork{\vspace*{-\bigskipamount}\vspace*{-\medskipamount}}
+\newtheorem{exercise}{Ejercicio}[chapter]
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\normalfont\itshape}
+\theoremseparator{:}
+% \theorempostwork{\hrule}
+\newtheorem{remark}{Nota}
+\newtheorem{solution}{Solución}
+\newtheorem{proof}{Demostración}
 
-% \usepackage{ntheorem}
-% \theoremstyle{break}
 
 \ifxetex
   \usepackage{polyglossia}
