@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-03-16" />
+<meta name="date" content="2022-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,11 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#elección-de-la-densidad-auxiliar"><i class="fa fa-check"></i><b>5.2.4</b> Elección de la densidad auxiliar</a></li>
-<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: Inferencia Bayesiana</a></li>
+<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#bayes-ar"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: inferencia bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación-rechazo</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
@@ -393,18 +393,18 @@ tipos de algoritmos.</p>
 </div>
 <p>Repetir el ejercicio anterior empleando la función <code>DEOptim</code>.</p>
 <p>Optimización con algoritmo genético implementado en <code>DEoptim</code>:</p>
-<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="algoritmos-genéticos.html#cb507-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(DEoptim)</span>
-<span id="cb507-2"><a href="algoritmos-genéticos.html#cb507-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb507-3"><a href="algoritmos-genéticos.html#cb507-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Representar la superficie del logaritmo de la verosimilitud</span></span>
-<span id="cb507-4"><a href="algoritmos-genéticos.html#cb507-4" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">xlab =</span> <span class="fu">expression</span>(mu[<span class="dv">1</span>]), <span class="at">ylab =</span> <span class="fu">expression</span>(mu[<span class="dv">2</span>]))</span>
-<span id="cb507-5"><a href="algoritmos-genéticos.html#cb507-5" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">nlevels =</span> <span class="dv">50</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb507-6"><a href="algoritmos-genéticos.html#cb507-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Estos algoritmos no requieren valores iniciales (los generan al azar en el rango)</span></span>
-<span id="cb507-7"><a href="algoritmos-genéticos.html#cb507-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb507-8"><a href="algoritmos-genéticos.html#cb507-8" aria-hidden="true" tabindex="-1"></a>lower <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>)</span>
-<span id="cb507-9"><a href="algoritmos-genéticos.html#cb507-9" aria-hidden="true" tabindex="-1"></a>upper <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>)</span>
-<span id="cb507-10"><a href="algoritmos-genéticos.html#cb507-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb507-11"><a href="algoritmos-genéticos.html#cb507-11" aria-hidden="true" tabindex="-1"></a><span class="co"># DEoptim(like, lower, upper)</span></span>
-<span id="cb507-12"><a href="algoritmos-genéticos.html#cb507-12" aria-hidden="true" tabindex="-1"></a>der <span class="ot">&lt;-</span> <span class="fu">DEoptim</span>(<span class="fu">tee.optim2d</span>(like), lower, upper, <span class="fu">DEoptim.control</span>(<span class="at">itermax =</span> <span class="dv">10</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="algoritmos-genéticos.html#cb513-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(DEoptim)</span>
+<span id="cb513-2"><a href="algoritmos-genéticos.html#cb513-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb513-3"><a href="algoritmos-genéticos.html#cb513-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Representar la superficie del logaritmo de la verosimilitud</span></span>
+<span id="cb513-4"><a href="algoritmos-genéticos.html#cb513-4" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">xlab =</span> <span class="fu">expression</span>(mu[<span class="dv">1</span>]), <span class="at">ylab =</span> <span class="fu">expression</span>(mu[<span class="dv">2</span>]))</span>
+<span id="cb513-5"><a href="algoritmos-genéticos.html#cb513-5" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">nlevels =</span> <span class="dv">50</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb513-6"><a href="algoritmos-genéticos.html#cb513-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Estos algoritmos no requieren valores iniciales (los generan al azar en el rango)</span></span>
+<span id="cb513-7"><a href="algoritmos-genéticos.html#cb513-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb513-8"><a href="algoritmos-genéticos.html#cb513-8" aria-hidden="true" tabindex="-1"></a>lower <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb513-9"><a href="algoritmos-genéticos.html#cb513-9" aria-hidden="true" tabindex="-1"></a>upper <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb513-10"><a href="algoritmos-genéticos.html#cb513-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb513-11"><a href="algoritmos-genéticos.html#cb513-11" aria-hidden="true" tabindex="-1"></a><span class="co"># DEoptim(like, lower, upper)</span></span>
+<span id="cb513-12"><a href="algoritmos-genéticos.html#cb513-12" aria-hidden="true" tabindex="-1"></a>der <span class="ot">&lt;-</span> <span class="fu">DEoptim</span>(<span class="fu">tee.optim2d</span>(like), lower, upper, <span class="fu">DEoptim.control</span>(<span class="at">itermax =</span> <span class="dv">10</span>))</span></code></pre></div>
 <pre><code>## Iteration: 1 bestvalit: 373.132461 bestmemit:   -0.764103    2.196961
 ## Iteration: 2 bestvalit: 367.580379 bestmemit:   -0.430095    2.196961
 ## Iteration: 3 bestvalit: 367.580379 bestmemit:   -0.430095    2.196961
@@ -415,9 +415,9 @@ tipos de algoritmos.</p>
 ## Iteration: 8 bestvalit: 361.657986 bestmemit:   -0.064005    2.452184
 ## Iteration: 9 bestvalit: 361.657986 bestmemit:   -0.064005    2.452184
 ## Iteration: 10 bestvalit: 361.657986 bestmemit:   -0.064005    2.452184</code></pre>
-<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb509-1"><a href="algoritmos-genéticos.html#cb509-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Por defecto fija el tamaño de la población a NP = 10*npar = 20</span></span>
-<span id="cb509-2"><a href="algoritmos-genéticos.html#cb509-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Puede ser mejor dejar el valor por defecto itermax = 200</span></span>
-<span id="cb509-3"><a href="algoritmos-genéticos.html#cb509-3" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(der<span class="sc">$</span>optim<span class="sc">$</span>bestmem[<span class="dv">1</span>], der<span class="sc">$</span>optim<span class="sc">$</span>bestmem[<span class="dv">2</span>], <span class="at">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="algoritmos-genéticos.html#cb515-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Por defecto fija el tamaño de la población a NP = 10*npar = 20</span></span>
+<span id="cb515-2"><a href="algoritmos-genéticos.html#cb515-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Puede ser mejor dejar el valor por defecto itermax = 200</span></span>
+<span id="cb515-3"><a href="algoritmos-genéticos.html#cb515-3" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(der<span class="sc">$</span>optim<span class="sc">$</span>bestmem[<span class="dv">1</span>], der<span class="sc">$</span>optim<span class="sc">$</span>bestmem[<span class="dv">2</span>], <span class="at">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
 <p><img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" /></p>
 
 </div>

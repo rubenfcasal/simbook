@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-03-16" />
+<meta name="date" content="2022-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,11 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#elección-de-la-densidad-auxiliar"><i class="fa fa-check"></i><b>5.2.4</b> Elección de la densidad auxiliar</a></li>
-<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: Inferencia Bayesiana</a></li>
+<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#bayes-ar"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: inferencia bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación-rechazo</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
@@ -405,32 +405,32 @@ la estimación sería:
 </div>
 <p>Aproximar la integral anterior empleando la variable <span class="math inline">\(U\sim\mathcal{U}(0,2)\)</span> para controlar la variable <span class="math inline">\(e^{U}\)</span>.</p>
 <p>Se trata de calcular la media de <span class="math inline">\(exp(\mathcal{U}(a,b))\)</span>:</p>
-<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="variables-de-control.html#cb532-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">0</span>; b <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb532-2"><a href="variables-de-control.html#cb532-2" aria-hidden="true" tabindex="-1"></a>teor <span class="ot">&lt;-</span> (<span class="fu">exp</span>(b)<span class="sc">-</span><span class="fu">exp</span>(a))<span class="sc">/</span>(b<span class="sc">-</span>a)</span>
-<span id="cb532-3"><a href="variables-de-control.html#cb532-3" aria-hidden="true" tabindex="-1"></a>teor</span></code></pre></div>
+<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="variables-de-control.html#cb538-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">0</span>; b <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb538-2"><a href="variables-de-control.html#cb538-2" aria-hidden="true" tabindex="-1"></a>teor <span class="ot">&lt;-</span> (<span class="fu">exp</span>(b)<span class="sc">-</span><span class="fu">exp</span>(a))<span class="sc">/</span>(b<span class="sc">-</span>a)</span>
+<span id="cb538-3"><a href="variables-de-control.html#cb538-3" aria-hidden="true" tabindex="-1"></a>teor</span></code></pre></div>
 <pre><code>## [1] 3.194528</code></pre>
 <p>Aproximación clásica por simulación:</p>
-<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="variables-de-control.html#cb534-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
-<span id="cb534-2"><a href="variables-de-control.html#cb534-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb534-3"><a href="variables-de-control.html#cb534-3" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">runif</span>(nsim, a, b)</span>
-<span id="cb534-4"><a href="variables-de-control.html#cb534-4" aria-hidden="true" tabindex="-1"></a>expu <span class="ot">&lt;-</span> <span class="fu">exp</span>(u)</span>
-<span id="cb534-5"><a href="variables-de-control.html#cb534-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(expu) </span></code></pre></div>
+<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="variables-de-control.html#cb540-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
+<span id="cb540-2"><a href="variables-de-control.html#cb540-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb540-3"><a href="variables-de-control.html#cb540-3" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">runif</span>(nsim, a, b)</span>
+<span id="cb540-4"><a href="variables-de-control.html#cb540-4" aria-hidden="true" tabindex="-1"></a>expu <span class="ot">&lt;-</span> <span class="fu">exp</span>(u)</span>
+<span id="cb540-5"><a href="variables-de-control.html#cb540-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(expu) </span></code></pre></div>
 <pre><code>## [1] 3.182118</code></pre>
 <p>Con variable control:</p>
-<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="variables-de-control.html#cb536-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(u, expu)</span>
-<span id="cb536-2"><a href="variables-de-control.html#cb536-2" aria-hidden="true" tabindex="-1"></a>reg <span class="ot">&lt;-</span> <span class="fu">lm</span>(expu <span class="sc">~</span> u)<span class="sc">$</span>coef</span>
-<span id="cb536-3"><a href="variables-de-control.html#cb536-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(reg, <span class="at">col=</span><span class="st">&#39;blue&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="variables-de-control.html#cb542-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(u, expu)</span>
+<span id="cb542-2"><a href="variables-de-control.html#cb542-2" aria-hidden="true" tabindex="-1"></a>reg <span class="ot">&lt;-</span> <span class="fu">lm</span>(expu <span class="sc">~</span> u)<span class="sc">$</span>coef</span>
+<span id="cb542-3"><a href="variables-de-control.html#cb542-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(reg, <span class="at">col=</span><span class="st">&#39;blue&#39;</span>)</span></code></pre></div>
 <p><img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="variables-de-control.html#cb537-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary(lm(expu ~ u)) # R-squared: 0.9392</span></span>
-<span id="cb537-2"><a href="variables-de-control.html#cb537-2" aria-hidden="true" tabindex="-1"></a>reg[<span class="dv">1</span>]<span class="sc">+</span>reg[<span class="dv">2</span>] <span class="co"># Coincidirá con la solución mean(expuc)</span></span></code></pre></div>
+<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="variables-de-control.html#cb543-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary(lm(expu ~ u)) # R-squared: 0.9392</span></span>
+<span id="cb543-2"><a href="variables-de-control.html#cb543-2" aria-hidden="true" tabindex="-1"></a>reg[<span class="dv">1</span>]<span class="sc">+</span>reg[<span class="dv">2</span>] <span class="co"># Coincidirá con la solución mean(expuc)</span></span></code></pre></div>
 <pre><code>## (Intercept) 
 ##    3.204933</code></pre>
 <p>Lo siguiente ya no sería necesario:</p>
-<div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb539-1"><a href="variables-de-control.html#cb539-1" aria-hidden="true" tabindex="-1"></a>expuc <span class="ot">&lt;-</span> expu <span class="sc">-</span> reg[<span class="dv">2</span>]<span class="sc">*</span>(u<span class="dv">-1</span>)</span>
-<span id="cb539-2"><a href="variables-de-control.html#cb539-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(expuc)  </span></code></pre></div>
+<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="variables-de-control.html#cb545-1" aria-hidden="true" tabindex="-1"></a>expuc <span class="ot">&lt;-</span> expu <span class="sc">-</span> reg[<span class="dv">2</span>]<span class="sc">*</span>(u<span class="dv">-1</span>)</span>
+<span id="cb545-2"><a href="variables-de-control.html#cb545-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(expuc)  </span></code></pre></div>
 <pre><code>## [1] 3.204933</code></pre>
 <p>Estimación del porcentaje de reducción en la varianza:</p>
-<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="variables-de-control.html#cb541-1" aria-hidden="true" tabindex="-1"></a><span class="dv">100</span><span class="sc">*</span>(<span class="fu">var</span>(expu)<span class="sc">-</span><span class="fu">var</span>(expuc))<span class="sc">/</span><span class="fu">var</span>(expu)</span></code></pre></div>
+<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="variables-de-control.html#cb547-1" aria-hidden="true" tabindex="-1"></a><span class="dv">100</span><span class="sc">*</span>(<span class="fu">var</span>(expu)<span class="sc">-</span><span class="fu">var</span>(expuc))<span class="sc">/</span><span class="fu">var</span>(expu)</span></code></pre></div>
 <pre><code>## [1] 93.91555</code></pre>
 </div>
             </section>

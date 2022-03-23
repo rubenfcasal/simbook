@@ -3,6 +3,28 @@
 
 
 
+<!-- 
+---
+title: "Simulación de variables discretas"
+author: "Simulación Estadística (UDC)"
+date: "Máster en Técnicas Estadísticas"
+output: 
+  bookdown::html_document2:
+    pandoc_args: ["--number-offset", "5,0"]
+    toc: yes 
+    # mathjax: local            # copia local de MathJax, hay que establecer:
+    # self_contained: false     # las dependencias se guardan en ficheros externos 
+  bookdown::pdf_document2:
+    keep_tex: yes
+    toc: yes 
+---
+
+bookdown::preview_chapter("06-Metodos_generales_discretas.Rmd")
+knitr::purl("06-Metodos_generales_discretas.Rmd", documentation = 2)
+knitr::spin("06-Metodos_generales_discretas.R",knit = FALSE)
+-->
+
+
 Se trata de simular una variable aleatoria discreta $X$ con función de masa de
 probabilidad (f.m.p.):
 $$\begin{array}{l|ccccc}
@@ -51,10 +73,15 @@ u\right\} ,\ \forall u\in \left( 0,1\right).$$
 Si $F$ es invertible $Q=F^{-1}$.
 
  
-\BeginKnitrBlock{theorem}\iffalse{-91-100-101-32-105-110-118-101-114-115-105-243-110-32-103-101-110-101-114-97-108-105-122-97-100-97-93-}\fi{}<div class="theorem"><span class="theorem" id="thm:invgen"><strong>(\#thm:invgen)  \iffalse (de inversión generalizada) \fi{} </strong></span><br>
-Si $U\sim \mathcal{U}\left( 0,1\right)$, la variable aleatoria $Q\left( U\right)$
-tiene función de distribución $F$.</div>\EndKnitrBlock{theorem}
-\BeginKnitrBlock{proof}<div class="proof">\iffalse{} <span class="proof"><em>Demostración. </em></span>  \fi{}
+\BeginKnitrBlock{theorem}\iffalse{-91-100-101-32-105-110-118-101-114-115-105-243-110-32-103-101-110-101-114-97-108-105-122-97-100-97-93-}\fi{}
+<span class="theorem" id="thm:invgen"><strong>(\#thm:invgen)  \iffalse (de inversión generalizada) \fi{} </strong></span><br>
+  
+Si $U\sim \mathcal{U}\left( 0,1\right)$, la variable aleatoria $Q\left( U\right)$ tiene función de distribución $F$.
+
+\EndKnitrBlock{theorem}
+
+\BeginKnitrBlock{proof}
+\iffalse{} <span class="proof"><em>Demostración. </em></span>  \fi{}
 Bastaría ver que: 
 $$Q\left( u\right) \leq x \Longleftrightarrow u\leq F(x).$$
 
@@ -62,18 +89,20 @@ Como $F$ es monótona y por la definición de $Q$:
 $$Q\left( u\right) \leq x \Rightarrow u \leq F(Q\left( u\right)) \leq F(x).$$
 Por otro lado como $Q$ también es monótona: 
 $$u \leq F(x) \Rightarrow Q\left( u\right) \leq Q(F(x)) \leq x$$
-  </div>\EndKnitrBlock{proof}
+  
+\EndKnitrBlock{proof}
 
 
-A partir de este resultado se deduce el siguiente algoritmo general 
-para simular una distribución de probabilidad discreta.
+A partir de este resultado se deduce el siguiente algoritmo general para simular una distribución de probabilidad discreta.
 
-\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-116-114-97-110-115-102-111-114-109-97-99-105-243-110-32-99-117-97-110-116-105-108-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-5"><strong>(\#cnj:unnamed-chunk-5)  \iffalse (de transformación cuantil) \fi{} </strong></span><br>
+\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-116-114-97-110-115-102-111-114-109-97-99-105-243-110-32-99-117-97-110-116-105-108-93-}\fi{}
+<span class="conjecture" id="cnj:unnamed-chunk-5"><strong>(\#cnj:unnamed-chunk-5)  \iffalse (de transformación cuantil) \fi{} </strong></span><br>
   
 1.  Generar $U\sim \mathcal{U}\left( 0,1\right)$.
 
 2.  Devolver $X=Q\left( U\right)$.
-</div>\EndKnitrBlock{conjecture}
+
+\EndKnitrBlock{conjecture}
 
 El principal problema es el cáculo de $Q\left( U\right)$. 
 En este caso, suponiendo por comodidad que los valores que toma la variable 
@@ -85,7 +114,8 @@ Q\left( U\right) &=\inf \left\{ x_{j}:\sum_{i=1}^{j}p_{i}\geq U\right\} \\
 
 Para encontrar este valor se puede emplear el siguiente algoritmo:
 
-\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-116-114-97-110-115-102-111-114-109-97-99-105-243-110-32-99-117-97-110-116-105-108-32-99-111-110-32-98-250-115-113-117-101-100-97-32-115-101-99-117-101-110-99-105-97-108-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-6"><strong>(\#cnj:unnamed-chunk-6)  \iffalse (de transformación cuantil con búsqueda secuencial) \fi{} </strong></span><br>
+\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-116-114-97-110-115-102-111-114-109-97-99-105-243-110-32-99-117-97-110-116-105-108-32-99-111-110-32-98-250-115-113-117-101-100-97-32-115-101-99-117-101-110-99-105-97-108-93-}\fi{}
+<span class="conjecture" id="cnj:unnamed-chunk-6"><strong>(\#cnj:unnamed-chunk-6)  \iffalse (de transformación cuantil con búsqueda secuencial) \fi{} </strong></span><br>
   
 1.  Generar $U\sim \mathcal{U}\left( 0,1\right)$.
 
@@ -94,14 +124,27 @@ Para encontrar este valor se puede emplear el siguiente algoritmo:
 3.  Mientras $U>S$ hacer $I=I+1$ y $S=S+p_{I}$
 
 4.  Devolver $X=x_{I}$.
-</div>\EndKnitrBlock{conjecture}
+
+\EndKnitrBlock{conjecture}
 
 Este algoritmo no es muy eficiente, especialmente si el número de
 posibles valores de la variable es grande.
 
-\BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}El algoritmo anterior es válido independientemente de que los 
-valores que tome la variable estén ordenados.
-</div>\EndKnitrBlock{remark}
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{images/cuantil-sim} 
+
+}
+
+\caption{Ilustración de la simulación de una distribución discreta mediante transformación cuantil.}(\#fig:cuantil-movie)
+\end{figure}
+
+\BeginKnitrBlock{remark}
+\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}El algoritmo anterior es válido independientemente de que los 
+valores que toma la variable estén ordenados.
+
+\EndKnitrBlock{remark}
 
 Si la variable toma un número finito de valores, se podría implementar en R 
 de la siguiente forma:
@@ -154,7 +197,9 @@ rfmp <- function(x, prob = 1/length(x), nsim = 1000) {
 }
 ```
 
-\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-98-105-110-111-109-105-97-108-32-109-101-100-105-97-110-116-101-32-101-108-32-109-233-116-111-100-111-32-100-101-32-108-97-32-116-114-97-110-115-102-111-114-109-97-99-105-243-110-32-99-117-97-110-116-105-108-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:binom-cuant"><strong>(\#exr:binom-cuant)  \iffalse (Simulación de una binomial mediante el método de la transformación cuantil) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-98-105-110-111-109-105-97-108-32-109-101-100-105-97-110-116-101-32-101-108-32-109-233-116-111-100-111-32-100-101-32-108-97-32-116-114-97-110-115-102-111-114-109-97-99-105-243-110-32-99-117-97-110-116-105-108-93-}\fi{}
+<span class="exercise" id="exr:binom-cuant"><strong>(\#exr:binom-cuant)  \iffalse (Simulación de una binomial mediante el método de la transformación cuantil) \fi{} </strong></span>
+\EndKnitrBlock{exercise}
 
 Generar, por el método de la transformación cuantil usando
 búsqueda secuencial, una muestra de $nsim=10^{5}$ observaciones
@@ -169,7 +214,7 @@ medio de comparaciones para generar cada observación.
 Empleamos la rutina anterior para generar las simulaciones:
 
 ```r
-set.seed(54321)
+set.seed(1)
 n <- 10
 p <- 0.5
 nsim <- 10^5
@@ -183,7 +228,7 @@ system.time( rx <- rfmp(x, fmp, nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.03    0.01    0.04
+##    0.13    0.00    0.14
 ```
 
 Aproximación de la media:
@@ -193,7 +238,7 @@ mean(rx)
 ```
 
 ```
-## [1] 5.00322
+## [1] 4.99697
 ```
 El valor teórico es `n*p` = 5.
 
@@ -204,7 +249,7 @@ ncomp/nsim
 ```
 
 ```
-## [1] 6.00322
+## [1] 5.99697
 ```
 
 ```r
@@ -215,14 +260,19 @@ Análisis de los resultados:
 
 ```r
 res <- table(rx)/nsim
+# res <- table(factor(rx, levels = x))/nsim
 plot(res, ylab = "frecuencia relativa", xlab = "valores")
 points(x, fmp, pch = 4)  # Comparación teórica
 ```
 
-<div class="figure" style="text-align: center">
-<img src="06-Metodos_generales_discretas_files/figure-html/comprfmp-1.png" alt="Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas." width="70%" />
-<p class="caption">(\#fig:comprfmp)Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{06-Metodos_generales_discretas_files/figure-latex/comprfmp-1} 
+
+}
+
+\caption{Comparación de las frecuencias relativas de los valores generados, mediante el método de la transformación cuantil, con las probabilidades teóricas.}(\#fig:comprfmp)
+\end{figure}
 
 ```r
 res <- as.data.frame(res)
@@ -233,17 +283,17 @@ res
 
 ```
 ##     x    psim        pteor
-## 1   0 0.00107 0.0009765625
-## 2   1 0.00990 0.0097656250
-## 3   2 0.04432 0.0439453125
-## 4   3 0.11778 0.1171875000
-## 5   4 0.20425 0.2050781250
-## 6   5 0.24375 0.2460937500
-## 7   6 0.20454 0.2050781250
-## 8   7 0.11898 0.1171875000
-## 9   8 0.04419 0.0439453125
-## 10  9 0.01023 0.0097656250
-## 11 10 0.00099 0.0009765625
+## 1   0 0.00100 0.0009765625
+## 2   1 0.00981 0.0097656250
+## 3   2 0.04457 0.0439453125
+## 4   3 0.11865 0.1171875000
+## 5   4 0.20377 0.2050781250
+## 6   5 0.24477 0.2460937500
+## 7   6 0.20593 0.2050781250
+## 8   7 0.11631 0.1171875000
+## 9   8 0.04415 0.0439453125
+## 10  9 0.01021 0.0097656250
+## 11 10 0.00083 0.0009765625
 ```
 
 ```r
@@ -252,7 +302,7 @@ max(abs(res$psim - res$pteor))
 ```
 
 ```
-## [1] 0.00234375
+## [1] 0.0014625
 ```
 
 ```r
@@ -260,20 +310,24 @@ max(abs(res$psim - res$pteor) / res$pteor)
 ```
 
 ```
-## [1] 0.09568
+## [1] 0.15008
 ```
 
-\BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}Puede ocurrir que no todos los valores sean generados en la simulación.
+\BeginKnitrBlock{remark}
+\iffalse{} <span class="remark"><em>Nota: </em></span>  \fi{}Puede ocurrir que no todos los valores sean generados en la simulación.
 En el código anterior si `length(x) > length(psim)`, la sentencia
 `res$pteor <- fmp` gererará un error.
-Una posible solución sería trabajar con factores (hacer que la función ´rfmp()´ devuelva ´factor(X, levels = x)´). Alternativamente se podría emplear por ejemplo:</div>\EndKnitrBlock{remark}
+Una posible solución sería trabajar con factores (hacer que la función `rfmp()` devuelva `factor(X, levels = x)` o emplear `res <- table(factor(rx, levels = x))/nsim`). 
 
-```r
+\EndKnitrBlock{remark}
+
+<!-- 
+# Alternativamente se podría emplear `match()`: 
 res <- data.frame(x = x, pteor = fmp, psim = 0)
 res.sim <- table(rx)/nsim
 index <- match(names(res.sim), x)
-res$psim[index] <- res.sim
-```
+res$psim[index] <- res.sim 
+-->
 
 
 ### Eficiencia del algoritmo
@@ -303,7 +357,9 @@ $$p_{l\left( 1\right) }\geq p_{l\left( 2\right) }\geq \cdots \geq p_{l\left(
 n\right) }\geq \cdots$$
 
 
-\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-98-105-110-111-109-105-97-108-44-32-99-111-110-116-105-110-117-97-99-105-243-110-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:binom-cuantb"><strong>(\#exr:binom-cuantb)  \iffalse (Simulación de una binomial, continuación) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-98-105-110-111-109-105-97-108-44-32-99-111-110-116-105-110-117-97-99-105-243-110-93-}\fi{}
+<span class="exercise" id="exr:binom-cuantb"><strong>(\#exr:binom-cuantb)  \iffalse (Simulación de una binomial, continuación) \fi{} </strong></span>
+\EndKnitrBlock{exercise}
 
 Repetir el Ejercicio \@ref(exr:binom-cuant) anterior ordenando previamente las
 probabilidades en orden decreciente y también empleando la
@@ -311,6 +367,7 @@ función `sample` de R.
 
 
 ```r
+set.seed(1)
 tini <- proc.time()
 
 ncomp <- 0
@@ -323,7 +380,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##    0.05    0.00    0.04
+##    0.05    0.00    0.05
 ```
 
 ```r
@@ -332,7 +389,7 @@ ncomp/nsim
 ```
 
 ```
-## [1] 3.08969
+## [1] 3.08369
 ```
 
 ```r
@@ -357,11 +414,10 @@ system.time( rx <- sample(x, nsim, replace = TRUE, prob = fmp) )
 ```
 
 
-Método de la tabla guía
------------------------
+## Método de la tabla guía
 
 La idea consiste en construir $m$ subintervalos equiespaciados
-contenidos en $[0,1]$ de la forma
+contenidos en $[0,1]$ de la forma:
 $$I_{j}=\left[ u_{j},u_{j+1}\right) =\left[ \frac{j-1}{m},\frac{j}{m}\right) 
 \text{ para }j=1,2,\ldots ,m$$
 y utilizarlos como punto de partida para la búsqueda.
@@ -372,12 +428,21 @@ $$g_{j}=Q_{\mathcal{I}}(u_{j})=\inf \left\{ i:F_{i}\geq u_{j}=\frac{j-1}{m}\righ
 El punto de partida para un valor $U$ será $g_{j_{0}}$ siendo:
 $$j_{0}=\left\lfloor mU\right\rfloor +1$$
 
-<img src="images/tablaguia2.png" width="70%" style="display: block; margin: auto;" />
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.8\linewidth]{images/tabla-sim} 
+
+}
+
+\caption{Ilustración de la simulación de una distribución discreta mediante tabla guía.}(\#fig:tabla-movie)
+\end{figure}
 
 En este caso, puede verse que una cota del número medio de comparaciones es:
 $$E\left( N\right) \leq 1+\frac{n}{m}$$
 
-\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-109-101-100-105-97-110-116-101-32-117-110-97-32-116-97-98-108-97-32-103-117-237-97-93-}\fi{}<div class="conjecture"><span class="conjecture" id="cnj:unnamed-chunk-18"><strong>(\#cnj:unnamed-chunk-18)  \iffalse (de simulación mediante una tabla guía) \fi{} </strong></span><br>
+\BeginKnitrBlock{conjecture}\iffalse{-91-100-101-32-115-105-109-117-108-97-99-105-243-110-32-109-101-100-105-97-110-116-101-32-117-110-97-32-116-97-98-108-97-32-103-117-237-97-93-}\fi{}
+<span class="conjecture" id="cnj:unnamed-chunk-16"><strong>(\#cnj:unnamed-chunk-16)  \iffalse (de simulación mediante una tabla guía) \fi{} </strong></span><br>
 
 Inicialización:
 
@@ -406,9 +471,12 @@ Simulación mediante tabla guía:
 4.  Mientras $U>F_{i}$ hacer $i=i+1$.
 
 5.  Devolver $X=x_{i}$.
-</div>\EndKnitrBlock{conjecture}
 
-\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-98-105-110-111-109-105-97-108-32-109-101-100-105-97-110-116-101-32-116-97-98-108-97-32-103-117-237-97-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:binom-tabla"><strong>(\#exr:binom-tabla)  \iffalse (Simulación de una binomial mediante tabla guía) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
+\EndKnitrBlock{conjecture}
+
+\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-98-105-110-111-109-105-97-108-32-109-101-100-105-97-110-116-101-32-116-97-98-108-97-32-103-117-237-97-93-}\fi{}
+<span class="exercise" id="exr:binom-tabla"><strong>(\#exr:binom-tabla)  \iffalse (Simulación de una binomial mediante tabla guía) \fi{} </strong></span>
+\EndKnitrBlock{exercise}
 
 Diseñar una rutina que permita generar $nsim$ valores de una
 distribución discreta usando una tabla guía. 
@@ -438,12 +506,13 @@ rfmp.tabla <- function(x, prob = 1/length(x), m, nsim = 1000) {
   return(X)
 }
 
+set.seed(1)
 system.time( rx <- rfmp.tabla(x, fmp, n-1, nsim) )
 ```
 
 ```
 ##    user  system elapsed 
-##    0.05    0.00    0.05
+##    0.04    0.00    0.08
 ```
 
 Análisis de los resultados:
@@ -454,14 +523,17 @@ plot(res, ylab = "frecuencia relativa", xlab = "valores")
 points(x, fmp, pch = 4)  # Comparación teórica
 ```
 
-<div class="figure" style="text-align: center">
-<img src="06-Metodos_generales_discretas_files/figure-html/comptabla-1.png" alt="Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas." width="70%" />
-<p class="caption">(\#fig:comptabla)Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{06-Metodos_generales_discretas_files/figure-latex/comptabla-1} 
+
+}
+
+\caption{Comparación de las frecuencias relativas de los valores generados, mediante el método de la tabla guía, con las probabilidades teóricas.}(\#fig:comptabla)
+\end{figure}
 
 
-Método de Alias {#alias}
----------------
+## Método de Alias {#alias}
 
 Se basa en representar la distribución de $X$ como una mixtura
 (uniforme) de variables dicotómicas (Walker, 1977):
@@ -472,8 +544,13 @@ x_{a_{i}} & \text{con prob. } 1-q_{i}
 \end{array}
 \ \right.$$
 
-La idea para construir estas variables es "tomar prestada" parte de la probabilidad de los valores más probables (ricos) para asignársela a los valores menos probables (pobres), almacenando en $a_i$ el índice del valor de donde procede. 
-El algoritmo “Robin Hood” de inicialización (Kronmal y Peterson, 1979) es el siguiente:
+Hay varias formas de construir las tablas de probabilidades $q_i$ y de alias $a_i$.
+Se suele emplear el denominado algoritmo “Robin Hood” de inicialización (Kronmal y Peterson, 1979).
+La idea es "tomar prestada" parte de la probabilidad de los valores más probables (ricos) para asignársela a los valores menos probables (pobres), recordando el valor de donde procede (almacenando el índice en $a_i$). 
+
+
+\BeginKnitrBlock{conjecture}\iffalse{-91-34-82-111-98-105-110-32-72-111-111-100-34-32-100-101-32-105-110-105-99-105-97-108-105-122-97-99-105-243-110-59-32-75-114-111-110-109-97-108-32-121-32-80-101-116-101-114-115-111-110-44-32-49-57-55-57-93-}\fi{}
+<span class="conjecture" id="cnj:robin-hood"><strong>(\#cnj:robin-hood)  \iffalse ("Robin Hood" de inicialización; Kronmal y Peterson, 1979) \fi{} </strong></span><br>
 
 1.  Desde $i=1$ hasta $n$ hacer $q_{i}=np_{i}$.
 
@@ -494,14 +571,22 @@ El algoritmo “Robin Hood” de inicialización (Kronmal y Peterson, 1979) es e
 
 9.  Ir al paso 3.
 
+\EndKnitrBlock{conjecture}
 
-<div class="figure" style="text-align: center">
-<img src="images/alias2.png" alt="Pasos del algoritmo de inicialización del método Alias." width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-20)Pasos del algoritmo de inicialización del método Alias.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.9\linewidth]{06-Metodos_generales_discretas_files/figure-latex/unnamed-chunk-18-1} 
+
+}
+
+\caption{Pasos del algoritmo de inicialización del método Alias.}(\#fig:unnamed-chunk-18)
+\end{figure}
 
 El algoritmo para generar las simulaciones es el estándar del método de composición:
 
+\BeginKnitrBlock{conjecture}\iffalse{-91-109-233-116-111-100-111-32-97-108-105-97-115-32-100-101-32-115-105-109-117-108-97-99-105-243-110-59-32-87-97-108-107-101-114-44-32-49-57-55-55-93-}\fi{}
+<span class="conjecture" id="cnj:walker"><strong>(\#cnj:walker)  \iffalse (método alias de simulación; Walker, 1977) \fi{} </strong></span><br>
+  
 1.  Generar $U,V\sim \mathcal{U}\left( 0,1\right)$.
 
 2.  Hacer $i=\left\lfloor nU\right\rfloor +1$.
@@ -510,9 +595,13 @@ El algoritmo para generar las simulaciones es el estándar del método de compos
 
 4.  En caso contrario devolver $X=x_{a_{i}}$.
 
-Este algoritmo es muy eficiente y es el implementado en la función `sample` de R.
+\EndKnitrBlock{conjecture}
 
-\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-98-105-110-111-109-105-97-108-32-109-101-100-105-97-110-116-101-32-101-110-32-109-233-116-111-100-111-32-100-101-32-65-108-105-97-115-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:binom-alias"><strong>(\#exr:binom-alias)  \iffalse (Simulación de una binomial mediante en método de Alias) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
+Este algoritmo es muy eficiente y es el empleado en la función `sample()` de R^[R implementa este algoritmo en el fichero fuente [random.c](https://svn.r-project.org/R/trunk/src/main/random.c) (para muestreo probabilístico con reemplazamiento, función C `walker_ProbSampleReplace()`), aunque el paso 2 del algoritmo de simulación empleado por defecto cambió ligeramente a partir de la versión 3.6.0 para evitar posibles problemas de redondeo (ver Sección \@ref(oprrng)).].
+
+\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-98-105-110-111-109-105-97-108-32-109-101-100-105-97-110-116-101-32-101-110-32-109-233-116-111-100-111-32-100-101-32-65-108-105-97-115-93-}\fi{}
+<span class="exercise" id="exr:binom-alias"><strong>(\#exr:binom-alias)  \iffalse (Simulación de una binomial mediante en método de Alias) \fi{} </strong></span>
+\EndKnitrBlock{exercise}
 
 Diseñar una rutina que permita generar $nsim$ valores de una
 distribución discreta usando el método de Alias. 
@@ -544,13 +633,18 @@ rfmp.alias <- function(x, prob = 1/length(x), nsim = 1000) {
   return( x[ ifelse( V < q[i], i, a[i]) ] )
 }
 
-
-system.time( rx <- rfmp.alias(x,fmp,nsim) )
+n <- 10
+p <- 0.5
+nsim <- 10^5
+x <- 0:n
+fmp <- dbinom(x, n, p)
+set.seed(1)
+system.time( rx <- rfmp.alias(x, fmp, nsim) )
 ```
 
 ```
 ##    user  system elapsed 
-##    0.03    0.00    0.03
+##    0.02    0.03    0.05
 ```
 
 Análisis de los resultados:
@@ -561,13 +655,16 @@ plot(res, ylab = "frecuencia relativa", xlab = "valores")
 points(x, fmp, pch = 4)  # Comparación teórica
 ```
 
-<div class="figure" style="text-align: center">
-<img src="06-Metodos_generales_discretas_files/figure-html/compalias-1.png" alt="Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas." width="70%" />
-<p class="caption">(\#fig:compalias)Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas.</p>
-</div>
+\begin{figure}[!htb]
 
-Simulación de una variable discreta con dominio infinito
---------------------------------------------------------
+{\centering \includegraphics[width=0.7\linewidth]{06-Metodos_generales_discretas_files/figure-latex/compalias-1} 
+
+}
+
+\caption{Comparación de las frecuencias relativas de los valores generados, mediante el método de alias, con las probabilidades teóricas.}(\#fig:compalias)
+\end{figure}
+
+## Simulación de una variable discreta con dominio infinito
 
 Los métodos anteriores están pensados para variables que toman
 un número finito de valores.
@@ -575,7 +672,9 @@ Si la variable discreta tiene dominio infinito no se podrían
 almacenar las probabilidades acumuladas, aunque en algunos casos podrían
 calcularse de forma recursiva.
 
-\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-100-101-32-80-111-105-115-115-111-110-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-22"><strong>(\#exm:unnamed-chunk-22)  \iffalse (distribución de Poisson) \fi{} </strong></span></div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-100-101-32-80-111-105-115-115-111-110-93-}\fi{}
+<span class="example" id="exm:unnamed-chunk-20"><strong>(\#exm:unnamed-chunk-20)  \iffalse (distribución de Poisson) \fi{} </strong></span>
+\EndKnitrBlock{example}
 Una variable $X$ con distribución de Poisson de parámetro $\lambda$, 
 toma los valores $x_{1}=0$, $x_{2}=1$, $\ldots$ con probabilidades:
 $$p_{j}=P\left( X=x_{j}\right)  =P\left( X=j-1\right)  =\frac{e^{-\lambda
@@ -601,11 +700,10 @@ estos casos.
 Como alternativa, siempre se puede pensar en truncar la distribución,
 eliminando los valores muy poco probables (teniendo en
 cuenta el número de generaciones que se pretenden realizar), 
-de esta forma la distribución de las simulaciones sería aproximada.
+de esta forma la distribución de las simulaciones será aproximada.
 
 
-Cálculo directo de la función cuantil
--------------------------------------
+## Cálculo directo de la función cuantil
 
 En ocasiones el método de la transformación cuantil puede acelerarse
 computacionalmente porque, mediante cálculos directos, es posible
@@ -613,7 +711,9 @@ encontrar el valor de la función cuantil en cualquier $U$,
 evitando el bucle de búsqueda. 
 Normalmente se realiza mediante truncamiento de una distribución continua.
 
-\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-117-110-105-102-111-114-109-101-32-100-105-115-99-114-101-116-97-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-23"><strong>(\#exm:unnamed-chunk-23)  \iffalse (distribución uniforme discreta) \fi{} </strong></span></div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-117-110-105-102-111-114-109-101-32-100-105-115-99-114-101-116-97-93-}\fi{}
+<span class="example" id="exm:unnamed-chunk-21"><strong>(\#exm:unnamed-chunk-21)  \iffalse (distribución uniforme discreta) \fi{} </strong></span>
+\EndKnitrBlock{example}
 
 La función de masa de probabilidad de una distribución uniforme discreta 
 en $\{1,2,\ldots,n\}$ viene dada por
@@ -627,7 +727,9 @@ truncando la distribución uniforme:
 2. Devolver $X=\left\lfloor nU\right\rfloor + 1$.
 
 
-\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-103-101-111-109-233-116-114-105-99-97-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-24"><strong>(\#exm:unnamed-chunk-24)  \iffalse (distribución geométrica) \fi{} </strong></span></div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}\iffalse{-91-100-105-115-116-114-105-98-117-99-105-243-110-32-103-101-111-109-233-116-114-105-99-97-93-}\fi{}
+<span class="example" id="exm:unnamed-chunk-22"><strong>(\#exm:unnamed-chunk-22)  \iffalse (distribución geométrica) \fi{} </strong></span>
+\EndKnitrBlock{example}
 
 La función de masa de probabilidad de una distribución geométrica es:
 $$P\left( X=j\right)  =P\left( I=j+1\right)  =p\left( 1-p\right)^{j}\text{,
@@ -657,8 +759,7 @@ De donde se obtendría el algoritmo:
 3. Devolver $X=\left\lfloor T\right\rfloor$.
 
 
-Otros métodos
--------------
+## Otros métodos
 
 * Aceptación-Rechazo: Este método también sería directamente aplicable al
   caso discreto. En principio habría que considerar una variable
@@ -674,7 +775,9 @@ Otros métodos
 
 
 
-\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-100-105-115-116-114-105-98-117-99-105-243-110-32-109-105-120-116-97-32-109-101-100-105-97-110-116-101-32-101-108-32-109-233-116-111-100-111-32-100-101-32-105-110-118-101-114-115-105-243-110-32-103-101-110-101-114-97-108-105-122-97-100-111-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:mixta-cuantil"><strong>(\#exr:mixta-cuantil)  \iffalse (Simulación de una distribución mixta mediante el método de inversión generalizado) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-83-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-97-32-100-105-115-116-114-105-98-117-99-105-243-110-32-109-105-120-116-97-32-109-101-100-105-97-110-116-101-32-101-108-32-109-233-116-111-100-111-32-100-101-32-105-110-118-101-114-115-105-243-110-32-103-101-110-101-114-97-108-105-122-97-100-111-93-}\fi{}
+<span class="exercise" id="exr:mixta-cuantil"><strong>(\#exr:mixta-cuantil)  \iffalse (Simulación de una distribución mixta mediante el método de inversión generalizado) \fi{} </strong></span>
+\EndKnitrBlock{exercise}
 
 Considera la variable aleatoria con función
 de distribución dada por: 
@@ -704,7 +807,9 @@ curve(fdistr(x), from = -0.1, to = 1.1, type = 's',
 abline(h = c(1/10, 2/10, 3/10), lty = 2) 
 ```
 
-<img src="06-Metodos_generales_discretas_files/figure-html/unnamed-chunk-25-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{06-Metodos_generales_discretas_files/figure-latex/unnamed-chunk-23-1} \end{center}
 
 
 **Nota**: Esta variable toma los valores 0 y 1/5 con probabilidad 1/10.
@@ -767,7 +872,9 @@ b)  Implementa el algoritmo en una función que permita generar $nsim$
     hist(simx, breaks = "FD", freq = FALSE)
     ```
     
-    <img src="06-Metodos_generales_discretas_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{06-Metodos_generales_discretas_files/figure-latex/unnamed-chunk-25-1} \end{center}
     
     En este caso como no es una variable absolutamente continua mejor emplear 
     la función de distribución para compararla con la teórica:
@@ -778,10 +885,14 @@ b)  Implementa el algoritmo en una función que permita generar $nsim$
     curve(fdistr(x), type = "s", lty = 2, add = TRUE)
     ```
     
-    <img src="06-Metodos_generales_discretas_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.7\linewidth]{06-Metodos_generales_discretas_files/figure-latex/unnamed-chunk-26-1} \end{center}
 
 
-\BeginKnitrBlock{exercise}\iffalse{-91-112-114-111-112-117-101-115-116-111-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:hipergeom"><strong>(\#exr:hipergeom)  \iffalse (propuesto) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
+\BeginKnitrBlock{exercise}\iffalse{-91-112-114-111-112-117-101-115-116-111-93-}\fi{}
+<span class="exercise" id="exr:hipergeom"><strong>(\#exr:hipergeom)  \iffalse (propuesto) \fi{} </strong></span>
+\EndKnitrBlock{exercise}
 
 Se pretende simular $nsim=10^{4}$ observaciones de una variable
 hipergeométrica (`dhyper(x, m, n, k)`) de parámetros $m=$ el número 
@@ -823,7 +934,7 @@ se puede deducir el siguiente método específico de simulación.
 
 3. Devolver $X$.
 
-Por este motivo se denominada también a esta distribución *Gamma–Poisson*. Empleando una aproximación similar podríamos generar otras distribuciones, como la *Beta-Binomial*, empleadas habitualmente en Inferencia Bayesiana.
+Por este motivo se denominada también a esta distribución *Gamma-Poisson*. Empleando una aproximación similar podríamos generar otras distribuciones, como la *Beta-Binomial*, empleadas habitualmente en inferencia bayesiana.
 
 
 

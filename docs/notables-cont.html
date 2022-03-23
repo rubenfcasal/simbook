@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-03-16" />
+<meta name="date" content="2022-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,11 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#elección-de-la-densidad-auxiliar"><i class="fa fa-check"></i><b>5.2.4</b> Elección de la densidad auxiliar</a></li>
-<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: Inferencia Bayesiana</a></li>
+<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#bayes-ar"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: inferencia bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación-rechazo</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
@@ -386,7 +386,7 @@ Sin embargo, además de que muchos de ellos servirían como ilustración de la a
 <span class="math inline">\(\mathcal{N}( 0, 1 )\)</span> independientes.</p>
 
 <div class="conjecture">
-<p><span id="cnj:box-muller" class="conjecture"><strong>Algoritmo 5.4  (de Box-Müller, 1958)  </strong></span><br></p>
+<p><span id="cnj:box-muller" class="conjecture"><strong>Algoritmo 5.8  (de Box-Müller, 1958)  </strong></span><br></p>
 <ol style="list-style-type: decimal">
 <li><p>Generar <span class="math inline">\(U,V\sim \mathcal{U}(0, 1)\)</span>.</p></li>
 <li><p>Hacer <span class="math inline">\(W_1=\sqrt{-2\ln U}\)</span> y <span class="math inline">\(W_2=2\pi V\)</span>.</p></li>
@@ -409,7 +409,7 @@ Probablemente, el más sencillo de todos es el que se obtiene a partir de la dis
 El resultado es el algoritmo de Fox (1963), que podría ser adecuado para simular esta distribución cuando <span class="math inline">\(a, b \in \mathbb{N}\)</span> y son valores pequeños.</p>
 
 <div class="conjecture">
-<p><span id="cnj:fox" class="conjecture"><strong>Algoritmo 5.5  (de Fox, 1963)  </strong></span><br></p>
+<p><span id="cnj:fox" class="conjecture"><strong>Algoritmo 5.9  (de Fox, 1963)  </strong></span><br></p>
 <ol style="list-style-type: decimal">
 <li><p>Generar <span class="math inline">\(U_1, U_2, \ldots, U_{a+b-1} \sim \mathcal{U}(0, 1)\)</span>.</p></li>
 <li><p>Ordenar: <span class="math inline">\(U_{(1)}\leq U_{(2)}\leq\cdots\leq U_{(a+b-1)}\)</span>.</p></li>
@@ -423,7 +423,7 @@ En cualquier caso, es obvio que no es necesario ordenar todos los valores <span 
 algoritmo de Jöhnk (1964).</p>
 
 <div class="conjecture">
-<p><span id="cnj:johnk" class="conjecture"><strong>Algoritmo 5.6  (de Jöhnk, 1964)  </strong></span><br></p>
+<p><span id="cnj:johnk" class="conjecture"><strong>Algoritmo 5.10  (de Jöhnk, 1964)  </strong></span><br></p>
 <ol style="list-style-type: decimal">
 <li><p>Generar <span class="math inline">\(U_1, U_2\sim \mathcal{U}(0, 1)\)</span>.</p></li>
 <li><p>Hacer <span class="math inline">\(V = U_1^{\frac1a}\)</span>, <span class="math inline">\(W = U_2^{\frac1b}\)</span> y <span class="math inline">\(S = V+W\)</span>.</p></li>
@@ -437,7 +437,7 @@ Por este motivo, el algoritmo de Jöhnk sólo es recomendable para <span class="
 Como remedio a esto puede usarse el algoritmo de Cheng (1978) que es algo más complicado de implementar<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a> pero mucho más eficiente.</p>
 
 <div class="conjecture">
-<p><span id="cnj:cheng" class="conjecture"><strong>Algoritmo 5.7  (de Cheng, 1978)  </strong></span><br></p>
+<p><span id="cnj:cheng" class="conjecture"><strong>Algoritmo 5.11  (de Cheng, 1978)  </strong></span><br></p>
 <p>Inicialización:</p>
 <ol style="list-style-type: decimal">
 <li><p>Hacer <span class="math inline">\(\alpha = a + b\)</span>.</p></li>

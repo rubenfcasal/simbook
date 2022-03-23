@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-03-16" />
+<meta name="date" content="2022-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,11 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#elección-de-la-densidad-auxiliar"><i class="fa fa-check"></i><b>5.2.4</b> Elección de la densidad auxiliar</a></li>
-<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: Inferencia Bayesiana</a></li>
+<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#bayes-ar"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: inferencia bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación-rechazo</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
@@ -395,17 +395,17 @@ x+\frac{1}{10} &amp; \mbox{si $x\in[\frac{1}{5},\frac{9}{10}]$}\\
 \end{array}
 \right.\]</span></p>
 <p>Función de distribución:</p>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="otros-métodos.html#cb215-1" aria-hidden="true" tabindex="-1"></a>fdistr <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb215-2"><a href="otros-métodos.html#cb215-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ifelse</span>(x <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="dv">0</span>,</span>
-<span id="cb215-3"><a href="otros-métodos.html#cb215-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ifelse</span>(x <span class="sc">&lt;</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">5</span>, x<span class="sc">/</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span>,</span>
-<span id="cb215-4"><a href="otros-métodos.html#cb215-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ifelse</span>(x <span class="sc">&lt;=</span> <span class="dv">9</span><span class="sc">/</span><span class="dv">10</span>, x <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span>, <span class="dv">1</span>) ) )</span>
-<span id="cb215-5"><a href="otros-métodos.html#cb215-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb215-6"><a href="otros-métodos.html#cb215-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Empleando ifelse se complica un poco más pero el resultado es una función vectorial.</span></span>
-<span id="cb215-7"><a href="otros-métodos.html#cb215-7" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">fdistr</span>(x), <span class="at">from =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">to =</span> <span class="fl">1.1</span>, <span class="at">type =</span> <span class="st">&#39;s&#39;</span>, </span>
-<span id="cb215-8"><a href="otros-métodos.html#cb215-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">&#39;Función de distribución&#39;</span>)</span>
-<span id="cb215-9"><a href="otros-métodos.html#cb215-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Discontinuidades en 0 y 1/5</span></span>
-<span id="cb215-10"><a href="otros-métodos.html#cb215-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">10</span>, <span class="dv">2</span><span class="sc">/</span><span class="dv">10</span>, <span class="dv">3</span><span class="sc">/</span><span class="dv">10</span>), <span class="at">lty =</span> <span class="dv">2</span>) </span></code></pre></div>
-<p><img src="06-Metodos_generales_discretas_files/figure-html/unnamed-chunk-25-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="otros-métodos.html#cb221-1" aria-hidden="true" tabindex="-1"></a>fdistr <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb221-2"><a href="otros-métodos.html#cb221-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ifelse</span>(x <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb221-3"><a href="otros-métodos.html#cb221-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ifelse</span>(x <span class="sc">&lt;</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">5</span>, x<span class="sc">/</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span>,</span>
+<span id="cb221-4"><a href="otros-métodos.html#cb221-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ifelse</span>(x <span class="sc">&lt;=</span> <span class="dv">9</span><span class="sc">/</span><span class="dv">10</span>, x <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span>, <span class="dv">1</span>) ) )</span>
+<span id="cb221-5"><a href="otros-métodos.html#cb221-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb221-6"><a href="otros-métodos.html#cb221-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Empleando ifelse se complica un poco más pero el resultado es una función vectorial.</span></span>
+<span id="cb221-7"><a href="otros-métodos.html#cb221-7" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">fdistr</span>(x), <span class="at">from =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">to =</span> <span class="fl">1.1</span>, <span class="at">type =</span> <span class="st">&#39;s&#39;</span>, </span>
+<span id="cb221-8"><a href="otros-métodos.html#cb221-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">&#39;Función de distribución&#39;</span>)</span>
+<span id="cb221-9"><a href="otros-métodos.html#cb221-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Discontinuidades en 0 y 1/5</span></span>
+<span id="cb221-10"><a href="otros-métodos.html#cb221-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">10</span>, <span class="dv">2</span><span class="sc">/</span><span class="dv">10</span>, <span class="dv">3</span><span class="sc">/</span><span class="dv">10</span>), <span class="at">lty =</span> <span class="dv">2</span>) </span></code></pre></div>
+<p><img src="06-Metodos_generales_discretas_files/figure-html/unnamed-chunk-23-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p><strong>Nota</strong>: Esta variable toma los valores 0 y 1/5 con probabilidad 1/10.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Diseña un algoritmo basándote en el método de inversión generalizado
@@ -428,26 +428,26 @@ el algoritmo sería:</p>
 </ol></li>
 <li><p>Implementa el algoritmo en una función que permita generar <span class="math inline">\(nsim\)</span>
 valores de la variable.</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="otros-métodos.html#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función cuantil:</span></span>
-<span id="cb216-2"><a href="otros-métodos.html#cb216-2" aria-hidden="true" tabindex="-1"></a>fquant <span class="ot">&lt;-</span> <span class="cf">function</span>(u) </span>
-<span id="cb216-3"><a href="otros-métodos.html#cb216-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ifelse</span>(u <span class="sc">&lt;</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span>, <span class="dv">0</span>,</span>
-<span id="cb216-4"><a href="otros-métodos.html#cb216-4" aria-hidden="true" tabindex="-1"></a>         <span class="fu">ifelse</span>(u <span class="sc">&lt;</span> <span class="dv">2</span><span class="sc">/</span><span class="dv">10</span>, <span class="dv">2</span><span class="sc">*</span>(u <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span>),</span>
-<span id="cb216-5"><a href="otros-métodos.html#cb216-5" aria-hidden="true" tabindex="-1"></a>                <span class="fu">ifelse</span>(u <span class="sc">&lt;</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">10</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">5</span>, u <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span>) ) )</span>
-<span id="cb216-6"><a href="otros-métodos.html#cb216-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para generar nsim valores:</span></span>
-<span id="cb216-7"><a href="otros-métodos.html#cb216-7" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> <span class="cf">function</span>(nsim) <span class="fu">fquant</span>(<span class="fu">runif</span>(nsim))</span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="otros-métodos.html#cb222-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función cuantil:</span></span>
+<span id="cb222-2"><a href="otros-métodos.html#cb222-2" aria-hidden="true" tabindex="-1"></a>fquant <span class="ot">&lt;-</span> <span class="cf">function</span>(u) </span>
+<span id="cb222-3"><a href="otros-métodos.html#cb222-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ifelse</span>(u <span class="sc">&lt;</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span>, <span class="dv">0</span>,</span>
+<span id="cb222-4"><a href="otros-métodos.html#cb222-4" aria-hidden="true" tabindex="-1"></a>         <span class="fu">ifelse</span>(u <span class="sc">&lt;</span> <span class="dv">2</span><span class="sc">/</span><span class="dv">10</span>, <span class="dv">2</span><span class="sc">*</span>(u <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span>),</span>
+<span id="cb222-5"><a href="otros-métodos.html#cb222-5" aria-hidden="true" tabindex="-1"></a>                <span class="fu">ifelse</span>(u <span class="sc">&lt;</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">10</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">5</span>, u <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span>) ) )</span>
+<span id="cb222-6"><a href="otros-métodos.html#cb222-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para generar nsim valores:</span></span>
+<span id="cb222-7"><a href="otros-métodos.html#cb222-7" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> <span class="cf">function</span>(nsim) <span class="fu">fquant</span>(<span class="fu">runif</span>(nsim))</span></code></pre></div>
 <p>Ejemplo:</p>
-<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="otros-métodos.html#cb217-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb217-2"><a href="otros-métodos.html#cb217-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
-<span id="cb217-3"><a href="otros-métodos.html#cb217-3" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(simx <span class="ot">&lt;-</span> <span class="fu">rx</span>(nsim))</span></code></pre></div>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="otros-métodos.html#cb223-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb223-2"><a href="otros-métodos.html#cb223-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
+<span id="cb223-3"><a href="otros-métodos.html#cb223-3" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(simx <span class="ot">&lt;-</span> <span class="fu">rx</span>(nsim))</span></code></pre></div>
 <pre><code>##    user  system elapsed 
 ##       0       0       0</code></pre>
-<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="otros-métodos.html#cb219-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(simx, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<p><img src="06-Metodos_generales_discretas_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="otros-métodos.html#cb225-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(simx, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="06-Metodos_generales_discretas_files/figure-html/unnamed-chunk-25-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>En este caso como no es una variable absolutamente continua mejor emplear
 la función de distribución para compararla con la teórica:</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="otros-métodos.html#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">ecdf</span>(simx)(x), <span class="at">from=</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">to =</span> <span class="fl">1.1</span>, <span class="at">type =</span> <span class="st">&quot;s&quot;</span>)</span>
-<span id="cb220-2"><a href="otros-métodos.html#cb220-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">fdistr</span>(x), <span class="at">type =</span> <span class="st">&quot;s&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="06-Metodos_generales_discretas_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" /></p></li>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="otros-métodos.html#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">ecdf</span>(simx)(x), <span class="at">from=</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">to =</span> <span class="fl">1.1</span>, <span class="at">type =</span> <span class="st">&quot;s&quot;</span>)</span>
+<span id="cb226-2"><a href="otros-métodos.html#cb226-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">fdistr</span>(x), <span class="at">type =</span> <span class="st">&quot;s&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="06-Metodos_generales_discretas_files/figure-html/unnamed-chunk-26-1.png" width="70%" style="display: block; margin: auto;" /></p></li>
 </ol>
 
 <div class="exercise">

@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-03-16" />
+<meta name="date" content="2022-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,11 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#elección-de-la-densidad-auxiliar"><i class="fa fa-check"></i><b>5.2.4</b> Elección de la densidad auxiliar</a></li>
-<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: Inferencia Bayesiana</a></li>
+<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#bayes-ar"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: inferencia bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación-rechazo</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
@@ -370,7 +370,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="método-de-la-tabla-guía" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> Método de la tabla guía</h2>
 <p>La idea consiste en construir <span class="math inline">\(m\)</span> subintervalos equiespaciados
-contenidos en <span class="math inline">\([0,1]\)</span> de la forma
+contenidos en <span class="math inline">\([0,1]\)</span> de la forma:
 <span class="math display">\[I_{j}=\left[ u_{j},u_{j+1}\right) =\left[ \frac{j-1}{m},\frac{j}{m}\right) 
 \text{ para }j=1,2,\ldots ,m\]</span>
 y utilizarlos como punto de partida para la búsqueda.
@@ -379,12 +379,17 @@ correspondientes a los extremos inferiores de los intervalos:
 <span class="math display">\[g_{j}=Q_{\mathcal{I}}(u_{j})=\inf \left\{ i:F_{i}\geq u_{j}=\frac{j-1}{m}\right\}\]</span></p>
 <p>El punto de partida para un valor <span class="math inline">\(U\)</span> será <span class="math inline">\(g_{j_{0}}\)</span> siendo:
 <span class="math display">\[j_{0}=\left\lfloor mU\right\rfloor +1\]</span></p>
-<p><img src="images/tablaguia2.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:tabla-movie"></span>
+<img src="images/tabla-movie.gif" alt="Ilustración de la simulación de una distribución discreta mediante tabla guía." width="80%" />
+<p class="caption">
+Figura 6.3: Ilustración de la simulación de una distribución discreta mediante tabla guía.
+</p>
+</div>
 <p>En este caso, puede verse que una cota del número medio de comparaciones es:
 <span class="math display">\[E\left( N\right) \leq 1+\frac{n}{m}\]</span></p>
 
 <div class="conjecture">
-<p><span id="cnj:unnamed-chunk-18" class="conjecture"><strong>Algoritmo 6.3  (de simulación mediante una tabla guía)  </strong></span><br></p>
+<p><span id="cnj:unnamed-chunk-16" class="conjecture"><strong>Algoritmo 6.3  (de simulación mediante una tabla guía)  </strong></span><br></p>
 <p>Inicialización:</p>
 <ol style="list-style-type: decimal">
 <li><p>Hacer <span class="math inline">\(F_{1}=p_{1}\)</span>.</p></li>
@@ -413,39 +418,40 @@ correspondientes a los extremos inferiores de los intervalos:
 <p>Diseñar una rutina que permita generar <span class="math inline">\(nsim\)</span> valores de una
 distribución discreta usando una tabla guía.
 Repetir el Ejercicio <a href="transcuant.html#exr:binom-cuant">6.1</a> anterior empleando esta rutina con <span class="math inline">\(m=n-1\)</span>.</p>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="método-de-la-tabla-guía.html#cb209-1" aria-hidden="true" tabindex="-1"></a>rfmp.tabla <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">prob =</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">length</span>(x), m, <span class="at">nsim =</span> <span class="dv">1000</span>) {</span>
-<span id="cb209-2"><a href="método-de-la-tabla-guía.html#cb209-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulación v.a. discreta a partir de función de masa de probabilidad</span></span>
-<span id="cb209-3"><a href="método-de-la-tabla-guía.html#cb209-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># por tabla guia de tamaño m</span></span>
-<span id="cb209-4"><a href="método-de-la-tabla-guía.html#cb209-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Inicializar tabla y FD</span></span>
-<span id="cb209-5"><a href="método-de-la-tabla-guía.html#cb209-5" aria-hidden="true" tabindex="-1"></a>  Fx <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(prob)</span>
-<span id="cb209-6"><a href="método-de-la-tabla-guía.html#cb209-6" aria-hidden="true" tabindex="-1"></a>  g <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>,m)</span>
-<span id="cb209-7"><a href="método-de-la-tabla-guía.html#cb209-7" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb209-8"><a href="método-de-la-tabla-guía.html#cb209-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>m) {</span>
-<span id="cb209-9"><a href="método-de-la-tabla-guía.html#cb209-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (Fx[i] <span class="sc">&lt;</span> (j<span class="dv">-1</span>)<span class="sc">/</span>m) i <span class="ot">&lt;-</span> i<span class="sc">+</span><span class="dv">1</span></span>
-<span id="cb209-10"><a href="método-de-la-tabla-guía.html#cb209-10" aria-hidden="true" tabindex="-1"></a>    g[j] <span class="ot">&lt;-</span> i</span>
-<span id="cb209-11"><a href="método-de-la-tabla-guía.html#cb209-11" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb209-12"><a href="método-de-la-tabla-guía.html#cb209-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generar valores</span></span>
-<span id="cb209-13"><a href="método-de-la-tabla-guía.html#cb209-13" aria-hidden="true" tabindex="-1"></a>  X <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nsim)</span>
-<span id="cb209-14"><a href="método-de-la-tabla-guía.html#cb209-14" aria-hidden="true" tabindex="-1"></a>  U <span class="ot">&lt;-</span> <span class="fu">runif</span>(nsim)</span>
-<span id="cb209-15"><a href="método-de-la-tabla-guía.html#cb209-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
-<span id="cb209-16"><a href="método-de-la-tabla-guía.html#cb209-16" aria-hidden="true" tabindex="-1"></a>    i <span class="ot">&lt;-</span> g[<span class="fu">floor</span>(U[j]<span class="sc">*</span>m)<span class="sc">+</span><span class="dv">1</span>]</span>
-<span id="cb209-17"><a href="método-de-la-tabla-guía.html#cb209-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (Fx[i] <span class="sc">&lt;</span> U[j]) i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb209-18"><a href="método-de-la-tabla-guía.html#cb209-18" aria-hidden="true" tabindex="-1"></a>    X[j] <span class="ot">&lt;-</span> x[i]</span>
-<span id="cb209-19"><a href="método-de-la-tabla-guía.html#cb209-19" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb209-20"><a href="método-de-la-tabla-guía.html#cb209-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(X)</span>
-<span id="cb209-21"><a href="método-de-la-tabla-guía.html#cb209-21" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb209-22"><a href="método-de-la-tabla-guía.html#cb209-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb209-23"><a href="método-de-la-tabla-guía.html#cb209-23" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>( rx <span class="ot">&lt;-</span> <span class="fu">rfmp.tabla</span>(x, fmp, n<span class="dv">-1</span>, nsim) )</span></code></pre></div>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="método-de-la-tabla-guía.html#cb215-1" aria-hidden="true" tabindex="-1"></a>rfmp.tabla <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">prob =</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">length</span>(x), m, <span class="at">nsim =</span> <span class="dv">1000</span>) {</span>
+<span id="cb215-2"><a href="método-de-la-tabla-guía.html#cb215-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulación v.a. discreta a partir de función de masa de probabilidad</span></span>
+<span id="cb215-3"><a href="método-de-la-tabla-guía.html#cb215-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># por tabla guia de tamaño m</span></span>
+<span id="cb215-4"><a href="método-de-la-tabla-guía.html#cb215-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Inicializar tabla y FD</span></span>
+<span id="cb215-5"><a href="método-de-la-tabla-guía.html#cb215-5" aria-hidden="true" tabindex="-1"></a>  Fx <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(prob)</span>
+<span id="cb215-6"><a href="método-de-la-tabla-guía.html#cb215-6" aria-hidden="true" tabindex="-1"></a>  g <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>,m)</span>
+<span id="cb215-7"><a href="método-de-la-tabla-guía.html#cb215-7" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb215-8"><a href="método-de-la-tabla-guía.html#cb215-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>m) {</span>
+<span id="cb215-9"><a href="método-de-la-tabla-guía.html#cb215-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (Fx[i] <span class="sc">&lt;</span> (j<span class="dv">-1</span>)<span class="sc">/</span>m) i <span class="ot">&lt;-</span> i<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb215-10"><a href="método-de-la-tabla-guía.html#cb215-10" aria-hidden="true" tabindex="-1"></a>    g[j] <span class="ot">&lt;-</span> i</span>
+<span id="cb215-11"><a href="método-de-la-tabla-guía.html#cb215-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb215-12"><a href="método-de-la-tabla-guía.html#cb215-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generar valores</span></span>
+<span id="cb215-13"><a href="método-de-la-tabla-guía.html#cb215-13" aria-hidden="true" tabindex="-1"></a>  X <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nsim)</span>
+<span id="cb215-14"><a href="método-de-la-tabla-guía.html#cb215-14" aria-hidden="true" tabindex="-1"></a>  U <span class="ot">&lt;-</span> <span class="fu">runif</span>(nsim)</span>
+<span id="cb215-15"><a href="método-de-la-tabla-guía.html#cb215-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
+<span id="cb215-16"><a href="método-de-la-tabla-guía.html#cb215-16" aria-hidden="true" tabindex="-1"></a>    i <span class="ot">&lt;-</span> g[<span class="fu">floor</span>(U[j]<span class="sc">*</span>m)<span class="sc">+</span><span class="dv">1</span>]</span>
+<span id="cb215-17"><a href="método-de-la-tabla-guía.html#cb215-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (Fx[i] <span class="sc">&lt;</span> U[j]) i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb215-18"><a href="método-de-la-tabla-guía.html#cb215-18" aria-hidden="true" tabindex="-1"></a>    X[j] <span class="ot">&lt;-</span> x[i]</span>
+<span id="cb215-19"><a href="método-de-la-tabla-guía.html#cb215-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb215-20"><a href="método-de-la-tabla-guía.html#cb215-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(X)</span>
+<span id="cb215-21"><a href="método-de-la-tabla-guía.html#cb215-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb215-22"><a href="método-de-la-tabla-guía.html#cb215-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb215-23"><a href="método-de-la-tabla-guía.html#cb215-23" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb215-24"><a href="método-de-la-tabla-guía.html#cb215-24" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>( rx <span class="ot">&lt;-</span> <span class="fu">rfmp.tabla</span>(x, fmp, n<span class="dv">-1</span>, nsim) )</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.05    0.00    0.05</code></pre>
+##    0.03    0.02    0.04</code></pre>
 <p>Análisis de los resultados:</p>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="método-de-la-tabla-guía.html#cb211-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">table</span>(rx)<span class="sc">/</span>nsim</span>
-<span id="cb211-2"><a href="método-de-la-tabla-guía.html#cb211-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">ylab =</span> <span class="st">&quot;frecuencia relativa&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;valores&quot;</span>)</span>
-<span id="cb211-3"><a href="método-de-la-tabla-guía.html#cb211-3" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(x, fmp, <span class="at">pch =</span> <span class="dv">4</span>)  <span class="co"># Comparación teórica</span></span></code></pre></div>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="método-de-la-tabla-guía.html#cb217-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">table</span>(rx)<span class="sc">/</span>nsim</span>
+<span id="cb217-2"><a href="método-de-la-tabla-guía.html#cb217-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">ylab =</span> <span class="st">&quot;frecuencia relativa&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;valores&quot;</span>)</span>
+<span id="cb217-3"><a href="método-de-la-tabla-guía.html#cb217-3" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(x, fmp, <span class="at">pch =</span> <span class="dv">4</span>)  <span class="co"># Comparación teórica</span></span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:comptabla"></span>
-<img src="06-Metodos_generales_discretas_files/figure-html/comptabla-1.png" alt="Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas." width="70%" />
+<img src="06-Metodos_generales_discretas_files/figure-html/comptabla-1.png" alt="Comparación de las frecuencias relativas de los valores generados, mediante el método de la tabla guía, con las probabilidades teóricas." width="70%" />
 <p class="caption">
-Figura 6.2: Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas.
+Figura 6.4: Comparación de las frecuencias relativas de los valores generados, mediante el método de la tabla guía, con las probabilidades teóricas.
 </p>
 </div>
 </div>

@@ -1,24 +1,41 @@
-# Simulación de variables continuas {#sim-con}
 
-<!-- 
-PENDIENTE:
-Emplear entorno algoritmo
-Usar ejemplos en lugar de ejercicios
-Ejemplo cociente de uniformes, incluir aplicación en la práctica
--->
+# Simulación de variables continuas {#sim-con}
 
 ```{r , child = '_global_options.Rmd'}
 ```
 
+<!-- 
+---
+title: "Simulación de variables continuas"
+author: "Simulación Estadística (UDC)"
+date: "Máster en Técnicas Estadísticas"
+output: 
+  bookdown::html_document2:
+    pandoc_args: ["--number-offset", "4,0"]
+    toc: yes 
+    # mathjax: local            # copia local de MathJax, hay que establecer:
+    # self_contained: false     # las dependencias se guardan en ficheros externos 
+  bookdown::pdf_document2:
+    keep_tex: yes
+    toc: yes 
+---
 
-En este capítulo se expondrán métodos generales para simular distribuciones continuas: el método de inversión y los basados en aceptación/rechazo. 
-En todos los casos como punto de partida es necesario
-disponer de un método de generación de números pseudoaleatorios uniformes en $(0,1)$.
+bookdown::preview_chapter("05-Metodos_generales_continuas.Rmd")
+knitr::purl("05-Metodos_generales_continuas.Rmd", documentation = 2)
+knitr::spin("05-Metodos_generales_continuas.R",knit = FALSE)
+
+PENDIENTE:
+Emplear entorno algoritmo
+Usar ejemplos en lugar de ejercicios
+-->
+
+En este capítulo se expondrán métodos generales para simular distribuciones continuas: el método de inversión y los basados en aceptación-rechazo. 
+En todos los casos como punto de partida es necesario disponer de un método de generación de números pseudoaleatorios uniformes en $(0,1)$.
 
 
 ## Método de inversión
 
-Se trataría del método preferible para la simulación de una variable continua (siempre que se disponga de la función cuantil). 
+En general sería el método preferible para la simulación de una variable continua (siempre que se disponga de la función cuantil). 
 Está basado en los siguientes resultados:
 
 Si $X$ es una variable aleatoria con función de distribución $F$ continua y estrictamente monótona (invertible), entonces:
@@ -44,7 +61,7 @@ A partir de este resultado se deduce el siguiente algoritmo genérico para simul
 ```
 <!-- \@ref(cnj:inversion) -->
 
-```{example, label="exp-inv", name="Simulación de una distribución exponencial"}
+```{example, label="exp-inv", name="simulación de una distribución exponencial"}
 ```
 
 La distribución exponencial $\exp \left( \lambda \right)$ de parámetro $\lambda>0$
@@ -54,6 +71,7 @@ $$F(x)=\left\{ \begin{array}{ll}
 1-e^{-\lambda x} & \text{si } x \ge 0 \\
 0 & \text{si } x < 0\\
 \end{array} \right.$$
+
 Teniendo en cuenta que:
 $$1-e^{-\lambda x}=u \Leftrightarrow x=-\frac{\ln \left( 1-u\right) }{ \lambda }$$
 el algoritmo para simular esta variable mediante el método de inversión es:
@@ -71,9 +89,9 @@ if (is_latex()) {
   nsim <- 3
   U <- runif(nsim)
   X <- -log(1-U)
-  curve(pexp(x), from = 0, to = 5, xlab = "X", ylab = "U", lwd = 2)
+  curve(pexp, from = 0, to = 5, xlab = "X", ylab = "U", lwd = 2)
   mtext(parse(text = paste0("u[",1:nsim,"]")), cex = 1.25,
-        side = 2, line = 2, at = U, col = 'red') 
+        side = 2, las = 1, line = 2, at = U, col = 'red') 
   mtext(parse(text = paste0("x[",1:nsim,"]")), cex = 1.25, 
         side = 1, line = 2, at = X, col = 'red')
   segments(-0.5, U, X, U, lty = 2, col = 'red')
@@ -112,23 +130,25 @@ fácilmente mediante el método de inversión. Se adjunta una forma
 simplificada del método que tiene por objeto evitar cálculos
 innecesarios (tal y como se hizo en el ejemplo de la exponencial).
 
-Nombre  | Densidad  | $F(x)$  | $F^{-1}\left( U\right)$  | Forma simplificada
-------------- | ------------- | ------------- | ------------- | -------------
-$\exp\left( \lambda\right)$ ($\lambda>0$)  | $\lambda e^{-\lambda x}$, si $x\geq0$  | $1-e^{-\lambda x}$  | $-\dfrac{\ln\left( 1-U\right)  }\lambda$  | $-\dfrac{\ln U}\lambda$
-Cauchy  | $\dfrac1{\pi\left( 1+x^{2}\right)  }$  | $\dfrac12+\dfrac{\arctan x}\pi$   | $\tan\left( \pi\left( U-\dfrac12\right) \right)$  | $\tan\pi U$
-Triangular en $\left( 0,a\right)$  | $\dfrac2a\left( 1-\dfrac xa\right)$, si $0\leq x\leq a$  | $\dfrac2a\left(x-\dfrac{x^{2}}{2a}\right)$  | $a\left( 1-\sqrt{1-U}\right)$  | $a\left( 1-\sqrt{U}\right)$
-Pareto ($a,b>0$)  | $\dfrac{ab^{a}}{x^{a+1}}$, si $x\geq b$  | $1-\left( \dfrac bx\right)^{a}$   | $\dfrac b{\left( 1-U\right)  ^{1/a}}$  | $\dfrac b{U^{1/a}}$
-Weibull ($\lambda,\alpha>0$) | $\alpha\lambda^{\alpha}x^{\alpha-1}e^{-\left( \lambda x\right)  ^{\alpha}}$, si $x\geq0$  | $1-e^{-\left( \lambda x\right)  ^{\alpha}}$  | $\dfrac{\left( -\ln\left(1-U\right)  \right)  ^{1/\alpha}}\lambda$   | $\dfrac{\left( -\ln U\right)^{1/\alpha}}\lambda$\
+| Nombre  | Densidad  | $F(x)$  | $F^{-1}\left( U\right)$  | Forma simplificada |
+| ------------- | :-----------: | :-----------: | :-----------: | :-----------: |
+| $\exp\left( \lambda\right)$ ($\lambda>0$)  | $\lambda e^{-\lambda x}$, si $x\geq0$ | $1-e^{-\lambda x}$  | $-\dfrac{\ln\left( 1-U\right)  }\lambda$  | $-\dfrac{\ln U}\lambda$ |
+| Cauchy  | $\dfrac1{\pi\left( 1+x^{2}\right)}$  | $\dfrac12+\dfrac{\arctan x}\pi$ | $\tan\left( \pi\left( U-\dfrac12\right) \right)$ | $\tan\pi U$ |
+| Triangular en $\left( 0,a\right)$ | $\dfrac2a\left( 1-\dfrac xa\right)$, si $0\leq x\leq a$  | $\dfrac2a\left(x-\dfrac{x^{2}}{2a}\right)$  | $a\left( 1-\sqrt{1-U}\right)$  | $a\left( 1-\sqrt{U}\right)$ |
+| Pareto ($a,b>0$) | $\dfrac{ab^{a}}{x^{a+1}}$, si $x\geq b$ | $1-\left( \dfrac bx\right)^{a}$ | $\dfrac b{\left( 1-U\right)^{1/a}}$ | $\dfrac b{U^{1/a}}$ |
+| Weibull ($\lambda,\alpha>0$) | $\alpha\lambda^{\alpha}x^{\alpha-1}e^{-\left( \lambda x\right)  ^{\alpha}}$, si $x\geq0$ | $1-e^{-\left( \lambda x\right)^{\alpha}}$ | $\dfrac{\left( -\ln\left(1-U\right)  \right)^{1/\alpha}}\lambda$ | $\dfrac{\left( -\ln U\right)^{1/\alpha}}\lambda$ | 
 
 
-```{exercise, label="ddexp", name="Distribución doble exponencial"}
+```{exercise, label="ddexp", name="distribución doble exponencial"}
 ```
 
 La distribución doble exponencial (o distribución de Laplace) de
 parámetro $\lambda$ tiene función de densidad:
 $$f(x)  =\frac{\lambda}{2}e^{-\lambda\left\vert x\right\vert
 }\text{, }x\in\mathbb{R}$$ 
+
 y función de distribución:
+
 $$F(x)  =\int_{-\infty}^{x}f\left( t\right)  dt=\left\{
 \begin{array}{ll}
 \frac{1}{2}e^{\lambda x} & \text{si } x<0\\
@@ -137,7 +157,7 @@ $$F(x)  =\int_{-\infty}^{x}f\left( t\right)  dt=\left\{
 \ \right.$$
 
 a)  Escribir una función que permita generar, por el método de
-    inversión, una muestra de $n$ observaciones de esta distribución^[Esta distribución puede generarse fácilmente simulando una distribución exponencial y otorgarle un signo positivo o negativo con equiprobabilidad (ver Ejemplo \@ref(exm:dexp-mix)).].
+    inversión, una muestra de $n$ observaciones de esta distribución.
 
     ```{r }
     ddexp <- function(x, lambda = 1){
@@ -177,12 +197,18 @@ b)  Generar $10^{4}$ valores de la distribución doble exponencial de
 
 c)  Representar el histograma y compararlo con la densidad teórica.
 
-    ```{r dexp-inv, fig.cap="Distribución de los valores generados de una doble exponencial mediante el método de inversión."}
+    ```{r ddexp-inv, fig.cap="Distribución de los valores generados de una doble exponencial mediante el método de inversión."}
     hist(x, breaks = "FD", freq = FALSE, main="")
     # lines(density(x), col = 'blue')
     curve(ddexp(x, 2), add = TRUE)
+    
     ```
+    
     Como se trata de un método exacto de simulación, si está bien implementado, la distribución de los valores generados debería comportarse como una muestra genuina de la distribución objetivo.
+    
+```{remark}
+Esta distribución también se puede generar fácilmente simulando una distribución exponencial y asignando un signo positivo o negativo con equiprobabilidad (ver Ejemplo \@ref(exm:dexp-mix)).
+```
     
 
 ### Ventajas e inconvenientes
@@ -282,7 +308,7 @@ b <- xx[round(0.6*nx)]
 axis(1, c(a, b), c("a", "b"))
 mode <- (s1 - 1)/(s1 + s2 - 2)
 m <- dbeta(mode, s1, s2)
-axis(2, c(0, m), expression(0, M == c*g(x)), las = 2)
+axis(2, c(0, m), expression(0, M == c~g(x)), las = 2)
 abline(h = m, lty = 3)
 lines(c(0, 1), c(m, m))
 abline(h = 0, lty = 3)
@@ -320,7 +346,7 @@ El resultado general sería en siguiente:
 * Recíprocamente si $\left( X,Y\right) \sim \mathcal{U}\left(A_{cf}\right)$ entonces^[Emplearemos también $X\sim f$ para indicar que $X$ es una variable aleatoria con función de densidad $f$.] $X\sim f$.
 
 Para generar valores de una variable aleatoria bidimensional con distribución uniforme
-en $A_{f}$ (o en $A_{f^{\ast }}$), se emplea el resultado anterior para 
+en $A_{f}$ (o en $A_{f^{\ast}}$), se emplea el resultado anterior para 
 generar valores en $A_{cg} \supset A_{f}$, siendo $g$ una densidad auxiliar
 (preferiblemente fácil de simular y similar a $f$).
 Teniendo en cuenta además que:
@@ -329,7 +355,7 @@ Teniendo en cuenta además que:
   $B \subset A\Rightarrow \left. \left( X,Y\right) \right\vert _{B}
   \sim \mathcal{U}\left(B\right)$
   
-Por tanto, si $\left( T, Y \right)$ sigue una distribución uniforme en $A_{cg}$, aceptando los valores de $\left( T, Y\right)$ que pertenezcan a $A_{f}$ (o a $A_{f^{\ast }}$) se obtendrán generaciones con distribución uniforme sobre $A_{f}$ (o $A_{f^{\ast }}$) y la densidad de la primera componente $T$ será $f$.
+Por tanto, si $\left( T, Y \right)$ sigue una distribución uniforme en $A_{cg}$, aceptando los valores de $\left( T, Y\right)$ que pertenezcan a $A_{f}$ (o a $A_{f^{\ast}}$) se obtendrán generaciones con distribución uniforme sobre $A_{f}$ (o $A_{f^{\ast}}$) y la densidad de la primera componente $T$ será $f$.
 
 ### Algoritmo
 
@@ -387,7 +413,7 @@ Pendiente: cambiar beta por triangular en [0, 2]
 Emplear código dtri?
 -->
 
-```{example, label="dbeta-dunif-ar", name = "Simulación de distribución beta a partir de la uniforme"}
+```{example, label="dbeta-dunif-ar", name = "simulación de distribución beta a partir de la uniforme"}
 ```
 
 Para simular una variable con función de densidad $\mathcal{Beta}(\alpha, \beta)$:
@@ -396,7 +422,7 @@ x^{\alpha -1}(1-x)^{\beta -1}\text{ si }0 \leq x \leq 1,$$
 (siguiendo la notación de la función `dbeta(x, shape1, shape2)` de `R`), podemos considerar como distribución auxiliar una $\mathcal{U}(0,1)$,
 con $g(x) = 1$ si $0 \leq x \leq 1$.
 
-Esta distribución está acotada y es unimodal, si $\alpha$ y $\beta$ son mayores que 1, y su moda es $\frac{\alpha - 1} {\alpha + \beta - 2}$, por lo que: 
+Esta distribución está acotada y es unimodal, si $\alpha$ y $\beta$ son mayores^[Si $\alpha$ o $\beta$ son iguales a 1 puede simularse fácilmente por el método de inversión y si alguno es menor que 1 esta densidad no está acotada.] que 1, y su moda es $\frac{\alpha - 1} {\alpha + \beta - 2}$, por lo que: 
 $$c = M = \max_{0 \leq x \leq 1}f(x) = f\left( \frac{\alpha - 1} {\alpha + \beta - 2} \right).$$
 
 Por ejemplo, considerando $\alpha = 2$ y $\beta = 4$, si comparamos la densidad objetivo con la auxiliar reescalada (Figura \@ref(fig:dbeta-dunif-plot)), confirmamos que esta última está por encima (y llegan a tocarse, por lo que se está empleando la cota óptima; ver siguiente sección).
@@ -486,8 +512,21 @@ Es obvio, por tanto, que cuanto más cercano a 1 sea el valor de $c$ más eficie
 Una vez fijada la densidad $g$, el valor óptimo será:
 $$c_{\text{opt}}=\max_{\{x : g(x) > 0\}} \frac{f(x)}{g(x)}.$$
 
+<br>
 
-```{example, label="dnorm-ddexp-ar", name = "Simulación de la normal a partir de la doble exponencial"}
+```{remark}
+Hay que tener en cuenta que la cota óptima es el número medio de iteraciones $c$ solo si conocemos las constantes normalizadoras. 
+Si solo se conoce la cuasidensidad $f^{\ast}$ de la distribución objetivo (o de la auxiliar), la correspondiente cota óptima:
+$$\tilde{c} = \max_{\{x : g(x) > 0\}} \frac{f^{\ast}(x)}{g(x)}$$ 
+asumirá la constante desconocida, aunque siempre podemos aproximar por simulación el verdadero valor de $c$ y a partir de él la constante normalizadora (ver Ejercicio \@ref(exr:post-pri-ar)).
+Basta con tener en cuenta que, si $f(x) = f^{\ast}(x)/k$:
+$$\frac{1}{c} = \frac{\text{area}\left(A_{f^{\ast}}\right)}{\text{area}\left( A_{\tilde{c}g}\right)} = \frac{k}{\tilde{c}},$$
+y por tanto $k= \tilde{c}/c$.
+```
+
+<br>
+
+```{example, label="dnorm-ddexp-ar", name = "simulación de la normal a partir de la doble exponencial"}
 ```
 
 Se trata de simular la distribución normal estándar, con función de densidad:
@@ -520,7 +559,7 @@ Si comparamos la densidad objetivo con la auxiliar reescalada con los parámetro
 c.opt <- sqrt(2*exp(1)/pi)
 lambda.opt <- 1
 curve(c.opt * ddexp(x), xlim = c(-4, 4), lty = 2)
-curve(dnorm(x), add = TRUE)
+curve(dnorm, add = TRUE)
 ```
 
 Alternativamente, en lugar de obtener la cota óptima de modo analítico, podríamos aproximarla numéricamente:
@@ -609,7 +648,7 @@ y, finalmente, elegir el mejor valor $\theta_{0}$ del parámetro, en el sentido 
 $$c_{\theta_{0}}=\min_{\theta\in\Theta}\max_{x}\frac{f(x) }{g_{\theta}(x)}.$$
 
 
-```{example, label="dnorm-ddexp-arb", name = "Simulación de la normal mediante la doble exponencial, continuación"}
+```{example, label="dnorm-ddexp-arb", name = "simulación de la normal mediante la doble exponencial, continuación"}
 ```
 
 Continuando con el Ejemplo \@ref(exm:dnorm-ddexp-ar) anterior sobre la simulación de una normal estándar mediante el método de aceptación-rechazo, en lugar de fijar la densidad auxiliar a una doble exponencial con $\lambda=1$, consideraremos el caso general de $\lambda>0$:
@@ -665,44 +704,44 @@ c.opt2
 ```
 
 
-### Ejemplo: Inferencia Bayesiana
+### Ejemplo: inferencia bayesiana {#bayes-ar}
 
-El algoritmo de Aceptación-Rechazo se emplea habitualmente en
-Inferencia Bayesiana:
+El algoritmo de aceptación-rechazo se emplea habitualmente en inferencia bayesiana.
+Denotando por:
 
-* $f(x|\theta )$ densidad muestral.
+* $f(x|\theta)$ la densidad muestral.
 
-* $\pi (\theta )$ densidad a priori.
+* $\pi(\theta)$ la densidad a priori.
 
-* $\mathbf{x}=(x_{1},...,x_n)^{\prime }$ muestra observada.
+* $\mathbf{x}=(x_1,...,x_n)^{\top}$ la muestra observada.
 
-* La distribución a posteriori de $\theta$ es:
-  $$\pi (\theta |\mathbf{x})=\frac{L(\mathbf{x}|\theta )\pi (\theta )}
-  {\int L(\mathbf{x}|\theta )\pi (\theta )d\theta }$$
-  siendo $L(\mathbf{x}|\theta )$ la función de verosimilitud
-  ($L(\mathbf{x}|\theta )=\prod\limits_{i=1}^{n}f(x_{i}|\theta)$
-  suponiendo i.i.d.). Es decir:
-  $$\pi (\theta |\mathbf{x})\propto L(\mathbf{x}|\theta )\pi (\theta ).$$
+El objetivo sería simular la distribución a posteriori de $\theta$:
+$$\pi(\theta|\mathbf{x}) = \frac{L(\mathbf{x}|\theta)\pi(\theta)}{\int L(\mathbf{x}|\theta)\pi(\theta)d\theta},$$
+siendo $L(\mathbf{x}|\theta)$ la función de verosimilitud ($L(\mathbf{x}|\theta) = \prod\limits_{i=1}^{n}f(x_i|\theta)$ suponiendo i.i.d.). 
+Es decir:
+$$\pi(\theta | \mathbf{x})\propto L(\mathbf{x}| \theta)\pi(\theta).$$
 
+Como esta distribución cambia al variar la muestra observada, puede resultar difícil encontrar una densidad auxiliar adecuada para simular valores de la densidad a posteriori $\pi(\theta|\mathbf{x})$.
+Por ejemplo, podríamos pensar en emplear la densidad a priori $\pi(\theta)$ como densidad auxiliar.
+Teniendo en cuenta que: 
 
-Para simular valores de la densidad a posteriori $\pi (\theta | \mathbf{x})$ 
-a partir de la densidad a priori $\pi (\theta )$
+* $\pi(\theta |\mathbf{x})/\pi(\theta)\propto L(\mathbf{x}|\theta)$
 
-* $\pi (\theta |\mathbf{x})/\pi (\theta )\propto L(\mathbf{x}|\theta )$
-
-* $L(\mathbf{x}|\theta )\leq c^{\prime }=L(\mathbf{x}|\hat{\theta})$ siendo
+* $L(\mathbf{x}|\theta)\leq \tilde{c}=L(\mathbf{x}|\hat{\theta})$ siendo
   $\hat{\theta}$ el estimador MV de $\theta$.
 
-Algoritmo:
+El algoritmo sería el siguiente:
 
 1. Generar $U \sim \mathcal{U}(0, 1)$.
 
-2. Generar $\tilde{\theta}\sim \pi (\theta )$.
+2. Generar $\tilde{\theta}\sim \pi(\theta)$.
 
 3.  Si $L(\mathbf{x}|\hat{\theta})\cdot U \leq 
     L(\mathbf{x}|\tilde{\theta})$ devolver $\tilde{\theta}$,
 
     en caso contrario volver al paso 1.
+    
+Aunque, como se muestra en el siguiente ejercicio, esta elección de densidad auxiliar puede ser muy poco adecuada, siendo preferible en la práctica emplear un método adaptativo que construya la densidad auxiliar de forma automática (Sección \@ref(ars)).  
 
 ```{exercise, label="post-pri-ar", name="Simulación de la distribución a posteriori a partir de la distribución a priori"}
 ```
@@ -712,21 +751,22 @@ como distribución a priori una Cauchy.
 
 a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     $n=10$ con $\theta_{0}=1$. Utilizar una $Cauchy(0,1)$
-    (`rcauchy`) como distribución a priori y como densidad auxiliar
+    (`rcauchy()`) como distribución a priori y como densidad auxiliar
     para simular por aceptación-rechazo una muestra de la densidad a
-    posteriori (emplear `dnorm` para construir la verosimilitud).
+    posteriori (emplear `dnorm()` para construir la verosimilitud).
     Obtener el intervalo de probabilidad/credibilidad al 95%.
 
 
     ```{r }
     mu0 <- 1
     n <- 10
-    nsim <- 10^3
+    nsim <- 10^4
     set.seed(54321)
     x <- rnorm(n, mean = mu0)
     
     # Función de verosimilitud
-    lik <- function(mu){prod(dnorm(x, mean = mu))}
+    # lik1 <- function(mu) prod(dnorm(x, mean = mu)) # escalar
+    lik <- Vectorize(function(mu) prod(dnorm(x, mean = mu))) # vectorial
     
     # Cota óptima
     # Estimación por máxima verosimilitud
@@ -734,26 +774,38 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     emv
     c <- emv$objective
     ```
+
     En este caso concreto, ya sabríamos que el estimador máximo verosímil es la media muestral:
+
     ```{r}
     mean(x)
     ```
+    
     y por tanto:
-    ```{r}
+    
+    ```{r post-pri-plot, fig.cap="Comparación de la cuasidensidad a posteriori (línea contínua) con la densidad a priori reescalada (línea discontinua)."}
     c <- lik(mean(x))
-    c    
+    c   
+
+    # f.cuasi <- function(mu) sapply(mu, lik1)*dcauchy(mu)
+    f.cuasi <- function(mu) lik(mu)*dcauchy(mu)    
+    curve(c * dcauchy(x), xlim = c(-4, 4), ylim = c(0, c/pi), lty = 2,
+          xlab = "mu", ylab = "cuasidensidad")
+    curve(f.cuasi, add = TRUE)
     ```
-    Finalmente podríamos emplear el siguiente código para generar simulaciones de la distribución a posteriori mediante aceptación-rechazo a partir de la distribución de Cauchy:
+    
+    Por ejemplo, podríamos emplear el siguiente código para generar simulaciones de la distribución a posteriori mediante aceptación-rechazo a partir de la distribución de Cauchy:
+    
     ```{r}    
     ngen <- nsim
-    Y <- rcauchy(nsim)
-    ind <- (c*runif(nsim) > sapply(Y, lik)) # TRUE si no verifica condición
+    mu <- rcauchy(nsim)
+    ind <- c*runif(nsim) > lik(mu) # TRUE si no verifica condición
     # Volver a generar si no verifica condición
     while (sum(ind)>0){
       le <- sum(ind)
       ngen <- ngen + le
-      Y[ind] <- rcauchy(le)
-      ind[ind] <- (c*runif(le) > sapply(Y[ind], lik)) # TRUE si no verifica condición
+      mu[ind] <- rcauchy(le)
+      ind[ind] <- c*runif(le) > lik(mu[ind]) # TRUE si no verifica condición
     }
     
     { # Número generaciones
@@ -762,22 +814,37 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
       cat("\nProporción de rechazos = ", 1-nsim/ngen,"\n")
     }
     
-    # Intervalo de probabilidad al 95% (intervalo de credibilidad bayesiano)
-    q <- quantile(Y, c(0.025, 0.975))
+    ```
+    
+    A partir de la aproximación del número medio de generaciones podemos aproximar la constante normalizadora:
+
+    ```{r}
+    cte <- c*nsim/ngen
+    # integrate(f.cuasi, -Inf, Inf)
+    f.aprox <- function(mu) f.cuasi(mu)/cte
+    ```
+
+    Finalmente, a partir de los valores generados podemos aproximar el intervalo de probabilidad al 95% (intervalo de credibilidad bayesiano):
+
+    ```{r ic-bayes, fig.cap="Distribución de los valores generados y aproximación del intervalo de credibilidad."}
+    q <- quantile(mu, c(0.025, 0.975))
+    q
     
     # Representar estimador e IC Bayes
-    hist(Y, freq=FALSE, main="Distribución a posteriori")
+    hist(mu, freq=FALSE, breaks = "FD", main="")
     # abline(v = mean(x), lty = 3) # Estimación frecuentista
-    abline(v = mean(Y), lty = 2, lwd = 2)  # Estimación Bayesiana
+    abline(v = mean(mu), lty = 2, lwd = 2)  # Estimación Bayesiana
     abline(v = q, lty = 2)
+    curve(f.aprox, col = "blue", add = TRUE)
     ```
+
 
 b)  Repetir el apartado anterior con $n=100$.
 
 
-## Modificaciones del método de aceptación rechazo
+## Modificaciones del método de aceptación-rechazo
 
-En el tiempo de computación influye:
+En el tiempo de computación del algoritmo de aceptación-rechazo influye:
 
 * La proporción de aceptación (debería ser grande).
 
@@ -786,11 +853,11 @@ En el tiempo de computación influye:
 * El tiempo necesario para hacer la comparación en el paso 4.
 
 En ciertos casos el tiempo de computación necesario para evaluar $f(x)$ puede ser alto.
+Para evitar evaluaciones de la densidad se puede emplear una función "squeeze" que aproxime la densidad por abajo (una envolvente inferior):
+$$s(x)\leq f(x) \text{, }\forall x\in \mathbb{R}.$$
 
-Para evitar evaluaciones de la densidad se puede emplear una función "squeeze" (Marsaglia, 1977) que aproxime la densidad por abajo:
-$$s(x)\leq f(x).$$
-
-Algoritmo:
+```{conjecture, label="marsaglia", name="Marsaglia, 1977"}
+<br>
 
 1.  Generar $U \sim \mathcal{U}(0, 1)$ y $T\sim g$.
 
@@ -803,9 +870,9 @@ Algoritmo:
     
     2.b.  en caso contrario volver al paso 1.
 
+```
 
-
-```{r echo=FALSE, fig.align = 'center'}
+```{r squeeze, echo=FALSE, out.width="80%", fig.cap = 'Ilustración del algoritmo de aceptación-rechazo con envolvente inferior (función "squeeze").'}
 #+ echo=FALSE, fig.align = 'center'
 # ![](squeeze.png)
 knitr::include_graphics(paste0(fig.path,"squeeze.png"))
@@ -820,7 +887,7 @@ funciones $g$ y $s$ de forma automática
 Estos métodos se basan principalmente en que una transformación de
 la densidad objetivo es cóncava o convexa.
 
-### Muestreo por rechazo adaptativo (ARS)
+### Muestreo por rechazo adaptativo (ARS) {#ars}
 
 Supongamos que $f$ es una cuasi-densidad log-cóncava 
 (i.e. $\frac{\partial ^{2}}{\partial x^{2}}\log f(x) <0,
@@ -853,11 +920,10 @@ Las envolventes de $f(x)$ en $I_{i}$ serán:
 
 Tenemos entonces que:
 $$s_n(x)\leq f(x) \leq G_n(x)=c\cdot g_n(x)$$
-donde $g_n(x)$ es una mixtura discreta de distribuciones tipo exponencial truncadas
-(las tasas pueden ser negativas), 
-que se puede simular fácilmente mediante el método de inversión.
+donde $g_n(x)$ es una mixtura discreta de distribuciones tipo exponencial truncadas (las tasas pueden ser negativas), que se puede simular fácilmente combinando el método de composición (Sección \@ref(composicion)) con el método de inversión.
 
-Algoritmo (Gilks, 1992):
+```{conjecture, label="gilks", name="Gilks, 1992"}
+<br>
 
 1.  Inicializar $n$ y $s_n$.
 
@@ -877,31 +943,82 @@ Algoritmo (Gilks, 1992):
 
 4.  Volver al paso 2.
 
+```
 
-Gilks y Wild (1992) propusieron una ligera modificación empleando tangentes para construir la cota superior, de esta forma se obtiene un método más eficiente pero requiere especificar la derivada de la densidad objetivo.
+Gilks y Wild (1992) propusieron una ligera modificación empleando tangentes para construir la cota superior, de esta forma se obtiene un método más eficiente pero requiere especificar la derivada de la densidad objetivo `r citefig("squeeze")`.
 
-La mayoría de las densidades de la familia de distribuciones exponencial son log-cóncavas.
+La mayoría de las densidades de la familia exponencial de distribuciones son log-cóncavas.
 Hörmann (1995) extendió esta aproximación al caso de densidades $T_{c}$-cóncavas:
-$$T_{c}(x) = signo(c)x^{c} \\
-T_{0}(x) = \log (x).$$
+$$T_{c}(x) = signo(c)x^{c} \\ T_{0}(x) = \log (x).$$
 Aparte de la transformación logarítmica, la transformación $T_{-1/2}(x)=-1/\sqrt{x}$ es habitualmente la más empleada.
 
 ### Método del cociente de uniformes
 
-Se puede ver como una modificación del método de aceptación rechazo,
-de especial interés cuando el soporte no es acotado.
+Se puede ver como una modificación del método de aceptación-rechazo, de especial interés cuando el soporte no es acotado.
 
 Si $(U,V)$ se distribuye uniformemente sobre:
-$$C_{h} = \left\{ \left( u,v\right) \in \mathbb{R}^{2} : 
-0<u\leq \sqrt{h(v/u)} \right\},$$
-siendo $h$ una función no negativa integrable
-(cuasi-densidad), entonces $X=V/U$ tiene función de densidad
-proporcional a $h$ (Kinderman y Monahan, 1977). 
-Además $C_{h}$ tiene área finita.
+$$C_{f^{\ast}} = \left\{ (u, v) \in \mathbb{R}^{2} : 
+0<u\leq \sqrt{f^{\ast}(v/u)} \right\},$$
+siendo $f^{\ast}$ una función no negativa integrable (cuasi-densidad), entonces $X=V/U$ tiene función de densidad proporcional a $f^{\ast}$ (Kinderman y Monahan, 1977). 
+Además $C_{f^{\ast}}$ tiene área finita, por lo que pueden generarse fácilmente los valores $(U,V)$ con distribución $\mathcal{U}\left(C_{f^{\ast}}\right)$ a partir de componentes uniformes unidimensionales (aceptando los puntos dentro de $C_{f^{\ast}}$).
 
-De modo análogo al método de aceptación-rechazo, hay modificaciones
-para acelerar los cálculos y automatizar el proceso, construyendo
-regiones mediante polígonos:$$C_{i}\subset C_{h}\subset C_{s}.$$
+De modo análogo al método de aceptación-rechazo, hay modificaciones para acelerar los cálculos y automatizar el proceso, construyendo regiones mediante polígonos:
+$$C_{i}\subset C_{f^{\ast}}\subset C_{s}.$$
+También se puede extender al caso multivariante y considerar transformaciones adicionales. 
+Ver por ejemplo el paquete `r citepkg("rust", "https://paulnorthrop.github.io/rust/index.html")`.
+
+
+```{example, label="cauchy-rou", name="simulación de la distribución de Cauchy mediante cociente de uniformes"}
+```
+
+Si consideramos la distribución de Cauchy:
+$$f(x) = \frac{1}{\pi (1 + x^2)} \text{, } x\in \mathbb{R},$$
+eliminando la constante por comodidad $f(x) \propto 1/(1 + x^2)$, se tiene que:
+$$\begin{aligned}
+C_{f^{\ast}} & = \left\{ (u, v) \in \mathbb{R}^{2} : 0 <u \leq \frac{1}{\sqrt{1 + (v/u)^2}}  \right\} \\
+& = \left\{ (u, v) \in \mathbb{R}^{2} : u > 0, u^2 \leq \frac{u^2}{u^2 + v^2}  \right\} \\
+& = \left\{ (u, v) \in \mathbb{R}^{2} : u > 0, u^2 + v^2 \leq 1  \right\}, 
+\end{aligned}$$
+dando como resultando que $C_{f^{\ast}}$ es el semicírculo de radio uno, y podemos generar valores con distribución uniforme en esta región a partir de $\mathcal{U}\left([0,1]\times[-1,1] \right)$.
+
+
+Por tanto, podemos emplear el siguiente código para generar valores de la densidad objetivo:
+
+```{r rcauchy-rou, fig.cap="Distribución de los valores generados mediante el método de cociente de uniformes."}
+rcauchy.rou <- function(nsim) {
+# Cauchy mediante cociente de uniformes  
+  ngen <- nsim
+  u <- runif(nsim, 0, 1)
+  v <- runif(nsim, -1, 1)
+  x <- v/u
+  ind <- u^2 + v^2 > 1 # TRUE si no verifica condición
+  # Volver a generar si no verifica condición
+  while (le <- sum(ind)){ # mientras le = sum(ind) > 0
+    ngen <- ngen + le
+    u <- runif(le, 0, 1)
+    v <- runif(le, -1, 1)
+    x[ind] <- v/u
+    ind[ind] <- u^2 + v^2 > 1 # TRUE si no verifica condición
+  }
+  attr(x, "ngen") <- ngen
+  return(x)
+}  
+
+set.seed(1)
+nsim <- 10^4
+rx <- rcauchy.rou(nsim)
+
+hist(rx, breaks = "FD", freq = FALSE, main = "", xlim = c(-6, 6))
+curve(dcauchy, add = TRUE)
+
+# Número generaciones
+ngen <- attr(rx, "ngen")
+{cat("Número de generaciones = ", ngen)
+cat("\nNúmero medio de generaciones = ", ngen/nsim)
+cat("\nProporción de rechazos = ", 1-nsim/ngen,"\n")}
+```
+
+
 
 ## Método de composición (o de simulación condicional) {#composicion}
 
@@ -912,14 +1029,18 @@ con $\sum_{j=1}^{k}p_j=1$, $p_j\geq 0$ y $f_j$ densidades
 (sería también válido para funciones de distribución o variables aleatorias,
 incluyendo el caso discreto).
 
-Algoritmo:
+```{conjecture, label="mixtura-discreta", name="simulación de una mixtura discreta"}
+<br>
 
 1. Generar $J$ con distribución $P\left( J=j \right) = p_j$.
 
 2. Generar $X\sim f_J$.
 
-```{example, label="dexp-mix", name="Distribución doble exponencial"}
 ```
+
+```{example, label="dexp-mix", name="distribución doble exponencial"}
+```
+
 A partir de la densidad de la distribución doble exponencial:
 $$f(x) =\frac{\lambda }{2}e^{-\lambda \left\vert x\right\vert }%
 \text{, }\forall x\in \mathbb{R},$$
@@ -932,7 +1053,7 @@ $$f_{1}(x) = \left\{
 \lambda e^{-\lambda x} & \text{si } x\geq 0 \\ 
 0 & \text{si } x<0
 \end{array}
-\ \right. \\
+\right., \  
 f_{2}(x) = \left\{ 
 \begin{array}{ll}
 \lambda e^{\lambda x} & \text{si } x<0 \\ 
@@ -965,12 +1086,14 @@ Simular a partir de una estimación de este tipo es lo que se conoce como *boots
 En el caso de una mixtura continua tendríamos:
 $$f(x)=\int g(x|y)h(y)dy$$
 
-Algoritmo:
+```{conjecture, label="mixtura-continua", name="simulación de una mixtura continua"}
+<br>
 
 1. Generar $Y\sim h$.
 
 2. Generar $X\sim g(\cdot |Y)$.
 
+```
 Este algoritmo es muy empleado en Inferencia Bayesiana y en la simulación de algunas variables discretas (como la Binomial Negativa, denominada también distribución Gamma-Poisson, o la distribución Beta-Binomial; ver Sección \@ref(notables-disc)),
 ya que el resultado sería válido cambiando las funciones de densidad $f$ y $g$ por funciones de masa de probabilidad.
 

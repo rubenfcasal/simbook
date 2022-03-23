@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-03-16" />
+<meta name="date" content="2022-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,11 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#elección-de-la-densidad-auxiliar"><i class="fa fa-check"></i><b>5.2.4</b> Elección de la densidad auxiliar</a></li>
-<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: Inferencia Bayesiana</a></li>
+<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#bayes-ar"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: inferencia bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación-rechazo</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
@@ -373,10 +373,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="math display">\[I = \int_a^b h(x)  dx.\]</span>.</p>
 <p>Consideraremos como ejemplo:
 <span class="math display">\[\int_0^1 4x^4 dx = \frac{4}{5}\]</span>.</p>
-<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="integración-numérica-unidimensional.html#cb597-1" aria-hidden="true" tabindex="-1"></a>fun <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">return</span>(<span class="dv">4</span> <span class="sc">*</span> x<span class="sc">^</span><span class="dv">4</span>)</span>
-<span id="cb597-2"><a href="integración-numérica-unidimensional.html#cb597-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb597-3"><a href="integración-numérica-unidimensional.html#cb597-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb597-4"><a href="integración-numérica-unidimensional.html#cb597-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="integración-numérica-unidimensional.html#cb603-1" aria-hidden="true" tabindex="-1"></a>fun <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">return</span>(<span class="dv">4</span> <span class="sc">*</span> x<span class="sc">^</span><span class="dv">4</span>)</span>
+<span id="cb603-2"><a href="integración-numérica-unidimensional.html#cb603-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb603-3"><a href="integración-numérica-unidimensional.html#cb603-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb603-4"><a href="integración-numérica-unidimensional.html#cb603-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="23-Integracion_numerica_files/figure-html/unnamed-chunk-2-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div id="método-del-trapezoide" class="section level3" number="13.1.1">
 <h3><span class="header-section-number">C.1.1</span> Método del trapezoide</h3>
@@ -385,26 +385,26 @@ Si se consideran <span class="math inline">\(n\)</span> subintervalos en <span c
 (i.e. <span class="math inline">\(n + 1\)</span> puntos regularmente espaciados cubriendo el dominio), y
 se aproxima linealmente la función en cada subintervalo, se obtiene que:
 <span class="math display">\[\int_a^b f(x)\, dx \approx \frac{h}{2} [f(a)+2f(a+h)+2f(a+2h)+...+f(b)]\]</span></p>
-<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="integración-numérica-unidimensional.html#cb598-1" aria-hidden="true" tabindex="-1"></a>trapezoid.vec <span class="ot">&lt;-</span> <span class="cf">function</span>(f.vec, <span class="at">h =</span> <span class="fl">0.01</span>) {</span>
-<span id="cb598-2"><a href="integración-numérica-unidimensional.html#cb598-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Integración numérica unidimensional entre a y b</span></span>
-<span id="cb598-3"><a href="integración-numérica-unidimensional.html#cb598-3" aria-hidden="true" tabindex="-1"></a><span class="co"># utilizando el método del trapezoide </span></span>
-<span id="cb598-4"><a href="integración-numérica-unidimensional.html#cb598-4" aria-hidden="true" tabindex="-1"></a><span class="co"># (se aproxima f linealmente en cada intervalo)</span></span>
-<span id="cb598-5"><a href="integración-numérica-unidimensional.html#cb598-5" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(f.vec) </span>
-<span id="cb598-6"><a href="integración-numérica-unidimensional.html#cb598-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(h<span class="sc">*</span>(f.vec[<span class="dv">1</span>]<span class="sc">/</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">sum</span>(f.vec[<span class="dv">2</span><span class="sc">:</span>(n<span class="dv">-1</span>)]) <span class="sc">+</span> f.vec[n]<span class="sc">/</span><span class="dv">2</span>))</span>
-<span id="cb598-7"><a href="integración-numérica-unidimensional.html#cb598-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb598-8"><a href="integración-numérica-unidimensional.html#cb598-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb598-9"><a href="integración-numérica-unidimensional.html#cb598-9" aria-hidden="true" tabindex="-1"></a>trapezoid <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, <span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">n =</span> <span class="dv">100</span>) {</span>
-<span id="cb598-10"><a href="integración-numérica-unidimensional.html#cb598-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Integración numérica de fun (función unidimensional) entre a y b</span></span>
-<span id="cb598-11"><a href="integración-numérica-unidimensional.html#cb598-11" aria-hidden="true" tabindex="-1"></a><span class="co"># utilizando el método del trapezoide con n subdivisiones</span></span>
-<span id="cb598-12"><a href="integración-numérica-unidimensional.html#cb598-12" aria-hidden="true" tabindex="-1"></a><span class="co"># (se aproxima f linealmente en cada intervalo)</span></span>
-<span id="cb598-13"><a href="integración-numérica-unidimensional.html#cb598-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Se asume a &lt; b y n entero positivo </span></span>
-<span id="cb598-14"><a href="integración-numérica-unidimensional.html#cb598-14" aria-hidden="true" tabindex="-1"></a>  h <span class="ot">&lt;-</span> (b<span class="sc">-</span>a)<span class="sc">/</span>n</span>
-<span id="cb598-15"><a href="integración-numérica-unidimensional.html#cb598-15" aria-hidden="true" tabindex="-1"></a>  x.vec <span class="ot">&lt;-</span> <span class="fu">seq</span>(a, b, <span class="at">by =</span> h)</span>
-<span id="cb598-16"><a href="integración-numérica-unidimensional.html#cb598-16" aria-hidden="true" tabindex="-1"></a>  f.vec <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x.vec, fun)</span>
-<span id="cb598-17"><a href="integración-numérica-unidimensional.html#cb598-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">trapezoid.vec</span>(f.vec, h))</span>
-<span id="cb598-18"><a href="integración-numérica-unidimensional.html#cb598-18" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb598-19"><a href="integración-numérica-unidimensional.html#cb598-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb598-20"><a href="integración-numérica-unidimensional.html#cb598-20" aria-hidden="true" tabindex="-1"></a><span class="fu">trapezoid</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="integración-numérica-unidimensional.html#cb604-1" aria-hidden="true" tabindex="-1"></a>trapezoid.vec <span class="ot">&lt;-</span> <span class="cf">function</span>(f.vec, <span class="at">h =</span> <span class="fl">0.01</span>) {</span>
+<span id="cb604-2"><a href="integración-numérica-unidimensional.html#cb604-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Integración numérica unidimensional entre a y b</span></span>
+<span id="cb604-3"><a href="integración-numérica-unidimensional.html#cb604-3" aria-hidden="true" tabindex="-1"></a><span class="co"># utilizando el método del trapezoide </span></span>
+<span id="cb604-4"><a href="integración-numérica-unidimensional.html#cb604-4" aria-hidden="true" tabindex="-1"></a><span class="co"># (se aproxima f linealmente en cada intervalo)</span></span>
+<span id="cb604-5"><a href="integración-numérica-unidimensional.html#cb604-5" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(f.vec) </span>
+<span id="cb604-6"><a href="integración-numérica-unidimensional.html#cb604-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(h<span class="sc">*</span>(f.vec[<span class="dv">1</span>]<span class="sc">/</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">sum</span>(f.vec[<span class="dv">2</span><span class="sc">:</span>(n<span class="dv">-1</span>)]) <span class="sc">+</span> f.vec[n]<span class="sc">/</span><span class="dv">2</span>))</span>
+<span id="cb604-7"><a href="integración-numérica-unidimensional.html#cb604-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb604-8"><a href="integración-numérica-unidimensional.html#cb604-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb604-9"><a href="integración-numérica-unidimensional.html#cb604-9" aria-hidden="true" tabindex="-1"></a>trapezoid <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, <span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">n =</span> <span class="dv">100</span>) {</span>
+<span id="cb604-10"><a href="integración-numérica-unidimensional.html#cb604-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Integración numérica de fun (función unidimensional) entre a y b</span></span>
+<span id="cb604-11"><a href="integración-numérica-unidimensional.html#cb604-11" aria-hidden="true" tabindex="-1"></a><span class="co"># utilizando el método del trapezoide con n subdivisiones</span></span>
+<span id="cb604-12"><a href="integración-numérica-unidimensional.html#cb604-12" aria-hidden="true" tabindex="-1"></a><span class="co"># (se aproxima f linealmente en cada intervalo)</span></span>
+<span id="cb604-13"><a href="integración-numérica-unidimensional.html#cb604-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Se asume a &lt; b y n entero positivo </span></span>
+<span id="cb604-14"><a href="integración-numérica-unidimensional.html#cb604-14" aria-hidden="true" tabindex="-1"></a>  h <span class="ot">&lt;-</span> (b<span class="sc">-</span>a)<span class="sc">/</span>n</span>
+<span id="cb604-15"><a href="integración-numérica-unidimensional.html#cb604-15" aria-hidden="true" tabindex="-1"></a>  x.vec <span class="ot">&lt;-</span> <span class="fu">seq</span>(a, b, <span class="at">by =</span> h)</span>
+<span id="cb604-16"><a href="integración-numérica-unidimensional.html#cb604-16" aria-hidden="true" tabindex="-1"></a>  f.vec <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x.vec, fun)</span>
+<span id="cb604-17"><a href="integración-numérica-unidimensional.html#cb604-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">trapezoid.vec</span>(f.vec, h))</span>
+<span id="cb604-18"><a href="integración-numérica-unidimensional.html#cb604-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb604-19"><a href="integración-numérica-unidimensional.html#cb604-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb604-20"><a href="integración-numérica-unidimensional.html#cb604-20" aria-hidden="true" tabindex="-1"></a><span class="fu">trapezoid</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">20</span>)</span></code></pre></div>
 <pre><code>## [1] 0.8033325</code></pre>
 <p>El error en esta aproximación se corresponde con:
 <span class="math display">\[ \frac{(b-a)^3}{12n^2}\,f&#39;&#39;(\xi), \]</span>
@@ -421,24 +421,24 @@ Aproximando de forma cuadrática la función en cada subintervalo <span class="m
 (considerando 3 puntos), se obtiene que:
 <span class="math display">\[ \int_a^b f(x) \, dx \approx \frac{h}{3} \bigg[ 
 f(x_0)+2\sum_{j=1}^{(n/2)-1}f(x_{2j})+ 4\sum_{j=1}^{n/2}f(x_{2j-1})+f(x_n) \bigg],\]</span></p>
-<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="integración-numérica-unidimensional.html#cb600-1" aria-hidden="true" tabindex="-1"></a>simpson <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, a, b, <span class="at">n =</span> <span class="dv">100</span>) { </span>
-<span id="cb600-2"><a href="integración-numérica-unidimensional.html#cb600-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Integración numérica de fnt entre a y b</span></span>
-<span id="cb600-3"><a href="integración-numérica-unidimensional.html#cb600-3" aria-hidden="true" tabindex="-1"></a><span class="co"># utilizando la regla de Simpson con n subdivisiones</span></span>
-<span id="cb600-4"><a href="integración-numérica-unidimensional.html#cb600-4" aria-hidden="true" tabindex="-1"></a><span class="co"># (se aproxima fun de forma cuadrática en cada par de intervalos)  </span></span>
-<span id="cb600-5"><a href="integración-numérica-unidimensional.html#cb600-5" aria-hidden="true" tabindex="-1"></a><span class="co"># fnt es una función de una sola variable</span></span>
-<span id="cb600-6"><a href="integración-numérica-unidimensional.html#cb600-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Se asume a &lt; b y n entero positivo par </span></span>
-<span id="cb600-7"><a href="integración-numérica-unidimensional.html#cb600-7" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">c</span>(<span class="dv">2</span><span class="sc">*</span>(n <span class="sc">%/%</span> <span class="dv">2</span>), <span class="dv">4</span>))</span>
-<span id="cb600-8"><a href="integración-numérica-unidimensional.html#cb600-8" aria-hidden="true" tabindex="-1"></a>  h <span class="ot">&lt;-</span> (b<span class="sc">-</span>a)<span class="sc">/</span>n</span>
-<span id="cb600-9"><a href="integración-numérica-unidimensional.html#cb600-9" aria-hidden="true" tabindex="-1"></a>  x.vec1 <span class="ot">&lt;-</span> <span class="fu">seq</span>(a<span class="sc">+</span>h, b<span class="sc">-</span>h, <span class="at">by =</span> <span class="dv">2</span><span class="sc">*</span>h)</span>
-<span id="cb600-10"><a href="integración-numérica-unidimensional.html#cb600-10" aria-hidden="true" tabindex="-1"></a>  x.vec2 <span class="ot">&lt;-</span> <span class="fu">seq</span>(a<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>h, b<span class="dv">-2</span><span class="sc">*</span>h, <span class="at">by =</span> <span class="dv">2</span><span class="sc">*</span>h)</span>
-<span id="cb600-11"><a href="integración-numérica-unidimensional.html#cb600-11" aria-hidden="true" tabindex="-1"></a>  f.vec1 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x.vec1, fun)</span>
-<span id="cb600-12"><a href="integración-numérica-unidimensional.html#cb600-12" aria-hidden="true" tabindex="-1"></a>  f.vec2 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x.vec2, fun)</span>
-<span id="cb600-13"><a href="integración-numérica-unidimensional.html#cb600-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(h<span class="sc">/</span><span class="dv">3</span><span class="sc">*</span>(<span class="fu">fun</span>(a) <span class="sc">+</span> <span class="fu">fun</span>(b) <span class="sc">+</span> <span class="dv">4</span><span class="sc">*</span><span class="fu">sum</span>(f.vec1) <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">sum</span>(f.vec2)))</span>
-<span id="cb600-14"><a href="integración-numérica-unidimensional.html#cb600-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Una cota del error en valor absoluto es:</span></span>
-<span id="cb600-15"><a href="integración-numérica-unidimensional.html#cb600-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># h^4*(b-a)*max(c(f.vec1, fvec.2))^4/180.</span></span>
-<span id="cb600-16"><a href="integración-numérica-unidimensional.html#cb600-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb600-17"><a href="integración-numérica-unidimensional.html#cb600-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb600-18"><a href="integración-numérica-unidimensional.html#cb600-18" aria-hidden="true" tabindex="-1"></a><span class="fu">simpson</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="integración-numérica-unidimensional.html#cb606-1" aria-hidden="true" tabindex="-1"></a>simpson <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, a, b, <span class="at">n =</span> <span class="dv">100</span>) { </span>
+<span id="cb606-2"><a href="integración-numérica-unidimensional.html#cb606-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Integración numérica de fnt entre a y b</span></span>
+<span id="cb606-3"><a href="integración-numérica-unidimensional.html#cb606-3" aria-hidden="true" tabindex="-1"></a><span class="co"># utilizando la regla de Simpson con n subdivisiones</span></span>
+<span id="cb606-4"><a href="integración-numérica-unidimensional.html#cb606-4" aria-hidden="true" tabindex="-1"></a><span class="co"># (se aproxima fun de forma cuadrática en cada par de intervalos)  </span></span>
+<span id="cb606-5"><a href="integración-numérica-unidimensional.html#cb606-5" aria-hidden="true" tabindex="-1"></a><span class="co"># fnt es una función de una sola variable</span></span>
+<span id="cb606-6"><a href="integración-numérica-unidimensional.html#cb606-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Se asume a &lt; b y n entero positivo par </span></span>
+<span id="cb606-7"><a href="integración-numérica-unidimensional.html#cb606-7" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">c</span>(<span class="dv">2</span><span class="sc">*</span>(n <span class="sc">%/%</span> <span class="dv">2</span>), <span class="dv">4</span>))</span>
+<span id="cb606-8"><a href="integración-numérica-unidimensional.html#cb606-8" aria-hidden="true" tabindex="-1"></a>  h <span class="ot">&lt;-</span> (b<span class="sc">-</span>a)<span class="sc">/</span>n</span>
+<span id="cb606-9"><a href="integración-numérica-unidimensional.html#cb606-9" aria-hidden="true" tabindex="-1"></a>  x.vec1 <span class="ot">&lt;-</span> <span class="fu">seq</span>(a<span class="sc">+</span>h, b<span class="sc">-</span>h, <span class="at">by =</span> <span class="dv">2</span><span class="sc">*</span>h)</span>
+<span id="cb606-10"><a href="integración-numérica-unidimensional.html#cb606-10" aria-hidden="true" tabindex="-1"></a>  x.vec2 <span class="ot">&lt;-</span> <span class="fu">seq</span>(a<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>h, b<span class="dv">-2</span><span class="sc">*</span>h, <span class="at">by =</span> <span class="dv">2</span><span class="sc">*</span>h)</span>
+<span id="cb606-11"><a href="integración-numérica-unidimensional.html#cb606-11" aria-hidden="true" tabindex="-1"></a>  f.vec1 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x.vec1, fun)</span>
+<span id="cb606-12"><a href="integración-numérica-unidimensional.html#cb606-12" aria-hidden="true" tabindex="-1"></a>  f.vec2 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x.vec2, fun)</span>
+<span id="cb606-13"><a href="integración-numérica-unidimensional.html#cb606-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(h<span class="sc">/</span><span class="dv">3</span><span class="sc">*</span>(<span class="fu">fun</span>(a) <span class="sc">+</span> <span class="fu">fun</span>(b) <span class="sc">+</span> <span class="dv">4</span><span class="sc">*</span><span class="fu">sum</span>(f.vec1) <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">sum</span>(f.vec2)))</span>
+<span id="cb606-14"><a href="integración-numérica-unidimensional.html#cb606-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Una cota del error en valor absoluto es:</span></span>
+<span id="cb606-15"><a href="integración-numérica-unidimensional.html#cb606-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># h^4*(b-a)*max(c(f.vec1, fvec.2))^4/180.</span></span>
+<span id="cb606-16"><a href="integración-numérica-unidimensional.html#cb606-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb606-17"><a href="integración-numérica-unidimensional.html#cb606-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb606-18"><a href="integración-numérica-unidimensional.html#cb606-18" aria-hidden="true" tabindex="-1"></a><span class="fu">simpson</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">20</span>)</span></code></pre></div>
 <pre><code>## [1] 0.8000033</code></pre>
 <p>El máximo error (en el caso unidimensional) viene dado por la expresión:
 <span class="math display">\[\frac{(b-a)^5}{180n^4}\,\max_{a\leq \xi \leq b}\left| f^{(4)}(\xi) \right|.\]</span>
@@ -449,53 +449,53 @@ En el caso general multidimensional sería <span class="math inline">\(O(n^{-\fr
 <p>En lugar de evaluar la función en una rejilla regular (muestrear por igual el dominio),
 puede interesar ir añadiendo puntos sólo en los lugares donde se mejore la aproximación
 (en principio donde hay mayor área).</p>
-<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="integración-numérica-unidimensional.html#cb602-1" aria-hidden="true" tabindex="-1"></a>quadrature <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, a, b, <span class="at">tol=</span><span class="fl">1e-8</span>) {</span>
-<span id="cb602-2"><a href="integración-numérica-unidimensional.html#cb602-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># numerical integration using adaptive quadrature</span></span>
-<span id="cb602-3"><a href="integración-numérica-unidimensional.html#cb602-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb602-4"><a href="integración-numérica-unidimensional.html#cb602-4" aria-hidden="true" tabindex="-1"></a>  simpson2 <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, a, b) {</span>
-<span id="cb602-5"><a href="integración-numérica-unidimensional.html#cb602-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># numerical integral using Simpson&#39;s rule</span></span>
-<span id="cb602-6"><a href="integración-numérica-unidimensional.html#cb602-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># assume a &lt; b and n = 2</span></span>
-<span id="cb602-7"><a href="integración-numérica-unidimensional.html#cb602-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>((b<span class="sc">-</span>a)<span class="sc">/</span><span class="dv">6</span> <span class="sc">*</span> (<span class="fu">fun</span>(a) <span class="sc">+</span> <span class="dv">4</span><span class="sc">*</span><span class="fu">fun</span>((a<span class="sc">+</span>b)<span class="sc">/</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">fun</span>(b)))</span>
-<span id="cb602-8"><a href="integración-numérica-unidimensional.html#cb602-8" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb602-9"><a href="integración-numérica-unidimensional.html#cb602-9" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb602-10"><a href="integración-numérica-unidimensional.html#cb602-10" aria-hidden="true" tabindex="-1"></a>    quadrature_internal <span class="ot">&lt;-</span> <span class="cf">function</span>(S.old, fun, a, m, b, tol, level) {</span>
-<span id="cb602-11"><a href="integración-numérica-unidimensional.html#cb602-11" aria-hidden="true" tabindex="-1"></a>        level.max <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb602-12"><a href="integración-numérica-unidimensional.html#cb602-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (level <span class="sc">&gt;</span> level.max) {</span>
-<span id="cb602-13"><a href="integración-numérica-unidimensional.html#cb602-13" aria-hidden="true" tabindex="-1"></a>            <span class="fu">cat</span> (<span class="st">&quot;recursion limit reached: singularity likely</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb602-14"><a href="integración-numérica-unidimensional.html#cb602-14" aria-hidden="true" tabindex="-1"></a>            <span class="fu">return</span> (<span class="cn">NULL</span>)</span>
-<span id="cb602-15"><a href="integración-numérica-unidimensional.html#cb602-15" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb602-16"><a href="integración-numérica-unidimensional.html#cb602-16" aria-hidden="true" tabindex="-1"></a>        S.left <span class="ot">&lt;-</span> <span class="fu">simpson2</span>(fun, a, m) </span>
-<span id="cb602-17"><a href="integración-numérica-unidimensional.html#cb602-17" aria-hidden="true" tabindex="-1"></a>        S.right <span class="ot">&lt;-</span> <span class="fu">simpson2</span>(fun, m, b)</span>
-<span id="cb602-18"><a href="integración-numérica-unidimensional.html#cb602-18" aria-hidden="true" tabindex="-1"></a>        S.new <span class="ot">&lt;-</span> S.left <span class="sc">+</span> S.right</span>
-<span id="cb602-19"><a href="integración-numérica-unidimensional.html#cb602-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">abs</span>(S.new<span class="sc">-</span>S.old) <span class="sc">&gt;</span> tol) {</span>
-<span id="cb602-20"><a href="integración-numérica-unidimensional.html#cb602-20" aria-hidden="true" tabindex="-1"></a>            S.left <span class="ot">&lt;-</span> <span class="fu">quadrature_internal</span>(S.left, fun, </span>
-<span id="cb602-21"><a href="integración-numérica-unidimensional.html#cb602-21" aria-hidden="true" tabindex="-1"></a>                                          a, (a<span class="sc">+</span>m)<span class="sc">/</span><span class="dv">2</span>, m, tol<span class="sc">/</span><span class="dv">2</span>, level<span class="sc">+</span><span class="dv">1</span>)</span>
-<span id="cb602-22"><a href="integración-numérica-unidimensional.html#cb602-22" aria-hidden="true" tabindex="-1"></a>            S.right <span class="ot">&lt;-</span> <span class="fu">quadrature_internal</span>(S.right, fun, </span>
-<span id="cb602-23"><a href="integración-numérica-unidimensional.html#cb602-23" aria-hidden="true" tabindex="-1"></a>                                           m, (m<span class="sc">+</span>b)<span class="sc">/</span><span class="dv">2</span>, b, tol<span class="sc">/</span><span class="dv">2</span>, level<span class="sc">+</span><span class="dv">1</span>)</span>
-<span id="cb602-24"><a href="integración-numérica-unidimensional.html#cb602-24" aria-hidden="true" tabindex="-1"></a>            S.new <span class="ot">&lt;-</span> S.left <span class="sc">+</span> S.right</span>
-<span id="cb602-25"><a href="integración-numérica-unidimensional.html#cb602-25" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb602-26"><a href="integración-numérica-unidimensional.html#cb602-26" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(S.new)</span>
-<span id="cb602-27"><a href="integración-numérica-unidimensional.html#cb602-27" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb602-28"><a href="integración-numérica-unidimensional.html#cb602-28" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb602-29"><a href="integración-numérica-unidimensional.html#cb602-29" aria-hidden="true" tabindex="-1"></a>    level <span class="ot">=</span> <span class="dv">1</span></span>
-<span id="cb602-30"><a href="integración-numérica-unidimensional.html#cb602-30" aria-hidden="true" tabindex="-1"></a>    S.old <span class="ot">&lt;-</span> (b<span class="sc">-</span>a) <span class="sc">*</span> (<span class="fu">fun</span>(a) <span class="sc">+</span> <span class="fu">fun</span>(b))<span class="sc">/</span><span class="dv">2</span></span>
-<span id="cb602-31"><a href="integración-numérica-unidimensional.html#cb602-31" aria-hidden="true" tabindex="-1"></a>    S.new <span class="ot">&lt;-</span> <span class="fu">quadrature_internal</span>(S.old, fun, </span>
-<span id="cb602-32"><a href="integración-numérica-unidimensional.html#cb602-32" aria-hidden="true" tabindex="-1"></a>                                 a, (a<span class="sc">+</span>b)<span class="sc">/</span><span class="dv">2</span>, b, tol, level<span class="sc">+</span><span class="dv">1</span>)</span>
-<span id="cb602-33"><a href="integración-numérica-unidimensional.html#cb602-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(S.new)</span>
-<span id="cb602-34"><a href="integración-numérica-unidimensional.html#cb602-34" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb602-35"><a href="integración-numérica-unidimensional.html#cb602-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb602-36"><a href="integración-numérica-unidimensional.html#cb602-36" aria-hidden="true" tabindex="-1"></a><span class="fu">quadrature</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="integración-numérica-unidimensional.html#cb608-1" aria-hidden="true" tabindex="-1"></a>quadrature <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, a, b, <span class="at">tol=</span><span class="fl">1e-8</span>) {</span>
+<span id="cb608-2"><a href="integración-numérica-unidimensional.html#cb608-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># numerical integration using adaptive quadrature</span></span>
+<span id="cb608-3"><a href="integración-numérica-unidimensional.html#cb608-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb608-4"><a href="integración-numérica-unidimensional.html#cb608-4" aria-hidden="true" tabindex="-1"></a>  simpson2 <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, a, b) {</span>
+<span id="cb608-5"><a href="integración-numérica-unidimensional.html#cb608-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># numerical integral using Simpson&#39;s rule</span></span>
+<span id="cb608-6"><a href="integración-numérica-unidimensional.html#cb608-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># assume a &lt; b and n = 2</span></span>
+<span id="cb608-7"><a href="integración-numérica-unidimensional.html#cb608-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>((b<span class="sc">-</span>a)<span class="sc">/</span><span class="dv">6</span> <span class="sc">*</span> (<span class="fu">fun</span>(a) <span class="sc">+</span> <span class="dv">4</span><span class="sc">*</span><span class="fu">fun</span>((a<span class="sc">+</span>b)<span class="sc">/</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">fun</span>(b)))</span>
+<span id="cb608-8"><a href="integración-numérica-unidimensional.html#cb608-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb608-9"><a href="integración-numérica-unidimensional.html#cb608-9" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb608-10"><a href="integración-numérica-unidimensional.html#cb608-10" aria-hidden="true" tabindex="-1"></a>    quadrature_internal <span class="ot">&lt;-</span> <span class="cf">function</span>(S.old, fun, a, m, b, tol, level) {</span>
+<span id="cb608-11"><a href="integración-numérica-unidimensional.html#cb608-11" aria-hidden="true" tabindex="-1"></a>        level.max <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb608-12"><a href="integración-numérica-unidimensional.html#cb608-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (level <span class="sc">&gt;</span> level.max) {</span>
+<span id="cb608-13"><a href="integración-numérica-unidimensional.html#cb608-13" aria-hidden="true" tabindex="-1"></a>            <span class="fu">cat</span> (<span class="st">&quot;recursion limit reached: singularity likely</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb608-14"><a href="integración-numérica-unidimensional.html#cb608-14" aria-hidden="true" tabindex="-1"></a>            <span class="fu">return</span> (<span class="cn">NULL</span>)</span>
+<span id="cb608-15"><a href="integración-numérica-unidimensional.html#cb608-15" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb608-16"><a href="integración-numérica-unidimensional.html#cb608-16" aria-hidden="true" tabindex="-1"></a>        S.left <span class="ot">&lt;-</span> <span class="fu">simpson2</span>(fun, a, m) </span>
+<span id="cb608-17"><a href="integración-numérica-unidimensional.html#cb608-17" aria-hidden="true" tabindex="-1"></a>        S.right <span class="ot">&lt;-</span> <span class="fu">simpson2</span>(fun, m, b)</span>
+<span id="cb608-18"><a href="integración-numérica-unidimensional.html#cb608-18" aria-hidden="true" tabindex="-1"></a>        S.new <span class="ot">&lt;-</span> S.left <span class="sc">+</span> S.right</span>
+<span id="cb608-19"><a href="integración-numérica-unidimensional.html#cb608-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">abs</span>(S.new<span class="sc">-</span>S.old) <span class="sc">&gt;</span> tol) {</span>
+<span id="cb608-20"><a href="integración-numérica-unidimensional.html#cb608-20" aria-hidden="true" tabindex="-1"></a>            S.left <span class="ot">&lt;-</span> <span class="fu">quadrature_internal</span>(S.left, fun, </span>
+<span id="cb608-21"><a href="integración-numérica-unidimensional.html#cb608-21" aria-hidden="true" tabindex="-1"></a>                                          a, (a<span class="sc">+</span>m)<span class="sc">/</span><span class="dv">2</span>, m, tol<span class="sc">/</span><span class="dv">2</span>, level<span class="sc">+</span><span class="dv">1</span>)</span>
+<span id="cb608-22"><a href="integración-numérica-unidimensional.html#cb608-22" aria-hidden="true" tabindex="-1"></a>            S.right <span class="ot">&lt;-</span> <span class="fu">quadrature_internal</span>(S.right, fun, </span>
+<span id="cb608-23"><a href="integración-numérica-unidimensional.html#cb608-23" aria-hidden="true" tabindex="-1"></a>                                           m, (m<span class="sc">+</span>b)<span class="sc">/</span><span class="dv">2</span>, b, tol<span class="sc">/</span><span class="dv">2</span>, level<span class="sc">+</span><span class="dv">1</span>)</span>
+<span id="cb608-24"><a href="integración-numérica-unidimensional.html#cb608-24" aria-hidden="true" tabindex="-1"></a>            S.new <span class="ot">&lt;-</span> S.left <span class="sc">+</span> S.right</span>
+<span id="cb608-25"><a href="integración-numérica-unidimensional.html#cb608-25" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb608-26"><a href="integración-numérica-unidimensional.html#cb608-26" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(S.new)</span>
+<span id="cb608-27"><a href="integración-numérica-unidimensional.html#cb608-27" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb608-28"><a href="integración-numérica-unidimensional.html#cb608-28" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb608-29"><a href="integración-numérica-unidimensional.html#cb608-29" aria-hidden="true" tabindex="-1"></a>    level <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb608-30"><a href="integración-numérica-unidimensional.html#cb608-30" aria-hidden="true" tabindex="-1"></a>    S.old <span class="ot">&lt;-</span> (b<span class="sc">-</span>a) <span class="sc">*</span> (<span class="fu">fun</span>(a) <span class="sc">+</span> <span class="fu">fun</span>(b))<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb608-31"><a href="integración-numérica-unidimensional.html#cb608-31" aria-hidden="true" tabindex="-1"></a>    S.new <span class="ot">&lt;-</span> <span class="fu">quadrature_internal</span>(S.old, fun, </span>
+<span id="cb608-32"><a href="integración-numérica-unidimensional.html#cb608-32" aria-hidden="true" tabindex="-1"></a>                                 a, (a<span class="sc">+</span>b)<span class="sc">/</span><span class="dv">2</span>, b, tol, level<span class="sc">+</span><span class="dv">1</span>)</span>
+<span id="cb608-33"><a href="integración-numérica-unidimensional.html#cb608-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(S.new)</span>
+<span id="cb608-34"><a href="integración-numérica-unidimensional.html#cb608-34" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb608-35"><a href="integración-numérica-unidimensional.html#cb608-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb608-36"><a href="integración-numérica-unidimensional.html#cb608-36" aria-hidden="true" tabindex="-1"></a><span class="fu">quadrature</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] 0.8</code></pre>
 <p>Fuente: <a href="https://www.r-bloggers.com/one-dimensional-integrals">r-blogger Guangchuang Yu</a></p>
 </div>
 <div id="comandos-de-r" class="section level3" number="13.1.4">
 <h3><span class="header-section-number">C.1.4</span> Comandos de R</h3>
-<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="integración-numérica-unidimensional.html#cb604-1" aria-hidden="true" tabindex="-1"></a><span class="fu">integrate</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)   <span class="co"># Permite límites infinitos  </span></span></code></pre></div>
+<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="integración-numérica-unidimensional.html#cb610-1" aria-hidden="true" tabindex="-1"></a><span class="fu">integrate</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)   <span class="co"># Permite límites infinitos  </span></span></code></pre></div>
 <pre><code>## 0.8 with absolute error &lt; 8.9e-15</code></pre>
-<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="integración-numérica-unidimensional.html#cb606-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Cuidado: fun debe ser vectorial...</span></span>
-<span id="cb606-2"><a href="integración-numérica-unidimensional.html#cb606-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb606-3"><a href="integración-numérica-unidimensional.html#cb606-3" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(MASS)</span>
-<span id="cb606-4"><a href="integración-numérica-unidimensional.html#cb606-4" aria-hidden="true" tabindex="-1"></a><span class="fu">area</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="integración-numérica-unidimensional.html#cb612-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Cuidado: fun debe ser vectorial...</span></span>
+<span id="cb612-2"><a href="integración-numérica-unidimensional.html#cb612-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb612-3"><a href="integración-numérica-unidimensional.html#cb612-3" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(MASS)</span>
+<span id="cb612-4"><a href="integración-numérica-unidimensional.html#cb612-4" aria-hidden="true" tabindex="-1"></a><span class="fu">area</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] 0.8000001</code></pre>
 </div>
 </div>

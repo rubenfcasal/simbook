@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.3 Modificaciones del método de aceptación rechazo | Simulación Estadística</title>
+  <title>5.3 Modificaciones del método de aceptación-rechazo | Simulación Estadística</title>
   <meta name="description" content="Apuntes de la asignatura de Simulación Estadística del Máster en Técnicas Estadísticas." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.3 Modificaciones del método de aceptación rechazo | Simulación Estadística" />
+  <meta property="og:title" content="5.3 Modificaciones del método de aceptación-rechazo | Simulación Estadística" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rubenfcasal/simbook" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.3 Modificaciones del método de aceptación rechazo | Simulación Estadística" />
+  <meta name="twitter:title" content="5.3 Modificaciones del método de aceptación-rechazo | Simulación Estadística" />
   
   <meta name="twitter:description" content="Apuntes de la asignatura de Simulación Estadística del Máster en Técnicas Estadísticas." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-03-16" />
+<meta name="date" content="2022-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,11 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#elección-de-la-densidad-auxiliar"><i class="fa fa-check"></i><b>5.2.4</b> Elección de la densidad auxiliar</a></li>
-<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: Inferencia Bayesiana</a></li>
+<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#bayes-ar"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: inferencia bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación-rechazo</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
@@ -368,17 +368,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="modificaciones-del-método-de-aceptación-rechazo" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Modificaciones del método de aceptación rechazo</h2>
-<p>En el tiempo de computación influye:</p>
+<h2><span class="header-section-number">5.3</span> Modificaciones del método de aceptación-rechazo</h2>
+<p>En el tiempo de computación del algoritmo de aceptación-rechazo influye:</p>
 <ul>
 <li><p>La proporción de aceptación (debería ser grande).</p></li>
 <li><p>La dificultad de simular con la densidad auxiliar.</p></li>
 <li><p>El tiempo necesario para hacer la comparación en el paso 4.</p></li>
 </ul>
-<p>En ciertos casos el tiempo de computación necesario para evaluar <span class="math inline">\(f(x)\)</span> puede ser alto.</p>
-<p>Para evitar evaluaciones de la densidad se puede emplear una función “squeeze” (Marsaglia, 1977) que aproxime la densidad por abajo:
-<span class="math display">\[s(x)\leq f(x).\]</span></p>
-<p>Algoritmo:</p>
+<p>En ciertos casos el tiempo de computación necesario para evaluar <span class="math inline">\(f(x)\)</span> puede ser alto.
+Para evitar evaluaciones de la densidad se puede emplear una función “squeeze” que aproxime la densidad por abajo (una envolvente inferior):
+<span class="math display">\[s(x)\leq f(x) \text{, }\forall x\in \mathbb{R}.\]</span></p>
+
+<div class="conjecture">
+<p><span id="cnj:marsaglia" class="conjecture"><strong>Algoritmo 5.4  (Marsaglia, 1977)  </strong></span><br></p>
 <ol style="list-style-type: decimal">
 <li><p>Generar <span class="math inline">\(U \sim \mathcal{U}(0, 1)\)</span> y <span class="math inline">\(T\sim g\)</span>.</p></li>
 <li><p>Si <span class="math inline">\(c\cdot U\cdot g\left( T\right) \leq s\left( T\right)\)</span> devolver <span class="math inline">\(X=T\)</span>,</p>
@@ -387,7 +389,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 devolver <span class="math inline">\(X=T\)</span>,</p>
 <p>2.b. en caso contrario volver al paso 1.</p></li>
 </ol>
-<p><img src="images/squeeze.png" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:squeeze"></span>
+<img src="images/squeeze.png" alt="Ilustración del algoritmo de aceptación-rechazo con envolvente inferior (función &quot;squeeze&quot;)." width="80%" />
+<p class="caption">
+Figura 5.12: Ilustración del algoritmo de aceptación-rechazo con envolvente inferior (función “squeeze”).
+</p>
+</div>
 <p>Cuanto mayor sea el área bajo <span class="math inline">\(s(x)\)</span> (más próxima a 1)
 más efectivo será el algoritmo.</p>
 <p>Se han desarrollado métodos generales para la construcción de las
@@ -395,7 +403,7 @@ funciones <span class="math inline">\(g\)</span> y <span class="math inline">\(s
 (cada vez que se evalúa la densidad se mejoran las aproximaciones).
 Estos métodos se basan principalmente en que una transformación de
 la densidad objetivo es cóncava o convexa.</p>
-<div id="muestreo-por-rechazo-adaptativo-ars" class="section level3" number="5.3.1">
+<div id="ars" class="section level3" number="5.3.1">
 <h3><span class="header-section-number">5.3.1</span> Muestreo por rechazo adaptativo (ARS)</h3>
 <p>Supongamos que <span class="math inline">\(f\)</span> es una cuasi-densidad log-cóncava
 (i.e. <span class="math inline">\(\frac{\partial ^{2}}{\partial x^{2}}\log f(x) &lt;0, ~\forall x\)</span>).</p>
@@ -419,10 +427,10 @@ la densidad objetivo es cóncava o convexa.</p>
 </ul>
 <p>Tenemos entonces que:
 <span class="math display">\[s_n(x)\leq f(x) \leq G_n(x)=c\cdot g_n(x)\]</span>
-donde <span class="math inline">\(g_n(x)\)</span> es una mixtura discreta de distribuciones tipo exponencial truncadas
-(las tasas pueden ser negativas),
-que se puede simular fácilmente mediante el método de inversión.</p>
-<p>Algoritmo (Gilks, 1992):</p>
+donde <span class="math inline">\(g_n(x)\)</span> es una mixtura discreta de distribuciones tipo exponencial truncadas (las tasas pueden ser negativas), que se puede simular fácilmente combinando el método de composición (Sección <a href="composicion.html#composicion">5.4</a>) con el método de inversión.</p>
+
+<div class="conjecture">
+<p><span id="cnj:gilks" class="conjecture"><strong>Algoritmo 5.5  (Gilks, 1992)  </strong></span><br></p>
 <ol style="list-style-type: decimal">
 <li><p>Inicializar <span class="math inline">\(n\)</span> y <span class="math inline">\(s_n\)</span>.</p></li>
 <li><p>Generar <span class="math inline">\(U \sim \mathcal{U}(0, 1)\)</span> y
@@ -436,8 +444,9 @@ devolver <span class="math inline">\(X=T\)</span>.</p>
 y actualizar <span class="math inline">\(s_n\)</span> y <span class="math inline">\(G_n\)</span>.</p></li>
 <li><p>Volver al paso 2.</p></li>
 </ol>
-<p>Gilks y Wild (1992) propusieron una ligera modificación empleando tangentes para construir la cota superior, de esta forma se obtiene un método más eficiente pero requiere especificar la derivada de la densidad objetivo.</p>
-<p>La mayoría de las densidades de la familia de distribuciones exponencial son log-cóncavas.
+</div>
+<p>Gilks y Wild (1992) propusieron una ligera modificación empleando tangentes para construir la cota superior, de esta forma se obtiene un método más eficiente pero requiere especificar la derivada de la densidad objetivo (ver Figura <a href="modificaciones-del-método-de-aceptación-rechazo.html#fig:squeeze">5.12</a>).</p>
+<p>La mayoría de las densidades de la familia exponencial de distribuciones son log-cóncavas.
 Hörmann (1995) extendió esta aproximación al caso de densidades <span class="math inline">\(T_{c}\)</span>-cóncavas:
 <span class="math display">\[T_{c}(x) = signo(c)x^{c} \\
 T_{0}(x) = \log (x).\]</span>
@@ -445,18 +454,69 @@ Aparte de la transformación logarítmica, la transformación <span class="math 
 </div>
 <div id="método-del-cociente-de-uniformes" class="section level3" number="5.3.2">
 <h3><span class="header-section-number">5.3.2</span> Método del cociente de uniformes</h3>
-<p>Se puede ver como una modificación del método de aceptación rechazo,
-de especial interés cuando el soporte no es acotado.</p>
+<p>Se puede ver como una modificación del método de aceptación-rechazo, de especial interés cuando el soporte no es acotado.</p>
 <p>Si <span class="math inline">\((U,V)\)</span> se distribuye uniformemente sobre:
-<span class="math display">\[C_{h} = \left\{ \left( u,v\right) \in \mathbb{R}^{2} : 
-0&lt;u\leq \sqrt{h(v/u)} \right\},\]</span>
-siendo <span class="math inline">\(h\)</span> una función no negativa integrable
-(cuasi-densidad), entonces <span class="math inline">\(X=V/U\)</span> tiene función de densidad
-proporcional a <span class="math inline">\(h\)</span> (Kinderman y Monahan, 1977).
-Además <span class="math inline">\(C_{h}\)</span> tiene área finita.</p>
-<p>De modo análogo al método de aceptación-rechazo, hay modificaciones
-para acelerar los cálculos y automatizar el proceso, construyendo
-regiones mediante polígonos:<span class="math display">\[C_{i}\subset C_{h}\subset C_{s}.\]</span></p>
+<span class="math display">\[C_{f^{\ast}} = \left\{ (u, v) \in \mathbb{R}^{2} : 
+0&lt;u\leq \sqrt{f^{\ast}(v/u)} \right\},\]</span>
+siendo <span class="math inline">\(f^{\ast}\)</span> una función no negativa integrable (cuasi-densidad), entonces <span class="math inline">\(X=V/U\)</span> tiene función de densidad proporcional a <span class="math inline">\(f^{\ast}\)</span> (Kinderman y Monahan, 1977).
+Además <span class="math inline">\(C_{f^{\ast}}\)</span> tiene área finita, por lo que pueden generarse fácilmente los valores <span class="math inline">\((U,V)\)</span> con distribución <span class="math inline">\(\mathcal{U}\left(C_{f^{\ast}}\right)\)</span> a partir de componentes uniformes unidimensionales (aceptando los puntos dentro de <span class="math inline">\(C_{f^{\ast}}\)</span>).</p>
+<p>De modo análogo al método de aceptación-rechazo, hay modificaciones para acelerar los cálculos y automatizar el proceso, construyendo regiones mediante polígonos:
+<span class="math display">\[C_{i}\subset C_{f^{\ast}}\subset C_{s}.\]</span>
+También se puede extender al caso multivariante y considerar transformaciones adicionales.
+Ver por ejemplo el paquete <a href="https://paulnorthrop.github.io/rust/index.html"><code>rust</code></a>.</p>
+
+<div class="example">
+<span id="exm:cauchy-rou" class="example"><strong>Ejemplo 5.5  (simulación de la distribución de Cauchy mediante cociente de uniformes)  </strong></span>
+</div>
+<p>Si consideramos la distribución de Cauchy:
+<span class="math display">\[f(x) = \frac{1}{\pi (1 + x^2)} \text{, } x\in \mathbb{R},\]</span>
+eliminando la constante por comodidad <span class="math inline">\(f(x) \propto 1/(1 + x^2)\)</span>, se tiene que:
+<span class="math display">\[\begin{aligned}
+C_{f^{\ast}} &amp; = \left\{ (u, v) \in \mathbb{R}^{2} : 0 &lt;u \leq \frac{1}{\sqrt{1 + (v/u)^2}}  \right\} \\
+&amp; = \left\{ (u, v) \in \mathbb{R}^{2} : u &gt; 0, u^2 \leq \frac{u^2}{u^2 + v^2}  \right\} \\
+&amp; = \left\{ (u, v) \in \mathbb{R}^{2} : u &gt; 0, u^2 + v^2 \leq 1  \right\}, 
+\end{aligned}\]</span>
+dando como resultando que <span class="math inline">\(C_{f^{\ast}}\)</span> es el semicírculo de radio uno, y podemos generar valores con distribución uniforme en esta región a partir de <span class="math inline">\(\mathcal{U}\left([0,1]\times[-1,1] \right)\)</span>.</p>
+<p>Por tanto, podemos emplear el siguiente código para generar valores de la densidad objetivo:</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-1" aria-hidden="true" tabindex="-1"></a>rcauchy.rou <span class="ot">&lt;-</span> <span class="cf">function</span>(nsim) {</span>
+<span id="cb186-2"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Cauchy mediante cociente de uniformes  </span></span>
+<span id="cb186-3"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-3" aria-hidden="true" tabindex="-1"></a>  ngen <span class="ot">&lt;-</span> nsim</span>
+<span id="cb186-4"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-4" aria-hidden="true" tabindex="-1"></a>  u <span class="ot">&lt;-</span> <span class="fu">runif</span>(nsim, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb186-5"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-5" aria-hidden="true" tabindex="-1"></a>  v <span class="ot">&lt;-</span> <span class="fu">runif</span>(nsim, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb186-6"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-6" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> v<span class="sc">/</span>u</span>
+<span id="cb186-7"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-7" aria-hidden="true" tabindex="-1"></a>  ind <span class="ot">&lt;-</span> u<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> v<span class="sc">^</span><span class="dv">2</span> <span class="sc">&gt;</span> <span class="dv">1</span> <span class="co"># TRUE si no verifica condición</span></span>
+<span id="cb186-8"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Volver a generar si no verifica condición</span></span>
+<span id="cb186-9"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (le <span class="ot">&lt;-</span> <span class="fu">sum</span>(ind)){ <span class="co"># mientras le = sum(ind) &gt; 0</span></span>
+<span id="cb186-10"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-10" aria-hidden="true" tabindex="-1"></a>    ngen <span class="ot">&lt;-</span> ngen <span class="sc">+</span> le</span>
+<span id="cb186-11"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-11" aria-hidden="true" tabindex="-1"></a>    u <span class="ot">&lt;-</span> <span class="fu">runif</span>(le, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb186-12"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-12" aria-hidden="true" tabindex="-1"></a>    v <span class="ot">&lt;-</span> <span class="fu">runif</span>(le, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb186-13"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-13" aria-hidden="true" tabindex="-1"></a>    x[ind] <span class="ot">&lt;-</span> v<span class="sc">/</span>u</span>
+<span id="cb186-14"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-14" aria-hidden="true" tabindex="-1"></a>    ind[ind] <span class="ot">&lt;-</span> u<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> v<span class="sc">^</span><span class="dv">2</span> <span class="sc">&gt;</span> <span class="dv">1</span> <span class="co"># TRUE si no verifica condición</span></span>
+<span id="cb186-15"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb186-16"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">attr</span>(x, <span class="st">&quot;ngen&quot;</span>) <span class="ot">&lt;-</span> ngen</span>
+<span id="cb186-17"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(x)</span>
+<span id="cb186-18"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-18" aria-hidden="true" tabindex="-1"></a>}  </span>
+<span id="cb186-19"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb186-20"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-20" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb186-21"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-21" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
+<span id="cb186-22"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-22" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> <span class="fu">rcauchy.rou</span>(nsim)</span>
+<span id="cb186-23"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb186-24"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-24" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(rx, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="dv">6</span>))</span>
+<span id="cb186-25"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb186-25" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(dcauchy, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:rcauchy-rou"></span>
+<img src="05-Metodos_generales_continuas_files/figure-html/rcauchy-rou-1.png" alt="Distribución de los valores generados mediante el método de cociente de uniformes." width="70%" />
+<p class="caption">
+Figura 5.13: Distribución de los valores generados mediante el método de cociente de uniformes.
+</p>
+</div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Número generaciones</span></span>
+<span id="cb187-2"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb187-2" aria-hidden="true" tabindex="-1"></a>ngen <span class="ot">&lt;-</span> <span class="fu">attr</span>(rx, <span class="st">&quot;ngen&quot;</span>)</span>
+<span id="cb187-3"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb187-3" aria-hidden="true" tabindex="-1"></a>{<span class="fu">cat</span>(<span class="st">&quot;Número de generaciones = &quot;</span>, ngen)</span>
+<span id="cb187-4"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb187-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Número medio de generaciones = &quot;</span>, ngen<span class="sc">/</span>nsim)</span>
+<span id="cb187-5"><a href="modificaciones-del-método-de-aceptación-rechazo.html#cb187-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Proporción de rechazos = &quot;</span>, <span class="dv">1</span><span class="sc">-</span>nsim<span class="sc">/</span>ngen,<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)}</span></code></pre></div>
+<pre><code>## Número de generaciones =  12751
+## Número medio de generaciones =  1.2751
+## Proporción de rechazos =  0.2157478</code></pre>
 </div>
 </div>
             </section>

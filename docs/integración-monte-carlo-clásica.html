@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-03-16" />
+<meta name="date" content="2022-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,11 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#elección-de-la-densidad-auxiliar"><i class="fa fa-check"></i><b>5.2.4</b> Elección de la densidad auxiliar</a></li>
-<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: Inferencia Bayesiana</a></li>
+<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#bayes-ar"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: inferencia bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación-rechazo</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
@@ -389,71 +389,70 @@ Si <span class="math inline">\(x_1,x_2,\ldots ,x_n\)</span> <em>i.i.d.</em>
 <span class="math display">\[I\approx \frac{1}{n}\sum\limits_{i=1}^nh\left( x_i\right) (b-a)\]</span></p>
 
 <div class="exercise">
-<p><span id="exr:mc-integral-clas" class="exercise"><strong>Ejercicio 9.1  </strong></span></p>
-Crear una función que implemente la integración Monte Carlo clásica
+<span id="exr:mc-integral-clas" class="exercise"><strong>Ejercicio 9.1  (integración Monte Carlo clásica)  </strong></span>
+</div>
+<p>Crear una función que implemente la integración Monte Carlo clásica
 para aproximar integrales del tipo:
 <span class="math display">\[I = \int_a^b h(x)  dx.\]</span>
 Emplearla para aproximar:
 <span class="math display">\[\int_0^1 4x^4 dx = \frac{4}{5},\]</span>
-y representar gráficamente la aproximación en función de <span class="math inline">\(n\)</span>.<br />
-
-</div>
+y representar gráficamente la aproximación en función de <span class="math inline">\(n\)</span>.</p>
 <p>Como primera aproximación podríamos considerar:</p>
-<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="integración-monte-carlo-clásica.html#cb452-1" aria-hidden="true" tabindex="-1"></a>mc.integral0 <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, a, b, n) {</span>
-<span id="cb452-2"><a href="integración-monte-carlo-clásica.html#cb452-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Integración Monte Carlo de fun entre a y b utilizando una muestra de tamaño n</span></span>
-<span id="cb452-3"><a href="integración-monte-carlo-clásica.html#cb452-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># fun es una función de una sola variable (y que no es vectorial)</span></span>
-<span id="cb452-4"><a href="integración-monte-carlo-clásica.html#cb452-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Se asume a &lt; b y n entero positivo</span></span>
-<span id="cb452-5"><a href="integración-monte-carlo-clásica.html#cb452-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># -------------------------------</span></span>
-<span id="cb452-6"><a href="integración-monte-carlo-clásica.html#cb452-6" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, a, b)</span>
-<span id="cb452-7"><a href="integración-monte-carlo-clásica.html#cb452-7" aria-hidden="true" tabindex="-1"></a>  fx <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x, fun) <span class="co"># Si fun fuese vectorial bastaría con: fx &lt;- fun(x)</span></span>
-<span id="cb452-8"><a href="integración-monte-carlo-clásica.html#cb452-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">mean</span>(fx) <span class="sc">*</span> (b <span class="sc">-</span> a))</span>
-<span id="cb452-9"><a href="integración-monte-carlo-clásica.html#cb452-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="integración-monte-carlo-clásica.html#cb458-1" aria-hidden="true" tabindex="-1"></a>mc.integral0 <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, a, b, n) {</span>
+<span id="cb458-2"><a href="integración-monte-carlo-clásica.html#cb458-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Integración Monte Carlo de fun entre a y b utilizando una muestra de tamaño n</span></span>
+<span id="cb458-3"><a href="integración-monte-carlo-clásica.html#cb458-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># fun es una función de una sola variable (y que no es vectorial)</span></span>
+<span id="cb458-4"><a href="integración-monte-carlo-clásica.html#cb458-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Se asume a &lt; b y n entero positivo</span></span>
+<span id="cb458-5"><a href="integración-monte-carlo-clásica.html#cb458-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># -------------------------------</span></span>
+<span id="cb458-6"><a href="integración-monte-carlo-clásica.html#cb458-6" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, a, b)</span>
+<span id="cb458-7"><a href="integración-monte-carlo-clásica.html#cb458-7" aria-hidden="true" tabindex="-1"></a>  fx <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x, fun) <span class="co"># Si fun fuese vectorial bastaría con: fx &lt;- fun(x)</span></span>
+<span id="cb458-8"><a href="integración-monte-carlo-clásica.html#cb458-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">mean</span>(fx) <span class="sc">*</span> (b <span class="sc">-</span> a))</span>
+<span id="cb458-9"><a href="integración-monte-carlo-clásica.html#cb458-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Función a integrar:</p>
-<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="integración-monte-carlo-clásica.html#cb453-1" aria-hidden="true" tabindex="-1"></a>fun <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">ifelse</span>((x <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">&amp;</span> (x <span class="sc">&lt;</span> <span class="dv">1</span>), <span class="dv">4</span> <span class="sc">*</span> x<span class="sc">^</span><span class="dv">4</span>, <span class="dv">0</span>)</span>
-<span id="cb453-2"><a href="integración-monte-carlo-clásica.html#cb453-2" aria-hidden="true" tabindex="-1"></a><span class="co"># return(4 * x^4)</span></span>
-<span id="cb453-3"><a href="integración-monte-carlo-clásica.html#cb453-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb453-4"><a href="integración-monte-carlo-clásica.html#cb453-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb453-5"><a href="integración-monte-carlo-clásica.html#cb453-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb453-6"><a href="integración-monte-carlo-clásica.html#cb453-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="integración-monte-carlo-clásica.html#cb459-1" aria-hidden="true" tabindex="-1"></a>fun <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">ifelse</span>((x <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">&amp;</span> (x <span class="sc">&lt;</span> <span class="dv">1</span>), <span class="dv">4</span> <span class="sc">*</span> x<span class="sc">^</span><span class="dv">4</span>, <span class="dv">0</span>)</span>
+<span id="cb459-2"><a href="integración-monte-carlo-clásica.html#cb459-2" aria-hidden="true" tabindex="-1"></a><span class="co"># return(4 * x^4)</span></span>
+<span id="cb459-3"><a href="integración-monte-carlo-clásica.html#cb459-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb459-4"><a href="integración-monte-carlo-clásica.html#cb459-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb459-5"><a href="integración-monte-carlo-clásica.html#cb459-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb459-6"><a href="integración-monte-carlo-clásica.html#cb459-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:int-mc-clas"></span>
 <img src="09-Monte_Carlo_files/figure-html/int-mc-clas-1.png" alt="Ejemplo de integral en dominio acotado." width="70%" />
 <p class="caption">
 Figura 9.1: Ejemplo de integral en dominio acotado.
 </p>
 </div>
-<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="integración-monte-carlo-clásica.html#cb454-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb454-2"><a href="integración-monte-carlo-clásica.html#cb454-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mc.integral0</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="integración-monte-carlo-clásica.html#cb460-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb460-2"><a href="integración-monte-carlo-clásica.html#cb460-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mc.integral0</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">20</span>)</span></code></pre></div>
 <pre><code>## [1] 0.977663</code></pre>
-<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="integración-monte-carlo-clásica.html#cb456-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mc.integral0</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">100</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="integración-monte-carlo-clásica.html#cb462-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mc.integral0</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">100</span>)</span></code></pre></div>
 <pre><code>## [1] 0.7311169</code></pre>
-<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="integración-monte-carlo-clásica.html#cb458-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mc.integral0</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">100</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="integración-monte-carlo-clásica.html#cb464-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mc.integral0</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">100</span>)</span></code></pre></div>
 <pre><code>## [1] 0.8304299</code></pre>
 <p>La función <code>mc.integral0</code> no es adecuada para analizar la convergencia
 de la aproximación por simulación.
 Una alternativa más eficiente para representar gráficamente la convergencia:</p>
-<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="integración-monte-carlo-clásica.html#cb460-1" aria-hidden="true" tabindex="-1"></a>  mc.integral <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, a, b, n, <span class="at">plot =</span> <span class="cn">TRUE</span>) {</span>
-<span id="cb460-2"><a href="integración-monte-carlo-clásica.html#cb460-2" aria-hidden="true" tabindex="-1"></a>    fx <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">runif</span>(n, a, b), fun) <span class="sc">*</span> (b <span class="sc">-</span> a)</span>
-<span id="cb460-3"><a href="integración-monte-carlo-clásica.html#cb460-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (plot) {</span>
-<span id="cb460-4"><a href="integración-monte-carlo-clásica.html#cb460-4" aria-hidden="true" tabindex="-1"></a>      estint <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(fx)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">:</span>n)</span>
-<span id="cb460-5"><a href="integración-monte-carlo-clásica.html#cb460-5" aria-hidden="true" tabindex="-1"></a>      esterr <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">cumsum</span>((fx <span class="sc">-</span> estint)<span class="sc">^</span><span class="dv">2</span>))<span class="sc">/</span>(<span class="dv">1</span><span class="sc">:</span>n)</span>
-<span id="cb460-6"><a href="integración-monte-carlo-clásica.html#cb460-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plot</span>(estint, <span class="at">ylab =</span> <span class="st">&quot;Media y rango de error&quot;</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">ylim =</span> <span class="fu">mean</span>(fx) <span class="sc">+</span> </span>
-<span id="cb460-7"><a href="integración-monte-carlo-clásica.html#cb460-7" aria-hidden="true" tabindex="-1"></a>             <span class="dv">2</span> <span class="sc">*</span> <span class="fu">c</span>(<span class="sc">-</span>esterr[<span class="dv">1</span>], esterr[<span class="dv">1</span>]), <span class="at">xlab =</span> <span class="st">&quot;Iteraciones&quot;</span>)</span>
-<span id="cb460-8"><a href="integración-monte-carlo-clásica.html#cb460-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">lines</span>(estint <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> esterr, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb460-9"><a href="integración-monte-carlo-clásica.html#cb460-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">lines</span>(estint <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> esterr, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb460-10"><a href="integración-monte-carlo-clásica.html#cb460-10" aria-hidden="true" tabindex="-1"></a>      valor <span class="ot">&lt;-</span> estint[n]</span>
-<span id="cb460-11"><a href="integración-monte-carlo-clásica.html#cb460-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">abline</span>(<span class="at">h =</span> valor)</span>
-<span id="cb460-12"><a href="integración-monte-carlo-clásica.html#cb460-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">valor =</span> valor, <span class="at">error =</span> <span class="dv">2</span> <span class="sc">*</span> esterr[n]))</span>
-<span id="cb460-13"><a href="integración-monte-carlo-clásica.html#cb460-13" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">valor =</span> <span class="fu">mean</span>(fx), <span class="at">error =</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">sd</span>(fx)<span class="sc">/</span><span class="fu">sqrt</span>(n)))</span>
-<span id="cb460-14"><a href="integración-monte-carlo-clásica.html#cb460-14" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb460-15"><a href="integración-monte-carlo-clásica.html#cb460-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb460-16"><a href="integración-monte-carlo-clásica.html#cb460-16" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb460-17"><a href="integración-monte-carlo-clásica.html#cb460-17" aria-hidden="true" tabindex="-1"></a><span class="fu">mc.integral</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="integración-monte-carlo-clásica.html#cb466-1" aria-hidden="true" tabindex="-1"></a>  mc.integral <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, a, b, n, <span class="at">plot =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb466-2"><a href="integración-monte-carlo-clásica.html#cb466-2" aria-hidden="true" tabindex="-1"></a>    fx <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">runif</span>(n, a, b), fun) <span class="sc">*</span> (b <span class="sc">-</span> a)</span>
+<span id="cb466-3"><a href="integración-monte-carlo-clásica.html#cb466-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (plot) {</span>
+<span id="cb466-4"><a href="integración-monte-carlo-clásica.html#cb466-4" aria-hidden="true" tabindex="-1"></a>      estint <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(fx)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">:</span>n)</span>
+<span id="cb466-5"><a href="integración-monte-carlo-clásica.html#cb466-5" aria-hidden="true" tabindex="-1"></a>      esterr <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">cumsum</span>((fx <span class="sc">-</span> estint)<span class="sc">^</span><span class="dv">2</span>))<span class="sc">/</span>(<span class="dv">1</span><span class="sc">:</span>n)</span>
+<span id="cb466-6"><a href="integración-monte-carlo-clásica.html#cb466-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plot</span>(estint, <span class="at">ylab =</span> <span class="st">&quot;Media y rango de error&quot;</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">ylim =</span> <span class="fu">mean</span>(fx) <span class="sc">+</span> </span>
+<span id="cb466-7"><a href="integración-monte-carlo-clásica.html#cb466-7" aria-hidden="true" tabindex="-1"></a>             <span class="dv">2</span> <span class="sc">*</span> <span class="fu">c</span>(<span class="sc">-</span>esterr[<span class="dv">1</span>], esterr[<span class="dv">1</span>]), <span class="at">xlab =</span> <span class="st">&quot;Iteraciones&quot;</span>)</span>
+<span id="cb466-8"><a href="integración-monte-carlo-clásica.html#cb466-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">lines</span>(estint <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> esterr, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb466-9"><a href="integración-monte-carlo-clásica.html#cb466-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">lines</span>(estint <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> esterr, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb466-10"><a href="integración-monte-carlo-clásica.html#cb466-10" aria-hidden="true" tabindex="-1"></a>      valor <span class="ot">&lt;-</span> estint[n]</span>
+<span id="cb466-11"><a href="integración-monte-carlo-clásica.html#cb466-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">abline</span>(<span class="at">h =</span> valor)</span>
+<span id="cb466-12"><a href="integración-monte-carlo-clásica.html#cb466-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">valor =</span> valor, <span class="at">error =</span> <span class="dv">2</span> <span class="sc">*</span> esterr[n]))</span>
+<span id="cb466-13"><a href="integración-monte-carlo-clásica.html#cb466-13" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">valor =</span> <span class="fu">mean</span>(fx), <span class="at">error =</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">sd</span>(fx)<span class="sc">/</span><span class="fu">sqrt</span>(n)))</span>
+<span id="cb466-14"><a href="integración-monte-carlo-clásica.html#cb466-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb466-15"><a href="integración-monte-carlo-clásica.html#cb466-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb466-16"><a href="integración-monte-carlo-clásica.html#cb466-16" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb466-17"><a href="integración-monte-carlo-clásica.html#cb466-17" aria-hidden="true" tabindex="-1"></a><span class="fu">mc.integral</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5000</span>)</span></code></pre></div>
 <pre><code>## $valor
 ## [1] 0.8142206
 ## 
 ## $error
 ## [1] 0.03087305</code></pre>
-<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="integración-monte-carlo-clásica.html#cb462-1" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">4</span><span class="sc">/</span><span class="dv">5</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="integración-monte-carlo-clásica.html#cb468-1" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">4</span><span class="sc">/</span><span class="dv">5</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:mc-integral"></span>
 <img src="09-Monte_Carlo_files/figure-html/mc-integral-1.png" alt="Convergencia de la aproximación de la integral mediante simulación." width="70%" />
 <p class="caption">
@@ -461,8 +460,8 @@ Figura 9.2: Convergencia de la aproximación de la integral mediante simulación
 </p>
 </div>
 <p>Si sólo interesa la aproximación:</p>
-<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="integración-monte-carlo-clásica.html#cb463-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb463-2"><a href="integración-monte-carlo-clásica.html#cb463-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mc.integral</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5000</span>, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="integración-monte-carlo-clásica.html#cb469-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb469-2"><a href="integración-monte-carlo-clásica.html#cb469-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mc.integral</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5000</span>, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## $valor
 ## [1] 0.8142206
 ## 
@@ -484,18 +483,18 @@ es preferible generar más valores donde hay mayor “área” (ver Figura <a hr
 En este caso podemos generar valores de la densidad objetivo fácilmente mediante el método de inversión,
 ya que <span class="math inline">\(F(x) = x^4\)</span> si <span class="math inline">\(0&lt;x&lt;1\)</span>.
 :</p>
-<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="integración-monte-carlo-clásica.html#cb465-1" aria-hidden="true" tabindex="-1"></a>rfun <span class="ot">&lt;-</span> <span class="cf">function</span>(nsim) <span class="fu">runif</span>(nsim)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>) <span class="co"># Método de inversión</span></span>
-<span id="cb465-2"><a href="integración-monte-carlo-clásica.html#cb465-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
-<span id="cb465-3"><a href="integración-monte-carlo-clásica.html#cb465-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb465-4"><a href="integración-monte-carlo-clásica.html#cb465-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rfun</span>(nsim)</span>
-<span id="cb465-5"><a href="integración-monte-carlo-clásica.html#cb465-5" aria-hidden="true" tabindex="-1"></a><span class="co"># h &lt;- function(x) x</span></span>
-<span id="cb465-6"><a href="integración-monte-carlo-clásica.html#cb465-6" aria-hidden="true" tabindex="-1"></a><span class="co"># res &lt;- mean(h(x)) # Aproximación por simulación </span></span>
-<span id="cb465-7"><a href="integración-monte-carlo-clásica.html#cb465-7" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">mean</span>(x)</span>
-<span id="cb465-8"><a href="integración-monte-carlo-clásica.html#cb465-8" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
+<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="integración-monte-carlo-clásica.html#cb471-1" aria-hidden="true" tabindex="-1"></a>rfun <span class="ot">&lt;-</span> <span class="cf">function</span>(nsim) <span class="fu">runif</span>(nsim)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>) <span class="co"># Método de inversión</span></span>
+<span id="cb471-2"><a href="integración-monte-carlo-clásica.html#cb471-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
+<span id="cb471-3"><a href="integración-monte-carlo-clásica.html#cb471-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb471-4"><a href="integración-monte-carlo-clásica.html#cb471-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rfun</span>(nsim)</span>
+<span id="cb471-5"><a href="integración-monte-carlo-clásica.html#cb471-5" aria-hidden="true" tabindex="-1"></a><span class="co"># h &lt;- function(x) x</span></span>
+<span id="cb471-6"><a href="integración-monte-carlo-clásica.html#cb471-6" aria-hidden="true" tabindex="-1"></a><span class="co"># res &lt;- mean(h(x)) # Aproximación por simulación </span></span>
+<span id="cb471-7"><a href="integración-monte-carlo-clásica.html#cb471-7" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">mean</span>(x)</span>
+<span id="cb471-8"><a href="integración-monte-carlo-clásica.html#cb471-8" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
 <pre><code>## [1] 0.7967756</code></pre>
-<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="integración-monte-carlo-clásica.html#cb467-1" aria-hidden="true" tabindex="-1"></a><span class="co"># error &lt;- 2*sd(h(x))/sqrt(nsim)</span></span>
-<span id="cb467-2"><a href="integración-monte-carlo-clásica.html#cb467-2" aria-hidden="true" tabindex="-1"></a>error <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(nsim)</span>
-<span id="cb467-3"><a href="integración-monte-carlo-clásica.html#cb467-3" aria-hidden="true" tabindex="-1"></a>error</span></code></pre></div>
+<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="integración-monte-carlo-clásica.html#cb473-1" aria-hidden="true" tabindex="-1"></a><span class="co"># error &lt;- 2*sd(h(x))/sqrt(nsim)</span></span>
+<span id="cb473-2"><a href="integración-monte-carlo-clásica.html#cb473-2" aria-hidden="true" tabindex="-1"></a>error <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(nsim)</span>
+<span id="cb473-3"><a href="integración-monte-carlo-clásica.html#cb473-3" aria-hidden="true" tabindex="-1"></a>error</span></code></pre></div>
 <pre><code>## [1] 0.004728174</code></pre>
 
 <div class="exercise">
@@ -504,18 +503,18 @@ ya que <span class="math inline">\(F(x) = x^4\)</span> si <span class="math inli
 <p>Aproximar:
 <span class="math display">\[\phi(t)=\int_{t}^{\infty}\frac1{\sqrt{2\pi}}e^{-\frac{x^2}2}dx,\]</span>
 para <span class="math inline">\(t=4.5\)</span>, empleando integración Monte Carlo (aproximación tradicional con dominio infinito).</p>
-<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="integración-monte-carlo-clásica.html#cb469-1" aria-hidden="true" tabindex="-1"></a><span class="co"># h &lt;- function(x) x &gt; 4.5</span></span>
-<span id="cb469-2"><a href="integración-monte-carlo-clásica.html#cb469-2" aria-hidden="true" tabindex="-1"></a><span class="co"># f &lt;- function(x) dnorm(x)</span></span>
-<span id="cb469-3"><a href="integración-monte-carlo-clásica.html#cb469-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb469-4"><a href="integración-monte-carlo-clásica.html#cb469-4" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">3</span></span>
-<span id="cb469-5"><a href="integración-monte-carlo-clásica.html#cb469-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(nsim)</span>
-<span id="cb469-6"><a href="integración-monte-carlo-clásica.html#cb469-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x <span class="sc">&gt;</span> <span class="fl">4.5</span>) <span class="co"># mean(h(x))</span></span></code></pre></div>
+<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="integración-monte-carlo-clásica.html#cb475-1" aria-hidden="true" tabindex="-1"></a><span class="co"># h &lt;- function(x) x &gt; 4.5</span></span>
+<span id="cb475-2"><a href="integración-monte-carlo-clásica.html#cb475-2" aria-hidden="true" tabindex="-1"></a><span class="co"># f &lt;- function(x) dnorm(x)</span></span>
+<span id="cb475-3"><a href="integración-monte-carlo-clásica.html#cb475-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb475-4"><a href="integración-monte-carlo-clásica.html#cb475-4" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">3</span></span>
+<span id="cb475-5"><a href="integración-monte-carlo-clásica.html#cb475-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(nsim)</span>
+<span id="cb475-6"><a href="integración-monte-carlo-clásica.html#cb475-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x <span class="sc">&gt;</span> <span class="fl">4.5</span>) <span class="co"># mean(h(x))</span></span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="integración-monte-carlo-clásica.html#cb471-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="sc">-</span><span class="fl">4.5</span>)  <span class="co"># valor teórico P(X &gt; 4.5) </span></span></code></pre></div>
+<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="integración-monte-carlo-clásica.html#cb477-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="sc">-</span><span class="fl">4.5</span>)  <span class="co"># valor teórico P(X &gt; 4.5) </span></span></code></pre></div>
 <pre><code>## [1] 3.397673e-06</code></pre>
 <p>De esta forma es dificil que se generen valores (en este caso ninguno)
 en la región que interesaría para la aproximación de la integral:</p>
-<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="integración-monte-carlo-clásica.html#cb473-1" aria-hidden="true" tabindex="-1"></a><span class="fu">any</span>(x <span class="sc">&gt;</span> <span class="fl">4.5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="integración-monte-carlo-clásica.html#cb479-1" aria-hidden="true" tabindex="-1"></a><span class="fu">any</span>(x <span class="sc">&gt;</span> <span class="fl">4.5</span>)</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <p>Como ya se comentó anteriormente, sería preferible generar más valores donde hay mayor “área,”
 pero en este caso <span class="math inline">\(f\)</span> concentra la densidad en una región que no resulta de utilidad.

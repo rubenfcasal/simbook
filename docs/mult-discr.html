@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-03-16" />
+<meta name="date" content="2022-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,11 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#elección-de-la-densidad-auxiliar"><i class="fa fa-check"></i><b>5.2.4</b> Elección de la densidad auxiliar</a></li>
-<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: Inferencia Bayesiana</a></li>
+<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#bayes-ar"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: inferencia bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación-rechazo</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
@@ -376,28 +376,28 @@ Este tipo de procedimientos son conocidos como métodos de etiquetado o codifica
 indice unidimensional equivalente al indice multidimensional,
 mediante una función de etiquetado
 <span class="math inline">\(l(\mathbf{i}) = l\left(i_1, i_2, \ldots,i_d \right) \in \mathbb{N}\)</span>.</p>
-<p>Si la variable discreta multidimensional tiene soporte finito, este tipo de recodificación se puede hacer de forma automática en R cambiando simplemente el indexado<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a> (empleando la función <code>as.vector()</code> para cambiar a un indexado unidimensional y posteriormente las funciones <code>as.matrix()</code>, o <code>as.array()</code>, para reconstruir el indexado multidimensional).</p>
+<p>Si la variable discreta multidimensional tiene soporte finito, este tipo de recodificación se puede hacer de forma automática en R cambiando simplemente el indexado<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a> (empleando la función <code>as.vector()</code> para cambiar a un indexado unidimensional y posteriormente las funciones <code>as.matrix()</code>, o <code>as.array()</code>, para reconstruir el indexado multidimensional).</p>
 <p>Como ejemplo ilustrativo (en el caso bidimensional) podríamos emplear el siguiente código:</p>
-<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="mult-discr.html#cb268-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="dv">11</span><span class="sc">:</span><span class="dv">18</span></span>
-<span id="cb268-2"><a href="mult-discr.html#cb268-2" aria-hidden="true" tabindex="-1"></a>xy <span class="ot">&lt;-</span> <span class="fu">matrix</span>(z, <span class="at">ncol =</span> <span class="dv">2</span>)</span>
-<span id="cb268-3"><a href="mult-discr.html#cb268-3" aria-hidden="true" tabindex="-1"></a>xy</span></code></pre></div>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="mult-discr.html#cb274-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="dv">11</span><span class="sc">:</span><span class="dv">18</span></span>
+<span id="cb274-2"><a href="mult-discr.html#cb274-2" aria-hidden="true" tabindex="-1"></a>xy <span class="ot">&lt;-</span> <span class="fu">matrix</span>(z, <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb274-3"><a href="mult-discr.html#cb274-3" aria-hidden="true" tabindex="-1"></a>xy</span></code></pre></div>
 <pre><code>##      [,1] [,2]
 ## [1,]   11   15
 ## [2,]   12   16
 ## [3,]   13   17
 ## [4,]   14   18</code></pre>
-<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="mult-discr.html#cb270-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(xy)</span>
-<span id="cb270-2"><a href="mult-discr.html#cb270-2" aria-hidden="true" tabindex="-1"></a>z</span></code></pre></div>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="mult-discr.html#cb276-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(xy)</span>
+<span id="cb276-2"><a href="mult-discr.html#cb276-2" aria-hidden="true" tabindex="-1"></a>z</span></code></pre></div>
 <pre><code>## [1] 11 12 13 14 15 16 17 18</code></pre>
-<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="mult-discr.html#cb272-1" aria-hidden="true" tabindex="-1"></a>i1d <span class="ot">&lt;-</span> <span class="fu">seq_along</span>(z)</span>
-<span id="cb272-2"><a href="mult-discr.html#cb272-2" aria-hidden="true" tabindex="-1"></a>i1d </span></code></pre></div>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="mult-discr.html#cb278-1" aria-hidden="true" tabindex="-1"></a>i1d <span class="ot">&lt;-</span> <span class="fu">seq_along</span>(z)</span>
+<span id="cb278-2"><a href="mult-discr.html#cb278-2" aria-hidden="true" tabindex="-1"></a>i1d </span></code></pre></div>
 <pre><code>## [1] 1 2 3 4 5 6 7 8</code></pre>
-<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="mult-discr.html#cb274-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cálculo del índice bidimensional (inversa de la función de etiquetado: 1d -&gt; 2d)</span></span>
-<span id="cb274-2"><a href="mult-discr.html#cb274-2" aria-hidden="true" tabindex="-1"></a>nx <span class="ot">&lt;-</span> <span class="fu">nrow</span>(xy)</span>
-<span id="cb274-3"><a href="mult-discr.html#cb274-3" aria-hidden="true" tabindex="-1"></a>linv <span class="ot">&lt;-</span> <span class="cf">function</span>(k) <span class="fu">cbind</span>((k <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">%%</span> nx <span class="sc">+</span> <span class="dv">1</span>, <span class="fu">floor</span>((k <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">/</span>nx) <span class="sc">+</span> <span class="dv">1</span>)</span>
-<span id="cb274-4"><a href="mult-discr.html#cb274-4" aria-hidden="true" tabindex="-1"></a>i2d <span class="ot">&lt;-</span> <span class="fu">linv</span>(i1d)</span>
-<span id="cb274-5"><a href="mult-discr.html#cb274-5" aria-hidden="true" tabindex="-1"></a><span class="co"># i2d &lt;- arrayInd(i1d, dim(xy))</span></span>
-<span id="cb274-6"><a href="mult-discr.html#cb274-6" aria-hidden="true" tabindex="-1"></a>i2d</span></code></pre></div>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="mult-discr.html#cb280-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cálculo del índice bidimensional (inversa de la función de etiquetado: 1d -&gt; 2d)</span></span>
+<span id="cb280-2"><a href="mult-discr.html#cb280-2" aria-hidden="true" tabindex="-1"></a>nx <span class="ot">&lt;-</span> <span class="fu">nrow</span>(xy)</span>
+<span id="cb280-3"><a href="mult-discr.html#cb280-3" aria-hidden="true" tabindex="-1"></a>linv <span class="ot">&lt;-</span> <span class="cf">function</span>(k) <span class="fu">cbind</span>((k <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">%%</span> nx <span class="sc">+</span> <span class="dv">1</span>, <span class="fu">floor</span>((k <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">/</span>nx) <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb280-4"><a href="mult-discr.html#cb280-4" aria-hidden="true" tabindex="-1"></a>i2d <span class="ot">&lt;-</span> <span class="fu">linv</span>(i1d)</span>
+<span id="cb280-5"><a href="mult-discr.html#cb280-5" aria-hidden="true" tabindex="-1"></a><span class="co"># i2d &lt;- arrayInd(i1d, dim(xy))</span></span>
+<span id="cb280-6"><a href="mult-discr.html#cb280-6" aria-hidden="true" tabindex="-1"></a>i2d</span></code></pre></div>
 <pre><code>##      [,1] [,2]
 ## [1,]    1    1
 ## [2,]    2    1
@@ -407,29 +407,29 @@ mediante una función de etiquetado
 ## [6,]    2    2
 ## [7,]    3    2
 ## [8,]    4    2</code></pre>
-<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="mult-discr.html#cb276-1" aria-hidden="true" tabindex="-1"></a>xy[i2d]</span></code></pre></div>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="mult-discr.html#cb282-1" aria-hidden="true" tabindex="-1"></a>xy[i2d]</span></code></pre></div>
 <pre><code>## [1] 11 12 13 14 15 16 17 18</code></pre>
-<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="mult-discr.html#cb278-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cálculo del índice unidimensional (función de etiquetado: 2d -&gt; 1d)</span></span>
-<span id="cb278-2"><a href="mult-discr.html#cb278-2" aria-hidden="true" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="cf">function</span>(i, j) nx<span class="sc">*</span>(j<span class="dv">-1</span>) <span class="sc">+</span> i</span>
-<span id="cb278-3"><a href="mult-discr.html#cb278-3" aria-hidden="true" tabindex="-1"></a><span class="fu">l</span>(<span class="dv">2</span>, <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="mult-discr.html#cb284-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cálculo del índice unidimensional (función de etiquetado: 2d -&gt; 1d)</span></span>
+<span id="cb284-2"><a href="mult-discr.html#cb284-2" aria-hidden="true" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="cf">function</span>(i, j) nx<span class="sc">*</span>(j<span class="dv">-1</span>) <span class="sc">+</span> i</span>
+<span id="cb284-3"><a href="mult-discr.html#cb284-3" aria-hidden="true" tabindex="-1"></a><span class="fu">l</span>(<span class="dv">2</span>, <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] 2</code></pre>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="mult-discr.html#cb280-1" aria-hidden="true" tabindex="-1"></a><span class="fu">l</span>(<span class="dv">2</span>, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="mult-discr.html#cb286-1" aria-hidden="true" tabindex="-1"></a><span class="fu">l</span>(<span class="dv">2</span>, <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 6</code></pre>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="mult-discr.html#cb282-1" aria-hidden="true" tabindex="-1"></a>i1d <span class="ot">&lt;-</span> <span class="fu">mapply</span>(l, i2d[, <span class="dv">1</span>], i2d[, <span class="dv">2</span>])</span>
-<span id="cb282-2"><a href="mult-discr.html#cb282-2" aria-hidden="true" tabindex="-1"></a>i1d</span></code></pre></div>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="mult-discr.html#cb288-1" aria-hidden="true" tabindex="-1"></a>i1d <span class="ot">&lt;-</span> <span class="fu">mapply</span>(l, i2d[, <span class="dv">1</span>], i2d[, <span class="dv">2</span>])</span>
+<span id="cb288-2"><a href="mult-discr.html#cb288-2" aria-hidden="true" tabindex="-1"></a>i1d</span></code></pre></div>
 <pre><code>## [1] 1 2 3 4 5 6 7 8</code></pre>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="mult-discr.html#cb284-1" aria-hidden="true" tabindex="-1"></a>z[i1d]</span></code></pre></div>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="mult-discr.html#cb290-1" aria-hidden="true" tabindex="-1"></a>z[i1d]</span></code></pre></div>
 <pre><code>## [1] 11 12 13 14 15 16 17 18</code></pre>
 <p>Realmente lo que ocurre es que internamente un objeto <code>matrix</code> o <code>array</code> está almacenado como un vector y R admite un indexado multidimensional si está presente un atributo <code>dim</code>:</p>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="mult-discr.html#cb286-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(z) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">2</span>)</span>
-<span id="cb286-2"><a href="mult-discr.html#cb286-2" aria-hidden="true" tabindex="-1"></a>z</span></code></pre></div>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="mult-discr.html#cb292-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(z) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">2</span>)</span>
+<span id="cb292-2"><a href="mult-discr.html#cb292-2" aria-hidden="true" tabindex="-1"></a>z</span></code></pre></div>
 <pre><code>##      [,1] [,2]
 ## [1,]   11   15
 ## [2,]   12   16
 ## [3,]   13   17
 ## [4,]   14   18</code></pre>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="mult-discr.html#cb288-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(z) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span>
-<span id="cb288-2"><a href="mult-discr.html#cb288-2" aria-hidden="true" tabindex="-1"></a>z</span></code></pre></div>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="mult-discr.html#cb294-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(z) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb294-2"><a href="mult-discr.html#cb294-2" aria-hidden="true" tabindex="-1"></a>z</span></code></pre></div>
 <pre><code>## , , 1
 ## 
 ##      [,1] [,2]
@@ -441,8 +441,8 @@ mediante una función de etiquetado
 ##      [,1] [,2]
 ## [1,]   15   17
 ## [2,]   16   18</code></pre>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="mult-discr.html#cb290-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(z) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb290-2"><a href="mult-discr.html#cb290-2" aria-hidden="true" tabindex="-1"></a>z</span></code></pre></div>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="mult-discr.html#cb296-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(z) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb296-2"><a href="mult-discr.html#cb296-2" aria-hidden="true" tabindex="-1"></a>z</span></code></pre></div>
 <pre><code>## [1] 11 12 13 14 15 16 17 18</code></pre>
 <p>Si la variable discreta multidimensional no tiene soporte finito (tampoco se podría guardar la función de masa de probabilidad en una tabla), se podrían emplear métodos de codificación más avanzados (ver Cao, 2002, Sección 6.3).</p>
 </div>
@@ -450,11 +450,11 @@ mediante una función de etiquetado
 <h3><span class="header-section-number">7.7.2</span> Simulación de una variable discreta bidimensional</h3>
 <p>Consideramos datos recogidos en un estudio de mejora de calidad en una fábrica de semiconductores.
 Se obtuvo una muestra de obleas que se clasificaron dependiendo de si se encontraron partículas en la matriz que producía la oblea y de si la calidad de oblea era buena (para más detalles Hall, 1994. Analysis of defectivity of semiconductor wafers by contigency table. Proceedings of the Institute of Environmental Sciences 1, 177-183).</p>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="mult-discr.html#cb292-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">320</span>, <span class="dv">14</span>, <span class="dv">80</span>, <span class="dv">36</span>)</span>
-<span id="cb292-2"><a href="mult-discr.html#cb292-2" aria-hidden="true" tabindex="-1"></a>particulas <span class="ot">&lt;-</span> <span class="fu">gl</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;si&quot;</span>))</span>
-<span id="cb292-3"><a href="mult-discr.html#cb292-3" aria-hidden="true" tabindex="-1"></a>calidad <span class="ot">&lt;-</span> <span class="fu">gl</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;buena&quot;</span>, <span class="st">&quot;mala&quot;</span>))</span>
-<span id="cb292-4"><a href="mult-discr.html#cb292-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(n, particulas, calidad)</span>
-<span id="cb292-5"><a href="mult-discr.html#cb292-5" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="mult-discr.html#cb298-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">320</span>, <span class="dv">14</span>, <span class="dv">80</span>, <span class="dv">36</span>)</span>
+<span id="cb298-2"><a href="mult-discr.html#cb298-2" aria-hidden="true" tabindex="-1"></a>particulas <span class="ot">&lt;-</span> <span class="fu">gl</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;si&quot;</span>))</span>
+<span id="cb298-3"><a href="mult-discr.html#cb298-3" aria-hidden="true" tabindex="-1"></a>calidad <span class="ot">&lt;-</span> <span class="fu">gl</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;buena&quot;</span>, <span class="st">&quot;mala&quot;</span>))</span>
+<span id="cb298-4"><a href="mult-discr.html#cb298-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(n, particulas, calidad)</span>
+<span id="cb298-5"><a href="mult-discr.html#cb298-5" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
 <pre><code>##     n particulas calidad
 ## 1 320         no   buena
 ## 2  14         si   buena
@@ -462,55 +462,55 @@ Se obtuvo una muestra de obleas que se clasificaron dependiendo de si se encontr
 ## 4  36         si    mala</code></pre>
 <p>En lugar de estar en el formato de un conjunto de datos (<code>data.frame</code>)
 puede que los datos estén en formato de tabla (<code>table</code>, <code>matrix</code>):</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="mult-discr.html#cb294-1" aria-hidden="true" tabindex="-1"></a>tabla <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(n <span class="sc">~</span> calidad <span class="sc">+</span> particulas)</span>
-<span id="cb294-2"><a href="mult-discr.html#cb294-2" aria-hidden="true" tabindex="-1"></a>tabla</span></code></pre></div>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="mult-discr.html#cb300-1" aria-hidden="true" tabindex="-1"></a>tabla <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(n <span class="sc">~</span> calidad <span class="sc">+</span> particulas)</span>
+<span id="cb300-2"><a href="mult-discr.html#cb300-2" aria-hidden="true" tabindex="-1"></a>tabla</span></code></pre></div>
 <pre><code>##        particulas
 ## calidad  no  si
 ##   buena 320  14
 ##   mala   80  36</code></pre>
 <p>Lo podemos convertir directamente a <code>data.frame</code>:</p>
-<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="mult-discr.html#cb296-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.data.frame</span>(tabla)</span></code></pre></div>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="mult-discr.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.data.frame</span>(tabla)</span></code></pre></div>
 <pre><code>##   calidad particulas Freq
 ## 1   buena         no  320
 ## 2    mala         no   80
 ## 3   buena         si   14
 ## 4    mala         si   36</code></pre>
 <p>En este caso definimos las probabilidades a partir de las frecuencias:</p>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="mult-discr.html#cb298-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>p <span class="ot">&lt;-</span> df<span class="sc">$</span>n<span class="sc">/</span><span class="fu">sum</span>(df<span class="sc">$</span>n)</span>
-<span id="cb298-2"><a href="mult-discr.html#cb298-2" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="mult-discr.html#cb304-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>p <span class="ot">&lt;-</span> df<span class="sc">$</span>n<span class="sc">/</span><span class="fu">sum</span>(df<span class="sc">$</span>n)</span>
+<span id="cb304-2"><a href="mult-discr.html#cb304-2" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
 <pre><code>##     n particulas calidad          p
 ## 1 320         no   buena 0.71111111
 ## 2  14         si   buena 0.03111111
 ## 3  80         no    mala 0.17777778
 ## 4  36         si    mala 0.08000000</code></pre>
 <p>En formato tabla:</p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="mult-discr.html#cb300-1" aria-hidden="true" tabindex="-1"></a>pij <span class="ot">&lt;-</span> tabla<span class="sc">/</span><span class="fu">sum</span>(tabla)</span>
-<span id="cb300-2"><a href="mult-discr.html#cb300-2" aria-hidden="true" tabindex="-1"></a>pij</span></code></pre></div>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="mult-discr.html#cb306-1" aria-hidden="true" tabindex="-1"></a>pij <span class="ot">&lt;-</span> tabla<span class="sc">/</span><span class="fu">sum</span>(tabla)</span>
+<span id="cb306-2"><a href="mult-discr.html#cb306-2" aria-hidden="true" tabindex="-1"></a>pij</span></code></pre></div>
 <pre><code>##        particulas
 ## calidad         no         si
 ##   buena 0.71111111 0.03111111
 ##   mala  0.17777778 0.08000000</code></pre>
 <p>Para simular la variable bidimensional consideramos una variable
 unidimensional de índices:</p>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="mult-discr.html#cb302-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df)</span>
-<span id="cb302-2"><a href="mult-discr.html#cb302-2" aria-hidden="true" tabindex="-1"></a>z</span></code></pre></div>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="mult-discr.html#cb308-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df)</span>
+<span id="cb308-2"><a href="mult-discr.html#cb308-2" aria-hidden="true" tabindex="-1"></a>z</span></code></pre></div>
 <pre><code>## [1] 1 2 3 4</code></pre>
 <p>Con probabilidades:</p>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="mult-discr.html#cb304-1" aria-hidden="true" tabindex="-1"></a>pz <span class="ot">&lt;-</span> df<span class="sc">$</span>p</span>
-<span id="cb304-2"><a href="mult-discr.html#cb304-2" aria-hidden="true" tabindex="-1"></a>pz</span></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="mult-discr.html#cb310-1" aria-hidden="true" tabindex="-1"></a>pz <span class="ot">&lt;-</span> df<span class="sc">$</span>p</span>
+<span id="cb310-2"><a href="mult-discr.html#cb310-2" aria-hidden="true" tabindex="-1"></a>pz</span></code></pre></div>
 <pre><code>## [1] 0.71111111 0.03111111 0.17777778 0.08000000</code></pre>
 <p>Si las probabilidades estuviesen en una matriz, las convertiríamos a un
 vector con:</p>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="mult-discr.html#cb306-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.vector</span>(pij)</span></code></pre></div>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="mult-discr.html#cb312-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.vector</span>(pij)</span></code></pre></div>
 <pre><code>## [1] 0.71111111 0.17777778 0.03111111 0.08000000</code></pre>
 <p>Si simulamos la variable unidimensional:</p>
-<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="mult-discr.html#cb308-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb308-2"><a href="mult-discr.html#cb308-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">20</span></span>
-<span id="cb308-3"><a href="mult-discr.html#cb308-3" aria-hidden="true" tabindex="-1"></a>rz <span class="ot">&lt;-</span> <span class="fu">sample</span>(z, nsim, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> pz)</span></code></pre></div>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="mult-discr.html#cb314-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb314-2"><a href="mult-discr.html#cb314-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb314-3"><a href="mult-discr.html#cb314-3" aria-hidden="true" tabindex="-1"></a>rz <span class="ot">&lt;-</span> <span class="fu">sample</span>(z, nsim, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> pz)</span></code></pre></div>
 <p>Podríamos obtener simulaciones bidimensionales, por ejemplo:</p>
-<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="mult-discr.html#cb309-1" aria-hidden="true" tabindex="-1"></a>etiquetas <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(df[<span class="fu">c</span>(<span class="st">&#39;particulas&#39;</span>, <span class="st">&#39;calidad&#39;</span>)])</span>
-<span id="cb309-2"><a href="mult-discr.html#cb309-2" aria-hidden="true" tabindex="-1"></a>rxy <span class="ot">&lt;-</span> etiquetas[rz, ]</span>
-<span id="cb309-3"><a href="mult-discr.html#cb309-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rxy)</span></code></pre></div>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="mult-discr.html#cb315-1" aria-hidden="true" tabindex="-1"></a>etiquetas <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(df[<span class="fu">c</span>(<span class="st">&#39;particulas&#39;</span>, <span class="st">&#39;calidad&#39;</span>)])</span>
+<span id="cb315-2"><a href="mult-discr.html#cb315-2" aria-hidden="true" tabindex="-1"></a>rxy <span class="ot">&lt;-</span> etiquetas[rz, ]</span>
+<span id="cb315-3"><a href="mult-discr.html#cb315-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rxy)</span></code></pre></div>
 <pre><code>##      particulas calidad
 ## [1,] &quot;no&quot;       &quot;buena&quot;
 ## [2,] &quot;no&quot;       &quot;buena&quot;
@@ -519,9 +519,9 @@ vector con:</p>
 ## [5,] &quot;no&quot;       &quot;buena&quot;
 ## [6,] &quot;si&quot;       &quot;mala&quot;</code></pre>
 <p>Alternativamente, si queremos trabajar con data.frames:</p>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="mult-discr.html#cb311-1" aria-hidden="true" tabindex="-1"></a>etiquetas <span class="ot">&lt;-</span> df[<span class="fu">c</span>(<span class="st">&#39;particulas&#39;</span>, <span class="st">&#39;calidad&#39;</span>)]</span>
-<span id="cb311-2"><a href="mult-discr.html#cb311-2" aria-hidden="true" tabindex="-1"></a>rxy <span class="ot">&lt;-</span> etiquetas[rz, ]</span>
-<span id="cb311-3"><a href="mult-discr.html#cb311-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rxy)</span></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="mult-discr.html#cb317-1" aria-hidden="true" tabindex="-1"></a>etiquetas <span class="ot">&lt;-</span> df[<span class="fu">c</span>(<span class="st">&#39;particulas&#39;</span>, <span class="st">&#39;calidad&#39;</span>)]</span>
+<span id="cb317-2"><a href="mult-discr.html#cb317-2" aria-hidden="true" tabindex="-1"></a>rxy <span class="ot">&lt;-</span> etiquetas[rz, ]</span>
+<span id="cb317-3"><a href="mult-discr.html#cb317-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rxy)</span></code></pre></div>
 <pre><code>##     particulas calidad
 ## 1           no   buena
 ## 1.1         no   buena
@@ -529,9 +529,9 @@ vector con:</p>
 ## 4           si    mala
 ## 1.3         no   buena
 ## 4.1         si    mala</code></pre>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="mult-discr.html#cb313-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Si se quieren eliminar las etiquetas de las filas:</span></span>
-<span id="cb313-2"><a href="mult-discr.html#cb313-2" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(rxy) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb313-3"><a href="mult-discr.html#cb313-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rxy)</span></code></pre></div>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="mult-discr.html#cb319-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Si se quieren eliminar las etiquetas de las filas:</span></span>
+<span id="cb319-2"><a href="mult-discr.html#cb319-2" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(rxy) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb319-3"><a href="mult-discr.html#cb319-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rxy)</span></code></pre></div>
 <pre><code>##   particulas calidad
 ## 1         no   buena
 ## 2         no   buena
@@ -545,19 +545,19 @@ vector con:</p>
 <p>El código anterior puede ser empleado para simular tablas de contingencia.
 Aunque en estos casos se suele fijar el total de la tabla (o incluso las frecuencias marginales).
 En este caso, sólo habría que fijar el número de simulaciones al total de la tabla:</p>
-<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="mult-discr.html#cb315-1" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="fu">sum</span>(n)</span>
-<span id="cb315-2"><a href="mult-discr.html#cb315-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb315-3"><a href="mult-discr.html#cb315-3" aria-hidden="true" tabindex="-1"></a>rz <span class="ot">&lt;-</span> <span class="fu">sample</span>(z, nsim, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> pz)</span>
-<span id="cb315-4"><a href="mult-discr.html#cb315-4" aria-hidden="true" tabindex="-1"></a>rtable <span class="ot">&lt;-</span> <span class="fu">table</span>(rz) <span class="co"># Tabla de frecuencias unidimensional</span></span>
-<span id="cb315-5"><a href="mult-discr.html#cb315-5" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span>(rtable, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="co"># Tabla de frecuencias bidimensional</span></span></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="mult-discr.html#cb321-1" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="fu">sum</span>(n)</span>
+<span id="cb321-2"><a href="mult-discr.html#cb321-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb321-3"><a href="mult-discr.html#cb321-3" aria-hidden="true" tabindex="-1"></a>rz <span class="ot">&lt;-</span> <span class="fu">sample</span>(z, nsim, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> pz)</span>
+<span id="cb321-4"><a href="mult-discr.html#cb321-4" aria-hidden="true" tabindex="-1"></a>rtable <span class="ot">&lt;-</span> <span class="fu">table</span>(rz) <span class="co"># Tabla de frecuencias unidimensional</span></span>
+<span id="cb321-5"><a href="mult-discr.html#cb321-5" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span>(rtable, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="co"># Tabla de frecuencias bidimensional</span></span></code></pre></div>
 <pre><code>##      [,1] [,2]
 ## [1,]  321   78
 ## [2,]   15   36</code></pre>
 <p>Aunque puede ser preferible emplear directamente <code>rmultinom</code>
 si se van a generar muchas:</p>
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="mult-discr.html#cb317-1" aria-hidden="true" tabindex="-1"></a>ntsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb317-2"><a href="mult-discr.html#cb317-2" aria-hidden="true" tabindex="-1"></a>rtablas <span class="ot">&lt;-</span> <span class="fu">rmultinom</span>(ntsim, <span class="fu">sum</span>(n), pz)</span>
-<span id="cb317-3"><a href="mult-discr.html#cb317-3" aria-hidden="true" tabindex="-1"></a>rtablas[ , <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="co"># Las cinco primeras simulaciones</span></span></code></pre></div>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="mult-discr.html#cb323-1" aria-hidden="true" tabindex="-1"></a>ntsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb323-2"><a href="mult-discr.html#cb323-2" aria-hidden="true" tabindex="-1"></a>rtablas <span class="ot">&lt;-</span> <span class="fu">rmultinom</span>(ntsim, <span class="fu">sum</span>(n), pz)</span>
+<span id="cb323-3"><a href="mult-discr.html#cb323-3" aria-hidden="true" tabindex="-1"></a>rtablas[ , <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="co"># Las cinco primeras simulaciones</span></span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]  298  329  323  323  307
 ## [2,]   15   21    5   15   15
@@ -565,27 +565,27 @@ si se van a generar muchas:</p>
 ## [4,]   45   32   31   35   36</code></pre>
 <p>Por ejemplo, si se quiere simular bajo independencia,
 estimando las probabilidades a partir de la tabla:</p>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="mult-discr.html#cb319-1" aria-hidden="true" tabindex="-1"></a>tabla</span></code></pre></div>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="mult-discr.html#cb325-1" aria-hidden="true" tabindex="-1"></a>tabla</span></code></pre></div>
 <pre><code>##        particulas
 ## calidad  no  si
 ##   buena 320  14
 ##   mala   80  36</code></pre>
 <p>Consideraríamos como probabilidades:</p>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="mult-discr.html#cb321-1" aria-hidden="true" tabindex="-1"></a>pind <span class="ot">&lt;-</span> (<span class="fu">rowSums</span>(tabla) <span class="sc">%o%</span> <span class="fu">colSums</span>(tabla))<span class="sc">/</span>(<span class="fu">sum</span>(tabla)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb321-2"><a href="mult-discr.html#cb321-2" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span>(pind, <span class="at">nrow =</span> <span class="fu">nrow</span>(tabla))</span></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="mult-discr.html#cb327-1" aria-hidden="true" tabindex="-1"></a>pind <span class="ot">&lt;-</span> (<span class="fu">rowSums</span>(tabla) <span class="sc">%o%</span> <span class="fu">colSums</span>(tabla))<span class="sc">/</span>(<span class="fu">sum</span>(tabla)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb327-2"><a href="mult-discr.html#cb327-2" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span>(pind, <span class="at">nrow =</span> <span class="fu">nrow</span>(tabla))</span></code></pre></div>
 <pre><code>##           [,1]       [,2]
 ## [1,] 0.6597531 0.08246914
 ## [2,] 0.2291358 0.02864198</code></pre>
-<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="mult-discr.html#cb323-1" aria-hidden="true" tabindex="-1"></a>rtablas <span class="ot">&lt;-</span> <span class="fu">rmultinom</span>(ntsim, <span class="fu">sum</span>(n), pind)</span>
-<span id="cb323-2"><a href="mult-discr.html#cb323-2" aria-hidden="true" tabindex="-1"></a>rtablas[ , <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="co"># Las cinco primeras simulaciones</span></span></code></pre></div>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="mult-discr.html#cb329-1" aria-hidden="true" tabindex="-1"></a>rtablas <span class="ot">&lt;-</span> <span class="fu">rmultinom</span>(ntsim, <span class="fu">sum</span>(n), pind)</span>
+<span id="cb329-2"><a href="mult-discr.html#cb329-2" aria-hidden="true" tabindex="-1"></a>rtablas[ , <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="co"># Las cinco primeras simulaciones</span></span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]  292  285  309  303  290
 ## [2,]   96  105   97   84  113
 ## [3,]   48   48   36   49   39
 ## [4,]   14   12    8   14    8</code></pre>
 <p>Para realizar el contraste de independencia:</p>
-<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="mult-discr.html#cb325-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(tabla)</span>
-<span id="cb325-2"><a href="mult-discr.html#cb325-2" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="mult-discr.html#cb331-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(tabla)</span>
+<span id="cb331-2"><a href="mult-discr.html#cb331-2" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
 ## 
@@ -596,11 +596,11 @@ estimando las probabilidades a partir de la tabla:</p>
 <span id="exr:chicuadind" class="exercise"><strong>Ejercicio 7.3  (Distribución del estadístico chi-cuadrado de independencia)  </strong></span>
 </div>
 <p>Aproximar por simulación la distribución (exacta) del estadístico chi-cuadrado bajo independencia.</p>
-<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="mult-discr.html#cb327-1" aria-hidden="true" tabindex="-1"></a>sim.stat <span class="ot">&lt;-</span> <span class="fu">apply</span>(rtablas, <span class="dv">2</span>, <span class="cf">function</span>(x){<span class="fu">chisq.test</span>(<span class="fu">matrix</span>(x,<span class="at">nrow=</span><span class="fu">nrow</span>(tabla)))<span class="sc">$</span>statistic})</span>
-<span id="cb327-2"><a href="mult-discr.html#cb327-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(sim.stat, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&#39;FD&#39;</span>)</span>
-<span id="cb327-3"><a href="mult-discr.html#cb327-3" aria-hidden="true" tabindex="-1"></a><span class="co"># lines(density(sim.stat))</span></span>
-<span id="cb327-4"><a href="mult-discr.html#cb327-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribución asintótica (aproximación chi-cuadrado)</span></span>
-<span id="cb327-5"><a href="mult-discr.html#cb327-5" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dchisq</span>(x, res<span class="sc">$</span>parameter), <span class="at">col =</span> <span class="st">&#39;blue&#39;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="mult-discr.html#cb333-1" aria-hidden="true" tabindex="-1"></a>sim.stat <span class="ot">&lt;-</span> <span class="fu">apply</span>(rtablas, <span class="dv">2</span>, <span class="cf">function</span>(x){<span class="fu">chisq.test</span>(<span class="fu">matrix</span>(x,<span class="at">nrow=</span><span class="fu">nrow</span>(tabla)))<span class="sc">$</span>statistic})</span>
+<span id="cb333-2"><a href="mult-discr.html#cb333-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(sim.stat, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&#39;FD&#39;</span>)</span>
+<span id="cb333-3"><a href="mult-discr.html#cb333-3" aria-hidden="true" tabindex="-1"></a><span class="co"># lines(density(sim.stat))</span></span>
+<span id="cb333-4"><a href="mult-discr.html#cb333-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribución asintótica (aproximación chi-cuadrado)</span></span>
+<span id="cb333-5"><a href="mult-discr.html#cb333-5" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dchisq</span>(x, res<span class="sc">$</span>parameter), <span class="at">col =</span> <span class="st">&#39;blue&#39;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>) </span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:chi2-plot"></span>
 <img src="07-Simulacion_multidimensional_files/figure-html/chi2-plot-1.png" alt="Aproximación Monte-Carlo de la distribución del estadístico chi-cuadrado bajo independencia." width="70%" />
 <p class="caption">
@@ -608,12 +608,12 @@ Figura 7.14: Aproximación Monte-Carlo de la distribución del estadístico chi-
 </p>
 </div>
 <p>Como se mostrará en la Sección <a href="contrastes.html#contrastes">8.3</a> del siguiente capítulo, podríamos aproximar el <span class="math inline">\(p\)</span>-valor del contraste de independencia a partir de esta distribución:</p>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="mult-discr.html#cb328-1" aria-hidden="true" tabindex="-1"></a>obs.stat <span class="ot">&lt;-</span> res<span class="sc">$</span>statistic</span>
-<span id="cb328-2"><a href="mult-discr.html#cb328-2" aria-hidden="true" tabindex="-1"></a>pvalue.mc <span class="ot">&lt;-</span> <span class="fu">mean</span>(sim.stat <span class="sc">&gt;=</span> obs.stat)</span>
-<span id="cb328-3"><a href="mult-discr.html#cb328-3" aria-hidden="true" tabindex="-1"></a>pvalue.mc</span></code></pre></div>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="mult-discr.html#cb334-1" aria-hidden="true" tabindex="-1"></a>obs.stat <span class="ot">&lt;-</span> res<span class="sc">$</span>statistic</span>
+<span id="cb334-2"><a href="mult-discr.html#cb334-2" aria-hidden="true" tabindex="-1"></a>pvalue.mc <span class="ot">&lt;-</span> <span class="fu">mean</span>(sim.stat <span class="sc">&gt;=</span> obs.stat)</span>
+<span id="cb334-3"><a href="mult-discr.html#cb334-3" aria-hidden="true" tabindex="-1"></a>pvalue.mc</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <p>Esto es similar a lo que realiza la función <code>chisq.test()</code> con la opción <code>simulate.p.value = TRUE</code> (empleando el algoritmo de Patefield, 1981):</p>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="mult-discr.html#cb330-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(tabla, <span class="at">simulate.p.value =</span> <span class="cn">TRUE</span>, <span class="at">B =</span> <span class="dv">2000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="mult-discr.html#cb336-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(tabla, <span class="at">simulate.p.value =</span> <span class="cn">TRUE</span>, <span class="at">B =</span> <span class="dv">2000</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test with simulated p-value (based on 2000
 ##  replicates)
@@ -626,8 +626,8 @@ Figura 7.14: Aproximación Monte-Carlo de la distribución del estadístico chi-
 <!-- </div> -->
 <div class="footnotes">
 <hr />
-<ol start="16">
-<li id="fn16"><p>En R podemos obtener el índice multidimensional empleando la función <code>arrayInd(ind, .dim, ...)</code>, siendo <code>ind</code> un vector de índices unidimensionales.<a href="mult-discr.html#fnref16" class="footnote-back">↩︎</a></p></li>
+<ol start="17">
+<li id="fn17"><p>En R podemos obtener el índice multidimensional empleando la función <code>arrayInd(ind, .dim, ...)</code>, siendo <code>ind</code> un vector de índices unidimensionales.<a href="mult-discr.html#fnref17" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-03-16" />
+<meta name="date" content="2022-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,11 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#elección-de-la-densidad-auxiliar"><i class="fa fa-check"></i><b>5.2.4</b> Elección de la densidad auxiliar</a></li>
-<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: Inferencia Bayesiana</a></li>
+<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#bayes-ar"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: inferencia bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación-rechazo</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
@@ -384,9 +384,8 @@ u\right\} ,\ \forall u\in \left( 0,1\right).\]</span>
 Si <span class="math inline">\(F\)</span> es invertible <span class="math inline">\(Q=F^{-1}\)</span>.</p>
 
 <div class="theorem">
-<span id="thm:invgen" class="theorem"><strong>Teorema 6.1  (de inversión generalizada)  </strong></span><br>
-Si <span class="math inline">\(U\sim \mathcal{U}\left( 0,1\right)\)</span>, la variable aleatoria <span class="math inline">\(Q\left( U\right)\)</span>
-tiene función de distribución <span class="math inline">\(F\)</span>.
+<p><span id="thm:invgen" class="theorem"><strong>Teorema 6.1  (de inversión generalizada)  </strong></span><br></p>
+<p>Si <span class="math inline">\(U\sim \mathcal{U}\left( 0,1\right)\)</span>, la variable aleatoria <span class="math inline">\(Q\left( U\right)\)</span> tiene función de distribución <span class="math inline">\(F\)</span>.</p>
 </div>
 
 <div class="proof">
@@ -398,8 +397,7 @@ Como <span class="math inline">\(F\)</span> es monótona y por la definición de
 Por otro lado como <span class="math inline">\(Q\)</span> también es monótona:
 <span class="math display">\[u \leq F(x) \Rightarrow Q\left( u\right) \leq Q(F(x)) \leq x\]</span>
 </div>
-<p>A partir de este resultado se deduce el siguiente algoritmo general
-para simular una distribución de probabilidad discreta.</p>
+<p>A partir de este resultado se deduce el siguiente algoritmo general para simular una distribución de probabilidad discreta.</p>
 
 <div class="conjecture">
 <p><span id="cnj:unnamed-chunk-5" class="conjecture"><strong>Algoritmo 6.1  (de transformación cuantil)  </strong></span><br></p>
@@ -428,52 +426,58 @@ Q\left( U\right) &amp;=\inf \left\{ x_{j}:\sum_{i=1}^{j}p_{i}\geq U\right\} \\
 </div>
 <p>Este algoritmo no es muy eficiente, especialmente si el número de
 posibles valores de la variable es grande.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:cuantil-movie"></span>
+<img src="images/cuantil-movie.gif" alt="Ilustración de la simulación de una distribución discreta mediante transformación cuantil." width="80%" />
+<p class="caption">
+Figura 6.1: Ilustración de la simulación de una distribución discreta mediante transformación cuantil.
+</p>
+</div>
 
 <div class="remark">
 <p> <span class="remark"><em>Nota: </em></span> El algoritmo anterior es válido independientemente de que los
-valores que tome la variable estén ordenados.</p>
+valores que toma la variable estén ordenados.</p>
 </div>
 <p>Si la variable toma un número finito de valores, se podría implementar en R
 de la siguiente forma:</p>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="transcuant.html#cb184-1" aria-hidden="true" tabindex="-1"></a>rfmp0 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">prob =</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">length</span>(x), <span class="at">nsim =</span> <span class="dv">1000</span>) {</span>
-<span id="cb184-2"><a href="transcuant.html#cb184-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulación nsim v.a. discreta a partir de fmp</span></span>
-<span id="cb184-3"><a href="transcuant.html#cb184-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># por inversión generalizada (transformación cuantil)</span></span>
-<span id="cb184-4"><a href="transcuant.html#cb184-4" aria-hidden="true" tabindex="-1"></a>  X <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nsim)</span>
-<span id="cb184-5"><a href="transcuant.html#cb184-5" aria-hidden="true" tabindex="-1"></a>  U <span class="ot">&lt;-</span> <span class="fu">runif</span>(nsim)</span>
-<span id="cb184-6"><a href="transcuant.html#cb184-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
-<span id="cb184-7"><a href="transcuant.html#cb184-7" aria-hidden="true" tabindex="-1"></a>    i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb184-8"><a href="transcuant.html#cb184-8" aria-hidden="true" tabindex="-1"></a>    Fx <span class="ot">&lt;-</span> prob[<span class="dv">1</span>]</span>
-<span id="cb184-9"><a href="transcuant.html#cb184-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (Fx <span class="sc">&lt;</span> U[j]) {</span>
-<span id="cb184-10"><a href="transcuant.html#cb184-10" aria-hidden="true" tabindex="-1"></a>      i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb184-11"><a href="transcuant.html#cb184-11" aria-hidden="true" tabindex="-1"></a>      Fx <span class="ot">&lt;-</span> Fx <span class="sc">+</span> prob[i]</span>
-<span id="cb184-12"><a href="transcuant.html#cb184-12" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb184-13"><a href="transcuant.html#cb184-13" aria-hidden="true" tabindex="-1"></a>    X[j] <span class="ot">&lt;-</span> x[i]</span>
-<span id="cb184-14"><a href="transcuant.html#cb184-14" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb184-15"><a href="transcuant.html#cb184-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(X)</span>
-<span id="cb184-16"><a href="transcuant.html#cb184-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="transcuant.html#cb191-1" aria-hidden="true" tabindex="-1"></a>rfmp0 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">prob =</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">length</span>(x), <span class="at">nsim =</span> <span class="dv">1000</span>) {</span>
+<span id="cb191-2"><a href="transcuant.html#cb191-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulación nsim v.a. discreta a partir de fmp</span></span>
+<span id="cb191-3"><a href="transcuant.html#cb191-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># por inversión generalizada (transformación cuantil)</span></span>
+<span id="cb191-4"><a href="transcuant.html#cb191-4" aria-hidden="true" tabindex="-1"></a>  X <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nsim)</span>
+<span id="cb191-5"><a href="transcuant.html#cb191-5" aria-hidden="true" tabindex="-1"></a>  U <span class="ot">&lt;-</span> <span class="fu">runif</span>(nsim)</span>
+<span id="cb191-6"><a href="transcuant.html#cb191-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
+<span id="cb191-7"><a href="transcuant.html#cb191-7" aria-hidden="true" tabindex="-1"></a>    i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb191-8"><a href="transcuant.html#cb191-8" aria-hidden="true" tabindex="-1"></a>    Fx <span class="ot">&lt;-</span> prob[<span class="dv">1</span>]</span>
+<span id="cb191-9"><a href="transcuant.html#cb191-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (Fx <span class="sc">&lt;</span> U[j]) {</span>
+<span id="cb191-10"><a href="transcuant.html#cb191-10" aria-hidden="true" tabindex="-1"></a>      i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb191-11"><a href="transcuant.html#cb191-11" aria-hidden="true" tabindex="-1"></a>      Fx <span class="ot">&lt;-</span> Fx <span class="sc">+</span> prob[i]</span>
+<span id="cb191-12"><a href="transcuant.html#cb191-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb191-13"><a href="transcuant.html#cb191-13" aria-hidden="true" tabindex="-1"></a>    X[j] <span class="ot">&lt;-</span> x[i]</span>
+<span id="cb191-14"><a href="transcuant.html#cb191-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb191-15"><a href="transcuant.html#cb191-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(X)</span>
+<span id="cb191-16"><a href="transcuant.html#cb191-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Adicionalmente, para disminuir el tiempo de computación, se puede almacenar
 las probabilidades acumuladas en una tabla.
 Si también se quiere obtener el número de comparaciones
 se puede considerar una variable global <code>ncomp</code>:</p>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="transcuant.html#cb185-1" aria-hidden="true" tabindex="-1"></a>ncomp <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb185-2"><a href="transcuant.html#cb185-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb185-3"><a href="transcuant.html#cb185-3" aria-hidden="true" tabindex="-1"></a>rfmp <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">prob =</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">length</span>(x), <span class="at">nsim =</span> <span class="dv">1000</span>) {</span>
-<span id="cb185-4"><a href="transcuant.html#cb185-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulación nsim v.a. discreta a partir de fmp</span></span>
-<span id="cb185-5"><a href="transcuant.html#cb185-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># por inversión generalizada (transformación cuantil)</span></span>
-<span id="cb185-6"><a href="transcuant.html#cb185-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Inicializar FD</span></span>
-<span id="cb185-7"><a href="transcuant.html#cb185-7" aria-hidden="true" tabindex="-1"></a>  Fx <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(prob)</span>
-<span id="cb185-8"><a href="transcuant.html#cb185-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simular</span></span>
-<span id="cb185-9"><a href="transcuant.html#cb185-9" aria-hidden="true" tabindex="-1"></a>  X <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nsim)</span>
-<span id="cb185-10"><a href="transcuant.html#cb185-10" aria-hidden="true" tabindex="-1"></a>  U <span class="ot">&lt;-</span> <span class="fu">runif</span>(nsim)</span>
-<span id="cb185-11"><a href="transcuant.html#cb185-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
-<span id="cb185-12"><a href="transcuant.html#cb185-12" aria-hidden="true" tabindex="-1"></a>    i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb185-13"><a href="transcuant.html#cb185-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (Fx[i] <span class="sc">&lt;</span> U[j]) i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb185-14"><a href="transcuant.html#cb185-14" aria-hidden="true" tabindex="-1"></a>    X[j] <span class="ot">&lt;-</span> x[i]</span>
-<span id="cb185-15"><a href="transcuant.html#cb185-15" aria-hidden="true" tabindex="-1"></a>    ncomp <span class="ot">&lt;&lt;-</span> ncomp <span class="sc">+</span> i</span>
-<span id="cb185-16"><a href="transcuant.html#cb185-16" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb185-17"><a href="transcuant.html#cb185-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(X)</span>
-<span id="cb185-18"><a href="transcuant.html#cb185-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># return(factor(X, levels = x))</span></span>
-<span id="cb185-19"><a href="transcuant.html#cb185-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="transcuant.html#cb192-1" aria-hidden="true" tabindex="-1"></a>ncomp <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb192-2"><a href="transcuant.html#cb192-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb192-3"><a href="transcuant.html#cb192-3" aria-hidden="true" tabindex="-1"></a>rfmp <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">prob =</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">length</span>(x), <span class="at">nsim =</span> <span class="dv">1000</span>) {</span>
+<span id="cb192-4"><a href="transcuant.html#cb192-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulación nsim v.a. discreta a partir de fmp</span></span>
+<span id="cb192-5"><a href="transcuant.html#cb192-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># por inversión generalizada (transformación cuantil)</span></span>
+<span id="cb192-6"><a href="transcuant.html#cb192-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Inicializar FD</span></span>
+<span id="cb192-7"><a href="transcuant.html#cb192-7" aria-hidden="true" tabindex="-1"></a>  Fx <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(prob)</span>
+<span id="cb192-8"><a href="transcuant.html#cb192-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simular</span></span>
+<span id="cb192-9"><a href="transcuant.html#cb192-9" aria-hidden="true" tabindex="-1"></a>  X <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nsim)</span>
+<span id="cb192-10"><a href="transcuant.html#cb192-10" aria-hidden="true" tabindex="-1"></a>  U <span class="ot">&lt;-</span> <span class="fu">runif</span>(nsim)</span>
+<span id="cb192-11"><a href="transcuant.html#cb192-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
+<span id="cb192-12"><a href="transcuant.html#cb192-12" aria-hidden="true" tabindex="-1"></a>    i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb192-13"><a href="transcuant.html#cb192-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (Fx[i] <span class="sc">&lt;</span> U[j]) i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb192-14"><a href="transcuant.html#cb192-14" aria-hidden="true" tabindex="-1"></a>    X[j] <span class="ot">&lt;-</span> x[i]</span>
+<span id="cb192-15"><a href="transcuant.html#cb192-15" aria-hidden="true" tabindex="-1"></a>    ncomp <span class="ot">&lt;&lt;-</span> ncomp <span class="sc">+</span> i</span>
+<span id="cb192-16"><a href="transcuant.html#cb192-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb192-17"><a href="transcuant.html#cb192-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(X)</span>
+<span id="cb192-18"><a href="transcuant.html#cb192-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># return(factor(X, levels = x))</span></span>
+<span id="cb192-19"><a href="transcuant.html#cb192-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 
 <div class="exercise">
 <span id="exr:binom-cuant" class="exercise"><strong>Ejercicio 6.1  (Simulación de una binomial mediante el método de la transformación cuantil)  </strong></span>
@@ -487,68 +491,72 @@ gráficamente y compararla con la teórica. Calcular también la
 media muestral (compararla con la teórica <span class="math inline">\(np\)</span>) y el número
 medio de comparaciones para generar cada observación.</p>
 <p>Empleamos la rutina anterior para generar las simulaciones:</p>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="transcuant.html#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
-<span id="cb186-2"><a href="transcuant.html#cb186-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb186-3"><a href="transcuant.html#cb186-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
-<span id="cb186-4"><a href="transcuant.html#cb186-4" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">5</span></span>
-<span id="cb186-5"><a href="transcuant.html#cb186-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb186-6"><a href="transcuant.html#cb186-6" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span>n</span>
-<span id="cb186-7"><a href="transcuant.html#cb186-7" aria-hidden="true" tabindex="-1"></a>fmp <span class="ot">&lt;-</span> <span class="fu">dbinom</span>(x, n, p)</span>
-<span id="cb186-8"><a href="transcuant.html#cb186-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb186-9"><a href="transcuant.html#cb186-9" aria-hidden="true" tabindex="-1"></a>ncomp <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb186-10"><a href="transcuant.html#cb186-10" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>( rx <span class="ot">&lt;-</span> <span class="fu">rfmp</span>(x, fmp, nsim) )</span></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="transcuant.html#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb193-2"><a href="transcuant.html#cb193-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb193-3"><a href="transcuant.html#cb193-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb193-4"><a href="transcuant.html#cb193-4" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">5</span></span>
+<span id="cb193-5"><a href="transcuant.html#cb193-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb193-6"><a href="transcuant.html#cb193-6" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span>n</span>
+<span id="cb193-7"><a href="transcuant.html#cb193-7" aria-hidden="true" tabindex="-1"></a>fmp <span class="ot">&lt;-</span> <span class="fu">dbinom</span>(x, n, p)</span>
+<span id="cb193-8"><a href="transcuant.html#cb193-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb193-9"><a href="transcuant.html#cb193-9" aria-hidden="true" tabindex="-1"></a>ncomp <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb193-10"><a href="transcuant.html#cb193-10" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>( rx <span class="ot">&lt;-</span> <span class="fu">rfmp</span>(x, fmp, nsim) )</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.03    0.01    0.04</code></pre>
+##    0.09    0.00    0.09</code></pre>
 <p>Aproximación de la media:</p>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="transcuant.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(rx)</span></code></pre></div>
-<pre><code>## [1] 5.00322</code></pre>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="transcuant.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(rx)</span></code></pre></div>
+<pre><code>## [1] 4.99697</code></pre>
 <p>El valor teórico es <code>n*p</code> = 5.</p>
 <p>Número medio de comparaciones:</p>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="transcuant.html#cb190-1" aria-hidden="true" tabindex="-1"></a>ncomp<span class="sc">/</span>nsim</span></code></pre></div>
-<pre><code>## [1] 6.00322</code></pre>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="transcuant.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Se verá más adelante que el valor teórico es sum((1:length(x))*fmp)</span></span></code></pre></div>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="transcuant.html#cb197-1" aria-hidden="true" tabindex="-1"></a>ncomp<span class="sc">/</span>nsim</span></code></pre></div>
+<pre><code>## [1] 5.99697</code></pre>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="transcuant.html#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Se verá más adelante que el valor teórico es sum((1:length(x))*fmp)</span></span></code></pre></div>
 <p>Análisis de los resultados:</p>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="transcuant.html#cb193-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">table</span>(rx)<span class="sc">/</span>nsim</span>
-<span id="cb193-2"><a href="transcuant.html#cb193-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">ylab =</span> <span class="st">&quot;frecuencia relativa&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;valores&quot;</span>)</span>
-<span id="cb193-3"><a href="transcuant.html#cb193-3" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(x, fmp, <span class="at">pch =</span> <span class="dv">4</span>)  <span class="co"># Comparación teórica</span></span></code></pre></div>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="transcuant.html#cb200-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">table</span>(rx)<span class="sc">/</span>nsim</span>
+<span id="cb200-2"><a href="transcuant.html#cb200-2" aria-hidden="true" tabindex="-1"></a><span class="co"># res &lt;- table(factor(rx, levels = x))/nsim</span></span>
+<span id="cb200-3"><a href="transcuant.html#cb200-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">ylab =</span> <span class="st">&quot;frecuencia relativa&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;valores&quot;</span>)</span>
+<span id="cb200-4"><a href="transcuant.html#cb200-4" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(x, fmp, <span class="at">pch =</span> <span class="dv">4</span>)  <span class="co"># Comparación teórica</span></span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:comprfmp"></span>
-<img src="06-Metodos_generales_discretas_files/figure-html/comprfmp-1.png" alt="Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas." width="70%" />
+<img src="06-Metodos_generales_discretas_files/figure-html/comprfmp-1.png" alt="Comparación de las frecuencias relativas de los valores generados, mediante el método de la transformación cuantil, con las probabilidades teóricas." width="70%" />
 <p class="caption">
-Figura 6.1: Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas.
+Figura 6.2: Comparación de las frecuencias relativas de los valores generados, mediante el método de la transformación cuantil, con las probabilidades teóricas.
 </p>
 </div>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="transcuant.html#cb194-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(res)</span>
-<span id="cb194-2"><a href="transcuant.html#cb194-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(res) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;psim&quot;</span>)</span>
-<span id="cb194-3"><a href="transcuant.html#cb194-3" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>pteor <span class="ot">&lt;-</span> fmp</span>
-<span id="cb194-4"><a href="transcuant.html#cb194-4" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="transcuant.html#cb201-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(res)</span>
+<span id="cb201-2"><a href="transcuant.html#cb201-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(res) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;psim&quot;</span>)</span>
+<span id="cb201-3"><a href="transcuant.html#cb201-3" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>pteor <span class="ot">&lt;-</span> fmp</span>
+<span id="cb201-4"><a href="transcuant.html#cb201-4" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
 <pre><code>##     x    psim        pteor
-## 1   0 0.00107 0.0009765625
-## 2   1 0.00990 0.0097656250
-## 3   2 0.04432 0.0439453125
-## 4   3 0.11778 0.1171875000
-## 5   4 0.20425 0.2050781250
-## 6   5 0.24375 0.2460937500
-## 7   6 0.20454 0.2050781250
-## 8   7 0.11898 0.1171875000
-## 9   8 0.04419 0.0439453125
-## 10  9 0.01023 0.0097656250
-## 11 10 0.00099 0.0009765625</code></pre>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="transcuant.html#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Errores</span></span>
-<span id="cb196-2"><a href="transcuant.html#cb196-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(res<span class="sc">$</span>psim <span class="sc">-</span> res<span class="sc">$</span>pteor))</span></code></pre></div>
-<pre><code>## [1] 0.00234375</code></pre>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="transcuant.html#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(res<span class="sc">$</span>psim <span class="sc">-</span> res<span class="sc">$</span>pteor) <span class="sc">/</span> res<span class="sc">$</span>pteor)</span></code></pre></div>
-<pre><code>## [1] 0.09568</code></pre>
+## 1   0 0.00100 0.0009765625
+## 2   1 0.00981 0.0097656250
+## 3   2 0.04457 0.0439453125
+## 4   3 0.11865 0.1171875000
+## 5   4 0.20377 0.2050781250
+## 6   5 0.24477 0.2460937500
+## 7   6 0.20593 0.2050781250
+## 8   7 0.11631 0.1171875000
+## 9   8 0.04415 0.0439453125
+## 10  9 0.01021 0.0097656250
+## 11 10 0.00083 0.0009765625</code></pre>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="transcuant.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Errores</span></span>
+<span id="cb203-2"><a href="transcuant.html#cb203-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(res<span class="sc">$</span>psim <span class="sc">-</span> res<span class="sc">$</span>pteor))</span></code></pre></div>
+<pre><code>## [1] 0.0014625</code></pre>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="transcuant.html#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(res<span class="sc">$</span>psim <span class="sc">-</span> res<span class="sc">$</span>pteor) <span class="sc">/</span> res<span class="sc">$</span>pteor)</span></code></pre></div>
+<pre><code>## [1] 0.15008</code></pre>
 
 <div class="remark">
- <span class="remark"><em>Nota: </em></span> Puede ocurrir que no todos los valores sean generados en la simulación.
+<p> <span class="remark"><em>Nota: </em></span> Puede ocurrir que no todos los valores sean generados en la simulación.
 En el código anterior si <code>length(x) &gt; length(psim)</code>, la sentencia
 <code>res$pteor &lt;- fmp</code> gererará un error.
-Una posible solución sería trabajar con factores (hacer que la función ´rfmp()´ devuelva ´factor(X, levels = x)´). Alternativamente se podría emplear por ejemplo:
+Una posible solución sería trabajar con factores (hacer que la función <code>rfmp()</code> devuelva <code>factor(X, levels = x)</code> o emplear <code>res &lt;- table(factor(rx, levels = x))/nsim</code>).</p>
 </div>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="transcuant.html#cb200-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">pteor =</span> fmp, <span class="at">psim =</span> <span class="dv">0</span>)</span>
-<span id="cb200-2"><a href="transcuant.html#cb200-2" aria-hidden="true" tabindex="-1"></a>res.sim <span class="ot">&lt;-</span> <span class="fu">table</span>(rx)<span class="sc">/</span>nsim</span>
-<span id="cb200-3"><a href="transcuant.html#cb200-3" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">match</span>(<span class="fu">names</span>(res.sim), x)</span>
-<span id="cb200-4"><a href="transcuant.html#cb200-4" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>psim[index] <span class="ot">&lt;-</span> res.sim</span></code></pre></div>
+<!-- 
+# Alternativamente se podría emplear `match()`: 
+res <- data.frame(x = x, pteor = fmp, psim = 0)
+res.sim <- table(rx)/nsim
+index <- match(names(res.sim), x)
+res$psim[index] <- res.sim 
+-->
 <div id="eficiencia-del-algoritmo-1" class="section level3" number="6.1.1">
 <h3><span class="header-section-number">6.1.1</span> Eficiencia del algoritmo</h3>
 <p>Si consideramos la variable aleatoria <span class="math inline">\(\mathcal{I}\)</span> correspondiente a las etiquetas, su función de masa de probabilidad sería:
@@ -579,24 +587,25 @@ n\right) }\geq \cdots\]</span></p>
 <p>Repetir el Ejercicio <a href="transcuant.html#exr:binom-cuant">6.1</a> anterior ordenando previamente las
 probabilidades en orden decreciente y también empleando la
 función <code>sample</code> de R.</p>
-<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="transcuant.html#cb201-1" aria-hidden="true" tabindex="-1"></a>tini <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
-<span id="cb201-2"><a href="transcuant.html#cb201-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb201-3"><a href="transcuant.html#cb201-3" aria-hidden="true" tabindex="-1"></a>ncomp <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb201-4"><a href="transcuant.html#cb201-4" aria-hidden="true" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">order</span>(fmp, <span class="at">decreasing=</span><span class="cn">TRUE</span>)</span>
-<span id="cb201-5"><a href="transcuant.html#cb201-5" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> <span class="fu">rfmp</span>(x[ind], fmp[ind], nsim)</span>
-<span id="cb201-6"><a href="transcuant.html#cb201-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb201-7"><a href="transcuant.html#cb201-7" aria-hidden="true" tabindex="-1"></a>tiempo <span class="ot">&lt;-</span> <span class="fu">proc.time</span>() <span class="sc">-</span> tini</span>
-<span id="cb201-8"><a href="transcuant.html#cb201-8" aria-hidden="true" tabindex="-1"></a>tiempo</span></code></pre></div>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="transcuant.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb207-2"><a href="transcuant.html#cb207-2" aria-hidden="true" tabindex="-1"></a>tini <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
+<span id="cb207-3"><a href="transcuant.html#cb207-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-4"><a href="transcuant.html#cb207-4" aria-hidden="true" tabindex="-1"></a>ncomp <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb207-5"><a href="transcuant.html#cb207-5" aria-hidden="true" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">order</span>(fmp, <span class="at">decreasing=</span><span class="cn">TRUE</span>)</span>
+<span id="cb207-6"><a href="transcuant.html#cb207-6" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> <span class="fu">rfmp</span>(x[ind], fmp[ind], nsim)</span>
+<span id="cb207-7"><a href="transcuant.html#cb207-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-8"><a href="transcuant.html#cb207-8" aria-hidden="true" tabindex="-1"></a>tiempo <span class="ot">&lt;-</span> <span class="fu">proc.time</span>() <span class="sc">-</span> tini</span>
+<span id="cb207-9"><a href="transcuant.html#cb207-9" aria-hidden="true" tabindex="-1"></a>tiempo</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.05    0.00    0.04</code></pre>
-<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="transcuant.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Número de comparaciones</span></span>
-<span id="cb203-2"><a href="transcuant.html#cb203-2" aria-hidden="true" tabindex="-1"></a>ncomp<span class="sc">/</span>nsim</span></code></pre></div>
-<pre><code>## [1] 3.08969</code></pre>
-<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="transcuant.html#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>((<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x))<span class="sc">*</span>fmp[ind]) <span class="co"># Valor teórico</span></span></code></pre></div>
+##    0.10    0.00    0.11</code></pre>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="transcuant.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Número de comparaciones</span></span>
+<span id="cb209-2"><a href="transcuant.html#cb209-2" aria-hidden="true" tabindex="-1"></a>ncomp<span class="sc">/</span>nsim</span></code></pre></div>
+<pre><code>## [1] 3.08369</code></pre>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="transcuant.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>((<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x))<span class="sc">*</span>fmp[ind]) <span class="co"># Valor teórico</span></span></code></pre></div>
 <pre><code>## [1] 3.083984</code></pre>
 <p>Como ya se comentó, en R se recomienda emplear la función <code>sample</code>
 (implementa eficientemente el método de Alias descrito en la Sección <a href="alias.html#alias">6.3</a>):</p>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="transcuant.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>( rx <span class="ot">&lt;-</span> <span class="fu">sample</span>(x, nsim, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> fmp) )</span></code></pre></div>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="transcuant.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>( rx <span class="ot">&lt;-</span> <span class="fu">sample</span>(x, nsim, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> fmp) )</span></code></pre></div>
 <pre><code>##    user  system elapsed 
 ##       0       0       0</code></pre>
 </div>

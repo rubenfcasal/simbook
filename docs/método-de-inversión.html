@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-03-16" />
+<meta name="date" content="2022-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,11 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#elección-de-la-densidad-auxiliar"><i class="fa fa-check"></i><b>5.2.4</b> Elección de la densidad auxiliar</a></li>
-<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: Inferencia Bayesiana</a></li>
+<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#bayes-ar"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: inferencia bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación-rechazo</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
@@ -369,7 +369,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="método-de-inversión" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Método de inversión</h2>
-<p>Se trataría del método preferible para la simulación de una variable continua (siempre que se disponga de la función cuantil).
+<p>En general sería el método preferible para la simulación de una variable continua (siempre que se disponga de la función cuantil).
 Está basado en los siguientes resultados:</p>
 <p>Si <span class="math inline">\(X\)</span> es una variable aleatoria con función de distribución <span class="math inline">\(F\)</span> continua y estrictamente monótona (invertible), entonces:
 <span class="math display">\[U = F\left( X \right) \sim \mathcal{U}(0, 1)\]</span>
@@ -392,7 +392,7 @@ ya que:
 <!-- \@ref(cnj:inversion) -->
 
 <div class="example">
-<span id="exm:exp-inv" class="example"><strong>Ejemplo 5.1  (Simulación de una distribución exponencial)  </strong></span>
+<span id="exm:exp-inv" class="example"><strong>Ejemplo 5.1  (simulación de una distribución exponencial)  </strong></span>
 </div>
 <p>La distribución exponencial <span class="math inline">\(\exp \left( \lambda \right)\)</span> de parámetro <span class="math inline">\(\lambda&gt;0\)</span>
 tiene como función de densidad <span class="math inline">\(f(x) =\lambda e^{-\lambda x}\)</span>, si <span class="math inline">\(x\geq 0\)</span>,
@@ -400,8 +400,8 @@ y como función de distribución:
 <span class="math display">\[F(x)=\left\{ \begin{array}{ll}
 1-e^{-\lambda x} &amp; \text{si } x \ge 0 \\
 0 &amp; \text{si } x &lt; 0\\
-\end{array} \right.\]</span>
-Teniendo en cuenta que:
+\end{array} \right.\]</span></p>
+<p>Teniendo en cuenta que:
 <span class="math display">\[1-e^{-\lambda x}=u \Leftrightarrow x=-\frac{\ln \left( 1-u\right) }{ \lambda }\]</span>
 el algoritmo para simular esta variable mediante el método de inversión es:</p>
 <ol style="list-style-type: decimal">
@@ -428,7 +428,7 @@ Figura 5.1: Ilustración de la simulación de una distribución exponencial por 
 <span id="cb144-9"><a href="método-de-inversión.html#cb144-9" aria-hidden="true" tabindex="-1"></a>tiempo <span class="ot">&lt;-</span> <span class="fu">proc.time</span>() <span class="sc">-</span> tini</span>
 <span id="cb144-10"><a href="método-de-inversión.html#cb144-10" aria-hidden="true" tabindex="-1"></a>tiempo</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##       0       0       0</code></pre>
+##    0.02    0.00    0.01</code></pre>
 <div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="método-de-inversión.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(X, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>, </span>
 <span id="cb146-2"><a href="método-de-inversión.html#cb146-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">2.5</span>))</span>
 <span id="cb146-3"><a href="método-de-inversión.html#cb146-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dexp</span>(x, lambda), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
@@ -456,60 +456,60 @@ innecesarios (tal y como se hizo en el ejemplo de la exponencial).</p>
 <thead>
 <tr class="header">
 <th>Nombre</th>
-<th>Densidad</th>
-<th><span class="math inline">\(F(x)\)</span></th>
-<th><span class="math inline">\(F^{-1}\left( U\right)\)</span></th>
-<th>Forma simplificada</th>
+<th align="center">Densidad</th>
+<th align="center"><span class="math inline">\(F(x)\)</span></th>
+<th align="center"><span class="math inline">\(F^{-1}\left( U\right)\)</span></th>
+<th align="center">Forma simplificada</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><span class="math inline">\(\exp\left( \lambda\right)\)</span> (<span class="math inline">\(\lambda&gt;0\)</span>)</td>
-<td><span class="math inline">\(\lambda e^{-\lambda x}\)</span>, si <span class="math inline">\(x\geq0\)</span></td>
-<td><span class="math inline">\(1-e^{-\lambda x}\)</span></td>
-<td><span class="math inline">\(-\dfrac{\ln\left( 1-U\right) }\lambda\)</span></td>
-<td><span class="math inline">\(-\dfrac{\ln U}\lambda\)</span></td>
+<td align="center"><span class="math inline">\(\lambda e^{-\lambda x}\)</span>, si <span class="math inline">\(x\geq0\)</span></td>
+<td align="center"><span class="math inline">\(1-e^{-\lambda x}\)</span></td>
+<td align="center"><span class="math inline">\(-\dfrac{\ln\left( 1-U\right) }\lambda\)</span></td>
+<td align="center"><span class="math inline">\(-\dfrac{\ln U}\lambda\)</span></td>
 </tr>
 <tr class="even">
 <td>Cauchy</td>
-<td><span class="math inline">\(\dfrac1{\pi\left( 1+x^{2}\right) }\)</span></td>
-<td><span class="math inline">\(\dfrac12+\dfrac{\arctan x}\pi\)</span></td>
-<td><span class="math inline">\(\tan\left( \pi\left( U-\dfrac12\right) \right)\)</span></td>
-<td><span class="math inline">\(\tan\pi U\)</span></td>
+<td align="center"><span class="math inline">\(\dfrac1{\pi\left( 1+x^{2}\right)}\)</span></td>
+<td align="center"><span class="math inline">\(\dfrac12+\dfrac{\arctan x}\pi\)</span></td>
+<td align="center"><span class="math inline">\(\tan\left( \pi\left( U-\dfrac12\right) \right)\)</span></td>
+<td align="center"><span class="math inline">\(\tan\pi U\)</span></td>
 </tr>
 <tr class="odd">
 <td>Triangular en <span class="math inline">\(\left( 0,a\right)\)</span></td>
-<td><span class="math inline">\(\dfrac2a\left( 1-\dfrac xa\right)\)</span>, si <span class="math inline">\(0\leq x\leq a\)</span></td>
-<td><span class="math inline">\(\dfrac2a\left(x-\dfrac{x^{2}}{2a}\right)\)</span></td>
-<td><span class="math inline">\(a\left( 1-\sqrt{1-U}\right)\)</span></td>
-<td><span class="math inline">\(a\left( 1-\sqrt{U}\right)\)</span></td>
+<td align="center"><span class="math inline">\(\dfrac2a\left( 1-\dfrac xa\right)\)</span>, si <span class="math inline">\(0\leq x\leq a\)</span></td>
+<td align="center"><span class="math inline">\(\dfrac2a\left(x-\dfrac{x^{2}}{2a}\right)\)</span></td>
+<td align="center"><span class="math inline">\(a\left( 1-\sqrt{1-U}\right)\)</span></td>
+<td align="center"><span class="math inline">\(a\left( 1-\sqrt{U}\right)\)</span></td>
 </tr>
 <tr class="even">
 <td>Pareto (<span class="math inline">\(a,b&gt;0\)</span>)</td>
-<td><span class="math inline">\(\dfrac{ab^{a}}{x^{a+1}}\)</span>, si <span class="math inline">\(x\geq b\)</span></td>
-<td><span class="math inline">\(1-\left( \dfrac bx\right)^{a}\)</span></td>
-<td><span class="math inline">\(\dfrac b{\left( 1-U\right) ^{1/a}}\)</span></td>
-<td><span class="math inline">\(\dfrac b{U^{1/a}}\)</span></td>
+<td align="center"><span class="math inline">\(\dfrac{ab^{a}}{x^{a+1}}\)</span>, si <span class="math inline">\(x\geq b\)</span></td>
+<td align="center"><span class="math inline">\(1-\left( \dfrac bx\right)^{a}\)</span></td>
+<td align="center"><span class="math inline">\(\dfrac b{\left( 1-U\right)^{1/a}}\)</span></td>
+<td align="center"><span class="math inline">\(\dfrac b{U^{1/a}}\)</span></td>
 </tr>
 <tr class="odd">
 <td>Weibull (<span class="math inline">\(\lambda,\alpha&gt;0\)</span>)</td>
-<td><span class="math inline">\(\alpha\lambda^{\alpha}x^{\alpha-1}e^{-\left( \lambda x\right) ^{\alpha}}\)</span>, si <span class="math inline">\(x\geq0\)</span></td>
-<td><span class="math inline">\(1-e^{-\left( \lambda x\right) ^{\alpha}}\)</span></td>
-<td><span class="math inline">\(\dfrac{\left( -\ln\left(1-U\right) \right) ^{1/\alpha}}\lambda\)</span></td>
-<td><span class="math inline">\(\dfrac{\left( -\ln U\right)^{1/\alpha}}\lambda\)</span>\</td>
+<td align="center"><span class="math inline">\(\alpha\lambda^{\alpha}x^{\alpha-1}e^{-\left( \lambda x\right) ^{\alpha}}\)</span>, si <span class="math inline">\(x\geq0\)</span></td>
+<td align="center"><span class="math inline">\(1-e^{-\left( \lambda x\right)^{\alpha}}\)</span></td>
+<td align="center"><span class="math inline">\(\dfrac{\left( -\ln\left(1-U\right) \right)^{1/\alpha}}\lambda\)</span></td>
+<td align="center"><span class="math inline">\(\dfrac{\left( -\ln U\right)^{1/\alpha}}\lambda\)</span></td>
 </tr>
 </tbody>
 </table>
 
 <div class="exercise">
-<span id="exr:ddexp" class="exercise"><strong>Ejercicio 5.1  (Distribución doble exponencial)  </strong></span>
+<span id="exr:ddexp" class="exercise"><strong>Ejercicio 5.1  (distribución doble exponencial)  </strong></span>
 </div>
 <p>La distribución doble exponencial (o distribución de Laplace) de
 parámetro <span class="math inline">\(\lambda\)</span> tiene función de densidad:
 <span class="math display">\[f(x)  =\frac{\lambda}{2}e^{-\lambda\left\vert x\right\vert
-}\text{, }x\in\mathbb{R}\]</span>
-y función de distribución:
-<span class="math display">\[F(x)  =\int_{-\infty}^{x}f\left( t\right)  dt=\left\{
+}\text{, }x\in\mathbb{R}\]</span></p>
+<p>y función de distribución:</p>
+<p><span class="math display">\[F(x)  =\int_{-\infty}^{x}f\left( t\right)  dt=\left\{
 \begin{array}{ll}
 \frac{1}{2}e^{\lambda x} &amp; \text{si } x&lt;0\\
 1-\frac{1}{2}e^{-\lambda x} &amp; \text{si } x\geq0
@@ -517,7 +517,7 @@ y función de distribución:
 \ \right.\]</span></p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Escribir una función que permita generar, por el método de
-inversión, una muestra de <span class="math inline">\(n\)</span> observaciones de esta distribución<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>.</p>
+inversión, una muestra de <span class="math inline">\(n\)</span> observaciones de esta distribución.</p>
 <div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="método-de-inversión.html#cb147-1" aria-hidden="true" tabindex="-1"></a>ddexp <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">lambda =</span> <span class="dv">1</span>){</span>
 <span id="cb147-2"><a href="método-de-inversión.html#cb147-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Densidad doble exponencial</span></span>
 <span id="cb147-3"><a href="método-de-inversión.html#cb147-3" aria-hidden="true" tabindex="-1"></a>  lambda<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span>lambda<span class="sc">*</span><span class="fu">abs</span>(x))<span class="sc">/</span><span class="dv">2</span></span>
@@ -546,19 +546,23 @@ generar la secuencia.</p>
 <div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="método-de-inversión.html#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
 <span id="cb148-2"><a href="método-de-inversión.html#cb148-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(x <span class="ot">&lt;-</span> <span class="fu">rdexpn</span>(<span class="dv">10</span><span class="sc">^</span><span class="dv">4</span>, <span class="dv">2</span>))</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.02    0.01    0.03</code></pre></li>
+##    0.05    0.00    0.05</code></pre></li>
 <li><p>Representar el histograma y compararlo con la densidad teórica.</p>
 <div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="método-de-inversión.html#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span>
 <span id="cb150-2"><a href="método-de-inversión.html#cb150-2" aria-hidden="true" tabindex="-1"></a><span class="co"># lines(density(x), col = &#39;blue&#39;)</span></span>
 <span id="cb150-3"><a href="método-de-inversión.html#cb150-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">ddexp</span>(x, <span class="dv">2</span>), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:dexp-inv"></span>
-<img src="05-Metodos_generales_continuas_files/figure-html/dexp-inv-1.png" alt="Distribución de los valores generados de una doble exponencial mediante el método de inversión." width="70%" />
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ddexp-inv"></span>
+<img src="05-Metodos_generales_continuas_files/figure-html/ddexp-inv-1.png" alt="Distribución de los valores generados de una doble exponencial mediante el método de inversión." width="70%" />
 <p class="caption">
 Figura 5.3: Distribución de los valores generados de una doble exponencial mediante el método de inversión.
 </p>
 </div>
 <p>Como se trata de un método exacto de simulación, si está bien implementado, la distribución de los valores generados debería comportarse como una muestra genuina de la distribución objetivo.</p></li>
 </ol>
+
+<div class="remark">
+ <span class="remark"><em>Nota: </em></span> Esta distribución también se puede generar fácilmente simulando una distribución exponencial y asignando un signo positivo o negativo con equiprobabilidad (ver Ejemplo <a href="composicion.html#exm:dexp-mix">5.6</a>).
+</div>
 </div>
 <div id="ventajas-e-inconvenientes" class="section level3" number="5.1.2">
 <h3><span class="header-section-number">5.1.2</span> Ventajas e inconvenientes</h3>
@@ -575,7 +579,7 @@ cuantil <span class="math inline">\(F^{-1}\left( u\right)\)</span>, se dispone d
 buena que se puede emplear en el algoritmo anterior (se obtendrían simulaciones
 con una distribución aproximada a la deseada).</p>
 <p>Por ejemplo, para aproximar la función cuantil de la normal estándar,
-Odeh y Evans (1974) consideraron la siguiente función auxiliar<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>:
+Odeh y Evans (1974) consideraron la siguiente función auxiliar<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>:
 <span class="math display">\[ g\left( v\right)  =\sqrt{-2\ln v}\frac{A\left( \sqrt{-2\ln v}\right)
 }{B\left( \sqrt{-2\ln v}\right)  },\]</span>
 siendo <span class="math inline">\(A(x) =\sum_{i=0}^{4}a_{i}x^{i}\)</span>
@@ -612,8 +616,7 @@ las correspondientes a la normal estándar).</p>
 <div class="footnotes">
 <hr />
 <ol start="9">
-<li id="fn9"><p>Esta distribución puede generarse fácilmente simulando una distribución exponencial y otorgarle un signo positivo o negativo con equiprobabilidad (ver Ejemplo <a href="composicion.html#exm:dexp-mix">5.5</a>).<a href="método-de-inversión.html#fnref9" class="footnote-back">↩︎</a></p></li>
-<li id="fn10"><p>R emplea una aproximación similar, basada en el algoritmo de Wichura (1988) más preciso, y que está implementado en el fichero fuente <a href="https://svn.r-project.org/R/trunk/src/nmath/qnorm.c">qnorm.c</a>.<a href="método-de-inversión.html#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn9"><p>R emplea una aproximación similar, basada en el algoritmo de Wichura (1988) más preciso, y que está implementado en el fichero fuente <a href="https://svn.r-project.org/R/trunk/src/nmath/qnorm.c">qnorm.c</a>.<a href="método-de-inversión.html#fnref9" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

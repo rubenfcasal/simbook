@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-03-16" />
+<meta name="date" content="2022-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,11 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#elección-de-la-densidad-auxiliar"><i class="fa fa-check"></i><b>5.2.4</b> Elección de la densidad auxiliar</a></li>
-<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: Inferencia Bayesiana</a></li>
+<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#bayes-ar"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: inferencia bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación-rechazo</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
@@ -380,22 +380,22 @@ De esta forma se consigue una sucesión de enteros aleatorios supuestamente inde
 <p>Empleando la discretización anterior se simplifica notablemente el contraste chi-cuadrado de bondad de ajuste a una uniforme, descrito en la Sección <a href="gof.html#chi2test">B.1.4</a> e implementado en la función <code>chisq.test.cont()</code>.
 En este caso bastaría con contrastar la equiprobabilidad de la secuencia de enteros (empleando directamente la función <code>chisq.test()</code>) y este método de denomina <em>contraste de frecuencias</em> (frequency test).
 Por ejemplo:</p>
-<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb594-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb594-2"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb594-2" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1000</span>)</span>
-<span id="cb594-3"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb594-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb594-4"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb594-4" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb594-5"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb594-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">floor</span>(k<span class="sc">*</span>u) <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb594-6"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb594-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Test chi-cuadrado</span></span>
-<span id="cb594-7"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb594-7" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">factor</span>(x, <span class="at">levels =</span> <span class="fu">seq_len</span>(k)))</span>
-<span id="cb594-8"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb594-8" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(f)</span></code></pre></div>
+<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb600-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb600-2"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb600-2" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1000</span>)</span>
+<span id="cb600-3"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb600-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb600-4"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb600-4" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb600-5"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb600-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">floor</span>(k<span class="sc">*</span>u) <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb600-6"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb600-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Test chi-cuadrado</span></span>
+<span id="cb600-7"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb600-7" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">factor</span>(x, <span class="at">levels =</span> <span class="fu">seq_len</span>(k)))</span>
+<span id="cb600-8"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb600-8" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(f)</span></code></pre></div>
 <pre><code>## 
 ##  Chi-squared test for given probabilities
 ## 
 ## data:  f
 ## X-squared = 10.26, df = 9, p-value = 0.3298</code></pre>
-<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb596-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Equivalente a</span></span>
-<span id="cb596-2"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb596-2" aria-hidden="true" tabindex="-1"></a><span class="co"># source(&quot;Test Chi-cuadrado continua.R&quot;)  </span></span>
-<span id="cb596-3"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb596-3" aria-hidden="true" tabindex="-1"></a><span class="co"># chisq.test.cont(u, distribution = &quot;unif&quot;, nclasses = k, output = FALSE, min = 0, max = 1)</span></span></code></pre></div>
+<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb602-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Equivalente a</span></span>
+<span id="cb602-2"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb602-2" aria-hidden="true" tabindex="-1"></a><span class="co"># source(&quot;Test Chi-cuadrado continua.R&quot;)  </span></span>
+<span id="cb602-3"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb602-3" aria-hidden="true" tabindex="-1"></a><span class="co"># chisq.test.cont(u, distribution = &quot;unif&quot;, nclasses = k, output = FALSE, min = 0, max = 1)</span></span></code></pre></div>
 </div>
 <div id="contraste-de-series" class="section level3" number="12.3.2">
 <h3><span class="header-section-number">B.3.2</span> Contraste de series</h3>

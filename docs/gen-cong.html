@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-03-16" />
+<meta name="date" content="2022-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,11 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#elección-de-la-densidad-auxiliar"><i class="fa fa-check"></i><b>5.2.4</b> Elección de la densidad auxiliar</a></li>
-<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: Inferencia Bayesiana</a></li>
+<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#bayes-ar"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: inferencia bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación-rechazo</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
@@ -380,7 +380,7 @@ u_{i}  &amp; = \dfrac{x_{i}}{m} \\
 i  &amp; =1,2,\ldots
 \end{aligned}\]</span>
 donde <span class="math inline">\(a\)</span> (<em>multiplicador</em>), <span class="math inline">\(c\)</span> (<em>incremento</em>) y <span class="math inline">\(m\)</span> (<em>módulo</em>) son enteros positivos<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a> fijados de antemano (los parámetros de este generador). Si <span class="math inline">\(c=0\)</span> el generador se denomina congruencial <em>multiplicativo</em> (Lehmer, 1951) y en caso contrario se dice que es <em>mixto</em> (Rotenburg, 1960).</p>
-<p>Este método está implementado en el fichero <em>RANDC.R</em>, tratando de imitar el funcionamiento de un generador de R (aunque de un forma no muy eficiente<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>):</p>
+<p>Este método está implementado en el siguiente código, imitando el funcionamiento del generador uniforme de R (aunque de un forma no muy eficiente<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>):</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="gen-cong.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --------------------------------------------------</span></span>
 <span id="cb52-2"><a href="gen-cong.html#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Generador congruencial de números pseudoaleatorios</span></span>
 <span id="cb52-3"><a href="gen-cong.html#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co"># --------------------------------------------------</span></span>
@@ -445,10 +445,9 @@ Un generador congruencial tiene período máximo (<span class="math inline">\(p=
 <li><p><span class="math inline">\(a-1\)</span> es múltiplo de todos los factores primos de <span class="math inline">\(m\)</span> (i.e.
 <span class="math inline">\(a \equiv 1 \bmod q\)</span>, para todo <span class="math inline">\(q\)</span> factor primo de <span class="math inline">\(m\)</span>).</p></li>
 <li><p>Si <span class="math inline">\(m\)</span> es múltiplo de <span class="math inline">\(4\)</span>, entonces <span class="math inline">\(a-1\)</span> también lo ha de
-ser (i.e. <span class="math inline">\(m \equiv 0 \bmod 4\Rightarrow a \equiv 1 \bmod 4\)</span>).</p></li>
+ser (i.e. <span class="math inline">\(m \equiv 0 \bmod 4\Rightarrow a \equiv 1 \bmod 4\)</span>).</p>
+</div></li>
 </ol>
-.
-</div>
 <p>Algunas consecuencias:</p>
 <ul>
 <li><p>Si <span class="math inline">\(m\)</span> primo, <span class="math inline">\(p=m\)</span> si y solo si <span class="math inline">\(a=1\)</span>.</p></li>
@@ -461,10 +460,9 @@ Un generador multiplicativo tiene período máximo (<span class="math inline">\(
 <ol style="list-style-type: decimal">
 <li><p><span class="math inline">\(m\)</span> es primo.</p></li>
 <li><p><span class="math inline">\(a\)</span> es una raiz primitiva de <span class="math inline">\(m\)</span> (i.e. el menor entero <span class="math inline">\(q\)</span> tal
-que <span class="math inline">\(a^{q}=1 \bmod m\)</span> es <span class="math inline">\(q=m-1\)</span>).</p></li>
+que <span class="math inline">\(a^{q}=1 \bmod m\)</span> es <span class="math inline">\(q=m-1\)</span>).</p>
+</div></li>
 </ol>
-.
-</div>
 <p>Además de preocuparse de la longitud del ciclo, las secuencias
 generadas deben aparentar muestras i.i.d. <span class="math inline">\(\mathcal{U}(0,1)\)</span>.</p>
 <p>Uno de los principales problemas es que los valores generados pueden mostrar una clara estructura reticular.

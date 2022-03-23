@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-03-16" />
+<meta name="date" content="2022-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,11 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#elección-de-la-densidad-auxiliar"><i class="fa fa-check"></i><b>5.2.4</b> Elección de la densidad auxiliar</a></li>
-<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: Inferencia Bayesiana</a></li>
+<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#bayes-ar"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: inferencia bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación-rechazo</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
@@ -377,8 +377,12 @@ x_{i} &amp; \text{con prob. } q_{i} \\
 x_{a_{i}} &amp; \text{con prob. } 1-q_{i}
 \end{array}
 \ \right.\]</span></p>
-<p>La idea para construir estas variables es “tomar prestada” parte de la probabilidad de los valores más probables (ricos) para asignársela a los valores menos probables (pobres), almacenando en <span class="math inline">\(a_i\)</span> el índice del valor de donde procede.
-El algoritmo “Robin Hood” de inicialización (Kronmal y Peterson, 1979) es el siguiente:</p>
+<p>Hay varias formas de construir las tablas de probabilidades <span class="math inline">\(q_i\)</span> y de alias <span class="math inline">\(a_i\)</span>.
+Se suele emplear el denominado algoritmo “Robin Hood” de inicialización (Kronmal y Peterson, 1979).
+La idea es “tomar prestada” parte de la probabilidad de los valores más probables (ricos) para asignársela a los valores menos probables (pobres), recordando el valor de donde procede (almacenando el índice en <span class="math inline">\(a_i\)</span>).</p>
+
+<div class="conjecture">
+<p><span id="cnj:robin-hood" class="conjecture"><strong>Algoritmo 6.4  (“Robin Hood” de inicialización; Kronmal y Peterson, 1979)  </strong></span><br></p>
 <ol style="list-style-type: decimal">
 <li><p>Desde <span class="math inline">\(i=1\)</span> hasta <span class="math inline">\(n\)</span> hacer <span class="math inline">\(q_{i}=np_{i}\)</span>.</p></li>
 <li><p>Establecer <span class="math inline">\(L=\left\{ l:q_{l}&lt;1\right\}\)</span> y
@@ -391,20 +395,25 @@ El algoritmo “Robin Hood” de inicialización (Kronmal y Peterson, 1979) es e
 <li><p>Si <span class="math inline">\(q_{h}&lt;1\)</span> mover <span class="math inline">\(h\)</span> de <span class="math inline">\(H\)</span> a <span class="math inline">\(L\)</span>.</p></li>
 <li><p>Ir al paso 3.</p></li>
 </ol>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-20"></span>
-<img src="images/alias2.png" alt="Pasos del algoritmo de inicialización del método Alias." width="70%" />
+</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-18"></span>
+<img src="06-Metodos_generales_discretas_files/figure-html/unnamed-chunk-18-1.png" alt="Pasos del algoritmo de inicialización del método Alias." width="90%" />
 <p class="caption">
-Figura 6.3: Pasos del algoritmo de inicialización del método Alias.
+Figura 6.5: Pasos del algoritmo de inicialización del método Alias.
 </p>
 </div>
 <p>El algoritmo para generar las simulaciones es el estándar del método de composición:</p>
+
+<div class="conjecture">
+<p><span id="cnj:walker" class="conjecture"><strong>Algoritmo 6.5  (método alias de simulación; Walker, 1977)  </strong></span><br></p>
 <ol style="list-style-type: decimal">
 <li><p>Generar <span class="math inline">\(U,V\sim \mathcal{U}\left( 0,1\right)\)</span>.</p></li>
 <li><p>Hacer <span class="math inline">\(i=\left\lfloor nU\right\rfloor +1\)</span>.</p></li>
 <li><p>Si <span class="math inline">\(V&lt;q_{i}\)</span> devolver <span class="math inline">\(X=x_{i}\)</span>.</p></li>
 <li><p>En caso contrario devolver <span class="math inline">\(X=x_{a_{i}}\)</span>.</p></li>
 </ol>
-<p>Este algoritmo es muy eficiente y es el implementado en la función <code>sample</code> de R.</p>
+</div>
+<p>Este algoritmo es muy eficiente y es el empleado en la función <code>sample()</code> de R<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a>.</p>
 
 <div class="exercise">
 <span id="exr:binom-alias" class="exercise"><strong>Ejercicio 6.4  (Simulación de una binomial mediante en método de Alias)  </strong></span>
@@ -412,43 +421,54 @@ Figura 6.3: Pasos del algoritmo de inicialización del método Alias.
 <p>Diseñar una rutina que permita generar <span class="math inline">\(nsim\)</span> valores de una
 distribución discreta usando el método de Alias.
 Repetir el Ejercicio <a href="transcuant.html#exr:binom-cuant">6.1</a> anterior empleando esta rutina.</p>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="alias.html#cb212-1" aria-hidden="true" tabindex="-1"></a>rfmp.alias <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">prob =</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">length</span>(x), <span class="at">nsim =</span> <span class="dv">1000</span>) {</span>
-<span id="cb212-2"><a href="alias.html#cb212-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Inicializar tablas</span></span>
-<span id="cb212-3"><a href="alias.html#cb212-3" aria-hidden="true" tabindex="-1"></a>  a <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(x))</span>
-<span id="cb212-4"><a href="alias.html#cb212-4" aria-hidden="true" tabindex="-1"></a>  q <span class="ot">&lt;-</span> prob<span class="sc">*</span><span class="fu">length</span>(x)</span>
-<span id="cb212-5"><a href="alias.html#cb212-5" aria-hidden="true" tabindex="-1"></a>  low <span class="ot">&lt;-</span> q <span class="sc">&lt;</span> <span class="dv">1</span></span>
-<span id="cb212-6"><a href="alias.html#cb212-6" aria-hidden="true" tabindex="-1"></a>  high <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="sc">!</span>low)</span>
-<span id="cb212-7"><a href="alias.html#cb212-7" aria-hidden="true" tabindex="-1"></a>  low <span class="ot">&lt;-</span> <span class="fu">which</span>(low)</span>
-<span id="cb212-8"><a href="alias.html#cb212-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (<span class="fu">length</span>(high) <span class="sc">&amp;&amp;</span> <span class="fu">length</span>(low)) {</span>
-<span id="cb212-9"><a href="alias.html#cb212-9" aria-hidden="true" tabindex="-1"></a>    l <span class="ot">&lt;-</span> low[<span class="dv">1</span>]</span>
-<span id="cb212-10"><a href="alias.html#cb212-10" aria-hidden="true" tabindex="-1"></a>    h <span class="ot">&lt;-</span> high[<span class="dv">1</span>]</span>
-<span id="cb212-11"><a href="alias.html#cb212-11" aria-hidden="true" tabindex="-1"></a>    a[l] <span class="ot">&lt;-</span> h</span>
-<span id="cb212-12"><a href="alias.html#cb212-12" aria-hidden="true" tabindex="-1"></a>    q[h] <span class="ot">&lt;-</span> q[h] <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> q[l])</span>
-<span id="cb212-13"><a href="alias.html#cb212-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (q[h] <span class="sc">&lt;</span> <span class="dv">1</span>) {</span>
-<span id="cb212-14"><a href="alias.html#cb212-14" aria-hidden="true" tabindex="-1"></a>      high <span class="ot">&lt;-</span> high[<span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb212-15"><a href="alias.html#cb212-15" aria-hidden="true" tabindex="-1"></a>      low[<span class="dv">1</span>] <span class="ot">&lt;-</span> h</span>
-<span id="cb212-16"><a href="alias.html#cb212-16" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> low <span class="ot">&lt;-</span> low[<span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb212-17"><a href="alias.html#cb212-17" aria-hidden="true" tabindex="-1"></a>  } <span class="co"># while</span></span>
-<span id="cb212-18"><a href="alias.html#cb212-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generar valores</span></span>
-<span id="cb212-19"><a href="alias.html#cb212-19" aria-hidden="true" tabindex="-1"></a>  V <span class="ot">&lt;-</span> <span class="fu">runif</span>(nsim)</span>
-<span id="cb212-20"><a href="alias.html#cb212-20" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> <span class="fu">floor</span>(<span class="fu">runif</span>(nsim)<span class="sc">*</span><span class="fu">length</span>(x)) <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb212-21"><a href="alias.html#cb212-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>( x[ <span class="fu">ifelse</span>( V <span class="sc">&lt;</span> q[i], i, a[i]) ] )</span>
-<span id="cb212-22"><a href="alias.html#cb212-22" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb212-23"><a href="alias.html#cb212-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb212-24"><a href="alias.html#cb212-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb212-25"><a href="alias.html#cb212-25" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>( rx <span class="ot">&lt;-</span> <span class="fu">rfmp.alias</span>(x,fmp,nsim) )</span></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="alias.html#cb218-1" aria-hidden="true" tabindex="-1"></a>rfmp.alias <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">prob =</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">length</span>(x), <span class="at">nsim =</span> <span class="dv">1000</span>) {</span>
+<span id="cb218-2"><a href="alias.html#cb218-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Inicializar tablas</span></span>
+<span id="cb218-3"><a href="alias.html#cb218-3" aria-hidden="true" tabindex="-1"></a>  a <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(x))</span>
+<span id="cb218-4"><a href="alias.html#cb218-4" aria-hidden="true" tabindex="-1"></a>  q <span class="ot">&lt;-</span> prob<span class="sc">*</span><span class="fu">length</span>(x)</span>
+<span id="cb218-5"><a href="alias.html#cb218-5" aria-hidden="true" tabindex="-1"></a>  low <span class="ot">&lt;-</span> q <span class="sc">&lt;</span> <span class="dv">1</span></span>
+<span id="cb218-6"><a href="alias.html#cb218-6" aria-hidden="true" tabindex="-1"></a>  high <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="sc">!</span>low)</span>
+<span id="cb218-7"><a href="alias.html#cb218-7" aria-hidden="true" tabindex="-1"></a>  low <span class="ot">&lt;-</span> <span class="fu">which</span>(low)</span>
+<span id="cb218-8"><a href="alias.html#cb218-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (<span class="fu">length</span>(high) <span class="sc">&amp;&amp;</span> <span class="fu">length</span>(low)) {</span>
+<span id="cb218-9"><a href="alias.html#cb218-9" aria-hidden="true" tabindex="-1"></a>    l <span class="ot">&lt;-</span> low[<span class="dv">1</span>]</span>
+<span id="cb218-10"><a href="alias.html#cb218-10" aria-hidden="true" tabindex="-1"></a>    h <span class="ot">&lt;-</span> high[<span class="dv">1</span>]</span>
+<span id="cb218-11"><a href="alias.html#cb218-11" aria-hidden="true" tabindex="-1"></a>    a[l] <span class="ot">&lt;-</span> h</span>
+<span id="cb218-12"><a href="alias.html#cb218-12" aria-hidden="true" tabindex="-1"></a>    q[h] <span class="ot">&lt;-</span> q[h] <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> q[l])</span>
+<span id="cb218-13"><a href="alias.html#cb218-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (q[h] <span class="sc">&lt;</span> <span class="dv">1</span>) {</span>
+<span id="cb218-14"><a href="alias.html#cb218-14" aria-hidden="true" tabindex="-1"></a>      high <span class="ot">&lt;-</span> high[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb218-15"><a href="alias.html#cb218-15" aria-hidden="true" tabindex="-1"></a>      low[<span class="dv">1</span>] <span class="ot">&lt;-</span> h</span>
+<span id="cb218-16"><a href="alias.html#cb218-16" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> low <span class="ot">&lt;-</span> low[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb218-17"><a href="alias.html#cb218-17" aria-hidden="true" tabindex="-1"></a>  } <span class="co"># while</span></span>
+<span id="cb218-18"><a href="alias.html#cb218-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generar valores</span></span>
+<span id="cb218-19"><a href="alias.html#cb218-19" aria-hidden="true" tabindex="-1"></a>  V <span class="ot">&lt;-</span> <span class="fu">runif</span>(nsim)</span>
+<span id="cb218-20"><a href="alias.html#cb218-20" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> <span class="fu">floor</span>(<span class="fu">runif</span>(nsim)<span class="sc">*</span><span class="fu">length</span>(x)) <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb218-21"><a href="alias.html#cb218-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>( x[ <span class="fu">ifelse</span>( V <span class="sc">&lt;</span> q[i], i, a[i]) ] )</span>
+<span id="cb218-22"><a href="alias.html#cb218-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb218-23"><a href="alias.html#cb218-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb218-24"><a href="alias.html#cb218-24" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb218-25"><a href="alias.html#cb218-25" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb218-26"><a href="alias.html#cb218-26" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">5</span></span>
+<span id="cb218-27"><a href="alias.html#cb218-27" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span>n</span>
+<span id="cb218-28"><a href="alias.html#cb218-28" aria-hidden="true" tabindex="-1"></a>fmp <span class="ot">&lt;-</span> <span class="fu">dbinom</span>(x, n, p)</span>
+<span id="cb218-29"><a href="alias.html#cb218-29" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb218-30"><a href="alias.html#cb218-30" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>( rx <span class="ot">&lt;-</span> <span class="fu">rfmp.alias</span>(x, fmp, nsim) )</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.03    0.00    0.03</code></pre>
+##    0.03    0.02    0.04</code></pre>
 <p>Análisis de los resultados:</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="alias.html#cb214-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">table</span>(rx)<span class="sc">/</span>nsim</span>
-<span id="cb214-2"><a href="alias.html#cb214-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">ylab =</span> <span class="st">&quot;frecuencia relativa&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;valores&quot;</span>)</span>
-<span id="cb214-3"><a href="alias.html#cb214-3" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(x, fmp, <span class="at">pch =</span> <span class="dv">4</span>)  <span class="co"># Comparación teórica</span></span></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="alias.html#cb220-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">table</span>(rx)<span class="sc">/</span>nsim</span>
+<span id="cb220-2"><a href="alias.html#cb220-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">ylab =</span> <span class="st">&quot;frecuencia relativa&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;valores&quot;</span>)</span>
+<span id="cb220-3"><a href="alias.html#cb220-3" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(x, fmp, <span class="at">pch =</span> <span class="dv">4</span>)  <span class="co"># Comparación teórica</span></span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:compalias"></span>
-<img src="06-Metodos_generales_discretas_files/figure-html/compalias-1.png" alt="Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas." width="70%" />
+<img src="06-Metodos_generales_discretas_files/figure-html/compalias-1.png" alt="Comparación de las frecuencias relativas de los valores generados, mediante el método de alias, con las probabilidades teóricas." width="70%" />
 <p class="caption">
-Figura 6.4: Comparación de las frecuencias relativas de los valores generados con las probabilidades teóricas.
+Figura 6.6: Comparación de las frecuencias relativas de los valores generados, mediante el método de alias, con las probabilidades teóricas.
 </p>
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="14">
+<li id="fn14"><p>R implementa este algoritmo en el fichero fuente <a href="https://svn.r-project.org/R/trunk/src/main/random.c">random.c</a> (para muestreo probabilístico con reemplazamiento, función C <code>walker_ProbSampleReplace()</code>), aunque el paso 2 del algoritmo de simulación empleado por defecto cambió ligeramente a partir de la versión 3.6.0 para evitar posibles problemas de redondeo (ver Sección <a href="oprrng.html#oprrng">2.1</a>).<a href="alias.html#fnref14" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 

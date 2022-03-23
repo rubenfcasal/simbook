@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-03-16" />
+<meta name="date" content="2022-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,11 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#elección-de-la-densidad-auxiliar"><i class="fa fa-check"></i><b>5.2.4</b> Elección de la densidad auxiliar</a></li>
-<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: Inferencia Bayesiana</a></li>
+<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#bayes-ar"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: inferencia bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación-rechazo</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
@@ -379,8 +379,8 @@ Se puede generar una muestra de esta variable (mixtura) mediante el método de c
 <pre><code>p.sim &lt;- rbinom(n, 1, 0.05)
 dat.sim &lt;- rnorm(n, 3*p.sim, 1+2*p.sim)</code></pre>
 <p>Podemos comparar la densidad objetivo con la de los valores contaminados:</p>
-<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="comparación-de-estimadores.html#cb401-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="dv">0</span>, <span class="dv">1</span>), <span class="sc">-</span><span class="dv">3</span>, <span class="dv">12</span>, <span class="at">ylab =</span> <span class="st">&#39;densidad&#39;</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
-<span id="cb401-2"><a href="comparación-de-estimadores.html#cb401-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fl">0.95</span><span class="sc">*</span><span class="fu">dnorm</span>(x, <span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span> <span class="fl">0.05</span><span class="sc">*</span><span class="fu">dnorm</span>(x, <span class="dv">3</span>, <span class="dv">3</span>), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="comparación-de-estimadores.html#cb407-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="dv">0</span>, <span class="dv">1</span>), <span class="sc">-</span><span class="dv">3</span>, <span class="dv">12</span>, <span class="at">ylab =</span> <span class="st">&#39;densidad&#39;</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb407-2"><a href="comparación-de-estimadores.html#cb407-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fl">0.95</span><span class="sc">*</span><span class="fu">dnorm</span>(x, <span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span> <span class="fl">0.05</span><span class="sc">*</span><span class="fu">dnorm</span>(x, <span class="dv">3</span>, <span class="dv">3</span>), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p><img src="08-Aplicaciones_Inferencia_files/figure-html/contaminada-1.png" width="70%" style="display: block; margin: auto;" /></p>
 
 <div class="remark">
@@ -393,51 +393,51 @@ dat.sim &lt;- rnorm(n, 3*p.sim, 1+2*p.sim)</code></pre>
 error estándar de la media y la mediana en el caso de una
 muestra de tamaño <span class="math inline">\(n=100\)</span> (suponiendo que se pretende estimar la
 media no contaminada 0).</p>
-<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="comparación-de-estimadores.html#cb402-1" aria-hidden="true" tabindex="-1"></a><span class="co"># media y mediana</span></span>
-<span id="cb402-2"><a href="comparación-de-estimadores.html#cb402-2" aria-hidden="true" tabindex="-1"></a>xsd <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb402-3"><a href="comparación-de-estimadores.html#cb402-3" aria-hidden="true" tabindex="-1"></a>xmed <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb402-4"><a href="comparación-de-estimadores.html#cb402-4" aria-hidden="true" tabindex="-1"></a>ndat <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb402-5"><a href="comparación-de-estimadores.html#cb402-5" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">500</span></span>
-<span id="cb402-6"><a href="comparación-de-estimadores.html#cb402-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb402-7"><a href="comparación-de-estimadores.html#cb402-7" aria-hidden="true" tabindex="-1"></a><span class="co"># for (isim in 1:nsim) # evitar matrix y apply</span></span>
-<span id="cb402-8"><a href="comparación-de-estimadores.html#cb402-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb402-9"><a href="comparación-de-estimadores.html#cb402-9" aria-hidden="true" tabindex="-1"></a>ntsim <span class="ot">&lt;-</span> ndat<span class="sc">*</span>nsim</span>
-<span id="cb402-10"><a href="comparación-de-estimadores.html#cb402-10" aria-hidden="true" tabindex="-1"></a>p.sim <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(ntsim, <span class="dv">1</span>, <span class="fl">0.05</span>)</span>
-<span id="cb402-11"><a href="comparación-de-estimadores.html#cb402-11" aria-hidden="true" tabindex="-1"></a>dat.sim <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(ntsim, <span class="dv">3</span><span class="sc">*</span>p.sim, <span class="dv">1</span><span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>p.sim)</span>
-<span id="cb402-12"><a href="comparación-de-estimadores.html#cb402-12" aria-hidden="true" tabindex="-1"></a>dat.sim <span class="ot">&lt;-</span> <span class="fu">matrix</span>(dat.sim, <span class="at">ncol=</span>nsim)</span></code></pre></div>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="comparación-de-estimadores.html#cb408-1" aria-hidden="true" tabindex="-1"></a><span class="co"># media y mediana</span></span>
+<span id="cb408-2"><a href="comparación-de-estimadores.html#cb408-2" aria-hidden="true" tabindex="-1"></a>xsd <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb408-3"><a href="comparación-de-estimadores.html#cb408-3" aria-hidden="true" tabindex="-1"></a>xmed <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb408-4"><a href="comparación-de-estimadores.html#cb408-4" aria-hidden="true" tabindex="-1"></a>ndat <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb408-5"><a href="comparación-de-estimadores.html#cb408-5" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb408-6"><a href="comparación-de-estimadores.html#cb408-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb408-7"><a href="comparación-de-estimadores.html#cb408-7" aria-hidden="true" tabindex="-1"></a><span class="co"># for (isim in 1:nsim) # evitar matrix y apply</span></span>
+<span id="cb408-8"><a href="comparación-de-estimadores.html#cb408-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb408-9"><a href="comparación-de-estimadores.html#cb408-9" aria-hidden="true" tabindex="-1"></a>ntsim <span class="ot">&lt;-</span> ndat<span class="sc">*</span>nsim</span>
+<span id="cb408-10"><a href="comparación-de-estimadores.html#cb408-10" aria-hidden="true" tabindex="-1"></a>p.sim <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(ntsim, <span class="dv">1</span>, <span class="fl">0.05</span>)</span>
+<span id="cb408-11"><a href="comparación-de-estimadores.html#cb408-11" aria-hidden="true" tabindex="-1"></a>dat.sim <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(ntsim, <span class="dv">3</span><span class="sc">*</span>p.sim, <span class="dv">1</span><span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>p.sim)</span>
+<span id="cb408-12"><a href="comparación-de-estimadores.html#cb408-12" aria-hidden="true" tabindex="-1"></a>dat.sim <span class="ot">&lt;-</span> <span class="fu">matrix</span>(dat.sim, <span class="at">ncol=</span>nsim)</span></code></pre></div>
 <p>Cada columna es una muestra</p>
-<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="comparación-de-estimadores.html#cb403-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dat.sim[,<span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="comparación-de-estimadores.html#cb409-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dat.sim[,<span class="dv">1</span>])</span></code></pre></div>
 <pre><code>##  num [1:100] 0.197 -0.42 1.163 -0.406 0.744 ...</code></pre>
-<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="comparación-de-estimadores.html#cb405-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(dat.sim[,<span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="comparación-de-estimadores.html#cb411-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(dat.sim[,<span class="dv">1</span>])</span></code></pre></div>
 <p><img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-42-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Calculamos los estimadores:</p>
-<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="comparación-de-estimadores.html#cb406-1" aria-hidden="true" tabindex="-1"></a>mean.sim <span class="ot">&lt;-</span> <span class="fu">apply</span>(dat.sim, <span class="dv">2</span>, mean)</span>
-<span id="cb406-2"><a href="comparación-de-estimadores.html#cb406-2" aria-hidden="true" tabindex="-1"></a>median.sim <span class="ot">&lt;-</span> <span class="fu">apply</span>(dat.sim, <span class="dv">2</span>, median)</span></code></pre></div>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="comparación-de-estimadores.html#cb412-1" aria-hidden="true" tabindex="-1"></a>mean.sim <span class="ot">&lt;-</span> <span class="fu">apply</span>(dat.sim, <span class="dv">2</span>, mean)</span>
+<span id="cb412-2"><a href="comparación-de-estimadores.html#cb412-2" aria-hidden="true" tabindex="-1"></a>median.sim <span class="ot">&lt;-</span> <span class="fu">apply</span>(dat.sim, <span class="dv">2</span>, median)</span></code></pre></div>
 <p>Estimamos sus características:</p>
-<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="comparación-de-estimadores.html#cb407-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(mean.sim) <span class="co"># Coincide con el sesgo (media teórica es 0)</span></span></code></pre></div>
+<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="comparación-de-estimadores.html#cb413-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(mean.sim) <span class="co"># Coincide con el sesgo (media teórica es 0)</span></span></code></pre></div>
 <pre><code>## [1] 0.1459986</code></pre>
-<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="comparación-de-estimadores.html#cb409-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(mean.sim)</span></code></pre></div>
+<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="comparación-de-estimadores.html#cb415-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(mean.sim)</span></code></pre></div>
 <pre><code>## [1] 0.1349537</code></pre>
-<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="comparación-de-estimadores.html#cb411-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(median.sim) <span class="co"># Coincide con el sesgo (media teórica es 0)</span></span></code></pre></div>
+<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="comparación-de-estimadores.html#cb417-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(median.sim) <span class="co"># Coincide con el sesgo (media teórica es 0)</span></span></code></pre></div>
 <pre><code>## [1] 0.04453509</code></pre>
-<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="comparación-de-estimadores.html#cb413-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(median.sim)</span></code></pre></div>
+<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="comparación-de-estimadores.html#cb419-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(median.sim)</span></code></pre></div>
 <pre><code>## [1] 0.1300611</code></pre>
 <p>Sesgo:</p>
-<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="comparación-de-estimadores.html#cb415-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(mean.sim<span class="sc">-</span>xmed, median.sim<span class="sc">-</span>xmed, </span>
-<span id="cb415-2"><a href="comparación-de-estimadores.html#cb415-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">names=</span><span class="fu">c</span>(<span class="st">&quot;Media&quot;</span>,<span class="st">&quot;Mediana&quot;</span>), <span class="at">ylab=</span><span class="st">&quot;Sesgo&quot;</span>)</span>
-<span id="cb415-3"><a href="comparación-de-estimadores.html#cb415-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="comparación-de-estimadores.html#cb421-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(mean.sim<span class="sc">-</span>xmed, median.sim<span class="sc">-</span>xmed, </span>
+<span id="cb421-2"><a href="comparación-de-estimadores.html#cb421-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">names=</span><span class="fu">c</span>(<span class="st">&quot;Media&quot;</span>,<span class="st">&quot;Mediana&quot;</span>), <span class="at">ylab=</span><span class="st">&quot;Sesgo&quot;</span>)</span>
+<span id="cb421-3"><a href="comparación-de-estimadores.html#cb421-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-45-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Error cuadrático:</p>
-<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="comparación-de-estimadores.html#cb416-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>((mean.sim<span class="sc">-</span>xmed)<span class="sc">^</span><span class="dv">2</span>, (median.sim<span class="sc">-</span>xmed)<span class="sc">^</span><span class="dv">2</span>, </span>
-<span id="cb416-2"><a href="comparación-de-estimadores.html#cb416-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">names=</span><span class="fu">c</span>(<span class="st">&quot;Media&quot;</span>,<span class="st">&quot;Mediana&quot;</span>), <span class="at">ylab=</span><span class="st">&quot;Error cuadrático&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="comparación-de-estimadores.html#cb422-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>((mean.sim<span class="sc">-</span>xmed)<span class="sc">^</span><span class="dv">2</span>, (median.sim<span class="sc">-</span>xmed)<span class="sc">^</span><span class="dv">2</span>, </span>
+<span id="cb422-2"><a href="comparación-de-estimadores.html#cb422-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">names=</span><span class="fu">c</span>(<span class="st">&quot;Media&quot;</span>,<span class="st">&quot;Mediana&quot;</span>), <span class="at">ylab=</span><span class="st">&quot;Error cuadrático&quot;</span>)</span></code></pre></div>
 <p><img src="08-Aplicaciones_Inferencia_files/figure-html/unnamed-chunk-46-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Estadísticos error cuadrático:</p>
-<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="comparación-de-estimadores.html#cb417-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SE media</span></span>
-<span id="cb417-2"><a href="comparación-de-estimadores.html#cb417-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>((mean.sim<span class="sc">-</span>xmed)<span class="sc">^</span><span class="dv">2</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="comparación-de-estimadores.html#cb423-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SE media</span></span>
+<span id="cb423-2"><a href="comparación-de-estimadores.html#cb423-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>((mean.sim<span class="sc">-</span>xmed)<span class="sc">^</span><span class="dv">2</span>) </span></code></pre></div>
 <pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
 ## 0.0000005 0.0045072 0.0206272 0.0394917 0.0591531 0.3619587</code></pre>
-<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="comparación-de-estimadores.html#cb419-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SE mediana</span></span>
-<span id="cb419-2"><a href="comparación-de-estimadores.html#cb419-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>((median.sim<span class="sc">-</span>xmed)<span class="sc">^</span><span class="dv">2</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="comparación-de-estimadores.html#cb425-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SE mediana</span></span>
+<span id="cb425-2"><a href="comparación-de-estimadores.html#cb425-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>((median.sim<span class="sc">-</span>xmed)<span class="sc">^</span><span class="dv">2</span>) </span></code></pre></div>
 <pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
 ## 0.0000001 0.0016481 0.0070625 0.0188654 0.0243903 0.2618368</code></pre></li>
 </ol>

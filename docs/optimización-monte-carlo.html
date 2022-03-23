@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-03-16" />
+<meta name="date" content="2022-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,11 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#elección-de-la-densidad-auxiliar"><i class="fa fa-check"></i><b>5.2.4</b> Elección de la densidad auxiliar</a></li>
-<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: Inferencia Bayesiana</a></li>
+<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#bayes-ar"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: inferencia bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación-rechazo</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
@@ -377,7 +377,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="math display">\[\mathbf{x}_{i+1} = \mathbf{x}_i-[Hf(\mathbf{x}_i)]^{-1}\nabla f(\mathbf{x}_i),\]</span>
 donde <span class="math inline">\(Hf(\mathbf{x}_i)\)</span> es el hessiano de la función (matriz de segundas derivadas) y <span class="math inline">\(\nabla f(\mathbf{x}_i)\)</span> el gradiente (vector de primeras derivadas).
 Estos métodos normalmente funcionan muy bien cuando la función objetivo no tiene mínimos locales (ideal <span class="math inline">\(f\)</span> cuadrática).
-Los resultados obtenidos pueden ser muy malos en caso contrario (especialmente en el caso multidimensional) y dependen en gran medida del punto inicial<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a>
+Los resultados obtenidos pueden ser muy malos en caso contrario (especialmente en el caso multidimensional) y dependen en gran medida del punto inicial<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a>
 Un ejemplo donde es habitual que aparezcan este tipo de problemas es en la estimación por máxima verosimilitud (la función objetivo puede ser multimodal).</p>
 
 <div class="exercise">
@@ -390,81 +390,81 @@ Generar una muestra de 200 valores de esta distribución con <span class="math i
 función de verosimilitud y representarla graficamente.
 Obtener la estimación por máxima verosimilitud de los parámetros empleando la rutina <code>nlm</code>.</p>
 <p>Obtención de la muestra (simulación mixtura dos normales):</p>
-<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="optimización-monte-carlo.html#cb497-1" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">200</span></span>
-<span id="cb497-2"><a href="optimización-monte-carlo.html#cb497-2" aria-hidden="true" tabindex="-1"></a>mu1 <span class="ot">&lt;-</span> <span class="dv">0</span> </span>
-<span id="cb497-3"><a href="optimización-monte-carlo.html#cb497-3" aria-hidden="true" tabindex="-1"></a>mu2 <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
-<span id="cb497-4"><a href="optimización-monte-carlo.html#cb497-4" aria-hidden="true" tabindex="-1"></a>sd1 <span class="ot">&lt;-</span> sd2 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb497-5"><a href="optimización-monte-carlo.html#cb497-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb497-6"><a href="optimización-monte-carlo.html#cb497-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
-<span id="cb497-7"><a href="optimización-monte-carlo.html#cb497-7" aria-hidden="true" tabindex="-1"></a>p.sim <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="dv">1</span>, <span class="fl">0.25</span>)</span>
-<span id="cb497-8"><a href="optimización-monte-carlo.html#cb497-8" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(nsim, mu1<span class="sc">*</span>p.sim <span class="sc">+</span> mu2<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p.sim), sd1<span class="sc">*</span>p.sim <span class="sc">+</span> sd2<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p.sim))</span>
-<span id="cb497-9"><a href="optimización-monte-carlo.html#cb497-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb497-10"><a href="optimización-monte-carlo.html#cb497-10" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(data, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>))</span>
-<span id="cb497-11"><a href="optimización-monte-carlo.html#cb497-11" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fl">0.25</span> <span class="sc">*</span> <span class="fu">dnorm</span>(x, mu1, sd1) <span class="sc">+</span> <span class="fl">0.75</span> <span class="sc">*</span> <span class="fu">dnorm</span>(x, mu2, sd2), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb503-1"><a href="optimización-monte-carlo.html#cb503-1" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">200</span></span>
+<span id="cb503-2"><a href="optimización-monte-carlo.html#cb503-2" aria-hidden="true" tabindex="-1"></a>mu1 <span class="ot">&lt;-</span> <span class="dv">0</span> </span>
+<span id="cb503-3"><a href="optimización-monte-carlo.html#cb503-3" aria-hidden="true" tabindex="-1"></a>mu2 <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
+<span id="cb503-4"><a href="optimización-monte-carlo.html#cb503-4" aria-hidden="true" tabindex="-1"></a>sd1 <span class="ot">&lt;-</span> sd2 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb503-5"><a href="optimización-monte-carlo.html#cb503-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb503-6"><a href="optimización-monte-carlo.html#cb503-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb503-7"><a href="optimización-monte-carlo.html#cb503-7" aria-hidden="true" tabindex="-1"></a>p.sim <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="dv">1</span>, <span class="fl">0.25</span>)</span>
+<span id="cb503-8"><a href="optimización-monte-carlo.html#cb503-8" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(nsim, mu1<span class="sc">*</span>p.sim <span class="sc">+</span> mu2<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p.sim), sd1<span class="sc">*</span>p.sim <span class="sc">+</span> sd2<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p.sim))</span>
+<span id="cb503-9"><a href="optimización-monte-carlo.html#cb503-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb503-10"><a href="optimización-monte-carlo.html#cb503-10" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(data, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>))</span>
+<span id="cb503-11"><a href="optimización-monte-carlo.html#cb503-11" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fl">0.25</span> <span class="sc">*</span> <span class="fu">dnorm</span>(x, mu1, sd1) <span class="sc">+</span> <span class="fl">0.75</span> <span class="sc">*</span> <span class="fu">dnorm</span>(x, mu2, sd2), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p><img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Logaritmo (negativo) de la función de verosimilitud
 (para la estimación de las medias)</p>
-<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="optimización-monte-carlo.html#cb498-1" aria-hidden="true" tabindex="-1"></a>like <span class="ot">&lt;-</span> <span class="cf">function</span>(mu)</span>
-<span id="cb498-2"><a href="optimización-monte-carlo.html#cb498-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fu">sum</span>(<span class="fu">log</span>((<span class="fl">0.25</span> <span class="sc">*</span> <span class="fu">dnorm</span>(data, mu[<span class="dv">1</span>], sd1) <span class="sc">+</span> <span class="fl">0.75</span> <span class="sc">*</span> <span class="fu">dnorm</span>(data, mu[<span class="dv">2</span>], sd2))))</span>
-<span id="cb498-3"><a href="optimización-monte-carlo.html#cb498-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># NOTA: Pueden aparecer NA/Inf por log(0)</span></span></code></pre></div>
+<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="optimización-monte-carlo.html#cb504-1" aria-hidden="true" tabindex="-1"></a>like <span class="ot">&lt;-</span> <span class="cf">function</span>(mu)</span>
+<span id="cb504-2"><a href="optimización-monte-carlo.html#cb504-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fu">sum</span>(<span class="fu">log</span>((<span class="fl">0.25</span> <span class="sc">*</span> <span class="fu">dnorm</span>(data, mu[<span class="dv">1</span>], sd1) <span class="sc">+</span> <span class="fl">0.75</span> <span class="sc">*</span> <span class="fu">dnorm</span>(data, mu[<span class="dv">2</span>], sd2))))</span>
+<span id="cb504-3"><a href="optimización-monte-carlo.html#cb504-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># NOTA: Pueden aparecer NA/Inf por log(0)</span></span></code></pre></div>
 <p>Si queremos capturar los valores en los que se evalúa esta función,
 podemos proceder de forma similar a como se describe en el capítulo
 <a href="http://adv-r.had.co.nz/Function-operators.html#behavioural-fos">Function operators</a>
 del libro “Advanced R” de Hadley Wickham:
 Behavioural FOs leave the inputs and outputs of a function unchanged,
 but add some extra behaviour.</p>
-<div class="sourceCode" id="cb499"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb499-1"><a href="optimización-monte-carlo.html#cb499-1" aria-hidden="true" tabindex="-1"></a>tee <span class="ot">&lt;-</span> <span class="cf">function</span>(f) {</span>
-<span id="cb499-2"><a href="optimización-monte-carlo.html#cb499-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(...) {</span>
-<span id="cb499-3"><a href="optimización-monte-carlo.html#cb499-3" aria-hidden="true" tabindex="-1"></a>    input <span class="ot">&lt;-</span> <span class="cf">if</span>(<span class="fu">nargs</span>() <span class="sc">==</span> <span class="dv">1</span>) <span class="fu">c</span>(...) <span class="cf">else</span> <span class="fu">list</span>(...)</span>
-<span id="cb499-4"><a href="optimización-monte-carlo.html#cb499-4" aria-hidden="true" tabindex="-1"></a>    output <span class="ot">&lt;-</span> <span class="fu">f</span>(...)</span>
-<span id="cb499-5"><a href="optimización-monte-carlo.html#cb499-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Hacer algo ...</span></span>
-<span id="cb499-6"><a href="optimización-monte-carlo.html#cb499-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... con output e input</span></span>
-<span id="cb499-7"><a href="optimización-monte-carlo.html#cb499-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(output)</span>
-<span id="cb499-8"><a href="optimización-monte-carlo.html#cb499-8" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb499-9"><a href="optimización-monte-carlo.html#cb499-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb505-1"><a href="optimización-monte-carlo.html#cb505-1" aria-hidden="true" tabindex="-1"></a>tee <span class="ot">&lt;-</span> <span class="cf">function</span>(f) {</span>
+<span id="cb505-2"><a href="optimización-monte-carlo.html#cb505-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(...) {</span>
+<span id="cb505-3"><a href="optimización-monte-carlo.html#cb505-3" aria-hidden="true" tabindex="-1"></a>    input <span class="ot">&lt;-</span> <span class="cf">if</span>(<span class="fu">nargs</span>() <span class="sc">==</span> <span class="dv">1</span>) <span class="fu">c</span>(...) <span class="cf">else</span> <span class="fu">list</span>(...)</span>
+<span id="cb505-4"><a href="optimización-monte-carlo.html#cb505-4" aria-hidden="true" tabindex="-1"></a>    output <span class="ot">&lt;-</span> <span class="fu">f</span>(...)</span>
+<span id="cb505-5"><a href="optimización-monte-carlo.html#cb505-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Hacer algo ...</span></span>
+<span id="cb505-6"><a href="optimización-monte-carlo.html#cb505-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... con output e input</span></span>
+<span id="cb505-7"><a href="optimización-monte-carlo.html#cb505-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(output)</span>
+<span id="cb505-8"><a href="optimización-monte-carlo.html#cb505-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb505-9"><a href="optimización-monte-carlo.html#cb505-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>En este caso queremos representar los puntos en los que el algoritmo de optimización
 evalúa la función objetivo (especialmente como evoluciona el valor óptimo)</p>
-<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="optimización-monte-carlo.html#cb500-1" aria-hidden="true" tabindex="-1"></a>tee.optim2d <span class="ot">&lt;-</span> <span class="cf">function</span>(f) {</span>
-<span id="cb500-2"><a href="optimización-monte-carlo.html#cb500-2" aria-hidden="true" tabindex="-1"></a>  best.f <span class="ot">&lt;-</span> <span class="cn">Inf</span>   <span class="co"># Suponemos que se va a minimizar (opción por defecto)</span></span>
-<span id="cb500-3"><a href="optimización-monte-carlo.html#cb500-3" aria-hidden="true" tabindex="-1"></a>  best.par <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>)   </span>
-<span id="cb500-4"><a href="optimización-monte-carlo.html#cb500-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(...) {</span>
-<span id="cb500-5"><a href="optimización-monte-carlo.html#cb500-5" aria-hidden="true" tabindex="-1"></a>    input <span class="ot">&lt;-</span> <span class="fu">c</span>(...)</span>
-<span id="cb500-6"><a href="optimización-monte-carlo.html#cb500-6" aria-hidden="true" tabindex="-1"></a>    output <span class="ot">&lt;-</span> <span class="fu">f</span>(...)</span>
-<span id="cb500-7"><a href="optimización-monte-carlo.html#cb500-7" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Hacer algo ...</span></span>
-<span id="cb500-8"><a href="optimización-monte-carlo.html#cb500-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">points</span>(input[<span class="dv">1</span>], input[<span class="dv">2</span>], <span class="at">col =</span> <span class="st">&quot;lightgray&quot;</span>)</span>
-<span id="cb500-9"><a href="optimización-monte-carlo.html#cb500-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(best.f <span class="sc">&gt;</span> output) {</span>
-<span id="cb500-10"><a href="optimización-monte-carlo.html#cb500-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">lines</span>(<span class="fu">rbind</span>(best.par, input), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
-<span id="cb500-11"><a href="optimización-monte-carlo.html#cb500-11" aria-hidden="true" tabindex="-1"></a>      best.f <span class="ot">&lt;&lt;-</span> output</span>
-<span id="cb500-12"><a href="optimización-monte-carlo.html#cb500-12" aria-hidden="true" tabindex="-1"></a>      best.par <span class="ot">&lt;&lt;-</span> input</span>
-<span id="cb500-13"><a href="optimización-monte-carlo.html#cb500-13" aria-hidden="true" tabindex="-1"></a>      <span class="co"># points(best.par[1], best.par[2], col = &quot;blue&quot;, pch = 20)</span></span>
-<span id="cb500-14"><a href="optimización-monte-carlo.html#cb500-14" aria-hidden="true" tabindex="-1"></a>      <span class="co"># cat(&quot;par = &quot;, best.par, &quot;value = &quot;, best.f, &quot;\n&quot;)</span></span>
-<span id="cb500-15"><a href="optimización-monte-carlo.html#cb500-15" aria-hidden="true" tabindex="-1"></a>    } </span>
-<span id="cb500-16"><a href="optimización-monte-carlo.html#cb500-16" aria-hidden="true" tabindex="-1"></a>    <span class="do">## ... con output e input</span></span>
-<span id="cb500-17"><a href="optimización-monte-carlo.html#cb500-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(output)</span>
-<span id="cb500-18"><a href="optimización-monte-carlo.html#cb500-18" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb500-19"><a href="optimización-monte-carlo.html#cb500-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="optimización-monte-carlo.html#cb506-1" aria-hidden="true" tabindex="-1"></a>tee.optim2d <span class="ot">&lt;-</span> <span class="cf">function</span>(f) {</span>
+<span id="cb506-2"><a href="optimización-monte-carlo.html#cb506-2" aria-hidden="true" tabindex="-1"></a>  best.f <span class="ot">&lt;-</span> <span class="cn">Inf</span>   <span class="co"># Suponemos que se va a minimizar (opción por defecto)</span></span>
+<span id="cb506-3"><a href="optimización-monte-carlo.html#cb506-3" aria-hidden="true" tabindex="-1"></a>  best.par <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>)   </span>
+<span id="cb506-4"><a href="optimización-monte-carlo.html#cb506-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(...) {</span>
+<span id="cb506-5"><a href="optimización-monte-carlo.html#cb506-5" aria-hidden="true" tabindex="-1"></a>    input <span class="ot">&lt;-</span> <span class="fu">c</span>(...)</span>
+<span id="cb506-6"><a href="optimización-monte-carlo.html#cb506-6" aria-hidden="true" tabindex="-1"></a>    output <span class="ot">&lt;-</span> <span class="fu">f</span>(...)</span>
+<span id="cb506-7"><a href="optimización-monte-carlo.html#cb506-7" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Hacer algo ...</span></span>
+<span id="cb506-8"><a href="optimización-monte-carlo.html#cb506-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">points</span>(input[<span class="dv">1</span>], input[<span class="dv">2</span>], <span class="at">col =</span> <span class="st">&quot;lightgray&quot;</span>)</span>
+<span id="cb506-9"><a href="optimización-monte-carlo.html#cb506-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(best.f <span class="sc">&gt;</span> output) {</span>
+<span id="cb506-10"><a href="optimización-monte-carlo.html#cb506-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">lines</span>(<span class="fu">rbind</span>(best.par, input), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb506-11"><a href="optimización-monte-carlo.html#cb506-11" aria-hidden="true" tabindex="-1"></a>      best.f <span class="ot">&lt;&lt;-</span> output</span>
+<span id="cb506-12"><a href="optimización-monte-carlo.html#cb506-12" aria-hidden="true" tabindex="-1"></a>      best.par <span class="ot">&lt;&lt;-</span> input</span>
+<span id="cb506-13"><a href="optimización-monte-carlo.html#cb506-13" aria-hidden="true" tabindex="-1"></a>      <span class="co"># points(best.par[1], best.par[2], col = &quot;blue&quot;, pch = 20)</span></span>
+<span id="cb506-14"><a href="optimización-monte-carlo.html#cb506-14" aria-hidden="true" tabindex="-1"></a>      <span class="co"># cat(&quot;par = &quot;, best.par, &quot;value = &quot;, best.f, &quot;\n&quot;)</span></span>
+<span id="cb506-15"><a href="optimización-monte-carlo.html#cb506-15" aria-hidden="true" tabindex="-1"></a>    } </span>
+<span id="cb506-16"><a href="optimización-monte-carlo.html#cb506-16" aria-hidden="true" tabindex="-1"></a>    <span class="do">## ... con output e input</span></span>
+<span id="cb506-17"><a href="optimización-monte-carlo.html#cb506-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(output)</span>
+<span id="cb506-18"><a href="optimización-monte-carlo.html#cb506-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb506-19"><a href="optimización-monte-carlo.html#cb506-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Representar la superficie del logaritmo de la verosimilitud,
 los puntos iniciales y las iteraciones en la optimización numérica con <code>nlm</code>:</p>
-<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb501-1"><a href="optimización-monte-carlo.html#cb501-1" aria-hidden="true" tabindex="-1"></a>mmu1 <span class="ot">&lt;-</span> mmu2 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">5</span>, <span class="at">length =</span> <span class="dv">128</span>)</span>
-<span id="cb501-2"><a href="optimización-monte-carlo.html#cb501-2" aria-hidden="true" tabindex="-1"></a>lli <span class="ot">&lt;-</span> <span class="fu">outer</span>(mmu1, mmu2, <span class="cf">function</span>(x,y) <span class="fu">apply</span>(<span class="fu">cbind</span>(x,y), <span class="dv">1</span>, like))</span>
-<span id="cb501-3"><a href="optimización-monte-carlo.html#cb501-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb501-4"><a href="optimización-monte-carlo.html#cb501-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb501-5"><a href="optimización-monte-carlo.html#cb501-5" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">xlab =</span> <span class="fu">expression</span>(mu[<span class="dv">1</span>]), <span class="at">ylab =</span> <span class="fu">expression</span>(mu[<span class="dv">2</span>]))</span>
-<span id="cb501-6"><a href="optimización-monte-carlo.html#cb501-6" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">nlevels =</span> <span class="dv">50</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb501-7"><a href="optimización-monte-carlo.html#cb501-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb501-8"><a href="optimización-monte-carlo.html#cb501-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Valores iniciales aleatorios</span></span>
-<span id="cb501-9"><a href="optimización-monte-carlo.html#cb501-9" aria-hidden="true" tabindex="-1"></a>nstarts <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb501-10"><a href="optimización-monte-carlo.html#cb501-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb501-11"><a href="optimización-monte-carlo.html#cb501-11" aria-hidden="true" tabindex="-1"></a>starts <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(<span class="dv">2</span><span class="sc">*</span>nstarts, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">5</span>), <span class="at">nrow =</span> nstarts)</span>
-<span id="cb501-12"><a href="optimización-monte-carlo.html#cb501-12" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(starts, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span>
-<span id="cb501-13"><a href="optimización-monte-carlo.html#cb501-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb501-14"><a href="optimización-monte-carlo.html#cb501-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Minimización numérica con nlm</span></span>
-<span id="cb501-15"><a href="optimización-monte-carlo.html#cb501-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nstarts){</span>
-<span id="cb501-16"><a href="optimización-monte-carlo.html#cb501-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Normalmente llamaríamos a nlm(like, start)</span></span>
-<span id="cb501-17"><a href="optimización-monte-carlo.html#cb501-17" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">nlm</span>(<span class="fu">tee.optim2d</span>(like), starts[j, ]) <span class="co"># nlm(like, starts[j, ])</span></span>
-<span id="cb501-18"><a href="optimización-monte-carlo.html#cb501-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">points</span>(res<span class="sc">$</span>estimate[<span class="dv">1</span>],res<span class="sc">$</span>estimate[<span class="dv">2</span>], <span class="at">pch =</span> <span class="dv">19</span>)</span>
-<span id="cb501-19"><a href="optimización-monte-carlo.html#cb501-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;par = &quot;</span>, res<span class="sc">$</span>estimate, <span class="st">&quot;value =&quot;</span>, res<span class="sc">$</span>minimum, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb501-20"><a href="optimización-monte-carlo.html#cb501-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="optimización-monte-carlo.html#cb507-1" aria-hidden="true" tabindex="-1"></a>mmu1 <span class="ot">&lt;-</span> mmu2 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">5</span>, <span class="at">length =</span> <span class="dv">128</span>)</span>
+<span id="cb507-2"><a href="optimización-monte-carlo.html#cb507-2" aria-hidden="true" tabindex="-1"></a>lli <span class="ot">&lt;-</span> <span class="fu">outer</span>(mmu1, mmu2, <span class="cf">function</span>(x,y) <span class="fu">apply</span>(<span class="fu">cbind</span>(x,y), <span class="dv">1</span>, like))</span>
+<span id="cb507-3"><a href="optimización-monte-carlo.html#cb507-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb507-4"><a href="optimización-monte-carlo.html#cb507-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb507-5"><a href="optimización-monte-carlo.html#cb507-5" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">xlab =</span> <span class="fu">expression</span>(mu[<span class="dv">1</span>]), <span class="at">ylab =</span> <span class="fu">expression</span>(mu[<span class="dv">2</span>]))</span>
+<span id="cb507-6"><a href="optimización-monte-carlo.html#cb507-6" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">nlevels =</span> <span class="dv">50</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb507-7"><a href="optimización-monte-carlo.html#cb507-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb507-8"><a href="optimización-monte-carlo.html#cb507-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Valores iniciales aleatorios</span></span>
+<span id="cb507-9"><a href="optimización-monte-carlo.html#cb507-9" aria-hidden="true" tabindex="-1"></a>nstarts <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb507-10"><a href="optimización-monte-carlo.html#cb507-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb507-11"><a href="optimización-monte-carlo.html#cb507-11" aria-hidden="true" tabindex="-1"></a>starts <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(<span class="dv">2</span><span class="sc">*</span>nstarts, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">5</span>), <span class="at">nrow =</span> nstarts)</span>
+<span id="cb507-12"><a href="optimización-monte-carlo.html#cb507-12" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(starts, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span>
+<span id="cb507-13"><a href="optimización-monte-carlo.html#cb507-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb507-14"><a href="optimización-monte-carlo.html#cb507-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Minimización numérica con nlm</span></span>
+<span id="cb507-15"><a href="optimización-monte-carlo.html#cb507-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nstarts){</span>
+<span id="cb507-16"><a href="optimización-monte-carlo.html#cb507-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Normalmente llamaríamos a nlm(like, start)</span></span>
+<span id="cb507-17"><a href="optimización-monte-carlo.html#cb507-17" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">nlm</span>(<span class="fu">tee.optim2d</span>(like), starts[j, ]) <span class="co"># nlm(like, starts[j, ])</span></span>
+<span id="cb507-18"><a href="optimización-monte-carlo.html#cb507-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">points</span>(res<span class="sc">$</span>estimate[<span class="dv">1</span>],res<span class="sc">$</span>estimate[<span class="dv">2</span>], <span class="at">pch =</span> <span class="dv">19</span>)</span>
+<span id="cb507-19"><a href="optimización-monte-carlo.html#cb507-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;par = &quot;</span>, res<span class="sc">$</span>estimate, <span class="st">&quot;value =&quot;</span>, res<span class="sc">$</span>minimum, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb507-20"><a href="optimización-monte-carlo.html#cb507-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p><img src="09-Monte_Carlo_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre><code>## par =  -0.03892511 2.494589 value = 361.5712 
 ## par =  -0.03892501 2.494589 value = 361.5712 
@@ -495,8 +495,8 @@ que se garantize la integrabilidad.</p>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="17">
-<li id="fn17"><p>Este tipo de algoritmos se denominan <em>codiciosos</em> o <em>voraces</em>, porque buscan la mejor opción a “corto plazo.”<a href="optimización-monte-carlo.html#fnref17" class="footnote-back">↩︎</a></p></li>
+<ol start="18">
+<li id="fn18"><p>Este tipo de algoritmos se denominan <em>codiciosos</em> o <em>voraces</em>, porque buscan la mejor opción a “corto plazo.”<a href="optimización-monte-carlo.html#fnref18" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-03-16" />
+<meta name="date" content="2022-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,11 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#elección-de-la-densidad-auxiliar"><i class="fa fa-check"></i><b>5.2.4</b> Elección de la densidad auxiliar</a></li>
-<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: Inferencia Bayesiana</a></li>
+<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#bayes-ar"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: inferencia bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación-rechazo</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
@@ -375,14 +375,17 @@ mixtura discreta de densidades:
 con <span class="math inline">\(\sum_{j=1}^{k}p_j=1\)</span>, <span class="math inline">\(p_j\geq 0\)</span> y <span class="math inline">\(f_j\)</span> densidades
 (sería también válido para funciones de distribución o variables aleatorias,
 incluyendo el caso discreto).</p>
-<p>Algoritmo:</p>
+
+<div class="conjecture">
+<p><span id="cnj:mixtura-discreta" class="conjecture"><strong>Algoritmo 5.6  (simulación de una mixtura discreta)  </strong></span><br></p>
 <ol style="list-style-type: decimal">
 <li><p>Generar <span class="math inline">\(J\)</span> con distribución <span class="math inline">\(P\left( J=j \right) = p_j\)</span>.</p></li>
 <li><p>Generar <span class="math inline">\(X\sim f_J\)</span>.</p></li>
 </ol>
+</div>
 
 <div class="example">
-<span id="exm:dexp-mix" class="example"><strong>Ejemplo 5.5  (Distribución doble exponencial)  </strong></span>
+<span id="exm:dexp-mix" class="example"><strong>Ejemplo 5.6  (distribución doble exponencial)  </strong></span>
 </div>
 <p>A partir de la densidad de la distribución doble exponencial:
 <span class="math display">\[f(x) =\frac{\lambda }{2}e^{-\lambda \left\vert x\right\vert }%
@@ -396,7 +399,7 @@ siendo:
 \lambda e^{-\lambda x} &amp; \text{si } x\geq 0 \\ 
 0 &amp; \text{si } x&lt;0
 \end{array}
-\ \right. \\
+\right., \  
 f_{2}(x) = \left\{ 
 \begin{array}{ll}
 \lambda e^{\lambda x} &amp; \text{si } x&lt;0 \\ 
@@ -422,11 +425,14 @@ tamaño <span class="math inline">\(n\)</span>, se simulan muestras de tamaño <
 Simular a partir de una estimación de este tipo es lo que se conoce como <em>bootstrap suavizado</em>.</p>
 <p>En el caso de una mixtura continua tendríamos:
 <span class="math display">\[f(x)=\int g(x|y)h(y)dy\]</span></p>
-<p>Algoritmo:</p>
+
+<div class="conjecture">
+<p><span id="cnj:mixtura-continua" class="conjecture"><strong>Algoritmo 5.7  (simulación de una mixtura continua)  </strong></span><br></p>
 <ol style="list-style-type: decimal">
 <li><p>Generar <span class="math inline">\(Y\sim h\)</span>.</p></li>
 <li><p>Generar <span class="math inline">\(X\sim g(\cdot |Y)\)</span>.</p></li>
 </ol>
+</div>
 <p>Este algoritmo es muy empleado en Inferencia Bayesiana y en la simulación de algunas variables discretas (como la Binomial Negativa, denominada también distribución Gamma-Poisson, o la distribución Beta-Binomial; ver Sección <a href="notables-disc.html#notables-disc">6.7</a>),
 ya que el resultado sería válido cambiando las funciones de densidad <span class="math inline">\(f\)</span> y <span class="math inline">\(g\)</span> por funciones de masa de probabilidad.</p>
 </div>

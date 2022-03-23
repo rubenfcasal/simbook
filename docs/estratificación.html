@@ -24,7 +24,7 @@
 <meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)" />
 
 
-<meta name="date" content="2022-03-16" />
+<meta name="date" content="2022-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,11 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>5.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
 <li class="chapter" data-level="5.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>5.2.3</b> Eficiencia del algoritmo</a></li>
 <li class="chapter" data-level="5.2.4" data-path="AR.html"><a href="AR.html#elección-de-la-densidad-auxiliar"><i class="fa fa-check"></i><b>5.2.4</b> Elección de la densidad auxiliar</a></li>
-<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#ejemplo-inferencia-bayesiana"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: Inferencia Bayesiana</a></li>
+<li class="chapter" data-level="5.2.5" data-path="AR.html"><a href="AR.html#bayes-ar"><i class="fa fa-check"></i><b>5.2.5</b> Ejemplo: inferencia bayesiana</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación rechazo</a>
+<li class="chapter" data-level="5.3" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>5.3</b> Modificaciones del método de aceptación-rechazo</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#muestreo-por-rechazo-adaptativo-ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="5.3.1" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#ars"><i class="fa fa-check"></i><b>5.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
 <li class="chapter" data-level="5.3.2" data-path="modificaciones-del-método-de-aceptación-rechazo.html"><a href="modificaciones-del-método-de-aceptación-rechazo.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>5.3.2</b> Método del cociente de uniformes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>5.4</b> Método de composición (o de simulación condicional)</a></li>
@@ -384,7 +384,7 @@ variabilidad en el estrato se puede obtener una reducción
 significativa de la varianza.</p>
 
 <div class="example">
-<span id="exm:estr-exp" class="example"><strong>Ejemplo 10.1  (Muestreo estratificado de una exponencial)  </strong></span>
+<span id="exm:estr-exp" class="example"><strong>Ejemplo 10.1  (muestreo estratificado de una exponencial)  </strong></span>
 </div>
 <p>Supóngase el siguiente problema (absolutamente artificial pero ilustrativo para comprender esta técnica).
 Dada una muestra de tamaño 10 de una población con distribución:
@@ -431,35 +431,35 @@ que es bastante menor que 1 (la varianza en el caso de muestreo aleatorio simple
 </div>
 <p>Aproximar la integral anterior empleando la técnica de estratificación, considerando <span class="math inline">\(k\)</span> subintervalos regularmente espaciados en el intervalo <span class="math inline">\(\left[ 0, 2 \right]\)</span>.
 ¿Como varía la reducción en la varianza dependiendo del valor de <span class="math inline">\(k\)</span>?</p>
-<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="estratificación.html#cb525-1" aria-hidden="true" tabindex="-1"></a>mc.integrale <span class="ot">&lt;-</span> <span class="cf">function</span>(ftn, a, b, n, k) {</span>
-<span id="cb525-2"><a href="estratificación.html#cb525-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Integración Monte Carlo con estratificación</span></span>
-<span id="cb525-3"><a href="estratificación.html#cb525-3" aria-hidden="true" tabindex="-1"></a>  l <span class="ot">&lt;-</span> n<span class="sc">%/%</span>k</span>
-<span id="cb525-4"><a href="estratificación.html#cb525-4" aria-hidden="true" tabindex="-1"></a>  int <span class="ot">&lt;-</span> <span class="fu">seq</span>(a, b, <span class="at">len=</span>k<span class="sc">+</span><span class="dv">1</span>)</span>
-<span id="cb525-5"><a href="estratificación.html#cb525-5" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">runif</span>(l<span class="sc">*</span>k, <span class="fu">rep</span>(int[<span class="sc">-</span>(k<span class="sc">+</span><span class="dv">1</span>)], <span class="at">each=</span>l), <span class="fu">rep</span>(int[<span class="sc">-</span><span class="dv">1</span>], <span class="at">each=</span>l))</span>
-<span id="cb525-6"><a href="estratificación.html#cb525-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># l uniformes en cada uno de los intervalos [(j-1)/k , j/k]</span></span>
-<span id="cb525-7"><a href="estratificación.html#cb525-7" aria-hidden="true" tabindex="-1"></a>  fx <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x, ftn)<span class="sc">*</span>(b<span class="sc">-</span>a)</span>
-<span id="cb525-8"><a href="estratificación.html#cb525-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">valor=</span><span class="fu">mean</span>(fx), <span class="at">error=</span><span class="dv">2</span><span class="sc">*</span><span class="fu">sd</span>(fx)<span class="sc">/</span><span class="fu">sqrt</span>(n)))   <span class="co"># error mal calculado</span></span>
-<span id="cb525-9"><a href="estratificación.html#cb525-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb525-10"><a href="estratificación.html#cb525-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb525-11"><a href="estratificación.html#cb525-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
-<span id="cb525-12"><a href="estratificación.html#cb525-12" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">mc.integral</span>(ftn, a, b, <span class="dv">500</span>)</span>
-<span id="cb525-13"><a href="estratificación.html#cb525-13" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> teor)</span></code></pre></div>
+<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="estratificación.html#cb531-1" aria-hidden="true" tabindex="-1"></a>mc.integrale <span class="ot">&lt;-</span> <span class="cf">function</span>(ftn, a, b, n, k) {</span>
+<span id="cb531-2"><a href="estratificación.html#cb531-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Integración Monte Carlo con estratificación</span></span>
+<span id="cb531-3"><a href="estratificación.html#cb531-3" aria-hidden="true" tabindex="-1"></a>  l <span class="ot">&lt;-</span> n<span class="sc">%/%</span>k</span>
+<span id="cb531-4"><a href="estratificación.html#cb531-4" aria-hidden="true" tabindex="-1"></a>  int <span class="ot">&lt;-</span> <span class="fu">seq</span>(a, b, <span class="at">len=</span>k<span class="sc">+</span><span class="dv">1</span>)</span>
+<span id="cb531-5"><a href="estratificación.html#cb531-5" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">runif</span>(l<span class="sc">*</span>k, <span class="fu">rep</span>(int[<span class="sc">-</span>(k<span class="sc">+</span><span class="dv">1</span>)], <span class="at">each=</span>l), <span class="fu">rep</span>(int[<span class="sc">-</span><span class="dv">1</span>], <span class="at">each=</span>l))</span>
+<span id="cb531-6"><a href="estratificación.html#cb531-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># l uniformes en cada uno de los intervalos [(j-1)/k , j/k]</span></span>
+<span id="cb531-7"><a href="estratificación.html#cb531-7" aria-hidden="true" tabindex="-1"></a>  fx <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x, ftn)<span class="sc">*</span>(b<span class="sc">-</span>a)</span>
+<span id="cb531-8"><a href="estratificación.html#cb531-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">valor=</span><span class="fu">mean</span>(fx), <span class="at">error=</span><span class="dv">2</span><span class="sc">*</span><span class="fu">sd</span>(fx)<span class="sc">/</span><span class="fu">sqrt</span>(n)))   <span class="co"># error mal calculado</span></span>
+<span id="cb531-9"><a href="estratificación.html#cb531-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb531-10"><a href="estratificación.html#cb531-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb531-11"><a href="estratificación.html#cb531-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
+<span id="cb531-12"><a href="estratificación.html#cb531-12" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">mc.integral</span>(ftn, a, b, <span class="dv">500</span>)</span>
+<span id="cb531-13"><a href="estratificación.html#cb531-13" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> teor)</span></code></pre></div>
 <p><img src="10-Reduccion_varianza_files/figure-html/unnamed-chunk-9-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="estratificación.html#cb526-1" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
+<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="estratificación.html#cb532-1" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
 <pre><code>## $valor
 ## [1] 3.184612
 ## 
 ## $error
 ## [1] 0.1619886</code></pre>
-<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="estratificación.html#cb528-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
-<span id="cb528-2"><a href="estratificación.html#cb528-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mc.integrale</span>(ftn, a, b, <span class="dv">500</span>, <span class="dv">50</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="estratificación.html#cb534-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
+<span id="cb534-2"><a href="estratificación.html#cb534-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mc.integrale</span>(ftn, a, b, <span class="dv">500</span>, <span class="dv">50</span>)</span></code></pre></div>
 <pre><code>## $valor
 ## [1] 3.193338
 ## 
 ## $error
 ## [1] 0.1597952</code></pre>
-<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="estratificación.html#cb530-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
-<span id="cb530-2"><a href="estratificación.html#cb530-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mc.integrale</span>(ftn, a, b, <span class="dv">500</span>, <span class="dv">100</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="estratificación.html#cb536-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
+<span id="cb536-2"><a href="estratificación.html#cb536-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mc.integrale</span>(ftn, a, b, <span class="dv">500</span>, <span class="dv">100</span>)</span></code></pre></div>
 <pre><code>## $valor
 ## [1] 3.193927
 ## 

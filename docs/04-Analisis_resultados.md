@@ -30,7 +30,9 @@ mediante simulación es *la ley (débil) de los grandes números*:
 
 -   *La ley fuerte* establece la convergencia casi segura.
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-2"><strong>(\#exm:unnamed-chunk-2) </strong></span>Aproximación de una probabilidad</div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}\iffalse{-91-65-112-114-111-120-105-109-97-99-105-243-110-32-100-101-32-117-110-97-32-112-114-111-98-97-98-105-108-105-100-97-100-93-}\fi{}
+<span class="example" id="exm:unnamed-chunk-2"><strong>(\#exm:unnamed-chunk-2)  \iffalse (Aproximación de una probabilidad) \fi{} </strong></span>
+\EndKnitrBlock{example}
 Simulamos una distribución de Bernoulli de parámetro $p=0.5$:
 
 ```r
@@ -59,10 +61,14 @@ abline(h = mean(rx), lty = 2)
 abline(h = p) 
 ```
 
-<div class="figure" style="text-align: center">
-<img src="04-Analisis_resultados_files/figure-html/proporcion-1.png" alt="Aproximación de la proporción en función del número de generaciones." width="70%" />
-<p class="caption">(\#fig:proporcion)Aproximación de la proporción en función del número de generaciones.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/proporcion-1} 
+
+}
+
+\caption{Aproximación de la proporción en función del número de generaciones.}(\#fig:proporcion)
+\end{figure}
 
 ### Detección de problemas de convergencia
 
@@ -81,10 +87,14 @@ plot(cumsum(rx)/1:nsim, type="l", lwd=2,
      xlab="Número de generaciones", ylab="Media muestral")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="04-Analisis_resultados_files/figure-html/cauchy-1.png" alt="Evolución de la media muestral de una distribución de Cauchy en función del número de generaciones." width="70%" />
-<p class="caption">(\#fig:cauchy)Evolución de la media muestral de una distribución de Cauchy en función del número de generaciones.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/cauchy-1} 
+
+}
+
+\caption{Evolución de la media muestral de una distribución de Cauchy en función del número de generaciones.}(\#fig:cauchy)
+\end{figure}
 
 
 Para detectar problemas de convergencia es recomendable representar la evolución de la aproximación de la característica de interés (sobre el número de generaciones), 
@@ -96,10 +106,14 @@ Por ejemplo, en este caso podemos observar los valores que producen estos saltos
 boxplot(rx)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="04-Analisis_resultados_files/figure-html/cauchy-box-1.png" alt="Gráfico de cajas de 10000 generaciones de una distribución de Cauchy." width="70%" />
-<p class="caption">(\#fig:cauchy-box)Gráfico de cajas de 10000 generaciones de una distribución de Cauchy.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/cauchy-box-1} 
+
+}
+
+\caption{Gráfico de cajas de 10000 generaciones de una distribución de Cauchy.}(\#fig:cauchy-box)
+\end{figure}
 
 
 ## Estimación de la precisión
@@ -139,7 +153,9 @@ es la precisión obtenida (con nivel de confianza $1-\alpha$).
 La convergencia de la aproximación, además de ser aleatoria, se podría considerar lenta.
 La idea es que para doblar la precisión (disminuir el error a la mitad), necesitaríamos un número de generaciones cuatro veces mayor. Pero una ventaja, es que este error no depende del número de dimensiones (en el caso multidimensional puede ser mucho más rápida que otras alternativas numéricas).
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-5"><strong>(\#exm:unnamed-chunk-5) </strong></span>Aproximación de la media de una distribución normal</div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}\iffalse{-91-65-112-114-111-120-105-109-97-99-105-243-110-32-100-101-32-108-97-32-109-101-100-105-97-32-100-101-32-117-110-97-32-100-105-115-116-114-105-98-117-99-105-243-110-32-110-111-114-109-97-108-93-}\fi{}
+<span class="example" id="exm:unnamed-chunk-5"><strong>(\#exm:unnamed-chunk-5)  \iffalse (Aproximación de la media de una distribución normal) \fi{} </strong></span>
+\EndKnitrBlock{example}
 
 
 ```r
@@ -184,10 +200,14 @@ lines(est - 2*esterr, lty=3)
 abline(h = xmed)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="04-Analisis_resultados_files/figure-html/conv-esterr-1.png" alt="Gráfico de convergencia incluyendo el error de la aproximación." width="70%" />
-<p class="caption">(\#fig:conv-esterr)Gráfico de convergencia incluyendo el error de la aproximación.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/conv-esterr-1} 
+
+}
+
+\caption{Gráfico de convergencia incluyendo el error de la aproximación.}(\#fig:conv-esterr)
+\end{figure}
 
  
 Determinación del número de generaciones
@@ -234,7 +254,9 @@ En el caso de dependencia, la estimación de la precisión se complica:
 $$Var\left( \overline{X}\right) =\frac{1}{n^{2}}\left( 
 \sum_{i=1}^{n}Var\left( X_{i} \right) + 2\sum_{i<j}Cov\left( X_{i},X_{j}\right) \right).$$
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:mmc"><strong>(\#exm:mmc) </strong></span>Aproximación de una proporción bajo dependencia (cadena de Markov)</div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}\iffalse{-91-97-112-114-111-120-105-109-97-99-105-243-110-32-100-101-32-117-110-97-32-112-114-111-112-111-114-99-105-243-110-32-98-97-106-111-32-100-101-112-101-110-100-101-110-99-105-97-44-32-99-97-100-101-110-97-32-100-101-32-77-97-114-107-111-118-93-}\fi{}
+<span class="example" id="exm:mmc"><strong>(\#exm:mmc)  \iffalse (aproximación de una proporción bajo dependencia, cadena de Markov) \fi{} </strong></span>
+\EndKnitrBlock{example}
 Supongamos que en A Coruña llueve de media 1/3 días al año,
 y que la probabilidad de que un día llueva solo depende de lo que ocurrió el día anterior, 
 siendo 0.94 si el día anterior llovió y 0.03 si no.
@@ -265,10 +287,14 @@ lines(est - 2*esterr, lty=2)
 abline(h = 1/3, col="darkgray")     # Prob. teor. cadenas Markov
 ```
 
-<div class="figure" style="text-align: center">
-<img src="04-Analisis_resultados_files/figure-html/conv-dep-1.png" alt="Gráfico de convergencia incluyendo el error de la aproximación (calculado asumiendo independencia)." width="70%" />
-<p class="caption">(\#fig:conv-dep)Gráfico de convergencia incluyendo el error de la aproximación (calculado asumiendo independencia).</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/conv-dep-1} 
+
+}
+
+\caption{Gráfico de convergencia incluyendo el error de la aproximación (calculado asumiendo independencia).}(\#fig:conv-dep)
+\end{figure}
 
 La aproximación de la proporción sería correcta (es consistente):
 
@@ -298,10 +324,14 @@ subestimación del verdadero error estandar.
 acf(as.numeric(rx))
 ```
 
-<div class="figure" style="text-align: center">
-<img src="04-Analisis_resultados_files/figure-html/acf-depsec-1.png" alt="Correlograma de la secuencia indicadora de días de lluvia." width="70%" />
-<p class="caption">(\#fig:acf-depsec)Correlograma de la secuencia indicadora de días de lluvia.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/acf-depsec-1} 
+
+}
+
+\caption{Correlograma de la secuencia indicadora de días de lluvia.}(\#fig:acf-depsec)
+\end{figure}
 
 El gráfico de autocorrelaciones sugiere que si tomamos 1 de cada 25 
 podemos suponer independencia.
@@ -314,10 +344,14 @@ rxi <- rx[xlag]
 acf(as.numeric(rxi))
 ```
 
-<div class="figure" style="text-align: center">
-<img src="04-Analisis_resultados_files/figure-html/acf-depsec2-1.png" alt="Correlograma de la subsecuencia de días de lluvia obtenida seleccionando uno de cada 25 valores." width="70%" />
-<p class="caption">(\#fig:acf-depsec2)Correlograma de la subsecuencia de días de lluvia obtenida seleccionando uno de cada 25 valores.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/acf-depsec2-1} 
+
+}
+
+\caption{Correlograma de la subsecuencia de días de lluvia obtenida seleccionando uno de cada 25 valores.}(\#fig:acf-depsec2)
+\end{figure}
 
 
 ```r
@@ -333,10 +367,14 @@ lines(est - 2*esterr, lty=2)
 abline(h = 1/3, col="darkgray")     # Prob. teor. cadenas Markov
 ```
 
-<div class="figure" style="text-align: center">
-<img src="04-Analisis_resultados_files/figure-html/conv-dep2-1.png" alt="Gráfico de convergencia de la aproximación de la probabilidad a partir de la subsecuencia de días de lluvia (calculando el error de aproximación asumiendo independencia)." width="70%" />
-<p class="caption">(\#fig:conv-dep2)Gráfico de convergencia de la aproximación de la probabilidad a partir de la subsecuencia de días de lluvia (calculando el error de aproximación asumiendo independencia).</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/conv-dep2-1} 
+
+}
+
+\caption{Gráfico de convergencia de la aproximación de la probabilidad a partir de la subsecuencia de días de lluvia (calculando el error de aproximación asumiendo independencia).}(\#fig:conv-dep2)
+\end{figure}
 
 
 Esta forma de proceder podría ser adecuada para tratar de aproximar la precisión:
@@ -369,10 +407,14 @@ lines(est - 2*esterr, lty=2)
 abline(h = 1/3, col="darkgray")     # Prob. teor. cadenas Markov
 ```
 
-<div class="figure" style="text-align: center">
-<img src="04-Analisis_resultados_files/figure-html/conv-dep-lotes-1.png" alt="Gráfico de convergencia de las medias por lotes." width="70%" />
-<p class="caption">(\#fig:conv-dep-lotes)Gráfico de convergencia de las medias por lotes.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/conv-dep-lotes-1} 
+
+}
+
+\caption{Gráfico de convergencia de las medias por lotes.}(\#fig:conv-dep-lotes)
+\end{figure}
 
 Esta es la idea del método de medias por lotes 
 (*batch means*; *macro-micro replicaciones*) para la estimación de la varianza.
@@ -463,10 +505,14 @@ lines(mest - 2*mesterr, lty = 2)
 abline(h = 1/3, col="darkgray")     
 ```
 
-<div class="figure" style="text-align: center">
-<img src="04-Analisis_resultados_files/figure-html/conv-dep-nsec-1.png" alt="Gráfico de convergencia de la media de 10 secuencias generadas de forma independiente." width="70%" />
-<p class="caption">(\#fig:conv-dep-nsec)Gráfico de convergencia de la media de 10 secuencias generadas de forma independiente.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/conv-dep-nsec-1} 
+
+}
+
+\caption{Gráfico de convergencia de la media de 10 secuencias generadas de forma independiente.}(\#fig:conv-dep-nsec)
+\end{figure}
 
 ```r
 # Aproximación final
@@ -523,7 +569,9 @@ abline(v = 2000, lty = 3)
 abline(h = 1/3, col="darkgray")     
 ```
 
-<img src="04-Analisis_resultados_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 
 En estos casos puede ser recomendable ignorar los primeros valores generados (por ejemplo los primeros 2000) y recalcular los 
@@ -531,7 +579,9 @@ estadísticos deseados.
 
 También trataremos este tipo de problemas en la diagnosis de algoritmos MCMC. 
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-18"><strong>(\#exm:unnamed-chunk-18) </strong></span>Simulación de un proceso autorregresivo (serie de tiempo)</div>\EndKnitrBlock{example}
+\BeginKnitrBlock{example}\iffalse{-91-115-105-109-117-108-97-99-105-243-110-32-100-101-32-117-110-32-112-114-111-99-101-115-111-32-97-117-116-111-114-114-101-103-114-101-115-105-118-111-44-32-115-101-114-105-101-32-100-101-32-116-105-101-109-112-111-93-}\fi{}
+<span class="example" id="exm:unnamed-chunk-18"><strong>(\#exm:unnamed-chunk-18)  \iffalse (simulación de un proceso autorregresivo, serie de tiempo) \fi{} </strong></span>
+\EndKnitrBlock{example}
 
 $$X_t = \mu + \rho * (X_{t-1} - \mu) + \varepsilon_t$$
 Podemos tener en cuenta que en este caso la varianza es:
@@ -581,10 +631,14 @@ plot(x)
 abline(v = nburn, lty = 2)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="04-Analisis_resultados_files/figure-html/sim-ar1-1.png" alt="Ejemplo de una simulación de una serie de tiempo autorregresiva." width="70%" />
-<p class="caption">(\#fig:sim-ar1)Ejemplo de una simulación de una serie de tiempo autorregresiva.</p>
-</div>
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{04-Analisis_resultados_files/figure-latex/sim-ar1-1} 
+
+}
+
+\caption{Ejemplo de una simulación de una serie de tiempo autorregresiva.}(\#fig:sim-ar1)
+\end{figure}
 y eliminamos el periodo de calentamiento:
 
 ```r
