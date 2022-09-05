@@ -121,19 +121,21 @@ Para la aproximación por integración Monte Carlo podemos emplear la función d
 
 
 ```r
-mc.integral <- function(ftn, a, b, n, plot=TRUE) {
-  fx <- sapply(runif(n, a, b), ftn)*(b-a)
+mc.integral <- function(fun, a, b, n, plot = TRUE) {
+  fx <- sapply(runif(n, a, b), fun) * (b - a)
   if (plot) {
-    estint <- cumsum(fx)/(1:n)
-    esterr <- sqrt(cumsum((fx-estint)^2))/(1:n)
-    plot(estint, ylab="Media y rango de error", type="l", lwd= 2, 
-         ylim=mean(fx)+2*c(-esterr[1],esterr[1]), xlab="Iteraciones")
-    abline(h = estint[n], lty=2)
-    lines(estint+2*esterr, lty = 3)
-    lines(estint-2*esterr, lty = 3)
-    return(list(valor=estint[n], error=2*esterr[n]))  
-  } else return(list(valor=mean(fx), error=2*sd(fx)/sqrt(n)))
-}  
+    cumn <- 1:n
+    estint <- cumsum(fx)/cumn
+    esterr <- sqrt((cumsum(fx^2)/cumn - estint^2)/(cumn-1)) # Errores estándar
+    plot(estint, ylab = "Media y rango de error", type = "l", lwd = 2, ylim = mean(fx) + 
+           c(-1, 1) * max(esterr[-1]), xlab = "Iteraciones")
+    lines(estint + 2 * esterr, col = "darkgray", lty = 3)
+    lines(estint - 2 * esterr, col = "darkgray", lty = 3)
+    valor <- estint[n]
+    abline(h = valor, lty = 2)
+    return(list(valor = valor, error = 2 * esterr[n]))
+  } else return(list(valor = mean(fx), error = 2 * sd(fx)/sqrt(n)))
+} 
 
 set.seed(54321)
 res <- mc.integral(ftn, a, b, 500)
@@ -153,7 +155,7 @@ res
 ## [1] 3.184612
 ## 
 ## $error
-## [1] 0.1619886
+## [1] 0.1629942
 ```
 
 
@@ -161,7 +163,7 @@ Para la integración Monte Carlo con variables antitéticas podríamos considera
 
 
 ```r
-mc.integrala <- function(ftn, a, b, n, plot=TRUE,...) {
+mc.integrala <- function(ftn, a, b, n, plot = TRUE) {
   # n es el nº de evaluaciones de la función objetivo (para facilitar comparaciones, solo se genera la mitad)
   x <- runif(n%/%2, a, b)
   # La siguiente línea solo para representar alternando
@@ -169,13 +171,15 @@ mc.integrala <- function(ftn, a, b, n, plot=TRUE,...) {
   # bastaría con emplear p.e. c(x,a+b-x)
   fx <- sapply(x, ftn)*(b-a)
   if (plot) {
-    estint <- cumsum(fx)/(1:n)
-    esterr <- sqrt(cumsum((fx-estint)^2))/(1:n)
-    plot(estint, ylab="Media y rango de error",type="l", lwd = 2,
-         ylim=mean(fx)+2*c(-esterr[1],esterr[1]),xlab="Iteraciones",...)
-    abline(h = estint[n], lty=2)
-    lines(estint+2*esterr, lty = 3)
-    lines(estint-2*esterr, lty = 3)
+    cumn <- 1:n
+    estint <- cumsum(fx)/cumn
+    esterr <- sqrt((cumsum(fx^2)/cumn - estint^2)/(cumn-1)) # Errores estándar
+    plot(estint, ylab = "Media y rango de error", type = "l", lwd = 2, ylim = mean(fx) + 
+           c(-1, 1) * max(esterr[-1]), xlab = "Iteraciones")
+    lines(estint + 2 * esterr, col = "darkgray", lty = 3)
+    lines(estint - 2 * esterr, col = "darkgray", lty = 3)
+    valor <- estint[n]
+    abline(h = valor, lty = 2)
     return(list(valor=estint[n],error=2*esterr[n]))
   } else return(list(valor=mean(fx),error=2*sd(fx)/sqrt(n)))
 }
@@ -197,7 +201,7 @@ res
 ## [1] 3.222366
 ## 
 ## $error
-## [1] 0.1641059
+## [1] 0.165086
 ```
 
 Pero aunque aparentemente converge antes, parece no haber una mejora en la precisión de la aproximación. 
@@ -372,7 +376,7 @@ res
 ## [1] 3.184612
 ## 
 ## $error
-## [1] 0.1619886
+## [1] 0.1629942
 ```
 
 ```r

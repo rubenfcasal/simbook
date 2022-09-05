@@ -1,4 +1,4 @@
-# Introducción a la simulación {#cap1}
+# Introducción a la simulación {#intro}
 
 
 
@@ -7,7 +7,7 @@ Cuando pensamos en ciencia pensamos en experimentos y en modelos.
 Se experimenta una y otra vez sobre el fenómeno real que se desea conocer mejor para, con la información así acumulada, construir un modelo teórico, que no es sino una representación simplificada (más o menos acertada) del fenómeno real.
 Como el modelo se formula en términos matemáticos, en general es susceptible de un estudio analítico del que poder sacar conclusiones.
 
-La simulación ofrece una alternativa a esa última fase del proceso, y sustituye (en parte o complementamente) el estudio analítico por más experimentación, pero esta vez sobre el propio modelo en lugar de sobre la realidad.
+La simulación ofrece una alternativa a esa última fase del proceso, y sustituye (en parte o completamente) el estudio analítico por más experimentación, pero esta vez sobre el propio modelo en lugar de sobre la realidad.
 
 Así, se puede definir la *simulación* como una técnica que consiste en realizar experimentos sobre el modelo de un sistema (experimentos de muestreo si la simulación incorpora aleatoriedad), con el objetivo de recopilar información bajo determinadas condiciones. 
 
@@ -15,20 +15,11 @@ Así, se puede definir la *simulación* como una técnica que consiste en realiz
 
 La experimentación directa sobre la realidad puede tener muchos inconvenientes, entre otros:
 
--   Coste elevado.
-
-    -   En ocasiones las pruebas son destructivas.
+-   Coste elevado: por ejemplo cuando las pruebas son destructivas o si es necesario esperar mucho tiempo para observar los resultados.
     
-    -   Lentitud.
+-   Puede no ser ética: por ejemplo la experimentación sobre seres humanos o la dispersión de un contaminante.
 
--   Puede no ser ética.
-
-    -   Experimentación sobre seres humanos.
-
--   Puede resultar imposible.
-
-    -   Acontecimientos futuros, alternativas en el pasado...
-
+-   Puede resultar imposible: por ejemplo cuando se trata de un acontecimiento futuro o una alternativa en el pasado.
 
 Además la realidad puede ser demasiado compleja como para ser estudiada directamente y resultar preferible trabajar con un modelo del sistema real. 
 Un modelo no es más que un conjunto de variables junto con ecuaciones matemáticas que las relacionan y restricciones sobre dichas variables. 
@@ -51,9 +42,10 @@ La inferencia estadística proporciona herramientas para estimar los parámetros
 La idea es emplear el modelo, asumiendo que es válido, para resolver el problema de interés. 
 Si se puede obtener la solución de forma analítica, esta suele ser exacta (aunque en ocasiones solo se dispone de soluciones aproximadas, basadas en resultados asintóticos, o que dependen de suposiciones que pueden ser cuestionables) y a menudo la resolución también es rápida.
 Cuando la solución no se puede obtener de modo analítico (o si la aproximación disponible no es adecuada) se puede recurrir a la simulación.
+De esta forma se pueden obtener resultados para un conjunto más amplio de modelos, que pueden ser mucho más complejos.
 
 Nos centraremos en el caso de la *simulación estocástica*: las conclusiones se obtienen generando repetidamente simulaciones del modelo aleatorio.
-Muchas veces se emplea la denominación de *método Monte-Carlo*^[Estos métodos surgieron a finales de la década de 1940 como resultado del trabajo realizado por Stanislaw Ulam y John von Neumann en el proyecto Manhattan para el desarrollo de la bomba atómica. Al parecer, como se trataba de una investigación secreta, Nicholas Metropolis sugirió emplear el nombre clave de "Monte-Carlo" en referencia al casino de Monte Carlo de Mónaco.] como sinónimo de simulación estocástica, pero realmente se trata de métodos especializados que emplean simulación para resolver problemas que pueden no estar relacionados con un modelo estocástico de un sistema real. Por ejemplo, en el Capítulo \@ref(cap9) se tratarán métodos de integración y optimización Monte-Carlo.
+Muchas veces se emplea la denominación de *método Monte Carlo*^[Estos métodos surgieron a finales de la década de 1940 como resultado del trabajo realizado por Stanislaw Ulam y John von Neumann en el proyecto Manhattan para el desarrollo de la bomba atómica. Al parecer, como se trataba de una investigación secreta, Nicholas Metropolis sugirió emplear el nombre clave de "Monte-Carlo" en referencia al casino de Monte Carlo de Mónaco.] como sinónimo de simulación estocástica, pero realmente se trata de métodos especializados que emplean simulación para resolver problemas que pueden no estar relacionados con un modelo estocástico de un sistema real. Por ejemplo, en el Capítulo \@ref(monte-carlo) se tratarán métodos de integración y optimización Monte Carlo.
 
 <!-- 
 Ejemplo: caballero de Meré 
@@ -130,7 +122,7 @@ Los principales campos de aplicación son:
 -   Física: Simulación de fenómenos naturales...
 
 
-En los capítulos \@ref(cap8) y \@ref(cap9) nos centraremos en algunas de las aplicaciones de utilidad en Estadística.
+En los capítulos \@ref(aplic-inf) y \@ref(monte-carlo) nos centraremos en algunas de las aplicaciones de utilidad en Estadística.
 
 
 ## Números aleatorios puros
@@ -203,7 +195,7 @@ Pendiente
 *números cuasi-aleatorios*: ... (se podría pensar que son una única generación de una variable aleatoria)?
 -->
 
-Algunos problemas, como la integración numérica (en el Capítulo \@ref(cap9) se tratarán métodos de integración Monte Carlo), no dependen realmente de la aleatoriedad de la secuencia. Para evitar generaciones poco probables, se puede recurrir a secuencias cuasi-aleatorias, también denominadas *sucesiones de baja discrepancia* (hablaríamos entonces de métodos cuasi-Monte Carlo). La idea sería que la proporción de valores en una región cualquiera sea siempre aproximadamente proporcional a la medida de la región (como sucedería en media con la distribución uniforme, aunque no necesariamente para una realización concreta).
+Algunos problemas, como la integración numérica (en el Capítulo \@ref(monte-carlo) se tratarán métodos de integración Monte Carlo), no dependen realmente de la aleatoriedad de la secuencia. Para evitar generaciones poco probables, se puede recurrir a secuencias cuasi-aleatorias, también denominadas *sucesiones de baja discrepancia* (hablaríamos entonces de métodos cuasi-Monte Carlo). La idea sería que la proporción de valores en una región cualquiera sea siempre aproximadamente proporcional a la medida de la región (como sucedería en media con la distribución uniforme, aunque no necesariamente para una realización concreta).
 
 Por ejemplo, el paquete [`randtoolbox`](https://CRAN.R-project.org/package=randtoolbox) de R implementa métodos para la generación de secuencias cuasi-aleatorias (ver Figura \@ref(fig:randtoolbox)).
 

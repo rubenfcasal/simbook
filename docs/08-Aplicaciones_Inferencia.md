@@ -1,4 +1,4 @@
-# Aplicaciones en Inferencia Estadística {#cap8}
+# Aplicaciones en Inferencia Estadística {#aplic-inf}
 
 
 
@@ -668,7 +668,7 @@ Ver [Capítulo 5](https://rubenfcasal.github.io/book_remuestreo/contrastes.html)
 <span class="exercise" id="exr:ks-test-sim"><strong>(\#exr:ks-test-sim)  \iffalse (Test de Kolmogorov-Smirnov) \fi{} </strong></span>
 \EndKnitrBlock{exercise}
 
-En la Sección \@ref(calgen) del Tema \@ref(cap3) se propuso el análisis de la bondad de ajuste de un generador de números pseudo-aleatorios mediante el test de Kolmogorov-Smirnov (ver Sección \@ref(ks-test)). 
+En la Sección \@ref(calgen) del Tema \@ref(gen-pseudo) se propuso el análisis de la bondad de ajuste de un generador de números pseudo-aleatorios mediante el test de Kolmogorov-Smirnov (ver Sección \@ref(ks-test)). 
 Sin embargo, si $H_{0}$ es compuesta (los parámetros desconocidos se estiman por máxima verosimilitud y se trabaja con $\hat{F}_{0}$) los cuantiles de la distribución (asintótica) de $D_{n}$ pueden ser demasiado conservativos y sería preferible utilizar la distribución exacta.
 
 a)  Analizar el comportamiento del contraste de Kolmogorov-Smirnov

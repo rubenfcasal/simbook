@@ -1,10 +1,24 @@
-# Análisis de resultados de simulación {#cap4}
+# Análisis de resultados de simulación {#resultados}
+
+<!-- 
+---
+title: '4. Análisis de resultados de simulación'
+author: 'Máster en Ténicas Estadísticas: Simulación Estadística'
+date: "Curso 2019/2020"
+output:
+  bookdown::html_document2:
+    pandoc_args: ["--number-offset", "4,0"]
+    toc: yes  
+---
+
+bookdown::preview_chapter("04-Analisis_resultados.Rmd") 
+-->
 
 
 
 
 En este capítulo nos centraremos en la aproximación mediante simulación de la media teórica de un estadístico a partir de la media muestral de una secuencia de simulaciones de dicho estadístico.
-La aproximación de una probabilidad sería un caso particular considerando una variable de Bernouilli.
+La aproximación de una probabilidad sería un caso particular considerando una variable de Bernoulli.
 
 En primer lugar se tratará el análisis de la convergencia y la precisión de la aproximación por simulación. 
 Al final del capítulo se incluye una breve introducción a los problemas de estabilización y dependencia (con los que nos solemos encontrar en simulación dinámica y MCMC).
@@ -13,18 +27,15 @@ Al final del capítulo se incluye una breve introducción a los problemas de est
 ## Convergencia {#convergencia}
 
 
-Supongamos que estamos interesados en aproximar la media teórica 
-$\mu = E\left( X\right)$ a partir de una secuencia i.i.d. $X_{1}$,
-$X_{2}$, $\cdots$, $X_{n}$ mediante la media muestral $\bar{X}_{n}$.
-Una justificación teórica de la validez de la aproximación obtenida
-mediante simulación es *la ley (débil) de los grandes números*:
+Supongamos que estamos interesados en aproximar la media teórica $\mu = E\left( X\right)$ a partir de una secuencia i.i.d. $X_{1}$, $X_{2}$, $\ldots$, $X_{n}$ obtenida mediante simulación, utilizando para ello la media muestral $\bar{X}_{n}$.
+Una justificación teórica de la validez de esta aproximación es *la ley (débil) de los grandes números*:
 
--   Si $X_{1}$, $X_{2}$, $\cdots$ es una secuencia de variables aleatorias
+-   Si $X_{1}$, $X_{2}$, $\ldots$ es una secuencia de variables aleatorias
     independientes con:
     $$E\left( X_{i}\right) =\mu \text{ y }Var\left( X_{i}\right) 
     =\sigma^{2}<\infty,$$
-    entonces $\overline{X}_{n}=\left( X_{1}+\cdots +X_{n}\right) /n$ 
-    converge en probabilidad a $\mu$. i.e. para cualquier $\varepsilon >0$:
+    entonces $\overline{X}_{n}=\left( X_{1}+\ldots +X_{n}\right) /n$ 
+    converge en probabilidad a $\mu$, i.e. para cualquier $\varepsilon >0$:
     $$\lim\limits_{n\rightarrow \infty }P\left( \left\vert \overline{X}_{n}-\mu
     \right\vert <\varepsilon \right) = 1.$$
 
@@ -135,7 +146,7 @@ Para ello podemos emplear el resultado mostrado a continuación.
 
 ## Teorema central del límite
 
-Si $X_{1}$, $X_{2}$, $\cdots$ es una secuencia de variables aleatorias
+Si $X_{1}$, $X_{2}$, $\ldots$ es una secuencia de variables aleatorias
 independientes con $E\left( X_{i}\right) =\mu$ y
 $Var\left( X_{i}\right) = \sigma ^{2}<\infty$, entonces:
 $$Z_{n}=\frac{\overline{X}_{n}-\mu }{\frac{\sigma }{\sqrt{n}}}
@@ -190,8 +201,8 @@ Podemos añadir también los correspondientes intervalos de confianza al gráfic
 ```r
 n <- 1:nsim
 est <- cumsum(rx)/n
-# Errores estándar calculados con la varianza muestral por comodidad:
-esterr <- sqrt(cumsum((rx-est)^2))/n  
+# (cumsum(rx^2) - n*est^2)/(n-1) # Varianzas muestrales
+esterr <- sqrt((cumsum(rx^2)/n - est^2)/(n-1)) # Errores estándar
 plot(est, type = "l", lwd = 2, xlab = "Número de generaciones", 
      ylab = "Media y rango de error", ylim = c(-1, 1))
 abline(h = est[nsim], lty=2)
@@ -209,7 +220,7 @@ abline(h = xmed)
 \caption{Gráfico de convergencia incluyendo el error de la aproximación.}(\#fig:conv-esterr)
 \end{figure}
 
- 
+
 Determinación del número de generaciones
 ----------------------------------------
 
@@ -398,7 +409,7 @@ rxm <- rowMeans(matrix(rx, ncol = lag, byrow = TRUE))
 nrxm <- length(rxm)
 n <- 1:nrxm
 est <- cumsum(rxm)/n
-esterr <- sqrt(cumsum((rxm-est)^2))/n  # Error estándar
+esterr <- sqrt((cumsum(rxm^2)/n - est^2)/(n-1)) # Errores estándar
 plot(est, type="l", lwd=2, ylab="Probabilidad", 
      xlab=paste("Número de simulaciones /", lag + 1), ylim=c(0,0.6))
 abline(h = est[length(rxm)], lty=2)
@@ -425,7 +436,7 @@ esterr[nrxm]
 ```
 
 ```
-## [1] 0.01569017
+## [1] 0.01582248
 ```
 pero si el objetivo es la aproximación de la varianza (de la variable y no de las medias por lotes), habrá que reescalarlo adecuadamente. 
 Supongamos que la correlación entre $X_i$ y $X_{i+k}$ es aproximadamente nula,
@@ -449,7 +460,7 @@ var.aprox
 ```
 
 ```
-## [1] 2.461814
+## [1] 2.50351
 ```
 
 Obtenida asumiendo independencia entre las medias por lotes, y que será

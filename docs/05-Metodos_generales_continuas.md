@@ -111,7 +111,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##    0.00    0.00    0.02
+##    0.00    0.01    0.02
 ```
 
 ```r
@@ -208,7 +208,7 @@ b)  Generar $10^{4}$ valores de la distribución doble exponencial de
     
     ```
     ##    user  system elapsed 
-    ##    0.04    0.02    0.06
+    ##    0.03    0.00    0.03
     ```
 
 
@@ -482,7 +482,7 @@ system.time(x <- rbeta2n(nsim, s1, s2))
 
 ```
 ##    user  system elapsed 
-##    0.03    0.00    0.03
+##    0.03    0.00    0.04
 ```
 
 Para analizar la eficiencia podemos emplear el número de generaciones de la distribución auxiliar (siguiente sección):
@@ -669,7 +669,7 @@ system.time(x <- rnormARn(nsim))
 
 ```
 ##    user  system elapsed 
-##    0.14    0.00    0.14
+##    0.11    0.00    0.11
 ```
 
 Evaluamos la eficiencia:
@@ -1105,8 +1105,7 @@ Gilks y Wild (1992) propusieron una ligera modificación empleando tangentes par
 
 La mayoría de las densidades de la familia exponencial de distribuciones son log-cóncavas.
 Hörmann (1995) extendió esta aproximación al caso de densidades $T_{c}$-cóncavas:
-$$T_{c}(x) = signo(c)x^{c} \\
-T_{0}(x) = \log (x).$$
+$$T_{c}(x) = signo(c)x^{c} \\ T_{0}(x) = \log (x).$$
 Aparte de la transformación logarítmica, la transformación $T_{-1/2}(x)=-1/\sqrt{x}$ es habitualmente la más empleada.
 
 ### Método del cociente de uniformes

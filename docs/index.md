@@ -1,7 +1,7 @@
 --- 
 title: "Simulación Estadística"
 author: "Rubén Fernández Casal (ruben.fcasal@udc.es), Ricardo Cao (rcao@udc.es)"
-date: "2022-03-23"
+date: "2022-09-05"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
@@ -13,6 +13,14 @@ description: "Apuntes de la asignatura de Simulación Estadística del Máster e
 ---
 
 # Prólogo {-}
+
+***IMPORTANTE***: Este libro es la "primera edición" y puede no estar actualizado.
+Se está elaborando una **nueva edición** disponible en
+[rubenfcasal.github.io/simbook2](https://rubenfcasal.github.io/simbook2)
+(que se corresponde con el repositorio 
+[rubenfcasal/simbook2](https://github.com/rubenfcasal/simbook2)).
+
+---
 
 Este libro contiene los apuntes de la asignatura de [Simulación Estadística](http://eamo.usc.es/pub/mte/index.php/es/?option=com_content&view=article&id=2201&idm=13&a%C3%B1o=2019) del [Máster en Técnicas Estadísticas](http://eio.usc.es/pub/mte). 
 

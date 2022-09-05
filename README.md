@@ -2,6 +2,9 @@
 
 ## Fernández-Casal, R. (rfcasal@udc.es) y Cao, R. (rcao@udc.es)
 
+***IMPORTANTE***: Este repositorio se corresponde con la "primera edición" de este libro.
+Se está elaborando una **nueva edición** disponible en el repositorio
+[rubenfcasal/simbook2](https://github.com/rubenfcasal/simbook2) (y compilado en [rubenfcasal.github.io/simbook2](https://rubenfcasal.github.io/simbook2)).
 
 Este libro contiene los apuntes de la asignatura de [Simulación Estadística](http://eamo.usc.es/pub/mte/index.php/es/?option=com_content&view=article&id=2201&idm=13&a%C3%B1o=2019) del [Máster en Técnicas Estadísticas](http://eio.usc.es/pub/mte). 
 

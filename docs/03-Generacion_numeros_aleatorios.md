@@ -1,11 +1,27 @@
-# Generación de números pseudoaleatorios {#cap3}
+# Generación de números pseudoaleatorios {#gen-pseudo}
 
 <!-- 
+---
+title: "Generación de números pseudoaleatorios"
+author: "Simulación Estadística (UDC)"
+date: "Máster en Técnicas Estadísticas"
+output: 
+  bookdown::html_document2:
+    pandoc_args: ["--number-offset", "2,0"]
+    toc: yes 
+    # mathjax: local            # copia local de MathJax, hay que establecer:
+    # self_contained: false     # las dependencias se guardan en ficheros externos 
+  bookdown::pdf_document2:
+    keep_tex: yes
+    toc: yes 
+---
+
+bookdown::preview_chapter("03-Generacion_numeros_aleatorios.Rmd")
+knitr::purl("03-Generacion_numeros_aleatorios.Rmd", documentation = 2)
+knitr::spin("03-Generacion_numeros_aleatorios.R",knit = FALSE)
+
 PENDIENTE:
-
 - Redactar ejemplo repetición de contrastes
-  Etiquetar figuras
-
 -->
 
 
@@ -30,6 +46,9 @@ i  & =1,2,\ldots
 \end{aligned}$$ 
 donde $a$ (*multiplicador*), $c$ (*incremento*) y $m$ (*módulo*) son enteros positivos^[Se supone además que $a$, $c$ y $x_0$ son menores que $m$, ya que, dadas las propiedades algebraicas de la suma y el producto en el conjunto de clases de resto módulo $m$ (que es un anillo), cualquier otra elección de valores mayores o iguales que $m$ tiene un equivalente verificando esta restricción.] fijados de antemano (los parámetros de este generador). Si $c=0$ el generador se denomina congruencial *multiplicativo* (Lehmer, 1951) y en caso contrario se dice que es *mixto* (Rotenburg, 1960).
 
+Obviamente los parámetros y la semilla determinan los valores generados, que también se pueden obtener de forma no recursiva:
+$$x_{i}=\left( a^{i}x_0+c\frac{a^{i}-1}{a-1}\right) \bmod m$$
+
 Este método está implementado en el siguiente código, imitando el funcionamiento del generador uniforme de R (aunque de un forma no muy eficiente^[Para evitar problemas computacionales, se recomienda realizar el cálculo de los valores empleando el método de Schrage (ver Bratley *et al.*, 1987; L'Ecuyer, 1988).]):
 
 ```r
@@ -37,17 +56,17 @@ Este método está implementado en el siguiente código, imitando el funcionamie
 # Generador congruencial de números pseudoaleatorios
 # --------------------------------------------------
 
-# initRANDC(semilla,a,c,m)
+# initRANDC(semilla, a, c, m)
 # -----------------------
-#   Selecciona el generador congruencial
+#   Selecciona los parámetros del generador congruencial
 #   Por defecto RANDU de IBM con semilla del reloj
-#   OJO: No se hace ninguna verificación de los parámetros
+#   No se hace ninguna verificación de los parámetros
 initRANDC <- function(semilla=as.numeric(Sys.time()), a=2^16+3, c=0, m=2^31) {
   .semilla <<- as.double(semilla) %% m  #Cálculos en doble precisión
   .a <<- a
   .c <<- c
   .m <<- m
-  return(invisible(list(semilla=.semilla,a=.a,c=.c,m=.m))) #print(initRANDC())
+  return(invisible(list(semilla = .semilla, a = .a, c = .c, m = .m))) #print(initRANDC())
 }
 
 # RANDC()
@@ -55,7 +74,7 @@ initRANDC <- function(semilla=as.numeric(Sys.time()), a=2^16+3, c=0, m=2^31) {
 #   Genera un valor pseudoaleatorio con el generador congruencial
 #   Actualiza la semilla (si no existe llama a initRANDC)
 RANDC <- function() {
-    if (!exists(".semilla", envir=globalenv())) initRANDC()
+  if (!exists(".semilla", envir = globalenv())) initRANDC()
     .semilla <<- (.a * .semilla + .c) %% .m
     return(.semilla/.m)
 }
@@ -65,7 +84,7 @@ RANDC <- function() {
 #   Genera un vector de valores pseudoaleatorios con el generador congruencial
 #   (por defecto de dimensión 1000)
 #   Actualiza la semilla (si no existe llama a initRANDC)
-RANDCN <- function(n=1000) {
+RANDCN <- function(n = 1000) {
     x <- numeric(n)
     for(i in 1:n) x[i]<-RANDC()
     return(x)
@@ -87,14 +106,10 @@ Ejemplos:
 -   $c=0$, $a=48271$ y $m=2^{31}-1$ actualización del *minimal standar* 
     propuesta por Park, Miller y Stockmeyer (1993).
     
-Los parámetros y la semilla determinan los valores generados:
-$$x_{i}=\left(  a^{i}x_0+c\frac{a^{i}-1}{a-1}\right) \bmod m$$
 
-A pesar de su simplicidad, una adecuada elección de los parámetros
-permite obtener de manera eficiente secuencias de números
-“aparentemente” i.i.d. $\mathcal{U}(0,1)$.
-
-El procedimiento habitual solía ser escoger $m$ de forma que la operación del módulo se pudiese realizar de forma muy eficiente, para posteriormente seleccionar $c$ y $a$ de forma que el período fuese lo más largo posible (o suficientemente largo).
+A pesar de su simplicidad, una adecuada elección de los parámetros permite obtener de manera eficiente secuencias de números "aparentemente" i.i.d. $\mathcal{U}(0,1)$.
+Durante los primeros años, el procedimiento habitual consistía en escoger $m$ de forma que se pudiera realizar eficientemente la operación del módulo, aprovechando la arquitectura del ordenador (por ejemplo $m = 2^{31}$ si se emplean enteros con signo de 32 bits). 
+Posteriormente se seleccionaban $c$ y $a$ de forma que el período $p$ fuese lo más largo posible (o suficientemente largo), empleando los resultados mostrados a continuación.
 
 
 \BeginKnitrBlock{theorem}\iffalse{-91-72-117-108-108-32-121-32-68-111-98-101-108-108-44-32-49-57-54-50-93-}\fi{}
@@ -130,8 +145,7 @@ Un generador multiplicativo tiene período máximo ($p=m-1$) si:
    
 \EndKnitrBlock{theorem}
 
-Además de preocuparse de la longitud del ciclo, las secuencias
-generadas deben aparentar muestras i.i.d. $\mathcal{U}(0,1)$. 
+Además de preocuparse de la longitud del ciclo, las secuencias generadas deben aparentar muestras i.i.d. $\mathcal{U}(0,1)$. 
 
 Uno de los principales problemas es que los valores generados pueden mostrar una clara estructura reticular.
 Este es el caso por ejemplo del generador RANDU de IBM muy empleado en la década de los 70 (ver Figura \@ref(fig:randu))^[Alternativamente se podría utilizar la función `plot3d` del paquete `rgl`, y rotar la figura (pulsando con el ratón) para ver los hiperplanos:
@@ -140,12 +154,12 @@ Por ejemplo, el conjunto de datos `randu` contiene 400 tripletas de números suc
 
 
 ```r
-system.time(u <- RANDCN(9999))  # Generar
+system.time(u <- RANDCN(9999))
 ```
 
 ```
 ##    user  system elapsed 
-##    0.06    0.00    0.14
+##    0.02    0.00    0.01
 ```
 
 ```r
@@ -165,36 +179,43 @@ points3D(xyz[,3], xyz[,2], xyz[,1], colvar = NULL, phi = 60,
 
 }
 
-\caption{Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)}(\#fig:randu)
+\caption{Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos).}(\#fig:randu)
 \end{figure}
 
 En general todos los generadores de este tipo van a presentar estructuras reticulares.
 Marsaglia (1968) demostró que las $k$-uplas de un generadores multiplicativo están contenidas en a lo sumo $\left(k!m\right)^{1/k}$ hiperplanos paralelos (para más detalles sobre la estructura reticular, ver por ejemplo Ripley, 1987, sección 2.7).
-Por tanto habría que seleccionar adecuadamente $m$ y $c$ ($a$ solo influiría en la pendiente) de forma que la estructura reticular sea impreceptible teniendo en cuenta el número de datos que se pretende generar (por ejemplo de forma que la distancia mínima entre los puntos sea próxima a la esperada en teoría).
+Por tanto habría que seleccionar adecuadamente $m$ y $c$ ($a$ solo influiría en la pendiente) de forma que la estructura reticular sea imperceptible teniendo en cuenta el número de datos que se pretende generar (por ejemplo de forma que la distancia mínima entre los puntos sea próxima a la esperada en teoría).
+
+<!-- 
+PENDIENTE: 
+Ejercicio aleatoriedad dígitos menos significativos (ejemplo sample)
+9*a(n-2)-6*a(n-1)+a(n) = 0 mod 2^31 en RANDU con periodo 2^29
+$a$ es una raiz primitiva de $m$ en Park y Miller
+-->
 
 Se han propuesto diversas pruebas (ver Sección \@ref(calgen)) para
 determinar si un generador tiene problemas de este tipo y se han
 realizado numerosos estudios para determinadas familias (e.g. Park y
 Miller, 1988, estudiaron que parámetros son adecuados para $m=2^{31}-1$).
 
--   En cualquier caso, se recomienda considerar un “periodo de
-    seguridad” $\approx \sqrt{p}$ para evitar este tipo de problemas.
+-   En ciertos contextos muy exigentes (por ejemplo en criptografía), se recomienda
+    considerar un "periodo de seguridad" $\approx \sqrt{p}$ para evitar este tipo 
+    de problemas.
 
--   Aunque estos generadores tiene limitaciones en su capacidad para
+-   Aunque estos generadores tienen limitaciones en su capacidad para
     producir secuencias muy largas de números i.i.d. $\mathcal{U}(0,1)$,
-    es un elemento básico en generadores más avanzados.
+    son un elemento básico en generadores más avanzados (siguiente sección).
 
     
 \BeginKnitrBlock{example}
 <span class="example" id="exm:congru512"><strong>(\#exm:congru512) </strong></span>
 \EndKnitrBlock{example}
 
-Considera el generador congruencial definido por: 
+Consideramos el generador congruencial, de ciclo máximo, definido por: 
 $$\begin{aligned}
 x_{n+1}  & =(5x_{n}+1)\ \bmod\ 512,\nonumber\\
 u_{n+1}  & =\frac{x_{n+1}}{512},\ n=0,1,\dots\nonumber
 \end{aligned}$$
-(de ciclo máximo).
 
 
 a)  Generar 500 valores de este generador, obtener el tiempo de CPU,
@@ -205,7 +226,7 @@ a)  Generar 500 valores de este generador, obtener el tiempo de CPU,
     ```r
     initRANDC(321, 5, 1, 512)       # Establecer semilla y parámetros
     nsim <- 500
-    system.time(u <- RANDCN(nsim))  # Generar
+    system.time(u <- RANDCN(nsim))  
     ```
     
     ```
@@ -224,7 +245,7 @@ a)  Generar 500 valores de este generador, obtener el tiempo de CPU,
     
     }
     
-    \caption{Histograma de los valores generados}(\#fig:ejcona)
+    \caption{Histograma de los valores generados.}(\#fig:ejcona)
     \end{figure}
 
     En este caso concreto la distribución de los valores generados es aparentemente más uniforme de lo que cabría esperar, lo que induciría a sospechar de la calidad de este generador (ver Ejemplo \@ref(exm:congru512b) en Sección \@ref(calgen)).
@@ -270,7 +291,7 @@ c)  Aproximar (mediante simulación) la probabilidad del intervalo
     ## [1] 0.402
     ```
 
-## Extensiones
+## Extensiones 
 
 Se han considerado diversas extensiones del generador congruencial lineal simple:
 
@@ -292,7 +313,7 @@ $$x_n = (x_{n-37} + x_{n-100}) \bmod 2^{30},$$
 con un período aproximado de $2^{129}$ y que puede ser empleado en R (lo cual no sería en principio recomendable; ver [Knuth Recent News 2002](https://www-cs-faculty.stanford.edu/~knuth/news02.html#rng)) estableciendo `kind` a `"Knuth-TAOCP-2002"` o `"Knuth-TAOCP"` en la llamada a `set.seed()` o `RNGkind()`.
     
 El generador *Mersenne-Twister* (Matsumoto y Nishimura, 1998), empleado por defecto en R, de periodo $2^{19937}-1$ y equidistribution en 623 dimensiones, se puede expresar como un generador congruencial matricial lineal.
-En cada iteración (*twist*) genera 624 valores (los últimos componentes de la semilla son los 624 enteros de 32 bits correspondientes, el segundo componente es el índice/posición correspondiente al último valor devuelto; el conjunto de enteros solo cambia cada 624 uniformes).
+En cada iteración (*twist*) genera 624 valores (los últimos componentes de la semilla son los 624 enteros de 32 bits correspondientes, el segundo componente es el índice/posición correspondiente al último valor devuelto; el conjunto de enteros solo cambia cada 624 generaciones).
 
 
 ```r
@@ -322,7 +343,7 @@ seed[2]; .Random.seed[2]
 
 ```r
 u <- runif(1)
-# Cada 624 generaciones cambia el conjunto de enteros y el índice se inicializa...
+# Cada 624 generaciones cambia el conjunto de enteros y el índice se inicializa
 sum(seed != .Random.seed)
 ```
 
@@ -353,16 +374,21 @@ Otras alternativas consisten en la combinanción de varios generadores, las más
 
 -   Barajar las salidas: por ejemplo se crea una tabla empleando un generador y se utiliza otro para seleccionar el índice del valor que se va a devolver y posteriormente actualizar.
 
+<!-- 
+PENDIENTE:  
+Ejemplo combinar salidas  generador Wichmann-Hill (1982)  https://en.wikipedia.org/wiki/Wichmann%E2%80%93Hill 
+-->
+
+
 El generador *L'Ecuyer-CMRG* (L'Ecuyer, 1999), empleado como base para la generación de múltiples secuencias en el paquete `parallel`, combina dos generadores concruenciales lineales múltiples de orden $k=3$ (el periodo aproximado es $2^{191}$).
 
 
-Análisis de la calidad de un generador {#calgen}
---------------------------------------
+## Análisis de la calidad de un generador {#calgen}
 
 Para verificar si un generador tiene las propiedades estadísticas deseadas hay disponibles una gran cantidad de test de hipótesis y métodos gráficos,
 incluyendo métodos genéricos (de bondad de ajuste y aleatoriedad) y contrastes específicos para generadores aleatorios.
 Se trata principalmente de contrastar si las muestras generadas son i.i.d. $\mathcal{U}\left(0,1\right)$ (análisis univariante).
-Aunque los métodos más avanzados tratan normalmente de contrastar si las $d$-uplas:
+Aunque los métodos más avanzados tratan de contrastar si las $d$-uplas:
 
 $$(U_{t+1},U_{t+2},\ldots,U_{t+d}); \ t=(i-1)d, \ i=1,\ldots,m$$
 
@@ -370,21 +396,16 @@ son i.i.d. $\mathcal{U}\left(0,1\right)^{d}$ (uniformes independientes en el hip
 En el Apéndice \@ref(gof-aleat) se describen algunos de estos métodos.
 
 En esta sección emplearemos únicamente métodos genéricos, ya que también pueden ser de utilidad para evaluar generadores de variables no uniformes y para la construcción de modelos del sistema real (e.g. para modelar variables que se tratarán como entradas del modelo general). 
-Sin embargo, los métodos clásicos pueden no ser muy adecuados para evaluar generadores de números pseudoaleatorios (e.g. L’Ecuyer y Simard, 2007).
+Sin embargo, los métodos clásicos pueden no ser muy adecuados para evaluar generadores de números pseudoaleatorios (ver L’Ecuyer y Simard, 2007).
 La recomendación sería emplear baterías de contrastes recientes, como las descritas en la Subsección \@ref(baterias).
 
 Hay que destacar algunas diferencias entre el uso de este tipo de métodos en inferencia y en simulación. 
 Por ejemplo, si empleamos un constrate de hipótesis del modo habitual, desconfiamos del generador si la muestra (secuencia) no se ajusta a la distribución teórica ($p$-valor $\leq \alpha$).
-En este caso además, también se sospecha si se ajusta demasiado
-bien a la distribución teórica ($p$-valor $\geq1-\alpha$),
-lo que indicaría que no reproduce adecuadamente la variabilidad.
+En simulación, además, también se sospecha si se ajusta demasiado bien a la distribución teórica ($p$-valor $\geq1-\alpha$), lo que indicaría que no reproduce adecuadamente la variabilidad.
 
-Uno de los contrastes más conocidos es el test chi-cuadrado de bondad de ajuste
-(`chisq.test` para el caso discreto). 
-Aunque si la variable de interés es continua, habría que discretizarla 
-(con la correspondiente perdida de información). 
-Por ejemplo, se podría emplear la siguiente función 
-(que imita a las incluidas en R):
+Uno de los contrastes más conocidos es el test chi-cuadrado de bondad de ajuste (`chisq.test` para el caso discreto). 
+Aunque si la variable de interés es continua, habría que discretizarla (con la correspondiente perdida de información). 
+Por ejemplo, se podría emplear la siguiente función (que imita a las incluidas en R):
 
 
 
@@ -467,6 +488,8 @@ system.time(u <- RANDCN(nsim))
 ```
 
 Al aplicar el test chi-cuadrado obtendríamos:
+
+<!-- PENDIENTE: evitar r-markdown en título figura -->
 
 
 ```r
@@ -591,7 +614,7 @@ acf(u)
 \caption{Autocorrelaciones de los valores generados.}(\#fig:plot-acf)
 \end{figure}
     
-Por ejemplo, para contrastar si las diez primeras son nulas podríamos emplear el test de Ljung-Box:
+Por ejemplo, para contrastar si las diez primeras autocorrelaciones son nulas podríamos emplear el test de Ljung-Box:
     
 
 ```r
@@ -609,7 +632,7 @@ Box.test(u, lag = 10, type = "Ljung")
 
 ### Repetición de contrastes
 
-Los contrastes se plantean habitualmente desde el punto de vista de la inferencia estadística en la práctica: se realiza una prueba sobre la única muestra disponible. 
+Los contrastes se plantean habitualmente desde el punto de vista de la inferencia estadística: se realiza una prueba sobre la única muestra disponible. 
 Si se realiza una única prueba, en las condiciones de $H_0$ hay una probabilidad $\alpha$ de rechazarla.
 En simulación tiene mucho más sentido realizar un gran número de pruebas:
 
@@ -620,7 +643,7 @@ En simulación tiene mucho más sentido realizar un gran número de pruebas:
     bajo $H_0$ (se podría realizar un nuevo contraste de bondad
     de ajuste).
 
--   Los *p*-valores obtenidos deberían ajustarse a una
+-   Los $p$-valores obtenidos deberían ajustarse a una
     $\mathcal{U}\left(0,1\right)$ (se podría realizar también un
     contraste de bondad de ajuste).
 
@@ -674,19 +697,49 @@ cat("Proporción de rechazos al 10% =", mean(pvalor < 0.1), "\n")   # sum(pvalor
 Las proporciones de rechazo obtenidas deberían comportarse como una aproximación por simulación de los niveles teóricos.
 En este caso no se observa nada extraño, por lo que no habría motivos para sospechar de la uniformidad de los valores generados (aparentemente no hay problemas con la uniformidad de este generador).
 
-También podemos estudiar la distribución del estadístico contraste.
+
+Adicionalmente, si queremos estudiar la proporción de rechazos (el *tamaño del contraste*) para los posibles valores de $\alpha$, podemos emplear la distribución empírica del $p$-valor (proporción de veces que resultó menor que un determinado valor):
+
+
+```r
+# Distribución empírica
+plot(ecdf(pvalor), do.points = FALSE, lwd = 2, 
+     xlab = 'Nivel de significación', ylab = 'Proporción de rechazos')
+abline(a = 0, b = 1, lty = 2)   # curve(punif(x, 0, 1), add = TRUE)
+```
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/rep-test-ecdf-1} 
+
+}
+
+\caption{Proporción de rechazos con los distintos niveles de significación.}(\#fig:rep-test-ecdf)
+\end{figure}
+
+<!-- 
+curve(ecdf(pvalor)(x), type = "s", lwd = 2) 
+-->
+
+
+También podemos estudiar la distribución del estadístico del contraste.
 En este caso, como la distribución bajo la hipótesis nula está implementada en R, podemos compararla fácilmente con la de los valores generados (debería ser una aproximación por simulación de la distribución teórica):
 
 
 ```r
 # Histograma
-hist(estadistico, breaks = "FD", freq=FALSE)
-curve(dchisq(x,99), add=TRUE)
+hist(estadistico, breaks = "FD", freq = FALSE, main = "")
+curve(dchisq(x, 99), add = TRUE)
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/rep-test-est-1} 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-13-1} \end{center}
+}
+
+\caption{Distribución del estadístico del constraste.}(\#fig:rep-test-est)
+\end{figure}
 
 Además de la comparación gráfica, podríamos emplear un test de bondad de ajuste para contrastar si la distribución del estadístico es la teórica bajo la hipótesis nula:
 
@@ -695,7 +748,7 @@ Además de la comparación gráfica, podríamos emplear un test de bondad de aju
 # Test chi-cuadrado (chi-cuadrado sobre chi-cuadrado)
 # chisq.test.cont(estadistico, distribution="chisq", nclasses=20, nestpar=0, df=99)
 # Test de Kolmogorov-Smirnov
-ks.test(estadistico, "pchisq", df=99)
+ks.test(estadistico, "pchisq", df = 99)
 ```
 
 ```
@@ -709,25 +762,30 @@ ks.test(estadistico, "pchisq", df=99)
 
 En este caso la distribución observada del estadístico es la que cabría esperar de una muestra de este tamaño de la distribución teórica, por tanto, según este criterio, aparentemente no habría problemas con la uniformidad de este generador (hay que recordar que estamos utilizando contrastes de hipótesis como herramienta para ver si hay algún problema con el generador, no tiene mucho sentido hablar de aceptar o rechazar una hipótesis).
 
-En lugar de estudiar la distribución del estadístico de contraste  siempre podemos analizar la distribución del *p*-valor.
-Mientras que la distribución teórica del estadístico depende del contraste y puede ser complicada, la del *p*-valor es siempre una uniforme.
+En lugar de estudiar la distribución del estadístico de contraste  siempre podemos analizar la distribución del $p$-valor.
+Mientras que la distribución teórica del estadístico depende del contraste y puede ser complicada, la del $p$-valor es siempre una uniforme.
 
 
 ```r
 # Histograma
-hist(pvalor, freq=FALSE)
+hist(pvalor, freq = FALSE, main = "")
 abline(h=1) # curve(dunif(x,0,1), add=TRUE)
 ```
 
+\begin{figure}[!htb]
 
+{\centering \includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/rep-test-pval-1} 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-15-1} \end{center}
+}
+
+\caption{Distribución del $p$-valor del constraste.}(\#fig:rep-test-pval)
+\end{figure}
 
 ```r
 # Test chi-cuadrado
 # chisq.test.cont(pvalor, distribution="unif", nclasses=20, nestpar=0, min=0, max=1)
 # Test de Kolmogorov-Smirnov
-ks.test(pvalor, "punif",  min=0, max=1)
+ks.test(pvalor, "punif",  min = 0, max = 1)
 ```
 
 ```
@@ -741,19 +799,6 @@ ks.test(pvalor, "punif",  min=0, max=1)
 
 Como podemos observar, obtendríamos los mismos resultados que al analizar la distribución del estadístico. 
 
-Adicionalmente, si queremos estudiar la proporción de rechazos (el *tamaño del contraste*) para los posibles valores de $\alpha$, podemos emplear la distribución empírica del $p$-valor (proporción de veces que resultó menor que un determinado valor):
-
-
-```r
-# Distribución empírica
-curve(ecdf(pvalor)(x), type = "s", lwd = 2, 
-      xlab = 'Nivel de significación', ylab = 'Proporción de rechazos')
-abline(a = 0, b = 1, lty = 2)   # curve(punif(x, 0, 1), add = TRUE)
-```
-
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{03-Generacion_numeros_aleatorios_files/figure-latex/unnamed-chunk-16-1} \end{center}
 
 
 ### Baterías de contrastes {#baterias}
@@ -794,7 +839,7 @@ Ejercicios
 \BeginKnitrBlock{exercise}\iffalse{-91-77-233-116-111-100-111-32-100-101-32-108-111-115-32-99-117-97-100-114-97-100-111-115-32-109-101-100-105-111-115-93-}\fi{}
 <span class="exercise" id="exr:RANDVN"><strong>(\#exr:RANDVN)  \iffalse (Método de los cuadrados medios) \fi{} </strong></span>
 \EndKnitrBlock{exercise}
-Uno de los primeros generadores fue el denominado método de los
+Uno de los primeros generadores utilizados fue el denominado método de los
 cuadrados medios propuesto por Von Neumann (1946). Con este
 procedimiento se generan números pseudoaleatorios de 4 dígitos de la
 siguiente forma:
@@ -812,7 +857,8 @@ se puede utilizar que:
 $$x_{i+1}=\left\lfloor \left(  x_{i}^2-\left\lfloor \dfrac{x_{i}^2}{10^{(2k-\frac{k}2)}}\right\rfloor 10^{(2k-\frac{k}2)}\right)
 /10^{\frac{k}2}\right\rfloor$$ 
 
-El algoritmo está implementado en el fichero *RANDVN.R*:
+El algoritmo está implementado en el siguiente código:
+<!-- fichero *RANDVN.R* -->
 
 ```r
 # -------------------------------------------------

@@ -64,6 +64,7 @@ Nelson, R. (1995). *Probability, stochastic processes, and queueing theory: the 
 Pardo, L. y Valdés, T. (1987). *Simulación. Aplicaciones prácticas a la empresa*. Díaz de Santos.
 
 Robert, C.P. y G. Casella (2004). *Monte Carlo statistical methods*. Springer. 
+Shao, J. (2003). *Mathematical statistics*. Springer.
 
 
 ### Artículos {-}

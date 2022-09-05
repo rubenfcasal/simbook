@@ -1,4 +1,4 @@
-# Integración y Optimización Monte Carlo {#cap9}
+# Integración y Optimización Monte Carlo {#monte-carlo}
 
 
 
@@ -110,20 +110,21 @@ Una alternativa más eficiente para representar gráficamente la convergencia:
 
 
 ```r
-  mc.integral <- function(fun, a, b, n, plot = TRUE) {
-    fx <- sapply(runif(n, a, b), fun) * (b - a)
-    if (plot) {
-      estint <- cumsum(fx)/(1:n)
-      esterr <- sqrt(cumsum((fx - estint)^2))/(1:n)
-      plot(estint, ylab = "Media y rango de error", type = "l", lwd = 2, ylim = mean(fx) + 
-             2 * c(-esterr[1], esterr[1]), xlab = "Iteraciones")
-      lines(estint + 2 * esterr, col = "darkgray", lwd = 2)
-      lines(estint - 2 * esterr, col = "darkgray", lwd = 2)
-      valor <- estint[n]
-      abline(h = valor)
-      return(list(valor = valor, error = 2 * esterr[n]))
-    } else return(list(valor = mean(fx), error = 2 * sd(fx)/sqrt(n)))
-  }
+mc.integral <- function(fun, a, b, n, plot = TRUE) {
+  fx <- sapply(runif(n, a, b), fun) * (b - a)
+  if (plot) {
+    cumn <- 1:n
+    estint <- cumsum(fx)/cumn
+    esterr <- sqrt((cumsum(fx^2)/cumn - estint^2)/(cumn-1)) # Errores estándar
+    plot(estint, ylab = "Media y rango de error", type = "l", lwd = 2, ylim = mean(fx) + 
+           c(-1, 1) * max(esterr[-1]), xlab = "Iteraciones")
+    lines(estint + 2 * esterr, col = "darkgray", lty = 3)
+    lines(estint - 2 * esterr, col = "darkgray", lty = 3)
+    valor <- estint[n]
+    abline(h = valor, lty = 2)
+    return(list(valor = valor, error = 2 * esterr[n]))
+  } else return(list(valor = mean(fx), error = 2 * sd(fx)/sqrt(n)))
+}
 
 set.seed(1)
 mc.integral(fun, 0, 1, 5000)
@@ -134,11 +135,11 @@ mc.integral(fun, 0, 1, 5000)
 ## [1] 0.8142206
 ## 
 ## $error
-## [1] 0.03087305
+## [1] 0.0309005
 ```
 
 ```r
-abline(h = 4/5, lty = 2)
+abline(h = 4/5)
 ```
 
 \begin{figure}[!htb]
@@ -299,7 +300,7 @@ la densidad $f$ con mayor facilidad puede dar lugar a
 "simulaciones" con varianza finita 
 (podría emplearse en casos en los que no existe
 $E \left( h^2 \left( X \right) \right)$;
-ver Sección \@ref(convergencia) en el Tema \@ref(cap4) de Análisis de resultados).
+ver Sección \@ref(convergencia)).
 
 La distribución de los pesos $w(y_i)$ debería ser homogénea para
 evitar datos influyentes (inestabilidad).

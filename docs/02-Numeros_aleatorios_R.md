@@ -243,7 +243,7 @@ b)  Aproximar el valor de $\pi$ mediante simulación a partir de
 ---    
 
 \BeginKnitrBlock{exercise}\iffalse{-91-69-120-112-101-114-105-109-101-110-116-111-32-100-101-32-66-101-114-110-111-117-108-108-105-93-}\fi{}
-<span class="exercise" id="exr:bernouilli"><strong>(\#exr:bernouilli)  \iffalse (Experimento de Bernoulli) \fi{} </strong></span>
+<span class="exercise" id="exr:bernoulli"><strong>(\#exr:bernoulli)  \iffalse (Experimento de Bernoulli) \fi{} </strong></span>
 \EndKnitrBlock{exercise}
 Consideramos el experimento de Bernoulli consistente en el
 lanzamiento de una moneda.
@@ -290,7 +290,7 @@ b)  En R pueden generarse valores de la distribución de Bernoulli
     set.seed(1)
     nsim <- 1000
     p <- 0.4
-    x <- rbinom(nsim, size = 1, prob = p) # Simulamos una Bernouilli
+    x <- rbinom(nsim, size = 1, prob = p) # Simulamos una Bernoulli
     # Alternativa programación: x <- runif(nsim) < p
     mean(x)
     ```
@@ -494,10 +494,10 @@ CPUtimeprint()
 ```
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.18    0.00    0.19 
+##    0.14    0.00    0.14 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.18    0.00    0.19
+##    0.14    0.00    0.14
 ```
 
 ```r
@@ -508,10 +508,10 @@ CPUtimeprint()
 ```
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.19    0.00    0.19 
+##    0.17    0.00    0.17 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.37    0.00    0.38
+##    0.31    0.00    0.31
 ```
 
 
@@ -545,7 +545,7 @@ tic("outer")
 ```
 
 ```
-## inner: 0 sec elapsed
+## inner: 0.01 sec elapsed
 ```
 
 ```r
@@ -553,7 +553,7 @@ tic("outer")
 ```
 
 ```
-## middle: 0 sec elapsed
+## middle: 0.01 sec elapsed
 ```
 
 ```r
@@ -561,7 +561,7 @@ toc() # outer
 ```
 
 ```
-## outer: 0.14 sec elapsed
+## outer: 0.11 sec elapsed
 ```
 
 ```r
@@ -581,8 +581,8 @@ str(log.times)
 
 ```
 ## 'data.frame':	10 obs. of  3 variables:
-##  $ tic: num  7.4 7.4 7.4 7.4 7.4 7.4 7.4 7.42 7.42 7.42
-##  $ toc: num  7.4 7.4 7.4 7.4 7.4 7.4 7.42 7.42 7.42 7.42
+##  $ tic: num  4.9 4.9 4.9 4.9 4.9 4.9 4.9 4.9 4.9 4.92
+##  $ toc: num  4.9 4.9 4.9 4.9 4.9 4.9 4.9 4.9 4.92 4.92
 ##  $ msg: chr  "1" "2" "3" "4" ...
 ```
 

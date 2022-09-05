@@ -403,7 +403,7 @@ mvrnorm
 ##         drop(X)
 ##     else t(X)
 ## }
-## <bytecode: 0x000000002ab86078>
+## <bytecode: 0x000000002adcfd78>
 ## <environment: namespace:MASS>
 ```
 
@@ -1083,10 +1083,6 @@ b)  Utilizando la rutina anterior generar una muestra de tamaño
     sm::sm.density(rcunif, xlab = "u", ylab = "v", zlab = "Density")    
     ```
     
-    ```
-    ## Warning: weights overwritten by binning
-    ```
-    
     \begin{figure}[!htb]
     
     {\centering \includegraphics[width=0.7\linewidth]{07-Simulacion_multidimensional_files/figure-latex/cclayton2-conjunta-1} 
@@ -1666,7 +1662,7 @@ curve(dchisq(x, res$parameter), col = 'blue', add = TRUE)
 
 }
 
-\caption{Aproximación Monte-Carlo de la distribución del estadístico chi-cuadrado bajo independencia.}(\#fig:chi2-plot)
+\caption{Aproximación Monte Carlo de la distribución del estadístico chi-cuadrado bajo independencia.}(\#fig:chi2-plot)
 \end{figure}
 
 Como se mostrará en la Sección \@ref(contrastes) del siguiente capítulo, podríamos aproximar el $p$-valor del contraste de independencia a partir de esta distribución:
