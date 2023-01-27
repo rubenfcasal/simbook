@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>10.3 Bootstrap suavizado | Técnicas de Simulación y Remuestreo</title>
+  <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="10.3 Bootstrap suavizado | Técnicas de Simulación y Remuestreo" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Apuntes de Simulación Estadística y Remuestreo." />
+  <meta name="github-repo" content="rubenfcasal/simbook" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="10.3 Bootstrap suavizado | Técnicas de Simulación y Remuestreo" />
+  
+  <meta name="twitter:description" content="Apuntes de Simulación Estadística y Remuestreo." />
+  
+
+<meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es)" />
+<meta name="author" content="Ricardo Cao (rcao@udc.es)" />
+<meta name="author" content="Julián Costa (julian.costa@udc.es)" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="modunif-boot-par.html"/>
+<link rel="next" href="boot-reg.html"/>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Técnicas de Simulación y Remuestreo</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introducción a la simulación</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="conceptos.html"><a href="conceptos.html"><i class="fa fa-check"></i><b>1.1</b> Conceptos básicos</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="conceptos.html"><a href="conceptos.html#ealbum"><i class="fa fa-check"></i><b>1.1.1</b> Ejemplo</a></li>
+<li class="chapter" data-level="1.1.2" data-path="conceptos.html"><a href="conceptos.html#ventajas-e-inconvenientes-de-la-simulación"><i class="fa fa-check"></i><b>1.1.2</b> Ventajas e inconvenientes de la simulación</a></li>
+<li class="chapter" data-level="1.1.3" data-path="conceptos.html"><a href="conceptos.html#aplicaciones-de-la-simulación"><i class="fa fa-check"></i><b>1.1.3</b> Aplicaciones de la simulación</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="tipos-de-números-aleatorios.html"><a href="tipos-de-números-aleatorios.html"><i class="fa fa-check"></i><b>1.2</b> Tipos de números aleatorios</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="tipos-de-números-aleatorios.html"><a href="tipos-de-números-aleatorios.html#números-aleatorios-puros"><i class="fa fa-check"></i><b>1.2.1</b> Números aleatorios puros</a></li>
+<li class="chapter" data-level="1.2.2" data-path="tipos-de-números-aleatorios.html"><a href="tipos-de-números-aleatorios.html#números-cuasi-aleatorios"><i class="fa fa-check"></i><b>1.2.2</b> Números cuasi-aleatorios</a></li>
+<li class="chapter" data-level="1.2.3" data-path="tipos-de-números-aleatorios.html"><a href="tipos-de-números-aleatorios.html#números-pseudo-aleatorios"><i class="fa fa-check"></i><b>1.2.3</b> Números pseudo-aleatorios</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="rrng.html"><a href="rrng.html"><i class="fa fa-check"></i><b>1.3</b> Números aleatorios en R</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="rrng.html"><a href="rrng.html#oprrng"><i class="fa fa-check"></i><b>1.3.1</b> Opciones</a></li>
+<li class="chapter" data-level="1.3.2" data-path="rrng.html"><a href="rrng.html#paquetes-de-r"><i class="fa fa-check"></i><b>1.3.2</b> Paquetes de R</a></li>
+<li class="chapter" data-level="1.3.3" data-path="rrng.html"><a href="rrng.html#tiempo-de-cpu"><i class="fa fa-check"></i><b>1.3.3</b> Tiempo de CPU</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="ejercicios.html"><a href="ejercicios.html"><i class="fa fa-check"></i><b>1.4</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="gen-pseudo.html"><a href="gen-pseudo.html"><i class="fa fa-check"></i><b>2</b> Generación de números pseudoaleatorios</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="gen-cong.html"><a href="gen-cong.html"><i class="fa fa-check"></i><b>2.1</b> Generadores congruenciales lineales</a></li>
+<li class="chapter" data-level="2.2" data-path="ext-cong.html"><a href="ext-cong.html"><i class="fa fa-check"></i><b>2.2</b> Extensiones</a></li>
+<li class="chapter" data-level="2.3" data-path="calgen.html"><a href="calgen.html"><i class="fa fa-check"></i><b>2.3</b> Análisis de la calidad de un generador</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="calgen.html"><a href="calgen.html#repetición-de-contrastes"><i class="fa fa-check"></i><b>2.3.1</b> Repetición de contrastes</a></li>
+<li class="chapter" data-level="2.3.2" data-path="calgen.html"><a href="calgen.html#baterias"><i class="fa fa-check"></i><b>2.3.2</b> Baterías de contrastes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="ejercicios-1.html"><a href="ejercicios-1.html"><i class="fa fa-check"></i><b>2.4</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="resultados.html"><a href="resultados.html"><i class="fa fa-check"></i><b>3</b> Análisis de resultados de simulación</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="convergencia.html"><a href="convergencia.html"><i class="fa fa-check"></i><b>3.1</b> Convergencia</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="convergencia.html"><a href="convergencia.html#detección-de-problemas-de-convergencia"><i class="fa fa-check"></i><b>3.1.1</b> Detección de problemas de convergencia</a></li>
+<li class="chapter" data-level="3.1.2" data-path="convergencia.html"><a href="convergencia.html#precisión"><i class="fa fa-check"></i><b>3.1.2</b> Precisión</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="num-gen.html"><a href="num-gen.html"><i class="fa fa-check"></i><b>3.2</b> Determinación del número de generaciones</a></li>
+<li class="chapter" data-level="3.3" data-path="el-problema-de-la-dependencia.html"><a href="el-problema-de-la-dependencia.html"><i class="fa fa-check"></i><b>3.3</b> El problema de la dependencia</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="el-problema-de-la-dependencia.html"><a href="el-problema-de-la-dependencia.html#periodo-de-calentamiento"><i class="fa fa-check"></i><b>3.3.1</b> Periodo de calentamiento</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="observaciones.html"><a href="observaciones.html"><i class="fa fa-check"></i><b>3.4</b> Observaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="continuas.html"><a href="continuas.html"><i class="fa fa-check"></i><b>4</b> Simulación de variables continuas</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="inversion.html"><a href="inversion.html"><i class="fa fa-check"></i><b>4.1</b> Método de inversión</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="inversion.html"><a href="inversion.html#algunas-distribuciones-que-pueden-simularse-por-el-método-de-inversión"><i class="fa fa-check"></i><b>4.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
+<li class="chapter" data-level="4.1.2" data-path="inversion.html"><a href="inversion.html#ventajas-e-inconvenientes"><i class="fa fa-check"></i><b>4.1.2</b> Ventajas e inconvenientes</a></li>
+<li class="chapter" data-level="4.1.3" data-path="inversion.html"><a href="inversion.html#inversión-aproximada"><i class="fa fa-check"></i><b>4.1.3</b> Inversión aproximada</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>4.2</b> Método de aceptación rechazo</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="AR.html"><a href="AR.html#algoritmo"><i class="fa fa-check"></i><b>4.2.1</b> Algoritmo</a></li>
+<li class="chapter" data-level="4.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>4.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
+<li class="chapter" data-level="4.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>4.2.3</b> Eficiencia del algoritmo</a></li>
+<li class="chapter" data-level="4.2.4" data-path="AR.html"><a href="AR.html#elección-de-la-densidad-auxiliar"><i class="fa fa-check"></i><b>4.2.4</b> Elección de la densidad auxiliar</a></li>
+<li class="chapter" data-level="4.2.5" data-path="AR.html"><a href="AR.html#bayes-ar"><i class="fa fa-check"></i><b>4.2.5</b> Ejemplo: inferencia bayesiana</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="modAR.html"><a href="modAR.html"><i class="fa fa-check"></i><b>4.3</b> Modificaciones del método de aceptación-rechazo</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="modAR.html"><a href="modAR.html#ars"><i class="fa fa-check"></i><b>4.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="4.3.2" data-path="modAR.html"><a href="modAR.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>4.3.2</b> Método del cociente de uniformes</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>4.4</b> Método de composición (o de simulación condicional)</a></li>
+<li class="chapter" data-level="4.5" data-path="notables-cont.html"><a href="notables-cont.html"><i class="fa fa-check"></i><b>4.5</b> Métodos específicos para la generación de algunas distribuciones notables</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="notables-cont.html"><a href="notables-cont.html#método-de-box-müller"><i class="fa fa-check"></i><b>4.5.1</b> Método de Box-Müller</a></li>
+<li class="chapter" data-level="4.5.2" data-path="notables-cont.html"><a href="notables-cont.html#simulación-de-la-distribución-beta"><i class="fa fa-check"></i><b>4.5.2</b> Simulación de la distribución beta</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="discretas.html"><a href="discretas.html"><i class="fa fa-check"></i><b>5</b> Simulación de variables discretas</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="transcuant.html"><a href="transcuant.html"><i class="fa fa-check"></i><b>5.1</b> Método de la transformación cuantil</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="transcuant.html"><a href="transcuant.html#eficiencia-del-algoritmo-1"><i class="fa fa-check"></i><b>5.1.1</b> Eficiencia del algoritmo</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="método-de-la-tabla-guía.html"><a href="método-de-la-tabla-guía.html"><i class="fa fa-check"></i><b>5.2</b> Método de la tabla guía</a></li>
+<li class="chapter" data-level="5.3" data-path="alias.html"><a href="alias.html"><i class="fa fa-check"></i><b>5.3</b> Método de Alias</a></li>
+<li class="chapter" data-level="5.4" data-path="simulación-de-una-variable-discreta-con-dominio-infinito.html"><a href="simulación-de-una-variable-discreta-con-dominio-infinito.html"><i class="fa fa-check"></i><b>5.4</b> Simulación de una variable discreta con dominio infinito</a></li>
+<li class="chapter" data-level="5.5" data-path="transcuant-directo.html"><a href="transcuant-directo.html"><i class="fa fa-check"></i><b>5.5</b> Cálculo directo de la función cuantil</a></li>
+<li class="chapter" data-level="5.6" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>5.6</b> Otros métodos</a></li>
+<li class="chapter" data-level="5.7" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>5.7</b> Métodos específicos para generación de distribuciones notables</a></li>
+<li class="chapter" data-level="5.8" data-path="ejercicios-discretas.html"><a href="ejercicios-discretas.html"><i class="fa fa-check"></i><b>5.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="multivariante.html"><a href="multivariante.html"><i class="fa fa-check"></i><b>6</b> Simulación de distribuciones multivariantes</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="simulación-de-componentes-independientes.html"><a href="simulación-de-componentes-independientes.html"><i class="fa fa-check"></i><b>6.1</b> Simulación de componentes independientes</a></li>
+<li class="chapter" data-level="6.2" data-path="el-método-de-aceptaciónrechazo.html"><a href="el-método-de-aceptaciónrechazo.html"><i class="fa fa-check"></i><b>6.2</b> El método de aceptación/rechazo</a></li>
+<li class="chapter" data-level="6.3" data-path="fact-cov.html"><a href="fact-cov.html"><i class="fa fa-check"></i><b>6.3</b> Factorización de la matriz de covarianzas</a></li>
+<li class="chapter" data-level="6.4" data-path="distrcond.html"><a href="distrcond.html"><i class="fa fa-check"></i><b>6.4</b> Método de las distribuciones condicionadas</a></li>
+<li class="chapter" data-level="6.5" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html"><i class="fa fa-check"></i><b>6.5</b> Simulación condicional e incondicional</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html#condnormal"><i class="fa fa-check"></i><b>6.5.1</b> Simulación condicional de una normal multivariante</a></li>
+<li class="chapter" data-level="6.5.2" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html#simulación-condicional-a-partir-de-un-modelo-ajustado"><i class="fa fa-check"></i><b>6.5.2</b> Simulación condicional a partir de un modelo ajustado</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html"><i class="fa fa-check"></i><b>6.6</b> Simulación basada en cópulas</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html#cópulas-arquimedianas"><i class="fa fa-check"></i><b>6.6.1</b> Cópulas Arquimedianas</a></li>
+<li class="chapter" data-level="6.6.2" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html#simulación"><i class="fa fa-check"></i><b>6.6.2</b> Simulación</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="mult-discr.html"><a href="mult-discr.html"><i class="fa fa-check"></i><b>6.7</b> Simulación de distribuciones multivariantes discretas</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="mult-discr.html"><a href="mult-discr.html#simulación-de-una-variable-discreta-bidimensional"><i class="fa fa-check"></i><b>6.7.1</b> Simulación de una variable discreta bidimensional</a></li>
+<li class="chapter" data-level="6.7.2" data-path="mult-discr.html"><a href="mult-discr.html#simconting"><i class="fa fa-check"></i><b>6.7.2</b> Simulación de tablas de contingencia</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="monte-carlo.html"><a href="monte-carlo.html"><i class="fa fa-check"></i><b>7</b> Métodos Monte Carlo</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="int-MC.html"><a href="int-MC.html"><i class="fa fa-check"></i><b>7.1</b> Integración Monte Carlo</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="int-MC.html"><a href="int-MC.html#integración-monte-carlo-clásica"><i class="fa fa-check"></i><b>7.1.1</b> Integración Monte Carlo clásica</a></li>
+<li class="chapter" data-level="7.1.2" data-path="int-MC.html"><a href="int-MC.html#caso-general"><i class="fa fa-check"></i><b>7.1.2</b> Caso general</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="muestreo-importancia.html"><a href="muestreo-importancia.html"><i class="fa fa-check"></i><b>7.2</b> Muestreo por importancia</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="muestreo-importancia.html"><a href="muestreo-importancia.html#remuestreo-del-muestreo-por-importancia"><i class="fa fa-check"></i><b>7.2.1</b> Remuestreo (del muestreo) por importancia</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="opt-MC.html"><a href="opt-MC.html"><i class="fa fa-check"></i><b>7.3</b> Optimización Monte Carlo</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="opt-MC.html"><a href="opt-MC.html#algoritmos-de-optimización-monte-carlo"><i class="fa fa-check"></i><b>7.3.1</b> Algoritmos de optimización Monte Carlo</a></li>
+<li class="chapter" data-level="7.3.2" data-path="opt-MC.html"><a href="opt-MC.html#temple-simulado"><i class="fa fa-check"></i><b>7.3.2</b> Temple simulado</a></li>
+<li class="chapter" data-level="7.3.3" data-path="opt-MC.html"><a href="opt-MC.html#algoritmos-genéticos"><i class="fa fa-check"></i><b>7.3.3</b> Algoritmos genéticos</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="aplic-inf.html"><a href="aplic-inf.html"><i class="fa fa-check"></i><b>7.4</b> Métodos Monte Carlo en Inferencia Estadística</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="aplic-inf.html"><a href="aplic-inf.html#distribución-en-el-muestreo"><i class="fa fa-check"></i><b>7.4.1</b> Distribución en el muestreo</a></li>
+<li class="chapter" data-level="7.4.2" data-path="aplic-inf.html"><a href="aplic-inf.html#intervalos-de-confianza"><i class="fa fa-check"></i><b>7.4.2</b> Intervalos de confianza</a></li>
+<li class="chapter" data-level="7.4.3" data-path="aplic-inf.html"><a href="aplic-inf.html#contrastes"><i class="fa fa-check"></i><b>7.4.3</b> Contrastes de hipótesis</a></li>
+<li class="chapter" data-level="7.4.4" data-path="aplic-inf.html"><a href="aplic-inf.html#comparación-de-estimadores"><i class="fa fa-check"></i><b>7.4.4</b> Comparación de estimadores</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="técnicas-de-reducción-de-la-varianza.html"><a href="técnicas-de-reducción-de-la-varianza.html"><i class="fa fa-check"></i><b>8</b> Técnicas de reducción de la varianza</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html"><i class="fa fa-check"></i><b>8.1</b> Variables antitéticas</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html#ejemplo-integración-monte-carlo"><i class="fa fa-check"></i><b>8.1.1</b> Ejemplo: Integración Monte Carlo</a></li>
+<li class="chapter" data-level="8.1.2" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html#generación-de-variables-antitéticas"><i class="fa fa-check"></i><b>8.1.2</b> Generación de variables antitéticas</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="estratificación.html"><a href="estratificación.html"><i class="fa fa-check"></i><b>8.2</b> Estratificación</a></li>
+<li class="chapter" data-level="8.3" data-path="variables-de-control.html"><a href="variables-de-control.html"><i class="fa fa-check"></i><b>8.3</b> Variables de control</a></li>
+<li class="chapter" data-level="8.4" data-path="números-aleatorios-comunes.html"><a href="números-aleatorios-comunes.html"><i class="fa fa-check"></i><b>8.4</b> Números aleatorios comunes</a></li>
+<li class="chapter" data-level="8.5" data-path="ejercicios-2.html"><a href="ejercicios-2.html"><i class="fa fa-check"></i><b>8.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="bootstrap.html"><a href="bootstrap.html"><i class="fa fa-check"></i><b>9</b> Métodos de remuestreo</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="boot-intro.html"><a href="boot-intro.html"><i class="fa fa-check"></i><b>9.1</b> Introducción</a></li>
+<li class="chapter" data-level="9.2" data-path="boot-unif.html"><a href="boot-unif.html"><i class="fa fa-check"></i><b>9.2</b> El Bootstrap uniforme</a></li>
+<li class="chapter" data-level="9.3" data-path="intro-paquetes.html"><a href="intro-paquetes.html"><i class="fa fa-check"></i><b>9.3</b> Herramientas disponibles en R sobre bootstrap</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="intro-paquetes.html"><a href="intro-paquetes.html#intro-pkgboot"><i class="fa fa-check"></i><b>9.3.1</b> El paquete <code>boot</code></a></li>
+<li class="chapter" data-level="9.3.2" data-path="intro-paquetes.html"><a href="intro-paquetes.html#extensiones-del-bootstrap-uniforme-con-el-paquete-boot"><i class="fa fa-check"></i><b>9.3.2</b> Extensiones del bootstrap uniforme con el paquete <code>boot</code></a></li>
+<li class="chapter" data-level="9.3.3" data-path="intro-paquetes.html"><a href="intro-paquetes.html#boot-unif-multi"><i class="fa fa-check"></i><b>9.3.3</b> Ejemplo: Bootstrap uniforme multidimensional</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="modunif.html"><a href="modunif.html"><i class="fa fa-check"></i><b>10</b> Extensiones del bootstrap uniforme</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="deficien-unif.html"><a href="deficien-unif.html"><i class="fa fa-check"></i><b>10.1</b> Deficiencias del bootstrap uniforme</a></li>
+<li class="chapter" data-level="10.2" data-path="modunif-boot-par.html"><a href="modunif-boot-par.html"><i class="fa fa-check"></i><b>10.2</b> Bootstrap paramétrico</a></li>
+<li class="chapter" data-level="10.3" data-path="modunif-boot-suav.html"><a href="modunif-boot-suav.html"><i class="fa fa-check"></i><b>10.3</b> Bootstrap suavizado</a></li>
+<li class="chapter" data-level="10.4" data-path="boot-reg.html"><a href="boot-reg.html"><i class="fa fa-check"></i><b>10.4</b> Bootstrap basado en modelos</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="boot-reg.html"><a href="boot-reg.html#boot-unif-reg"><i class="fa fa-check"></i><b>10.4.1</b> Remuestreo de las observaciones</a></li>
+<li class="chapter" data-level="10.4.2" data-path="boot-reg.html"><a href="boot-reg.html#boot-residual"><i class="fa fa-check"></i><b>10.4.2</b> Bootstrap residual</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="boot-aplic.html"><a href="boot-aplic.html"><i class="fa fa-check"></i><b>11</b> Aplicaciones del remuestreo</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="sesgo-prec.html"><a href="sesgo-prec.html"><i class="fa fa-check"></i><b>11.1</b> Estimación del sesgo y la precisión de un estimador</a></li>
+<li class="chapter" data-level="11.2" data-path="boot-ic.html"><a href="boot-ic.html"><i class="fa fa-check"></i><b>11.2</b> Intervalos de confianza bootstrap</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="boot-ic.html"><a href="boot-ic.html#boot-ic-norm"><i class="fa fa-check"></i><b>11.2.1</b> Aproximación normal</a></li>
+<li class="chapter" data-level="11.2.2" data-path="boot-ic.html"><a href="boot-ic.html#boot-ic-perc"><i class="fa fa-check"></i><b>11.2.2</b> Método percentil directo</a></li>
+<li class="chapter" data-level="11.2.3" data-path="boot-ic.html"><a href="boot-ic.html#boot-ic-basic"><i class="fa fa-check"></i><b>11.2.3</b> Método percentil básico</a></li>
+<li class="chapter" data-level="11.2.4" data-path="boot-ic.html"><a href="boot-ic.html#boot-ic-stud"><i class="fa fa-check"></i><b>11.2.4</b> Método percentil-<em>t</em></a></li>
+<li class="chapter" data-level="11.2.5" data-path="boot-ic.html"><a href="boot-ic.html#boot-ic-bca"><i class="fa fa-check"></i><b>11.2.5</b> Método BCa</a></li>
+<li class="chapter" data-level="11.2.6" data-path="boot-ic.html"><a href="boot-ic.html#icboot-trans"><i class="fa fa-check"></i><b>11.2.6</b> Ejemplo: IC bootstrap para el coeficiente de correlación</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="boot-test.html"><a href="boot-test.html"><i class="fa fa-check"></i><b>11.3</b> Contrastes de hipótesis bootstrap</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="boot-test.html"><a href="boot-test.html#contrastes-parametricos"><i class="fa fa-check"></i><b>11.3.1</b> Contrastes bootstrap paramétricos</a></li>
+<li class="chapter" data-level="11.3.2" data-path="boot-test.html"><a href="boot-test.html#contrastes-de-permutaciones"><i class="fa fa-check"></i><b>11.3.2</b> Contrastes de permutaciones</a></li>
+<li class="chapter" data-level="11.3.3" data-path="boot-test.html"><a href="boot-test.html#contrastes-semiparametricos"><i class="fa fa-check"></i><b>11.3.3</b> Contrastes bootstrap semiparamétricos</a></li>
+</ul></li>
+</ul></li>
+<li class="appendix"><span><b>Apendices</b></span></li>
+<li class="chapter" data-level="A" data-path="gof-aleat.html"><a href="gof-aleat.html"><i class="fa fa-check"></i><b>A</b> Bondad de Ajuste y Aleatoriedad</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="gof.html"><a href="gof.html"><i class="fa fa-check"></i><b>A.1</b> Métodos de bondad de ajuste</a>
+<ul>
+<li class="chapter" data-level="A.1.1" data-path="gof.html"><a href="gof.html#histograma"><i class="fa fa-check"></i><b>A.1.1</b> Histograma</a></li>
+<li class="chapter" data-level="A.1.2" data-path="gof.html"><a href="gof.html#empdistr"><i class="fa fa-check"></i><b>A.1.2</b> Función de distribución empírica</a></li>
+<li class="chapter" data-level="A.1.3" data-path="gof.html"><a href="gof.html#gráficos-p-p-y-q-q"><i class="fa fa-check"></i><b>A.1.3</b> Gráficos P-P y Q-Q</a></li>
+<li class="chapter" data-level="A.1.4" data-path="gof.html"><a href="gof.html#chi2test"><i class="fa fa-check"></i><b>A.1.4</b> Contraste chi-cuadrado de Pearson</a></li>
+<li class="chapter" data-level="A.1.5" data-path="gof.html"><a href="gof.html#ks-test"><i class="fa fa-check"></i><b>A.1.5</b> Contraste de Kolmogorov-Smirnov</a></li>
+</ul></li>
+<li class="chapter" data-level="A.2" data-path="diag-aleat.html"><a href="diag-aleat.html"><i class="fa fa-check"></i><b>A.2</b> Diagnosis de la independencia</a>
+<ul>
+<li class="chapter" data-level="A.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>A.2.1</b> Métodos para detectar dependencia</a></li>
+<li class="chapter" data-level="A.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>A.2.2</b> Gráfico secuencial</a></li>
+<li class="chapter" data-level="A.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>A.2.3</b> Gráfico de dispersion retardado</a></li>
+<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="A.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>A.2.5</b> Test de rachas</a></li>
+<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>A.3</b> Contrastes específicos para generadores aleatorios</a>
+<ul>
+<li class="chapter" data-level="A.3.1" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#freq-test"><i class="fa fa-check"></i><b>A.3.1</b> Contraste de frecuencias</a></li>
+<li class="chapter" data-level="A.3.2" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#contraste-de-series"><i class="fa fa-check"></i><b>A.3.2</b> Contraste de series</a></li>
+<li class="chapter" data-level="A.3.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#el-contraste-del-poker"><i class="fa fa-check"></i><b>A.3.3</b> El contraste del poker</a></li>
+<li class="chapter" data-level="A.3.4" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#el-contraste-del-coleccionista"><i class="fa fa-check"></i><b>A.3.4</b> El contraste del coleccionista</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="int-num.html"><a href="int-num.html"><i class="fa fa-check"></i><b>B</b> Integración numérica</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html"><i class="fa fa-check"></i><b>B.1</b> Integración numérica unidimensional</a>
+<ul>
+<li class="chapter" data-level="B.1.1" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#método-del-trapezoide"><i class="fa fa-check"></i><b>B.1.1</b> Método del trapezoide</a></li>
+<li class="chapter" data-level="B.1.2" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#regla-de-simpson"><i class="fa fa-check"></i><b>B.1.2</b> Regla de Simpson</a></li>
+<li class="chapter" data-level="B.1.3" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#cuadratura-adaptativa"><i class="fa fa-check"></i><b>B.1.3</b> Cuadratura adaptativa</a></li>
+<li class="chapter" data-level="B.1.4" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#comandos-de-r"><i class="fa fa-check"></i><b>B.1.4</b> Comandos de R</a></li>
+</ul></li>
+<li class="chapter" data-level="B.2" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html"><i class="fa fa-check"></i><b>B.2</b> Integración numérica bidimensional</a>
+<ul>
+<li class="chapter" data-level="B.2.1" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#representación-gráfica"><i class="fa fa-check"></i><b>B.2.1</b> Representación gráfica</a></li>
+<li class="chapter" data-level="B.2.2" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#método-del-trapezoide-1"><i class="fa fa-check"></i><b>B.2.2</b> Método del trapezoide</a></li>
+<li class="chapter" data-level="B.2.3" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#comandos-de-r-1"><i class="fa fa-check"></i><b>B.2.3</b> Comandos de R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="intro-hpc.html"><a href="intro-hpc.html"><i class="fa fa-check"></i><b>C</b> Introducción al procesamiento en paralelo en R</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>C.1</b> Introducción</a></li>
+<li class="chapter" data-level="C.2" data-path="paquetes-en-r.html"><a href="paquetes-en-r.html"><i class="fa fa-check"></i><b>C.2</b> Paquetes en R</a></li>
+<li class="chapter" data-level="C.3" data-path="ejemplos.html"><a href="ejemplos.html"><i class="fa fa-check"></i><b>C.3</b> Ejemplos</a>
+<ul>
+<li class="chapter" data-level="C.3.1" data-path="ejemplos.html"><a href="ejemplos.html#procesamiento-en-paralelo-con-la-función-boot"><i class="fa fa-check"></i><b>C.3.1</b> Procesamiento en paralelo con la función <code>boot()</code></a></li>
+<li class="chapter" data-level="C.3.2" data-path="ejemplos.html"><a href="ejemplos.html#estudio-sim-boot"><i class="fa fa-check"></i><b>C.3.2</b> Estudio de simulación</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="D" data-path="soluciones.html"><a href="soluciones.html"><i class="fa fa-check"></i><b>D</b> Soluciones ejercicios</a>
+<ul>
+<li class="chapter" data-level="D.1" data-path="capítulo-1-introducción-a-la-simulación.html"><a href="capítulo-1-introducción-a-la-simulación.html"><i class="fa fa-check"></i><b>D.1</b> Capítulo 1 <span>Introducción a la simulación</span></a>
+<ul>
+<li class="chapter" data-level="D.1.1" data-path="capítulo-1-introducción-a-la-simulación.html"><a href="capítulo-1-introducción-a-la-simulación.html#sol-simpi"><i class="fa fa-check"></i><b>D.1.1</b> Ejercicio <span>1.1</span></a></li>
+<li class="chapter" data-level="D.1.2" data-path="capítulo-1-introducción-a-la-simulación.html"><a href="capítulo-1-introducción-a-la-simulación.html#sol-bernoulli"><i class="fa fa-check"></i><b>D.1.2</b> Ejercicio <span>1.2</span></a></li>
+<li class="chapter" data-level="D.1.3" data-path="capítulo-1-introducción-a-la-simulación.html"><a href="capítulo-1-introducción-a-la-simulación.html#sol-circuito"><i class="fa fa-check"></i><b>D.1.3</b> Ejercicio <span>1.3</span></a></li>
+<li class="chapter" data-level="D.1.4" data-path="capítulo-1-introducción-a-la-simulación.html"><a href="capítulo-1-introducción-a-la-simulación.html#sol-mere"><i class="fa fa-check"></i><b>D.1.4</b> Ejercicio <span>1.4</span></a></li>
+<li class="chapter" data-level="D.1.5" data-path="capítulo-1-introducción-a-la-simulación.html"><a href="capítulo-1-introducción-a-la-simulación.html#sol-album"><i class="fa fa-check"></i><b>D.1.5</b> Ejercicio <span>1.5</span></a></li>
+</ul></li>
+<li class="chapter" data-level="D.2" data-path="capítulo-2-generación-de-números-pseudoaleatorios.html"><a href="capítulo-2-generación-de-números-pseudoaleatorios.html"><i class="fa fa-check"></i><b>D.2</b> Capítulo 2 <span>Generación de números pseudoaleatorios</span></a>
+<ul>
+<li class="chapter" data-level="D.2.1" data-path="capítulo-2-generación-de-números-pseudoaleatorios.html"><a href="capítulo-2-generación-de-números-pseudoaleatorios.html#sol-RANDVN"><i class="fa fa-check"></i><b>D.2.1</b> Ejercicio <span>2.1</span></a></li>
+</ul></li>
+<li class="chapter" data-level="D.3" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html"><i class="fa fa-check"></i><b>D.3</b> Capítulo 5 <span>Simulación de variables discretas</span></a>
+<ul>
+<li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio <span>5.1</span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
+<ul>
+<li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Técnicas de Simulación y Remuestreo</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="modunif-boot-suav" class="section level2" number="10.3">
+<h2><span class="header-section-number">10.3</span> Bootstrap suavizado</h2>
+<p>Cuando la distribución poblacional, <span class="math inline">\(F\)</span>, es continua es lógico incorporar dicha información al bootstrap.
+Eso significa que la función de distribución tiene una función de densidad asociada, relacionadas mediante la expresión: <span class="math inline">\(f(x) =F^{\prime}(x)\)</span>.
+Una forma de remuestrear de un universo bootstrap continuo es emplear un estimador de la función de densidad, como por ejemplo el estimador no paramétrico tipo núcleo, y remuestrear de él.</p>
+<p>Si <span class="math inline">\(\left( X_1, X_2, \ldots, X_n \right)\)</span> es una muestra aleatoria simple (m.a.s.), de una población con función de distribución <span class="math inline">\(F\)</span>, absolutamente continua, y función de densidad <span class="math inline">\(f\)</span>, el estimador tipo núcleo propuesto por Parzen (1962) y Rosenblatt (1956) viene dado por
+<span class="math display">\[\hat{f}_{h}\left( x \right) =\frac{1}{nh}\sum_{i=1}^{n}K\left( \frac{x-X_i}{h} \right) =\frac{1}{n}\sum_{i=1}^{n}K_{h}\left( x-X_i \right),\]</span>
+donde <span class="math inline">\(K_{h}\left( u \right) =\frac{1}{h}K\left( \frac{u}{h} \right)\)</span>, <span class="math inline">\(K\)</span> es una función núcleo (normalmente una densidad simétrica en torno al cero) y <span class="math inline">\(h&gt;0\)</span> es una parámetro de suavizado, llamado ventana, que regula el tamaño del entorno que se usa para llevar a cabo la estimación.</p>
+<p>Es habitual seleccionar una función núcleo <span class="math inline">\(K\)</span> no negativa y con integral uno:
+<span class="math display">\[K\left( u \right) \geq 0,~\forall u,~\int_{-\infty }^{\infty }
+K\left( u \right) du=1\]</span>
+(i.e. una función de densidad).
+Además, frecuentemente <span class="math inline">\(K\)</span> es una función simétrica (<span class="math inline">\(K\left( -u \right) =K\left( u \right)\)</span>).
+Aunque la elección de esta función no tiene gran impacto en las propiedades del estimador (salvo sus condiciones de regularidad: continuidad, diferenciabilidad, etc.) la elección del parámetro de suavizado sí es muy importante para una correcta estimación.
+En otras palabras, el tamaño del entorno usado para la estimación no paramétrica debe ser adecuado (ni demasiado grande ni demasiado pequeño).</p>
+<p>En <code>R</code> podemos emplear la función <code>density()</code> del paquete base para obtener
+una estimación tipo núcleo de la densidad.
+Los principales parámetros (con los valores por defecto) son los siguientes:</p>
+<pre><code>density(x, bw = &quot;nrd0&quot;, adjust = 1, kernel = &quot;gaussian&quot;, n = 512, from, to)</code></pre>
+<ul>
+<li><p><code>bw</code>: ventana, puede ser un valor numérico o una cadena de texto que la determine
+(en ese caso llamará internamente a la función <code>bw.xxx()</code> donde <code>xxx</code> se corresponde
+con la cadena de texto). Las opciones son:</p>
+<ul>
+<li><p><code>"nrd0"</code>, <code>"nrd"</code>: Reglas del pulgar de Silverman (1986, page 48, eqn (3.31)) y
+Scott (1992), respectivamente. Como es de esperar que la densidad objetivo
+no sea tan suave como la normal, estos criterios tenderán a seleccionar
+ventanas que producen un sobresuavizado de las observaciones.</p></li>
+<li><p><code>"ucv"</code>, <code>"bcv"</code>: Métodos de validación cruzada insesgada y sesgada, respectivamente.</p></li>
+<li><p><code>"sj"</code>, <code>"sj-ste"</code>, <code>"sj-dpi"</code>: Métodos de Sheather y Jones (1991),
+“solve-the-equation” y “direct plug-in,” respectivamente.</p></li>
+</ul></li>
+<li><p><code>adjust</code>: parameto para reescalado de la ventana, las estimaciones se calculan
+con la ventana <code>adjust*bw</code>.</p></li>
+<li><p><code>kernel</code>: cadena de texto que determina la función núcleo, las opciones son: <code>"gaussian"</code>,
+<code>"epanechnikov"</code>, <code>"rectangular"</code>, <code>"triangular"</code>, <code>"biweight"</code>, <code>"cosine"</code> y <code>"optcosine"</code>.</p></li>
+<li><p><code>n</code>, <code>from</code>, <code>to</code>: permiten establecer la rejilla en la que se obtendrán las estimaciones
+(si <span class="math inline">\(n&gt;512\)</span> se emplea <code>fft()</code> por lo que se recomienda establecer <code>n</code> a un múltiplo de 2;
+por defecto <code>from</code> y <code>to</code> se establecen como <code>cut = 3</code> veces la ventana desde los extremos
+de las observaciones).</p></li>
+</ul>
+<p>Como ejemplo consideraremos el conjunto de datos <code>precip</code>, que contiene el promedio de precipitación,
+en pulgadas de lluvia, de 70 ciudades de Estados Unidos.</p>
+<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="modunif-boot-suav.html#cb578-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> precip</span>
+<span id="cb578-2"><a href="modunif-boot-suav.html#cb578-2" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">bw.SJ</span>(x)</span>
+<span id="cb578-3"><a href="modunif-boot-suav.html#cb578-3" aria-hidden="true" tabindex="-1"></a>npden <span class="ot">&lt;-</span> <span class="fu">density</span>(x, <span class="at">bw =</span> h)</span>
+<span id="cb578-4"><a href="modunif-boot-suav.html#cb578-4" aria-hidden="true" tabindex="-1"></a><span class="co"># npden &lt;- density(x, bw = &quot;SJ&quot;)</span></span>
+<span id="cb578-5"><a href="modunif-boot-suav.html#cb578-5" aria-hidden="true" tabindex="-1"></a><span class="co"># h &lt;- npden$bw</span></span>
+<span id="cb578-6"><a href="modunif-boot-suav.html#cb578-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb578-7"><a href="modunif-boot-suav.html#cb578-7" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(npden)</span></span>
+<span id="cb578-8"><a href="modunif-boot-suav.html#cb578-8" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Kernel density estimation&quot;</span>,</span>
+<span id="cb578-9"><a href="modunif-boot-suav.html#cb578-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">paste</span>(<span class="st">&quot;Bandwidth =&quot;</span>, <span class="fu">formatC</span>(h)), <span class="at">border =</span> <span class="st">&quot;darkgray&quot;</span>, </span>
+<span id="cb578-10"><a href="modunif-boot-suav.html#cb578-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">80</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.04</span>))</span>
+<span id="cb578-11"><a href="modunif-boot-suav.html#cb578-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(npden, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb578-12"><a href="modunif-boot-suav.html#cb578-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rug</span>(x, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:density"></span>
+<img src="10-Bootstrap_ext_files/figure-html/density-1.png" alt="Estimación tipo núcleo de la densidad de `precip`." width="70%" />
+<p class="caption">
+Figura 10.4: Estimación tipo núcleo de la densidad de <code>precip</code>.
+</p>
+</div>
+<p>Alternativamente podríamos emplear implementaciones en otros paquetes de <code>R</code>.
+Uno de los más empleados es <code>ks</code> (Duong, 2019), que admite estimación incondicional y condicional multidimensional.
+También se podrían emplear los paquetes <code>KernSmooth</code> (Wand y Ripley, 2019), <code>sm</code> (Bowman y Azzalini, 2019), <code>np</code> (Tristen y Jeffrey, 2019), <code>kedd</code> (Guidoum, 2019), <code>features</code> (Duong y Matt, 2019) y <code>npsp</code> (Fernández-Casal, 2019), entre otros.</p>
+<p>La función de distribución asociada al estimador tipo núcleo de la función de densidad viene dada por
+<span class="math display">\[\begin{aligned}
+\hat{F}_{h}\left( x \right) &amp;= \int_{-\infty }^{x}\hat{f}_{h}\left( y \right) dy
+=\int_{-\infty }^{x}\frac{1}{n}\sum_{i=1}^{n}\frac{1}{h}
+K\left( \frac{y-X_i}{h} \right) dy \\
+&amp;= \frac{1}{nh}\sum_{i=1}^{n}\int_{-\infty }^{x}
+K\left( \frac{y-X_i}{h} \right) dy \\
+&amp;= \frac{1}{n}\sum_{i=1}^{n}\int_{-\infty }^{\frac{x-X_i}{h}}K\left( u \right) du
+=\frac{1}{n}\sum_{i=1}^{n}\mathbb{K}\left( \frac{x-X_i}{h} \right)
+\end{aligned}\]</span>
+donde <span class="math inline">\(\mathbb{K}\)</span> es la función de distribución asociada al núcleo <span class="math inline">\(K\)</span>, es decir
+<span class="math display">\[\mathbb{K}\left( t \right) =\int_{-\infty }^{t}K\left(u \right) du.\]</span></p>
+<p>Por ejemplo, en el caso de del conjunto de datos de precipitaciones, el siguiente código compara la estimación tipo núcleo de la distribución con la empírica:</p>
+<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="modunif-boot-suav.html#cb579-1" aria-hidden="true" tabindex="-1"></a>Fn <span class="ot">&lt;-</span> <span class="fu">ecdf</span>(precip)</span>
+<span id="cb579-2"><a href="modunif-boot-suav.html#cb579-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(Fn, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">75</span>), <span class="at">ylab =</span> <span class="st">&quot;F(x)&quot;</span>, <span class="at">type =</span> <span class="st">&quot;s&quot;</span>)</span>
+<span id="cb579-3"><a href="modunif-boot-suav.html#cb579-3" aria-hidden="true" tabindex="-1"></a>Fnp <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">sapply</span>(x, <span class="cf">function</span>(y) <span class="fu">mean</span>(<span class="fu">pnorm</span>(y, precip, h)))</span>
+<span id="cb579-4"><a href="modunif-boot-suav.html#cb579-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(Fnp, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>) </span>
+<span id="cb579-5"><a href="modunif-boot-suav.html#cb579-5" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Empírica&quot;</span>, <span class="st">&quot;Tipo núcleo&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:pnp"></span>
+<img src="10-Bootstrap_ext_files/figure-html/pnp-1.png" alt="Estimación empírica y tipo núcleo de la función de distribución de `precip`. " width="70%" />
+<p class="caption">
+Figura 10.5: Estimación empírica y tipo núcleo de la función de distribución de <code>precip</code>.
+</p>
+</div>
+<p>Tendiendo en cuenta que el estimador <span class="math inline">\(\hat{f}_{h}\left( x \right)\)</span> es una combinación lineal convexa de funciones de densidad, <span class="math inline">\(K_{h}\left(x-X_i \right)\)</span>, con pesos <span class="math inline">\(\frac{1}{n}\)</span>, podemos simular valores <span class="math inline">\(X^{\ast}\)</span>, procedentes de esta distribución empleando el método de composición descrito en la Sección <a href="composicion.html#composicion">4.4</a>.
+El primer paso consistiría en elegir (aleatoriamente y con equiprobabilidad) un índice <span class="math inline">\(i\in \left\{ 1,\ldots ,n\right\}\)</span>, y posteriormente simular <span class="math inline">\(X^{\ast}\)</span> a partir de la densidad <span class="math inline">\(K_{h}\left(\cdot -X_i \right)\)</span>.
+Este último paso puede realizarse simulando un valor <span class="math inline">\(V\)</span> con densidad <span class="math inline">\(K\)</span> y haciendo <span class="math inline">\(X_i+hV\)</span>.
+Por tanto, podemos pensar que el bootstrap suavizado parte del bootstrap uniforme (<span class="math inline">\(X_i^{\ast}=X_{\left\lfloor nU_i\right\rfloor +1}\)</span>) y añade una perturbación (<span class="math inline">\(hV_i\)</span>), cuya magnitud viene dada por el parámetro de suavizado (<span class="math inline">\(h\)</span>) y cuya forma imita a la de una variable aleatoria (<span class="math inline">\(V_i\)</span>) con densidad <span class="math inline">\(K\)</span>.</p>
+<p>Por ejemplo, la función <code>density()</code> emplea por defecto un núcleo gaussiano, y como se muestra en la ayuda de esta función, podemos emplear un código como el siguiente para obtener <code>nsim</code> simulaciones(ver Figura <a href="modunif-boot-suav.html#fig:density-sim">10.6</a>):</p>
+<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="modunif-boot-suav.html#cb580-1" aria-hidden="true" tabindex="-1"></a><span class="do">## simulation from a density() fit:</span></span>
+<span id="cb580-2"><a href="modunif-boot-suav.html#cb580-2" aria-hidden="true" tabindex="-1"></a><span class="co"># a kernel density fit is an equally-weighted mixture.</span></span>
+<span id="cb580-3"><a href="modunif-boot-suav.html#cb580-3" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="fl">1e6</span></span>
+<span id="cb580-4"><a href="modunif-boot-suav.html#cb580-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb580-5"><a href="modunif-boot-suav.html#cb580-5" aria-hidden="true" tabindex="-1"></a><span class="co"># x_boot &lt;- sample(x, nsim, replace = TRUE)</span></span>
+<span id="cb580-6"><a href="modunif-boot-suav.html#cb580-6" aria-hidden="true" tabindex="-1"></a><span class="co"># x_boot &lt;- x_boot + bandwidth * rnorm(nsim)</span></span>
+<span id="cb580-7"><a href="modunif-boot-suav.html#cb580-7" aria-hidden="true" tabindex="-1"></a>x_boot <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(nsim, <span class="fu">sample</span>(x, nsim, <span class="at">replace =</span> <span class="cn">TRUE</span>), h)</span>
+<span id="cb580-8"><a href="modunif-boot-suav.html#cb580-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Representar</span></span>
+<span id="cb580-9"><a href="modunif-boot-suav.html#cb580-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(npden, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb580-10"><a href="modunif-boot-suav.html#cb580-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(x_boot), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:density-sim"></span>
+<img src="10-Bootstrap_ext_files/figure-html/density-sim-1.png" alt="Estimaciónes tipo núcleo de las densidades de `precip` y de una simulación." width="70%" />
+<p class="caption">
+Figura 10.6: Estimaciónes tipo núcleo de las densidades de <code>precip</code> y de una simulación.
+</p>
+</div>
+<p>En el boostrap suavizado, la distribución de una observación <span class="math inline">\(X_i^{\ast}\)</span> de la remuestra bootstrap es continua (puede tomar infinitos valores), mientras que en el bootstrap uniforme es discreta.
+De esta forma se pueden evitar algunos de los problemas del bootstrap uniforme, como los descritos en la Sección <a href="deficien-unif.html#deficien-unif">10.1</a>.
+Un problema importante es la elección del parámetro de suavizado, <span class="math inline">\(h\)</span>, en este procedimiento de remuestreo.
+En la práctica es razonable elegir <span class="math inline">\(h\)</span> como un valor bastante pequeño, en relación con la desviación típica de la muestra.
+Es fácil observar que en el caso extremo <span class="math inline">\(h=0\)</span> este método de remuestreo se reduce al bootstrap uniforme.</p>
+<div class="example">
+<p><span id="exm:media-suav" class="example"><strong>Ejemplo 10.4  (Inferencia sobre la media, continuación) </strong></span><br></p>
+<p>Continuando con el Ejemplo <a href="boot-unif.html#exm:media-dt-desconocida">9.2</a> del tiempo de vida de microorganismos, podríamos pensar en emplear bootstrap suavizado para calcular un intervalo de confianza para la media poblacional.</p>
+<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="modunif-boot-suav.html#cb581-1" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> simres<span class="sc">::</span>lifetimes</span>
+<span id="cb581-2"><a href="modunif-boot-suav.html#cb581-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(muestra)</span>
+<span id="cb581-3"><a href="modunif-boot-suav.html#cb581-3" aria-hidden="true" tabindex="-1"></a>alfa <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb581-4"><a href="modunif-boot-suav.html#cb581-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimaciones muestrales</span></span>
+<span id="cb581-5"><a href="modunif-boot-suav.html#cb581-5" aria-hidden="true" tabindex="-1"></a>x_barra <span class="ot">&lt;-</span> <span class="fu">mean</span>(muestra)</span>
+<span id="cb581-6"><a href="modunif-boot-suav.html#cb581-6" aria-hidden="true" tabindex="-1"></a>cuasi_dt <span class="ot">&lt;-</span> <span class="fu">sd</span>(muestra)</span>
+<span id="cb581-7"><a href="modunif-boot-suav.html#cb581-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Remuestreo</span></span>
+<span id="cb581-8"><a href="modunif-boot-suav.html#cb581-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb581-9"><a href="modunif-boot-suav.html#cb581-9" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb581-10"><a href="modunif-boot-suav.html#cb581-10" aria-hidden="true" tabindex="-1"></a><span class="co"># h &lt;- 1e-08</span></span>
+<span id="cb581-11"><a href="modunif-boot-suav.html#cb581-11" aria-hidden="true" tabindex="-1"></a><span class="co"># h &lt;- 0.05*cuasi_dt</span></span>
+<span id="cb581-12"><a href="modunif-boot-suav.html#cb581-12" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">bw.SJ</span>(muestra)<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb581-13"><a href="modunif-boot-suav.html#cb581-13" aria-hidden="true" tabindex="-1"></a>estadistico_boot <span class="ot">&lt;-</span> <span class="fu">numeric</span>(B)</span>
+<span id="cb581-14"><a href="modunif-boot-suav.html#cb581-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>B) {</span>
+<span id="cb581-15"><a href="modunif-boot-suav.html#cb581-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remuestra &lt;- sample(muestra, n, replace = TRUE)</span></span>
+<span id="cb581-16"><a href="modunif-boot-suav.html#cb581-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remuestra &lt;- rexp(n, 1/x_barra)</span></span>
+<span id="cb581-17"><a href="modunif-boot-suav.html#cb581-17" aria-hidden="true" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="fu">sample</span>(muestra, n, <span class="at">replace =</span> <span class="cn">TRUE</span>), h)</span>
+<span id="cb581-18"><a href="modunif-boot-suav.html#cb581-18" aria-hidden="true" tabindex="-1"></a>  x_barra_boot <span class="ot">&lt;-</span> <span class="fu">mean</span>(remuestra)</span>
+<span id="cb581-19"><a href="modunif-boot-suav.html#cb581-19" aria-hidden="true" tabindex="-1"></a>  cuasi_dt_boot <span class="ot">&lt;-</span> <span class="fu">sd</span>(remuestra)</span>
+<span id="cb581-20"><a href="modunif-boot-suav.html#cb581-20" aria-hidden="true" tabindex="-1"></a>  estadistico_boot[k] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(n) <span class="sc">*</span> (x_barra_boot <span class="sc">-</span> x_barra)<span class="sc">/</span>cuasi_dt_boot</span>
+<span id="cb581-21"><a href="modunif-boot-suav.html#cb581-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb581-22"><a href="modunif-boot-suav.html#cb581-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Aproximación Monte Carlo de los ptos críticos:</span></span>
+<span id="cb581-23"><a href="modunif-boot-suav.html#cb581-23" aria-hidden="true" tabindex="-1"></a>pto_crit <span class="ot">&lt;-</span> <span class="fu">quantile</span>(estadistico_boot, <span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span> <span class="sc">-</span> alfa<span class="sc">/</span><span class="dv">2</span>))</span>
+<span id="cb581-24"><a href="modunif-boot-suav.html#cb581-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Construcción del IC</span></span>
+<span id="cb581-25"><a href="modunif-boot-suav.html#cb581-25" aria-hidden="true" tabindex="-1"></a>ic_inf_boot <span class="ot">&lt;-</span> x_barra <span class="sc">-</span> pto_crit[<span class="dv">2</span>] <span class="sc">*</span> cuasi_dt<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
+<span id="cb581-26"><a href="modunif-boot-suav.html#cb581-26" aria-hidden="true" tabindex="-1"></a>ic_sup_boot <span class="ot">&lt;-</span> x_barra <span class="sc">-</span> pto_crit[<span class="dv">1</span>] <span class="sc">*</span> cuasi_dt<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
+<span id="cb581-27"><a href="modunif-boot-suav.html#cb581-27" aria-hidden="true" tabindex="-1"></a>IC_boot <span class="ot">&lt;-</span> <span class="fu">c</span>(ic_inf_boot, ic_sup_boot)</span>
+<span id="cb581-28"><a href="modunif-boot-suav.html#cb581-28" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(IC_boot) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">-</span>alfa<span class="sc">/</span><span class="dv">2</span>), <span class="st">&quot;%&quot;</span>)</span>
+<span id="cb581-29"><a href="modunif-boot-suav.html#cb581-29" aria-hidden="true" tabindex="-1"></a>IC_boot</span></code></pre></div>
+<pre><code>##      2.5%     97.5% 
+## 0.4960975 1.1880279</code></pre>
+<p>Con el paquete <code>boot</code>, la recomendación es implementarlo como
+un bootstrap paramétrico:</p>
+<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="modunif-boot-suav.html#cb583-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb583-2"><a href="modunif-boot-suav.html#cb583-2" aria-hidden="true" tabindex="-1"></a>ran.gen.smooth <span class="ot">&lt;-</span> <span class="cf">function</span>(data, mle) {</span>
+<span id="cb583-3"><a href="modunif-boot-suav.html#cb583-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Función para generar muestras aleatorias mediante </span></span>
+<span id="cb583-4"><a href="modunif-boot-suav.html#cb583-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># bootstrap suavizado con función núcleo gaussiana,</span></span>
+<span id="cb583-5"><a href="modunif-boot-suav.html#cb583-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># mle contendrá la ventana.</span></span>
+<span id="cb583-6"><a href="modunif-boot-suav.html#cb583-6" aria-hidden="true" tabindex="-1"></a>    n <span class="ot">&lt;-</span> <span class="fu">length</span>(data)</span>
+<span id="cb583-7"><a href="modunif-boot-suav.html#cb583-7" aria-hidden="true" tabindex="-1"></a>    h <span class="ot">&lt;-</span> mle</span>
+<span id="cb583-8"><a href="modunif-boot-suav.html#cb583-8" aria-hidden="true" tabindex="-1"></a>    out <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="fu">sample</span>(data, n, <span class="at">replace =</span> <span class="cn">TRUE</span>), h)</span>
+<span id="cb583-9"><a href="modunif-boot-suav.html#cb583-9" aria-hidden="true" tabindex="-1"></a>    out</span>
+<span id="cb583-10"><a href="modunif-boot-suav.html#cb583-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb583-11"><a href="modunif-boot-suav.html#cb583-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb583-12"><a href="modunif-boot-suav.html#cb583-12" aria-hidden="true" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data){</span>
+<span id="cb583-13"><a href="modunif-boot-suav.html#cb583-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="fu">mean</span>(data), <span class="fu">var</span>(data)<span class="sc">/</span><span class="fu">length</span>(data))</span>
+<span id="cb583-14"><a href="modunif-boot-suav.html#cb583-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb583-15"><a href="modunif-boot-suav.html#cb583-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb583-16"><a href="modunif-boot-suav.html#cb583-16" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb583-17"><a href="modunif-boot-suav.html#cb583-17" aria-hidden="true" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> B, <span class="at">sim =</span> <span class="st">&quot;parametric&quot;</span>,</span>
+<span id="cb583-18"><a href="modunif-boot-suav.html#cb583-18" aria-hidden="true" tabindex="-1"></a>                 <span class="at">ran.gen =</span> ran.gen.smooth, <span class="at">mle =</span> h)</span>
+<span id="cb583-19"><a href="modunif-boot-suav.html#cb583-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb583-20"><a href="modunif-boot-suav.html#cb583-20" aria-hidden="true" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot, <span class="at">type =</span> <span class="st">&quot;stud&quot;</span>)</span></code></pre></div>
+<pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+## Based on 1000 bootstrap replicates
+## 
+## CALL : 
+## boot.ci(boot.out = res.boot, type = &quot;stud&quot;)
+## 
+## Intervals : 
+## Level    Studentized     
+## 95%   ( 0.4960,  1.1927 )  
+## Calculations and Intervals on Original Scale</code></pre>
+</div>
+<p>En el <a href="https://rubenfcasal.github.io/book_remuestreo/npden.html">Capítulo 6</a> de Cao y Fernández-Casal (2022) se describen métodos bootstrap diseñados específicamente para hacer inferencia sobre la densidad empleando el estimador no paramétrico tipo núcleo (i.e. empleando bootstrap suavizado), como la construcción de intervalos de confianza o la selección del parámetro de suavizado.</p>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="modunif-boot-par.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="boot-reg.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rubenfcasal/simbook/edit/master/10-Bootstrap_ext.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Simulacion.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

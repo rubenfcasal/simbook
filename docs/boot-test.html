@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>11.3 Contrastes de hipótesis bootstrap | Técnicas de Simulación y Remuestreo</title>
+  <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="11.3 Contrastes de hipótesis bootstrap | Técnicas de Simulación y Remuestreo" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Apuntes de Simulación Estadística y Remuestreo." />
+  <meta name="github-repo" content="rubenfcasal/simbook" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="11.3 Contrastes de hipótesis bootstrap | Técnicas de Simulación y Remuestreo" />
+  
+  <meta name="twitter:description" content="Apuntes de Simulación Estadística y Remuestreo." />
+  
+
+<meta name="author" content="Rubén Fernández Casal (ruben.fcasal@udc.es)" />
+<meta name="author" content="Ricardo Cao (rcao@udc.es)" />
+<meta name="author" content="Julián Costa (julian.costa@udc.es)" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="boot-ic.html"/>
+<link rel="next" href="gof-aleat.html"/>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Técnicas de Simulación y Remuestreo</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prólogo</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introducción a la simulación</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="conceptos.html"><a href="conceptos.html"><i class="fa fa-check"></i><b>1.1</b> Conceptos básicos</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="conceptos.html"><a href="conceptos.html#ealbum"><i class="fa fa-check"></i><b>1.1.1</b> Ejemplo</a></li>
+<li class="chapter" data-level="1.1.2" data-path="conceptos.html"><a href="conceptos.html#ventajas-e-inconvenientes-de-la-simulación"><i class="fa fa-check"></i><b>1.1.2</b> Ventajas e inconvenientes de la simulación</a></li>
+<li class="chapter" data-level="1.1.3" data-path="conceptos.html"><a href="conceptos.html#aplicaciones-de-la-simulación"><i class="fa fa-check"></i><b>1.1.3</b> Aplicaciones de la simulación</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="tipos-de-números-aleatorios.html"><a href="tipos-de-números-aleatorios.html"><i class="fa fa-check"></i><b>1.2</b> Tipos de números aleatorios</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="tipos-de-números-aleatorios.html"><a href="tipos-de-números-aleatorios.html#números-aleatorios-puros"><i class="fa fa-check"></i><b>1.2.1</b> Números aleatorios puros</a></li>
+<li class="chapter" data-level="1.2.2" data-path="tipos-de-números-aleatorios.html"><a href="tipos-de-números-aleatorios.html#números-cuasi-aleatorios"><i class="fa fa-check"></i><b>1.2.2</b> Números cuasi-aleatorios</a></li>
+<li class="chapter" data-level="1.2.3" data-path="tipos-de-números-aleatorios.html"><a href="tipos-de-números-aleatorios.html#números-pseudo-aleatorios"><i class="fa fa-check"></i><b>1.2.3</b> Números pseudo-aleatorios</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="rrng.html"><a href="rrng.html"><i class="fa fa-check"></i><b>1.3</b> Números aleatorios en R</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="rrng.html"><a href="rrng.html#oprrng"><i class="fa fa-check"></i><b>1.3.1</b> Opciones</a></li>
+<li class="chapter" data-level="1.3.2" data-path="rrng.html"><a href="rrng.html#paquetes-de-r"><i class="fa fa-check"></i><b>1.3.2</b> Paquetes de R</a></li>
+<li class="chapter" data-level="1.3.3" data-path="rrng.html"><a href="rrng.html#tiempo-de-cpu"><i class="fa fa-check"></i><b>1.3.3</b> Tiempo de CPU</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="ejercicios.html"><a href="ejercicios.html"><i class="fa fa-check"></i><b>1.4</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="gen-pseudo.html"><a href="gen-pseudo.html"><i class="fa fa-check"></i><b>2</b> Generación de números pseudoaleatorios</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="gen-cong.html"><a href="gen-cong.html"><i class="fa fa-check"></i><b>2.1</b> Generadores congruenciales lineales</a></li>
+<li class="chapter" data-level="2.2" data-path="ext-cong.html"><a href="ext-cong.html"><i class="fa fa-check"></i><b>2.2</b> Extensiones</a></li>
+<li class="chapter" data-level="2.3" data-path="calgen.html"><a href="calgen.html"><i class="fa fa-check"></i><b>2.3</b> Análisis de la calidad de un generador</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="calgen.html"><a href="calgen.html#repetición-de-contrastes"><i class="fa fa-check"></i><b>2.3.1</b> Repetición de contrastes</a></li>
+<li class="chapter" data-level="2.3.2" data-path="calgen.html"><a href="calgen.html#baterias"><i class="fa fa-check"></i><b>2.3.2</b> Baterías de contrastes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="ejercicios-1.html"><a href="ejercicios-1.html"><i class="fa fa-check"></i><b>2.4</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="resultados.html"><a href="resultados.html"><i class="fa fa-check"></i><b>3</b> Análisis de resultados de simulación</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="convergencia.html"><a href="convergencia.html"><i class="fa fa-check"></i><b>3.1</b> Convergencia</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="convergencia.html"><a href="convergencia.html#detección-de-problemas-de-convergencia"><i class="fa fa-check"></i><b>3.1.1</b> Detección de problemas de convergencia</a></li>
+<li class="chapter" data-level="3.1.2" data-path="convergencia.html"><a href="convergencia.html#precisión"><i class="fa fa-check"></i><b>3.1.2</b> Precisión</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="num-gen.html"><a href="num-gen.html"><i class="fa fa-check"></i><b>3.2</b> Determinación del número de generaciones</a></li>
+<li class="chapter" data-level="3.3" data-path="el-problema-de-la-dependencia.html"><a href="el-problema-de-la-dependencia.html"><i class="fa fa-check"></i><b>3.3</b> El problema de la dependencia</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="el-problema-de-la-dependencia.html"><a href="el-problema-de-la-dependencia.html#periodo-de-calentamiento"><i class="fa fa-check"></i><b>3.3.1</b> Periodo de calentamiento</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="observaciones.html"><a href="observaciones.html"><i class="fa fa-check"></i><b>3.4</b> Observaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="continuas.html"><a href="continuas.html"><i class="fa fa-check"></i><b>4</b> Simulación de variables continuas</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="inversion.html"><a href="inversion.html"><i class="fa fa-check"></i><b>4.1</b> Método de inversión</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="inversion.html"><a href="inversion.html#algunas-distribuciones-que-pueden-simularse-por-el-método-de-inversión"><i class="fa fa-check"></i><b>4.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
+<li class="chapter" data-level="4.1.2" data-path="inversion.html"><a href="inversion.html#ventajas-e-inconvenientes"><i class="fa fa-check"></i><b>4.1.2</b> Ventajas e inconvenientes</a></li>
+<li class="chapter" data-level="4.1.3" data-path="inversion.html"><a href="inversion.html#inversión-aproximada"><i class="fa fa-check"></i><b>4.1.3</b> Inversión aproximada</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>4.2</b> Método de aceptación rechazo</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="AR.html"><a href="AR.html#algoritmo"><i class="fa fa-check"></i><b>4.2.1</b> Algoritmo</a></li>
+<li class="chapter" data-level="4.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>4.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
+<li class="chapter" data-level="4.2.3" data-path="AR.html"><a href="AR.html#eficiencia-del-algoritmo"><i class="fa fa-check"></i><b>4.2.3</b> Eficiencia del algoritmo</a></li>
+<li class="chapter" data-level="4.2.4" data-path="AR.html"><a href="AR.html#elección-de-la-densidad-auxiliar"><i class="fa fa-check"></i><b>4.2.4</b> Elección de la densidad auxiliar</a></li>
+<li class="chapter" data-level="4.2.5" data-path="AR.html"><a href="AR.html#bayes-ar"><i class="fa fa-check"></i><b>4.2.5</b> Ejemplo: inferencia bayesiana</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="modAR.html"><a href="modAR.html"><i class="fa fa-check"></i><b>4.3</b> Modificaciones del método de aceptación-rechazo</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="modAR.html"><a href="modAR.html#ars"><i class="fa fa-check"></i><b>4.3.1</b> Muestreo por rechazo adaptativo (ARS)</a></li>
+<li class="chapter" data-level="4.3.2" data-path="modAR.html"><a href="modAR.html#método-del-cociente-de-uniformes"><i class="fa fa-check"></i><b>4.3.2</b> Método del cociente de uniformes</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="composicion.html"><a href="composicion.html"><i class="fa fa-check"></i><b>4.4</b> Método de composición (o de simulación condicional)</a></li>
+<li class="chapter" data-level="4.5" data-path="notables-cont.html"><a href="notables-cont.html"><i class="fa fa-check"></i><b>4.5</b> Métodos específicos para la generación de algunas distribuciones notables</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="notables-cont.html"><a href="notables-cont.html#método-de-box-müller"><i class="fa fa-check"></i><b>4.5.1</b> Método de Box-Müller</a></li>
+<li class="chapter" data-level="4.5.2" data-path="notables-cont.html"><a href="notables-cont.html#simulación-de-la-distribución-beta"><i class="fa fa-check"></i><b>4.5.2</b> Simulación de la distribución beta</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="discretas.html"><a href="discretas.html"><i class="fa fa-check"></i><b>5</b> Simulación de variables discretas</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="transcuant.html"><a href="transcuant.html"><i class="fa fa-check"></i><b>5.1</b> Método de la transformación cuantil</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="transcuant.html"><a href="transcuant.html#eficiencia-del-algoritmo-1"><i class="fa fa-check"></i><b>5.1.1</b> Eficiencia del algoritmo</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="método-de-la-tabla-guía.html"><a href="método-de-la-tabla-guía.html"><i class="fa fa-check"></i><b>5.2</b> Método de la tabla guía</a></li>
+<li class="chapter" data-level="5.3" data-path="alias.html"><a href="alias.html"><i class="fa fa-check"></i><b>5.3</b> Método de Alias</a></li>
+<li class="chapter" data-level="5.4" data-path="simulación-de-una-variable-discreta-con-dominio-infinito.html"><a href="simulación-de-una-variable-discreta-con-dominio-infinito.html"><i class="fa fa-check"></i><b>5.4</b> Simulación de una variable discreta con dominio infinito</a></li>
+<li class="chapter" data-level="5.5" data-path="transcuant-directo.html"><a href="transcuant-directo.html"><i class="fa fa-check"></i><b>5.5</b> Cálculo directo de la función cuantil</a></li>
+<li class="chapter" data-level="5.6" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>5.6</b> Otros métodos</a></li>
+<li class="chapter" data-level="5.7" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>5.7</b> Métodos específicos para generación de distribuciones notables</a></li>
+<li class="chapter" data-level="5.8" data-path="ejercicios-discretas.html"><a href="ejercicios-discretas.html"><i class="fa fa-check"></i><b>5.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="multivariante.html"><a href="multivariante.html"><i class="fa fa-check"></i><b>6</b> Simulación de distribuciones multivariantes</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="simulación-de-componentes-independientes.html"><a href="simulación-de-componentes-independientes.html"><i class="fa fa-check"></i><b>6.1</b> Simulación de componentes independientes</a></li>
+<li class="chapter" data-level="6.2" data-path="el-método-de-aceptaciónrechazo.html"><a href="el-método-de-aceptaciónrechazo.html"><i class="fa fa-check"></i><b>6.2</b> El método de aceptación/rechazo</a></li>
+<li class="chapter" data-level="6.3" data-path="fact-cov.html"><a href="fact-cov.html"><i class="fa fa-check"></i><b>6.3</b> Factorización de la matriz de covarianzas</a></li>
+<li class="chapter" data-level="6.4" data-path="distrcond.html"><a href="distrcond.html"><i class="fa fa-check"></i><b>6.4</b> Método de las distribuciones condicionadas</a></li>
+<li class="chapter" data-level="6.5" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html"><i class="fa fa-check"></i><b>6.5</b> Simulación condicional e incondicional</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html#condnormal"><i class="fa fa-check"></i><b>6.5.1</b> Simulación condicional de una normal multivariante</a></li>
+<li class="chapter" data-level="6.5.2" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html#simulación-condicional-a-partir-de-un-modelo-ajustado"><i class="fa fa-check"></i><b>6.5.2</b> Simulación condicional a partir de un modelo ajustado</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html"><i class="fa fa-check"></i><b>6.6</b> Simulación basada en cópulas</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html#cópulas-arquimedianas"><i class="fa fa-check"></i><b>6.6.1</b> Cópulas Arquimedianas</a></li>
+<li class="chapter" data-level="6.6.2" data-path="simulación-basada-en-cópulas.html"><a href="simulación-basada-en-cópulas.html#simulación"><i class="fa fa-check"></i><b>6.6.2</b> Simulación</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="mult-discr.html"><a href="mult-discr.html"><i class="fa fa-check"></i><b>6.7</b> Simulación de distribuciones multivariantes discretas</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="mult-discr.html"><a href="mult-discr.html#simulación-de-una-variable-discreta-bidimensional"><i class="fa fa-check"></i><b>6.7.1</b> Simulación de una variable discreta bidimensional</a></li>
+<li class="chapter" data-level="6.7.2" data-path="mult-discr.html"><a href="mult-discr.html#simconting"><i class="fa fa-check"></i><b>6.7.2</b> Simulación de tablas de contingencia</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="monte-carlo.html"><a href="monte-carlo.html"><i class="fa fa-check"></i><b>7</b> Métodos Monte Carlo</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="int-MC.html"><a href="int-MC.html"><i class="fa fa-check"></i><b>7.1</b> Integración Monte Carlo</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="int-MC.html"><a href="int-MC.html#integración-monte-carlo-clásica"><i class="fa fa-check"></i><b>7.1.1</b> Integración Monte Carlo clásica</a></li>
+<li class="chapter" data-level="7.1.2" data-path="int-MC.html"><a href="int-MC.html#caso-general"><i class="fa fa-check"></i><b>7.1.2</b> Caso general</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="muestreo-importancia.html"><a href="muestreo-importancia.html"><i class="fa fa-check"></i><b>7.2</b> Muestreo por importancia</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="muestreo-importancia.html"><a href="muestreo-importancia.html#remuestreo-del-muestreo-por-importancia"><i class="fa fa-check"></i><b>7.2.1</b> Remuestreo (del muestreo) por importancia</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="opt-MC.html"><a href="opt-MC.html"><i class="fa fa-check"></i><b>7.3</b> Optimización Monte Carlo</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="opt-MC.html"><a href="opt-MC.html#algoritmos-de-optimización-monte-carlo"><i class="fa fa-check"></i><b>7.3.1</b> Algoritmos de optimización Monte Carlo</a></li>
+<li class="chapter" data-level="7.3.2" data-path="opt-MC.html"><a href="opt-MC.html#temple-simulado"><i class="fa fa-check"></i><b>7.3.2</b> Temple simulado</a></li>
+<li class="chapter" data-level="7.3.3" data-path="opt-MC.html"><a href="opt-MC.html#algoritmos-genéticos"><i class="fa fa-check"></i><b>7.3.3</b> Algoritmos genéticos</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="aplic-inf.html"><a href="aplic-inf.html"><i class="fa fa-check"></i><b>7.4</b> Métodos Monte Carlo en Inferencia Estadística</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="aplic-inf.html"><a href="aplic-inf.html#distribución-en-el-muestreo"><i class="fa fa-check"></i><b>7.4.1</b> Distribución en el muestreo</a></li>
+<li class="chapter" data-level="7.4.2" data-path="aplic-inf.html"><a href="aplic-inf.html#intervalos-de-confianza"><i class="fa fa-check"></i><b>7.4.2</b> Intervalos de confianza</a></li>
+<li class="chapter" data-level="7.4.3" data-path="aplic-inf.html"><a href="aplic-inf.html#contrastes"><i class="fa fa-check"></i><b>7.4.3</b> Contrastes de hipótesis</a></li>
+<li class="chapter" data-level="7.4.4" data-path="aplic-inf.html"><a href="aplic-inf.html#comparación-de-estimadores"><i class="fa fa-check"></i><b>7.4.4</b> Comparación de estimadores</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="técnicas-de-reducción-de-la-varianza.html"><a href="técnicas-de-reducción-de-la-varianza.html"><i class="fa fa-check"></i><b>8</b> Técnicas de reducción de la varianza</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html"><i class="fa fa-check"></i><b>8.1</b> Variables antitéticas</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html#ejemplo-integración-monte-carlo"><i class="fa fa-check"></i><b>8.1.1</b> Ejemplo: Integración Monte Carlo</a></li>
+<li class="chapter" data-level="8.1.2" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html#generación-de-variables-antitéticas"><i class="fa fa-check"></i><b>8.1.2</b> Generación de variables antitéticas</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="estratificación.html"><a href="estratificación.html"><i class="fa fa-check"></i><b>8.2</b> Estratificación</a></li>
+<li class="chapter" data-level="8.3" data-path="variables-de-control.html"><a href="variables-de-control.html"><i class="fa fa-check"></i><b>8.3</b> Variables de control</a></li>
+<li class="chapter" data-level="8.4" data-path="números-aleatorios-comunes.html"><a href="números-aleatorios-comunes.html"><i class="fa fa-check"></i><b>8.4</b> Números aleatorios comunes</a></li>
+<li class="chapter" data-level="8.5" data-path="ejercicios-2.html"><a href="ejercicios-2.html"><i class="fa fa-check"></i><b>8.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="bootstrap.html"><a href="bootstrap.html"><i class="fa fa-check"></i><b>9</b> Métodos de remuestreo</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="boot-intro.html"><a href="boot-intro.html"><i class="fa fa-check"></i><b>9.1</b> Introducción</a></li>
+<li class="chapter" data-level="9.2" data-path="boot-unif.html"><a href="boot-unif.html"><i class="fa fa-check"></i><b>9.2</b> El Bootstrap uniforme</a></li>
+<li class="chapter" data-level="9.3" data-path="intro-paquetes.html"><a href="intro-paquetes.html"><i class="fa fa-check"></i><b>9.3</b> Herramientas disponibles en R sobre bootstrap</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="intro-paquetes.html"><a href="intro-paquetes.html#intro-pkgboot"><i class="fa fa-check"></i><b>9.3.1</b> El paquete <code>boot</code></a></li>
+<li class="chapter" data-level="9.3.2" data-path="intro-paquetes.html"><a href="intro-paquetes.html#extensiones-del-bootstrap-uniforme-con-el-paquete-boot"><i class="fa fa-check"></i><b>9.3.2</b> Extensiones del bootstrap uniforme con el paquete <code>boot</code></a></li>
+<li class="chapter" data-level="9.3.3" data-path="intro-paquetes.html"><a href="intro-paquetes.html#boot-unif-multi"><i class="fa fa-check"></i><b>9.3.3</b> Ejemplo: Bootstrap uniforme multidimensional</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="modunif.html"><a href="modunif.html"><i class="fa fa-check"></i><b>10</b> Extensiones del bootstrap uniforme</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="deficien-unif.html"><a href="deficien-unif.html"><i class="fa fa-check"></i><b>10.1</b> Deficiencias del bootstrap uniforme</a></li>
+<li class="chapter" data-level="10.2" data-path="modunif-boot-par.html"><a href="modunif-boot-par.html"><i class="fa fa-check"></i><b>10.2</b> Bootstrap paramétrico</a></li>
+<li class="chapter" data-level="10.3" data-path="modunif-boot-suav.html"><a href="modunif-boot-suav.html"><i class="fa fa-check"></i><b>10.3</b> Bootstrap suavizado</a></li>
+<li class="chapter" data-level="10.4" data-path="boot-reg.html"><a href="boot-reg.html"><i class="fa fa-check"></i><b>10.4</b> Bootstrap basado en modelos</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="boot-reg.html"><a href="boot-reg.html#boot-unif-reg"><i class="fa fa-check"></i><b>10.4.1</b> Remuestreo de las observaciones</a></li>
+<li class="chapter" data-level="10.4.2" data-path="boot-reg.html"><a href="boot-reg.html#boot-residual"><i class="fa fa-check"></i><b>10.4.2</b> Bootstrap residual</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="boot-aplic.html"><a href="boot-aplic.html"><i class="fa fa-check"></i><b>11</b> Aplicaciones del remuestreo</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="sesgo-prec.html"><a href="sesgo-prec.html"><i class="fa fa-check"></i><b>11.1</b> Estimación del sesgo y la precisión de un estimador</a></li>
+<li class="chapter" data-level="11.2" data-path="boot-ic.html"><a href="boot-ic.html"><i class="fa fa-check"></i><b>11.2</b> Intervalos de confianza bootstrap</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="boot-ic.html"><a href="boot-ic.html#boot-ic-norm"><i class="fa fa-check"></i><b>11.2.1</b> Aproximación normal</a></li>
+<li class="chapter" data-level="11.2.2" data-path="boot-ic.html"><a href="boot-ic.html#boot-ic-perc"><i class="fa fa-check"></i><b>11.2.2</b> Método percentil directo</a></li>
+<li class="chapter" data-level="11.2.3" data-path="boot-ic.html"><a href="boot-ic.html#boot-ic-basic"><i class="fa fa-check"></i><b>11.2.3</b> Método percentil básico</a></li>
+<li class="chapter" data-level="11.2.4" data-path="boot-ic.html"><a href="boot-ic.html#boot-ic-stud"><i class="fa fa-check"></i><b>11.2.4</b> Método percentil-<em>t</em></a></li>
+<li class="chapter" data-level="11.2.5" data-path="boot-ic.html"><a href="boot-ic.html#boot-ic-bca"><i class="fa fa-check"></i><b>11.2.5</b> Método BCa</a></li>
+<li class="chapter" data-level="11.2.6" data-path="boot-ic.html"><a href="boot-ic.html#icboot-trans"><i class="fa fa-check"></i><b>11.2.6</b> Ejemplo: IC bootstrap para el coeficiente de correlación</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="boot-test.html"><a href="boot-test.html"><i class="fa fa-check"></i><b>11.3</b> Contrastes de hipótesis bootstrap</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="boot-test.html"><a href="boot-test.html#contrastes-parametricos"><i class="fa fa-check"></i><b>11.3.1</b> Contrastes bootstrap paramétricos</a></li>
+<li class="chapter" data-level="11.3.2" data-path="boot-test.html"><a href="boot-test.html#contrastes-de-permutaciones"><i class="fa fa-check"></i><b>11.3.2</b> Contrastes de permutaciones</a></li>
+<li class="chapter" data-level="11.3.3" data-path="boot-test.html"><a href="boot-test.html#contrastes-semiparametricos"><i class="fa fa-check"></i><b>11.3.3</b> Contrastes bootstrap semiparamétricos</a></li>
+</ul></li>
+</ul></li>
+<li class="appendix"><span><b>Apendices</b></span></li>
+<li class="chapter" data-level="A" data-path="gof-aleat.html"><a href="gof-aleat.html"><i class="fa fa-check"></i><b>A</b> Bondad de Ajuste y Aleatoriedad</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="gof.html"><a href="gof.html"><i class="fa fa-check"></i><b>A.1</b> Métodos de bondad de ajuste</a>
+<ul>
+<li class="chapter" data-level="A.1.1" data-path="gof.html"><a href="gof.html#histograma"><i class="fa fa-check"></i><b>A.1.1</b> Histograma</a></li>
+<li class="chapter" data-level="A.1.2" data-path="gof.html"><a href="gof.html#empdistr"><i class="fa fa-check"></i><b>A.1.2</b> Función de distribución empírica</a></li>
+<li class="chapter" data-level="A.1.3" data-path="gof.html"><a href="gof.html#gráficos-p-p-y-q-q"><i class="fa fa-check"></i><b>A.1.3</b> Gráficos P-P y Q-Q</a></li>
+<li class="chapter" data-level="A.1.4" data-path="gof.html"><a href="gof.html#chi2test"><i class="fa fa-check"></i><b>A.1.4</b> Contraste chi-cuadrado de Pearson</a></li>
+<li class="chapter" data-level="A.1.5" data-path="gof.html"><a href="gof.html#ks-test"><i class="fa fa-check"></i><b>A.1.5</b> Contraste de Kolmogorov-Smirnov</a></li>
+</ul></li>
+<li class="chapter" data-level="A.2" data-path="diag-aleat.html"><a href="diag-aleat.html"><i class="fa fa-check"></i><b>A.2</b> Diagnosis de la independencia</a>
+<ul>
+<li class="chapter" data-level="A.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>A.2.1</b> Métodos para detectar dependencia</a></li>
+<li class="chapter" data-level="A.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>A.2.2</b> Gráfico secuencial</a></li>
+<li class="chapter" data-level="A.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>A.2.3</b> Gráfico de dispersion retardado</a></li>
+<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="A.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>A.2.5</b> Test de rachas</a></li>
+<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>A.3</b> Contrastes específicos para generadores aleatorios</a>
+<ul>
+<li class="chapter" data-level="A.3.1" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#freq-test"><i class="fa fa-check"></i><b>A.3.1</b> Contraste de frecuencias</a></li>
+<li class="chapter" data-level="A.3.2" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#contraste-de-series"><i class="fa fa-check"></i><b>A.3.2</b> Contraste de series</a></li>
+<li class="chapter" data-level="A.3.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#el-contraste-del-poker"><i class="fa fa-check"></i><b>A.3.3</b> El contraste del poker</a></li>
+<li class="chapter" data-level="A.3.4" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html#el-contraste-del-coleccionista"><i class="fa fa-check"></i><b>A.3.4</b> El contraste del coleccionista</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="int-num.html"><a href="int-num.html"><i class="fa fa-check"></i><b>B</b> Integración numérica</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html"><i class="fa fa-check"></i><b>B.1</b> Integración numérica unidimensional</a>
+<ul>
+<li class="chapter" data-level="B.1.1" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#método-del-trapezoide"><i class="fa fa-check"></i><b>B.1.1</b> Método del trapezoide</a></li>
+<li class="chapter" data-level="B.1.2" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#regla-de-simpson"><i class="fa fa-check"></i><b>B.1.2</b> Regla de Simpson</a></li>
+<li class="chapter" data-level="B.1.3" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#cuadratura-adaptativa"><i class="fa fa-check"></i><b>B.1.3</b> Cuadratura adaptativa</a></li>
+<li class="chapter" data-level="B.1.4" data-path="integración-numérica-unidimensional.html"><a href="integración-numérica-unidimensional.html#comandos-de-r"><i class="fa fa-check"></i><b>B.1.4</b> Comandos de R</a></li>
+</ul></li>
+<li class="chapter" data-level="B.2" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html"><i class="fa fa-check"></i><b>B.2</b> Integración numérica bidimensional</a>
+<ul>
+<li class="chapter" data-level="B.2.1" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#representación-gráfica"><i class="fa fa-check"></i><b>B.2.1</b> Representación gráfica</a></li>
+<li class="chapter" data-level="B.2.2" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#método-del-trapezoide-1"><i class="fa fa-check"></i><b>B.2.2</b> Método del trapezoide</a></li>
+<li class="chapter" data-level="B.2.3" data-path="integración-numérica-bidimensional.html"><a href="integración-numérica-bidimensional.html#comandos-de-r-1"><i class="fa fa-check"></i><b>B.2.3</b> Comandos de R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="intro-hpc.html"><a href="intro-hpc.html"><i class="fa fa-check"></i><b>C</b> Introducción al procesamiento en paralelo en R</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>C.1</b> Introducción</a></li>
+<li class="chapter" data-level="C.2" data-path="paquetes-en-r.html"><a href="paquetes-en-r.html"><i class="fa fa-check"></i><b>C.2</b> Paquetes en R</a></li>
+<li class="chapter" data-level="C.3" data-path="ejemplos.html"><a href="ejemplos.html"><i class="fa fa-check"></i><b>C.3</b> Ejemplos</a>
+<ul>
+<li class="chapter" data-level="C.3.1" data-path="ejemplos.html"><a href="ejemplos.html#procesamiento-en-paralelo-con-la-función-boot"><i class="fa fa-check"></i><b>C.3.1</b> Procesamiento en paralelo con la función <code>boot()</code></a></li>
+<li class="chapter" data-level="C.3.2" data-path="ejemplos.html"><a href="ejemplos.html#estudio-sim-boot"><i class="fa fa-check"></i><b>C.3.2</b> Estudio de simulación</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="D" data-path="soluciones.html"><a href="soluciones.html"><i class="fa fa-check"></i><b>D</b> Soluciones ejercicios</a>
+<ul>
+<li class="chapter" data-level="D.1" data-path="capítulo-1-introducción-a-la-simulación.html"><a href="capítulo-1-introducción-a-la-simulación.html"><i class="fa fa-check"></i><b>D.1</b> Capítulo 1 <span>Introducción a la simulación</span></a>
+<ul>
+<li class="chapter" data-level="D.1.1" data-path="capítulo-1-introducción-a-la-simulación.html"><a href="capítulo-1-introducción-a-la-simulación.html#sol-simpi"><i class="fa fa-check"></i><b>D.1.1</b> Ejercicio <span>1.1</span></a></li>
+<li class="chapter" data-level="D.1.2" data-path="capítulo-1-introducción-a-la-simulación.html"><a href="capítulo-1-introducción-a-la-simulación.html#sol-bernoulli"><i class="fa fa-check"></i><b>D.1.2</b> Ejercicio <span>1.2</span></a></li>
+<li class="chapter" data-level="D.1.3" data-path="capítulo-1-introducción-a-la-simulación.html"><a href="capítulo-1-introducción-a-la-simulación.html#sol-circuito"><i class="fa fa-check"></i><b>D.1.3</b> Ejercicio <span>1.3</span></a></li>
+<li class="chapter" data-level="D.1.4" data-path="capítulo-1-introducción-a-la-simulación.html"><a href="capítulo-1-introducción-a-la-simulación.html#sol-mere"><i class="fa fa-check"></i><b>D.1.4</b> Ejercicio <span>1.4</span></a></li>
+<li class="chapter" data-level="D.1.5" data-path="capítulo-1-introducción-a-la-simulación.html"><a href="capítulo-1-introducción-a-la-simulación.html#sol-album"><i class="fa fa-check"></i><b>D.1.5</b> Ejercicio <span>1.5</span></a></li>
+</ul></li>
+<li class="chapter" data-level="D.2" data-path="capítulo-2-generación-de-números-pseudoaleatorios.html"><a href="capítulo-2-generación-de-números-pseudoaleatorios.html"><i class="fa fa-check"></i><b>D.2</b> Capítulo 2 <span>Generación de números pseudoaleatorios</span></a>
+<ul>
+<li class="chapter" data-level="D.2.1" data-path="capítulo-2-generación-de-números-pseudoaleatorios.html"><a href="capítulo-2-generación-de-números-pseudoaleatorios.html#sol-RANDVN"><i class="fa fa-check"></i><b>D.2.1</b> Ejercicio <span>2.1</span></a></li>
+</ul></li>
+<li class="chapter" data-level="D.3" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html"><i class="fa fa-check"></i><b>D.3</b> Capítulo 5 <span>Simulación de variables discretas</span></a>
+<ul>
+<li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio <span>5.1</span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
+<ul>
+<li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Técnicas de Simulación y Remuestreo</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="boot-test" class="section level2" number="11.3">
+<h2><span class="header-section-number">11.3</span> Contrastes de hipótesis bootstrap</h2>
+<p>El objetivo de los contrastes de hipótesis es, a partir de la información
+que proporciona una muestra, decidir (tratando de controlar el riesgo de
+equivocarse al no disponer de toda la información)
+entre dos hipótesis sobre alguna característica de interés de la población:
+hipótesis nula (<span class="math inline">\(H_{0}\)</span>) e hipótesis alternativa (<span class="math inline">\(H_{1}\)</span>).</p>
+<p>Entre los distintos tipos de contrastes de hipótesis (e.g. paramétricos,
+no paramétricos, …), nos centraremos principalmente en los contrastes
+de bondad de ajuste. En este caso interesará distinguir principalmente
+entre hipótesis nulas simples (especifican un único modelo) y compuestas
+(especifican un conjunto/familia de modelos).</p>
+<p>Para realizar el contraste se emplea un estadístico <span class="math inline">\(D\left( X_1,\ldots ,X_n;H_0\right)\)</span>,
+que mide la discrepancia entre la muestra observada y la hipótesis nula,
+con distribución conocida (o que se puede aproximar) bajo <span class="math inline">\(H_0\)</span>.
+Por ejemplo, en el caso de una hipótesis nula paramétrica
+es habitual emplear un estadístico studentizado de la forma:
+<span class="math display">\[D\left( X_1,\ldots ,X_n;H_0\right) =
+\frac{\hat{\theta}-\theta _0}{\hat\sigma_{\hat\theta}}\]</span>
+(o algún tipo de razón de verosimilitudes).</p>
+<p>La regla de decisión depende de la hipótesis alternativa y
+del riesgo asumible al rechazar <span class="math inline">\(H_0\)</span> siendo cierta:
+<span class="math display">\[P\left( \text{rechazar }H_0\mid H_0\text{ cierta}\right) =\alpha,\]</span>
+denominado nivel de significación.
+Se determina una región de rechazo (RR) a partir de los valores que tiende
+a tomar el estadístico cuando <span class="math inline">\(H_1\)</span> es cierta,
+de forma que<a href="#fn33" class="footnote-ref" id="fnref33"><sup>33</sup></a>:
+<span class="math display">\[P\left( D\in RR \mid H_0\text{ cierta}\right) =\alpha.\]</span>
+Se rechaza la hipótesis nula cuando el valor observado del
+estadístico <span class="math inline">\(\hat{d}=D\left( x_1,\ldots ,x_n;H_0\right)\)</span> pertenece
+a la región de rechazo.</p>
+<p>Para medir el nivel de evidencia en contra de <span class="math inline">\(H_0\)</span> se emplea el
+<span class="math inline">\(p\)</span>-valor del contraste (también denominado valor crítico o
+tamaño del contraste), el menor valor del nivel
+de significación para el que se rechaza <span class="math inline">\(H_0\)</span>
+(que se puede interpretar también como la
+probabilidad de obtener una discrepancia mayor o igual que
+<span class="math inline">\(\hat{d}\)</span> cuando <span class="math inline">\(H_0\)</span> es cierta).</p>
+<p>El cálculo del <span class="math inline">\(p\)</span>-valor dependerá por tanto de la hipótesis altervativa.
+Por ejemplo, si el estadístico del contraste tiende a tomar valores
+grandes cuando <span class="math inline">\(H_0\)</span> es falsa (contraste unilateral derecho):
+<span class="math display">\[p = P\left( D \geq \hat{d} \middle| H_0\right).\]</span>
+En otros casos (contrastes bilaterales) hay evidencias en contra de
+<span class="math inline">\(H_0\)</span> si el estadístico toma valores significativamente grandes o pequeños.
+En estos casos la distribución del estadístico del contraste bajo <span class="math inline">\(H_0\)</span>
+suele ser simétrica en torno al cero, por lo que:
+<span class="math display">\[p = 2P\left( D \geq \vert \hat{d} \vert \middle| H_0 \right).\]</span>
+Pero si esta distribución es asimétrica:
+<span class="math display">\[p = 2 \min \left\{ P\left( D \leq \hat{d} \middle| H_0 \right),
+P\left( D \geq \hat{d} \middle| H_0\right) \right\}.\]</span></p>
+<p>La regla de decisión a partir del <span class="math inline">\(p\)</span>-valor es siempre la misma.
+Rechazamos <span class="math inline">\(H_0\)</span>, al nivel de significación <span class="math inline">\(\alpha\)</span>, si <span class="math inline">\(p \leq \alpha\)</span>,
+en cuyo caso se dice que el contraste es estadísticamente significativo
+(rechazamos <span class="math inline">\(H_0\)</span> con mayor seguridad cuanto más pequeño es el <span class="math inline">\(p\)</span>-valor).
+Por tanto, la correspondiente variable aleatoria <span class="math inline">\(\mathcal{P}\)</span> debería verificar:
+<span class="math display">\[P\left( \mathcal{P} \leq \alpha \middle| H_0\right)= \alpha.\]</span>
+Es decir, la distribución del <span class="math inline">\(p\)</span>-valor bajo <span class="math inline">\(H_0\)</span> debería ser <span class="math inline">\(\mathcal{U}(0,1)\)</span>
+(si la distribución del estadístico del constrate es continua).</p>
+<p>En los métodos tradicionales de contrastes de hipótesis se conoce o se
+puede aproximar la distribución del estadístico del contraste bajo <span class="math inline">\(H_0\)</span>.
+Muchas de estas aproximaciones están basadas en resultados asintóticos
+y pueden no ser adecuadas para tamaños muestrales pequeños.
+En ese caso, o si no se dispone de estas herramientas,
+se puede recurrir a métodos de remuestreo para aproximar el <span class="math inline">\(p\)</span>-valor.
+Uno de los procedimientos más antiguos es el denominado
+<em>contraste de permutaciones</em> (Fisher, 1935; Pitman, 1937; Welch, 1937).
+Aunque el bootstrap paramétrico y el semiparamétrico son los
+procedimientos de remuestreo más empleados para aproximar
+la distribución del estadístico de contraste bajo la hipótesis nula.</p>
+<p>La idea es obtener remuestras de una aproximación de la distribución del
+estadístico bajo <span class="math inline">\(H_0\)</span>.
+En el bootstrap paramétrico y semiparamétrico se estima la distribución
+de los datos bajo la hipótesis nula, <span class="math inline">\(\hat{F}_0\)</span>, y se obtienen réplicas del
+estadístico a partir de remuestras de esta distribución (no sería adecuado
+emplear directamente la distribución empírica).
+En el caso de los contrastes de permutaciones las remuestras se obtienen
+directamente de los datos, remuestreando sin reemplazamiento los valores
+de la respuesta (y manteniendo fijas las covariables).</p>
+<p>Finalmente, se emplean las réplicas bootstrap
+del estadístico <span class="math inline">\(d_1^{\ast},\ldots, d_B^{\ast}\)</span> para aproximar el <span class="math inline">\(p\)</span>-valor.
+Por ejemplo, en el caso de un contraste unilateral en el que el estadístico del
+contraste tiende a tomar valores grandes si la hipótesis nula es falsa,
+se podría emplear como aproximación:
+<span class="math display">\[p_{boot} = \frac{1}{B}\#\left\{ d_i^{\ast} \geq \hat{d} \right\}.\]</span>
+Mientras que en el caso bilateral, asumiendo que la distribución del estadístico
+no es necesariamente simétrica, habría que emplear:
+<span class="math display">\[p_{boot} = \frac{2}{B} \min \left(\#\left\{ d_i^{\ast} \leq \hat{d} \right\},
+\#\left\{ d_i^{\ast} \geq \hat{d} \right\}\right).\]</span></p>
+<div id="contrastes-parametricos" class="section level3" number="11.3.1">
+<h3><span class="header-section-number">11.3.1</span> Contrastes bootstrap paramétricos</h3>
+<p>En los casos en los que la hipótesis nula especifica por completo la distribución
+(hipótesis nula simple) o solo desconocemos los valores de algunos parámetros
+(hipótesis nula paramétrica compuesta) podemos emplear
+bootstrap paramétrico para obtener las remuestras bootstrap de los datos
+(realmente en el primer caso se trataría de simulaciones Monte Carlo).
+Siempre hay que tener en cuenta que las réplicas bootstrap del estadístico se
+deberían obtener empleando el mismo procedimiento utilizado en la muestra
+(p.e. reestimando los parámetros si es el caso).</p>
+<!-- 
+Pendiente: 
+Referencia test ji-cuadrado 
+Mover parte a sección 7.4.3 y reescribir
+
+-->
+<div class="example">
+<p><span id="exm:ks-test-sim-exp" class="example"><strong>Ejemplo 11.3  (Contraste de Kolmogorov-Smirnov) </strong></span><br></p>
+<p>Se trata de un contraste de bondad de ajuste (similar a la prueba de
+Cramer-von Mises o a la de Anderson-Darling, implementadas en el paquete
+<code>goftest</code> de R, que son en principio mejores).
+A partir de <span class="math inline">\(X_1,\ldots ,X_n\)</span> m.a.s. de <span class="math inline">\(X\)</span> con función de distribución <span class="math inline">\(F\)</span>,
+se pretende contrastar:
+<span class="math display">\[\left \{ 
+\begin{array}{l}
+H_0 : F = F_0 \\ 
+H_1 : F \neq F_0 
+\end{array}
+\right. \]</span>
+siendo <span class="math inline">\(F_0\)</span> una función de distribución continua.
+El estadístico empleado para ello compara la función de distribución bajo
+<span class="math inline">\(H_0\)</span> (<span class="math inline">\(F_0\)</span>) con la empírica (<span class="math inline">\(F_n\)</span>):
+<span class="math display">\[\begin{aligned}
+    D_n=&amp;\sup_{x}|F_n(x)-F_0(x)| \\
+    =&amp;\max_{1 \leq i\leq n}\left \{
+    |F_n(X_{(i)})-F_0(X_{(i)})|,|F_n(X_{(i-1)})-F_0(X_{(i)})|\right \} \\
+    =&amp;\max_{1 \leq i\leq n}\left \{ \frac{i}{n}-F_0(X_{(i)}), \ F_0(X_{(i)})-\frac{i-1}{n}\right \} \\
+    =&amp;\max_{1 \leq i\leq n}\left \{ D_{n,i}^{+},\ D_{n,i}^{-}\right \},
+\end{aligned}\]</span>
+y su distribución bajo <span class="math inline">\(H_0\)</span> no depende <span class="math inline">\(F_0\)</span> (es de distribución libre),
+si <span class="math inline">\(H_0\)</span> es simple y <span class="math inline">\(F_0\)</span> es continua.
+Esta distribución está tabulada (para tamaños muestrales grandes se utiliza
+la aproximación asintótica) y se rechaza <span class="math inline">\(H_0\)</span> si el valor observado <span class="math inline">\(d\)</span>
+del estadístico es significativamente grande:
+<span class="math display">\[p = P \left( D_n \geq d \right) \leq \alpha.\]</span>
+Este método está implementado en la función <code>ks.test()</code> del paquete base de R:</p>
+<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="boot-test.html#cb612-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(x, y, ...)</span></code></pre></div>
+<p>donde <code>x</code> es un vector que contiene los datos, <code>y</code> es una función de distribución
+(o una cadena de texto que la especifica; también puede ser otro vector de datos
+para el contraste de dos muestras) y <code>...</code> representa los parámetros de la distribución.</p>
+<p>Si <span class="math inline">\(H_0\)</span> es compuesta, el procedimiento habitual es estimar los parámetros desconocidos
+por máxima verosimilitud y emplear <span class="math inline">\(\hat{F}_0\)</span> en lugar de <span class="math inline">\(F_0\)</span>.
+Sin embargo, al proceder de esta forma es de esperar que <span class="math inline">\(\hat{F}_0\)</span> se aproxime más
+que <span class="math inline">\(F_0\)</span> a la distribución empírica, por lo que los cuantiles de la distribución de
+<span class="math inline">\(D_n\)</span> pueden ser demasiado conservativos (los <span class="math inline">\(p\)</span>-valores tenderán a ser mayores de
+lo que deberían) y se tenderá a aceptar la hipótesis nula.</p>
+<p>Para evitar este problema, en el caso de contrastar normalidad se desarrolló el test
+de Lilliefors, implementado en la función <code>lillie.test()</code> del paquete <code>nortest</code>
+(también hay versiones en este paquete para los métodos de Cramer-von Mises y
+Anderson-Darling). Como ejemplo analizaremos el comportamiento de ambos métodos
+para contrastar normalidad considerando 1000 pruebas con muestras de tamaño 30 de
+una <span class="math inline">\(\mathcal{N}(0,1)\)</span> (estudiaremos el <em>tamaño de los contrastes</em>).</p>
+<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb613-1"><a href="boot-test.html#cb613-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Valores iniciales</span></span>
+<span id="cb613-2"><a href="boot-test.html#cb613-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nortest)</span>
+<span id="cb613-3"><a href="boot-test.html#cb613-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb613-4"><a href="boot-test.html#cb613-4" aria-hidden="true" tabindex="-1"></a>nx <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb613-5"><a href="boot-test.html#cb613-5" aria-hidden="true" tabindex="-1"></a>mx <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb613-6"><a href="boot-test.html#cb613-6" aria-hidden="true" tabindex="-1"></a>sx <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb613-7"><a href="boot-test.html#cb613-7" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb613-8"><a href="boot-test.html#cb613-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Realizar contrastes</span></span>
+<span id="cb613-9"><a href="boot-test.html#cb613-9" aria-hidden="true" tabindex="-1"></a>pvalor.ks <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nsim)</span>
+<span id="cb613-10"><a href="boot-test.html#cb613-10" aria-hidden="true" tabindex="-1"></a>pvalor.lil <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nsim)</span>
+<span id="cb613-11"><a href="boot-test.html#cb613-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(isim <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
+<span id="cb613-12"><a href="boot-test.html#cb613-12" aria-hidden="true" tabindex="-1"></a>  rx <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(nx, mx, sx)</span>
+<span id="cb613-13"><a href="boot-test.html#cb613-13" aria-hidden="true" tabindex="-1"></a>  pvalor.ks[isim] <span class="ot">&lt;-</span> <span class="fu">ks.test</span>(rx, <span class="st">&quot;pnorm&quot;</span>, <span class="fu">mean</span>(rx), <span class="fu">sd</span>(rx))<span class="sc">$</span>p.value</span>
+<span id="cb613-14"><a href="boot-test.html#cb613-14" aria-hidden="true" tabindex="-1"></a>  pvalor.lil[isim] <span class="ot">&lt;-</span> <span class="fu">lillie.test</span>(rx)<span class="sc">$</span>p.value</span>
+<span id="cb613-15"><a href="boot-test.html#cb613-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Bajo la hipótesis nula el <span class="math inline">\(p\)</span>-valor debería de seguir una distribución uniforme,
+por lo que podríamos generar el correspondiente histograma para estudiar el
+tamaño del contraste. Alternativamente podríamos representar su función de
+distribución empírica, que se correspondería con la proporción de rechazos
+para los distintos niveles de significación.</p>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="boot-test.html#cb614-1" aria-hidden="true" tabindex="-1"></a>old.par <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb614-2"><a href="boot-test.html#cb614-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Test de KS</span></span>
+<span id="cb614-3"><a href="boot-test.html#cb614-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Histograma</span></span>
+<span id="cb614-4"><a href="boot-test.html#cb614-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pvalor.ks, <span class="at">freq=</span><span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb614-5"><a href="boot-test.html#cb614-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">1</span>, <span class="at">lty=</span><span class="dv">2</span>)   <span class="co"># curve(dunif(x,0,1), add=TRUE)</span></span>
+<span id="cb614-6"><a href="boot-test.html#cb614-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Distribución empírica</span></span>
+<span id="cb614-7"><a href="boot-test.html#cb614-7" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">ecdf</span>(pvalor.ks)(x), <span class="at">type =</span> <span class="st">&quot;s&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">main =</span> <span class="st">&#39;&#39;</span>, </span>
+<span id="cb614-8"><a href="boot-test.html#cb614-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">&#39;Proporción de rechazos&#39;</span>, <span class="at">xlab =</span> <span class="st">&#39;Nivel de significación&#39;</span>)</span>
+<span id="cb614-9"><a href="boot-test.html#cb614-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="dv">0</span>, <span class="at">b=</span><span class="dv">1</span>, <span class="at">lty=</span><span class="dv">2</span>)   <span class="co"># curve(punif(x, 0, 1), add = TRUE)</span></span>
+<span id="cb614-10"><a href="boot-test.html#cb614-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Test de Lilliefors</span></span>
+<span id="cb614-11"><a href="boot-test.html#cb614-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Histograma</span></span>
+<span id="cb614-12"><a href="boot-test.html#cb614-12" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pvalor.lil, <span class="at">freq=</span><span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb614-13"><a href="boot-test.html#cb614-13" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">1</span>, <span class="at">lty=</span><span class="dv">2</span>)   <span class="co"># curve(dunif(x,0,1), add=TRUE)</span></span>
+<span id="cb614-14"><a href="boot-test.html#cb614-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Distribución empírica</span></span>
+<span id="cb614-15"><a href="boot-test.html#cb614-15" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">ecdf</span>(pvalor.lil)(x), <span class="at">type =</span> <span class="st">&quot;s&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">main =</span> <span class="st">&#39;&#39;</span>, </span>
+<span id="cb614-16"><a href="boot-test.html#cb614-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">&#39;Proporción de rechazos&#39;</span>,  <span class="at">xlab =</span> <span class="st">&#39;Nivel de significación&#39;</span>)</span>
+<span id="cb614-17"><a href="boot-test.html#cb614-17" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="dv">0</span>, <span class="at">b=</span><span class="dv">1</span>, <span class="at">lty=</span><span class="dv">2</span>)   <span class="co"># curve(punif(x, 0, 1), add = TRUE)</span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ks-lil-plot"></span>
+<img src="11-Bootstrap_aplic_files/figure-html/ks-lil-plot-1.png" alt="Distribución del p-valor (izquierda) y tamaño (proporción de rechazos bajo la hipótesis nula; derecha), aproximados por Monte Carlo, para el contraste de Kolmogorov-Smirnov (arriba) y el de Lilliefors (abajo)." width="90%" />
+<p class="caption">
+Figura 11.2: Distribución del p-valor (izquierda) y tamaño (proporción de rechazos bajo la hipótesis nula; derecha), aproximados por Monte Carlo, para el contraste de Kolmogorov-Smirnov (arriba) y el de Lilliefors (abajo).
+</p>
+</div>
+<div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb615-1"><a href="boot-test.html#cb615-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(old.par)</span></code></pre></div>
+<p>En el caso del contraste de Kolmogorov-Smirnov (KS) se observa que el <span class="math inline">\(p\)</span>-valor
+tiende a tomar valores grandes y por tanto se rechaza la hipótesis nula
+muchas menos veces de las que se debería.</p>
+<p>En el caso de otras distribuciones se puede emplear bootstrap paramétrico para
+aproximar la distribución del estadístico del contraste.
+Es importante recordar que el bootstrap debería imitar el procedimiento
+empleado sobre la muestra, por lo que en este caso también habría que estimar
+los parámetros en cada remuestra
+(en caso contrario aproximaríamos la distribución de <span class="math inline">\(D_n\)</span>).</p>
+<p>Por ejemplo, la siguiente función implementaría el contraste KS de
+bondad de ajuste de una variable exponencial aproximando el
+<span class="math inline">\(p\)</span>-valor mediante bootstrap paramétrico:</p>
+<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="boot-test.html#cb616-1" aria-hidden="true" tabindex="-1"></a>ks.exp.boot <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">nboot =</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">3</span>) {</span>
+<span id="cb616-2"><a href="boot-test.html#cb616-2" aria-hidden="true" tabindex="-1"></a>  DNAME <span class="ot">&lt;-</span> <span class="fu">deparse</span>(<span class="fu">substitute</span>(x))</span>
+<span id="cb616-3"><a href="boot-test.html#cb616-3" aria-hidden="true" tabindex="-1"></a>  METHOD <span class="ot">&lt;-</span> <span class="st">&quot;Kolmogorov-Smirnov Test of pexp by bootstrap&quot;</span> </span>
+<span id="cb616-4"><a href="boot-test.html#cb616-4" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb616-5"><a href="boot-test.html#cb616-5" aria-hidden="true" tabindex="-1"></a>  RATE <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">mean</span>(x)</span>
+<span id="cb616-6"><a href="boot-test.html#cb616-6" aria-hidden="true" tabindex="-1"></a>  ks.exp.stat <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">rate =</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">mean</span>(x)) { <span class="co"># se estima el parámetro</span></span>
+<span id="cb616-7"><a href="boot-test.html#cb616-7" aria-hidden="true" tabindex="-1"></a>    DMinus <span class="ot">&lt;-</span> <span class="fu">pexp</span>(<span class="fu">sort</span>(x), <span class="at">rate=</span>rate) <span class="sc">-</span> (<span class="dv">0</span><span class="sc">:</span>(n <span class="sc">-</span> <span class="dv">1</span>))<span class="sc">/</span>n</span>
+<span id="cb616-8"><a href="boot-test.html#cb616-8" aria-hidden="true" tabindex="-1"></a>    DPlus <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>n <span class="sc">-</span> DMinus</span>
+<span id="cb616-9"><a href="boot-test.html#cb616-9" aria-hidden="true" tabindex="-1"></a>    Dn <span class="ot">=</span> <span class="fu">max</span>(<span class="fu">c</span>(DMinus, DPlus))</span>
+<span id="cb616-10"><a href="boot-test.html#cb616-10" aria-hidden="true" tabindex="-1"></a>  }  </span>
+<span id="cb616-11"><a href="boot-test.html#cb616-11" aria-hidden="true" tabindex="-1"></a>  STATISTIC <span class="ot">&lt;-</span> <span class="fu">ks.exp.stat</span>(x, <span class="at">rate =</span> RATE) </span>
+<span id="cb616-12"><a href="boot-test.html#cb616-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(STATISTIC) <span class="ot">&lt;-</span> <span class="st">&quot;Dn&quot;</span></span>
+<span id="cb616-13"><a href="boot-test.html#cb616-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># PVAL &lt;- 0</span></span>
+<span id="cb616-14"><a href="boot-test.html#cb616-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># for(i in 1:nboot) {</span></span>
+<span id="cb616-15"><a href="boot-test.html#cb616-15" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   rx &lt;- rexp(n, rate = RATE)</span></span>
+<span id="cb616-16"><a href="boot-test.html#cb616-16" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   if (STATISTIC &lt;= ks.exp.stat(rx)) PVAL &lt;- PVAL + 1</span></span>
+<span id="cb616-17"><a href="boot-test.html#cb616-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># }</span></span>
+<span id="cb616-18"><a href="boot-test.html#cb616-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># PVAL &lt;- PVAL/nboot</span></span>
+<span id="cb616-19"><a href="boot-test.html#cb616-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># PVAL &lt;- (PVAL + 1)/(nboot + 1) # Alternativa para aproximar el p-valor</span></span>
+<span id="cb616-20"><a href="boot-test.html#cb616-20" aria-hidden="true" tabindex="-1"></a>  rx <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rexp</span>(n<span class="sc">*</span>nboot, <span class="at">rate =</span> RATE), <span class="at">ncol=</span>n)</span>
+<span id="cb616-21"><a href="boot-test.html#cb616-21" aria-hidden="true" tabindex="-1"></a>  PVAL <span class="ot">&lt;-</span> <span class="fu">mean</span>(STATISTIC <span class="sc">&lt;=</span> <span class="fu">apply</span>(rx, <span class="dv">1</span>, ks.exp.stat))</span>
+<span id="cb616-22"><a href="boot-test.html#cb616-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">structure</span>(<span class="fu">list</span>(<span class="at">statistic =</span> STATISTIC, <span class="at">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, </span>
+<span id="cb616-23"><a href="boot-test.html#cb616-23" aria-hidden="true" tabindex="-1"></a>                   <span class="at">p.value =</span> PVAL, <span class="at">method =</span> METHOD, <span class="at">data.name =</span> DNAME), </span>
+<span id="cb616-24"><a href="boot-test.html#cb616-24" aria-hidden="true" tabindex="-1"></a>                   <span class="at">class =</span> <span class="st">&quot;htest&quot;</span>))</span>
+<span id="cb616-25"><a href="boot-test.html#cb616-25" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Como ejemplo estudiaremos el caso de contrastar una distribución exponencial
+considerando 500 pruebas con muestras de tamaño 30 de una <span class="math inline">\(Exp(1)\)</span>
+y 200 réplicas bootstrap (para disminuir el tiempo de computación).</p>
+<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="boot-test.html#cb617-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Valores iniciales</span></span>
+<span id="cb617-2"><a href="boot-test.html#cb617-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb617-3"><a href="boot-test.html#cb617-3" aria-hidden="true" tabindex="-1"></a>nx <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb617-4"><a href="boot-test.html#cb617-4" aria-hidden="true" tabindex="-1"></a>ratex <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb617-5"><a href="boot-test.html#cb617-5" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb617-6"><a href="boot-test.html#cb617-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Realizar contrastes</span></span>
+<span id="cb617-7"><a href="boot-test.html#cb617-7" aria-hidden="true" tabindex="-1"></a>pvalor.ks <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nsim)</span>
+<span id="cb617-8"><a href="boot-test.html#cb617-8" aria-hidden="true" tabindex="-1"></a>pvalor.ks.boot <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nsim)</span>
+<span id="cb617-9"><a href="boot-test.html#cb617-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(isim <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
+<span id="cb617-10"><a href="boot-test.html#cb617-10" aria-hidden="true" tabindex="-1"></a>  rx <span class="ot">&lt;-</span> <span class="fu">rexp</span>(nx, ratex)</span>
+<span id="cb617-11"><a href="boot-test.html#cb617-11" aria-hidden="true" tabindex="-1"></a>  pvalor.ks[isim] <span class="ot">&lt;-</span> <span class="fu">ks.test</span>(rx, <span class="st">&quot;pexp&quot;</span>, <span class="dv">1</span><span class="sc">/</span><span class="fu">mean</span>(rx))<span class="sc">$</span>p.value</span>
+<span id="cb617-12"><a href="boot-test.html#cb617-12" aria-hidden="true" tabindex="-1"></a>  pvalor.ks.boot[isim] <span class="ot">&lt;-</span> <span class="fu">ks.exp.boot</span>(rx, <span class="at">nboot =</span> <span class="dv">200</span>)<span class="sc">$</span>p.value</span>
+<span id="cb617-13"><a href="boot-test.html#cb617-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb617-14"><a href="boot-test.html#cb617-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Generar gráficos</span></span>
+<span id="cb617-15"><a href="boot-test.html#cb617-15" aria-hidden="true" tabindex="-1"></a>old.par <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb617-16"><a href="boot-test.html#cb617-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Test de KS</span></span>
+<span id="cb617-17"><a href="boot-test.html#cb617-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Histograma</span></span>
+<span id="cb617-18"><a href="boot-test.html#cb617-18" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pvalor.ks, <span class="at">freq=</span><span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb617-19"><a href="boot-test.html#cb617-19" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">1</span>, <span class="at">lty=</span><span class="dv">2</span>)   <span class="co"># curve(dunif(x,0,1), add=TRUE)</span></span>
+<span id="cb617-20"><a href="boot-test.html#cb617-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Distribución empírica</span></span>
+<span id="cb617-21"><a href="boot-test.html#cb617-21" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">ecdf</span>(pvalor.ks)(x), <span class="at">type =</span> <span class="st">&quot;s&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">main =</span> <span class="st">&#39;&#39;</span>, </span>
+<span id="cb617-22"><a href="boot-test.html#cb617-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">&#39;Proporción de rechazos&#39;</span>, <span class="at">xlab =</span> <span class="st">&#39;Nivel de significación&#39;</span>)</span>
+<span id="cb617-23"><a href="boot-test.html#cb617-23" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="dv">0</span>, <span class="at">b=</span><span class="dv">1</span>, <span class="at">lty=</span><span class="dv">2</span>)   <span class="co"># curve(punif(x, 0, 1), add = TRUE)</span></span>
+<span id="cb617-24"><a href="boot-test.html#cb617-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Contraste bootstrap paramétrico</span></span>
+<span id="cb617-25"><a href="boot-test.html#cb617-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Histograma</span></span>
+<span id="cb617-26"><a href="boot-test.html#cb617-26" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pvalor.ks.boot, <span class="at">freq=</span><span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb617-27"><a href="boot-test.html#cb617-27" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">1</span>, <span class="at">lty=</span><span class="dv">2</span>)   <span class="co"># curve(dunif(x,0,1), add=TRUE)</span></span>
+<span id="cb617-28"><a href="boot-test.html#cb617-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Distribución empírica</span></span>
+<span id="cb617-29"><a href="boot-test.html#cb617-29" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">ecdf</span>(pvalor.ks.boot)(x), <span class="at">type =</span> <span class="st">&quot;s&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">main =</span> <span class="st">&#39;&#39;</span>, </span>
+<span id="cb617-30"><a href="boot-test.html#cb617-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">&#39;Proporción de rechazos&#39;</span>,  <span class="at">xlab =</span> <span class="st">&#39;Nivel de significación&#39;</span>)</span>
+<span id="cb617-31"><a href="boot-test.html#cb617-31" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="dv">0</span>, <span class="at">b=</span><span class="dv">1</span>, <span class="at">lty=</span><span class="dv">2</span>)   <span class="co"># curve(punif(x, 0, 1), add = TRUE)</span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ks-boot-plot"></span>
+<img src="11-Bootstrap_aplic_files/figure-html/ks-boot-plot-1.png" alt="Distribución del p-valor (izquierda) y tamaño (proporción de rechazos bajo la hipótesis nula; derecha), aproximados por  Monte Carlo, para el contraste de Kolmogorov-Smirnov (arriba) y el correspondiente contraste boostrap paramétrico (abajo)." width="90%" />
+<p class="caption">
+Figura 11.3: Distribución del p-valor (izquierda) y tamaño (proporción de rechazos bajo la hipótesis nula; derecha), aproximados por Monte Carlo, para el contraste de Kolmogorov-Smirnov (arriba) y el correspondiente contraste boostrap paramétrico (abajo).
+</p>
+</div>
+<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="boot-test.html#cb618-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(old.par)</span></code></pre></div>
+<p>El estadístico de Kolmogorov-Smirnov <code>Dn = max(c(DMinus, DPlus))</code> tiene ventajas desde el
+punto de vista teórico, pero puede no ser muy potente para detectar diferencias entre la
+distribución bajo la hipótesis nula y la distribución de los datos.
+La ventaja de la aproximación por simulación es que no estamos atados a resultados teóricos
+y podemos emplear el estadístico que se considere oportuno
+(la principal desventaja es el tiempo de computación).
+Por ejemplo, podríamos pensar en utilizar como estadístico la suma de los errores en
+valor absoluto del correspondiente gráfico PP, y solo habría que cambiar el estadístico
+<code>Dn</code> en la función <code>ks.exp.sim</code> por <code>Dn = sum(abs( (1:n - 0.5)/n -  pexp(sort(x), rate=rate) ))</code>.</p>
+</div>
+</div>
+<div id="contrastes-de-permutaciones" class="section level3" number="11.3.2">
+<h3><span class="header-section-number">11.3.2</span> Contrastes de permutaciones</h3>
+<p>Supongamos que a partir de una muestra
+<span class="math inline">\(\left\{ \left( \mathbf{X}_i, Y_i\right): i=1,\ldots, n \right\}\)</span>
+estamos interesados en contrastar la hipótesis nula de independencia
+entre <span class="math inline">\(\mathbf{X}\)</span> e <span class="math inline">\(Y\)</span>:
+<span class="math display">\[H_0: F_{Y \mid \mathbf{X}} = F_Y\]</span>
+o equivalentemente que <span class="math inline">\(\mathbf{X}\)</span> no influye en la distribución de <span class="math inline">\(Y\)</span>.</p>
+<p>En este caso los valores de la respuesta serían intercambiables bajo la hipótesis nula,
+por lo que podríamos obtener las remuestras manteniendo fijos los valores<a href="#fn34" class="footnote-ref" id="fnref34"><sup>34</sup></a>
+<span class="math inline">\(\mathbf{X}_i\)</span> y permutando los <span class="math inline">\(Y_i\)</span>. Es decir:</p>
+<ol style="list-style-type: decimal">
+<li><p>Generar <span class="math inline">\(Y^{\ast}_i\)</span>, con <span class="math inline">\(i=1,\ldots, n\)</span>, mediante muestreo
+sin reemplazamiento de <span class="math inline">\(\left\{ Y_i: i=1,\ldots, n \right\}\)</span>.</p></li>
+<li><p>Considerar la remuestra bootstrap
+<span class="math inline">\(\left\{ \left( \mathbf{X}_i, Y^{\ast}_i\right): i=1,\ldots, n \right\}\)</span>.</p></li>
+</ol>
+<p>Se pueden realizar contrastes de este tipo con el paquete <code>boot</code> estableciendo
+el parámetro <code>sim = "permutation"</code> al llamar a la función <code>boot()</code> (el argumento
+<code>i</code> de la función <code>statistic</code> contendrá permutaciones del vector de índices).
+Puede ser también de interés el paquete <a href="https://cran.r-project.org/web/packages/coin/index.html"><code>coin</code></a>,
+que implementa muchos contrastes de este tipo.</p>
+<div class="example">
+<p><span id="exm:perm-test-cor" class="example"><strong>Ejemplo 11.4  (Inferencia sobre el coeficiente de correlación lineal) </strong></span><br></p>
+<p>Continuando con el ejemplo de las secciones <a href="intro-paquetes.html#boot-unif-multi">9.3.3</a> y <a href="boot-ic.html#icboot-trans">11.2.6</a> (y de los Ejercicios <a href="boot-unif.html#exr:unif-multi">9.1</a>, <a href="sesgo-prec.html#exr:unif-multi-sesgo-var">11.1</a> y <a href="boot-ic.html#exr:boot-unif-multi-ic">11.2</a>), estamos interesados en hacer inferencia sobre el coeficiente de correlación lineal <span class="math inline">\(\rho\)</span> empleando el coeficiente de correlación muestral <span class="math inline">\(r\)</span> como estimador.
+En este caso sin embargo, consideraremos como ejemplo el conjunto de datos <code>dogs</code>
+del paquete <code>boot</code>, que contiene observaciones sobre el consumo de
+oxígeno cardíaco (<code>mvo</code>) y la presión ventricular izquierda (<code>lvp</code>)
+de 7 perros domésticos.</p>
+<div class="sourceCode" id="cb619"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb619-1"><a href="boot-test.html#cb619-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb619-2"><a href="boot-test.html#cb619-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&#39;dogs&#39;</span>, <span class="at">package =</span> <span class="st">&quot;boot&quot;</span>)</span>
+<span id="cb619-3"><a href="boot-test.html#cb619-3" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(dogs)</span></span>
+<span id="cb619-4"><a href="boot-test.html#cb619-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(dogs<span class="sc">$</span>mvo, dogs<span class="sc">$</span>lvp)</span></code></pre></div>
+<pre><code>## [1] 0.8536946</code></pre>
+<div class="sourceCode" id="cb621"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb621-1"><a href="boot-test.html#cb621-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with(dogs, cor(mvo, lvp))</span></span></code></pre></div>
+<p>Como ya se comentó, para realizar inferencias sobre <span class="math inline">\(\rho\)</span> podemos emplear la función <code>cor.test()</code>:</p>
+<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="boot-test.html#cb622-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(dogs<span class="sc">$</span>mvo, dogs<span class="sc">$</span>lvp)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  dogs$mvo and dogs$lvp
+## t = 3.6655, df = 5, p-value = 0.01451
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.2818014 0.9780088
+## sample estimates:
+##       cor 
+## 0.8536946</code></pre>
+<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="boot-test.html#cb624-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with(dogs, cor.test(mvo, lvp))</span></span></code></pre></div>
+<p>Esta función realiza el contraste <span class="math inline">\(H_0: \rho = 0\)</span> empleando el estadístico:
+<span class="math display">\[\frac{r\sqrt{n - 2}}{\sqrt{1 - r^2}} \underset{aprox}{\sim } t_{n-2},\]</span>
+<!-- \mathcal{t}_{n-2} error en LaTeX-->
+bajo la hipótesis nula de que la verdadera correlación es cero.
+Alternativamente se pueden realizar contrastes unilaterales estableciendo
+el parámetro <code>alternative</code> igual a <code>"less"</code> o <code>"greater"</code>.
+Por ejemplo, para contrastar <span class="math inline">\(H_0: \rho \leq 0\)</span> podríamos emplear:</p>
+<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb625-1"><a href="boot-test.html#cb625-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(dogs<span class="sc">$</span>mvo, dogs<span class="sc">$</span>lvp, <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  dogs$mvo and dogs$lvp
+## t = 3.6655, df = 5, p-value = 0.007255
+## alternative hypothesis: true correlation is greater than 0
+## 95 percent confidence interval:
+##  0.4195889 1.0000000
+## sample estimates:
+##       cor 
+## 0.8536946</code></pre>
+<p>Para realizar el contraste con la función <code>boot</code> podríamos
+emplear el siguiente código:</p>
+<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb627-1"><a href="boot-test.html#cb627-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb627-2"><a href="boot-test.html#cb627-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb627-3"><a href="boot-test.html#cb627-3" aria-hidden="true" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i) <span class="fu">cor</span>(data<span class="sc">$</span>mvo, data<span class="sc">$</span>lvp[i])</span>
+<span id="cb627-4"><a href="boot-test.html#cb627-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb627-5"><a href="boot-test.html#cb627-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb627-6"><a href="boot-test.html#cb627-6" aria-hidden="true" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(dogs, statistic, <span class="at">R =</span> <span class="dv">1000</span>, <span class="at">sim =</span> <span class="st">&quot;permutation&quot;</span>)</span>
+<span id="cb627-7"><a href="boot-test.html#cb627-7" aria-hidden="true" tabindex="-1"></a><span class="co"># res.boot</span></span></code></pre></div>
+<p>Posteriormente emplearíamos las réplicas (almacenadas en <code>res.boot$t</code>) y el valor
+observado del estadístico del contraste (almacenado en <code>res.boot$t0</code>)
+para aproximar el <span class="math inline">\(p\)</span>-valor:</p>
+<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="boot-test.html#cb628-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(res.boot<span class="sc">$</span>t, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb628-2"><a href="boot-test.html#cb628-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> res.boot<span class="sc">$</span>t0, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:perm-test-cor"></span>
+<img src="11-Bootstrap_aplic_files/figure-html/perm-test-cor-1.png" alt="Distribución del estadístico del contraste bajo la hipótesis nula aproximada mediante permutación de las observaciones." width="70%" />
+<p class="caption">
+Figura 11.4: Distribución del estadístico del contraste bajo la hipótesis nula aproximada mediante permutación de las observaciones.
+</p>
+</div>
+<p>Por ejemplo, para el contraste unilateral <span class="math inline">\(H_0: \rho \leq 0\)</span>
+(<code>alternative = "greater"</code>), obtendríamos:</p>
+<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="boot-test.html#cb629-1" aria-hidden="true" tabindex="-1"></a>pval.greater <span class="ot">&lt;-</span> <span class="fu">mean</span>(res.boot<span class="sc">$</span>t <span class="sc">&gt;=</span> res.boot<span class="sc">$</span>t0)</span>
+<span id="cb629-2"><a href="boot-test.html#cb629-2" aria-hidden="true" tabindex="-1"></a>pval.greater</span></code></pre></div>
+<pre><code>## [1] 0.009</code></pre>
+<p>Mientras que para realizar el contraste bilateral <span class="math inline">\(H_0: \rho = 0\)</span>
+(<code>alternative = "two.sided"</code>), sin asumir que
+la distribución del estadístico de contraste es simétrica:</p>
+<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="boot-test.html#cb631-1" aria-hidden="true" tabindex="-1"></a>pval.less <span class="ot">&lt;-</span> <span class="fu">mean</span>(res.boot<span class="sc">$</span>t <span class="sc">&lt;=</span> res.boot<span class="sc">$</span>t0)</span>
+<span id="cb631-2"><a href="boot-test.html#cb631-2" aria-hidden="true" tabindex="-1"></a>pval <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">min</span>(pval.less, pval.greater)</span>
+<span id="cb631-3"><a href="boot-test.html#cb631-3" aria-hidden="true" tabindex="-1"></a>pval</span></code></pre></div>
+<pre><code>## [1] 0.018</code></pre>
+</div>
+</div>
+<div id="contrastes-semiparametricos" class="section level3" number="11.3.3">
+<h3><span class="header-section-number">11.3.3</span> Contrastes bootstrap semiparamétricos</h3>
+<p>Este tipo de aproximación se emplearía en el caso de que la hipótesis nula
+(o la alternativa) especifique un modelo semiparamétrico,
+con una componente paramétrica y otra no paramétrica.
+Típicamente se incluye el error en la componente no paramétrica, y podríamos emplear
+el bootstrap residual (también denominado semiparamétrico o basado en modelos)
+descrito en la Sección <a href="boot-reg.html#boot-residual">10.4.2</a>.</p>
+<p>En esta sección nos centraremos en inferencia sobre modelos de regresión lineales (aunque el procedimiento sería análogo en el caso de modelos más generales), empleando como ejemplo el conjunto de datos <code>Prestige</code> del paquete <code>carData</code>, considerando como variable respuesta <code>prestige</code> (puntuación de ocupaciones obtenidas a partir de una encuesta) y como variables explicativas: <code>income</code> (media de ingresos en la ocupación) y <code>education</code> (media de los años de educación).</p>
+<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="boot-test.html#cb633-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Prestige, <span class="at">package =</span> <span class="st">&quot;carData&quot;</span>)</span>
+<span id="cb633-2"><a href="boot-test.html#cb633-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ?Prestige</span></span></code></pre></div>
+<p>En la mayoría de los casos nos interesa contrastar un <strong>modelo reducido</strong>
+frente a un <strong>modelo completo</strong> (que generaliza el modelo reducido).
+Por ejemplo, en el caso de modelos lineales (estimados por mínimos cuadrados)
+se dispone del test <span class="math inline">\(F\)</span> para realizar los contrastes de este tipo,
+que emplea el estadístico:
+<span class="math display">\[F=\frac{n - q}{q - q_0}\frac{RSS_0 - RSS}{RSS},\]</span>
+<!-- $$F=\frac{\frac{RSS_0 - RSS}{q - q_0}}{\frac{RSS}{n - q}},$$ -->
+siendo <span class="math inline">\(n\)</span> el número de observaciones, <span class="math inline">\(RSS\)</span> y <span class="math inline">\(q\)</span> la suma de cuadrados residual y
+el número de parámetros distintos del modelo completo,
+y <span class="math inline">\(RSS_0\)</span> y <span class="math inline">\(q_0\)</span> los correspondientes al modelo reducido.
+Este estadístico sigue una distribución <span class="math inline">\(\mathcal{F}_{q - q_0, n - q}\)</span>
+bajo <span class="math inline">\(H_0\)</span> y las hipótesis habituales del modelo lineal
+(<span class="math inline">\(\varepsilon_i\)</span> i.i.d. <span class="math inline">\(\mathcal{N}(0, \sigma^2)\)</span>).</p>
+<p>El contraste de regresión sería un caso particular. Por ejemplo,
+para contrastar si <code>income</code> y <code>education</code> influyen linealmente en <code>prestige</code>
+podemos emplear el siguiente código:</p>
+<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="boot-test.html#cb634-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> income <span class="sc">+</span> education, <span class="at">data =</span> Prestige)</span>
+<span id="cb634-2"><a href="boot-test.html#cb634-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = prestige ~ income + education, data = Prestige)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -19.4040  -5.3308   0.0154   4.9803  17.6889 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -6.8477787  3.2189771  -2.127   0.0359 *  
+## income       0.0013612  0.0002242   6.071 2.36e-08 ***
+## education    4.1374444  0.3489120  11.858  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 7.81 on 99 degrees of freedom
+## Multiple R-squared:  0.798,  Adjusted R-squared:  0.7939 
+## F-statistic: 195.6 on 2 and 99 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>También podemos obtener el valor observado del estadístico <span class="math inline">\(F\)</span>
+a partir de los resultados del método <code>summary.lm()</code>:</p>
+<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="boot-test.html#cb636-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">summary</span>(modelo)</span>
+<span id="cb636-2"><a href="boot-test.html#cb636-2" aria-hidden="true" tabindex="-1"></a><span class="co"># names(res)</span></span>
+<span id="cb636-3"><a href="boot-test.html#cb636-3" aria-hidden="true" tabindex="-1"></a>stat <span class="ot">&lt;-</span> res<span class="sc">$</span>fstatistic[<span class="dv">1</span>]</span>
+<span id="cb636-4"><a href="boot-test.html#cb636-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> res<span class="sc">$</span>fstatistic[<span class="dv">2</span>]</span>
+<span id="cb636-5"><a href="boot-test.html#cb636-5" aria-hidden="true" tabindex="-1"></a>dfr <span class="ot">&lt;-</span> res<span class="sc">$</span>fstatistic[<span class="dv">3</span>]</span>
+<span id="cb636-6"><a href="boot-test.html#cb636-6" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>fstatistic</span></code></pre></div>
+<pre><code>##    value    numdf    dendf 
+## 195.5505   2.0000  99.0000</code></pre>
+<p>o haciendo los cálculos a mano:</p>
+<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="boot-test.html#cb638-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(Prestige)</span>
+<span id="cb638-2"><a href="boot-test.html#cb638-2" aria-hidden="true" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb638-3"><a href="boot-test.html#cb638-3" aria-hidden="true" tabindex="-1"></a>q0 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb638-4"><a href="boot-test.html#cb638-4" aria-hidden="true" tabindex="-1"></a>rss0 <span class="ot">&lt;-</span> <span class="fu">with</span>(Prestige, <span class="fu">sum</span>((prestige <span class="sc">-</span> <span class="fu">mean</span>(prestige))<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb638-5"><a href="boot-test.html#cb638-5" aria-hidden="true" tabindex="-1"></a>rss <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(modelo)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb638-6"><a href="boot-test.html#cb638-6" aria-hidden="true" tabindex="-1"></a>inc.mse <span class="ot">&lt;-</span> (rss0 <span class="sc">-</span> rss)<span class="sc">/</span>(q <span class="sc">-</span> q0)  <span class="co"># Incremento en varibilidad explicada</span></span>
+<span id="cb638-7"><a href="boot-test.html#cb638-7" aria-hidden="true" tabindex="-1"></a>msr <span class="ot">&lt;-</span>  rss<span class="sc">/</span>(n <span class="sc">-</span> q)               <span class="co"># Variabilidad residual</span></span>
+<span id="cb638-8"><a href="boot-test.html#cb638-8" aria-hidden="true" tabindex="-1"></a>inc.mse<span class="sc">/</span>msr</span></code></pre></div>
+<pre><code>## [1] 195.5505</code></pre>
+<p>Desde el punto de vista de comparación de modelos, el modelo
+reducido bajo la hipótesis nula es:</p>
+<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb640-1"><a href="boot-test.html#cb640-1" aria-hidden="true" tabindex="-1"></a>modelo0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> Prestige)</span></code></pre></div>
+<p>y podemos realizar el contraste mediante la función <code>anova()</code></p>
+<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="boot-test.html#cb641-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(modelo0, modelo)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: prestige ~ 1
+## Model 2: prestige ~ income + education
+##   Res.Df     RSS Df Sum of Sq      F    Pr(&gt;F)    
+## 1    101 29895.4                                  
+## 2     99  6038.9  2     23857 195.55 &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Para aproximar la distribución de este estadístico bajo <span class="math inline">\(H_0\)</span> podríamos adaptar
+el bootstrap semiparamétrico<a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a> descrito en la Sección <a href="boot-reg.html#boot-residual">10.4.2</a>:</p>
+<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="boot-test.html#cb643-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb643-2"><a href="boot-test.html#cb643-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb643-3"><a href="boot-test.html#cb643-3" aria-hidden="true" tabindex="-1"></a>pres.dat <span class="ot">&lt;-</span> Prestige</span>
+<span id="cb643-4"><a href="boot-test.html#cb643-4" aria-hidden="true" tabindex="-1"></a><span class="co"># pres.dat$fit0 &lt;- mean(Prestige$prestige)</span></span>
+<span id="cb643-5"><a href="boot-test.html#cb643-5" aria-hidden="true" tabindex="-1"></a><span class="co"># pres.dat$fit0 &lt;- predict(modelo0)</span></span>
+<span id="cb643-6"><a href="boot-test.html#cb643-6" aria-hidden="true" tabindex="-1"></a>pres.dat<span class="sc">$</span>res0 <span class="ot">&lt;-</span> <span class="fu">with</span>(Prestige, prestige <span class="sc">-</span> <span class="fu">mean</span>(prestige))</span>
+<span id="cb643-7"><a href="boot-test.html#cb643-7" aria-hidden="true" tabindex="-1"></a><span class="co"># pres.dat$res0 &lt;- residuals(modelo0)</span></span>
+<span id="cb643-8"><a href="boot-test.html#cb643-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb643-9"><a href="boot-test.html#cb643-9" aria-hidden="true" tabindex="-1"></a>mod.stat <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i) {</span>
+<span id="cb643-10"><a href="boot-test.html#cb643-10" aria-hidden="true" tabindex="-1"></a>    data<span class="sc">$</span>prestige <span class="ot">&lt;-</span> <span class="fu">mean</span>(data<span class="sc">$</span>prestige) <span class="sc">+</span> data<span class="sc">$</span>res0[i]</span>
+<span id="cb643-11"><a href="boot-test.html#cb643-11" aria-hidden="true" tabindex="-1"></a>    fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> income <span class="sc">+</span> education, <span class="at">data =</span> data)</span>
+<span id="cb643-12"><a href="boot-test.html#cb643-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summary</span>(fit)<span class="sc">$</span>fstatistic[<span class="dv">1</span>]</span>
+<span id="cb643-13"><a href="boot-test.html#cb643-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb643-14"><a href="boot-test.html#cb643-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb643-15"><a href="boot-test.html#cb643-15" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb643-16"><a href="boot-test.html#cb643-16" aria-hidden="true" tabindex="-1"></a>boot.mod <span class="ot">&lt;-</span> <span class="fu">boot</span>(pres.dat, mod.stat, <span class="at">R =</span> <span class="dv">1000</span>)</span>
+<span id="cb643-17"><a href="boot-test.html#cb643-17" aria-hidden="true" tabindex="-1"></a>boot.mod</span></code></pre></div>
+<pre><code>## 
+## ORDINARY NONPARAMETRIC BOOTSTRAP
+## 
+## 
+## Call:
+## boot(data = pres.dat, statistic = mod.stat, R = 1000)
+## 
+## 
+## Bootstrap Statistics :
+##     original    bias    std. error
+## t1* 195.5505 -194.4866    1.096335</code></pre>
+<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="boot-test.html#cb645-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(boot.mod<span class="sc">$</span>t, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb645-2"><a href="boot-test.html#cb645-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">pf</span>(x, df, dfr, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:semipar-test-plot"></span>
+<img src="11-Bootstrap_aplic_files/figure-html/semipar-test-plot-1.png" alt="Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico." width="70%" />
+<p class="caption">
+Figura 11.5: Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico.
+</p>
+</div>
+<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="boot-test.html#cb646-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pval &lt;- mean(boot.mod$t &gt;= boot.mod$t0)</span></span>
+<span id="cb646-2"><a href="boot-test.html#cb646-2" aria-hidden="true" tabindex="-1"></a>pval <span class="ot">&lt;-</span> <span class="fu">mean</span>(boot.mod<span class="sc">$</span>t <span class="sc">&gt;=</span> stat)</span>
+<span id="cb646-3"><a href="boot-test.html#cb646-3" aria-hidden="true" tabindex="-1"></a>pval</span></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<p>Procediendo de esta forma sin embargo estaríamos sobreestimando la variabilidad
+del error cuando la hipótesis nula es falsa (la variabilidad no explicada por la
+tendencia es asumida por el error), lo que disminuirá la potencia del contraste.
+Para mejorar la potencia, siguiendo la idea propuesta por González-Manteiga
+y Cao (1993), se pueden remuestrear los residuos del modelo completo.
+De esta forma reproduciríamos la variabilidad del error de forma consistente
+tanto bajo la hipótesis alternativa como bajo la nula.</p>
+<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb648-1"><a href="boot-test.html#cb648-1" aria-hidden="true" tabindex="-1"></a>old.par <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb648-2"><a href="boot-test.html#cb648-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Variabilidad residual con el modelo reducido</span></span>
+<span id="cb648-3"><a href="boot-test.html#cb648-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">residuals</span>(modelo0), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">50</span>, <span class="dv">50</span>), <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb648-4"><a href="boot-test.html#cb648-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Variabilidad residual con el modelo completo</span></span>
+<span id="cb648-5"><a href="boot-test.html#cb648-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">residuals</span>(modelo), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">50</span>, <span class="dv">50</span>), <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:semipar-var-plot"></span>
+<img src="11-Bootstrap_aplic_files/figure-html/semipar-var-plot-1.png" alt="Variabilidad residual con el modelo reducido (izquierda) y con el modelo completo (derecha)." width="90%" />
+<p class="caption">
+Figura 11.6: Variabilidad residual con el modelo reducido (izquierda) y con el modelo completo (derecha).
+</p>
+</div>
+<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb649-1"><a href="boot-test.html#cb649-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(old.par)</span></code></pre></div>
+<p>Adicionalmente, como se mostró en la Sección <a href="boot-reg.html#boot-residual">10.4.2</a>, se puede emplear
+la modificación propuesta en Davison y Hinkley (1997, Alg. 6.3, p. 271)
+y remuestrear los residuos reescalados y centrados.</p>
+<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb650-1"><a href="boot-test.html#cb650-1" aria-hidden="true" tabindex="-1"></a>pres.dat <span class="ot">&lt;-</span> Prestige</span>
+<span id="cb650-2"><a href="boot-test.html#cb650-2" aria-hidden="true" tabindex="-1"></a><span class="co"># pres.dat$fit0 &lt;- mean(Prestige$prestige)</span></span>
+<span id="cb650-3"><a href="boot-test.html#cb650-3" aria-hidden="true" tabindex="-1"></a><span class="co"># pres.dat$fit0 &lt;- predict(modelo0)</span></span>
+<span id="cb650-4"><a href="boot-test.html#cb650-4" aria-hidden="true" tabindex="-1"></a><span class="co"># pres.dat$res &lt;- residuals(modelo)</span></span>
+<span id="cb650-5"><a href="boot-test.html#cb650-5" aria-hidden="true" tabindex="-1"></a>pres.dat<span class="sc">$</span>sres <span class="ot">&lt;-</span> <span class="fu">residuals</span>(modelo)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">hatvalues</span>(modelo))</span>
+<span id="cb650-6"><a href="boot-test.html#cb650-6" aria-hidden="true" tabindex="-1"></a>pres.dat<span class="sc">$</span>sres <span class="ot">&lt;-</span> pres.dat<span class="sc">$</span>sres <span class="sc">-</span> <span class="fu">mean</span>(pres.dat<span class="sc">$</span>sres)</span>
+<span id="cb650-7"><a href="boot-test.html#cb650-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb650-8"><a href="boot-test.html#cb650-8" aria-hidden="true" tabindex="-1"></a>mod.stat <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i) {</span>
+<span id="cb650-9"><a href="boot-test.html#cb650-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># data$prestige &lt;- mean(data$prestige) + data$res[i]</span></span>
+<span id="cb650-10"><a href="boot-test.html#cb650-10" aria-hidden="true" tabindex="-1"></a>    data<span class="sc">$</span>prestige <span class="ot">&lt;-</span> <span class="fu">mean</span>(data<span class="sc">$</span>prestige) <span class="sc">+</span> data<span class="sc">$</span>sres[i]</span>
+<span id="cb650-11"><a href="boot-test.html#cb650-11" aria-hidden="true" tabindex="-1"></a>    fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> income <span class="sc">+</span> education, <span class="at">data =</span> data)</span>
+<span id="cb650-12"><a href="boot-test.html#cb650-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summary</span>(fit)<span class="sc">$</span>fstatistic[<span class="dv">1</span>]</span>
+<span id="cb650-13"><a href="boot-test.html#cb650-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb650-14"><a href="boot-test.html#cb650-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb650-15"><a href="boot-test.html#cb650-15" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb650-16"><a href="boot-test.html#cb650-16" aria-hidden="true" tabindex="-1"></a>boot.mod <span class="ot">&lt;-</span> <span class="fu">boot</span>(pres.dat, mod.stat, <span class="at">R =</span> <span class="dv">1000</span>)</span>
+<span id="cb650-17"><a href="boot-test.html#cb650-17" aria-hidden="true" tabindex="-1"></a>boot.mod</span></code></pre></div>
+<pre><code>## 
+## ORDINARY NONPARAMETRIC BOOTSTRAP
+## 
+## 
+## Call:
+## boot(data = pres.dat, statistic = mod.stat, R = 1000)
+## 
+## 
+## Bootstrap Statistics :
+##       original   bias    std. error
+## t1* 0.01164396 1.029746    1.029715</code></pre>
+<p>En la aproximación del <span class="math inline">\(p\)</span>-valor hay que tener en cuenta que al modificar los residuos
+<code>boot.mod$t0</code> no va a coincidir con el valor observado del estadístico,
+almacenado en <code>stat</code> (por tanto habría que ignorar <code>original</code> y <code>bias</code>
+en <code>Bootstrap Statistics</code>;
+la función <code>Boot()</code> del paquete <code>car</code> corrige este problema).</p>
+<div class="sourceCode" id="cb652"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb652-1"><a href="boot-test.html#cb652-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(boot.mod<span class="sc">$</span>t, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb652-2"><a href="boot-test.html#cb652-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">pf</span>(x, df, dfr, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:boot-semipar-test-plot"></span>
+<img src="11-Bootstrap_aplic_files/figure-html/boot-semipar-test-plot-1.png" alt="Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico." width="70%" />
+<p class="caption">
+Figura 11.7: Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico.
+</p>
+</div>
+<div class="sourceCode" id="cb653"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb653-1"><a href="boot-test.html#cb653-1" aria-hidden="true" tabindex="-1"></a>pval <span class="ot">&lt;-</span> <span class="fu">mean</span>(boot.mod<span class="sc">$</span>t <span class="sc">&gt;=</span> stat)</span>
+<span id="cb653-2"><a href="boot-test.html#cb653-2" aria-hidden="true" tabindex="-1"></a>pval</span></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<p>En el caso de modelos no lineales (o otros tipos de modelos lineales) puede ser
+complicado aproximar los grados de libertad para el cálculo del estadístico <span class="math inline">\(F\)</span>,
+pero si empleamos bootstrap, vamos a obtener los mismos resultados considerando
+como estadístico:
+<span class="math display">\[\tilde F =\frac{RSS_0 - RSS}{RSS},\]</span>
+que se puede interpretar también como una medida del incremento en la variabilidad residual
+al considerar el modelo reducido (ya que únicamente difieren en una constante).
+En este caso también se suelen emplear los residuos sin reescalar, ya que también puede ser
+difícil encontrar la transformación adecuada.</p>
+<div class="exercise">
+<p><span id="exr:test-semipar-cuadratico" class="exercise"><strong>Ejercicio 11.3  </strong></span><br></p>
+<p>Al estudiar el efecto de las variables explicativas en el modelo
+anterior, podríamos pensar que no es adecuado asumir un efecto lineal
+de alguna de las variables explicativas. Por ejemplo, si generamos los gráficos
+parciales de residuos obtendríamos:</p>
+<div class="sourceCode" id="cb655"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb655-1"><a href="boot-test.html#cb655-1" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">crPlots</span>(modelo)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:semipar-crplot"></span>
+<img src="11-Bootstrap_aplic_files/figure-html/semipar-crplot-1.png" alt="Efecto de las variables explicativas en el modelo (gráficos de residuos)." width="90%" />
+<p class="caption">
+Figura 11.8: Efecto de las variables explicativas en el modelo (gráficos de residuos).
+</p>
+</div>
+<p>En este caso podría ser razonable considerar un efecto cuadrático
+de la variable <code>income</code><a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a></p>
+<div class="sourceCode" id="cb656"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb656-1"><a href="boot-test.html#cb656-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> income <span class="sc">+</span> <span class="fu">I</span>(income<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> education, <span class="at">data =</span> Prestige)</span>
+<span id="cb656-2"><a href="boot-test.html#cb656-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = prestige ~ income + I(income^2) + education, data = Prestige)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -15.732  -4.900  -0.057   4.598  18.459 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -1.135e+01  3.272e+00  -3.470 0.000775 ***
+## income       3.294e-03  5.669e-04   5.810 7.79e-08 ***
+## I(income^2) -7.967e-08  2.169e-08  -3.673 0.000390 ***
+## education    3.809e+00  3.407e-01  11.179  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 7.36 on 98 degrees of freedom
+## Multiple R-squared:  0.8224, Adjusted R-squared:  0.817 
+## F-statistic: 151.3 on 3 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Para comparar el ajuste de este modelo respecto al del anterior, podemos
+realizar un contraste empleando la función <code>anova()</code>:</p>
+<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb658-1"><a href="boot-test.html#cb658-1" aria-hidden="true" tabindex="-1"></a>modelo0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> income <span class="sc">+</span> education, <span class="at">data =</span> Prestige)</span>
+<span id="cb658-2"><a href="boot-test.html#cb658-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(modelo0, modelo)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: prestige ~ income + education
+## Model 2: prestige ~ income + I(income^2) + education
+##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+## 1     99 6038.9                                  
+## 2     98 5308.0  1     730.8 13.492 0.0003904 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Contrastar si el efecto de <code>income</code> es lineal mediante bootstrap residual,
+empleando como estadístico el incremento en la variabilidad residual con el
+modelo reducido y remuestreando los residuos del modelo completo (sin reescalar).
+Aproximar el nivel crítico del contraste y el valor que tendría que superar el
+estadístico para rechazar <span class="math inline">\(H_0\)</span> con un nivel de significación <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+</div>
+
+</div>
+</div>
+<!-- </div> -->
+
+
+
+<div class="footnotes">
+<hr />
+<ol start="33">
+<li id="fn33"><p>Aunque cuando la hipótesis nula es compuesta:
+<span class="math inline">\(P\left( D\in RR \mid H_0\text{ cierta}\right) \leq \alpha\)</span>.<a href="boot-test.html#fnref33" class="footnote-back">↩︎</a></p></li>
+<li id="fn34"><p>Nótese que
+no se hace ninguna suposición sobre el tipo de covariables,
+podrían ser categóricas, numéricas o una combinación de ambas.<a href="boot-test.html#fnref34" class="footnote-back">↩︎</a></p></li>
+<li id="fn35"><p>En este caso también podríamos emplear un contraste
+de permutaciones.<a href="boot-test.html#fnref35" class="footnote-back">↩︎</a></p></li>
+<li id="fn36"><p>Para ajustar un modelo polinómico
+puede ser recomendable, especialmente si el grado del polinomio es alto,
+emplear la función <code>poly()</code> ya que utiliza polinomios ortogonales.
+En el caso cuadrático, al emplear <code>y ~ x + I(x^2)</code>
+estaremos considerando <span class="math inline">\(1, x, x^2\)</span>, mientras que <code>y ~ poly(x, 2)</code> considerará
+polinomios de Legendre de la forma <span class="math inline">\(1, x, \frac{1}{2}(3x^2-1)\)</span>.
+En este caso concreto, obtendríamos una parametrización equivalente
+empleando <code>modelo &lt;- lm(prestige ~ poly(income, 2) + education, data = Prestige)</code>.<a href="boot-test.html#fnref36" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="boot-ic.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="gof-aleat.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rubenfcasal/simbook/edit/master/11-Bootstrap_aplic.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Simulacion.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,3 +1,29 @@
+<!-- 
+---
+title: "Introducción a la simulación"
+author: "Simulación Estadística (UDC)"
+date: "Máster en Técnicas Estadísticas"
+output: 
+  bookdown::html_document2:
+    pandoc_args: ["--number-offset", "0,0"]
+    toc: yes 
+    # mathjax: local            # copia local de MathJax, hay que establecer:
+    # self_contained: false     # las dependencias se guardan en ficheros externos 
+  bookdown::pdf_document2:
+    includes:
+      in_header: preamble.tex
+    keep_tex: yes
+    toc: yes 
+---
+
+bookdown::preview_chapter("01-Introduccion.Rmd")
+knitr::purl("01-Introduccion.Rmd", documentation = 2)
+knitr::spin("01-Introduccion.R",knit = FALSE)
+
+PENDENTE:
+  - cite_fsimres
+-->
+
 # Introducción a la simulación {#intro}
 
 
@@ -11,7 +37,7 @@ La simulación ofrece una alternativa a esa última fase del proceso, y sustituy
 
 Así, se puede definir la *simulación* como una técnica que consiste en realizar experimentos sobre el modelo de un sistema (experimentos de muestreo si la simulación incorpora aleatoriedad), con el objetivo de recopilar información bajo determinadas condiciones. 
 
-## Conceptos básicos
+## Conceptos básicos {#conceptos}
 
 La experimentación directa sobre la realidad puede tener muchos inconvenientes, entre otros:
 
@@ -54,6 +80,155 @@ Modelo de probabilidad
 Aproximación por simulación
 -->
 
+
+### Ejemplo {#ealbum}
+
+Supongamos que nos regalan un álbum con $n = 75$ cromos, que se venden sobres con $m = 6$ cromos por 0.8€, y que estamos interesados en el número de sobres que hay que comprar para completar la colección, por ejemplo en su valor medio.
+
+Podemos aproximar la distribución del número de sobres para completar la colección a partir de $nsim=1000$ simulaciones de coleccionistas de cromos:
+
+
+```r
+# Parámetros
+n <- 75 # Número total de cromos
+m <- 6  # Número de cromos en cada sobre
+repe <- TRUE # Repetición de cromos en cada sobre
+# Número de simulaciones
+nsim <- 1000
+# Resultados simulación
+nsobres <- numeric(nsim)
+# evol <- vector("list", nsim)
+# Fijar semilla
+set.seed(1)
+# Bucle simulación
+for (isim in 1:nsim) {
+  # seed <- .Random.seed    # .Random.seed <- seed
+  album <- logical(n)
+  i <- 0 # Número de sobres
+  while(sum(album) < n) {
+    i <- i + 1
+    album[sample(n,m, replace = repe)] <- TRUE
+  }
+  nsobres[isim] <- i
+}
+```
+
+Distribución del número de sobres para completar la colección
+(aproximada por simulación):
+
+
+```r
+hist(nsobres, breaks = "FD", freq = FALSE,
+     main = "", xlab = "Número de sobres")
+lines(density(nsobres))
+```
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{01-Introduccion_files/figure-latex/distr-ealbum-1} 
+
+}
+
+\caption{Aproximación por simulación de la distribución del número de sobres para completar la colección.}(\#fig:distr-ealbum)
+\end{figure}
+
+Aproximación por simulación del número medio de sobres para completar la colección:
+
+
+```r
+sol <- mean(nsobres)
+sol
+```
+
+```
+## [1] 61.775
+```
+
+<!-- 
+Análisis de la convergencia:
+
+
+```r
+plot(1:nsim, cumsum(nsobres)/1:nsim, type = "l",
+     ylab="Número de sobres", xlab="Número de simulaciones")
+abline(h = sol)
+```
+
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{01-Introduccion_files/figure-latex/unnamed-chunk-4-1} \end{center}
+-->
+
+Número mínimo de sobres para asegurar de que se completa la colección con una probabilidad del 95\%:
+
+
+```r
+nmin <- quantile(nsobres, probs = 0.95)
+ceiling(nmin)
+```
+
+```
+## 95% 
+##  92
+```
+
+```r
+# Reserva de dinero para poder completar la colección el 95% de las veces:
+ceiling(nmin)*0.8
+```
+
+```
+##  95% 
+## 73.6
+```
+
+```r
+hist(nsobres, breaks = "FD", freq = FALSE,
+     main = "", xlab = "Número de sobres")
+lines(density(nsobres))
+abline(v = sol)
+abline(v = nmin, lty = 2)
+```
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{01-Introduccion_files/figure-latex/distr-ealbum2-1} 
+
+}
+
+\caption{Aproximaciones por simulación de la distribución del número de sobres para completar la colección, de su valor esperado (línea vertical continua) y del cuantil 0.95 (línea vertical discontinua).}(\#fig:distr-ealbum2)
+\end{figure}
+
+Por supuesto, la distribución del gasto necesario para completar la colección es esta misma reescalada.
+
+
+```r
+res <- simres::mc.plot(nsobres*0.8)
+```
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.9\linewidth]{01-Introduccion_files/figure-latex/mc-plot-ealbum-1} 
+
+}
+
+\caption{Gráficos exploratorios de las simulaciones del gasto para completar la colección obtenidos con la función `simres::mc.plot()`.}(\#fig:mc-plot-ealbum)
+\end{figure}
+
+Aproximación del gasto medio:
+
+
+```r
+res$approx  # sol*0.8
+```
+
+```
+## [1] 49.42
+```
+ 
+En el Ejercicio \@ref(exr:album) se propone modificar este código para obtener información adicional sobre la evolución del número de cromos distintos dependiendo de los sobres comprados por un coleccionista.
+
+
 ### Ventajas e inconvenientes de la simulación 
 
 Ventajas (Shannon, 1975):
@@ -92,7 +267,7 @@ Otro problema de la simulación es que se obtienen resultados para unos valores 
 resultaría complicado extrapolar las conclusiones a otras situaciones.
 
 
-## Aplicaciones de la simulación
+### Aplicaciones de la simulación
 
 La simulación resulta de utilidad en multitud de contextos diferentes.
 Los principales campos de aplicación son:
@@ -124,19 +299,22 @@ Los principales campos de aplicación son:
 
 En los capítulos \@ref(aplic-inf) y \@ref(monte-carlo) nos centraremos en algunas de las aplicaciones de utilidad en Estadística.
 
-
-## Números aleatorios puros
+## Tipos de números aleatorios
 
 El primer requisito para poder realizar simulación estocástica sería disponer de números aleatorios.
-Una sucesión de números aleatorios puros (*true random*) se caracteriza porque no existe ninguna regla o plan que nos permita conocer sus valores.
+Se distingue entre tres tipos de secuencias:
+
+- *números aleatorios puros* (*true random*): se caracteriza porque no existe ninguna regla o plan que nos permita conocer sus valores.
+
+- *números pseudo-aleatorios*: simulan realizaciones de una variable aleatoria (uniforme),
+
+- *números cuasi-aleatorios*: secuencias deterministas con una distribución más regular en el rango considerado.
+
+
+### Números aleatorios puros
 
 Normalmente son obtenidos por procesos físicos (loterías, ruletas, ruidos...) y, hasta hace una décadas, se almacenaban en *tablas de dígitos aleatorios*. 
 Por ejemplo, en 1955 la Corporación RAND publicó el libro [*A Million Random Digits with 100,000 Normal Deviates*](https://www.rand.org/pubs/monograph_reports/MR1418.html) que contenía números aleatorios generados mediante una ruleta electrónica conectada a una computadora (ver Figura \@ref(fig:randbook)).
-
-<!-- 
-Pendiente:
-Leyenda markdown
--->
 
 \begin{figure}[!htb]
 
@@ -146,6 +324,11 @@ Leyenda markdown
 
 \caption{Líneas 10580-10594, columnas 21-40, del libro *A Million Random Digits with 100,000 Normal Deviates*.}(\#fig:randbook)
 \end{figure}
+
+<!-- 
+Pendiente:
+Leyenda markdown
+-->
 
 El procedimiento que se utilizaba para seleccionar de una tabla, de forma manual, números aleatorios 
 en un rango de 1 a *m* era el siguiente:
@@ -179,17 +362,11 @@ Siempre está presente la posible aparición de sesgos, principalmente debidos a
 Por ejemplo, en el caso de la máquina RAND, fallos mecánicos en el sistema de grabación de los datos causaron problemas de aleatoriedad (Hacking, 1965, p. 129).
 
 El otro inconveniente estaría relacionado con su reproducibilidad, por lo que habría que almacenarlos en tablas si se quieren volver a reproducir los resultados.
+A partir de la década de 1960, al disponer de computadoras de mayor velocidad, empezó a resultar más eficiente generar valores mediante software en lugar de leerlos de tablas.
 
 
-## Generación de números "aleatorios" mediante software
-
-A partir de la década de 1960, al disponer de computadoras de mayor velocidad, empezó a resultar más eficiente generar valores mediante software en lugar de leerlos de las tablas. 
-Se distingue entre dos tipos de secuencias:
-
--   *números pseudo-aleatorios*: simulan realizaciones de una variable aleatoria (uniforme),
-
--   *números cuasi-aleatorios*: secuencias deterministas con una distribución más regular en el rango considerado.
-
+### Números cuasi-aleatorios 
+ 
 <!-- 
 Pendiente 
 *números cuasi-aleatorios*: ... (se podría pensar que son una única generación de una variable aleatoria)?
@@ -225,9 +402,9 @@ par(par.old)
 En este libro sólo consideraremos los números pseudoaleatorios y por comodidad se eliminará el prefijo "pseudo" en algunos casos.
 
 
-## Números pseudoaleatorios
+### Números pseudo-aleatorios
 
-La mayoría de los métodos de simulación se basan en la posibilidad de generar números pseudoaleatorios que imiten las propiedades de valores independientes de una distribución $\mathcal{U}(0,1)$, es decir, que imiten las propiedades de una muestra aleatoria simple^[Aunque hay que distinguir entre secuencia y muestra. En un problema de inferencia, en principio estamos interesados en una característica desconocida de la población. En cambio, en un problema de simulación "la población" es el modelo y lo conocemos por completo (no obstante el problema de simulación puede surgir como solución de un problema de inferencia).]. 
+La mayoría de los métodos de simulación se basan en la posibilidad de generar números pseudoaleatorios que imiten las propiedades de valores independientes de la distribución $\mathcal{U}(0,1)$, es decir, que imiten las propiedades de una muestra aleatoria simple^[Aunque hay que distinguir entre secuencia y muestra. En un problema de inferencia, en principio estamos interesados en una característica desconocida de la población. En cambio, en un problema de simulación "la población" es el modelo y lo conocemos por completo (no obstante el problema de simulación puede surgir como solución de un problema de inferencia).] de esta distribución. 
 
 El procedimiento habitual para obtener estas secuencias es emplear un algoritmo recursivo denominado *generador*:
 
@@ -312,5 +489,423 @@ Además, sería recomendable utilizar alguna de las implementaciones disponibles
 En este libro nos centraremos en los generadores congruenciales, descritos en la Sección \@ref(gen-cong).
 Estos métodos son muy simples, aunque con las opciones adecuadas podrían ser utilizados en pequeños estudios de simulación. Sin embargo, su principal interés es que constituyen la base de los generadores avanzados habitualmente considerados.
 
+## Números aleatorios en R {#rrng}
+
+La generación de números pseudoaleatorios en R es una de las mejores
+disponibles en paquetes estadísticos. 
+Entre las herramientas implementadas en el paquete base de R podemos destacar:
+
+-   `set.seed(entero)`: permite establecer la semilla (y el generador).
+
+-   `RNGkind()`: selecciona el generador.
+
+-   `rdistribución(n,...):` genera valores aleatorios de la correspondiente distribución. 
+    Por ejemplo, `runif(n, min = 0, max = 1)`, generaría `n` valores de una uniforme. Se puede acceder al listado completo de las funciones disponibles en el paquete `stats` mediante el comando `?distributions`.
+
+-   `sample()`: genera muestras aleatorias de variables discretas y permutaciones (se tratará en el Capítulo \@ref(discretas)).
+
+-   `simulate()`: genera realizaciones de la respuesta de un modelo ajustado.
+
+Además están disponibles otros paquetes que implementan distribuciones adicionales (ver [CRAN Task View: Probability Distributions](https://cran.r-project.org/view=Distributions)). 
+Entre ellos podríamos destacar los paquetes [`distr`](http://distr.r-forge.r-project.org) (clases S4; con extensiones en otros paquetes) y [`distr6`](https://alan-turing-institute.github.io/distr6/index.html) (clases R6).
+
+La semilla se almacena en `.Random.seed`:
+
+-   Inicialmente no existe. 
+La recomendación es establecerla con `set.seed()`, en caso contrario se generará a partir del reloj del sistema^[y del identificador asignado por el sistema operativo al proceso.] cuando se necesite.
+
+-   Se almacena como un objeto oculto en el entorno de trabajo (o entorno global `.GlobalEnv`). Con las opciones por defecto de R, si al terminar una sesión almacenamos el entorno (en un fichero *.RData*), al iniciar una nueva sesión se restaurará también la semilla (y se podría continuar con las simulaciones).
+
+-   Es un vector de enteros cuya estructura depende del tipo de generador (en la Sección \@ref(ext-cong) se dan algunos detalles sobre la configuración por defecto), por lo que no debería ser modificado manualmente.  
+Puede ser recomendable almacenar (el objeto completo) antes de generar simulaciones, e.g. `seed <- .Random.seed`. Esto permite reproducir los resultados y facilita la depuración de posibles errores.
+
+En la mayoría de los ejemplos de este libro se generan todos los valores de una vez,
+se guardan y se procesan vectorialmente (normalmente empleando la función `apply`).
+En problemas mas complejos, en los que no es necesario almacenar todas las simulaciones,
+puede ser preferible emplear un bucle para generar y procesar cada simulación iterativamente.
+Por ejemplo podríamos emplear el siguiente esquema:
+
+
+```r
+# Fijar semilla
+set.seed(1)
+for (isim in 1:nsim) {
+  seed <- .Random.seed
+  # Si se produce un error, podremos depurarlo ejecutando:
+  #  .Random.seed <- seed
+  ...
+  # Generar valores pseudoaleatorios
+  ...
+}
+```
+
+o alternativamente fijar la semilla en cada iteración, por ejemplo:
+
+
+```r
+for (isim in 1:nsim) {
+  set.seed(isim)
+  ...
+  # Generar valores pseudoaleatorios
+  ...
+}
+```
+
+
+###  Opciones {#oprrng}
+
+Normalmente no nos va a interesar cambiar las opciones por defecto de R para la generación de números pseudoaleatorios.
+Para establecer estas opciones podemos emplear los argumentos `kind = NULL`, `normal.kind = NULL` y  `sample.kind = NULL` en las funciones `RNGkind()` o `set.seed()`.
+A continuación se muestran las distintas opciones (resaltando en negrita los valores por defecto):
+
+-   `kind` especifica el generador pseudoaleatorio (uniforme):
+
+    -   “Wichmann-Hill”: Ciclo $6.9536\times10^{12}$
+
+    -   “Marsaglia-Multicarry”: Ciclo mayor de $2^{60}$
+
+    -   “Super-Duper”: Ciclo aprox. $4.6\times10^{18}$ (S-PLUS)
+
+    -   **“Mersenne-Twister”**: Ciclo $2^{19937}-1$ y equidistribution
+        en 623 dimensiones.
+
+    -   “Knuth-TAOCP-2002”: Ciclo aprox. $2^{129}$.
+
+    -   “Knuth-TAOCP”
+
+    -   “user-supplied”: permite emplear generadores adicionales.
+
+-   `normal.kind` selecciona el método de generación de normales 
+    (se tratará más adelante):
+    “Kinderman-Ramage”, “Buggy Kinderman-Ramage”,
+    “Ahrens-Dieter”, “Box-Muller”, **“Inversion”** , o “user-supplied”.
+    
+-   `sample.kind` selecciona el método de generación de uniformes discretas (el empleado por la función `sample()`, que cambió ligeramente^[Para evitar problemas de redondeo con tamaños extremadamente grandes; ver bug [PR#17494](https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=17494).] a partir de la versión 3.6.0 de R): "Rounding" (versión anterior a 3.6.0) o **"Rejection"**.    
+    
+Estas opciones están codificadas (con índices comenzando en 0) en el primer componente de la semilla:
+
+```r
+set.seed(1)
+.Random.seed[1]
+```
+
+```
+## [1] 10403
+```
+Los dos últimos dígitos se corresponden con el generador, las centenas con el método de generación de normales y las decenas de millar con el método uniforme discreto. 
+
+
+###  Paquetes de R
+
+<!-- 
+Pendiente: [``](https://CRAN.R-project.org/package=)
+-->
+
+
+Otros paquetes de R que pueden ser de interés:
+
+-   `setRNG` contiene herramientas que facilitan operar con la semilla
+    (dentro de funciones,...).
+
+-   `random` permite la descarga de números “true random” desde [RANDOM.ORG](https://www.random.org).
+
+-   `randtoolbox` implementa generadores más recientes (`rngWELL`) y
+    generación de secuencias cuasi-aleatorias.
+
+-   `RDieHarder` implementa diversos contrastes para el análisis de la
+    calidad de un generador y varios generadores.
+
+-   [`Runuran`](http://statmath.wu.ac.at/unuran) interfaz para la librería UNU.RAN para la
+    generación (automática) de variables aleatorias no uniformes (ver Hörmann et al., 2004).
+
+-   `rsprng`, `rstream` y `rlecuyer` implementan la generación de múltiples
+    secuencias (para programación paralela).
+
+-   `gls`, `rngwell19937`, `randaes`, `SuppDists`, `lhs`, `mc2d`,
+    `fOptions`, ...
+
+
+<!-- 
+PENDIENTE: Paquetes de simulación 
+-->
+
+### Tiempo de CPU
+
+
+La velocidad del generador suele ser una característica importante (también medir los tiempos, de cada iteración y de cada procedimento, en estudios de simulación). 
+Para evaluar el rendimiento están disponibles en R distintas herramientas:
+
+-   `proc.time()`: permite obtener tiempo de computación real y de
+    CPU.
+    
+    ```
+    tini <- proc.time()
+    # Código a evaluar
+    tiempo <- proc.time() - tini
+    ```
+
+-   `system.time(expresión)`: muestra el tiempo de computación (real y
+    de CPU) de expresión.
+
+
+Por ejemplo, podríamos emplear las siguientes funciones para
+ir midiendo los tiempos de CPU durante una simulación:
+
+
+```r
+CPUtimeini <- function() {
+  .tiempo.ini <<- proc.time()
+  .tiempo.last <<- .tiempo.ini
+}
+
+CPUtimeprint <- function() {
+  tmp <- proc.time()
+  cat("Tiempo última operación:\n")
+  print(tmp-.tiempo.last)
+  cat("Tiempo total operación:\n")
+  print(tmp-.tiempo.ini)
+  .tiempo.last <<- tmp
+}
+```
+
+Llamando a `CPUtimeini()` donde se quiere empezar a contar, 
+y a `CPUtimeprint()` para imprimir el tiempo total 
+y el tiempo desde la última llamada a una de estas funciones. 
+Ejemplo:
+
+
+```r
+funtest <- function(n) mad(runif(n)) 
+CPUtimeini()
+result1 <- funtest(10^6)
+CPUtimeprint()
+```
+
+```
+## Tiempo última operación:
+##    user  system elapsed 
+##    0.25    0.01    0.27 
+## Tiempo total operación:
+##    user  system elapsed 
+##    0.25    0.01    0.27
+```
+
+```r
+result2 <- funtest(10^3)
+CPUtimeprint()
+```
+
+```
+## Tiempo última operación:
+##    user  system elapsed 
+##    0.02    0.00    0.02 
+## Tiempo total operación:
+##    user  system elapsed 
+##    0.27    0.01    0.29
+```
+
+
+Hay diversos paquetes que implementan herramientas similares, por ejemplo:
+
+* El paquete `tictoc`:
+
+  - `tic("mensaje")`: inicia el temporizador y almacena el tiempo de inicio junto con el mensaje en una pila. 
+  
+  - `toc()`: calcula el tiempo transcurrido desde la llamada correspondiente a `tic()`.
+
+
+    
+    ```r
+    library(tictoc)
+    ## Timing nested code
+    tic("outer")
+       result1 <- funtest(10^6)
+       tic("middle")
+          result2 <- funtest(10^3)
+          tic("inner")
+             result3 <- funtest(10^2)
+          toc() # inner
+    ```
+    
+    ```
+    ## inner: 0 sec elapsed
+    ```
+    
+    ```r
+       toc() # middle
+    ```
+    
+    ```
+    ## middle: 0 sec elapsed
+    ```
+    
+    ```r
+    toc() # outer
+    ```
+    
+    ```
+    ## outer: 0.31 sec elapsed
+    ```
+    
+    ```r
+    ## Timing in a loop and analyzing the results later using tic.log().
+    tic.clearlog()
+    for (i in 1:10)
+    {
+       tic(i)
+       result <- funtest(10^4)
+       toc(log = TRUE, quiet = TRUE)
+    }
+    # log.txt <- tic.log(format = TRUE)
+    # log.lst <- tic.log(format = FALSE)
+    log.times <- do.call(rbind.data.frame, tic.log(format = FALSE))
+    str(log.times)
+    ```
+    
+    ```
+    ## 'data.frame':	10 obs. of  3 variables:
+    ##  $ tic: num  6.87 6.87 6.87 6.87 6.87 6.87 6.87 6.87 6.87 6.87
+    ##  $ toc: num  6.87 6.87 6.87 6.87 6.87 6.87 6.87 6.87 6.87 6.89
+    ##  $ msg: chr  "1" "2" "3" "4" ...
+    ```
+    
+    ```r
+    tic.clearlog()
+    
+    # timings <- unlist(lapply(log.lst, function(x) x$toc - x$tic))
+    log.times$timings <- with(log.times, toc - tic)
+    summary(log.times$timings)
+    ```
+    
+    ```
+    ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    ##   0.000   0.000   0.000   0.002   0.000   0.020
+    ```
+
+* La función [`cpu.time()`](https://rubenfcasal.github.io/simres/reference/cpu.time.html) del paquete `simres`:
+
+  -   `cpu.time(restart = TRUE)`: inicia el temporizador y almacena el tiempo de inicio.
+  
+  -   `cpu.time()`: calcula el tiempo (real y de CPU) total (desde tiempo de inicio) y parcial (desde la última llamada a esta función).
+
+
+Hay que tener en cuenta que, por construcción, aunque se realicen en la mismas condiciones (en el mismo equipo), los tiempos de CPU en R pueden variar "ligeramente" entre ejecuciones.
+Si se quieren estudiar tiempos de computación de forma más precisa, se recomendaría promediar los tiempos de varias ejecuciones.
+Para ello se pueden emplear las herramientas del paquete [`microbenchmark`](https://CRAN.R-project.org/package=microbenchmark).
+No obstante, para los fines de este libro no será necesaria tanta precisión. 
+
+Finalmente, si los tiempos de computación no fuesen asumibles, para identificar los cuellos de botella y mejorar el código para optimizar la velocidad, podríamos emplear la función `Rprof(fichero)`. 
+Esta función permite evaluar el rendimiento muestreando la pila en intervalos para determinar en que funciones se emplea el tiempo de computación.
+Después de ejecutar el código, llamando a `Rprof(NULL)` se desactiva el muestreo y con `summaryRprof(fichero)` se muestran los resultados (para analizarlos puede resultar de utilidad el paquete [`proftools`](https://CRAN.R-project.org/package=proftools)).
+
+
+## Ejercicios
+
+::: {.exercise #simpi}
+<br>
+  
+Sea $(X,Y)$ es un vector aleatorio con distribución uniforme en el
+cuadrado $[-1,1]\times\lbrack-1,1]$ de área 4.
+
+a)  Aproximar mediante simulación $P\left(X + Y \leq 0 \right)$ y
+    compararla con la probabilidad teórica (obtenida aplicando la
+    regla de Laplace $\frac{\text{área favorable}}{\text{área posible}}$).
+
+
+b)  Aproximar el valor de $\pi$ mediante simulación a partir de
+    $P\left( X^2 +Y^2 \leq 1 \right)$.
+
+:::
+
+Ver solución en Sección \@ref(sol-simpi).
+
+
+
+::: {.exercise #bernoulli name="Experimento de Bernoulli"}
+<br>
+
+Consideramos el experimento de Bernoulli consistente en el
+lanzamiento de una moneda.
+
+a)  Empleando la función `sample`, obtener 1000 simulaciones del
+    lanzamiento de una moneda `(0 = cruz, 1 = cara)`, suponiendo que
+    no está trucada. Aproximar la probabilidad de cara a partir de
+    las simulaciones.
+    
+b)  En R pueden generarse valores de la distribución de Bernoulli
+    mediante la función `rbinom(nsim, size=1, prob)`. Generar un
+    gráfico de lineas considerando en el eje $X$ el número de
+    lanzamientos (de 1 a 10000) y en el eje $Y$ la frecuencia
+    relativa del suceso cara (puede ser recomendable emplear la
+    función `cumsum`).
+:::
+
+
+Ver solución en Sección \@ref(sol-bernoulli).
+
+
+::: {.exercise #circuito name="Simulación de un circuito"}
+<br>
+  
+Simular el paso de corriente a través del circuito mostrado en la Figura \@ref(fig:circuito2), donde se muestran las probabilidades de que pase corriente por cada uno de los interruptores, que se suponen variables aleatorias de Bernoulli independientes.
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.5\linewidth]{images/circuito2} 
+
+}
+
+\caption{Esquema de un circuito eléctrico con interruptores aleatorios.}(\#fig:circuito2)
+\end{figure}
+:::
+
+
+
+::: {.remark}
+R maneja internamente los valores lógicos como 1 (`TRUE`) y 0 (`FALSE`).
+Recíprocamente, cualquier número puede ser tratado como lógico (al estilo de C).
+El entero 0 es equivalente a `FALSE` y cualquier entero distinto de 0 a `TRUE`.
+:::
+
+
+Ver solución en Sección \@ref(sol-circuito).
+
+
+::: {.exercise #mere name="El problema del Caballero de Méré"}
+<br>
+
+En 1651, el Caballero de Méré le planteó a Pascal una pregunta
+relacionada con las apuestas y los juegos de azar: ¿es ventajoso
+apostar a que en cuatro lanzamientos de un dado se obtiene al menos
+un seis? Este problema generó una fructífera correspondencia entre
+Pascal y Fermat que se considera, simbólicamente, como el nacimiento
+del Cálculo de Probabilidades.
+
+a)  Escribir una función que simule el lanzamiento de $n$ dados. El
+    parámetro de entrada es el número de lanzamientos $n$, que toma
+    el valor 4 por defecto, y la salida debe ser `TRUE` si se
+    obtiene al menos un 6 y `FALSE` en caso contrario.
+
+b)  Utilizar la función anterior para simular $nsim=10000$ jugadas
+    de este juego y calcular la proporción de veces que se gana la
+    apuesta (obtener al menos un 6 en $n$ lanzamientos), usando
+    $n=4$. Comparar el resultado con la probabilidad teórica
+    $1-(5/6)^{n}$.
+    
+    
+:::
+
+Ver solución en Sección \@ref(sol-mere).
+
+
+::: {.exercise #album name="variación del problema del coleccionista (cadena de Markov)"}
+<br>
+
+Continuando con el ejemplo de la Sección \@ref(ealbum)
+(álbum con $n = 75$ cromos y sobres con $m = 6$). A partir de $nsim=2000$ simulaciones de coleccionistas de cromos, aproximar por simulación la evolución del proceso de compra de un coleccionista (número de cromos distintos dependiendo de los sobres comprados).
+
+:::
+
+Ver solución en Sección \@ref(sol-album).
 
 

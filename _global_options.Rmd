@@ -39,4 +39,14 @@ fig.path <- "images/"
     citepkg <- function(x, url = paste0("https://CRAN.R-project.org/package=", x))
       paste0("[`", x, "`](", url, ")")
       # paste0("[`", x, "`](https://cran.r-project.org/web/packages/", x, "/index.html)")
+    
+    cite_simres <- function() citepkg("simres", "https://rubenfcasal.github.io/simres")
+    cite_fsimres <- function(..., lnk = NULL, pkg = FALSE)  {
+      x <- list(...)
+      paste0(if(pkg) "[`simres::" else "[`", x, "()`](https://rubenfcasal.github.io/simres/reference/",
+                            if (!is.null(lnk)) lnk else x,
+                            ".html)",
+                            collapse = ", ")
+      # downlit::autolink_url
+    }  
 ```

@@ -1,8 +1,29 @@
-Bondad de Ajuste y Aleatoriedad {#gof-aleat}
-===============================
+# (APPENDIX) Apendices {-} 
+
+# Bondad de Ajuste y Aleatoriedad {#gof-aleat}
 
 
 
+
+<!-- 
+---
+title: "Bondad de Ajuste y Aleatoriedad"
+author: "Simulación Estadística (UDC)"
+date: "Máster en Técnicas Estadísticas"
+output: 
+  bookdown::html_document2:
+    pandoc_args: ["--number-offset", "21,0"]
+    toc: yes 
+    # mathjax: local            # copia local de MathJax, hay que establecer:
+    # self_contained: false     # las dependencias se guardan en ficheros externos 
+  bookdown::pdf_document2:
+    keep_tex: yes
+    toc: yes 
+---
+bookdown::preview_chapter("22-Bondad_ajuste_Aleatoriedad.Rmd") 
+knitr::purl("22-Bondad_ajuste_Aleatoriedad.Rmd", documentation = 2)
+knitr::spin("22-Bondad_ajuste_Aleatoriedad.R",knit = FALSE)
+-->
 
 En los métodos clásicos de inferencia estadística es habitual asumir que los valores observados $X_1,\ldots, X_n$ (o los errores de un modelo) constituyen una muestra aleatoria simple de una variable aleatoria $X$.
 Se están asumiendo por tanto dos hipótesis estructurales: la independencia (aleatoriedad) y la homogeneidad (misma distribución) de las observaciones (o de los errores).
@@ -134,6 +155,19 @@ curve(pnorm(x, mean(datos), sd(datos)), add = TRUE)
 \caption{Comparación de la distribución empírica de los datos de ejemplo con la función de distribución de la aproximación normal.}(\#fig:ecdfplot)
 \end{figure}
 
+La función de distribución empírica se corresponde con una variable aleatoria discreta que toma los valores
+$X_1,\ldots ,X_n$ todos ellos con probabilidad $\frac{1}{n}$.
+Suponiendo que $\mathbf{X}=\left( X_1,\ldots ,X_n \right)$ es una muestra aleatoria de una población con distribución $F$:
+$$\begin{aligned}
+nF_n\left( x \right) &= \sum_{i=1}^{n}\mathbf{1}\left\{ X_i\leq x\right\}
+\sim \mathcal{B}\left( n,F\left( x \right) \right), \\
+E\left( nF_n\left( x \right) \right) &= nF\left( x \right) \implies E\left(
+F_n\left( x \right) \right) =F\left( x \right), \\
+Var\left( nF_n\left( x \right) \right) &=  nF\left( x \right) \left(
+1-F\left( x \right) \right) \\
+&\implies  Var\left( F_n\left( x \right) \right) =\frac{F\left( x \right) \left( 1-F\left( x \right) \right)}{n}
+\end{aligned}$$
+
 
 ### Gráficos P-P y Q-Q
 
@@ -239,7 +273,7 @@ chisq.test(table(x))            # NOT 'chisq.test(x)'!
 ## X-squared = 9.2, df = 4, p-value = 0.05629
 ```
 
-La distribución exacta del estadístico del contraste es discreta (se podría aproximar por simulación, por ejemplo empleando los parámetros `simulate.p.value = TRUE` y `B = 2000` de la función `chisq.test()`; ver también el Ejercicio \@ref(exr:chicuadind) de la Sección \@ref(simconting) para el caso del contraste chi-cuadrado de independencia).
+La distribución exacta del estadístico del contraste es discreta (se podría aproximar por simulación, por ejemplo empleando los parámetros `simulate.p.value = TRUE` y `B = 2000` de la función `chisq.test()`; ver también el Ejemplo \@ref(exm:chicuadind) de la Sección \@ref(simconting) para el caso del contraste chi-cuadrado de independencia).
 Para que la aproximación continua $\chi^2$ sea válida:
 
 -   El tamaño muestral debe ser suficientemente grande (p.e. $n>30$).
@@ -267,71 +301,65 @@ frecuencia esperada $\geq5$:
 Si la variable de interés es continua, una forma de garantizar que $e_{i}\geq5$ consiste en tomar un número de intervalos $k\leq \lfloor n/5 \rfloor$ y de forma que sean equiprobables $p_{i}=1/k$,
 considerando los puntos críticos $x_{i/k}$ de la distribución bajo $H_0$.
 
-Por ejemplo, se podría emplear la siguiente función (que imita a las incluídas en R):
+Por ejemplo, se podría emplear la función `simres::chisq.cont.test()` (fichero [*test.R*](R/test.R)), que imita a las incluidas en R:
 
 
 ```r
-#-------------------------------------------------------------------------------
-# chisq.test.cont(x, distribution, nclasses, output, nestpar,...)
-#-------------------------------------------------------------------------------
-# Realiza el test chi-cuadrado de bondad de ajuste para una distribución continua
-# discretizando en intervalos equiprobables.
-# Parámetros:
-#   distribution = "norm","unif",etc
-#   nclasses = floor(length(x)/5)
-#   output = TRUE
-#   nestpar = 0= nº de parámetros estimados
-#   ... = parámetros distribución
-# Ejemplo:
-#   chisq.test.cont(x, distribution="norm", nestpar=2, mean=mean(x), sd=sqrt((nx-1)/nx)*sd(x))
-#-------------------------------------------------------------------------------
-chisq.test.cont <- function(x, distribution = "norm", nclasses = floor(length(x)/5), 
-    output = TRUE, nestpar = 0, ...) {
-    # Funciones distribución
-    q.distrib <- eval(parse(text = paste("q", distribution, sep = "")))
-    d.distrib <- eval(parse(text = paste("d", distribution, sep = "")))
-    # Puntos de corte
-    q <- q.distrib((1:(nclasses - 1))/nclasses, ...)
-    tol <- sqrt(.Machine$double.eps)
-    xbreaks <- c(min(x) - tol, q, max(x) + tol)
-    # Gráficos y frecuencias
-    if (output) {
-        xhist <- hist(x, breaks = xbreaks, freq = FALSE, lty = 2, border = "grey50")
-        curve(d.distrib(x, ...), add = TRUE)
-    } else {
-        xhist <- hist(x, breaks = xbreaks, plot = FALSE)
-    }
-    # Cálculo estadístico y p-valor
-    O <- xhist$counts  # Equivalente a table(cut(x, xbreaks)) pero más eficiente
-    E <- length(x)/nclasses
-    DNAME <- deparse(substitute(x))
-    METHOD <- "Pearson's Chi-squared test"
-    STATISTIC <- sum((O - E)^2/E)
-    names(STATISTIC) <- "X-squared"
-    PARAMETER <- nclasses - nestpar - 1
-    names(PARAMETER) <- "df"
-    PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
-    # Preparar resultados
-    classes <- format(xbreaks)
-    classes <- paste("(", classes[-(nclasses + 1)], ",", classes[-1], "]", 
-        sep = "")
-    RESULTS <- list(classes = classes, observed = O, expected = E, residuals = (O - 
-        E)/sqrt(E))
-    if (output) {
-        cat("\nPearson's Chi-squared test table\n")
-        print(as.data.frame(RESULTS))
-    }
-    if (any(E < 5)) 
-        warning("Chi-squared approximation may be incorrect")
-    structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL, 
-        method = METHOD, data.name = DNAME), RESULTS), class = "htest")
-}
+simres::chisq.cont.test
 ```
+
+```
+## function (x, distribution = "norm", nclass = floor(length(x)/5), 
+##     output = TRUE, nestpar = 0, ...) 
+## {
+##     q.distrib <- eval(parse(text = paste("q", distribution, sep = "")))
+##     q <- q.distrib((1:(nclass - 1))/nclass, ...)
+##     tol <- sqrt(.Machine$double.eps)
+##     xbreaks <- c(min(x) - tol, q, max(x) + tol)
+##     if (output) {
+##         xhist <- hist(x, breaks = xbreaks, freq = FALSE, lty = 2, 
+##             border = "grey50")
+##         d.distrib <- eval(parse(text = paste("d", distribution, 
+##             sep = "")))
+##         curve(d.distrib(x, ...), add = TRUE)
+##     }
+##     else {
+##         xhist <- hist(x, breaks = xbreaks, plot = FALSE)
+##     }
+##     O <- xhist$counts
+##     E <- length(x)/nclass
+##     DNAME <- deparse(substitute(x))
+##     METHOD <- "Pearson's Chi-squared test"
+##     STATISTIC <- sum((O - E)^2/E)
+##     names(STATISTIC) <- "X-squared"
+##     PARAMETER <- nclass - nestpar - 1
+##     names(PARAMETER) <- "df"
+##     PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
+##     classes <- format(xbreaks)
+##     classes <- paste("(", classes[-(nclass + 1)], ",", classes[-1], 
+##         "]", sep = "")
+##     RESULTS <- list(classes = classes, observed = O, expected = E, 
+##         residuals = (O - E)/sqrt(E))
+##     if (output) {
+##         cat("\nPearson's Chi-squared test table\n")
+##         print(as.data.frame(RESULTS))
+##     }
+##     if (any(E < 5)) 
+##         warning("Chi-squared approximation may be incorrect")
+##     structure(c(list(statistic = STATISTIC, parameter = PARAMETER, 
+##         p.value = PVAL, method = METHOD, data.name = DNAME), 
+##         RESULTS), class = "htest")
+## }
+## <bytecode: 0x00000000375c9e70>
+## <environment: namespace:simres>
+```
+
 Continuando con el ejemplo anterior, podríamos contrastar normalidad mediante:
 
 
 ```r
-chisq.test.cont(datos, distribution = "norm", nestpar = 2, mean=mean(datos), sd=sd(datos))
+library(simres)
+chisq.cont.test(datos, distribution = "norm", nestpar = 2, mean=mean(datos), sd=sd(datos))
 ```
 
 
@@ -481,7 +509,8 @@ Típicamente $Cov(X_{1},X_{2})>0$ por lo que con los métodos
 subestimaciones de las varianzas (IC más estrechos y tendencia a
 rechazar $H_{0}$ en contrastes).
 
-**Ejemplo**: datos simulados
+::: {.example #sim-dep name="Datos simulados dependientes"}
+<br>
 
 Consideramos un proceso temporal estacionario con dependencia exponencial 
 (la dependencia entre las observaciones depende del "salto" entre ellas;
@@ -539,7 +568,9 @@ var(x2)
 ## [1] 0.1108155
 ```
 
-En el caso de datos dependientes se produce una clara subestimación de la varianza
+En el caso de datos dependientes se produce una clara subestimación de la varianza.
+
+:::
 
 ### Métodos para detectar dependencia
 
@@ -587,7 +618,7 @@ plot(as.ts(datos))
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/grafsec-1} 
+{\centering \includegraphics[width=0.9\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/grafsec-1} 
 
 }
 
@@ -620,7 +651,7 @@ plot(x3, type = 'l', ylab = '', main = 'Dependencia negativa')
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-13-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 ```r
 par(old.par)
@@ -646,7 +677,7 @@ plot(x3[-length(x3)], x3[-1], xlab = "X_t", ylab = "X_t+1", main = 'Dependencia 
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 ```r
 par(old.par)
@@ -656,7 +687,7 @@ Se puede generalizar al gráfico $\{(X_{i},X_{i+k}) : i = 1, \ldots, n-k \}$
 que permite detectar dependencias a $k$ retardos 
 (separadas $k$ instantes).
 
-**Ejemplo**
+Ejemplo:
 
 
 ```r
@@ -681,7 +712,8 @@ cor(datos[-length(datos)], datos[-1])
 ```
 
 
-**Ejemplo**: Calidad de un generador aleatorio
+::: {.example #ret-gen name="Calidad de un generador aleatorio"}
+<br>
 
 En el caso de una secuencia muy grande de número pseudoaleatorios (supuestamente independientes), sería muy dificil distinguir un patrón a partir del gráfico anterior. La recomendación en R sería utilizar puntos con color de relleno:
 
@@ -701,6 +733,9 @@ plot(u[-length(u)], u[-1], xlab="U_t", ylab="U_t+1", pch=21, bg="white")
 Si se observa algún tipo de patrón indicaría dependencia (se podría considerar como una versión descriptiva del denominado “Parking lot test”).
 Se puede generalizar también a $d$-uplas $(X_{t+1},X_{t+2},\ldots,X_{t+d})$ 
 (ver ejemplo del generador RANDU en Figura \@ref(fig:randu) de la Sección \@ref(gen-cong)).
+
+:::
+
 
 ### El correlograma
 
@@ -753,7 +788,7 @@ $$r(k)\underset{aprox.}{\sim}N\left(  \rho(k),\frac{1}{n}\right)$$
     (para detectar dependencias significativas).
 
 
-**Ejemplo**
+Ejemplo:
 
 
 ```r
@@ -830,7 +865,7 @@ un punto de corte para dicotomizarlas. Normalmente se toma como punto de corte l
 -   Comandos R: `tseries::runs.test(as.factor(x > median(x)))`
 
 
-**Ejemplo**
+Ejemplo:
 
 
 ```r
@@ -881,7 +916,7 @@ $$\left\{\begin{array}[c]{l}
 ```
 
 
-**Ejemplo**
+Ejemplo:
 
 
 ```r
@@ -923,17 +958,18 @@ De esta forma se consigue una sucesión de enteros aleatorios supuestamente inde
 
 En esta sección se describirán algunos de los métodos tradicionales en este campo con fines ilustrativos. Si realmente el objetivo es diagnosticar la calidad de un generador, la recomendación sería emplear las baterías de contrastes más recientes descritas en la Sección \@ref(baterias).
 
-### Contraste de frecuencias
+### Contraste de frecuencias {#freq-test}
 
-Empleando la discretización anterior se simplifica notablemente el contraste chi-cuadrado de bondad de ajuste a una uniforme, descrito en la Sección \@ref(chi2test) e implementado en la función `chisq.test.cont()`. 
+Empleando la discretización anterior se simplifica notablemente el contraste chi-cuadrado de bondad de ajuste a una uniforme, descrito en la Sección \@ref(chi2test) e implementado en la función `chisq.cont.test()`. 
 En este caso bastaría con contrastar la equiprobabilidad de la secuencia de enteros (empleando directamente la función `chisq.test()`) y este método de denomina *contraste de frecuencias* (frequency test).
 Por ejemplo:
 
 
 ```r
+# Generar
 set.seed(1)
 u <- runif(1000)
-
+# Discretizar
 k <- 10
 x <- floor(k*u) + 1
 # Test chi-cuadrado
@@ -949,11 +985,16 @@ chisq.test(f)
 ## X-squared = 10.26, df = 9, p-value = 0.3298
 ```
 
+Este código está implementado en la función `simres::freq.test()` (fichero [*test.R*](R/test.R)) y podríamos emplear:
+
+
 ```r
-# Equivalente a
-# source("Test Chi-cuadrado continua.R")  
-# chisq.test.cont(u, distribution = "unif", nclasses = k, output = FALSE, min = 0, max = 1)
+library(simres)
+freq.test(u, nclass = k)
+# Alternativamente
+# chisq.cont.test(u, distribution = "unif", nclass = k, output = FALSE, min = 0, max = 1)
 ```
+
 
 ### Contraste de series
 
