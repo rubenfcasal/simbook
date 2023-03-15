@@ -6,8 +6,8 @@
 ]{book}
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -33,14 +33,6 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\hypersetup{
-  pdftitle={Técnicas de Simulación y Remuestreo},
-  pdfauthor={Rubén Fernández Casal (ruben.fcasal@udc.es); Ricardo Cao (rcao@udc.es); Julián Costa (julian.costa@udc.es)},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -170,15 +162,23 @@
   \thm@postskip=\thm@preskip
 }
 \makeatother
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Técnicas de Simulación y Remuestreo},
+  pdfauthor={Rubén Fernández Casal (ruben.fcasal@udc.es); Ricardo Cao (rcao@udc.es); Julián Costa (julian.costa@udc.es)},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
 
 \title{Técnicas de Simulación y Remuestreo}
 \author{Rubén Fernández Casal (\href{mailto:ruben.fcasal@udc.es}{\nolinkurl{ruben.fcasal@udc.es}}) \and Ricardo Cao (\href{mailto:rcao@udc.es}{\nolinkurl{rcao@udc.es}}) \and Julián Costa (\href{mailto:julian.costa@udc.es}{\nolinkurl{julian.costa@udc.es}})}
-\date{Edición: Enero de 2023. Impresión: 2023-01-27}
+\date{Edición: Enero de 2023. Impresión: 2023-03-15}
 
 \begin{document}
 \maketitle
@@ -230,9 +230,9 @@ Para instalar los paquetes necesarios se puede emplear los siguientes comandos:
 Para generar el libro (compilar) serán necesarios paquetes adicionales,
 para lo que se recomendaría consultar el libro de \href{https://rubenfcasal.github.io/bookdown_intro}{``Escritura de libros con bookdown''} en castellano.
 
-\begin{flushleft}\includegraphics[width=0.1\linewidth]{images/by-nc-nd-88x31} \end{flushleft}
-
 En la Sección \protect\hyperlink{links}{Enlaces} de las Referencias se incluyen recursos adicionales, incluyendo algunos que pueden ser útiles para el aprendizaje de R.
+
+\begin{flushleft}\includegraphics[width=0.1\linewidth]{images/by-nc-nd-88x31} \end{flushleft}
 
 Este obra está bajo una licencia de \href{https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es_ES}{Creative Commons Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional}
 (esperamos poder liberarlo bajo una licencia menos restrictiva más adelante\ldots).
@@ -928,10 +928,10 @@ Ejemplo:
 \begin{verbatim}
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.25    0.01    0.27 
+##    0.15    0.00    0.15 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.25    0.01    0.27
+##    0.15    0.00    0.15
 \end{verbatim}
 
 \begin{Shaded}
@@ -944,10 +944,10 @@ Ejemplo:
 \begin{verbatim}
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.02    0.00    0.02 
+##       0       0       0 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.27    0.01    0.29
+##    0.15    0.00    0.15
 \end{verbatim}
 
 Hay diversos paquetes que implementan herramientas similares, por ejemplo:
@@ -997,7 +997,7 @@ Hay diversos paquetes que implementan herramientas similares, por ejemplo:
 \end{Shaded}
 
 \begin{verbatim}
-## outer: 0.31 sec elapsed
+## outer: 0.15 sec elapsed
 \end{verbatim}
 
 \begin{Shaded}
@@ -1018,10 +1018,11 @@ Hay diversos paquetes que implementan herramientas similares, por ejemplo:
 \end{Shaded}
 
 \begin{verbatim}
-## 'data.frame':    10 obs. of  3 variables:
-##  $ tic: num  6.87 6.87 6.87 6.87 6.87 6.87 6.87 6.87 6.87 6.87
-##  $ toc: num  6.87 6.87 6.87 6.87 6.87 6.87 6.87 6.87 6.87 6.89
-##  $ msg: chr  "1" "2" "3" "4" ...
+## 'data.frame':    10 obs. of  4 variables:
+##  $ tic         : num  3.4 3.4 3.4 3.4 3.4 3.4 3.4 3.4 3.4 3.4
+##  $ toc         : num  3.4 3.4 3.4 3.4 3.4 3.4 3.4 3.4 3.4 3.4
+##  $ msg         : chr  "1" "2" "3" "4" ...
+##  $ callback_msg: chr  "1: 0 sec elapsed" "2: 0 sec elapsed" "3: 0 sec elapsed" "4: 0 sec elapsed" ...
 \end{verbatim}
 
 \begin{Shaded}
@@ -1036,7 +1037,7 @@ Hay diversos paquetes que implementan herramientas similares, por ejemplo:
 
 \begin{verbatim}
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   0.000   0.000   0.000   0.002   0.000   0.020
+##       0       0       0       0       0       0
 \end{verbatim}
   \end{itemize}
 \item
@@ -1202,19 +1203,22 @@ Este método está implementado\footnote{Aunque de forma no muy eficiente. Para 
 \end{Shaded}
 
 \begin{verbatim}
-## function (n, seed = as.numeric(Sys.time()), a = 7^5, c = 0, m = 2^31 - 
-##     1) 
-## {
-##     u <- numeric(n)
-##     for (i in 1:n) {
-##         seed <- (a * seed + c)%%m
-##         u[i] <- seed/m
-##     }
-##     assign(".rng", list(seed = seed, type = "lcg", parameters = list(a = a, 
-##         c = c, m = m)), envir = globalenv())
-##     return(u)
+## function(n, seed = as.numeric(Sys.time()), a = 7^5, c = 0, m = 2^31 - 1) {
+##   u <- numeric(n)
+##   for(i in 1:n) {
+##     seed <- (a * seed + c) %% m
+##     u[i] <- seed/m # (seed + 1)/(m + 1)
+##   }
+##   # Almacenar semilla y parámetros
+##   assign(".rng", list(seed = seed, type = "lcg",
+##           parameters = list(a = a, c = c, m = m)), envir = globalenv())
+##   # .rng <<- list(seed = seed, type = "lcg", parameters = list(a = a, c = c, m = m))
+##   # Para continuar con semilla y parámetros:
+##   #   with(.rng, rlcg(n, seed, parameters$a, parameters$c, parameters$m))
+##   # Devolver valores
+##   return(u)
 ## }
-## <bytecode: 0x00000000386c5a50>
+## <bytecode: 0x00000247e31eb4e8>
 ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -1223,7 +1227,7 @@ Ejemplos de parámetros:
 \begin{itemize}
 \item
   \(c=0\), \(a=2^{16}+3=65539\) y \(m=2^{31}\), generador \emph{RANDU} de IBM
-  (\textbf{no recomendable}).
+  (\textbf{no recomendable} como veremos más adelante).
 \item
   \(c=0\), \(a=7^{5}=16807\) y \(m=2^{31}-1\) (primo de Mersenne), Park y Miller (1988)
   \emph{minimal standar}, empleado por las librerías IMSL y NAG.
@@ -1279,12 +1283,11 @@ Un generador multiplicativo tiene período máximo (\(p=m-1\)) si:
 
 \end{theorem}
 
-Además de preocuparse de la longitud del ciclo, las secuencias generadas deben aparentar muestras i.i.d. \(\mathcal{U}(0,1)\).
-
-Uno de los principales problemas es que los valores generados pueden mostrar una clara estructura reticular.
-Este es el caso por ejemplo del generador RANDU de IBM muy empleado en la década de los 70 (ver Figura \ref{fig:randu})\footnote{Alternativamente se podría utilizar la función \texttt{plot3d} del paquete \texttt{rgl}, y rotar la figura (pulsando con el ratón) para ver los hiperplanos:
-  \texttt{rgl::plot3d(xyz)}}.
-Por ejemplo, el conjunto de datos \texttt{randu} contiene 400 tripletas de números sucesivos obtenidos con la implementación de VAX/VMS 1.5 (1977).
+Sin embargo, además de preocuparse de la longitud del ciclo, sería mucho más importante que las secuencias generadas se comporten de forma similar a muestras aleatorias simple de una \(\mathcal{U}(0,1)\).
+Uno de los principales problemas con este tipo de generadores (y con muchos otros) es que los valores generados pueden mostrar una estructura reticular.
+Este es el caso del generador RANDU de IBM muy empleado en la década de los 70 y que muestra una clara estructura reticular cuando se consideran más de dos dimensiones (aunque ya se detectó este problema en 1963 se siguió utilizando hasta los 90).
+Para ilustrar este problema podríamos emplear el conjunto de datos \texttt{randu} del paquete base \texttt{datasets} que contiene 400 tripletas de números sucesivos generados con la implementación de VAX/VMS 1.5 (de 1977, y que no se corrigió hasta la versión 2.0 de 1980).
+Aunque también podemos emplear el siguiente código\footnote{La función \texttt{stats::embed(u,\ 3)} devuelve una matriz en la que la fila i-ésima contiene los valores \texttt{u{[}i+2{]}}, \texttt{u{[}i+1{]}} y \texttt{u{[}i{]}}. Además, en lugar de la función \texttt{plot3D::points3D()} se podría utilizar la función \texttt{plot3d()} del paquete \texttt{rgl}, y rotar la figura (pulsando con el ratón) para ver los hiperplanos \texttt{rgl::plot3d(xyz)}.} (ver Figura \ref{fig:randu}):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1296,7 +1299,7 @@ Por ejemplo, el conjunto de datos \texttt{randu} contiene 400 tripletas de núme
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.01    0.00    0.02
+##       0       0       0
 \end{verbatim}
 
 \begin{Shaded}
@@ -1321,24 +1324,17 @@ Por ejemplo, el conjunto de datos \texttt{randu} contiene 400 tripletas de núme
 \end{figure}
 
 En general todos los generadores de este tipo van a presentar estructuras reticulares.
-Marsaglia (1968) demostró que las \(k\)-uplas de un generadores multiplicativo están contenidas en a lo sumo \(\left(k!m\right)^{1/k}\) hiperplanos paralelos (para más detalles sobre la estructura reticular, ver por ejemplo Ripley, 1987, sección 2.7).
-Por tanto habría que seleccionar adecuadamente \(m\) y \(c\) (\(a\) solo influiría en la pendiente) de forma que la estructura reticular sea imperceptible teniendo en cuenta el número de datos que se pretende generar (por ejemplo de forma que la distancia mínima entre los puntos sea próxima a la esperada en teoría).
+Marsaglia (1968) demostró que las k-uplas de un generadores multiplicativo están contenidas en a lo sumo \(\left(k!m\right)^{1/k}\) hiperplanos paralelos (\texttt{r}trunc((factorial(3)*2\textsuperscript{31)}(1/3))` como máximo con \(k=3\) y \(m=2^{31}\)).
+Por tanto habría que seleccionar adecuadamente los parámetros del generador congruencial de forma que la estructura reticular sea imperceptible, teniendo en cuenta el número de datos que se pretende generar (por ejemplo de forma que la distancia mínima entre los puntos sea próxima a la esperada en teoría).
+Para más detalles sobre la estructura reticular ver por ejemplo Ripley (1987, Sección 2.7).
 
 Se han propuesto diversas pruebas (ver Sección \ref{calgen}) para
 determinar si un generador tiene problemas de este tipo y se han
 realizado numerosos estudios para determinadas familias (e.g.~Park y
-Miller, 1988, estudiaron que parámetros son adecuados para \(m=2^{31}-1\)).
+Miller, 1988, estudiaron los multiplicadores adecuados para \(m=2^{31}-1\)).
+En ciertos contextos muy exigentes (por ejemplo en criptografía), se recomienda considerar un ``periodo de seguridad'' \(\approx \sqrt{p}\) para evitar este tipo de problemas.
 
-\begin{itemize}
-\item
-  En ciertos contextos muy exigentes (por ejemplo en criptografía), se recomienda
-  considerar un ``periodo de seguridad'' \(\approx \sqrt{p}\) para evitar este tipo
-  de problemas.
-\item
-  Aunque estos generadores tienen limitaciones en su capacidad para
-  producir secuencias muy largas de números i.i.d. \(\mathcal{U}(0,1)\),
-  son un elemento básico en generadores más avanzados (siguiente sección).
-\end{itemize}
+Aunque estos generadores tienen limitaciones en su capacidad para producir secuencias muy largas de números i.i.d. \(\mathcal{U}(0,1)\), son un elemento básico en generadores más avanzados (incluyendo el empleado por defecto en R) como veremos en la siguiente sección.
 
 \begin{example}
 \protect\hypertarget{exm:congru512}{}\label{exm:congru512}
@@ -1563,48 +1559,50 @@ Por ejemplo, se podría emplear la función \texttt{simres::chisq.cont.test()} (
 \end{Shaded}
 
 \begin{verbatim}
-## function (x, distribution = "norm", nclass = floor(length(x)/5), 
-##     output = TRUE, nestpar = 0, ...) 
-## {
-##     q.distrib <- eval(parse(text = paste("q", distribution, sep = "")))
-##     q <- q.distrib((1:(nclass - 1))/nclass, ...)
-##     tol <- sqrt(.Machine$double.eps)
-##     xbreaks <- c(min(x) - tol, q, max(x) + tol)
-##     if (output) {
-##         xhist <- hist(x, breaks = xbreaks, freq = FALSE, lty = 2, 
-##             border = "grey50")
-##         d.distrib <- eval(parse(text = paste("d", distribution, 
-##             sep = "")))
-##         curve(d.distrib(x, ...), add = TRUE)
-##     }
-##     else {
-##         xhist <- hist(x, breaks = xbreaks, plot = FALSE)
-##     }
-##     O <- xhist$counts
-##     E <- length(x)/nclass
-##     DNAME <- deparse(substitute(x))
-##     METHOD <- "Pearson's Chi-squared test"
-##     STATISTIC <- sum((O - E)^2/E)
-##     names(STATISTIC) <- "X-squared"
-##     PARAMETER <- nclass - nestpar - 1
-##     names(PARAMETER) <- "df"
-##     PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
-##     classes <- format(xbreaks)
-##     classes <- paste("(", classes[-(nclass + 1)], ",", classes[-1], 
-##         "]", sep = "")
-##     RESULTS <- list(classes = classes, observed = O, expected = E, 
-##         residuals = (O - E)/sqrt(E))
-##     if (output) {
-##         cat("\nPearson's Chi-squared test table\n")
-##         print(as.data.frame(RESULTS))
-##     }
-##     if (any(E < 5)) 
-##         warning("Chi-squared approximation may be incorrect")
-##     structure(c(list(statistic = STATISTIC, parameter = PARAMETER, 
-##         p.value = PVAL, method = METHOD, data.name = DNAME), 
-##         RESULTS), class = "htest")
+## function(x, distribution = "norm", nclass = floor(length(x)/5),
+##                             output = TRUE, nestpar = 0, ...) {
+##   # Función distribución
+##   q.distrib <- eval(parse(text = paste("q", distribution, sep = "")))
+##   # Puntos de corte
+##   q <- q.distrib((1:(nclass - 1))/nclass, ...)
+##   tol <- sqrt(.Machine$double.eps)
+##   xbreaks <- c(min(x) - tol, q, max(x) + tol)
+##   # Gráficos y frecuencias
+##   if (output) {
+##     xhist <- hist(x, breaks = xbreaks, freq = FALSE,
+##                   lty = 2, border = "grey50")
+##     # Función densidad
+##     d.distrib <- eval(parse(text = paste("d", distribution, sep = "")))
+##     curve(d.distrib(x, ...), add = TRUE)
+##   } else {
+##     xhist <- hist(x, breaks = xbreaks, plot = FALSE)
+##   }
+##   # Cálculo estadístico y p-valor
+##   O <- xhist$counts  # Equivalente a table(cut(x, xbreaks)) pero más eficiente
+##   E <- length(x)/nclass
+##   DNAME <- deparse(substitute(x))
+##   METHOD <- "Pearson's Chi-squared test"
+##   STATISTIC <- sum((O - E)^2/E)
+##   names(STATISTIC) <- "X-squared"
+##   PARAMETER <- nclass - nestpar - 1
+##   names(PARAMETER) <- "df"
+##   PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
+##   # Preparar resultados
+##   classes <- format(xbreaks)
+##   classes <- paste("(", classes[-(nclass + 1)], ",", classes[-1], "]",
+##                    sep = "")
+##   RESULTS <- list(classes = classes, observed = O, expected = E,
+##                   residuals = (O - E)/sqrt(E))
+##   if (output) {
+##     cat("\nPearson's Chi-squared test table\n")
+##     print(as.data.frame(RESULTS))
+##   }
+##   if (any(E < 5))
+##     warning("Chi-squared approximation may be incorrect")
+##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
+##                    method = METHOD, data.name = DNAME), RESULTS), class = "htest")
 ## }
-## <bytecode: 0x00000000396c8270>
+## <bytecode: 0x00000247f3218378>
 ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -1698,7 +1696,7 @@ Podemos realizar el contraste con el siguiente código:
 
 \begin{verbatim}
 ## 
-##  One-sample Kolmogorov-Smirnov test
+##  Asymptotic one-sample Kolmogorov-Smirnov test
 ## 
 ## data:  u
 ## D = 0.0033281, p-value = 1
@@ -1902,7 +1900,7 @@ Además de la comparación gráfica, podríamos emplear un test de bondad de aju
 
 \begin{verbatim}
 ## 
-##  One-sample Kolmogorov-Smirnov test
+##  Asymptotic one-sample Kolmogorov-Smirnov test
 ## 
 ## data:  estadistico
 ## D = 0.023499, p-value = 0.6388
@@ -1942,7 +1940,7 @@ Mientras que la distribución teórica del estadístico depende del contraste y 
 
 \begin{verbatim}
 ## 
-##  One-sample Kolmogorov-Smirnov test
+##  Asymptotic one-sample Kolmogorov-Smirnov test
 ## 
 ## data:  pvalor
 ## D = 0.023499, p-value = 0.6388
@@ -2084,22 +2082,26 @@ Este algoritmo está implementado en la función \texttt{simres::rvng()} (ver ta
 \end{Shaded}
 
 \begin{verbatim}
-## function (n, seed = as.numeric(Sys.time()), k = 4) 
-## {
-##     seed <- seed%%10^k
-##     aux <- 10^(2 * k - k/2)
-##     aux2 <- 10^(k/2)
-##     u <- numeric(n)
-##     for (i in 1:n) {
-##         z <- seed^2
-##         seed <- trunc((z - trunc(z/aux) * aux)/aux2)
-##         u[i] <- seed/10^k
-##     }
-##     assign(".rng", list(seed = seed, type = "vm", parameters = list(k = k)), 
-##         envir = globalenv())
-##     return(u)
+## function(n, seed = as.numeric(Sys.time()), k = 4) {
+##   seed <- seed %% 10^k
+##   aux <- 10^(2*k-k/2)
+##   aux2 <- 10^(k/2)
+##   u <- numeric(n)
+##   for(i in 1:n) {
+##     z <- seed^2
+##     seed <- trunc((z - trunc(z/aux)*aux)/aux2)
+##     u[i] <- seed/10^k
+##   }
+##   # Almacenar semilla y parámetros
+##   assign(".rng", list(seed = seed, type = "vm", parameters = list(k = k)),
+##       envir = globalenv())
+##   # .rng <<- list(seed = seed, type = "vm", parameters = list(k = k))
+##   # Para continuar con semilla y parámetros:
+##   #   with(.rng, rvng(n, seed, parameters$k))
+##   # Devolver valores
+##   return(u)
 ## }
-## <bytecode: 0x000000003841e018>
+## <bytecode: 0x00000247e2a1ecd0>
 ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -2892,7 +2894,7 @@ El código para implementar este algoritmo en R podría ser el siguiente:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.03    0.00    0.03
+##    0.01    0.00    0.01
 \end{verbatim}
 
 \begin{Shaded}
@@ -2924,21 +2926,31 @@ simplificada del método que tiene por objeto evitar cálculos
 innecesarios (tal y como se hizo en el ejemplo de la exponencial).
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.20}}
-  >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.20}}
-  >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.20}}
-  >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.20}}
-  >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.20}}@{}}
-\toprule
-Nombre & Densidad & \(F(x)\) & \(F^{-1}\left( U\right)\) & Forma simplificada \\
-\midrule
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Nombre
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Densidad
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\(F(x)\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\(F^{-1}\left( U\right)\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Forma simplificada
+\end{minipage} \\
+\midrule()
 \endhead
 \(\exp\left( \lambda\right)\) (\(\lambda>0\)) & \(\lambda e^{-\lambda x}\), si \(x\geq0\) & \(1-e^{-\lambda x}\) & \(-\dfrac{\ln\left( 1-U\right) }\lambda\) & \(-\dfrac{\ln U}\lambda\) \\
 Cauchy & \(\dfrac1{\pi\left( 1+x^{2}\right)}\) & \(\dfrac12+\dfrac{\arctan x}\pi\) & \(\tan\left( \pi\left( U-\dfrac12\right) \right)\) & \(\tan\pi U\) \\
 Triangular en \(\left( 0,a\right)\) & \(\dfrac2a\left( 1-\dfrac xa\right)\), si \(0\leq x\leq a\) & \(\dfrac2a\left(x-\dfrac{x^{2}}{2a}\right)\) & \(a\left( 1-\sqrt{1-U}\right)\) & \(a\left( 1-\sqrt{U}\right)\) \\
 Pareto (\(a,b>0\)) & \(\dfrac{ab^{a}}{x^{a+1}}\), si \(x\geq b\) & \(1-\left( \dfrac bx\right)^{a}\) & \(\dfrac b{\left( 1-U\right)^{1/a}}\) & \(\dfrac b{U^{1/a}}\) \\
 Weibull (\(\lambda,\alpha>0\)) & \(\alpha\lambda^{\alpha}x^{\alpha-1}e^{-\left( \lambda x\right) ^{\alpha}}\), si \(x\geq0\) & \(1-e^{-\left( \lambda x\right)^{\alpha}}\) & \(\dfrac{\left( -\ln\left(1-U\right) \right)^{1/\alpha}}\lambda\) & \(\dfrac{\left( -\ln U\right)^{1/\alpha}}\lambda\) \\
-\bottomrule
+\bottomrule()
 \end{longtable}
 
 \begin{exercise}[distribución doble exponencial]
@@ -3004,7 +3016,7 @@ y función de distribución:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.05    0.00    0.04
+##    0.01    0.00    0.02
 \end{verbatim}
 \item
   Representar el histograma y compararlo con la densidad teórica.
@@ -3096,14 +3108,16 @@ las correspondientes a la normal estándar).
 \hypertarget{AR}{%
 \section{Método de aceptación rechazo}\label{AR}}
 
-Se trata de un método universal alternativo al de inversión para
-el caso de que no se pueda emplear la función cuantil,
-pero se dispone de una expresión (preferiblemente sencilla) para la
-función de densidad objetivo \(f\left( x \right)\).
+Se trata de un método universal alternativo al de inversión para el caso de que no se pueda emplear la función cuantil, pero se dispone de una expresión (preferiblemente sencilla) para la función de densidad objetivo \(f\left( x \right)\).
 
-La idea es simular una variable aleatoria bidimensional \(\left( X, Y\right)\) con distribución uniforme en el hipografo de \(f\) (el conjunto de puntos del plano comprendidos entre el eje OX y \(f\)):
+La idea es simular una variable aleatoria bidimensional \(\left( X, Y\right)\) con distribución uniforme en el hipografo de \(f\) (la región del plano comprendida entre el eje OX y \(f\), de área 1):
 \[A_{f}=\left\{ \left( x,y\right) \in \mathbb{R}^{2}:0\leq y\leq f(x) \right\}.\]
-De esta forma la primera componente tendrá la distribución deseada (Figura \ref{fig:var-gen}):
+De esta forma la primera componente tendrá la distribución deseada (ver Figura \ref{fig:var-gen}):
+
+\[ P\left( a<X<b\right) = \frac{\text{Area de }\left\{ \left( x,y\right) \in 
+\mathbb{R}^{2}:a<x<b;~0\leq y\leq f(x) \right\} }{\text{Area de }
+A_{f}} \\
+= \int_{a}^{b}f(x) dx \]
 
 \begin{figure}[!htb]
 
@@ -3114,12 +3128,16 @@ De esta forma la primera componente tendrá la distribución deseada (Figura \re
 \caption{Puntos con distribución uniforme en el hipografo de una función de densidad.}\label{fig:var-gen}
 \end{figure}
 
-\[ P\left( a<X<b\right) = \frac{\text{Area de }\left\{ \left( x,y\right) \in 
-\mathbb{R}^{2}:a<x<b;~0\leq y\leq f(x) \right\} }{\text{Area de }
-A_{f}} \\
-= \int_{a}^{b}f(x) dx \]
-
-El resultado anterior es también válido para una cuasi-densidad \(f^{\ast}\) (no depende de la constante normalizadora):
+El resultado anterior es también válido para una cuasi-densidad\footnote{Una cuasi-densidad es cualquier función no negativa \(f^{\ast}(x) \geq 0\) integrable. Por tanto, si \(k = \int_{-\infty}^{+\infty}f^{\ast}(x)dx\) es el área bajo esta curva, denominada \emph{constante normalizadora}, entonces \(f(x) = \frac{1}{k}f^{\ast}(x)\) es una densidad.
+  En ocasiones no interesa especialmente esta constante \(k\) (no es necesario calcularla o simplemente se quieren simplificar las expresiones) y se denota por \(f(x) \propto f^{\ast}(x)\) que la función de densidad es proporcional a la cuasi-densidad.
+  Por ejemplo, a partir de la densidad conjunta \(f(x, y)\) de una variable aleatoria bidimensional \((X, Y)\), podemos obtener la densidad de la distribución condicionada \(X|Y=y_0\):
+  \[f(x | y_0) = \frac{f(x, y_0)}{f_Y(y_0)}\]
+  siendo \(f_Y(y_0) = \int_{-\infty}^{+\infty}f(x, y_0)dx\) la densidad marginal de \(Y\) evaluada en \(y_0\). Por tanto \(f(x | y_0) \propto f(x, y_0)\).
+  De la expresión anterior también se deduce que:
+  \[f(x, y) = f(x | y)f_Y(y) = f(y | x)f_X(x)\]
+  y podríamos escribir que:
+  \[f(y | x) \propto f(x | y)f_Y(y)\]
+  que sería una expresión del \emph{teorema de Bayes} aplicado a densidades.} \(f^{\ast}\) (no depende de la constante normalizadora):
 
 \begin{itemize}
 \tightlist
@@ -3292,7 +3310,7 @@ Empleando estas funciones podemos generar una muestra de \(10^3\) observaciones 
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.03    0.00    0.04
+##    0.01    0.00    0.02
 \end{verbatim}
 
 Para analizar la eficiencia podemos emplear el número de generaciones de la distribución auxiliar (siguiente sección):
@@ -3355,7 +3373,7 @@ Una vez fijada la densidad \(g\), el valor óptimo será:
 
 \begin{remark}
 Hay que tener en cuenta que la cota óptima es el número medio de iteraciones \(c\) solo si conocemos las constantes normalizadoras.
-Si solo se conoce la cuasidensidad \(f^{\ast}\) de la distribución objetivo (o de la auxiliar), la correspondiente cota óptima:
+Si solo se conoce la cuasi-densidad \(f^{\ast}\) de la distribución objetivo (o de la auxiliar), la correspondiente cota óptima:
 \[\tilde{c} = \max_{\{x : g(x) > 0\}} \frac{f^{\ast}(x)}{g(x)}\]
 asumirá la constante desconocida, aunque siempre podemos aproximar por simulación el verdadero valor de \(c\) y a partir de él la constante normalizadora (ver Ejercicio \ref{exr:post-pri-ar}).
 Basta con tener en cuenta que, si \(f(x) = f^{\ast}(x)/k\):
@@ -3480,7 +3498,7 @@ Generamos una muestra de \(10^4\) observaciones:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.18    0.00    0.20
+##    0.01    0.05    0.06
 \end{verbatim}
 
 Evaluamos la eficiencia:
@@ -3635,7 +3653,7 @@ El objetivo sería simular la distribución a posteriori de \(\theta\):
 \[\pi(\theta|\mathbf{x}) = \frac{L(\mathbf{x}|\theta)\pi(\theta)}{\int L(\mathbf{x}|\theta)\pi(\theta)d\theta},\]
 siendo \(L(\mathbf{x}|\theta)\) la función de verosimilitud (\(L(\mathbf{x}|\theta) = \prod\limits_{i=1}^{n}f(x_i|\theta)\) suponiendo i.i.d.).
 Es decir:
-\[\pi(\theta | \mathbf{x})\propto L(\mathbf{x}| \theta)\pi(\theta).\]
+\[\pi(\theta | \mathbf{x}) \propto L(\mathbf{x}| \theta)\pi(\theta).\]
 
 Como esta distribución cambia al variar la muestra observada, puede resultar difícil encontrar una densidad auxiliar adecuada para simular valores de la densidad a posteriori \(\pi(\theta|\mathbf{x})\).
 Por ejemplo, podríamos emplear la densidad a priori \(\pi(\theta)\) como densidad auxiliar.
@@ -3744,7 +3762,7 @@ como distribución a priori una Cauchy.
 \CommentTok{\# f.cuasi \textless{}{-} function(mu) sapply(mu, lik1)*dcauchy(mu)}
 \NormalTok{f.cuasi }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(mu) }\FunctionTok{lik}\NormalTok{(mu)}\SpecialCharTok{*}\FunctionTok{dcauchy}\NormalTok{(mu)    }
 \FunctionTok{curve}\NormalTok{(c }\SpecialCharTok{*} \FunctionTok{dcauchy}\NormalTok{(x), }\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{), }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, c}\SpecialCharTok{/}\NormalTok{pi), }\AttributeTok{lty =} \DecValTok{2}\NormalTok{,}
-      \AttributeTok{xlab =} \StringTok{"mu"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"cuasidensidad"}\NormalTok{)}
+      \AttributeTok{xlab =} \StringTok{"mu"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"cuasi{-}densidad"}\NormalTok{)}
 \FunctionTok{curve}\NormalTok{(f.cuasi, }\AttributeTok{add =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -3755,7 +3773,7 @@ como distribución a priori una Cauchy.
 
   }
 
-  \caption{Comparación de la cuasidensidad a posteriori (línea contínua) con la densidad a priori reescalada (línea discontinua).}\label{fig:post-pri-plot}
+  \caption{Comparación de la cuasi-densidad a posteriori (línea contínua) con la densidad a priori reescalada (línea discontinua).}\label{fig:post-pri-plot}
   \end{figure}
 
   Por ejemplo, podríamos emplear el siguiente código para generar simulaciones de la distribución a posteriori mediante aceptación-rechazo a partir de la distribución de Cauchy:
@@ -4005,24 +4023,25 @@ El correspondiente algoritmo está implementado en la función \href{https://rub
 \end{Shaded}
 
 \begin{verbatim}
-## function (n) 
-## {
-##     ngen <- n
-##     u <- runif(n, 0, 1)
-##     v <- runif(n, -1, 1)
-##     x <- v/u
-##     ind <- u^2 + v^2 > 1
-##     while (le <- sum(ind)) {
-##         ngen <- ngen + le
-##         u <- runif(le, 0, 1)
-##         v <- runif(le, -1, 1)
-##         x[ind] <- v/u
-##         ind[ind] <- u^2 + v^2 > 1
-##     }
-##     attr(x, "ngen") <- ngen
-##     return(x)
+## function(n) {
+##   # Cauchy mediante cociente de uniformes
+##   ngen <- n
+##   u <- runif(n, 0, 1)
+##   v <- runif(n, -1, 1)
+##   x <- v/u
+##   ind <- u^2 + v^2 > 1 # TRUE si no verifica condición
+##   # Volver a generar si no verifica condición
+##   while (le <- sum(ind)){ # mientras le = sum(ind) > 0
+##     ngen <- ngen + le
+##     u <- runif(le, 0, 1)
+##     v <- runif(le, -1, 1)
+##     x[ind] <- v/u
+##     ind[ind] <- u^2 + v^2 > 1 # TRUE si no verifica condición
+##   }
+##   attr(x, "ngen") <- ngen
+##   return(x)
 ## }
-## <bytecode: 0x000000003f43bb88>
+## <bytecode: 0x000002a0b2046a60>
 ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -4445,24 +4464,25 @@ Este algoritmo está implementado en la función \href{https://rubenfcasal.githu
 \end{Shaded}
 
 \begin{verbatim}
-## function (x, prob = 1/length(x), n = 1000, as.factor = FALSE) 
-## {
-##     ncomp <- 0
-##     Fx <- cumsum(prob)
-##     X <- numeric(n)
-##     U <- runif(n)
-##     for (j in 1:n) {
-##         i <- 1
-##         while (Fx[i] < U[j]) i <- i + 1
-##         X[j] <- x[i]
-##         ncomp <- ncomp + i
-##     }
-##     if (as.factor) 
-##         X <- factor(X, levels = x)
-##     attr(X, "ncomp") <- ncomp
-##     return(X)
+## function(x, prob = 1/length(x), n = 1000, as.factor = FALSE) {
+##   # Numero de comparaciones
+##   ncomp <- 0
+##   # Inicializar FD
+##   Fx <- cumsum(prob)
+##   # Simular
+##   X <- numeric(n)
+##   U <- runif(n)
+##   for(j in 1:n) {
+##     i <- 1
+##     while (Fx[i] < U[j]) i <- i + 1
+##     X[j] <- x[i]
+##     ncomp <- ncomp + i
+##   }
+##   if(as.factor) X <- factor(X, levels = x)
+##   attr(X, "ncomp") <- ncomp
+##   return(X)
 ## }
-## <bytecode: 0x0000000039b22858>
+## <bytecode: 0x0000021a6e0fa608>
 ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -4491,7 +4511,7 @@ Empleamos la rutina anterior para generar las simulaciones:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.05    0.00    0.06
+##    0.03    0.00    0.03
 \end{verbatim}
 
 A partir de ellas podríamos aproximar el valor esperado:
@@ -4650,7 +4670,7 @@ Podemos repetir la simulación del Ejemplo \ref{exm:binom-cuant} anterior ordena
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.04    0.00    0.05
+##    0.02    0.00    0.02
 \end{verbatim}
 
 \begin{Shaded}
@@ -4686,7 +4706,7 @@ Como ya se comentó, en R se recomienda emplear la función \texttt{sample()}
 
 \begin{verbatim}
 ##    user  system elapsed 
-##       0       0       0
+##    0.02    0.00    0.02
 \end{verbatim}
 
 \end{example}
@@ -4769,30 +4789,30 @@ Este algoritmo está implementado en la función \href{https://rubenfcasal.githu
 \end{Shaded}
 
 \begin{verbatim}
-## function (x, prob = 1/length(x), m, n = 1000, as.factor = FALSE) 
-## {
-##     Fx <- cumsum(prob)
-##     g <- rep(1, m)
-##     i <- 1
-##     for (j in 2:m) {
-##         while (Fx[i] < (j - 1)/m) i <- i + 1
-##         g[j] <- i
-##     }
-##     ncomp <- i - 1
-##     X <- numeric(n)
-##     U <- runif(n)
-##     for (j in 1:n) {
-##         i <- i0 <- g[floor(U[j] * m) + 1]
-##         while (Fx[i] < U[j]) i <- i + 1
-##         ncomp <- ncomp + i - i0
-##         X[j] <- x[i]
-##     }
-##     if (as.factor) 
-##         X <- factor(X, levels = x)
-##     attr(X, "ncomp") <- ncomp
-##     return(X)
+## function(x, prob = 1/length(x), m, n = 1000, as.factor = FALSE) {
+##   # Inicializar tabla y FD
+##   Fx <- cumsum(prob)
+##   g <- rep(1,m)
+##   i <- 1
+##   for(j in 2:m) {
+##     while (Fx[i] < (j-1)/m) i <- i + 1
+##     g[j] <- i
+##   }
+##   ncomp <- i - 1
+##   # Generar valores
+##   X <- numeric(n)
+##   U <- runif(n)
+##   for(j in 1:n) {
+##     i <- i0 <- g[floor(U[j] * m) + 1]
+##     while (Fx[i] < U[j]) i <- i + 1
+##     ncomp <- ncomp + i - i0
+##     X[j] <- x[i]
+##   }
+##   if(as.factor) X <- factor(X, levels = x)
+##   attr(X, "ncomp") <- ncomp
+##   return(X)
 ## }
-## <bytecode: 0x000000003a19dcc8>
+## <bytecode: 0x0000021a6e83f990>
 ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -4810,7 +4830,7 @@ Repetimos la simulación del Ejemplo \ref{exm:binom-cuant} anterior empleando es
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.04    0.00    0.03
+##    0.02    0.00    0.01
 \end{verbatim}
 
 Número medio de comparaciones:
@@ -4940,32 +4960,31 @@ Este método también está implementado en la función \href{https://rubenfcasa
 \end{Shaded}
 
 \begin{verbatim}
-## function (x, prob = 1/length(x), n = 1000, as.factor = FALSE) 
-## {
-##     a <- numeric(length(x))
-##     q <- prob * length(x)
-##     low <- q < 1
-##     high <- which(!low)
-##     low <- which(low)
-##     while (length(high) && length(low)) {
-##         l <- low[1]
-##         h <- high[1]
-##         a[l] <- h
-##         q[h] <- q[h] - (1 - q[l])
-##         if (q[h] < 1) {
-##             high <- high[-1]
-##             low[1] <- h
-##         }
-##         else low <- low[-1]
-##     }
-##     V <- runif(n)
-##     i <- floor(runif(n) * length(x)) + 1
-##     X <- x[ifelse(V < q[i], i, a[i])]
-##     if (as.factor) 
-##         X <- factor(X, levels = x)
-##     return(X)
+## function(x, prob = 1/length(x), n = 1000, as.factor = FALSE) {
+##   # Inicializar tablas
+##   a <- numeric(length(x))
+##   q <- prob*length(x)
+##   low <- q < 1
+##   high <- which(!low)
+##   low <- which(low)
+##   while (length(high) && length(low)) {
+##     l <- low[1]
+##     h <- high[1]
+##     a[l] <- h
+##     q[h] <- q[h] - (1 - q[l])
+##     if (q[h] < 1) {
+##       high <- high[-1]
+##       low[1] <- h
+##     } else low <- low[-1]
+##   } # while
+##   # Generar valores
+##   V <- runif(n)
+##   i <- floor(runif(n)*length(x)) + 1
+##   X <- x[ ifelse( V < q[i], i, a[i]) ]
+##   if(as.factor) X <- factor(X, levels = x)
+##   return(X)
 ## }
-## <bytecode: 0x0000000036d69358>
+## <bytecode: 0x0000021a6b39baf8>
 ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -4983,7 +5002,7 @@ Repetimos la simulación del Ejemplo \ref{exm:binom-cuant} anterior empleando es
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.02    0.00    0.02
+##       0       0       0
 \end{verbatim}
 
 Análisis de los resultados:
@@ -5675,7 +5694,7 @@ del paquete \texttt{MASS} que emplea la factorización espectral (\texttt{eigen}
 ##         drop(X)
 ##     else t(X)
 ## }
-## <bytecode: 0x000000003733ca10>
+## <bytecode: 0x0000019c97509b20>
 ## <environment: namespace:MASS>
 \end{verbatim}
 
@@ -5716,7 +5735,7 @@ x_1,x_2,\ldots,x_{i-1}\right)},\]
 se obtiene el siguiente algoritmo general:
 
 \begin{conjecture}[de simulación mediante distribuciones condicionadas]
-\protect\hypertarget{cnj:mult-distrcond}{}\label{cnj:mult-distrcond}
+\protect\hypertarget{cnj:mult-distrcond}{}\label{cnj:mult-distrcond}\leavevmode
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -6389,10 +6408,6 @@ Podemos representar la densidad conjunta (con \texttt{sm::sm.density()}) {[}Figu
 \NormalTok{sm}\SpecialCharTok{::}\FunctionTok{sm.density}\NormalTok{(rcunif, }\AttributeTok{xlab =} \StringTok{"u"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"v"}\NormalTok{, }\AttributeTok{zlab =} \StringTok{"Density"}\NormalTok{)    }
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## Warning: weights overwritten by binning
-\end{verbatim}
 
 \begin{figure}[!htb]
 
@@ -7157,18 +7172,15 @@ Una alternativa más eficiente para representar gráficamente la convergencia es
 \end{Shaded}
 
 \begin{verbatim}
-## function (fun, a, b, n, level = 0.95, plot = TRUE, ...) 
-## {
-##     fx <- sapply(runif(n, a, b), fun) * (b - a)
-##     result <- if (plot) 
-##         conv.plot(fx, level = level, ...)
-##     else {
-##         q <- qnorm((1 + level)/2)
-##         list(approx = mean(fx), max.error = q * sd(fx)/sqrt(n))
-##     }
-##     return(result)
+## function(fun, a, b, n, level = 0.95, plot = TRUE, ...) {
+##   fx <- sapply(runif(n, a, b), fun) * (b - a)
+##   result <- if (plot) conv.plot(fx, level = level, ...) else {
+##     q <- qnorm((1 + level)/2)
+##     list(approx = mean(fx), max.error = q * sd(fx)/sqrt(n))
+##   }
+##   return(result)
 ## }
-## <bytecode: 0x00000000381a6768>
+## <bytecode: 0x00000273e5382a78>
 ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -13283,14 +13295,22 @@ En este caso interesará distinguir principalmente entre hipótesis nulas simple
 Por ejemplo:
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.43}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.53}}@{}}
-\toprule
-\(H_0\) simple & \(H_0\) compuesta \\
-\midrule
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4306}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5278}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{verbatim}
+  $H_0$ simple
+\end{verbatim}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{verbatim}
+     $H_0$ compuesta
+\end{verbatim}
+\end{minipage} \\
+\midrule()
 \endhead
 \(\left \{ \begin{array}{l} H_0:F= \mathcal{N}(0,1)\\ H_1:F\neq \mathcal{N}(0,1) \end{array} \right.\) & \(\left \{ \begin{array}{l} H_0:F= \mathcal{N}(\mu,\sigma^2)\\ H_1:F\neq \mathcal{N}(\mu,\sigma^2) \end{array} \right.\) \\
-\bottomrule
+\bottomrule()
 \end{longtable}
 
 Entre los métodos gráficos habituales estarían: histograma, gráfico de la densidad suavizada, gráfico de tallo y hojas, gráfico de la distribución empírica (o versión suavizada) y gráficos P-P o Q-Q.
@@ -13447,16 +13467,31 @@ desarrollado inicialmente para variables categóricas. En el caso general, podem
 
 Si la hipótesis nula es simple, cada clase tendrá asociada una probabilidad \(p_{i}=P\left( X\in C_{i} \right)\) bajo \(H_0\) . Si por el contrario es compuesta, se trabajará con una estimación de dicha probabilidad (y habrá que correguir la distribución aproximada del estadístico del contraste).
 
-\begin{longtable}[]{@{}lllll@{}}
-\toprule
-Clases & Discreta & Continua & \(H_0\) simple & \(H_0\) compuesta \\
-\midrule
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1169}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2208}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2208}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2987}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Clases
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Discreta
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Continua
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(H_0\) simple
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(H_0\) compuesta
+\end{minipage} \\
+\midrule()
 \endhead
 \(C_1\) & \(x_1\) & \([L_0,L_1)\) & \(p_1\) & \(\hat{p}_1\) \\
 \(\vdots\) & \(\vdots\) & \(\vdots\) & \(\vdots\) & \(\vdots\) \\
 \(C_{k}\) & \(x_{k}\) & \([L_{k-1},L_{k})\) & \(p_{k}\) & \(\hat{p}_{k}\) \\
 & & & \(\sum_{i}p_{i}=1\) & \(\sum_{i}\hat{p}_{i}=1\) \\
-\bottomrule
+\bottomrule()
 \end{longtable}
 
 Se realizará un contraste equivalente:
@@ -13472,20 +13507,30 @@ Equivalentemente, las frecuencias observadas \(n_{i}=n\cdot f_{i}\) deberían se
 siendo \(k\) el número de clases y \(r\) el número de parámetros estimados (para aproximar las probabilidades bajo \(H_0\)).
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.07}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.20}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.20}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.20}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.34}}@{}}
-\toprule
-Clases & \(n_{i}\) observadas & \(p_{i}\) bajo \(H_0\) & \(e_{i}\) bajo \(H_0\) & \(\frac{(n_{i}-e_{i})^2}{e_{i}}\) \\
-\midrule
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.0659}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1978}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1978}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1978}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.3407}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Clases
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(n_{i}\) observadas
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(p_{i}\) bajo \(H_0\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(e_{i}\) bajo \(H_0\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(\frac{(n_{i}-e_{i})^2}{e_{i}}\)
+\end{minipage} \\
+\midrule()
 \endhead
 \(C_1\) & \(n_1\) & \(p_1\) & \(e_1\) & \(\frac{(n_1-e_1)^2}{e_1}\) \\
 \(\vdots\) & \(\vdots\) & \(\vdots\) & \(\vdots\) & \(\vdots\) \\
 \(C_{k}\) & \(n_{k}\) & \(p_{k}\) & \(e_{k}\) & \(\frac{(n_{k}-e_{k})^2}{e_{k}}\) \\
 Total & \(\sum_{i}n_{i}=n\) & \(\sum_{i}p_{i}=1\) & \(\sum_{i}e_{i}=n\) & \(\chi^2=\sum_{i=1}^{k}\frac{(n_{i}-e_{i})^2}{e_{i}}\) \\
-\bottomrule
+\bottomrule()
 \end{longtable}
 
 Cuando \(H_0\) es cierta el estadístico tiende a tomar valores pequeños y grandes cuando es falsa.
@@ -13557,48 +13602,50 @@ Por ejemplo, se podría emplear la función \texttt{simres::chisq.cont.test()} (
 \end{Shaded}
 
 \begin{verbatim}
-## function (x, distribution = "norm", nclass = floor(length(x)/5), 
-##     output = TRUE, nestpar = 0, ...) 
-## {
-##     q.distrib <- eval(parse(text = paste("q", distribution, sep = "")))
-##     q <- q.distrib((1:(nclass - 1))/nclass, ...)
-##     tol <- sqrt(.Machine$double.eps)
-##     xbreaks <- c(min(x) - tol, q, max(x) + tol)
-##     if (output) {
-##         xhist <- hist(x, breaks = xbreaks, freq = FALSE, lty = 2, 
-##             border = "grey50")
-##         d.distrib <- eval(parse(text = paste("d", distribution, 
-##             sep = "")))
-##         curve(d.distrib(x, ...), add = TRUE)
-##     }
-##     else {
-##         xhist <- hist(x, breaks = xbreaks, plot = FALSE)
-##     }
-##     O <- xhist$counts
-##     E <- length(x)/nclass
-##     DNAME <- deparse(substitute(x))
-##     METHOD <- "Pearson's Chi-squared test"
-##     STATISTIC <- sum((O - E)^2/E)
-##     names(STATISTIC) <- "X-squared"
-##     PARAMETER <- nclass - nestpar - 1
-##     names(PARAMETER) <- "df"
-##     PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
-##     classes <- format(xbreaks)
-##     classes <- paste("(", classes[-(nclass + 1)], ",", classes[-1], 
-##         "]", sep = "")
-##     RESULTS <- list(classes = classes, observed = O, expected = E, 
-##         residuals = (O - E)/sqrt(E))
-##     if (output) {
-##         cat("\nPearson's Chi-squared test table\n")
-##         print(as.data.frame(RESULTS))
-##     }
-##     if (any(E < 5)) 
-##         warning("Chi-squared approximation may be incorrect")
-##     structure(c(list(statistic = STATISTIC, parameter = PARAMETER, 
-##         p.value = PVAL, method = METHOD, data.name = DNAME), 
-##         RESULTS), class = "htest")
+## function(x, distribution = "norm", nclass = floor(length(x)/5),
+##                             output = TRUE, nestpar = 0, ...) {
+##   # Función distribución
+##   q.distrib <- eval(parse(text = paste("q", distribution, sep = "")))
+##   # Puntos de corte
+##   q <- q.distrib((1:(nclass - 1))/nclass, ...)
+##   tol <- sqrt(.Machine$double.eps)
+##   xbreaks <- c(min(x) - tol, q, max(x) + tol)
+##   # Gráficos y frecuencias
+##   if (output) {
+##     xhist <- hist(x, breaks = xbreaks, freq = FALSE,
+##                   lty = 2, border = "grey50")
+##     # Función densidad
+##     d.distrib <- eval(parse(text = paste("d", distribution, sep = "")))
+##     curve(d.distrib(x, ...), add = TRUE)
+##   } else {
+##     xhist <- hist(x, breaks = xbreaks, plot = FALSE)
+##   }
+##   # Cálculo estadístico y p-valor
+##   O <- xhist$counts  # Equivalente a table(cut(x, xbreaks)) pero más eficiente
+##   E <- length(x)/nclass
+##   DNAME <- deparse(substitute(x))
+##   METHOD <- "Pearson's Chi-squared test"
+##   STATISTIC <- sum((O - E)^2/E)
+##   names(STATISTIC) <- "X-squared"
+##   PARAMETER <- nclass - nestpar - 1
+##   names(PARAMETER) <- "df"
+##   PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
+##   # Preparar resultados
+##   classes <- format(xbreaks)
+##   classes <- paste("(", classes[-(nclass + 1)], ",", classes[-1], "]",
+##                    sep = "")
+##   RESULTS <- list(classes = classes, observed = O, expected = E,
+##                   residuals = (O - E)/sqrt(E))
+##   if (output) {
+##     cat("\nPearson's Chi-squared test table\n")
+##     print(as.data.frame(RESULTS))
+##   }
+##   if (any(E < 5))
+##     warning("Chi-squared approximation may be incorrect")
+##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
+##                    method = METHOD, data.name = DNAME), RESULTS), class = "htest")
 ## }
-## <bytecode: 0x00000000375c9e70>
+## <bytecode: 0x0000026a7520bdd0>
 ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -13678,7 +13725,7 @@ Continuando con el ejemplo anterior, para contrastar \(H_0:F= \mathcal{N}(20,5^2
 
 \begin{verbatim}
 ## 
-##  One-sample Kolmogorov-Smirnov test
+##  Asymptotic one-sample Kolmogorov-Smirnov test
 ## 
 ## data:  datos
 ## D = 0.13239, p-value = 0.4688
@@ -13707,7 +13754,7 @@ Por ejemplo:
 
 \begin{verbatim}
 ## 
-##  One-sample Kolmogorov-Smirnov test
+##  Asymptotic one-sample Kolmogorov-Smirnov test
 ## 
 ## data:  datos
 ## D = 0.097809, p-value = 0.8277
@@ -14801,7 +14848,7 @@ Por defecto empleará todos los núcleos disponibles, pero se puede especificar 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 4
+## [1] 20
 \end{verbatim}
 
 \begin{Shaded}
@@ -14820,7 +14867,7 @@ Por defecto empleará todos los núcleos disponibles, pero se puede especificar 
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.09    0.00    0.09
+##    0.05    0.00    0.05
 \end{verbatim}
 
 \begin{Shaded}
@@ -14842,7 +14889,7 @@ En Windows habría que crear previamente un cluster, llamar a una de las funcion
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.00    0.00    0.05
+##    0.00    0.00    0.03
 \end{verbatim}
 
 \begin{Shaded}
@@ -14909,7 +14956,7 @@ Veamos un ejemplo empleando una muestra simulada:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.07    0.00    0.06
+##    0.03    0.00    0.03
 \end{verbatim}
 
 \begin{Shaded}
@@ -14921,7 +14968,7 @@ Veamos un ejemplo empleando una muestra simulada:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.06    0.02    0.08
+##    0.04    0.00    0.03
 \end{verbatim}
 
 \hypertarget{estudio-sim-boot}{%
@@ -14982,7 +15029,7 @@ Por ejemplo, a continuación se realiza un estudio de simulación comparando las
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.02    0.00   16.28
+##    0.00    0.00    1.88
 \end{verbatim}
 
 \begin{Shaded}
@@ -15002,10 +15049,10 @@ Por ejemplo, a continuación se realiza un estudio de simulación comparando las
 
 \begin{verbatim}
 ##             Cobertura Longitud
-## Normal          0.872 56.76171
-## Basic           0.862 56.68745
-## Studentized     0.894 65.01878
-## Percentil       0.866 56.68745
+## Normal          0.858 57.78773
+## Basic           0.854 57.73865
+## Studentized     0.904 67.00259
+## Percentil       0.860 57.73865
 \end{verbatim}
 
 \begin{Shaded}
@@ -15018,13 +15065,13 @@ Por ejemplo, a continuación se realiza un estudio de simulación comparando las
 \hline
   & Cobertura & Longitud\\
 \hline
-Normal & 0.872 & 56.762\\
+Normal & 0.858 & 57.788\\
 \hline
-Basic & 0.862 & 56.687\\
+Basic & 0.854 & 57.739\\
 \hline
-Studentized & 0.894 & 65.019\\
+Studentized & 0.904 & 67.003\\
 \hline
-Percentil & 0.866 & 56.687\\
+Percentil & 0.860 & 57.739\\
 \hline
 \end{tabular}
 
@@ -15571,22 +15618,26 @@ Este algoritmo está implementado en la función \texttt{simres::rvng()} (ver ta
 \end{Shaded}
 
 \begin{verbatim}
-## function (n, seed = as.numeric(Sys.time()), k = 4) 
-## {
-##     seed <- seed%%10^k
-##     aux <- 10^(2 * k - k/2)
-##     aux2 <- 10^(k/2)
-##     u <- numeric(n)
-##     for (i in 1:n) {
-##         z <- seed^2
-##         seed <- trunc((z - trunc(z/aux) * aux)/aux2)
-##         u[i] <- seed/10^k
-##     }
-##     assign(".rng", list(seed = seed, type = "vm", parameters = list(k = k)), 
-##         envir = globalenv())
-##     return(u)
+## function(n, seed = as.numeric(Sys.time()), k = 4) {
+##   seed <- seed %% 10^k
+##   aux <- 10^(2*k-k/2)
+##   aux2 <- 10^(k/2)
+##   u <- numeric(n)
+##   for(i in 1:n) {
+##     z <- seed^2
+##     seed <- trunc((z - trunc(z/aux)*aux)/aux2)
+##     u[i] <- seed/10^k
+##   }
+##   # Almacenar semilla y parámetros
+##   assign(".rng", list(seed = seed, type = "vm", parameters = list(k = k)),
+##       envir = globalenv())
+##   # .rng <<- list(seed = seed, type = "vm", parameters = list(k = k))
+##   # Para continuar con semilla y parámetros:
+##   #   with(.rng, rvng(n, seed, parameters$k))
+##   # Devolver valores
+##   return(u)
 ## }
-## <bytecode: 0x000000003b844538>
+## <bytecode: 0x0000021b6478bca0>
 ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -15705,7 +15756,7 @@ Esta función está implementada en el siguiente código:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.00    0.01    0.02
+##       0       0       0
 \end{verbatim}
 
 \begin{Shaded}

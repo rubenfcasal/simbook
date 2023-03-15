@@ -275,14 +275,16 @@ las correspondientes a la normal estándar).
 
 ## Método de aceptación rechazo {#AR}
 
-Se trata de un método universal alternativo al de inversión para
-el caso de que no se pueda emplear la función cuantil, 
-pero se dispone de una expresión (preferiblemente sencilla) para la
-función de densidad objetivo $f\left( x \right)$. 
+Se trata de un método universal alternativo al de inversión para el caso de que no se pueda emplear la función cuantil, pero se dispone de una expresión (preferiblemente sencilla) para la función de densidad objetivo $f\left( x \right)$. 
 
-La idea es simular una variable aleatoria bidimensional $\left( X, Y\right)$ con distribución uniforme en el hipografo de $f$ (el conjunto de puntos del plano comprendidos entre el eje OX y $f$):
+La idea es simular una variable aleatoria bidimensional $\left( X, Y\right)$ con distribución uniforme en el hipografo de $f$ (la región del plano comprendida entre el eje OX y $f$, de área 1):
 $$A_{f}=\left\{ \left( x,y\right) \in \mathbb{R}^{2}:0\leq y\leq f(x) \right\}.$$
-De esta forma la primera componente tendrá la distribución deseada (Figura \@ref(fig:var-gen)):
+De esta forma la primera componente tendrá la distribución deseada (ver Figura \@ref(fig:var-gen)):
+
+$$ P\left( a<X<b\right) = \frac{\text{Area de }\left\{ \left( x,y\right) \in 
+\mathbb{R}^{2}:a<x<b;~0\leq y\leq f(x) \right\} }{\text{Area de }
+A_{f}} \\
+= \int_{a}^{b}f(x) dx $$
 
 ```{r var-gen, echo=FALSE, fig.dim = c(9, 6), out.width = "80%", fig.cap="Puntos con distribución uniforme en el hipografo de una función de densidad."}
 # --------------------------------
@@ -327,12 +329,16 @@ points(x, y, col = ifelse(y <= dbeta(x, s1, s2), "black", "lightgray"))
 par(old.par)
 ```
 
-$$ P\left( a<X<b\right) = \frac{\text{Area de }\left\{ \left( x,y\right) \in 
-\mathbb{R}^{2}:a<x<b;~0\leq y\leq f(x) \right\} }{\text{Area de }
-A_{f}} \\
-= \int_{a}^{b}f(x) dx $$
-
-El resultado anterior es también válido para una cuasi-densidad $f^{\ast}$ (no depende de la constante normalizadora): 
+El resultado anterior es también válido para una cuasi-densidad^[Una cuasi-densidad es cualquier función no negativa $f^{\ast}(x) \geq 0$ integrable. Por tanto, si $k = \int_{-\infty}^{+\infty}f^{\ast}(x)dx$ es el área bajo esta curva, denominada *constante normalizadora*, entonces $f(x) = \frac{1}{k}f^{\ast}(x)$ es una densidad.
+En ocasiones no interesa especialmente esta constante $k$ (no es necesario calcularla o simplemente se quieren simplificar las expresiones) y se denota por $f(x) \propto f^{\ast}(x)$ que la función de densidad es proporcional a la cuasi-densidad. 
+Por ejemplo, a partir de la densidad conjunta $f(x, y)$ de una variable aleatoria bidimensional $(X, Y)$, podemos obtener la densidad de la distribución condicionada $X|Y=y_0$: 
+$$f(x | y_0) = \frac{f(x, y_0)}{f_Y(y_0)}$$ 
+siendo $f_Y(y_0) = \int_{-\infty}^{+\infty}f(x, y_0)dx$ la densidad marginal de $Y$ evaluada en $y_0$. Por tanto $f(x | y_0) \propto f(x, y_0)$.
+De la expresión anterior también se deduce que:
+$$f(x, y) = f(x | y)f_Y(y) = f(y | x)f_X(x)$$
+y podríamos escribir que:
+$$f(y | x) \propto f(x | y)f_Y(y)$$ 
+que sería una expresión del *teorema de Bayes* aplicado a densidades.]  $f^{\ast}$ (no depende de la constante normalizadora): 
 
 * Si $\left( X,Y\right) \sim \mathcal{U}\left(A_{f^{\ast}}\right)$ entonces^[Emplearemos también $X\sim f$ para indicar que $X$ es una variable aleatoria con función de densidad $f$.] $X\sim f$.
 
@@ -524,7 +530,7 @@ $$c_{\text{opt}}=\max_{\{x : g(x) > 0\}} \frac{f(x)}{g(x)}.$$
 
 ::: {.remark}
 Hay que tener en cuenta que la cota óptima es el número medio de iteraciones $c$ solo si conocemos las constantes normalizadoras. 
-Si solo se conoce la cuasidensidad $f^{\ast}$ de la distribución objetivo (o de la auxiliar), la correspondiente cota óptima:
+Si solo se conoce la cuasi-densidad $f^{\ast}$ de la distribución objetivo (o de la auxiliar), la correspondiente cota óptima:
 $$\tilde{c} = \max_{\{x : g(x) > 0\}} \frac{f^{\ast}(x)}{g(x)}$$ 
 asumirá la constante desconocida, aunque siempre podemos aproximar por simulación el verdadero valor de $c$ y a partir de él la constante normalizadora (ver Ejercicio \@ref(exr:post-pri-ar)).
 Basta con tener en cuenta que, si $f(x) = f^{\ast}(x)/k$:
@@ -730,7 +736,7 @@ El objetivo sería simular la distribución a posteriori de $\theta$:
 $$\pi(\theta|\mathbf{x}) = \frac{L(\mathbf{x}|\theta)\pi(\theta)}{\int L(\mathbf{x}|\theta)\pi(\theta)d\theta},$$
 siendo $L(\mathbf{x}|\theta)$ la función de verosimilitud ($L(\mathbf{x}|\theta) = \prod\limits_{i=1}^{n}f(x_i|\theta)$ suponiendo i.i.d.). 
 Es decir:
-$$\pi(\theta | \mathbf{x})\propto L(\mathbf{x}| \theta)\pi(\theta).$$
+$$\pi(\theta | \mathbf{x}) \propto L(\mathbf{x}| \theta)\pi(\theta).$$
 
 Como esta distribución cambia al variar la muestra observada, puede resultar difícil encontrar una densidad auxiliar adecuada para simular valores de la densidad a posteriori $\pi(\theta|\mathbf{x})$.
 Por ejemplo, podríamos emplear la densidad a priori $\pi(\theta)$ como densidad auxiliar.
@@ -802,14 +808,14 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     
     y por tanto:
     
-    ```{r post-pri-plot, fig.cap="Comparación de la cuasidensidad a posteriori (línea contínua) con la densidad a priori reescalada (línea discontinua)."}
+    ```{r post-pri-plot, fig.cap="Comparación de la cuasi-densidad a posteriori (línea contínua) con la densidad a priori reescalada (línea discontinua)."}
     c <- lik(mean(x))
     c   
 
     # f.cuasi <- function(mu) sapply(mu, lik1)*dcauchy(mu)
     f.cuasi <- function(mu) lik(mu)*dcauchy(mu)    
     curve(c * dcauchy(x), xlim = c(-4, 4), ylim = c(0, c/pi), lty = 2,
-          xlab = "mu", ylab = "cuasidensidad")
+          xlab = "mu", ylab = "cuasi-densidad")
     curve(f.cuasi, add = TRUE)
     ```
     

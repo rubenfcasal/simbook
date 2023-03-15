@@ -423,7 +423,7 @@ mvrnorm
 ##         drop(X)
 ##     else t(X)
 ## }
-## <bytecode: 0x000000003733ca10>
+## <bytecode: 0x0000019c97509b20>
 ## <environment: namespace:MASS>
 ```
 
@@ -1101,10 +1101,6 @@ Podemos representar la densidad conjunta (con `sm::sm.density()`) [Figura \@ref(
 ```r
 # if(!require(sm)) stop('Required package `sm` not installed.')
 sm::sm.density(rcunif, xlab = "u", ylab = "v", zlab = "Density")    
-```
-
-```
-## Warning: weights overwritten by binning
 ```
 
 \begin{figure}[!htb]

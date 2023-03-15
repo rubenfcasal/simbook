@@ -64,7 +64,7 @@ ncores
 ```
 
 ```
-## [1] 4
+## [1] 20
 ```
 
 ```r
@@ -81,7 +81,7 @@ system.time(res.boot <- mclapply(1:100, func)) # En Windows llama a lapply() (mc
 
 ```
 ##    user  system elapsed 
-##    0.09    0.00    0.09
+##    0.05    0.00    0.05
 ```
 
 ```r
@@ -100,7 +100,7 @@ system.time(res.boot <- parSapply(cl, 1:100, func))
 
 ```
 ##    user  system elapsed 
-##    0.00    0.00    0.05
+##    0.00    0.00    0.03
 ```
 
 ```r
@@ -161,7 +161,7 @@ system.time(res.boot <- boot(muestra, statistic, R = B))
 
 ```
 ##    user  system elapsed 
-##    0.07    0.00    0.06
+##    0.03    0.00    0.03
 ```
 
 ```r
@@ -171,7 +171,7 @@ system.time(res.boot <- boot(muestra, statistic, R = B, parallel = "snow", cl = 
 
 ```
 ##    user  system elapsed 
-##    0.06    0.02    0.08
+##    0.04    0.00    0.03
 ```
 
 ### Estudio de simulación {#estudio-sim-boot}
@@ -230,7 +230,7 @@ print(t.fin)
 
 ```
 ##    user  system elapsed 
-##    0.02    0.00   16.28
+##    0.00    0.00    1.88
 ```
 
 ```r
@@ -248,10 +248,10 @@ res
 
 ```
 ##             Cobertura Longitud
-## Normal          0.872 56.76171
-## Basic           0.862 56.68745
-## Studentized     0.894 65.01878
-## Percentil       0.866 56.68745
+## Normal          0.858 57.78773
+## Basic           0.854 57.73865
+## Studentized     0.904 67.00259
+## Percentil       0.860 57.73865
 ```
 
 ```r
@@ -263,13 +263,13 @@ knitr::kable(res, digits = 3)
 \hline
   & Cobertura & Longitud\\
 \hline
-Normal & 0.872 & 56.762\\
+Normal & 0.858 & 57.788\\
 \hline
-Basic & 0.862 & 56.687\\
+Basic & 0.854 & 57.739\\
 \hline
-Studentized & 0.894 & 65.019\\
+Studentized & 0.904 & 67.003\\
 \hline
-Percentil & 0.866 & 56.687\\
+Percentil & 0.860 & 57.739\\
 \hline
 \end{tabular}
 

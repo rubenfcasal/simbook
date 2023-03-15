@@ -110,7 +110,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##    0.03    0.00    0.03
+##    0.01    0.00    0.01
 ```
 
 ```r
@@ -208,7 +208,7 @@ b)  Generar $10^{4}$ valores de la distribución doble exponencial de
     
     ```
     ##    user  system elapsed 
-    ##    0.05    0.00    0.04
+    ##    0.01    0.00    0.02
     ```
 
 
@@ -299,14 +299,16 @@ las correspondientes a la normal estándar).
 
 ## Método de aceptación rechazo {#AR}
 
-Se trata de un método universal alternativo al de inversión para
-el caso de que no se pueda emplear la función cuantil, 
-pero se dispone de una expresión (preferiblemente sencilla) para la
-función de densidad objetivo $f\left( x \right)$. 
+Se trata de un método universal alternativo al de inversión para el caso de que no se pueda emplear la función cuantil, pero se dispone de una expresión (preferiblemente sencilla) para la función de densidad objetivo $f\left( x \right)$. 
 
-La idea es simular una variable aleatoria bidimensional $\left( X, Y\right)$ con distribución uniforme en el hipografo de $f$ (el conjunto de puntos del plano comprendidos entre el eje OX y $f$):
+La idea es simular una variable aleatoria bidimensional $\left( X, Y\right)$ con distribución uniforme en el hipografo de $f$ (la región del plano comprendida entre el eje OX y $f$, de área 1):
 $$A_{f}=\left\{ \left( x,y\right) \in \mathbb{R}^{2}:0\leq y\leq f(x) \right\}.$$
-De esta forma la primera componente tendrá la distribución deseada (Figura \@ref(fig:var-gen)):
+De esta forma la primera componente tendrá la distribución deseada (ver Figura \@ref(fig:var-gen)):
+
+$$ P\left( a<X<b\right) = \frac{\text{Area de }\left\{ \left( x,y\right) \in 
+\mathbb{R}^{2}:a<x<b;~0\leq y\leq f(x) \right\} }{\text{Area de }
+A_{f}} \\
+= \int_{a}^{b}f(x) dx $$
 
 \begin{figure}[!htb]
 
@@ -317,12 +319,16 @@ De esta forma la primera componente tendrá la distribución deseada (Figura \@r
 \caption{Puntos con distribución uniforme en el hipografo de una función de densidad.}(\#fig:var-gen)
 \end{figure}
 
-$$ P\left( a<X<b\right) = \frac{\text{Area de }\left\{ \left( x,y\right) \in 
-\mathbb{R}^{2}:a<x<b;~0\leq y\leq f(x) \right\} }{\text{Area de }
-A_{f}} \\
-= \int_{a}^{b}f(x) dx $$
-
-El resultado anterior es también válido para una cuasi-densidad $f^{\ast}$ (no depende de la constante normalizadora): 
+El resultado anterior es también válido para una cuasi-densidad^[Una cuasi-densidad es cualquier función no negativa $f^{\ast}(x) \geq 0$ integrable. Por tanto, si $k = \int_{-\infty}^{+\infty}f^{\ast}(x)dx$ es el área bajo esta curva, denominada *constante normalizadora*, entonces $f(x) = \frac{1}{k}f^{\ast}(x)$ es una densidad.
+En ocasiones no interesa especialmente esta constante $k$ (no es necesario calcularla o simplemente se quieren simplificar las expresiones) y se denota por $f(x) \propto f^{\ast}(x)$ que la función de densidad es proporcional a la cuasi-densidad. 
+Por ejemplo, a partir de la densidad conjunta $f(x, y)$ de una variable aleatoria bidimensional $(X, Y)$, podemos obtener la densidad de la distribución condicionada $X|Y=y_0$: 
+$$f(x | y_0) = \frac{f(x, y_0)}{f_Y(y_0)}$$ 
+siendo $f_Y(y_0) = \int_{-\infty}^{+\infty}f(x, y_0)dx$ la densidad marginal de $Y$ evaluada en $y_0$. Por tanto $f(x | y_0) \propto f(x, y_0)$.
+De la expresión anterior también se deduce que:
+$$f(x, y) = f(x | y)f_Y(y) = f(y | x)f_X(x)$$
+y podríamos escribir que:
+$$f(y | x) \propto f(x | y)f_Y(y)$$ 
+que sería una expresión del *teorema de Bayes* aplicado a densidades.]  $f^{\ast}$ (no depende de la constante normalizadora): 
 
 * Si $\left( X,Y\right) \sim \mathcal{U}\left(A_{f^{\ast}}\right)$ entonces^[Emplearemos también $X\sim f$ para indicar que $X$ es una variable aleatoria con función de densidad $f$.] $X\sim f$.
 
@@ -484,7 +490,7 @@ system.time(x <- rbeta2n(nsim, s1, s2))
 
 ```
 ##    user  system elapsed 
-##    0.03    0.00    0.04
+##    0.01    0.00    0.02
 ```
 
 Para analizar la eficiencia podemos emplear el número de generaciones de la distribución auxiliar (siguiente sección):
@@ -548,7 +554,7 @@ $$c_{\text{opt}}=\max_{\{x : g(x) > 0\}} \frac{f(x)}{g(x)}.$$
 
 ::: {.remark}
 Hay que tener en cuenta que la cota óptima es el número medio de iteraciones $c$ solo si conocemos las constantes normalizadoras. 
-Si solo se conoce la cuasidensidad $f^{\ast}$ de la distribución objetivo (o de la auxiliar), la correspondiente cota óptima:
+Si solo se conoce la cuasi-densidad $f^{\ast}$ de la distribución objetivo (o de la auxiliar), la correspondiente cota óptima:
 $$\tilde{c} = \max_{\{x : g(x) > 0\}} \frac{f^{\ast}(x)}{g(x)}$$ 
 asumirá la constante desconocida, aunque siempre podemos aproximar por simulación el verdadero valor de $c$ y a partir de él la constante normalizadora (ver Ejercicio \@ref(exr:post-pri-ar)).
 Basta con tener en cuenta que, si $f(x) = f^{\ast}(x)/k$:
@@ -671,7 +677,7 @@ system.time(x <- rnormARn(nsim))
 
 ```
 ##    user  system elapsed 
-##    0.18    0.00    0.20
+##    0.01    0.05    0.06
 ```
 
 Evaluamos la eficiencia:
@@ -819,7 +825,7 @@ El objetivo sería simular la distribución a posteriori de $\theta$:
 $$\pi(\theta|\mathbf{x}) = \frac{L(\mathbf{x}|\theta)\pi(\theta)}{\int L(\mathbf{x}|\theta)\pi(\theta)d\theta},$$
 siendo $L(\mathbf{x}|\theta)$ la función de verosimilitud ($L(\mathbf{x}|\theta) = \prod\limits_{i=1}^{n}f(x_i|\theta)$ suponiendo i.i.d.). 
 Es decir:
-$$\pi(\theta | \mathbf{x})\propto L(\mathbf{x}| \theta)\pi(\theta).$$
+$$\pi(\theta | \mathbf{x}) \propto L(\mathbf{x}| \theta)\pi(\theta).$$
 
 Como esta distribución cambia al variar la muestra observada, puede resultar difícil encontrar una densidad auxiliar adecuada para simular valores de la densidad a posteriori $\pi(\theta|\mathbf{x})$.
 Por ejemplo, podríamos emplear la densidad a priori $\pi(\theta)$ como densidad auxiliar.
@@ -922,7 +928,7 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     # f.cuasi <- function(mu) sapply(mu, lik1)*dcauchy(mu)
     f.cuasi <- function(mu) lik(mu)*dcauchy(mu)    
     curve(c * dcauchy(x), xlim = c(-4, 4), ylim = c(0, c/pi), lty = 2,
-          xlab = "mu", ylab = "cuasidensidad")
+          xlab = "mu", ylab = "cuasi-densidad")
     curve(f.cuasi, add = TRUE)
     ```
     
@@ -932,7 +938,7 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     
     }
     
-    \caption{Comparación de la cuasidensidad a posteriori (línea contínua) con la densidad a priori reescalada (línea discontinua).}(\#fig:post-pri-plot)
+    \caption{Comparación de la cuasi-densidad a posteriori (línea contínua) con la densidad a priori reescalada (línea discontinua).}(\#fig:post-pri-plot)
     \end{figure}
     
     Por ejemplo, podríamos emplear el siguiente código para generar simulaciones de la distribución a posteriori mediante aceptación-rechazo a partir de la distribución de Cauchy:
@@ -1161,24 +1167,25 @@ simres::rcauchy.rou
 ```
 
 ```
-## function (n) 
-## {
-##     ngen <- n
-##     u <- runif(n, 0, 1)
-##     v <- runif(n, -1, 1)
-##     x <- v/u
-##     ind <- u^2 + v^2 > 1
-##     while (le <- sum(ind)) {
-##         ngen <- ngen + le
-##         u <- runif(le, 0, 1)
-##         v <- runif(le, -1, 1)
-##         x[ind] <- v/u
-##         ind[ind] <- u^2 + v^2 > 1
-##     }
-##     attr(x, "ngen") <- ngen
-##     return(x)
+## function(n) {
+##   # Cauchy mediante cociente de uniformes
+##   ngen <- n
+##   u <- runif(n, 0, 1)
+##   v <- runif(n, -1, 1)
+##   x <- v/u
+##   ind <- u^2 + v^2 > 1 # TRUE si no verifica condición
+##   # Volver a generar si no verifica condición
+##   while (le <- sum(ind)){ # mientras le = sum(ind) > 0
+##     ngen <- ngen + le
+##     u <- runif(le, 0, 1)
+##     v <- runif(le, -1, 1)
+##     x[ind] <- v/u
+##     ind[ind] <- u^2 + v^2 > 1 # TRUE si no verifica condición
+##   }
+##   attr(x, "ngen") <- ngen
+##   return(x)
 ## }
-## <bytecode: 0x000000003f43bb88>
+## <bytecode: 0x000002a0b2046a60>
 ## <environment: namespace:simres>
 ```
 

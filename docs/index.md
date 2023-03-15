@@ -4,7 +4,7 @@ author:
   - "Rubén Fernández Casal (ruben.fcasal@udc.es)"
   - "Ricardo Cao (rcao@udc.es)"
   - "Julián Costa (julian.costa@udc.es)"
-date: "Edición: Enero de 2023. Impresión: 2023-01-27"
+date: "Edición: Enero de 2023. Impresión: 2023-03-15"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
@@ -59,10 +59,10 @@ install.packages(setdiff(pkgs, installed.packages()[,"Package"]),
 Para generar el libro (compilar) serán necesarios paquetes adicionales, 
 para lo que se recomendaría consultar el libro de ["Escritura de libros con bookdown" ](https://rubenfcasal.github.io/bookdown_intro) en castellano.
 
+En la Sección [Enlaces](#links) de las Referencias se incluyen recursos adicionales, incluyendo algunos que pueden ser útiles para el aprendizaje de R.
+
 
 \begin{flushleft}\includegraphics[width=0.1\linewidth]{images/by-nc-nd-88x31} \end{flushleft}
-
-En la Sección [Enlaces](#links) de las Referencias se incluyen recursos adicionales, incluyendo algunos que pueden ser útiles para el aprendizaje de R.
 
 Este obra está bajo una licencia de [Creative Commons Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es_ES) 
 (esperamos poder liberarlo bajo una licencia menos restrictiva más adelante...).

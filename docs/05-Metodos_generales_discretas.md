@@ -163,24 +163,25 @@ rpmf
 ```
 
 ```
-## function (x, prob = 1/length(x), n = 1000, as.factor = FALSE) 
-## {
-##     ncomp <- 0
-##     Fx <- cumsum(prob)
-##     X <- numeric(n)
-##     U <- runif(n)
-##     for (j in 1:n) {
-##         i <- 1
-##         while (Fx[i] < U[j]) i <- i + 1
-##         X[j] <- x[i]
-##         ncomp <- ncomp + i
-##     }
-##     if (as.factor) 
-##         X <- factor(X, levels = x)
-##     attr(X, "ncomp") <- ncomp
-##     return(X)
+## function(x, prob = 1/length(x), n = 1000, as.factor = FALSE) {
+##   # Numero de comparaciones
+##   ncomp <- 0
+##   # Inicializar FD
+##   Fx <- cumsum(prob)
+##   # Simular
+##   X <- numeric(n)
+##   U <- runif(n)
+##   for(j in 1:n) {
+##     i <- 1
+##     while (Fx[i] < U[j]) i <- i + 1
+##     X[j] <- x[i]
+##     ncomp <- ncomp + i
+##   }
+##   if(as.factor) X <- factor(X, levels = x)
+##   attr(X, "ncomp") <- ncomp
+##   return(X)
 ## }
-## <bytecode: 0x0000000039b22858>
+## <bytecode: 0x0000021a6e0fa608>
 ## <environment: namespace:simres>
 ```
 
@@ -208,7 +209,7 @@ system.time( rx <- rpmf(x, pmf, nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.05    0.00    0.06
+##    0.03    0.00    0.03
 ```
 
 A partir de ellas podríamos aproximar el valor esperado:
@@ -363,7 +364,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##    0.04    0.00    0.05
+##    0.02    0.00    0.02
 ```
 
 ```r
@@ -394,7 +395,7 @@ system.time( rx <- sample(x, nsim, replace = TRUE, prob = pmf) )
 
 ```
 ##    user  system elapsed 
-##       0       0       0
+##    0.02    0.00    0.02
 ```
 
 :::
@@ -465,30 +466,30 @@ rpmf.table
 ```
 
 ```
-## function (x, prob = 1/length(x), m, n = 1000, as.factor = FALSE) 
-## {
-##     Fx <- cumsum(prob)
-##     g <- rep(1, m)
-##     i <- 1
-##     for (j in 2:m) {
-##         while (Fx[i] < (j - 1)/m) i <- i + 1
-##         g[j] <- i
-##     }
-##     ncomp <- i - 1
-##     X <- numeric(n)
-##     U <- runif(n)
-##     for (j in 1:n) {
-##         i <- i0 <- g[floor(U[j] * m) + 1]
-##         while (Fx[i] < U[j]) i <- i + 1
-##         ncomp <- ncomp + i - i0
-##         X[j] <- x[i]
-##     }
-##     if (as.factor) 
-##         X <- factor(X, levels = x)
-##     attr(X, "ncomp") <- ncomp
-##     return(X)
+## function(x, prob = 1/length(x), m, n = 1000, as.factor = FALSE) {
+##   # Inicializar tabla y FD
+##   Fx <- cumsum(prob)
+##   g <- rep(1,m)
+##   i <- 1
+##   for(j in 2:m) {
+##     while (Fx[i] < (j-1)/m) i <- i + 1
+##     g[j] <- i
+##   }
+##   ncomp <- i - 1
+##   # Generar valores
+##   X <- numeric(n)
+##   U <- runif(n)
+##   for(j in 1:n) {
+##     i <- i0 <- g[floor(U[j] * m) + 1]
+##     while (Fx[i] < U[j]) i <- i + 1
+##     ncomp <- ncomp + i - i0
+##     X[j] <- x[i]
+##   }
+##   if(as.factor) X <- factor(X, levels = x)
+##   attr(X, "ncomp") <- ncomp
+##   return(X)
 ## }
-## <bytecode: 0x000000003a19dcc8>
+## <bytecode: 0x0000021a6e83f990>
 ## <environment: namespace:simres>
 ```
 
@@ -505,7 +506,7 @@ system.time( rx <- rpmf.table(x, pmf, n-1, nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.04    0.00    0.03
+##    0.02    0.00    0.01
 ```
 
 Número medio de comparaciones:
@@ -620,32 +621,31 @@ rpmf.alias
 ```
 
 ```
-## function (x, prob = 1/length(x), n = 1000, as.factor = FALSE) 
-## {
-##     a <- numeric(length(x))
-##     q <- prob * length(x)
-##     low <- q < 1
-##     high <- which(!low)
-##     low <- which(low)
-##     while (length(high) && length(low)) {
-##         l <- low[1]
-##         h <- high[1]
-##         a[l] <- h
-##         q[h] <- q[h] - (1 - q[l])
-##         if (q[h] < 1) {
-##             high <- high[-1]
-##             low[1] <- h
-##         }
-##         else low <- low[-1]
-##     }
-##     V <- runif(n)
-##     i <- floor(runif(n) * length(x)) + 1
-##     X <- x[ifelse(V < q[i], i, a[i])]
-##     if (as.factor) 
-##         X <- factor(X, levels = x)
-##     return(X)
+## function(x, prob = 1/length(x), n = 1000, as.factor = FALSE) {
+##   # Inicializar tablas
+##   a <- numeric(length(x))
+##   q <- prob*length(x)
+##   low <- q < 1
+##   high <- which(!low)
+##   low <- which(low)
+##   while (length(high) && length(low)) {
+##     l <- low[1]
+##     h <- high[1]
+##     a[l] <- h
+##     q[h] <- q[h] - (1 - q[l])
+##     if (q[h] < 1) {
+##       high <- high[-1]
+##       low[1] <- h
+##     } else low <- low[-1]
+##   } # while
+##   # Generar valores
+##   V <- runif(n)
+##   i <- floor(runif(n)*length(x)) + 1
+##   X <- x[ ifelse( V < q[i], i, a[i]) ]
+##   if(as.factor) X <- factor(X, levels = x)
+##   return(X)
 ## }
-## <bytecode: 0x0000000036d69358>
+## <bytecode: 0x0000021a6b39baf8>
 ## <environment: namespace:simres>
 ```
 
@@ -664,7 +664,7 @@ system.time( rx <- rpmf.alias(x, pmf, nsim) )
 
 ```
 ##    user  system elapsed 
-##    0.02    0.00    0.02
+##       0       0       0
 ```
 
 Análisis de los resultados:

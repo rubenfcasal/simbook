@@ -1,3 +1,8 @@
+# Generación de números pseudoaleatorios {#gen-pseudo}
+
+
+
+
 <!--
 ---
 title: "Generación de números pseudoaleatorios"
@@ -23,11 +28,6 @@ knitr::spin("02-Generacion_numeros_aleatorios.R",knit = FALSE)
 PENDIENTE:
 - Redactar ejemplo repetición de contrastes
 -->
-
-# Generación de números pseudoaleatorios {#gen-pseudo}
-
-
-
 
 Como ya se comentó, los distintos métodos de simulación requieren disponer de secuencias de números pseudoaleatorios que imiten las propiedades de generaciones independientes de una distribución $\mathcal{U}(0,1)$. 
 En primer lugar nos centraremos en el caso de los generadores congruenciales. A pesar de su simplicidad, podrían ser adecuados en muchos casos y constituyen la base de los generadores avanzados habitualmente considerados.
@@ -59,19 +59,22 @@ simres::rlcg
 ```
 
 ```
-## function (n, seed = as.numeric(Sys.time()), a = 7^5, c = 0, m = 2^31 - 
-##     1) 
-## {
-##     u <- numeric(n)
-##     for (i in 1:n) {
-##         seed <- (a * seed + c)%%m
-##         u[i] <- seed/m
-##     }
-##     assign(".rng", list(seed = seed, type = "lcg", parameters = list(a = a, 
-##         c = c, m = m)), envir = globalenv())
-##     return(u)
+## function(n, seed = as.numeric(Sys.time()), a = 7^5, c = 0, m = 2^31 - 1) {
+##   u <- numeric(n)
+##   for(i in 1:n) {
+##     seed <- (a * seed + c) %% m
+##     u[i] <- seed/m # (seed + 1)/(m + 1)
+##   }
+##   # Almacenar semilla y parámetros
+##   assign(".rng", list(seed = seed, type = "lcg",
+##           parameters = list(a = a, c = c, m = m)), envir = globalenv())
+##   # .rng <<- list(seed = seed, type = "lcg", parameters = list(a = a, c = c, m = m))
+##   # Para continuar con semilla y parámetros:
+##   #   with(.rng, rlcg(n, seed, parameters$a, parameters$c, parameters$m))
+##   # Devolver valores
+##   return(u)
 ## }
-## <bytecode: 0x00000000386c5a50>
+## <bytecode: 0x00000247e31eb4e8>
 ## <environment: namespace:simres>
 ```
 
@@ -79,7 +82,7 @@ simres::rlcg
 Ejemplos de parámetros:
 
 -   $c=0$, $a=2^{16}+3=65539$ y $m=2^{31}$, generador *RANDU* de IBM
-    (**no recomendable**).
+    (**no recomendable** como veremos más adelante).
 
 -   $c=0$, $a=7^{5}=16807$ y $m=2^{31}-1$ (primo de Mersenne), Park y Miller (1988)
     *minimal standar*, empleado por las librerías IMSL y NAG.
@@ -126,12 +129,11 @@ Un generador multiplicativo tiene período máximo ($p=m-1$) si:
    
 :::
 
-Además de preocuparse de la longitud del ciclo, las secuencias generadas deben aparentar muestras i.i.d. $\mathcal{U}(0,1)$. 
-
-Uno de los principales problemas es que los valores generados pueden mostrar una clara estructura reticular.
-Este es el caso por ejemplo del generador RANDU de IBM muy empleado en la década de los 70 (ver Figura \@ref(fig:randu))^[Alternativamente se podría utilizar la función `plot3d` del paquete `rgl`, y rotar la figura (pulsando con el ratón) para ver los hiperplanos:
-`rgl::plot3d(xyz)`].
-Por ejemplo, el conjunto de datos `randu` contiene 400 tripletas de números sucesivos obtenidos con la implementación de VAX/VMS 1.5 (1977).
+Sin embargo, además de preocuparse de la longitud del ciclo, sería mucho más importante que las secuencias generadas se comporten de forma similar a muestras aleatorias simple de una $\mathcal{U}(0,1)$. 
+Uno de los principales problemas con este tipo de generadores (y con muchos otros) es que los valores generados pueden mostrar una estructura reticular.
+Este es el caso del generador RANDU de IBM muy empleado en la década de los 70 y que muestra una clara estructura reticular cuando se consideran más de dos dimensiones (aunque ya se detectó este problema en 1963 se siguió utilizando hasta los 90).
+Para ilustrar este problema podríamos emplear el conjunto de datos `randu` del paquete base `datasets` que contiene 400 tripletas de números sucesivos generados con la implementación de VAX/VMS 1.5 (de 1977, y que no se corrigió hasta la versión 2.0 de 1980). 
+Aunque también podemos emplear el siguiente código^[La función `stats::embed(u, 3)` devuelve una matriz en la que la fila i-ésima contiene los valores `u[i+2]`, `u[i+1]` y `u[i]`. Además, en lugar de la función `plot3D::points3D()` se podría utilizar la función `plot3d()` del paquete `rgl`, y rotar la figura (pulsando con el ratón) para ver los hiperplanos `rgl::plot3d(xyz)`.] (ver Figura \@ref(fig:randu)):
 
 
 ```r
@@ -142,7 +144,7 @@ system.time(u <- rlcg(n = 9999,
 
 ```
 ##    user  system elapsed 
-##    0.01    0.00    0.02
+##       0       0       0
 ```
 
 ```r
@@ -165,8 +167,9 @@ points3D(xyz[,3], xyz[,2], xyz[,1], colvar = NULL, phi = 60,
 \end{figure}
 
 En general todos los generadores de este tipo van a presentar estructuras reticulares.
-Marsaglia (1968) demostró que las $k$-uplas de un generadores multiplicativo están contenidas en a lo sumo $\left(k!m\right)^{1/k}$ hiperplanos paralelos (para más detalles sobre la estructura reticular, ver por ejemplo Ripley, 1987, sección 2.7).
-Por tanto habría que seleccionar adecuadamente $m$ y $c$ ($a$ solo influiría en la pendiente) de forma que la estructura reticular sea imperceptible teniendo en cuenta el número de datos que se pretende generar (por ejemplo de forma que la distancia mínima entre los puntos sea próxima a la esperada en teoría).
+Marsaglia (1968) demostró que las k-uplas de un generadores multiplicativo están contenidas en a lo sumo $\left(k!m\right)^{1/k}$ hiperplanos paralelos (`r `trunc((factorial(3)*2^31)^(1/3))` como máximo con $k=3$ y $m=2^{31}$).
+Por tanto habría que seleccionar adecuadamente los parámetros del generador congruencial de forma que la estructura reticular sea imperceptible, teniendo en cuenta el número de datos que se pretende generar (por ejemplo de forma que la distancia mínima entre los puntos sea próxima a la esperada en teoría). 
+Para más detalles sobre la estructura reticular ver por ejemplo Ripley (1987, Sección 2.7).
 
 <!-- 
 PENDIENTE: 
@@ -178,15 +181,10 @@ $a$ es una raiz primitiva de $m$ en Park y Miller
 Se han propuesto diversas pruebas (ver Sección \@ref(calgen)) para
 determinar si un generador tiene problemas de este tipo y se han
 realizado numerosos estudios para determinadas familias (e.g. Park y
-Miller, 1988, estudiaron que parámetros son adecuados para $m=2^{31}-1$).
+Miller, 1988, estudiaron los multiplicadores adecuados para $m=2^{31}-1$).
+En ciertos contextos muy exigentes (por ejemplo en criptografía), se recomienda    considerar un "periodo de seguridad" $\approx \sqrt{p}$ para evitar este tipo de problemas.
 
--   En ciertos contextos muy exigentes (por ejemplo en criptografía), se recomienda
-    considerar un "periodo de seguridad" $\approx \sqrt{p}$ para evitar este tipo 
-    de problemas.
-
--   Aunque estos generadores tienen limitaciones en su capacidad para
-    producir secuencias muy largas de números i.i.d. $\mathcal{U}(0,1)$,
-    son un elemento básico en generadores más avanzados (siguiente sección).
+Aunque estos generadores tienen limitaciones en su capacidad para producir secuencias muy largas de números i.i.d. $\mathcal{U}(0,1)$, son un elemento básico en generadores más avanzados (incluyendo el empleado por defecto en R) como veremos en la siguiente sección.
 
     
 ::: {.example #congru512}
@@ -397,48 +395,50 @@ simres::chisq.cont.test
 ```
 
 ```
-## function (x, distribution = "norm", nclass = floor(length(x)/5), 
-##     output = TRUE, nestpar = 0, ...) 
-## {
-##     q.distrib <- eval(parse(text = paste("q", distribution, sep = "")))
-##     q <- q.distrib((1:(nclass - 1))/nclass, ...)
-##     tol <- sqrt(.Machine$double.eps)
-##     xbreaks <- c(min(x) - tol, q, max(x) + tol)
-##     if (output) {
-##         xhist <- hist(x, breaks = xbreaks, freq = FALSE, lty = 2, 
-##             border = "grey50")
-##         d.distrib <- eval(parse(text = paste("d", distribution, 
-##             sep = "")))
-##         curve(d.distrib(x, ...), add = TRUE)
-##     }
-##     else {
-##         xhist <- hist(x, breaks = xbreaks, plot = FALSE)
-##     }
-##     O <- xhist$counts
-##     E <- length(x)/nclass
-##     DNAME <- deparse(substitute(x))
-##     METHOD <- "Pearson's Chi-squared test"
-##     STATISTIC <- sum((O - E)^2/E)
-##     names(STATISTIC) <- "X-squared"
-##     PARAMETER <- nclass - nestpar - 1
-##     names(PARAMETER) <- "df"
-##     PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
-##     classes <- format(xbreaks)
-##     classes <- paste("(", classes[-(nclass + 1)], ",", classes[-1], 
-##         "]", sep = "")
-##     RESULTS <- list(classes = classes, observed = O, expected = E, 
-##         residuals = (O - E)/sqrt(E))
-##     if (output) {
-##         cat("\nPearson's Chi-squared test table\n")
-##         print(as.data.frame(RESULTS))
-##     }
-##     if (any(E < 5)) 
-##         warning("Chi-squared approximation may be incorrect")
-##     structure(c(list(statistic = STATISTIC, parameter = PARAMETER, 
-##         p.value = PVAL, method = METHOD, data.name = DNAME), 
-##         RESULTS), class = "htest")
+## function(x, distribution = "norm", nclass = floor(length(x)/5),
+##                             output = TRUE, nestpar = 0, ...) {
+##   # Función distribución
+##   q.distrib <- eval(parse(text = paste("q", distribution, sep = "")))
+##   # Puntos de corte
+##   q <- q.distrib((1:(nclass - 1))/nclass, ...)
+##   tol <- sqrt(.Machine$double.eps)
+##   xbreaks <- c(min(x) - tol, q, max(x) + tol)
+##   # Gráficos y frecuencias
+##   if (output) {
+##     xhist <- hist(x, breaks = xbreaks, freq = FALSE,
+##                   lty = 2, border = "grey50")
+##     # Función densidad
+##     d.distrib <- eval(parse(text = paste("d", distribution, sep = "")))
+##     curve(d.distrib(x, ...), add = TRUE)
+##   } else {
+##     xhist <- hist(x, breaks = xbreaks, plot = FALSE)
+##   }
+##   # Cálculo estadístico y p-valor
+##   O <- xhist$counts  # Equivalente a table(cut(x, xbreaks)) pero más eficiente
+##   E <- length(x)/nclass
+##   DNAME <- deparse(substitute(x))
+##   METHOD <- "Pearson's Chi-squared test"
+##   STATISTIC <- sum((O - E)^2/E)
+##   names(STATISTIC) <- "X-squared"
+##   PARAMETER <- nclass - nestpar - 1
+##   names(PARAMETER) <- "df"
+##   PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
+##   # Preparar resultados
+##   classes <- format(xbreaks)
+##   classes <- paste("(", classes[-(nclass + 1)], ",", classes[-1], "]",
+##                    sep = "")
+##   RESULTS <- list(classes = classes, observed = O, expected = E,
+##                   residuals = (O - E)/sqrt(E))
+##   if (output) {
+##     cat("\nPearson's Chi-squared test table\n")
+##     print(as.data.frame(RESULTS))
+##   }
+##   if (any(E < 5))
+##     warning("Chi-squared approximation may be incorrect")
+##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
+##                    method = METHOD, data.name = DNAME), RESULTS), class = "htest")
 ## }
-## <bytecode: 0x00000000396c8270>
+## <bytecode: 0x00000247f3218378>
 ## <environment: namespace:simres>
 ```
 
@@ -528,7 +528,7 @@ ks.test(u, "punif", 0, 1)
 
 ```
 ## 
-## 	One-sample Kolmogorov-Smirnov test
+## 	Asymptotic one-sample Kolmogorov-Smirnov test
 ## 
 ## data:  u
 ## D = 0.0033281, p-value = 1
@@ -727,7 +727,7 @@ ks.test(estadistico, "pchisq", df = 99)
 
 ```
 ## 
-## 	One-sample Kolmogorov-Smirnov test
+## 	Asymptotic one-sample Kolmogorov-Smirnov test
 ## 
 ## data:  estadistico
 ## D = 0.023499, p-value = 0.6388
@@ -764,7 +764,7 @@ ks.test(pvalor, "punif",  min = 0, max = 1)
 
 ```
 ## 
-## 	One-sample Kolmogorov-Smirnov test
+## 	Asymptotic one-sample Kolmogorov-Smirnov test
 ## 
 ## data:  pvalor
 ## D = 0.023499, p-value = 0.6388
@@ -893,22 +893,26 @@ simres::rvng
 ```
 
 ```
-## function (n, seed = as.numeric(Sys.time()), k = 4) 
-## {
-##     seed <- seed%%10^k
-##     aux <- 10^(2 * k - k/2)
-##     aux2 <- 10^(k/2)
-##     u <- numeric(n)
-##     for (i in 1:n) {
-##         z <- seed^2
-##         seed <- trunc((z - trunc(z/aux) * aux)/aux2)
-##         u[i] <- seed/10^k
-##     }
-##     assign(".rng", list(seed = seed, type = "vm", parameters = list(k = k)), 
-##         envir = globalenv())
-##     return(u)
+## function(n, seed = as.numeric(Sys.time()), k = 4) {
+##   seed <- seed %% 10^k
+##   aux <- 10^(2*k-k/2)
+##   aux2 <- 10^(k/2)
+##   u <- numeric(n)
+##   for(i in 1:n) {
+##     z <- seed^2
+##     seed <- trunc((z - trunc(z/aux)*aux)/aux2)
+##     u[i] <- seed/10^k
+##   }
+##   # Almacenar semilla y parámetros
+##   assign(".rng", list(seed = seed, type = "vm", parameters = list(k = k)),
+##       envir = globalenv())
+##   # .rng <<- list(seed = seed, type = "vm", parameters = list(k = k))
+##   # Para continuar con semilla y parámetros:
+##   #   with(.rng, rvng(n, seed, parameters$k))
+##   # Devolver valores
+##   return(u)
 ## }
-## <bytecode: 0x000000003841e018>
+## <bytecode: 0x00000247e2a1ecd0>
 ## <environment: namespace:simres>
 ```
 
