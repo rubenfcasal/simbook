@@ -1,3 +1,8 @@
+# Generación de números pseudoaleatorios {#gen-pseudo}
+
+```{r , child = '_global_options.Rmd'}
+```
+
 <!--
 ---
 title: "Generación de números pseudoaleatorios"
@@ -23,11 +28,6 @@ knitr::spin("02-Generacion_numeros_aleatorios.R",knit = FALSE)
 PENDIENTE:
 - Redactar ejemplo repetición de contrastes
 -->
-
-# Generación de números pseudoaleatorios {#gen-pseudo}
-
-```{r , child = '_global_options.Rmd'}
-```
 
 Como ya se comentó, los distintos métodos de simulación requieren disponer de secuencias de números pseudoaleatorios que imiten las propiedades de generaciones independientes de una distribución $\mathcal{U}(0,1)$. 
 En primer lugar nos centraremos en el caso de los generadores congruenciales. A pesar de su simplicidad, podrían ser adecuados en muchos casos y constituyen la base de los generadores avanzados habitualmente considerados.
@@ -61,7 +61,7 @@ simres::rlcg
 Ejemplos de parámetros:
 
 -   $c=0$, $a=2^{16}+3=65539$ y $m=2^{31}$, generador *RANDU* de IBM
-    (**no recomendable**).
+    (**no recomendable** como veremos más adelante).
 
 -   $c=0$, $a=7^{5}=16807$ y $m=2^{31}-1$ (primo de Mersenne), Park y Miller (1988)
     *minimal standar*, empleado por las librerías IMSL y NAG.
@@ -108,12 +108,11 @@ Un generador multiplicativo tiene período máximo ($p=m-1$) si:
    
 :::
 
-Además de preocuparse de la longitud del ciclo, las secuencias generadas deben aparentar muestras i.i.d. $\mathcal{U}(0,1)$. 
-
-Uno de los principales problemas es que los valores generados pueden mostrar una clara estructura reticular.
-Este es el caso por ejemplo del generador RANDU de IBM muy empleado en la década de los 70 `r citefig("randu")`^[Alternativamente se podría utilizar la función `plot3d` del paquete `rgl`, y rotar la figura (pulsando con el ratón) para ver los hiperplanos:
-`rgl::plot3d(xyz)`].
-Por ejemplo, el conjunto de datos `randu` contiene 400 tripletas de números sucesivos obtenidos con la implementación de VAX/VMS 1.5 (1977).
+Sin embargo, además de preocuparse de la longitud del ciclo, sería mucho más importante que las secuencias generadas se comporten de forma similar a muestras aleatorias simple de una $\mathcal{U}(0,1)$. 
+Uno de los principales problemas con este tipo de generadores (y con muchos otros) es que los valores generados pueden mostrar una estructura reticular.
+Este es el caso del generador RANDU de IBM muy empleado en la década de los 70 y que muestra una clara estructura reticular cuando se consideran más de dos dimensiones (aunque ya se detectó este problema en 1963 se siguió utilizando hasta los 90).
+Para ilustrar este problema podríamos emplear el conjunto de datos `randu` del paquete base `datasets` que contiene 400 tripletas de números sucesivos generados con la implementación de VAX/VMS 1.5 (de 1977, y que no se corrigió hasta la versión 2.0 de 1980). 
+Aunque también podemos emplear el siguiente código^[La función `stats::embed(u, 3)` devuelve una matriz en la que la fila i-ésima contiene los valores `u[i+2]`, `u[i+1]` y `u[i]`. Además, en lugar de la función `plot3D::points3D()` se podría utilizar la función `plot3d()` del paquete `rgl`, y rotar la figura (pulsando con el ratón) para ver los hiperplanos `rgl::plot3d(xyz)`.] `r citefig("randu")`:
 
 ```{r randu, warning=FALSE, fig.cap='Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos).'}
 library(simres)
@@ -129,8 +128,9 @@ points3D(xyz[,3], xyz[,2], xyz[,1], colvar = NULL, phi = 60,
 ```
 
 En general todos los generadores de este tipo van a presentar estructuras reticulares.
-Marsaglia (1968) demostró que las $k$-uplas de un generadores multiplicativo están contenidas en a lo sumo $\left(k!m\right)^{1/k}$ hiperplanos paralelos (para más detalles sobre la estructura reticular, ver por ejemplo Ripley, 1987, sección 2.7).
-Por tanto habría que seleccionar adecuadamente $m$ y $c$ ($a$ solo influiría en la pendiente) de forma que la estructura reticular sea imperceptible teniendo en cuenta el número de datos que se pretende generar (por ejemplo de forma que la distancia mínima entre los puntos sea próxima a la esperada en teoría).
+Marsaglia (1968) demostró que las k-uplas de un generadores multiplicativo están contenidas en a lo sumo $\left(k!m\right)^{1/k}$ hiperplanos paralelos (`r `trunc((factorial(3)*2^31)^(1/3))` como máximo con $k=3$ y $m=2^{31}$).
+Por tanto habría que seleccionar adecuadamente los parámetros del generador congruencial de forma que la estructura reticular sea imperceptible, teniendo en cuenta el número de datos que se pretende generar (por ejemplo de forma que la distancia mínima entre los puntos sea próxima a la esperada en teoría). 
+Para más detalles sobre la estructura reticular ver por ejemplo Ripley (1987, Sección 2.7).
 
 <!-- 
 PENDIENTE: 
@@ -142,15 +142,10 @@ $a$ es una raiz primitiva de $m$ en Park y Miller
 Se han propuesto diversas pruebas (ver Sección \@ref(calgen)) para
 determinar si un generador tiene problemas de este tipo y se han
 realizado numerosos estudios para determinadas familias (e.g. Park y
-Miller, 1988, estudiaron que parámetros son adecuados para $m=2^{31}-1$).
+Miller, 1988, estudiaron los multiplicadores adecuados para $m=2^{31}-1$).
+En ciertos contextos muy exigentes (por ejemplo en criptografía), se recomienda    considerar un "periodo de seguridad" $\approx \sqrt{p}$ para evitar este tipo de problemas.
 
--   En ciertos contextos muy exigentes (por ejemplo en criptografía), se recomienda
-    considerar un "periodo de seguridad" $\approx \sqrt{p}$ para evitar este tipo 
-    de problemas.
-
--   Aunque estos generadores tienen limitaciones en su capacidad para
-    producir secuencias muy largas de números i.i.d. $\mathcal{U}(0,1)$,
-    son un elemento básico en generadores más avanzados (siguiente sección).
+Aunque estos generadores tienen limitaciones en su capacidad para producir secuencias muy largas de números i.i.d. $\mathcal{U}(0,1)$, son un elemento básico en generadores más avanzados (incluyendo el empleado por defecto en R) como veremos en la siguiente sección.
 
     
 ::: {.example #congru512}
