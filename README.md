@@ -2,14 +2,13 @@
 
 ## Fernández-Casal, R. (rfcasal@udc.es) y Cao, R. (rcao@udc.es)
 
-***IMPORTANTE***: Este repositorio se corresponde con la "primera edición" de este libro.
-Se está elaborando una **nueva edición** disponible en el repositorio
-[rubenfcasal/simbook2](https://github.com/rubenfcasal/simbook2) (y compilado en [rubenfcasal.github.io/simbook2](https://rubenfcasal.github.io/simbook2)).
+***IMPORTANTE***: Esta rama se corresponde con la "primera edición" de este libro.
+La **nueva edición** esta disponible en la rama principal del repositorio.
 
 Este libro contiene los apuntes de la asignatura de [Simulación Estadística](http://eamo.usc.es/pub/mte/index.php/es/?option=com_content&view=article&id=2201&idm=13&a%C3%B1o=2019) del [Máster en Técnicas Estadísticas](http://eio.usc.es/pub/mte). 
 
-El libro ha sido escrito en [R-Markdown](http://rmarkdown.rstudio.com) empleando el paquete [`bookdown`](https://bookdown.org/yihui/bookdown/) y está disponible en el repositorio Github: [rubenfcasal/simbook](https://github.com/rubenfcasal/simbook). 
-El libro (compilado) está disponible online en [rubenfcasal.github.io/simbook](https://rubenfcasal.github.io/simbook).
+El libro ha sido escrito en [R-Markdown](http://rmarkdown.rstudio.com) empleando el paquete [`bookdown`](https://bookdown.org/yihui/bookdown/).
+y está disponible compilado en la carpeta *docs* de esta rama.
 
 Para instalar los paquetes necesarios para poder ejecutar los ejemplos mostrados en el libro se puede emplear el siguiente comando:
 ```{r eval=FALSE}
