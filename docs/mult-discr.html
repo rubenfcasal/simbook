@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6.7 Simulación de distribuciones multivariantes discretas | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6.7 Simulación de distribuciones multivariantes discretas | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -222,10 +222,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2" data-path="método-de-la-tabla-guía.html"><a href="método-de-la-tabla-guía.html"><i class="fa fa-check"></i><b>5.2</b> Método de la tabla guía</a></li>
 <li class="chapter" data-level="5.3" data-path="alias.html"><a href="alias.html"><i class="fa fa-check"></i><b>5.3</b> Método de Alias</a></li>
 <li class="chapter" data-level="5.4" data-path="simulación-de-una-variable-discreta-con-dominio-infinito.html"><a href="simulación-de-una-variable-discreta-con-dominio-infinito.html"><i class="fa fa-check"></i><b>5.4</b> Simulación de una variable discreta con dominio infinito</a></li>
-<li class="chapter" data-level="5.5" data-path="transcuant-directo.html"><a href="transcuant-directo.html"><i class="fa fa-check"></i><b>5.5</b> Cálculo directo de la función cuantil</a></li>
-<li class="chapter" data-level="5.6" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>5.6</b> Otros métodos</a></li>
-<li class="chapter" data-level="5.7" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>5.7</b> Métodos específicos para generación de distribuciones notables</a></li>
-<li class="chapter" data-level="5.8" data-path="ejercicios-discretas.html"><a href="ejercicios-discretas.html"><i class="fa fa-check"></i><b>5.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="5.5" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>5.5</b> Otros métodos</a></li>
+<li class="chapter" data-level="5.6" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>5.6</b> Métodos específicos para generación de distribuciones notables</a></li>
+<li class="chapter" data-level="5.7" data-path="ejercicios-discretas.html"><a href="ejercicios-discretas.html"><i class="fa fa-check"></i><b>5.7</b> Ejercicios</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="multivariante.html"><a href="multivariante.html"><i class="fa fa-check"></i><b>6</b> Simulación de distribuciones multivariantes</a>
 <ul>
@@ -430,7 +429,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>En el caso de una distribución <span class="math inline">\(d\)</span>-dimensional discreta el procedimiento habitual es simular una variable aleatoria discreta unidimensional equivalente.
 Este tipo de procedimientos son conocidos como métodos de etiquetado o codificación y la idea básica consistiría en construir un indice unidimensional equivalente al indice multidimensional, mediante una función de etiquetado
 <span class="math inline">\(l(\mathbf{i}) = l\left(i_1, i_2, \ldots,i_d \right) \in \mathbb{N}\)</span>.</p>
-<p>Si la variable discreta multidimensional tiene soporte finito, este tipo de recodificación se puede hacer de forma automática en R cambiando simplemente el indexado<a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a> (empleando la función <code>as.vector()</code> para cambiar a un indexado unidimensional y posteriormente las funciones <code>as.matrix()</code>, o <code>as.array()</code>, para reconstruir el indexado multidimensional).</p>
+<p>Si la variable discreta multidimensional tiene soporte finito, este tipo de recodificación se puede hacer de forma automática en R cambiando simplemente el indexado<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a> (empleando la función <code>as.vector()</code> para cambiar a un indexado unidimensional y posteriormente las funciones <code>as.matrix()</code>, o <code>as.array()</code>, para reconstruir el indexado multidimensional).</p>
 <p>Como ejemplo ilustrativo, en el caso bidimensional, podríamos emplear el siguiente código:</p>
 <div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="mult-discr.html#cb267-1" aria-hidden="true" tabindex="-1"></a>xy <span class="ot">&lt;-</span> <span class="fu">outer</span>(<span class="dv">10</span><span class="sc">*</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="st">&quot;+&quot;</span>)</span>
 <span id="cb267-2"><a href="mult-discr.html#cb267-2" aria-hidden="true" tabindex="-1"></a>xy</span></code></pre></div>
@@ -519,7 +518,7 @@ Se obtuvo una muestra de obleas que se clasificaron dependiendo de si se encontr
 ## 2    mala         no   80
 ## 3   buena         si   14
 ## 4    mala         si   36</code></pre>
-<p>En este caso estimamos<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a> las probabilidades a partir de las frecuencias:</p>
+<p>En este caso estimamos<a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a> las probabilidades a partir de las frecuencias:</p>
 <div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="mult-discr.html#cb293-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>p <span class="ot">&lt;-</span> df<span class="sc">$</span>n<span class="sc">/</span><span class="fu">sum</span>(df<span class="sc">$</span>n)</span>
 <span id="cb293-2"><a href="mult-discr.html#cb293-2" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
 <pre><code>##     n particulas calidad          p
@@ -585,7 +584,7 @@ Se obtuvo una muestra de obleas que se clasificaron dependiendo de si se encontr
 <div id="simconting" class="section level3 hasAnchor" number="6.7.2">
 <h3><span class="header-section-number">6.7.2</span> Simulación de tablas de contingencia<a href="mult-discr.html#simconting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Podríamos emplear el código anterior para simular tablas de contingencia.
-En estos casos se suele mantener fijo el tamaño de la muestra, igual al total de la tabla<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a>:</p>
+En estos casos se suele mantener fijo el tamaño de la muestra, igual al total de la tabla<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a>:</p>
 <div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="mult-discr.html#cb310-1" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="fu">sum</span>(n)</span>
 <span id="cb310-2"><a href="mult-discr.html#cb310-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
 <span id="cb310-3"><a href="mult-discr.html#cb310-3" aria-hidden="true" tabindex="-1"></a>rz <span class="ot">&lt;-</span> <span class="fu">sample</span>(z, nsim, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> pz)</span>
@@ -663,10 +662,10 @@ Figura 6.14: Aproximación Monte Carlo de la distribución del estadístico chi-
 <!-- </div> -->
 <div class="footnotes">
 <hr />
-<ol start="22">
-<li id="fn22"><p>En R podemos obtener el índice multidimensional empleando la función <code>arrayInd(ind, .dim, ...)</code>, siendo <code>ind</code> un vector de índices unidimensionales.<a href="mult-discr.html#fnref22" class="footnote-back">↩︎</a></p></li>
-<li id="fn23"><p>Como ya se comentó, la simulación empleando un modelo estimado también se denomina bootstrap paramétrico.<a href="mult-discr.html#fnref23" class="footnote-back">↩︎</a></p></li>
-<li id="fn24"><p>También se podría fijar una de las distribuciones de frecuencias marginales y simular las correspondientes distribuciones condicionadas.<a href="mult-discr.html#fnref24" class="footnote-back">↩︎</a></p></li>
+<ol start="26">
+<li id="fn26"><p>En R podemos obtener el índice multidimensional empleando la función <code>arrayInd(ind, .dim, ...)</code>, siendo <code>ind</code> un vector de índices unidimensionales.<a href="mult-discr.html#fnref26" class="footnote-back">↩︎</a></p></li>
+<li id="fn27"><p>Como ya se comentó, la simulación empleando un modelo estimado también se denomina bootstrap paramétrico.<a href="mult-discr.html#fnref27" class="footnote-back">↩︎</a></p></li>
+<li id="fn28"><p>También se podría fijar una de las distribuciones de frecuencias marginales y simular las correspondientes distribuciones condicionadas.<a href="mult-discr.html#fnref28" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

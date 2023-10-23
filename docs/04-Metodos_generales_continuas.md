@@ -110,7 +110,7 @@ tiempo
 
 ```
 ##    user  system elapsed 
-##    0.01    0.00    0.01
+##       0       0       0
 ```
 
 ```r
@@ -208,7 +208,7 @@ b)  Generar $10^{4}$ valores de la distribución doble exponencial de
     
     ```
     ##    user  system elapsed 
-    ##    0.01    0.00    0.02
+    ##    0.03    0.01    0.05
     ```
 
 
@@ -362,7 +362,7 @@ $$f(x) \leq c\cdot g(x)
 \text{, }\forall x\in \mathbb{R},$$
 (de donde se deduce que el soporte de $g$ debe contener el de $f$).
 
-::: {.conjecture #aceptacion-rechazo name="Método de aceptación-rechazo; Von Neuman 1951"}
+::: {.conjecture #aceptacion-rechazo name="Método de aceptación-rechazo; Von Neuman, 1951"}
 <br>
 
 1.  Generar $U \sim \mathcal{U}(0, 1)$.
@@ -490,7 +490,7 @@ system.time(x <- rbeta2n(nsim, s1, s2))
 
 ```
 ##    user  system elapsed 
-##    0.01    0.00    0.02
+##    0.03    0.00    0.03
 ```
 
 Para analizar la eficiencia podemos emplear el número de generaciones de la distribución auxiliar (siguiente sección):
@@ -677,7 +677,7 @@ system.time(x <- rnormARn(nsim))
 
 ```
 ##    user  system elapsed 
-##    0.01    0.05    0.06
+##    0.12    0.02    0.14
 ```
 
 Evaluamos la eficiencia:
@@ -859,14 +859,15 @@ Cambiar a ejemplo y apartado b) a ejercicio $n = 100$, $\theta_{0}=3$
 Comentar resultados (intervalos de probabilidad a posteriori) y eficiencia del método
 -->
 
+Se desea estimar la media $\theta$ de una distribución normal $N(\theta, 1)$ (supondremos que la desviación tipica es conocida).
+Para ello se va a simular la distribución a posteriori de $\theta$ por el método de aceptación-rechazo.
+En este caso, en la estimación bayesiana de la media de una distribución normal, se suele utilizar una distribución de Cauchy como distribución a priori.
 
-Para la estimación Bayes de la media de una normal se suele utilizar
-como distribución a priori una Cauchy.
 
 a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     $n=10$ con $\theta_{0}=1$. Utilizar una $Cauchy(0,1)$
-    (`rcauchy()`) como distribución a priori y como densidad auxiliar
-    para simular por aceptación-rechazo una muestra de la densidad a
+    (`rcauchy()`) como distribución a priori y como densidad auxiliar.
+    Simular por aceptación-rechazo una muestra de la densidad a
     posteriori (emplear `dnorm()` para construir la verosimilitud).
     Obtener el intervalo de probabilidad/credibilidad al 95%.
 
@@ -878,11 +879,9 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     nsim <- 10^4
     set.seed(54321)
     x <- rnorm(n, mean = mu0)
-    
     # Función de verosimilitud
     # lik1 <- function(mu) prod(dnorm(x, mean = mu)) # escalar
     lik <- Vectorize(function(mu) prod(dnorm(x, mean = mu))) # vectorial
-    
     # Cota óptima
     # Estimación por máxima verosimilitud
     emv <- optimize(f = lik, int = range(x), maximum = TRUE)
@@ -1030,7 +1029,7 @@ En ciertos casos el tiempo de computación necesario para evaluar $f(x)$ puede s
 Para evitar evaluaciones de la densidad se puede emplear una función "squeeze" que aproxime la densidad por abajo (una envolvente inferior):
 $$s(x)\leq f(x) \text{, }\forall x\in \mathbb{R}.$$
 
-::: {.conjecture #marsaglia name="Marsaglia 1977"}
+::: {.conjecture #marsaglia name="Marsaglia, 1977"}
 <br>
 
 1.  Generar $U \sim \mathcal{U}(0, 1)$ y $T\sim g$.
@@ -1099,7 +1098,7 @@ Tenemos entonces que:
 $$s_n(x)\leq f(x) \leq G_n(x)=c\cdot g_n(x)$$
 donde $g_n(x)$ es una mixtura discreta de distribuciones tipo exponencial truncadas (las tasas pueden ser negativas), que se puede simular fácilmente combinando el método de composición (Sección \@ref(composicion)) con el método de inversión.
 
-::: {.conjecture #gilks name="Gilks 1992"}
+::: {.conjecture #gilks name="Gilks, 1992"}
 <br>
 
 1.  Inicializar $n$ y $s_n$.
@@ -1185,7 +1184,7 @@ simres::rcauchy.rou
 ##   attr(x, "ngen") <- ngen
 ##   return(x)
 ## }
-## <bytecode: 0x000002a0b2046a60>
+## <bytecode: 0x0000026e4899c4f8>
 ## <environment: namespace:simres>
 ```
 
@@ -1260,7 +1259,11 @@ f_{2}(x) = \left\{
 \end{array}
 \ \right.$$
 
-El algoritmo resultante sería el siguiente (empleando dos números pseudoaleatorios uniformes, el primero para seleccionar el índice y el segundo para generar un valor de la correspondiente componente mediante el método de inversión):
+El algoritmo resultante, empleando dos números pseudoaleatorios uniformes[^composicion-1], el primero para seleccionar el índice y el segundo para generar un valor de la correspondiente componente mediante el método de inversión, sería el siguiente:
+
+[^composicion-1]: En ocasiones se hace un reciclado de los números aleatorios, es decir, solo se genera la uniforme $U$ y se obtiene $V$ a partir de ella. Por ejemplo, $V=2U$ si $U \le 0.5$ y $V=2(U-0.5)$ si $U > 0.5$.
+
+<!-- referencia -->
 
 1. Generar $U,V \sim \mathcal{U}(0, 1)$.
 
@@ -1273,16 +1276,8 @@ Este método está implementado en la función [`rdexp()`](https://rubenfcasal.g
 :::
 
 
-Observaciones:
 
-* En ocasiones se hace un reciclado de los números aleatorios
-  (solo se genera una uniforme, e.g. $V=2(U-0.5)$ si
-  $U\in (0.5,1)$).
-
-* En ciertas ocasiones por comodidad, para simular una muestra de
-  tamaño $n$, se simulan muestras de tamaño $np_{i}$ con densidad
-  $f_{i}$ y se combinan aleatoriamente.
-
+En ciertas ocasiones, por comodidad, para simular una muestra de tamaño $n$, se simulan muestras de tamaño $np_{i}$ con densidad $f_{i}$ y, si el orden es importante, se combinan aleatoriamente
 
 Otro ejemplo de una mixtura discreta es el estimador tipo núcleo de la densidad (ver e.g. la ayuda de la función `density()` de R o la Sección \@ref(modunif-boot-suav)).
 Simular a partir de una estimación de este tipo es lo que se conoce como *bootstrap suavizado*. 
@@ -1352,7 +1347,7 @@ También se podrían emplear resultado conocidos relacionados con esta distribuc
 $$U_{(k)} \sim \mathcal{Beta}(k,n+1-k).$$
 El resultado es el algoritmo de Fox (1963), que podría ser adecuado para simular esta distribución cuando $a, b \in \mathbb{N}$ y son valores pequeños.
 
-::: {.conjecture #fox name="de Fox 1963"}
+::: {.conjecture #fox name="Fox, 1963"}
 <br>
   
 1. Generar $U_1, U_2, \ldots, U_{a+b-1} \sim \mathcal{U}(0, 1)$.
@@ -1370,7 +1365,7 @@ En cualquier caso, es obvio que no es necesario ordenar todos los valores $U_{i}
 Un método válido aunque $a$ ó $b$ no sean enteros es el dado por el
 algoritmo de Jöhnk (1964).
 
-::: {.conjecture #johnk name="de Jöhnk 1964"}
+::: {.conjecture #johnk name="Jöhnk, 1964"}
 <br>
   
 1. Generar $U_1, U_2\sim \mathcal{U}(0, 1)$.
@@ -1388,7 +1383,7 @@ Esto es debido a que la condición $S\leq1$ del paso 3 puede tardar muchísimo e
 Por este motivo, el algoritmo de Jöhnk sólo es recomendable para $a<1$ y $b<1$. 
 Como remedio a esto puede usarse el algoritmo de Cheng (1978) que es algo más complicado de implementar^[R implementa este algoritmo en el fichero fuente [rbeta.c](https://svn.r-project.org/R/trunk/src/nmath/rbeta.c).] pero mucho más eficiente.
 
-::: {.conjecture #cheng name="de Cheng 1978"}
+::: {.conjecture #cheng name="Cheng, 1978"}
 <br>
   
 Inicialización:

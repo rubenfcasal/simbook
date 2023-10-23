@@ -175,7 +175,7 @@ mc.integral
 ##   }
 ##   return(result)
 ## }
-## <bytecode: 0x00000273e5382a78>
+## <bytecode: 0x000001df4f92f7d0>
 ## <environment: namespace:simres>
 ```
 
@@ -601,14 +601,13 @@ En este caso (como $g$ es una densidad) podríamos estimar la constante normaliz
 
 :::
 
+
 <!-- 
+---  
+
+***LA MATERIA EVALUABLE EN EL CURSO 2022/2023 TERMINA AQUÍ***
 
 --- 
-
-***LA MATERIA EVALUABLE EN EL CURSO 2020/2021 TERMINA AQUÍ***
-
---- 
-
 -->
 
 ## Optimización Monte Carlo {#opt-MC}

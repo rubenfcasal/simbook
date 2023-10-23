@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>C.3 Ejemplos | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
   <meta property="og:title" content="C.3 Ejemplos | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -222,10 +222,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2" data-path="método-de-la-tabla-guía.html"><a href="método-de-la-tabla-guía.html"><i class="fa fa-check"></i><b>5.2</b> Método de la tabla guía</a></li>
 <li class="chapter" data-level="5.3" data-path="alias.html"><a href="alias.html"><i class="fa fa-check"></i><b>5.3</b> Método de Alias</a></li>
 <li class="chapter" data-level="5.4" data-path="simulación-de-una-variable-discreta-con-dominio-infinito.html"><a href="simulación-de-una-variable-discreta-con-dominio-infinito.html"><i class="fa fa-check"></i><b>5.4</b> Simulación de una variable discreta con dominio infinito</a></li>
-<li class="chapter" data-level="5.5" data-path="transcuant-directo.html"><a href="transcuant-directo.html"><i class="fa fa-check"></i><b>5.5</b> Cálculo directo de la función cuantil</a></li>
-<li class="chapter" data-level="5.6" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>5.6</b> Otros métodos</a></li>
-<li class="chapter" data-level="5.7" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>5.7</b> Métodos específicos para generación de distribuciones notables</a></li>
-<li class="chapter" data-level="5.8" data-path="ejercicios-discretas.html"><a href="ejercicios-discretas.html"><i class="fa fa-check"></i><b>5.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="5.5" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>5.5</b> Otros métodos</a></li>
+<li class="chapter" data-level="5.6" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>5.6</b> Métodos específicos para generación de distribuciones notables</a></li>
+<li class="chapter" data-level="5.7" data-path="ejercicios-discretas.html"><a href="ejercicios-discretas.html"><i class="fa fa-check"></i><b>5.7</b> Ejercicios</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="multivariante.html"><a href="multivariante.html"><i class="fa fa-check"></i><b>6</b> Simulación de distribuciones multivariantes</a>
 <ul>
@@ -432,7 +431,7 @@ Por defecto empleará todos los núcleos disponibles, pero se puede especificar 
 <div class="sourceCode" id="cb729"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb729-1"><a href="ejemplos.html#cb729-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(parallel)</span>
 <span id="cb729-2"><a href="ejemplos.html#cb729-2" aria-hidden="true" tabindex="-1"></a>ncores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>()</span>
 <span id="cb729-3"><a href="ejemplos.html#cb729-3" aria-hidden="true" tabindex="-1"></a>ncores</span></code></pre></div>
-<pre><code>## [1] 20</code></pre>
+<pre><code>## [1] 8</code></pre>
 <div class="sourceCode" id="cb731"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb731-1"><a href="ejemplos.html#cb731-1" aria-hidden="true" tabindex="-1"></a>func <span class="ot">&lt;-</span> <span class="cf">function</span>(k) {</span>
 <span id="cb731-2"><a href="ejemplos.html#cb731-2" aria-hidden="true" tabindex="-1"></a>  i_boot <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(iris), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb731-3"><a href="ejemplos.html#cb731-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(Petal.Width <span class="sc">~</span> Petal.Length, <span class="at">data =</span> iris[i_boot, ])<span class="sc">$</span>coefficients</span>
@@ -443,7 +442,7 @@ Por defecto empleará todos los núcleos disponibles, pero se puede especificar 
 <span id="cb731-8"><a href="ejemplos.html#cb731-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb731-9"><a href="ejemplos.html#cb731-9" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(res.boot <span class="ot">&lt;-</span> <span class="fu">mclapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, func)) <span class="co"># En Windows llama a lapply() (mc.cores = 1)</span></span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.04    0.00    0.03</code></pre>
+##    0.10    0.00    0.09</code></pre>
 <div class="sourceCode" id="cb733"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb733-1"><a href="ejemplos.html#cb733-1" aria-hidden="true" tabindex="-1"></a><span class="co"># res.boot &lt;- mclapply(1:100, func, mc.cores = ncores - 1) # En Windows genera un error si mc.cores &gt; 1</span></span></code></pre></div>
 <p>En Windows habría que crear previamente un cluster, llamar a una de las funciones <code>par*apply()</code> y finalizar el cluster:</p>
 <div class="sourceCode" id="cb734"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb734-1"><a href="ejemplos.html#cb734-1" aria-hidden="true" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(ncores <span class="sc">-</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">&quot;PSOCK&quot;</span>)</span>
@@ -451,7 +450,7 @@ Por defecto empleará todos los núcleos disponibles, pero se puede especificar 
 <span id="cb734-3"><a href="ejemplos.html#cb734-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb734-4"><a href="ejemplos.html#cb734-4" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(res.boot <span class="ot">&lt;-</span> <span class="fu">parSapply</span>(cl, <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, func))</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.00    0.00    0.02</code></pre>
+##    0.02    0.00    0.08</code></pre>
 <div class="sourceCode" id="cb736"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb736-1"><a href="ejemplos.html#cb736-1" aria-hidden="true" tabindex="-1"></a><span class="co"># stopCluster(cl)</span></span>
 <span id="cb736-2"><a href="ejemplos.html#cb736-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb736-3"><a href="ejemplos.html#cb736-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(res.boot)</span></code></pre></div>
@@ -490,11 +489,11 @@ Si <code>parallel = "snow"</code> se crea un clúster en la máquina local duran
 <span id="cb739-15"><a href="ejemplos.html#cb739-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb739-16"><a href="ejemplos.html#cb739-16" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> B))</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.03    0.00    0.03</code></pre>
+##    0.11    0.00    0.10</code></pre>
 <div class="sourceCode" id="cb741"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb741-1"><a href="ejemplos.html#cb741-1" aria-hidden="true" tabindex="-1"></a><span class="co"># system.time(res.boot &lt;- boot(muestra, statistic, R = B, parallel = &quot;snow&quot;))</span></span>
 <span id="cb741-2"><a href="ejemplos.html#cb741-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> B, <span class="at">parallel =</span> <span class="st">&quot;snow&quot;</span>, <span class="at">cl =</span> cl))</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.05    0.00    0.05</code></pre>
+##    0.06    0.01    0.08</code></pre>
 </div>
 <div id="estudio-sim-boot" class="section level3 hasAnchor" number="14.3.2">
 <h3><span class="header-section-number">C.3.2</span> Estudio de simulación<a href="ejemplos.html#estudio-sim-boot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -545,7 +544,7 @@ Si <code>parallel = "snow"</code> se crea un clúster en la máquina local duran
 <span id="cb743-43"><a href="ejemplos.html#cb743-43" aria-hidden="true" tabindex="-1"></a>t.fin <span class="ot">&lt;-</span> <span class="fu">proc.time</span>() <span class="sc">-</span> t.ini</span>
 <span id="cb743-44"><a href="ejemplos.html#cb743-44" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(t.fin)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.02    0.02    1.87</code></pre>
+##    0.00    0.00    7.05</code></pre>
 <div class="sourceCode" id="cb745"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb745-1"><a href="ejemplos.html#cb745-1" aria-hidden="true" tabindex="-1"></a>resnames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Cobertura&quot;</span>, <span class="st">&quot;Longitud&quot;</span>)</span>
 <span id="cb745-2"><a href="ejemplos.html#cb745-2" aria-hidden="true" tabindex="-1"></a>intervals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Normal&quot;</span>, <span class="st">&quot;Basic&quot;</span>, <span class="st">&quot;Studentized&quot;</span>, <span class="st">&quot;Percentil&quot;</span>, <span class="st">&quot;BCa&quot;</span>)</span>
 <span id="cb745-3"><a href="ejemplos.html#cb745-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(intervals) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;normal&quot;</span>,<span class="st">&quot;basic&quot;</span>, <span class="st">&quot;student&quot;</span>, <span class="st">&quot;percent&quot;</span>, <span class="st">&quot;bca&quot;</span>)</span>
@@ -557,10 +556,10 @@ Si <code>parallel = "snow"</code> se crea un clúster en la máquina local duran
 <span id="cb745-9"><a href="ejemplos.html#cb745-9" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">apply</span>(resultados, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), mean))</span>
 <span id="cb745-10"><a href="ejemplos.html#cb745-10" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
 <pre><code>##             Cobertura Longitud
-## Normal          0.858 57.78773
-## Basic           0.854 57.73865
-## Studentized     0.904 67.00259
-## Percentil       0.860 57.73865</code></pre>
+## Normal          0.866 57.05639
+## Basic           0.860 56.97389
+## Studentized     0.900 65.72609
+## Percentil       0.868 56.97389</code></pre>
 <div class="sourceCode" id="cb747"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb747-1"><a href="ejemplos.html#cb747-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(res, <span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
 <table>
 <thead>
@@ -573,23 +572,23 @@ Si <code>parallel = "snow"</code> se crea un clúster en la máquina local duran
 <tbody>
 <tr class="odd">
 <td align="left">Normal</td>
-<td align="right">0.858</td>
-<td align="right">57.788</td>
+<td align="right">0.866</td>
+<td align="right">57.056</td>
 </tr>
 <tr class="even">
 <td align="left">Basic</td>
-<td align="right">0.854</td>
-<td align="right">57.739</td>
+<td align="right">0.860</td>
+<td align="right">56.974</td>
 </tr>
 <tr class="odd">
 <td align="left">Studentized</td>
-<td align="right">0.904</td>
-<td align="right">67.003</td>
+<td align="right">0.900</td>
+<td align="right">65.726</td>
 </tr>
 <tr class="even">
 <td align="left">Percentil</td>
-<td align="right">0.860</td>
-<td align="right">57.739</td>
+<td align="right">0.868</td>
+<td align="right">56.974</td>
 </tr>
 </tbody>
 </table>

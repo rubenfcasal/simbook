@@ -1,7 +1,11 @@
 # Simulación de variables discretas {#discretas}
 
-```{r , child = '_global_options.Rmd'}
+<!-- Capítulo \@ref(discretas) -->
+
+```{r global-options, include=FALSE}
+source("_global_options.R")
 ```
+
 
 <!-- 
 ---
@@ -44,14 +48,29 @@ x <- runif(nsim) < p
 ```
 para simular una distribución $Bernoulli(p)$.
 
-Para generar variables discretas con dominio finito en R,
-si no se dispone de un algoritmo específico más eficiente, 
-es recomendable emplear:
+Otro ejemplo es la distribución uniforme discreta 
+en $\{1,2,\ldots,n\}$, con función de masa de probabilidad dada por
+$$p_{j}=\frac{1}{n}\text{, para }j=1,2,\ldots n.$$ 
+Pueden generarse valores de esta distribución de forma muy eficiente truncando la distribución uniforme:
+
+::: {.conjecture #unif-discr name="distribución uniforme discreta"}
+<br>
+
+1. Generar $U\sim \mathcal{U}\left( 0,1\right)$.
+
+2. Devolver $X=\left\lfloor nU\right\rfloor + 1$.
+
+:::
+
+Sin embargo, para generar variables discretas con dominio finito en R, si no se dispone de un algoritmo específico más eficiente, es recomendable emplear la función `r cite_fun(sample)` del paquete base.
+En el caso general[^discretas-1]:
 ```{r eval=FALSE}
-sample(valores, nsim, replace = TRUE, prob)
+sample(x = valores, size = nsim, replace = TRUE, prob)
 ```
-Esta función del paquete base implementa eficientemente el método "alias" 
-que describiremos más adelante en la Sección \@ref(alias).
+implementa eficientemente el método "alias" que describiremos más adelante, en la Sección \@ref(alias).
+
+[^discretas-1]: En el caso de que `x = n` sea un entero (o un escalar) generará valores de una distribución uniforme discreta (equivalente a `sample(x = 1:n, ...)` o `sample.int(n, ...)`).
+
 
 ## Método de la transformación cuantil {#transcuant}
 
@@ -207,7 +226,7 @@ res$pteor <- pmf
 print(res, digits = 2)
 # Máximo error absoluto 
 max(abs(res$psim - res$pteor))
-# Máximo error porcentual absoluto
+# Máximo error absoluto porcentual 
 100*max(abs(res$psim - res$pteor) / res$pteor)
 ```
 :::
@@ -239,15 +258,11 @@ i & 1 & 2 & \cdots & n & \cdots \\ \hline
 P\left( \mathcal{I}=i\right) & p_{1} & p_{2} & \cdots & p_{n} & \cdots 
 \end{array}$$
 y el número de comparaciones en el paso 3 sería un valor aleatorio de esta variable.
-Una medida de la eficiencia del algoritmo de la transformación cuantil es
-el número medio de comparaciones:
+Una medida de la eficiencia del algoritmo de la transformación cuantil es el número medio de comparaciones[^transcuant-1]:
 $$E\left( \mathcal{I}\right) =\sum_i ip_{i}.$$
-Realmente, cuando la variable toma un número finito de valores:
-$x_{1}$, $x_{2}$, $\ldots$, $x_{n}$, no sería necesario hacer
-la última comprobación $U>\sum_{i=1}^{n}p_{i}=1$ y se
-generaría directamente $x_{n}$, por lo que el
-número medio de comparaciones sería:
-$$\sum_{i=1}^{n-1}ip_{i}+\left( n-1\right)  p_{n}.$$
+
+[^transcuant-1]: Realmente, cuando la variable toma un número finito de valores: $x_{1}$, $x_{2}$, $\ldots$, $x_{n}$, no sería necesario hacer
+la última comprobación $U>\sum_{i=1}^{n}p_{i}=1$ y se generaría directamente $x_{n}$, por lo que el número medio de comparaciones sería: $$\sum_{i=1}^{n-1}ip_{i}+\left( n-1\right)  p_{n}.$$
 
 Para disminuir el número esperado de comparaciones podemos
 reordenar los valores $x_{i}$ de forma que las probabilidades
@@ -557,37 +572,28 @@ eliminando los valores muy poco probables (teniendo en cuenta el número de gene
 aunque la distribución de las simulaciones será aproximada.
 
 
-## Cálculo directo de la función cuantil {#transcuant-directo}
+## Otros métodos
+
+Muchos de los métodos descritos en el Capítulo \@ref(continuas) para variables continuas son directamente aplicables al caso discreto:
+
+* Aceptación-Rechazo (Sección \@ref(AR)): En principio habría que considerar una variable auxiliar discreta con el mismo soporte, pero también hay modificaciones para variables auxiliares continuas.
+
+* Método de composición (Sección \@ref(composicion)): es uno de los más empleados, por ejemplo en el método de Alias (Sección \@ref(alias)) y para simular la distribución binomial negativa (Sección \@ref(notables-disc)).
+
+Hay otros métodos que tratan de reducir el número medio de comparaciones de la búsqueda secuencial, por ejemplo los árboles (binarios) de Huffman (e.g. Cao, 2002, Sección 4.2).
+Estos métodos son muy poco eficientes para simular variables discretas pero pueden resultar de utilidad para diseñar experimentos de simulación más complejos (la idea es la misma, preocuparse principalmente por los sucesos más probables).
 
 En ocasiones el método de la transformación cuantil puede acelerarse computacionalmente porque, mediante cálculos directos, es posible encontrar el valor de la función cuantil en cualquier $U$, evitando el bucle de búsqueda. 
 Normalmente se realiza mediante truncamiento de una distribución continua.
 
-::: {.example name="distribución uniforme discreta"}
-<br>
-
-La función de masa de probabilidad de una distribución uniforme discreta 
-en $\{1,2,\ldots,n\}$ viene dada por
-$$p_{j}=\frac{1}{n}\text{, para }j=1,2,\ldots n.$$ 
-
-Pueden generarse valores de esta distribución de forma muy eficiente
-truncando la distribución uniforme:
-
-1. Generar $U\sim \mathcal{U}\left( 0,1\right)$.
-
-2. Devolver $X=\left\lfloor nU\right\rfloor + 1$.
-
-:::
-
-
-::: {.example name="distribución geométrica"}
+::: {.example #transcuant-directo name="Cálculo directo de la función cuantil"}
 <br>
 
 La función de masa de probabilidad de una distribución geométrica es:
 $$P\left( X=j\right)  =P\left( I=j+1\right)  =p\left( 1-p\right)^{j}\text{,
 }j=0,1,\ldots$$
 
-Si se considera como variable aleatoria continua auxiliar una
-exponencial, con función de distribución 
+Si se considera como variable aleatoria continua auxiliar una exponencial, con función de distribución 
 $G\left( x\right) = 1-e^{-\lambda x}$ si $x\geq0$,
 se tiene que:
 $$\begin{aligned}
@@ -601,6 +607,11 @@ G\left( i\right) - G\left( i-1\right)
 tomando $p=1-e^{-\lambda}$.
 De donde se obtendría el algoritmo:
 
+:::
+
+::: {.conjecture #geometrica name="distribución geométrica"}
+<br>
+
 0. Hacer $\lambda=-\ln\left( 1-p\right)$.
 
 1. Generar $U\sim \mathcal{U}\left( 0,1\right)$.
@@ -610,18 +621,6 @@ De donde se obtendría el algoritmo:
 3. Devolver $X=\left\lfloor T\right\rfloor$.
 
 :::
-
-
-## Otros métodos
-
-Muchos de los métodos descritos en el Capítulo \@ref(continuas) para variables continuas son directamente aplicables al caso discreto:
-
-* Aceptación-Rechazo (Sección \@ref(AR)): En principio habría que considerar una variable auxiliar discreta con el mismo soporte, pero también hay modificaciones para variables auxiliares continuas.
-
-* Método de composición (Sección \@ref(composicion)): es uno de los más empleados, por ejemplo en el método de Alias (Sección \@ref(alias)) y para simular la distribución binomial negativa (Sección \@ref(notables-disc)).
-
-Hay otros métodos que tratan de reducir el número medio de comparaciones de la búsqueda secuencial, por ejemplo los árboles (binarios) de Huffman (e.g. Cao, 2002, Sección 4.2).
-Estos métodos son muy poco eficientes para simular variables discretas pero pueden resultar de utilidad para diseñar experimentos de simulación más complejos (la idea es la misma, preocuparse principalmente por los sucesos más probables).
 
 
 ## Métodos específicos para generación de distribuciones notables {#notables-disc}
@@ -700,8 +699,7 @@ Ver solución en Sección \@ref(sol-mixta-cuantil).
 <br>
 
 Se pretende simular $nsim=10^{4}$ observaciones de una variable
-hipergeométrica (`dhyper(x, m, n, k)`) de parámetros $m=$ el número 
-de grupo multiplicado por 10, $n=100-m$ y $k=20$.
+hipergeométrica (`dhyper(x, m, n, k)`) de parámetros $m$ los dos últimos dígitos del DNI, $n=100-m$ y $k=20$.
 
 a)  Comprobar que el rango de posibles valores de esta variable es
     `max(0, k-n):min(m, k)`. Generar los valores empleando el método

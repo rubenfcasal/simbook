@@ -1,18 +1,16 @@
 \usepackage{booktabs}
 \usepackage[a4paper, top=3.25cm, bottom=2.5cm, left=3cm, right=2.5cm]{geometry}
-% \usepackage{fontspec}
-% \setmainfont{Arial}
-% \usepackage{amsthm}
+%\usepackage{animate}
+%\usepackage{fontspec}
+%\setmainfont{Arial}
+% ---------------------------
+% Leyendas de figuras y tablas
+\usepackage{caption}
+\captionsetup{font=small, labelfont=bf, margin={.08\textwidth}}
+% ---------------------------
 % Espacio después de teorema
-% Basado en https://tex.stackexchange.com/questions/37797/theorem-environment-line-break-after-label
-% \newtheoremstyle{break}
-%   {\topsep}{\topsep}% Space above and below
-%   {\itshape}{}%       Body font, Indent amoun
-%   {\bfseries}{}%      Theorem head font, Punctuation after theorem head
-%   {\newline}%         Space after theorem head
-%   {}%                 Theorem head spec (can be left empty, meaning ‘normal’ )
-% Problemas con listas  https://tex.stackexchange.com/questions/8110/is-it-possible-to-skip-the-first-line-in-a-theorem-environment
-
+% https://tex.stackexchange.com/questions/37797/theorem-environment-line-break-after-label
+% https://tex.stackexchange.com/questions/8110/is-it-possible-to-skip-the-first-line-in-a-theorem-environment
 \usepackage{ntheorem}
 \theoremstyle{break}
 \theoremheaderfont{\normalfont\bfseries}
@@ -42,21 +40,27 @@
 \newtheorem{remark}{Nota}
 \newtheorem{solution}{Solución}
 \newtheorem{proof}{Demostración}
-
-
+% ---------------------------
+% Spanish
 \ifxetex
   \usepackage{polyglossia}
   \setmainlanguage{spanish}
   % Tabla en lugar de cuadro
   \gappto\captionsspanish{\renewcommand{\tablename}{Tabla}
           \renewcommand{\listtablename}{Índice de tablas}}
-
 \else
   \usepackage[spanish,es-tabla]{babel}
 \fi
-\makeatletter
-\def\thm@space@setup{%
-  \thm@preskip=8pt plus 2pt minus 4pt
-  \thm@postskip=\thm@preskip
-}
-\makeatother
+% ---------------------------
+% Code chunks
+% https://github.com/tidymodels/TMwR/blob/main/latex_extras/preamble.tex
+%\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\},fontsize=\small}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}, xleftmargin=2mm}
+\renewcommand{\CommentTok}[1]{\textcolor[rgb]{0.41,0.41,0.41}{\texttt{#1}}}
+% https://tex.stackexchange.com/questions/161678/decreasing-font-size-in-verbatim
+% ---------------------------
+% Warning: Package microtype Warning: Unable to apply patch `footnote' on input line 214.
+% https://github.com/schlcht/microtype/issues/11
+\usepackage{microtype}
+\usepackage{setspace}
+\usepackage{hyperref}

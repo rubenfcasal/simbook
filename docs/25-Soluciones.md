@@ -21,9 +21,9 @@ output:
     toc: yes 
 ---
 
-bookdown::preview_chapter("24-Soluciones.Rmd")
-knitr::purl("24-Soluciones.Rmd", documentation = 2)
-knitr::spin("24-Soluciones.R",knit = FALSE)
+bookdown::preview_chapter("25-Soluciones.Rmd")
+knitr::purl("25-Soluciones.Rmd", documentation = 2)
+knitr::spin("25-Soluciones.R",knit = FALSE)
 -->
 
 A continuación se muestran soluciones de algunos de los ejercicios no resueltos en el texto.
@@ -517,7 +517,7 @@ simres::rvng
 ##   # Devolver valores
 ##   return(u)
 ## }
-## <bytecode: 0x0000021b6478bca0>
+## <bytecode: 0x00000155cb1b3050>
 ## <environment: namespace:simres>
 ```
 
@@ -551,16 +551,23 @@ ifelse(x < 0, 0,
     ifelse(x < 1/5, x/2 + 1/10,
         ifelse(x <= 9/10, x + 1/10, 1) ) )
 }
-# Empleando ifelse la función es vectorial (y podemos emplear curve...)
-curve(fdistr, from = -0.1, to = 1.1, type = 's', 
-      main = 'Función de distribución')
-# Discontinuidades en 0 y 1/5
-abline(h = c(1/10, 2/10, 3/10), lty = 2) 
 ```
 
+Como es una función vectorial podemos emplear `curve()` para representarla:
 
+```r
+curve(fdistr, from = -0.1, to = 1.1, type = 's', main = '')
+abline(h = c(1/10, 2/10, 3/10), lty = 2) # Discontinuidades
+```
 
-\begin{center}\includegraphics[width=0.7\linewidth]{25-Soluciones_files/figure-latex/unnamed-chunk-17-1} \end{center}
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{25-Soluciones_files/figure-latex/mixta-cuantil-plot-sol-1} 
+
+}
+
+\caption{Función de distribución mixta (con discontinuidades en 0 y 1/5).}(\#fig:mixta-cuantil-plot-sol)
+\end{figure}
 
 **Nota**: Esta variable toma los valores 0 y 1/5 con probabilidad 1/10.
 
@@ -587,9 +594,9 @@ a)  El algoritmo general es siempre el mismo. Empleando la función cuantil:
     
     2. Si $U < \frac{1}{10}$ devolver $X = 0$
     
-    3. Si $U < \frac{2}{10}$ devolver $X = 2(U - \frac{1}{10})$
+    3. En caso contrario, si $U < \frac{2}{10}$ devolver $X = 2(U - \frac{1}{10})$
     
-    4. Si $U < \frac{3}{10}$ devolver $X = \frac{2}{10}$
+    4. En caso contrario, si $U < \frac{3}{10}$ devolver $X = \frac{2}{10}$
     
     5. En caso contrario devolver $X = U - \frac{1}{10}$
 

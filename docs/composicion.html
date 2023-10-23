@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4.4 Método de composición (o de simulación condicional) | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4.4 Método de composición (o de simulación condicional) | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -222,10 +222,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2" data-path="método-de-la-tabla-guía.html"><a href="método-de-la-tabla-guía.html"><i class="fa fa-check"></i><b>5.2</b> Método de la tabla guía</a></li>
 <li class="chapter" data-level="5.3" data-path="alias.html"><a href="alias.html"><i class="fa fa-check"></i><b>5.3</b> Método de Alias</a></li>
 <li class="chapter" data-level="5.4" data-path="simulación-de-una-variable-discreta-con-dominio-infinito.html"><a href="simulación-de-una-variable-discreta-con-dominio-infinito.html"><i class="fa fa-check"></i><b>5.4</b> Simulación de una variable discreta con dominio infinito</a></li>
-<li class="chapter" data-level="5.5" data-path="transcuant-directo.html"><a href="transcuant-directo.html"><i class="fa fa-check"></i><b>5.5</b> Cálculo directo de la función cuantil</a></li>
-<li class="chapter" data-level="5.6" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>5.6</b> Otros métodos</a></li>
-<li class="chapter" data-level="5.7" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>5.7</b> Métodos específicos para generación de distribuciones notables</a></li>
-<li class="chapter" data-level="5.8" data-path="ejercicios-discretas.html"><a href="ejercicios-discretas.html"><i class="fa fa-check"></i><b>5.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="5.5" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>5.5</b> Otros métodos</a></li>
+<li class="chapter" data-level="5.6" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>5.6</b> Métodos específicos para generación de distribuciones notables</a></li>
+<li class="chapter" data-level="5.7" data-path="ejercicios-discretas.html"><a href="ejercicios-discretas.html"><i class="fa fa-check"></i><b>5.7</b> Ejercicios</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="multivariante.html"><a href="multivariante.html"><i class="fa fa-check"></i><b>6</b> Simulación de distribuciones multivariantes</a>
 <ul>
@@ -456,7 +455,8 @@ f_{2}(x) = \left\{
 0 &amp; \text{si } x\geq 0
 \end{array}
 \ \right.\]</span></p>
-<p>El algoritmo resultante sería el siguiente (empleando dos números pseudoaleatorios uniformes, el primero para seleccionar el índice y el segundo para generar un valor de la correspondiente componente mediante el método de inversión):</p>
+<p>El algoritmo resultante, empleando dos números pseudoaleatorios uniformes<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a>, el primero para seleccionar el índice y el segundo para generar un valor de la correspondiente componente mediante el método de inversión, sería el siguiente:</p>
+<!-- referencia -->
 <ol style="list-style-type: decimal">
 <li><p>Generar <span class="math inline">\(U,V \sim \mathcal{U}(0, 1)\)</span>.</p></li>
 <li><p>Si <span class="math inline">\(U&lt;0.5\)</span> devolver <span class="math inline">\(X= -\ln( 1-V )/\lambda\)</span>.</p></li>
@@ -464,15 +464,7 @@ f_{2}(x) = \left\{
 </ol>
 <p>Este método está implementado en la función <a href="https://rubenfcasal.github.io/simres/reference/ddexp.html"><code>rdexp()</code></a> del paquete <a href="https://rubenfcasal.github.io/simres"><code>simres</code></a> (fichero <a href="R/ddexp.R"><em>ddexp.R</em></a>).</p>
 </div>
-<p>Observaciones:</p>
-<ul>
-<li><p>En ocasiones se hace un reciclado de los números aleatorios
-(solo se genera una uniforme, e.g. <span class="math inline">\(V=2(U-0.5)\)</span> si
-<span class="math inline">\(U\in (0.5,1)\)</span>).</p></li>
-<li><p>En ciertas ocasiones por comodidad, para simular una muestra de
-tamaño <span class="math inline">\(n\)</span>, se simulan muestras de tamaño <span class="math inline">\(np_{i}\)</span> con densidad
-<span class="math inline">\(f_{i}\)</span> y se combinan aleatoriamente.</p></li>
-</ul>
+<p>En ciertas ocasiones, por comodidad, para simular una muestra de tamaño <span class="math inline">\(n\)</span>, se simulan muestras de tamaño <span class="math inline">\(np_{i}\)</span> con densidad <span class="math inline">\(f_{i}\)</span> y, si el orden es importante, se combinan aleatoriamente</p>
 <p>Otro ejemplo de una mixtura discreta es el estimador tipo núcleo de la densidad (ver e.g. la ayuda de la función <code>density()</code> de R o la Sección <a href="modunif-boot-suav.html#modunif-boot-suav">10.3</a>).
 Simular a partir de una estimación de este tipo es lo que se conoce como <em>bootstrap suavizado</em>.</p>
 <p>En el caso de una mixtura continua tendríamos:
@@ -484,8 +476,14 @@ Simular a partir de una estimación de este tipo es lo que se conoce como <em>bo
 <li><p>Generar <span class="math inline">\(X\sim g(\cdot |Y)\)</span>.</p></li>
 </ol>
 </div>
-<p>Este algoritmo es muy empleado en Inferencia Bayesiana y en la simulación de algunas variables discretas (como la Binomial Negativa, denominada también distribución Gamma-Poisson, o la distribución Beta-Binomial; ver Sección <a href="notables-disc.html#notables-disc">5.7</a>),
+<p>Este algoritmo es muy empleado en Inferencia Bayesiana y en la simulación de algunas variables discretas (como la Binomial Negativa, denominada también distribución Gamma-Poisson, o la distribución Beta-Binomial; ver Sección <a href="notables-disc.html#notables-disc">5.6</a>),
 ya que el resultado sería válido cambiando las funciones de densidad <span class="math inline">\(f\)</span> y <span class="math inline">\(g\)</span> por funciones de masa de probabilidad.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="17">
+<li id="fn17"><p>En ocasiones se hace un reciclado de los números aleatorios, es decir, solo se genera la uniforme <span class="math inline">\(U\)</span> y se obtiene <span class="math inline">\(V\)</span> a partir de ella. Por ejemplo, <span class="math inline">\(V=2U\)</span> si <span class="math inline">\(U \le 0.5\)</span> y <span class="math inline">\(V=2(U-0.5)\)</span> si <span class="math inline">\(U &gt; 0.5\)</span>.<a href="composicion.html#fnref17" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 

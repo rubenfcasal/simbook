@@ -296,7 +296,7 @@ $$\mathbf{X} =\boldsymbol\mu + H\Lambda^{1/2}\mathbf{Z} \sim \mathcal{N}_d\left(
   $$\mathbf{X} =\boldsymbol\mu + L\mathbf{Z} 
   \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right).$$
 
-Desde el punto de vista de la eficiencia computacional la factorización de Cholesky sería la preferible. Pero en ocasiones, para evitar problemas numéricos (por ejemplo, en el caso de matrices definidas positivas, i.e. con autovalores nulos) puede ser más adecuado emplear la factorización espectral.
+Desde el punto de vista de la eficiencia computacional la factorización de Cholesky sería la preferible. Pero en ocasiones, para evitar problemas numéricos (por ejemplo, en el caso de matrices semidefinidas positivas^[También se habla de matrices definidas no negativas (*non negative definite matrices*) o de matrices no estrictamente definidas positivas.], i.e. con autovalores nulos) puede ser más adecuado emplear la factorización espectral.
 En el primer caso el algoritmo sería el siguiente:
 
 ::: {.conjecture #mnorm-fact name="de simulación de una normal multivariante" }
@@ -423,7 +423,7 @@ mvrnorm
 ##         drop(X)
 ##     else t(X)
 ## }
-## <bytecode: 0x0000019c97509b20>
+## <bytecode: 0x000001c095e74528>
 ## <environment: namespace:MASS>
 ```
 

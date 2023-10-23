@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>10.4 Bootstrap basado en modelos | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
   <meta property="og:title" content="10.4 Bootstrap basado en modelos | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -222,10 +222,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2" data-path="método-de-la-tabla-guía.html"><a href="método-de-la-tabla-guía.html"><i class="fa fa-check"></i><b>5.2</b> Método de la tabla guía</a></li>
 <li class="chapter" data-level="5.3" data-path="alias.html"><a href="alias.html"><i class="fa fa-check"></i><b>5.3</b> Método de Alias</a></li>
 <li class="chapter" data-level="5.4" data-path="simulación-de-una-variable-discreta-con-dominio-infinito.html"><a href="simulación-de-una-variable-discreta-con-dominio-infinito.html"><i class="fa fa-check"></i><b>5.4</b> Simulación de una variable discreta con dominio infinito</a></li>
-<li class="chapter" data-level="5.5" data-path="transcuant-directo.html"><a href="transcuant-directo.html"><i class="fa fa-check"></i><b>5.5</b> Cálculo directo de la función cuantil</a></li>
-<li class="chapter" data-level="5.6" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>5.6</b> Otros métodos</a></li>
-<li class="chapter" data-level="5.7" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>5.7</b> Métodos específicos para generación de distribuciones notables</a></li>
-<li class="chapter" data-level="5.8" data-path="ejercicios-discretas.html"><a href="ejercicios-discretas.html"><i class="fa fa-check"></i><b>5.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="5.5" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>5.5</b> Otros métodos</a></li>
+<li class="chapter" data-level="5.6" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>5.6</b> Métodos específicos para generación de distribuciones notables</a></li>
+<li class="chapter" data-level="5.7" data-path="ejercicios-discretas.html"><a href="ejercicios-discretas.html"><i class="fa fa-check"></i><b>5.7</b> Ejercicios</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="multivariante.html"><a href="multivariante.html"><i class="fa fa-check"></i><b>6</b> Simulación de distribuciones multivariantes</a>
 <ul>
@@ -450,7 +449,7 @@ Una de las aplicaciones del bootstrap semiparamétrico es el contraste de hipót
 En este caso se suele reescribir como:
 <span class="math display">\[Y = m(\mathbf{X}) + \sigma(\mathbf{X}) \varepsilon,\]</span>
 siendo <span class="math inline">\(\sigma^2(\mathbf{x}) = Var\left( \left. Y\right\vert_{\mathbf{X}=\mathbf{x}} \right)\)</span> la varianza condicional y suponiendo adicionalmente que <span class="math inline">\(\varepsilon\)</span> tiene varianza uno.
-Se podría modificar el bootstrap residual para este caso pero habría que modelizar y estimar la varianza condicional<a href="#fn31" class="footnote-ref" id="fnref31"><sup>31</sup></a>.</p>
+Se podría modificar el bootstrap residual para este caso pero habría que modelizar y estimar la varianza condicional<a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a>.</p>
 <p>En esta sección nos centraremos en el caso de regresión lineal:
 <span class="math display">\[m_{\boldsymbol{\beta}}(\mathbf{x}) =  \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \cdots + \beta_{p}X_{p},\]</span>
 siendo <span class="math inline">\(\boldsymbol{\beta} = \left( \beta_{0}, \beta_{1}, \ldots, \beta_{p} \right)^{\top}\)</span> el vector de parámetros (desconocidos).
@@ -581,7 +580,7 @@ siendo <span class="math inline">\(H = X\left( X^{\top}X\right)^{-1}X^{\top}\)</
 La idea es remuestrear los residuos reescalados (de forma que su varianza sea constante) y centrados <span class="math inline">\(e_i - \bar{e}\)</span>, siendo:
 <span class="math display">\[e_i = \frac{r_i}{\sqrt{1 - h_{ii}}},\]</span>
 donde <span class="math inline">\(h_{ii}\)</span> es el valor de influencia o leverage, el elemento <span class="math inline">\(i\)</span>-ésimo de la diagonal de <span class="math inline">\(H\)</span>.</p>
-<p>En <code>R</code> podríamos obtener estos residuos mediante los comandos<a href="#fn32" class="footnote-ref" id="fnref32"><sup>32</sup></a>:</p>
+<p>En <code>R</code> podríamos obtener estos residuos mediante los comandos<a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a>:</p>
 <div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="boot-reg.html#cb598-1" aria-hidden="true" tabindex="-1"></a>pres.dat<span class="sc">$</span>sres <span class="ot">&lt;-</span> <span class="fu">residuals</span>(modelo)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">hatvalues</span>(modelo))</span>
 <span id="cb598-2"><a href="boot-reg.html#cb598-2" aria-hidden="true" tabindex="-1"></a>pres.dat<span class="sc">$</span>sres <span class="ot">&lt;-</span> pres.dat<span class="sc">$</span>sres <span class="sc">-</span> <span class="fu">mean</span>(pres.dat<span class="sc">$</span>sres)</span></code></pre></div>
 <p>Sin embargo puede ser más cómodo emplear la función <code>Boot()</code> del paquete <code>car</code> (que internamente llama a la función <code>boot()</code>),
@@ -610,11 +609,11 @@ y una estimación por intervalo de confianza de este estadístico).</p>
 <!-- </div> -->
 <div class="footnotes">
 <hr />
-<ol start="31">
-<li id="fn31"><p>Alternativamente se podría emplear el denominado <em>Wild Bootstrap</em>, ver p.e. Cao y Fernández-Casal, 2022, <a href="https://rubenfcasal.github.io/book_remuestreo/m%C3%A9todos-de-remuestreo-en-regresi%C3%B3n-no-param%C3%A9trica.html#wild-bootstrap">Capítulo 7</a> para el caso de modelos de regresión no paramétricos<a href="boot-reg.html#fnref31" class="footnote-back">↩︎</a></p></li>
-<li id="fn32"><p>Para reescalar los
+<ol start="35">
+<li id="fn35"><p>Alternativamente se podría emplear el denominado <em>Wild Bootstrap</em>, ver p.e. Cao y Fernández-Casal, 2022, <a href="https://rubenfcasal.github.io/book_remuestreo/m%C3%A9todos-de-remuestreo-en-regresi%C3%B3n-no-param%C3%A9trica.html#wild-bootstrap">Capítulo 7</a> para el caso de modelos de regresión no paramétricos<a href="boot-reg.html#fnref35" class="footnote-back">↩︎</a></p></li>
+<li id="fn36"><p>Para reescalar los
 residuos de un modelo <code>gam</code> del paquete <code>mgcv</code>, como no implementa un método <code>hatvalues()</code>,
-habrá que emplear <code>influence.gam()</code> (o directamente <code>modelo.gam$hat</code>).<a href="boot-reg.html#fnref32" class="footnote-back">↩︎</a></p></li>
+habrá que emplear <code>influence.gam()</code> (o directamente <code>modelo.gam$hat</code>).<a href="boot-reg.html#fnref36" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

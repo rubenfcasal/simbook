@@ -102,19 +102,17 @@
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
 \usepackage[a4paper, top=3.25cm, bottom=2.5cm, left=3cm, right=2.5cm]{geometry}
-% \usepackage{fontspec}
-% \setmainfont{Arial}
-% \usepackage{amsthm}
+%\usepackage{animate}
+%\usepackage{fontspec}
+%\setmainfont{Arial}
+% ---------------------------
+% Leyendas de figuras y tablas
+\usepackage{caption}
+\captionsetup{font=small, labelfont=bf, margin={.08\textwidth}}
+% ---------------------------
 % Espacio después de teorema
-% Basado en https://tex.stackexchange.com/questions/37797/theorem-environment-line-break-after-label
-% \newtheoremstyle{break}
-%   {\topsep}{\topsep}% Space above and below
-%   {\itshape}{}%       Body font, Indent amoun
-%   {\bfseries}{}%      Theorem head font, Punctuation after theorem head
-%   {\newline}%         Space after theorem head
-%   {}%                 Theorem head spec (can be left empty, meaning ‘normal’ )
-% Problemas con listas  https://tex.stackexchange.com/questions/8110/is-it-possible-to-skip-the-first-line-in-a-theorem-environment
-
+% https://tex.stackexchange.com/questions/37797/theorem-environment-line-break-after-label
+% https://tex.stackexchange.com/questions/8110/is-it-possible-to-skip-the-first-line-in-a-theorem-environment
 \usepackage{ntheorem}
 \theoremstyle{break}
 \theoremheaderfont{\normalfont\bfseries}
@@ -144,24 +142,30 @@
 \newtheorem{remark}{Nota}
 \newtheorem{solution}{Solución}
 \newtheorem{proof}{Demostración}
-
-
+% ---------------------------
+% Spanish
 \ifxetex
   \usepackage{polyglossia}
   \setmainlanguage{spanish}
   % Tabla en lugar de cuadro
   \gappto\captionsspanish{\renewcommand{\tablename}{Tabla}
           \renewcommand{\listtablename}{Índice de tablas}}
-
 \else
   \usepackage[spanish,es-tabla]{babel}
 \fi
-\makeatletter
-\def\thm@space@setup{%
-  \thm@preskip=8pt plus 2pt minus 4pt
-  \thm@postskip=\thm@preskip
-}
-\makeatother
+% ---------------------------
+% Code chunks
+% https://github.com/tidymodels/TMwR/blob/main/latex_extras/preamble.tex
+%\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\},fontsize=\small}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}, xleftmargin=2mm}
+\renewcommand{\CommentTok}[1]{\textcolor[rgb]{0.41,0.41,0.41}{\texttt{#1}}}
+% https://tex.stackexchange.com/questions/161678/decreasing-font-size-in-verbatim
+% ---------------------------
+% Warning: Package microtype Warning: Unable to apply patch `footnote' on input line 214.
+% https://github.com/schlcht/microtype/issues/11
+\usepackage{microtype}
+\usepackage{setspace}
+\usepackage{hyperref}
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -178,7 +182,7 @@
 
 \title{Técnicas de Simulación y Remuestreo}
 \author{Rubén Fernández Casal (\href{mailto:ruben.fcasal@udc.es}{\nolinkurl{ruben.fcasal@udc.es}}) \and Ricardo Cao (\href{mailto:rcao@udc.es}{\nolinkurl{rcao@udc.es}}) \and Julián Costa (\href{mailto:julian.costa@udc.es}{\nolinkurl{julian.costa@udc.es}})}
-\date{Edición: Enero de 2023. Impresión: 2023-03-15}
+\date{Edición: Enero de 2023. Impresión: 2023-10-24}
 
 \begin{document}
 \maketitle
@@ -193,7 +197,9 @@
 
 Este libro, \textbf{en proceso de elaboración}, contiene los apuntes de la asignatura de \href{http://eamo.usc.es/pub/mte/index.php/es/?option=com_content\&view=article\&id=2201\&idm=13\&a\%C3\%B1o=2019}{Simulación Estadística} del \href{http://eio.usc.es/pub/mte}{Máster en Técnicas Estadísticas} y material de apoyo a la docencia de la asignatura de \href{https://guiadocente.udc.es/guia_docent/index.php?centre=614\&ensenyament=614G02\&assignatura=614G02036\&idioma=cast}{Técnicas de Simulación y Remuestreo} del \href{https://estudos.udc.es/es/study/start/614G02V01}{Grado en Ciencia e Ingeniería de Datos} de la \href{https://www.udc.es}{UDC}.
 
-Este libro ha sido escrito en \href{http://rmarkdown.rstudio.com}{R-Markdown} empleando el paquete \href{https://bookdown.org/yihui/bookdown/}{\texttt{bookdown}} y está disponible en el repositorio Github: \href{https://github.com/rubenfcasal/simbook}{rubenfcasal/simbook}.
+Este libro ha sido escrito en \href{http://rmarkdown.rstudio.com}{R-Markdown} empleando el paquete \href{https://bookdown.org/yihui/bookdown/}{\texttt{bookdown}} y está disponible en el repositorio \href{https://github.com/rubenfcasal/simbook}{rubenfcasal/simbook} de Github.
+Este libro es una ``segunda edición'', la anterior (Fernández-Casal R. y Cao R., 2022, \emph{Simulación Estadística}) está disponible en la rama \emph{\href{https://github.com/rubenfcasal/simbook/tree/primera_edicion}{primera\_edicion}} de este repositorio.
+
 Se puede acceder a la versión en línea a través del siguiente enlace:
 
 \url{https://rubenfcasal.github.io/simbook/index.html}.
@@ -928,10 +934,10 @@ Ejemplo:
 \begin{verbatim}
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.15    0.00    0.15 
+##    0.17    0.02    0.19 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.15    0.00    0.15
+##    0.17    0.02    0.19
 \end{verbatim}
 
 \begin{Shaded}
@@ -944,10 +950,10 @@ Ejemplo:
 \begin{verbatim}
 ## Tiempo última operación:
 ##    user  system elapsed 
-##       0       0       0 
+##    0.02    0.00    0.01 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.15    0.00    0.15
+##    0.19    0.02    0.20
 \end{verbatim}
 
 Hay diversos paquetes que implementan herramientas similares, por ejemplo:
@@ -987,7 +993,7 @@ Hay diversos paquetes que implementan herramientas similares, por ejemplo:
 \end{Shaded}
 
 \begin{verbatim}
-## middle: 0 sec elapsed
+## middle: 0.02 sec elapsed
 \end{verbatim}
 
 \begin{Shaded}
@@ -997,7 +1003,7 @@ Hay diversos paquetes que implementan herramientas similares, por ejemplo:
 \end{Shaded}
 
 \begin{verbatim}
-## outer: 0.15 sec elapsed
+## outer: 0.17 sec elapsed
 \end{verbatim}
 
 \begin{Shaded}
@@ -1019,10 +1025,10 @@ Hay diversos paquetes que implementan herramientas similares, por ejemplo:
 
 \begin{verbatim}
 ## 'data.frame':    10 obs. of  4 variables:
-##  $ tic         : num  3.4 3.4 3.4 3.4 3.4 3.4 3.4 3.4 3.4 3.4
-##  $ toc         : num  3.4 3.4 3.4 3.4 3.4 3.4 3.4 3.4 3.4 3.4
+##  $ tic         : num  7.28 7.29 7.29 7.29 7.29 7.29 7.29 7.29 7.29 7.29
+##  $ toc         : num  7.29 7.29 7.29 7.29 7.29 7.29 7.29 7.29 7.29 7.29
 ##  $ msg         : chr  "1" "2" "3" "4" ...
-##  $ callback_msg: chr  "1: 0 sec elapsed" "2: 0 sec elapsed" "3: 0 sec elapsed" "4: 0 sec elapsed" ...
+##  $ callback_msg: chr  "1: 0.01 sec elapsed" "2: 0 sec elapsed" "3: 0 sec elapsed" "4: 0 sec elapsed" ...
 \end{verbatim}
 
 \begin{Shaded}
@@ -1037,7 +1043,7 @@ Hay diversos paquetes que implementan herramientas similares, por ejemplo:
 
 \begin{verbatim}
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##       0       0       0       0       0       0
+##   0.000   0.000   0.000   0.001   0.000   0.010
 \end{verbatim}
   \end{itemize}
 \item
@@ -1218,7 +1224,7 @@ Este método está implementado\footnote{Aunque de forma no muy eficiente. Para 
 ##   # Devolver valores
 ##   return(u)
 ## }
-## <bytecode: 0x00000247e31eb4e8>
+## <bytecode: 0x000001aee7a2a5a0>
 ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -1240,7 +1246,7 @@ A pesar de su simplicidad, una adecuada elección de los parámetros permite obt
 Durante los primeros años, el procedimiento habitual consistía en escoger \(m\) de forma que se pudiera realizar eficientemente la operación del módulo, aprovechando la arquitectura del ordenador (por ejemplo \(m = 2^{31}\) si se emplean enteros con signo de 32 bits).
 Posteriormente se seleccionaban \(c\) y \(a\) de forma que el período \(p\) fuese lo más largo posible (o suficientemente largo), empleando los resultados mostrados a continuación.
 
-\begin{theorem}[Hull y Dobell 1962]
+\begin{theorem}[Hull y Dobell, 1962]
 \protect\hypertarget{thm:hull-dobell}{}\label{thm:hull-dobell}
 
 Un generador congruencial tiene período máximo (\(p=m\)) si y solo si:
@@ -1602,7 +1608,7 @@ Por ejemplo, se podría emplear la función \texttt{simres::chisq.cont.test()} (
 ##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
 ##                    method = METHOD, data.name = DNAME), RESULTS), class = "htest")
 ## }
-## <bytecode: 0x00000247f3218378>
+## <bytecode: 0x000001aeecba2c50>
 ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -2101,7 +2107,7 @@ Este algoritmo está implementado en la función \texttt{simres::rvng()} (ver ta
 ##   # Devolver valores
 ##   return(u)
 ## }
-## <bytecode: 0x00000247e2a1ecd0>
+## <bytecode: 0x000001aeeda1f248>
 ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -2127,7 +2133,7 @@ Al final del capítulo se incluye una breve introducción a los problemas de est
 Supongamos que estamos interesados en aproximar la media teórica \(\mu = E\left( X\right)\) a partir de una secuencia i.i.d. \(X_{1}\), \(X_{2}\), \(\ldots\), \(X_{n}\) obtenida mediante simulación, utilizando para ello la media muestral \(\bar{X}_{n}\).
 Una justificación teórica de la validez de esta aproximación es \emph{la ley (débil\footnote{\emph{La ley fuerte} establece la convergencia casi segura.}) de los grandes números}:
 
-\begin{theorem}[Ley débil de los grandes números; Khintchine 1928]
+\begin{theorem}[Ley débil de los grandes números; Khintchine, 1928]
 \protect\hypertarget{thm:khinchine}{}\label{thm:khinchine}
 Si \(X_{1}\), \(X_{2}\), \(\ldots\) es una secuencia de variables aleatorias independientes e idénticamente distribuidas con media finita \(E\left( X_{i}\right) =\mu\) (i.e.~\(E\left( \left\vert X_{i} \right\vert \right) < \infty\)) entonces \(\overline{X}_{n}=\left( X_{1}+\ldots +X_{n}\right) /n\)
 converge en probabilidad a \(\mu\): \[\overline{X}_{n}\ \overset{p}{ \longrightarrow }\ \mu\]
@@ -2894,7 +2900,7 @@ El código para implementar este algoritmo en R podría ser el siguiente:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.01    0.00    0.01
+##       0       0       0
 \end{verbatim}
 
 \begin{Shaded}
@@ -3016,7 +3022,7 @@ y función de distribución:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.01    0.00    0.02
+##    0.03    0.01    0.05
 \end{verbatim}
 \item
   Representar el histograma y compararlo con la densidad teórica.
@@ -3181,7 +3187,7 @@ existe una constante \(c>0\) tal que:
 \text{, }\forall x\in \mathbb{R},\]
 (de donde se deduce que el soporte de \(g\) debe contener el de \(f\)).
 
-\begin{conjecture}[Método de aceptación-rechazo; Von Neuman 1951]
+\begin{conjecture}[Método de aceptación-rechazo; Von Neuman, 1951]
 \protect\hypertarget{cnj:aceptacion-rechazo}{}\label{cnj:aceptacion-rechazo}
 
 \begin{enumerate}
@@ -3310,7 +3316,7 @@ Empleando estas funciones podemos generar una muestra de \(10^3\) observaciones 
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.01    0.00    0.02
+##    0.03    0.00    0.03
 \end{verbatim}
 
 Para analizar la eficiencia podemos emplear el número de generaciones de la distribución auxiliar (siguiente sección):
@@ -3498,7 +3504,7 @@ Generamos una muestra de \(10^4\) observaciones:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.01    0.05    0.06
+##    0.12    0.02    0.14
 \end{verbatim}
 
 Evaluamos la eficiencia:
@@ -3686,16 +3692,17 @@ Aunque, como se muestra en el siguiente ejercicio, esta elección de densidad au
 \begin{exercise}[Simulación de la distribución a posteriori a partir de la distribución a priori]
 \protect\hypertarget{exr:post-pri-ar}{}\label{exr:post-pri-ar}
 
-Para la estimación Bayes de la media de una normal se suele utilizar
-como distribución a priori una Cauchy.
+Se desea estimar la media \(\theta\) de una distribución normal \(N(\theta, 1)\) (supondremos que la desviación tipica es conocida).
+Para ello se va a simular la distribución a posteriori de \(\theta\) por el método de aceptación-rechazo.
+En este caso, en la estimación bayesiana de la media de una distribución normal, se suele utilizar una distribución de Cauchy como distribución a priori.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
 \item
   Generar una muestra i.i.d. \(X_{i}\sim N(\theta_{0},1)\) de tamaño
   \(n=10\) con \(\theta_{0}=1\). Utilizar una \(Cauchy(0,1)\)
-  (\texttt{rcauchy()}) como distribución a priori y como densidad auxiliar
-  para simular por aceptación-rechazo una muestra de la densidad a
+  (\texttt{rcauchy()}) como distribución a priori y como densidad auxiliar.
+  Simular por aceptación-rechazo una muestra de la densidad a
   posteriori (emplear \texttt{dnorm()} para construir la verosimilitud).
   Obtener el intervalo de probabilidad/credibilidad al 95\%.
 
@@ -3706,11 +3713,9 @@ como distribución a priori una Cauchy.
 \NormalTok{nsim }\OtherTok{\textless{}{-}} \DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{4}
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{54321}\NormalTok{)}
 \NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n, }\AttributeTok{mean =}\NormalTok{ mu0)}
-
 \CommentTok{\# Función de verosimilitud}
 \CommentTok{\# lik1 \textless{}{-} function(mu) prod(dnorm(x, mean = mu)) \# escalar}
 \NormalTok{lik }\OtherTok{\textless{}{-}} \FunctionTok{Vectorize}\NormalTok{(}\ControlFlowTok{function}\NormalTok{(mu) }\FunctionTok{prod}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(x, }\AttributeTok{mean =}\NormalTok{ mu))) }\CommentTok{\# vectorial}
-
 \CommentTok{\# Cota óptima}
 \CommentTok{\# Estimación por máxima verosimilitud}
 \NormalTok{emv }\OtherTok{\textless{}{-}} \FunctionTok{optimize}\NormalTok{(}\AttributeTok{f =}\NormalTok{ lik, }\AttributeTok{int =} \FunctionTok{range}\NormalTok{(x), }\AttributeTok{maximum =} \ConstantTok{TRUE}\NormalTok{)}
@@ -3872,7 +3877,7 @@ En ciertos casos el tiempo de computación necesario para evaluar \(f(x)\) puede
 Para evitar evaluaciones de la densidad se puede emplear una función ``squeeze'' que aproxime la densidad por abajo (una envolvente inferior):
 \[s(x)\leq f(x) \text{, }\forall x\in \mathbb{R}.\]
 
-\begin{conjecture}[Marsaglia 1977]
+\begin{conjecture}[Marsaglia, 1977]
 \protect\hypertarget{cnj:marsaglia}{}\label{cnj:marsaglia}
 
 \begin{enumerate}
@@ -3951,7 +3956,7 @@ Tenemos entonces que:
 \[s_n(x)\leq f(x) \leq G_n(x)=c\cdot g_n(x)\]
 donde \(g_n(x)\) es una mixtura discreta de distribuciones tipo exponencial truncadas (las tasas pueden ser negativas), que se puede simular fácilmente combinando el método de composición (Sección \ref{composicion}) con el método de inversión.
 
-\begin{conjecture}[Gilks 1992]
+\begin{conjecture}[Gilks, 1992]
 \protect\hypertarget{cnj:gilks}{}\label{cnj:gilks}
 
 \begin{enumerate}
@@ -4041,7 +4046,7 @@ El correspondiente algoritmo está implementado en la función \href{https://rub
 ##   attr(x, "ngen") <- ngen
 ##   return(x)
 ## }
-## <bytecode: 0x000002a0b2046a60>
+## <bytecode: 0x0000026e4899c4f8>
 ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -4124,7 +4129,7 @@ f_{2}(x) = \left\{
 \end{array}
 \ \right.\]
 
-El algoritmo resultante sería el siguiente (empleando dos números pseudoaleatorios uniformes, el primero para seleccionar el índice y el segundo para generar un valor de la correspondiente componente mediante el método de inversión):
+El algoritmo resultante, empleando dos números pseudoaleatorios uniformes\footnote{En ocasiones se hace un reciclado de los números aleatorios, es decir, solo se genera la uniforme \(U\) y se obtiene \(V\) a partir de ella. Por ejemplo, \(V=2U\) si \(U \le 0.5\) y \(V=2(U-0.5)\) si \(U > 0.5\).}, el primero para seleccionar el índice y el segundo para generar un valor de la correspondiente componente mediante el método de inversión, sería el siguiente:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -4139,18 +4144,7 @@ El algoritmo resultante sería el siguiente (empleando dos números pseudoaleato
 Este método está implementado en la función \href{https://rubenfcasal.github.io/simres/reference/ddexp.html}{\texttt{rdexp()}} del paquete \href{https://rubenfcasal.github.io/simres}{\texttt{simres}} (fichero \href{R/ddexp.R}{\emph{ddexp.R}}).
 \end{example}
 
-Observaciones:
-
-\begin{itemize}
-\item
-  En ocasiones se hace un reciclado de los números aleatorios
-  (solo se genera una uniforme, e.g.~\(V=2(U-0.5)\) si
-  \(U\in (0.5,1)\)).
-\item
-  En ciertas ocasiones por comodidad, para simular una muestra de
-  tamaño \(n\), se simulan muestras de tamaño \(np_{i}\) con densidad
-  \(f_{i}\) y se combinan aleatoriamente.
-\end{itemize}
+En ciertas ocasiones, por comodidad, para simular una muestra de tamaño \(n\), se simulan muestras de tamaño \(np_{i}\) con densidad \(f_{i}\) y, si el orden es importante, se combinan aleatoriamente
 
 Otro ejemplo de una mixtura discreta es el estimador tipo núcleo de la densidad (ver e.g.~la ayuda de la función \texttt{density()} de R o la Sección \ref{modunif-boot-suav}).
 Simular a partir de una estimación de este tipo es lo que se conoce como \emph{bootstrap suavizado}.
@@ -4234,7 +4228,7 @@ También se podrían emplear resultado conocidos relacionados con esta distribuc
 \[U_{(k)} \sim \mathcal{Beta}(k,n+1-k).\]
 El resultado es el algoritmo de Fox (1963), que podría ser adecuado para simular esta distribución cuando \(a, b \in \mathbb{N}\) y son valores pequeños.
 
-\begin{conjecture}[de Fox 1963]
+\begin{conjecture}[Fox, 1963]
 \protect\hypertarget{cnj:fox}{}\label{cnj:fox}
 
 \begin{enumerate}
@@ -4256,7 +4250,7 @@ En cualquier caso, es obvio que no es necesario ordenar todos los valores \(U_{i
 Un método válido aunque \(a\) ó \(b\) no sean enteros es el dado por el
 algoritmo de Jöhnk (1964).
 
-\begin{conjecture}[de Jöhnk 1964]
+\begin{conjecture}[Jöhnk, 1964]
 \protect\hypertarget{cnj:johnk}{}\label{cnj:johnk}
 
 \begin{enumerate}
@@ -4278,7 +4272,7 @@ Esto es debido a que la condición \(S\leq1\) del paso 3 puede tardar muchísimo
 Por este motivo, el algoritmo de Jöhnk sólo es recomendable para \(a<1\) y \(b<1\).
 Como remedio a esto puede usarse el algoritmo de Cheng (1978) que es algo más complicado de implementar\footnote{R implementa este algoritmo en el fichero fuente \href{https://svn.r-project.org/R/trunk/src/nmath/rbeta.c}{rbeta.c}.} pero mucho más eficiente.
 
-\begin{conjecture}[de Cheng 1978]
+\begin{conjecture}[Cheng, 1978]
 \protect\hypertarget{cnj:cheng}{}\label{cnj:cheng}
 
 Inicialización:
@@ -4335,18 +4329,34 @@ código de la forma:
 
 para simular una distribución \(Bernoulli(p)\).
 
-Para generar variables discretas con dominio finito en R,
-si no se dispone de un algoritmo específico más eficiente,
-es recomendable emplear:
+Otro ejemplo es la distribución uniforme discreta
+en \(\{1,2,\ldots,n\}\), con función de masa de probabilidad dada por
+\[p_{j}=\frac{1}{n}\text{, para }j=1,2,\ldots n.\]
+Pueden generarse valores de esta distribución de forma muy eficiente truncando la distribución uniforme:
+
+\begin{conjecture}[distribución uniforme discreta]
+\protect\hypertarget{cnj:unif-discr}{}\label{cnj:unif-discr}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Generar \(U\sim \mathcal{U}\left( 0,1\right)\).
+\item
+  Devolver \(X=\left\lfloor nU\right\rfloor + 1\).
+\end{enumerate}
+
+\end{conjecture}
+
+Sin embargo, para generar variables discretas con dominio finito en R, si no se dispone de un algoritmo específico más eficiente, es recomendable emplear la función \href{https://rdrr.io/r/base/sample.html}{\texttt{sample()}} del paquete base.
+En el caso general\footnote{En el caso de que \texttt{x\ =\ n} sea un entero (o un escalar) generará valores de una distribución uniforme discreta (equivalente a \texttt{sample(x\ =\ 1:n,\ ...)} o \texttt{sample.int(n,\ ...)}).}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{sample}\NormalTok{(valores, nsim, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{, prob)}
+\FunctionTok{sample}\NormalTok{(}\AttributeTok{x =}\NormalTok{ valores, }\AttributeTok{size =}\NormalTok{ nsim, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{, prob)}
 \end{Highlighting}
 \end{Shaded}
 
-Esta función del paquete base implementa eficientemente el método ``alias''
-que describiremos más adelante en la Sección \ref{alias}.
+implementa eficientemente el método ``alias'' que describiremos más adelante, en la Sección \ref{alias}.
 
 \hypertarget{transcuant}{%
 \section{Método de la transformación cuantil}\label{transcuant}}
@@ -4464,26 +4474,26 @@ Este algoritmo está implementado en la función \href{https://rubenfcasal.githu
 \end{Shaded}
 
 \begin{verbatim}
-## function(x, prob = 1/length(x), n = 1000, as.factor = FALSE) {
-##   # Numero de comparaciones
-##   ncomp <- 0
-##   # Inicializar FD
-##   Fx <- cumsum(prob)
-##   # Simular
-##   X <- numeric(n)
-##   U <- runif(n)
-##   for(j in 1:n) {
-##     i <- 1
-##     while (Fx[i] < U[j]) i <- i + 1
-##     X[j] <- x[i]
-##     ncomp <- ncomp + i
-##   }
-##   if(as.factor) X <- factor(X, levels = x)
-##   attr(X, "ncomp") <- ncomp
-##   return(X)
-## }
-## <bytecode: 0x0000021a6e0fa608>
-## <environment: namespace:simres>
+ ## function(x, prob = 1/length(x), n = 1000, as.factor = FALSE) {
+ ##   # Numero de comparaciones
+ ##   ncomp <- 0
+ ##   # Inicializar FD
+ ##   Fx <- cumsum(prob)
+ ##   # Simular
+ ##   X <- numeric(n)
+ ##   U <- runif(n)
+ ##   for(j in 1:n) {
+ ##     i <- 1
+ ##     while (Fx[i] < U[j]) i <- i + 1
+ ##     X[j] <- x[i]
+ ##     ncomp <- ncomp + i
+ ##   }
+ ##   if(as.factor) X <- factor(X, levels = x)
+ ##   attr(X, "ncomp") <- ncomp
+ ##   return(X)
+ ## }
+ ## <bytecode: 0x000001b7dca82ec0>
+ ## <environment: namespace:simres>
 \end{verbatim}
 
 \begin{example}[Simulación de una binomial mediante el método de la transformación cuantil]
@@ -4510,8 +4520,8 @@ Empleamos la rutina anterior para generar las simulaciones:
 \end{Shaded}
 
 \begin{verbatim}
-##    user  system elapsed 
-##    0.03    0.00    0.03
+ ##    user  system elapsed 
+ ##    0.06    0.00    0.06
 \end{verbatim}
 
 A partir de ellas podríamos aproximar el valor esperado:
@@ -4523,7 +4533,7 @@ A partir de ellas podríamos aproximar el valor esperado:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 4.99697
+ ## [1] 4.99697
 \end{verbatim}
 
 aunque en este caso el valor teórico es conocido \(np\) = 5.
@@ -4538,7 +4548,7 @@ Calculamos el número medio de comparaciones para generar cada observación:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 5.99697
+ ## [1] 5.99697
 \end{verbatim}
 
 \begin{Shaded}
@@ -4560,7 +4570,7 @@ Representamos la aproximación por simulación de la función de masa de probabi
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_discretas_files/figure-latex/comprfmp-1} 
+{\centering \includegraphics[width=0.75\linewidth]{05-Metodos_generales_discretas_files/figure-latex/comprfmp-1} 
 
 }
 
@@ -4579,18 +4589,18 @@ También podríamos realizar comparaciones numéricas:
 \end{Shaded}
 
 \begin{verbatim}
-##     x    psim   pteor
-## 1   0 0.00100 0.00098
-## 2   1 0.00981 0.00977
-## 3   2 0.04457 0.04395
-## 4   3 0.11865 0.11719
-## 5   4 0.20377 0.20508
-## 6   5 0.24477 0.24609
-## 7   6 0.20593 0.20508
-## 8   7 0.11631 0.11719
-## 9   8 0.04415 0.04395
-## 10  9 0.01021 0.00977
-## 11 10 0.00083 0.00098
+ ##     x    psim   pteor
+ ## 1   0 0.00100 0.00098
+ ## 2   1 0.00981 0.00977
+ ## 3   2 0.04457 0.04395
+ ## 4   3 0.11865 0.11719
+ ## 5   4 0.20377 0.20508
+ ## 6   5 0.24477 0.24609
+ ## 7   6 0.20593 0.20508
+ ## 8   7 0.11631 0.11719
+ ## 9   8 0.04415 0.04395
+ ## 10  9 0.01021 0.00977
+ ## 11 10 0.00083 0.00098
 \end{verbatim}
 
 \begin{Shaded}
@@ -4601,18 +4611,18 @@ También podríamos realizar comparaciones numéricas:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.0014625
+ ## [1] 0.0014625
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Máximo error porcentual absoluto}
+\CommentTok{\# Máximo error absoluto porcentual }
 \DecValTok{100}\SpecialCharTok{*}\FunctionTok{max}\NormalTok{(}\FunctionTok{abs}\NormalTok{(res}\SpecialCharTok{$}\NormalTok{psim }\SpecialCharTok{{-}}\NormalTok{ res}\SpecialCharTok{$}\NormalTok{pteor) }\SpecialCharTok{/}\NormalTok{ res}\SpecialCharTok{$}\NormalTok{pteor)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 15.008
+ ## [1] 15.008
 \end{verbatim}
 
 \end{example}
@@ -4632,15 +4642,9 @@ i & 1 & 2 & \cdots & n & \cdots \\ \hline
 P\left( \mathcal{I}=i\right) & p_{1} & p_{2} & \cdots & p_{n} & \cdots 
 \end{array}\]
 y el número de comparaciones en el paso 3 sería un valor aleatorio de esta variable.
-Una medida de la eficiencia del algoritmo de la transformación cuantil es
-el número medio de comparaciones:
+Una medida de la eficiencia del algoritmo de la transformación cuantil es el número medio de comparaciones\footnote{Realmente, cuando la variable toma un número finito de valores: \(x_{1}\), \(x_{2}\), \(\ldots\), \(x_{n}\), no sería necesario hacer
+  la última comprobación \(U>\sum_{i=1}^{n}p_{i}=1\) y se generaría directamente \(x_{n}\), por lo que el número medio de comparaciones sería: \[\sum_{i=1}^{n-1}ip_{i}+\left( n-1\right)  p_{n}.\]}:
 \[E\left( \mathcal{I}\right) =\sum_i ip_{i}.\]
-Realmente, cuando la variable toma un número finito de valores:
-\(x_{1}\), \(x_{2}\), \(\ldots\), \(x_{n}\), no sería necesario hacer
-la última comprobación \(U>\sum_{i=1}^{n}p_{i}=1\) y se
-generaría directamente \(x_{n}\), por lo que el
-número medio de comparaciones sería:
-\[\sum_{i=1}^{n-1}ip_{i}+\left( n-1\right)  p_{n}.\]
 
 Para disminuir el número esperado de comparaciones podemos
 reordenar los valores \(x_{i}\) de forma que las probabilidades
@@ -4669,8 +4673,8 @@ Podemos repetir la simulación del Ejemplo \ref{exm:binom-cuant} anterior ordena
 \end{Shaded}
 
 \begin{verbatim}
-##    user  system elapsed 
-##    0.02    0.00    0.02
+ ##    user  system elapsed 
+ ##    0.03    0.00    0.03
 \end{verbatim}
 
 \begin{Shaded}
@@ -4682,7 +4686,7 @@ Podemos repetir la simulación del Ejemplo \ref{exm:binom-cuant} anterior ordena
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 3.08369
+ ## [1] 3.08369
 \end{verbatim}
 
 \begin{Shaded}
@@ -4692,7 +4696,7 @@ Podemos repetir la simulación del Ejemplo \ref{exm:binom-cuant} anterior ordena
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 3.083984
+ ## [1] 3.083984
 \end{verbatim}
 
 Como ya se comentó, en R se recomienda emplear la función \texttt{sample()}
@@ -4705,8 +4709,8 @@ Como ya se comentó, en R se recomienda emplear la función \texttt{sample()}
 \end{Shaded}
 
 \begin{verbatim}
-##    user  system elapsed 
-##    0.02    0.00    0.02
+ ##    user  system elapsed 
+ ##    0.01    0.00    0.01
 \end{verbatim}
 
 \end{example}
@@ -4789,31 +4793,31 @@ Este algoritmo está implementado en la función \href{https://rubenfcasal.githu
 \end{Shaded}
 
 \begin{verbatim}
-## function(x, prob = 1/length(x), m, n = 1000, as.factor = FALSE) {
-##   # Inicializar tabla y FD
-##   Fx <- cumsum(prob)
-##   g <- rep(1,m)
-##   i <- 1
-##   for(j in 2:m) {
-##     while (Fx[i] < (j-1)/m) i <- i + 1
-##     g[j] <- i
-##   }
-##   ncomp <- i - 1
-##   # Generar valores
-##   X <- numeric(n)
-##   U <- runif(n)
-##   for(j in 1:n) {
-##     i <- i0 <- g[floor(U[j] * m) + 1]
-##     while (Fx[i] < U[j]) i <- i + 1
-##     ncomp <- ncomp + i - i0
-##     X[j] <- x[i]
-##   }
-##   if(as.factor) X <- factor(X, levels = x)
-##   attr(X, "ncomp") <- ncomp
-##   return(X)
-## }
-## <bytecode: 0x0000021a6e83f990>
-## <environment: namespace:simres>
+ ## function(x, prob = 1/length(x), m, n = 1000, as.factor = FALSE) {
+ ##   # Inicializar tabla y FD
+ ##   Fx <- cumsum(prob)
+ ##   g <- rep(1,m)
+ ##   i <- 1
+ ##   for(j in 2:m) {
+ ##     while (Fx[i] < (j-1)/m) i <- i + 1
+ ##     g[j] <- i
+ ##   }
+ ##   ncomp <- i - 1
+ ##   # Generar valores
+ ##   X <- numeric(n)
+ ##   U <- runif(n)
+ ##   for(j in 1:n) {
+ ##     i <- i0 <- g[floor(U[j] * m) + 1]
+ ##     while (Fx[i] < U[j]) i <- i + 1
+ ##     ncomp <- ncomp + i - i0
+ ##     X[j] <- x[i]
+ ##   }
+ ##   if(as.factor) X <- factor(X, levels = x)
+ ##   attr(X, "ncomp") <- ncomp
+ ##   return(X)
+ ## }
+ ## <bytecode: 0x000001b7e1982108>
+ ## <environment: namespace:simres>
 \end{verbatim}
 
 \begin{example}[Simulación de una binomial mediante tabla guía]
@@ -4829,8 +4833,8 @@ Repetimos la simulación del Ejemplo \ref{exm:binom-cuant} anterior empleando es
 \end{Shaded}
 
 \begin{verbatim}
-##    user  system elapsed 
-##    0.02    0.00    0.01
+ ##    user  system elapsed 
+ ##    0.06    0.00    0.06
 \end{verbatim}
 
 Número medio de comparaciones:
@@ -4843,7 +4847,7 @@ Número medio de comparaciones:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.55951
+ ## [1] 0.55951
 \end{verbatim}
 
 \begin{Shaded}
@@ -4853,7 +4857,7 @@ Número medio de comparaciones:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 6
+ ## [1] 6
 \end{verbatim}
 
 Análisis de los resultados:
@@ -4868,7 +4872,7 @@ Análisis de los resultados:
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_discretas_files/figure-latex/comptabla-1} 
+{\centering \includegraphics[width=0.75\linewidth]{05-Metodos_generales_discretas_files/figure-latex/comptabla-1} 
 
 }
 
@@ -4923,11 +4927,11 @@ La idea es ``tomar prestada'' parte de la probabilidad de los valores más proba
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.9\linewidth]{05-Metodos_generales_discretas_files/figure-latex/unnamed-chunk-15-1} 
+{\centering \includegraphics[width=0.9\linewidth]{05-Metodos_generales_discretas_files/figure-latex/unnamed-chunk-14-1} 
 
 }
 
-\caption{Pasos del algoritmo de inicialización del método Alias.}\label{fig:unnamed-chunk-15}
+\caption{Pasos del algoritmo de inicialización del método Alias.}\label{fig:unnamed-chunk-14}
 \end{figure}
 
 El algoritmo para generar las simulaciones es el estándar del método de composición:
@@ -4960,32 +4964,32 @@ Este método también está implementado en la función \href{https://rubenfcasa
 \end{Shaded}
 
 \begin{verbatim}
-## function(x, prob = 1/length(x), n = 1000, as.factor = FALSE) {
-##   # Inicializar tablas
-##   a <- numeric(length(x))
-##   q <- prob*length(x)
-##   low <- q < 1
-##   high <- which(!low)
-##   low <- which(low)
-##   while (length(high) && length(low)) {
-##     l <- low[1]
-##     h <- high[1]
-##     a[l] <- h
-##     q[h] <- q[h] - (1 - q[l])
-##     if (q[h] < 1) {
-##       high <- high[-1]
-##       low[1] <- h
-##     } else low <- low[-1]
-##   } # while
-##   # Generar valores
-##   V <- runif(n)
-##   i <- floor(runif(n)*length(x)) + 1
-##   X <- x[ ifelse( V < q[i], i, a[i]) ]
-##   if(as.factor) X <- factor(X, levels = x)
-##   return(X)
-## }
-## <bytecode: 0x0000021a6b39baf8>
-## <environment: namespace:simres>
+ ## function(x, prob = 1/length(x), n = 1000, as.factor = FALSE) {
+ ##   # Inicializar tablas
+ ##   a <- numeric(length(x))
+ ##   q <- prob*length(x)
+ ##   low <- q < 1
+ ##   high <- which(!low)
+ ##   low <- which(low)
+ ##   while (length(high) && length(low)) {
+ ##     l <- low[1]
+ ##     h <- high[1]
+ ##     a[l] <- h
+ ##     q[h] <- q[h] - (1 - q[l])
+ ##     if (q[h] < 1) {
+ ##       high <- high[-1]
+ ##       low[1] <- h
+ ##     } else low <- low[-1]
+ ##   } # while
+ ##   # Generar valores
+ ##   V <- runif(n)
+ ##   i <- floor(runif(n)*length(x)) + 1
+ ##   X <- x[ ifelse( V < q[i], i, a[i]) ]
+ ##   if(as.factor) X <- factor(X, levels = x)
+ ##   return(X)
+ ## }
+ ## <bytecode: 0x000001b7dc810628>
+ ## <environment: namespace:simres>
 \end{verbatim}
 
 \begin{example}[Simulación de una binomial mediante en método de Alias]
@@ -5001,8 +5005,8 @@ Repetimos la simulación del Ejemplo \ref{exm:binom-cuant} anterior empleando es
 \end{Shaded}
 
 \begin{verbatim}
-##    user  system elapsed 
-##       0       0       0
+ ##    user  system elapsed 
+ ##    0.02    0.00    0.02
 \end{verbatim}
 
 Análisis de los resultados:
@@ -5017,7 +5021,7 @@ Análisis de los resultados:
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_discretas_files/figure-latex/compalias-1} 
+{\centering \includegraphics[width=0.75\linewidth]{05-Metodos_generales_discretas_files/figure-latex/compalias-1} 
 
 }
 
@@ -5064,67 +5068,6 @@ Como alternativa, siempre se puede pensar en truncar la distribución,
 eliminando los valores muy poco probables (teniendo en cuenta el número de generaciones que se pretenden realizar),
 aunque la distribución de las simulaciones será aproximada.
 
-\hypertarget{transcuant-directo}{%
-\section{Cálculo directo de la función cuantil}\label{transcuant-directo}}
-
-En ocasiones el método de la transformación cuantil puede acelerarse computacionalmente porque, mediante cálculos directos, es posible encontrar el valor de la función cuantil en cualquier \(U\), evitando el bucle de búsqueda.
-Normalmente se realiza mediante truncamiento de una distribución continua.
-
-\begin{example}[distribución uniforme discreta]
-
-La función de masa de probabilidad de una distribución uniforme discreta
-en \(\{1,2,\ldots,n\}\) viene dada por
-\[p_{j}=\frac{1}{n}\text{, para }j=1,2,\ldots n.\]
-
-Pueden generarse valores de esta distribución de forma muy eficiente
-truncando la distribución uniforme:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Generar \(U\sim \mathcal{U}\left( 0,1\right)\).
-\item
-  Devolver \(X=\left\lfloor nU\right\rfloor + 1\).
-\end{enumerate}
-
-\end{example}
-
-\begin{example}[distribución geométrica]
-
-La función de masa de probabilidad de una distribución geométrica es:
-\[P\left( X=j\right)  =P\left( I=j+1\right)  =p\left( 1-p\right)^{j}\text{,
-}j=0,1,\ldots\]
-
-Si se considera como variable aleatoria continua auxiliar una
-exponencial, con función de distribución
-\(G\left( x\right) = 1-e^{-\lambda x}\) si \(x\geq0\),
-se tiene que:
-\[\begin{aligned}
-G\left( i\right) - G\left( i-1\right)   
-& = 1-e^{-\lambda i}-\left(1-e^{-\lambda\left( i-1\right) }\right)  
-= e^{-\lambda\left( i-1\right)}-e^{-\lambda i}\\
-& = e^{-\lambda\left( i-1\right)  }\left( 1-e^{-\lambda}\right)  
-= \left( 1-e^{-\lambda}\right)  \left( e^{-\lambda}\right)^{i-1} \\
-& = p\left(1-p\right)^{i-1},
-\end{aligned}\]
-tomando \(p=1-e^{-\lambda}\).
-De donde se obtendría el algoritmo:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{-1}
-\item
-  Hacer \(\lambda=-\ln\left( 1-p\right)\).
-\item
-  Generar \(U\sim \mathcal{U}\left( 0,1\right)\).
-\item
-  Hacer \(T=-\frac{\ln U}{\lambda}\).
-\item
-  Devolver \(X=\left\lfloor T\right\rfloor\).
-\end{enumerate}
-
-\end{example}
-
 \hypertarget{otros-muxe9todos}{%
 \section{Otros métodos}\label{otros-muxe9todos}}
 
@@ -5139,6 +5082,49 @@ Muchos de los métodos descritos en el Capítulo \ref{continuas} para variables 
 
 Hay otros métodos que tratan de reducir el número medio de comparaciones de la búsqueda secuencial, por ejemplo los árboles (binarios) de Huffman (e.g.~Cao, 2002, Sección 4.2).
 Estos métodos son muy poco eficientes para simular variables discretas pero pueden resultar de utilidad para diseñar experimentos de simulación más complejos (la idea es la misma, preocuparse principalmente por los sucesos más probables).
+
+En ocasiones el método de la transformación cuantil puede acelerarse computacionalmente porque, mediante cálculos directos, es posible encontrar el valor de la función cuantil en cualquier \(U\), evitando el bucle de búsqueda.
+Normalmente se realiza mediante truncamiento de una distribución continua.
+
+\begin{example}[Cálculo directo de la función cuantil]
+\protect\hypertarget{exm:transcuant-directo}{}\label{exm:transcuant-directo}
+
+La función de masa de probabilidad de una distribución geométrica es:
+\[P\left( X=j\right)  =P\left( I=j+1\right)  =p\left( 1-p\right)^{j}\text{,
+}j=0,1,\ldots\]
+
+Si se considera como variable aleatoria continua auxiliar una exponencial, con función de distribución
+\(G\left( x\right) = 1-e^{-\lambda x}\) si \(x\geq0\),
+se tiene que:
+\[\begin{aligned}
+G\left( i\right) - G\left( i-1\right)   
+& = 1-e^{-\lambda i}-\left(1-e^{-\lambda\left( i-1\right) }\right)  
+= e^{-\lambda\left( i-1\right)}-e^{-\lambda i}\\
+& = e^{-\lambda\left( i-1\right)  }\left( 1-e^{-\lambda}\right)  
+= \left( 1-e^{-\lambda}\right)  \left( e^{-\lambda}\right)^{i-1} \\
+& = p\left(1-p\right)^{i-1},
+\end{aligned}\]
+tomando \(p=1-e^{-\lambda}\).
+De donde se obtendría el algoritmo:
+\end{example}
+
+\begin{conjecture}[distribución geométrica]
+\protect\hypertarget{cnj:geometrica}{}\label{cnj:geometrica}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{-1}
+\item
+  Hacer \(\lambda=-\ln\left( 1-p\right)\).
+\item
+  Generar \(U\sim \mathcal{U}\left( 0,1\right)\).
+\item
+  Hacer \(T=-\frac{\ln U}{\lambda}\).
+\item
+  Devolver \(X=\left\lfloor T\right\rfloor\).
+\end{enumerate}
+
+\end{conjecture}
 
 \hypertarget{notables-disc}{%
 \section{Métodos específicos para generación de distribuciones notables}\label{notables-disc}}
@@ -5212,7 +5198,7 @@ Como es una función vectorial podemos emplear \texttt{curve()} para representar
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_discretas_files/figure-latex/mixta-cuantil-plot-1} 
+{\centering \includegraphics[width=0.75\linewidth]{05-Metodos_generales_discretas_files/figure-latex/mixta-cuantil-plot-1} 
 
 }
 
@@ -5237,8 +5223,7 @@ Ver solución en Sección \ref{sol-mixta-cuantil}.
 \protect\hypertarget{exr:hipergeom}{}\label{exr:hipergeom}
 
 Se pretende simular \(nsim=10^{4}\) observaciones de una variable
-hipergeométrica (\texttt{dhyper(x,\ m,\ n,\ k)}) de parámetros \(m=\) el número
-de grupo multiplicado por 10, \(n=100-m\) y \(k=20\).
+hipergeométrica (\texttt{dhyper(x,\ m,\ n,\ k)}) de parámetros \(m\) los dos últimos dígitos del DNI, \(n=100-m\) y \(k=20\).
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -5554,7 +5539,7 @@ Partiendo de \(\mathbf{Z} \sim \mathcal{N}_d\left( \mathbf{0},I_d\right)\), se p
   \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right).\]
 \end{itemize}
 
-Desde el punto de vista de la eficiencia computacional la factorización de Cholesky sería la preferible. Pero en ocasiones, para evitar problemas numéricos (por ejemplo, en el caso de matrices definidas positivas, i.e.~con autovalores nulos) puede ser más adecuado emplear la factorización espectral.
+Desde el punto de vista de la eficiencia computacional la factorización de Cholesky sería la preferible. Pero en ocasiones, para evitar problemas numéricos (por ejemplo, en el caso de matrices semidefinidas positivas\footnote{También se habla de matrices definidas no negativas (\emph{non negative definite matrices}) o de matrices no estrictamente definidas positivas.}, i.e.~con autovalores nulos) puede ser más adecuado emplear la factorización espectral.
 En el primer caso el algoritmo sería el siguiente:
 
 \begin{conjecture}[de simulación de una normal multivariante]
@@ -5694,7 +5679,7 @@ del paquete \texttt{MASS} que emplea la factorización espectral (\texttt{eigen}
 ##         drop(X)
 ##     else t(X)
 ## }
-## <bytecode: 0x0000019c97509b20>
+## <bytecode: 0x000001c095e74528>
 ## <environment: namespace:MASS>
 \end{verbatim}
 
@@ -5735,7 +5720,7 @@ x_1,x_2,\ldots,x_{i-1}\right)},\]
 se obtiene el siguiente algoritmo general:
 
 \begin{conjecture}[de simulación mediante distribuciones condicionadas]
-\protect\hypertarget{cnj:mult-distrcond}{}\label{cnj:mult-distrcond}\leavevmode
+\protect\hypertarget{cnj:mult-distrcond}{}\label{cnj:mult-distrcond}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -7180,7 +7165,7 @@ Una alternativa más eficiente para representar gráficamente la convergencia es
 ##   }
 ##   return(result)
 ## }
-## <bytecode: 0x00000273e5382a78>
+## <bytecode: 0x000001df4f92f7d0>
 ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -10320,7 +10305,7 @@ En el caso del bootstrap uniforme, el algoritmo es:
 
 Para la elección del número de réplicas Monte Carlo \(B\) se aplicarían las mismas recomendaciones de la Sección \ref{num-gen} para el caso general de una aproximación por simulación.
 
-Como ya se mostró anteriormente, el paso 1 se puede llevar a cabo simulando una distribución uniforme discreta mediante el método de la transformación cuantil (Sección \ref{transcuant-directo}):
+Como ya se mostró anteriormente, el paso 1 se puede llevar a cabo simulando una distribución uniforme discreta mediante el método de la transformación cuantil (Algoritmo \ref{cnj:unif-discr}):
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -13645,7 +13630,7 @@ Por ejemplo, se podría emplear la función \texttt{simres::chisq.cont.test()} (
 ##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
 ##                    method = METHOD, data.name = DNAME), RESULTS), class = "htest")
 ## }
-## <bytecode: 0x0000026a7520bdd0>
+## <bytecode: 0x0000024bbdf8b2f8>
 ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -14848,7 +14833,7 @@ Por defecto empleará todos los núcleos disponibles, pero se puede especificar 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 20
+## [1] 8
 \end{verbatim}
 
 \begin{Shaded}
@@ -14867,7 +14852,7 @@ Por defecto empleará todos los núcleos disponibles, pero se puede especificar 
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.05    0.00    0.05
+##    0.09    0.00    0.09
 \end{verbatim}
 
 \begin{Shaded}
@@ -14889,7 +14874,7 @@ En Windows habría que crear previamente un cluster, llamar a una de las funcion
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.00    0.00    0.03
+##    0.00    0.00    0.05
 \end{verbatim}
 
 \begin{Shaded}
@@ -14956,7 +14941,7 @@ Veamos un ejemplo empleando una muestra simulada:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.03    0.00    0.03
+##    0.07    0.00    0.08
 \end{verbatim}
 
 \begin{Shaded}
@@ -14968,7 +14953,7 @@ Veamos un ejemplo empleando una muestra simulada:
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.04    0.00    0.03
+##    0.06    0.00    0.06
 \end{verbatim}
 
 \hypertarget{estudio-sim-boot}{%
@@ -15029,7 +15014,7 @@ Por ejemplo, a continuación se realiza un estudio de simulación comparando las
 
 \begin{verbatim}
 ##    user  system elapsed 
-##    0.00    0.00    1.88
+##    0.00    0.02    7.06
 \end{verbatim}
 
 \begin{Shaded}
@@ -15049,10 +15034,10 @@ Por ejemplo, a continuación se realiza un estudio de simulación comparando las
 
 \begin{verbatim}
 ##             Cobertura Longitud
-## Normal          0.858 57.78773
-## Basic           0.854 57.73865
-## Studentized     0.904 67.00259
-## Percentil       0.860 57.73865
+## Normal          0.866 57.05639
+## Basic           0.860 56.97389
+## Studentized     0.900 65.72609
+## Percentil       0.868 56.97389
 \end{verbatim}
 
 \begin{Shaded}
@@ -15065,13 +15050,13 @@ Por ejemplo, a continuación se realiza un estudio de simulación comparando las
 \hline
   & Cobertura & Longitud\\
 \hline
-Normal & 0.858 & 57.788\\
+Normal & 0.866 & 57.056\\
 \hline
-Basic & 0.854 & 57.739\\
+Basic & 0.860 & 56.974\\
 \hline
-Studentized & 0.904 & 67.003\\
+Studentized & 0.900 & 65.726\\
 \hline
-Percentil & 0.860 & 57.739\\
+Percentil & 0.868 & 56.974\\
 \hline
 \end{tabular}
 
@@ -15637,7 +15622,7 @@ Este algoritmo está implementado en la función \texttt{simres::rvng()} (ver ta
 ##   # Devolver valores
 ##   return(u)
 ## }
-## <bytecode: 0x0000021b6478bca0>
+## <bytecode: 0x00000155cb1b3050>
 ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -15673,15 +15658,26 @@ Esta función está implementada en el siguiente código:
     \FunctionTok{ifelse}\NormalTok{(x }\SpecialCharTok{\textless{}} \DecValTok{1}\SpecialCharTok{/}\DecValTok{5}\NormalTok{, x}\SpecialCharTok{/}\DecValTok{2} \SpecialCharTok{+} \DecValTok{1}\SpecialCharTok{/}\DecValTok{10}\NormalTok{,}
         \FunctionTok{ifelse}\NormalTok{(x }\SpecialCharTok{\textless{}=} \DecValTok{9}\SpecialCharTok{/}\DecValTok{10}\NormalTok{, x }\SpecialCharTok{+} \DecValTok{1}\SpecialCharTok{/}\DecValTok{10}\NormalTok{, }\DecValTok{1}\NormalTok{) ) )}
 \NormalTok{\}}
-\CommentTok{\# Empleando ifelse la función es vectorial (y podemos emplear curve...)}
-\FunctionTok{curve}\NormalTok{(fdistr, }\AttributeTok{from =} \SpecialCharTok{{-}}\FloatTok{0.1}\NormalTok{, }\AttributeTok{to =} \FloatTok{1.1}\NormalTok{, }\AttributeTok{type =} \StringTok{\textquotesingle{}s\textquotesingle{}}\NormalTok{, }
-      \AttributeTok{main =} \StringTok{\textquotesingle{}Función de distribución\textquotesingle{}}\NormalTok{)}
-\CommentTok{\# Discontinuidades en 0 y 1/5}
-\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{10}\NormalTok{, }\DecValTok{2}\SpecialCharTok{/}\DecValTok{10}\NormalTok{, }\DecValTok{3}\SpecialCharTok{/}\DecValTok{10}\NormalTok{), }\AttributeTok{lty =} \DecValTok{2}\NormalTok{) }
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.7\linewidth]{25-Soluciones_files/figure-latex/unnamed-chunk-17-1} \end{center}
+Como es una función vectorial podemos emplear \texttt{curve()} para representarla:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{curve}\NormalTok{(fdistr, }\AttributeTok{from =} \SpecialCharTok{{-}}\FloatTok{0.1}\NormalTok{, }\AttributeTok{to =} \FloatTok{1.1}\NormalTok{, }\AttributeTok{type =} \StringTok{\textquotesingle{}s\textquotesingle{}}\NormalTok{, }\AttributeTok{main =} \StringTok{\textquotesingle{}\textquotesingle{}}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{10}\NormalTok{, }\DecValTok{2}\SpecialCharTok{/}\DecValTok{10}\NormalTok{, }\DecValTok{3}\SpecialCharTok{/}\DecValTok{10}\NormalTok{), }\AttributeTok{lty =} \DecValTok{2}\NormalTok{) }\CommentTok{\# Discontinuidades}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.7\linewidth]{25-Soluciones_files/figure-latex/mixta-cuantil-plot-sol-1} 
+
+}
+
+\caption{Función de distribución mixta (con discontinuidades en 0 y 1/5).}\label{fig:mixta-cuantil-plot-sol}
+\end{figure}
 
 \textbf{Nota}: Esta variable toma los valores 0 y 1/5 con probabilidad 1/10.
 
@@ -15722,9 +15718,9 @@ Esta función está implementada en el siguiente código:
   \item
     Si \(U < \frac{1}{10}\) devolver \(X = 0\)
   \item
-    Si \(U < \frac{2}{10}\) devolver \(X = 2(U - \frac{1}{10})\)
+    En caso contrario, si \(U < \frac{2}{10}\) devolver \(X = 2(U - \frac{1}{10})\)
   \item
-    Si \(U < \frac{3}{10}\) devolver \(X = \frac{2}{10}\)
+    En caso contrario, si \(U < \frac{3}{10}\) devolver \(X = \frac{2}{10}\)
   \item
     En caso contrario devolver \(X = U - \frac{1}{10}\)
   \end{enumerate}
@@ -15788,8 +15784,6 @@ Esta función está implementada en el siguiente código:
 
 Cao, R. (2002). \emph{Introducción a la simulación y a la teoría de colas}. NetBiblo.
 
-Cao R. y Fernández-Casal R. (2020). \emph{Técnicas de Remuestreo}. \url{https://rubenfcasal.github.io/book_remuestreo}.
-
 Gentle, J.E. (2003). \emph{Random number generation and Monte Carlo methods}. Springer‐Verlag.
 
 Jones, O. et al.~(2009). \emph{Introduction to Scientific Programming and Simulation Using R}. CRC.
@@ -15798,13 +15792,15 @@ Ripley, B.D. (1987). \emph{Stochastic Simulation}. John Wiley \& Sons.
 
 Robert, C.P. y G. Casella (2010). \emph{Introducing Monte Carlo Methods with R}. Springer.
 
-Ross, S.M. (1999).\emph{Simulación}. Prentice Hall.
+Ross, S.M. (1999).\emph{Simulation}. Prentice Hall.
 
 Suess, E.A. y Trumbo, B.E. (2010). \emph{Introduction to probability simulation and Gibbs sampling with R}. Springer.
 
 \textbf{Bibliografía complementaria}
 
 Bratley, P., Fox, B.L. y Schrage L.E. (1987). \emph{A guide to simulation}. Springer-Verlag.
+
+Cao R. y Fernández-Casal R. (2022). \emph{Técnicas de Remuestreo}. \url{https://rubenfcasal.github.io/book_remuestreo}.
 
 Davison, A.C. y Hinkley, D.V. (1997). \emph{Bootstrap Methods and Their Application}. Cambridge University Press.
 
@@ -15821,6 +15817,7 @@ Moeschlin, O., Grycko, E., Pohl, C. y Steinert, F. (1998). \emph{Experimental st
 Pardo, L. y Valdés, T. (1987). \emph{Simulación. Aplicaciones prácticas a la empresa}. Díaz de Santos.
 
 Robert, C.P. y G. Casella (2004). \emph{Monte Carlo statistical methods}. Springer.
+
 Shao, J. (2003). \emph{Mathematical statistics}. Springer.
 
 \hypertarget{links}{%

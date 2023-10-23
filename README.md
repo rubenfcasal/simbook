@@ -2,10 +2,18 @@
 
 ## R. Fernández-Casal (rfcasal@udc.es), R. Cao (rcao@udc.es) y J. Costa (julian.costa@udc.es)
 
-Este libro, **en proceso de elaboración**, contiene los apuntes de la asignatura contiene los apuntes de la asignatura de [Simulación Estadística](http://eamo.usc.es/pub/mte/index.php/es/?option=com_content&view=article&id=2201&idm=13&a%C3%B1o=2019) del [Máster en Técnicas Estadísticas](http://eio.usc.es/pub/mte) y material de apoyo a la docencia de la asignatura de [Técnicas de Simulación y Remuestreo](https://guiadocente.udc.es/guia_docent/index.php?centre=614&ensenyament=614G02&assignatura=614G02036&idioma=cast) del [Grado en Ciencia e Ingeniería de Datos](https://estudos.udc.es/es/study/start/614G02V01) de la [UDC](https://www.udc.es).  
+Este libro, **en proceso de elaboración**, contiene los apuntes de la asignatura de [Simulación Estadística](http://eamo.usc.es/pub/mte/index.php/es/?option=com_content&view=article&id=2201&idm=13&a%C3%B1o=2019) del [Máster en Técnicas Estadísticas](http://eio.usc.es/pub/mte) y material de apoyo a la docencia de la asignatura de [Técnicas de Simulación y Remuestreo](https://guiadocente.udc.es/guia_docent/index.php?centre=614&ensenyament=614G02&assignatura=614G02036&idioma=cast) del [Grado en Ciencia e Ingeniería de Datos](https://estudos.udc.es/es/study/start/614G02V01) de la [UDC](https://www.udc.es).  
 
-El libro ha sido escrito en [R-Markdown](http://rmarkdown.rstudio.com) empleando el paquete [`bookdown`](https://bookdown.org/yihui/bookdown/) y está disponible en el repositorio Github: [rubenfcasal/simbook](https://github.com/rubenfcasal/simbook). 
-El libro (compilado) está disponible online en [rubenfcasal.github.io/simbook](https://rubenfcasal.github.io/simbook).
+
+El libro ha sido escrito en [R-Markdown](http://rmarkdown.rstudio.com) empleando el paquete [`bookdown`](https://bookdown.org/yihui/bookdown/) y está disponible en el repositorio [rubenfcasal/simbook](https://github.com/rubenfcasal/simbook) de Github. 
+Este libro es una "segunda edición", la anterior (Fernández-Casal R. y Cao R., 2022, *Simulación Estadística*) está disponible en la rama *[primera_edicion](https://github.com/rubenfcasal/simbook/tree/primera_edicion)* de este repositorio. 
+
+Se puede acceder a la versión en línea a través del siguiente enlace:
+
+<https://rubenfcasal.github.io/simbook/index.html>.
+
+donde puede descargarse en formato [pdf](https://rubenfcasal.github.io/simbook/Simulacion.pdf).
+
 
 Para poder ejecutar los ejemplos mostrados en el libro es recomendable emplear el paquete `r cite_simres()`, ***no disponible actualmente en CRAN***, aunque se puede instalar la versión de desarrollo en [GitHub](https://github.com/rubenfcasal/simres)):
 ```{r eval=FALSE}

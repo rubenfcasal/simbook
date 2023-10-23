@@ -1,5 +1,7 @@
 # Simulación de variables discretas {#discretas}
 
+<!-- Capítulo \@ref(discretas) -->
+
 
 
 
@@ -45,15 +47,30 @@ x <- runif(nsim) < p
 ```
 para simular una distribución $Bernoulli(p)$.
 
-Para generar variables discretas con dominio finito en R,
-si no se dispone de un algoritmo específico más eficiente, 
-es recomendable emplear:
+Otro ejemplo es la distribución uniforme discreta 
+en $\{1,2,\ldots,n\}$, con función de masa de probabilidad dada por
+$$p_{j}=\frac{1}{n}\text{, para }j=1,2,\ldots n.$$ 
+Pueden generarse valores de esta distribución de forma muy eficiente truncando la distribución uniforme:
+
+::: {.conjecture #unif-discr name="distribución uniforme discreta"}
+<br>
+
+1. Generar $U\sim \mathcal{U}\left( 0,1\right)$.
+
+2. Devolver $X=\left\lfloor nU\right\rfloor + 1$.
+
+:::
+
+Sin embargo, para generar variables discretas con dominio finito en R, si no se dispone de un algoritmo específico más eficiente, es recomendable emplear la función [`sample()`](https://rdrr.io/r/base/sample.html) del paquete base.
+En el caso general[^discretas-1]:
 
 ```r
-sample(valores, nsim, replace = TRUE, prob)
+sample(x = valores, size = nsim, replace = TRUE, prob)
 ```
-Esta función del paquete base implementa eficientemente el método "alias" 
-que describiremos más adelante en la Sección \@ref(alias).
+implementa eficientemente el método "alias" que describiremos más adelante, en la Sección \@ref(alias).
+
+[^discretas-1]: En el caso de que `x = n` sea un entero (o un escalar) generará valores de una distribución uniforme discreta (equivalente a `sample(x = 1:n, ...)` o `sample.int(n, ...)`).
+
 
 ## Método de la transformación cuantil {#transcuant}
 
@@ -163,26 +180,26 @@ rpmf
 ```
 
 ```
-## function(x, prob = 1/length(x), n = 1000, as.factor = FALSE) {
-##   # Numero de comparaciones
-##   ncomp <- 0
-##   # Inicializar FD
-##   Fx <- cumsum(prob)
-##   # Simular
-##   X <- numeric(n)
-##   U <- runif(n)
-##   for(j in 1:n) {
-##     i <- 1
-##     while (Fx[i] < U[j]) i <- i + 1
-##     X[j] <- x[i]
-##     ncomp <- ncomp + i
-##   }
-##   if(as.factor) X <- factor(X, levels = x)
-##   attr(X, "ncomp") <- ncomp
-##   return(X)
-## }
-## <bytecode: 0x0000021a6e0fa608>
-## <environment: namespace:simres>
+ ## function(x, prob = 1/length(x), n = 1000, as.factor = FALSE) {
+ ##   # Numero de comparaciones
+ ##   ncomp <- 0
+ ##   # Inicializar FD
+ ##   Fx <- cumsum(prob)
+ ##   # Simular
+ ##   X <- numeric(n)
+ ##   U <- runif(n)
+ ##   for(j in 1:n) {
+ ##     i <- 1
+ ##     while (Fx[i] < U[j]) i <- i + 1
+ ##     X[j] <- x[i]
+ ##     ncomp <- ncomp + i
+ ##   }
+ ##   if(as.factor) X <- factor(X, levels = x)
+ ##   attr(X, "ncomp") <- ncomp
+ ##   return(X)
+ ## }
+ ## <bytecode: 0x000001b7dca82ec0>
+ ## <environment: namespace:simres>
 ```
 
 ::: {.example #binom-cuant name="Simulación de una binomial mediante el método de la transformación cuantil"}
@@ -208,8 +225,8 @@ system.time( rx <- rpmf(x, pmf, nsim) )
 ```
 
 ```
-##    user  system elapsed 
-##    0.03    0.00    0.03
+ ##    user  system elapsed 
+ ##    0.06    0.00    0.06
 ```
 
 A partir de ellas podríamos aproximar el valor esperado:
@@ -219,7 +236,7 @@ mean(rx)
 ```
 
 ```
-## [1] 4.99697
+ ## [1] 4.99697
 ```
 aunque en este caso el valor teórico es conocido $np$ = 5.
 
@@ -231,7 +248,7 @@ ncomp/nsim
 ```
 
 ```
-## [1] 5.99697
+ ## [1] 5.99697
 ```
 
 ```r
@@ -249,7 +266,7 @@ points(x, pmf, pch = 4, col = "blue")  # Comparación teórica
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_discretas_files/figure-latex/comprfmp-1} 
+{\centering \includegraphics[width=0.75\linewidth]{05-Metodos_generales_discretas_files/figure-latex/comprfmp-1} 
 
 }
 
@@ -266,18 +283,18 @@ print(res, digits = 2)
 ```
 
 ```
-##     x    psim   pteor
-## 1   0 0.00100 0.00098
-## 2   1 0.00981 0.00977
-## 3   2 0.04457 0.04395
-## 4   3 0.11865 0.11719
-## 5   4 0.20377 0.20508
-## 6   5 0.24477 0.24609
-## 7   6 0.20593 0.20508
-## 8   7 0.11631 0.11719
-## 9   8 0.04415 0.04395
-## 10  9 0.01021 0.00977
-## 11 10 0.00083 0.00098
+ ##     x    psim   pteor
+ ## 1   0 0.00100 0.00098
+ ## 2   1 0.00981 0.00977
+ ## 3   2 0.04457 0.04395
+ ## 4   3 0.11865 0.11719
+ ## 5   4 0.20377 0.20508
+ ## 6   5 0.24477 0.24609
+ ## 7   6 0.20593 0.20508
+ ## 8   7 0.11631 0.11719
+ ## 9   8 0.04415 0.04395
+ ## 10  9 0.01021 0.00977
+ ## 11 10 0.00083 0.00098
 ```
 
 ```r
@@ -286,16 +303,16 @@ max(abs(res$psim - res$pteor))
 ```
 
 ```
-## [1] 0.0014625
+ ## [1] 0.0014625
 ```
 
 ```r
-# Máximo error porcentual absoluto
+# Máximo error absoluto porcentual 
 100*max(abs(res$psim - res$pteor) / res$pteor)
 ```
 
 ```
-## [1] 15.008
+ ## [1] 15.008
 ```
 :::
 
@@ -326,15 +343,11 @@ i & 1 & 2 & \cdots & n & \cdots \\ \hline
 P\left( \mathcal{I}=i\right) & p_{1} & p_{2} & \cdots & p_{n} & \cdots 
 \end{array}$$
 y el número de comparaciones en el paso 3 sería un valor aleatorio de esta variable.
-Una medida de la eficiencia del algoritmo de la transformación cuantil es
-el número medio de comparaciones:
+Una medida de la eficiencia del algoritmo de la transformación cuantil es el número medio de comparaciones[^transcuant-1]:
 $$E\left( \mathcal{I}\right) =\sum_i ip_{i}.$$
-Realmente, cuando la variable toma un número finito de valores:
-$x_{1}$, $x_{2}$, $\ldots$, $x_{n}$, no sería necesario hacer
-la última comprobación $U>\sum_{i=1}^{n}p_{i}=1$ y se
-generaría directamente $x_{n}$, por lo que el
-número medio de comparaciones sería:
-$$\sum_{i=1}^{n-1}ip_{i}+\left( n-1\right)  p_{n}.$$
+
+[^transcuant-1]: Realmente, cuando la variable toma un número finito de valores: $x_{1}$, $x_{2}$, $\ldots$, $x_{n}$, no sería necesario hacer
+la última comprobación $U>\sum_{i=1}^{n}p_{i}=1$ y se generaría directamente $x_{n}$, por lo que el número medio de comparaciones sería: $$\sum_{i=1}^{n-1}ip_{i}+\left( n-1\right)  p_{n}.$$
 
 Para disminuir el número esperado de comparaciones podemos
 reordenar los valores $x_{i}$ de forma que las probabilidades
@@ -363,8 +376,8 @@ tiempo
 ```
 
 ```
-##    user  system elapsed 
-##    0.02    0.00    0.02
+ ##    user  system elapsed 
+ ##    0.03    0.00    0.03
 ```
 
 ```r
@@ -374,7 +387,7 @@ ncomp/nsim
 ```
 
 ```
-## [1] 3.08369
+ ## [1] 3.08369
 ```
 
 ```r
@@ -382,7 +395,7 @@ sum((1:length(x))*pmf[ind]) # Valor teórico
 ```
 
 ```
-## [1] 3.083984
+ ## [1] 3.083984
 ```
 
 Como ya se comentó, en R se recomienda emplear la función `sample()` 
@@ -394,8 +407,8 @@ system.time( rx <- sample(x, nsim, replace = TRUE, prob = pmf) )
 ```
 
 ```
-##    user  system elapsed 
-##    0.02    0.00    0.02
+ ##    user  system elapsed 
+ ##    0.01    0.00    0.01
 ```
 
 :::
@@ -466,31 +479,31 @@ rpmf.table
 ```
 
 ```
-## function(x, prob = 1/length(x), m, n = 1000, as.factor = FALSE) {
-##   # Inicializar tabla y FD
-##   Fx <- cumsum(prob)
-##   g <- rep(1,m)
-##   i <- 1
-##   for(j in 2:m) {
-##     while (Fx[i] < (j-1)/m) i <- i + 1
-##     g[j] <- i
-##   }
-##   ncomp <- i - 1
-##   # Generar valores
-##   X <- numeric(n)
-##   U <- runif(n)
-##   for(j in 1:n) {
-##     i <- i0 <- g[floor(U[j] * m) + 1]
-##     while (Fx[i] < U[j]) i <- i + 1
-##     ncomp <- ncomp + i - i0
-##     X[j] <- x[i]
-##   }
-##   if(as.factor) X <- factor(X, levels = x)
-##   attr(X, "ncomp") <- ncomp
-##   return(X)
-## }
-## <bytecode: 0x0000021a6e83f990>
-## <environment: namespace:simres>
+ ## function(x, prob = 1/length(x), m, n = 1000, as.factor = FALSE) {
+ ##   # Inicializar tabla y FD
+ ##   Fx <- cumsum(prob)
+ ##   g <- rep(1,m)
+ ##   i <- 1
+ ##   for(j in 2:m) {
+ ##     while (Fx[i] < (j-1)/m) i <- i + 1
+ ##     g[j] <- i
+ ##   }
+ ##   ncomp <- i - 1
+ ##   # Generar valores
+ ##   X <- numeric(n)
+ ##   U <- runif(n)
+ ##   for(j in 1:n) {
+ ##     i <- i0 <- g[floor(U[j] * m) + 1]
+ ##     while (Fx[i] < U[j]) i <- i + 1
+ ##     ncomp <- ncomp + i - i0
+ ##     X[j] <- x[i]
+ ##   }
+ ##   if(as.factor) X <- factor(X, levels = x)
+ ##   attr(X, "ncomp") <- ncomp
+ ##   return(X)
+ ## }
+ ## <bytecode: 0x000001b7e1982108>
+ ## <environment: namespace:simres>
 ```
 
 ::: {.example #binom-tabla name="Simulación de una binomial mediante tabla guía"}
@@ -505,8 +518,8 @@ system.time( rx <- rpmf.table(x, pmf, n-1, nsim) )
 ```
 
 ```
-##    user  system elapsed 
-##    0.02    0.00    0.01
+ ##    user  system elapsed 
+ ##    0.06    0.00    0.06
 ```
 
 Número medio de comparaciones:
@@ -517,7 +530,7 @@ ncomp/nsim
 ```
 
 ```
-## [1] 0.55951
+ ## [1] 0.55951
 ```
 
 ```r
@@ -525,7 +538,7 @@ sum((1:length(x))*pmf) # Numero esperado con búsqueda secuencial
 ```
 
 ```
-## [1] 6
+ ## [1] 6
 ```
 
 Análisis de los resultados:
@@ -538,7 +551,7 @@ points(x, pmf, pch = 4, col = "blue")  # Comparación teórica
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_discretas_files/figure-latex/comptabla-1} 
+{\centering \includegraphics[width=0.75\linewidth]{05-Metodos_generales_discretas_files/figure-latex/comptabla-1} 
 
 }
 
@@ -589,11 +602,11 @@ La idea es "tomar prestada" parte de la probabilidad de los valores más probabl
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.9\linewidth]{05-Metodos_generales_discretas_files/figure-latex/unnamed-chunk-15-1} 
+{\centering \includegraphics[width=0.9\linewidth]{05-Metodos_generales_discretas_files/figure-latex/unnamed-chunk-14-1} 
 
 }
 
-\caption{Pasos del algoritmo de inicialización del método Alias.}(\#fig:unnamed-chunk-15)
+\caption{Pasos del algoritmo de inicialización del método Alias.}(\#fig:unnamed-chunk-14)
 \end{figure}
 
 El algoritmo para generar las simulaciones es el estándar del método de composición:
@@ -621,32 +634,32 @@ rpmf.alias
 ```
 
 ```
-## function(x, prob = 1/length(x), n = 1000, as.factor = FALSE) {
-##   # Inicializar tablas
-##   a <- numeric(length(x))
-##   q <- prob*length(x)
-##   low <- q < 1
-##   high <- which(!low)
-##   low <- which(low)
-##   while (length(high) && length(low)) {
-##     l <- low[1]
-##     h <- high[1]
-##     a[l] <- h
-##     q[h] <- q[h] - (1 - q[l])
-##     if (q[h] < 1) {
-##       high <- high[-1]
-##       low[1] <- h
-##     } else low <- low[-1]
-##   } # while
-##   # Generar valores
-##   V <- runif(n)
-##   i <- floor(runif(n)*length(x)) + 1
-##   X <- x[ ifelse( V < q[i], i, a[i]) ]
-##   if(as.factor) X <- factor(X, levels = x)
-##   return(X)
-## }
-## <bytecode: 0x0000021a6b39baf8>
-## <environment: namespace:simres>
+ ## function(x, prob = 1/length(x), n = 1000, as.factor = FALSE) {
+ ##   # Inicializar tablas
+ ##   a <- numeric(length(x))
+ ##   q <- prob*length(x)
+ ##   low <- q < 1
+ ##   high <- which(!low)
+ ##   low <- which(low)
+ ##   while (length(high) && length(low)) {
+ ##     l <- low[1]
+ ##     h <- high[1]
+ ##     a[l] <- h
+ ##     q[h] <- q[h] - (1 - q[l])
+ ##     if (q[h] < 1) {
+ ##       high <- high[-1]
+ ##       low[1] <- h
+ ##     } else low <- low[-1]
+ ##   } # while
+ ##   # Generar valores
+ ##   V <- runif(n)
+ ##   i <- floor(runif(n)*length(x)) + 1
+ ##   X <- x[ ifelse( V < q[i], i, a[i]) ]
+ ##   if(as.factor) X <- factor(X, levels = x)
+ ##   return(X)
+ ## }
+ ## <bytecode: 0x000001b7dc810628>
+ ## <environment: namespace:simres>
 ```
 
 
@@ -663,8 +676,8 @@ system.time( rx <- rpmf.alias(x, pmf, nsim) )
 ```
 
 ```
-##    user  system elapsed 
-##       0       0       0
+ ##    user  system elapsed 
+ ##    0.02    0.00    0.02
 ```
 
 Análisis de los resultados:
@@ -677,7 +690,7 @@ points(x, pmf, pch = 4, col = "blue")  # Comparación teórica
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_discretas_files/figure-latex/compalias-1} 
+{\centering \includegraphics[width=0.75\linewidth]{05-Metodos_generales_discretas_files/figure-latex/compalias-1} 
 
 }
 
@@ -722,37 +735,28 @@ eliminando los valores muy poco probables (teniendo en cuenta el número de gene
 aunque la distribución de las simulaciones será aproximada.
 
 
-## Cálculo directo de la función cuantil {#transcuant-directo}
+## Otros métodos
+
+Muchos de los métodos descritos en el Capítulo \@ref(continuas) para variables continuas son directamente aplicables al caso discreto:
+
+* Aceptación-Rechazo (Sección \@ref(AR)): En principio habría que considerar una variable auxiliar discreta con el mismo soporte, pero también hay modificaciones para variables auxiliares continuas.
+
+* Método de composición (Sección \@ref(composicion)): es uno de los más empleados, por ejemplo en el método de Alias (Sección \@ref(alias)) y para simular la distribución binomial negativa (Sección \@ref(notables-disc)).
+
+Hay otros métodos que tratan de reducir el número medio de comparaciones de la búsqueda secuencial, por ejemplo los árboles (binarios) de Huffman (e.g. Cao, 2002, Sección 4.2).
+Estos métodos son muy poco eficientes para simular variables discretas pero pueden resultar de utilidad para diseñar experimentos de simulación más complejos (la idea es la misma, preocuparse principalmente por los sucesos más probables).
 
 En ocasiones el método de la transformación cuantil puede acelerarse computacionalmente porque, mediante cálculos directos, es posible encontrar el valor de la función cuantil en cualquier $U$, evitando el bucle de búsqueda. 
 Normalmente se realiza mediante truncamiento de una distribución continua.
 
-::: {.example name="distribución uniforme discreta"}
-<br>
-
-La función de masa de probabilidad de una distribución uniforme discreta 
-en $\{1,2,\ldots,n\}$ viene dada por
-$$p_{j}=\frac{1}{n}\text{, para }j=1,2,\ldots n.$$ 
-
-Pueden generarse valores de esta distribución de forma muy eficiente
-truncando la distribución uniforme:
-
-1. Generar $U\sim \mathcal{U}\left( 0,1\right)$.
-
-2. Devolver $X=\left\lfloor nU\right\rfloor + 1$.
-
-:::
-
-
-::: {.example name="distribución geométrica"}
+::: {.example #transcuant-directo name="Cálculo directo de la función cuantil"}
 <br>
 
 La función de masa de probabilidad de una distribución geométrica es:
 $$P\left( X=j\right)  =P\left( I=j+1\right)  =p\left( 1-p\right)^{j}\text{,
 }j=0,1,\ldots$$
 
-Si se considera como variable aleatoria continua auxiliar una
-exponencial, con función de distribución 
+Si se considera como variable aleatoria continua auxiliar una exponencial, con función de distribución 
 $G\left( x\right) = 1-e^{-\lambda x}$ si $x\geq0$,
 se tiene que:
 $$\begin{aligned}
@@ -766,6 +770,11 @@ G\left( i\right) - G\left( i-1\right)
 tomando $p=1-e^{-\lambda}$.
 De donde se obtendría el algoritmo:
 
+:::
+
+::: {.conjecture #geometrica name="distribución geométrica"}
+<br>
+
 0. Hacer $\lambda=-\ln\left( 1-p\right)$.
 
 1. Generar $U\sim \mathcal{U}\left( 0,1\right)$.
@@ -775,18 +784,6 @@ De donde se obtendría el algoritmo:
 3. Devolver $X=\left\lfloor T\right\rfloor$.
 
 :::
-
-
-## Otros métodos
-
-Muchos de los métodos descritos en el Capítulo \@ref(continuas) para variables continuas son directamente aplicables al caso discreto:
-
-* Aceptación-Rechazo (Sección \@ref(AR)): En principio habría que considerar una variable auxiliar discreta con el mismo soporte, pero también hay modificaciones para variables auxiliares continuas.
-
-* Método de composición (Sección \@ref(composicion)): es uno de los más empleados, por ejemplo en el método de Alias (Sección \@ref(alias)) y para simular la distribución binomial negativa (Sección \@ref(notables-disc)).
-
-Hay otros métodos que tratan de reducir el número medio de comparaciones de la búsqueda secuencial, por ejemplo los árboles (binarios) de Huffman (e.g. Cao, 2002, Sección 4.2).
-Estos métodos son muy poco eficientes para simular variables discretas pero pueden resultar de utilidad para diseñar experimentos de simulación más complejos (la idea es la misma, preocuparse principalmente por los sucesos más probables).
 
 
 ## Métodos específicos para generación de distribuciones notables {#notables-disc}
@@ -852,7 +849,7 @@ abline(h = c(1/10, 2/10, 3/10), lty = 2) # Discontinuidades
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{05-Metodos_generales_discretas_files/figure-latex/mixta-cuantil-plot-1} 
+{\centering \includegraphics[width=0.75\linewidth]{05-Metodos_generales_discretas_files/figure-latex/mixta-cuantil-plot-1} 
 
 }
 
@@ -876,8 +873,7 @@ Ver solución en Sección \@ref(sol-mixta-cuantil).
 <br>
 
 Se pretende simular $nsim=10^{4}$ observaciones de una variable
-hipergeométrica (`dhyper(x, m, n, k)`) de parámetros $m=$ el número 
-de grupo multiplicado por 10, $n=100-m$ y $k=20$.
+hipergeométrica (`dhyper(x, m, n, k)`) de parámetros $m$ los dos últimos dígitos del DNI, $n=100-m$ y $k=20$.
 
 a)  Comprobar que el rango de posibles valores de esta variable es
     `max(0, k-n):min(m, k)`. Generar los valores empleando el método

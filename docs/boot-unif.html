@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9.2 El Bootstrap uniforme | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9.2 El Bootstrap uniforme | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -222,10 +222,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2" data-path="método-de-la-tabla-guía.html"><a href="método-de-la-tabla-guía.html"><i class="fa fa-check"></i><b>5.2</b> Método de la tabla guía</a></li>
 <li class="chapter" data-level="5.3" data-path="alias.html"><a href="alias.html"><i class="fa fa-check"></i><b>5.3</b> Método de Alias</a></li>
 <li class="chapter" data-level="5.4" data-path="simulación-de-una-variable-discreta-con-dominio-infinito.html"><a href="simulación-de-una-variable-discreta-con-dominio-infinito.html"><i class="fa fa-check"></i><b>5.4</b> Simulación de una variable discreta con dominio infinito</a></li>
-<li class="chapter" data-level="5.5" data-path="transcuant-directo.html"><a href="transcuant-directo.html"><i class="fa fa-check"></i><b>5.5</b> Cálculo directo de la función cuantil</a></li>
-<li class="chapter" data-level="5.6" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>5.6</b> Otros métodos</a></li>
-<li class="chapter" data-level="5.7" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>5.7</b> Métodos específicos para generación de distribuciones notables</a></li>
-<li class="chapter" data-level="5.8" data-path="ejercicios-discretas.html"><a href="ejercicios-discretas.html"><i class="fa fa-check"></i><b>5.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="5.5" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>5.5</b> Otros métodos</a></li>
+<li class="chapter" data-level="5.6" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>5.6</b> Métodos específicos para generación de distribuciones notables</a></li>
+<li class="chapter" data-level="5.7" data-path="ejercicios-discretas.html"><a href="ejercicios-discretas.html"><i class="fa fa-check"></i><b>5.7</b> Ejercicios</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="multivariante.html"><a href="multivariante.html"><i class="fa fa-check"></i><b>6</b> Simulación de distribuciones multivariantes</a>
 <ul>
@@ -469,12 +468,12 @@ En el caso del bootstrap uniforme, el algoritmo es:</p>
 muestreo de <span class="math inline">\(R\)</span>.</p></li>
 </ol>
 <p>Para la elección del número de réplicas Monte Carlo <span class="math inline">\(B\)</span> se aplicarían las mismas recomendaciones de la Sección <a href="num-gen.html#num-gen">3.2</a> para el caso general de una aproximación por simulación.</p>
-<p>Como ya se mostró anteriormente, el paso 1 se puede llevar a cabo simulando una distribución uniforme discreta mediante el método de la transformación cuantil (Sección <a href="transcuant-directo.html#transcuant-directo">5.5</a>):</p>
+<p>Como ya se mostró anteriormente, el paso 1 se puede llevar a cabo simulando una distribución uniforme discreta mediante el método de la transformación cuantil (Algoritmo <a href="discretas.html#cnj:unif-discr">5.1</a>):</p>
 <ol style="list-style-type: decimal">
 <li>Para cada <span class="math inline">\(i=1,\ldots ,n\)</span> arrojar <span class="math inline">\(U_i\sim \mathcal{U}\left( 0,1 \right)\)</span> y
 hacer <span class="math inline">\(X_i^{\ast}=X_{\left\lfloor nU_i\right\rfloor +1}\)</span></li>
 </ol>
-<p>Aunque en <code>R</code> es recomendable<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a> emplear la función <code>sample</code> para generar muestras aleatorias con reemplazamiento del conjunto de datos original:</p>
+<p>Aunque en <code>R</code> es recomendable<a href="#fn32" class="footnote-ref" id="fnref32"><sup>32</sup></a> emplear la función <code>sample</code> para generar muestras aleatorias con reemplazamiento del conjunto de datos original:</p>
 <div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="boot-unif.html#cb528-1" aria-hidden="true" tabindex="-1"></a>muestra_boot <span class="ot">&lt;-</span> <span class="fu">sample</span>(muestra, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="example">
 <p><span id="exm:media-dt-desconocida" class="example"><strong>Ejemplo 9.2  (Inferencia sobre la media con varianza desconocida) </strong></span><br></p>
@@ -536,7 +535,7 @@ se aproximan por las correspondientes de la distribución bootstrap de <span cla
 En este caso nos interesa aproximar los puntos críticos <span class="math inline">\(x_{\alpha /2}\)</span> y
 <span class="math inline">\(x_{1-\alpha /2}\)</span>, tales que:
 <span class="math display">\[P\left( x_{\alpha /2} &lt; R &lt; x_{1-\alpha /2} \right) = 1-\alpha.\]</span>
-Para lo que podemos emplear los cuantiles muestrales<a href="#fn29" class="footnote-ref" id="fnref29"><sup>29</sup></a>:</p>
+Para lo que podemos emplear los cuantiles muestrales<a href="#fn33" class="footnote-ref" id="fnref33"><sup>33</sup></a>:</p>
 <div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="boot-unif.html#cb533-1" aria-hidden="true" tabindex="-1"></a>pto_crit <span class="ot">&lt;-</span> <span class="fu">quantile</span>(estadistico_boot, <span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span> <span class="sc">-</span> alfa<span class="sc">/</span><span class="dv">2</span>))</span>
 <span id="cb533-2"><a href="boot-unif.html#cb533-2" aria-hidden="true" tabindex="-1"></a>pto_crit</span></code></pre></div>
 <pre><code>##      2.5%     97.5% 
@@ -622,9 +621,9 @@ $$R = \sqrt{n - 2} \frac{r -\rho}{\sqrt{1 - r^2}}$$ --></p>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="28">
-<li id="fn28"><p>De esta forma se evitan posibles problemas numéricos al emplear el método de la transformación cuantil cuando <span class="math inline">\(n\)</span> es extremadamente grande (e.g. <a href="https://stat.ethz.ch/pipermail/r-devel/2018-September/076817.html" class="uri">https://stat.ethz.ch/pipermail/r-devel/2018-September/076817.html</a>).<a href="boot-unif.html#fnref28" class="footnote-back">↩︎</a></p></li>
-<li id="fn29"><p>
+<ol start="32">
+<li id="fn32"><p>De esta forma se evitan posibles problemas numéricos al emplear el método de la transformación cuantil cuando <span class="math inline">\(n\)</span> es extremadamente grande (e.g. <a href="https://stat.ethz.ch/pipermail/r-devel/2018-September/076817.html" class="uri">https://stat.ethz.ch/pipermail/r-devel/2018-September/076817.html</a>).<a href="boot-unif.html#fnref32" class="footnote-back">↩︎</a></p></li>
+<li id="fn33"><p>
 Se podrían considerar distintos estimadores del cuantil <span class="math inline">\(x_{\alpha}\)</span>
 (ver p.e. la ayuda de la función <code>quantile()</code>).
 Si empleamos directamente la distribución empírica, el cuantil se
@@ -634,7 +633,7 @@ lo que equivale a emplear la función <code>quantile()</code> de <code>R</code> 
 <code>type = 1</code>. Esta función considera por defecto la posición
 <span class="math inline">\(1 + (B - 1) \alpha\)</span> (<code>type = 7</code>).
 En el libro de Davison y Hinkley (1997), y en el paquete <code>boot</code>, se emplea <span class="math inline">\((B + 1) \alpha\)</span> (equivalente a <code>type = 6</code>; lo que justifica que
-consideren habitualmente 99, 199 ó 999 réplicas bootstrap).<a href="boot-unif.html#fnref29" class="footnote-back">↩︎</a></p></li>
+consideren habitualmente 99, 199 ó 999 réplicas bootstrap).<a href="boot-unif.html#fnref33" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

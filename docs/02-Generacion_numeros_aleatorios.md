@@ -74,7 +74,7 @@ simres::rlcg
 ##   # Devolver valores
 ##   return(u)
 ## }
-## <bytecode: 0x00000247e31eb4e8>
+## <bytecode: 0x000001aee7a2a5a0>
 ## <environment: namespace:simres>
 ```
 
@@ -96,7 +96,7 @@ Durante los primeros años, el procedimiento habitual consistía en escoger $m$ 
 Posteriormente se seleccionaban $c$ y $a$ de forma que el período $p$ fuese lo más largo posible (o suficientemente largo), empleando los resultados mostrados a continuación.
 
 
-::: {.theorem #hull-dobell name="Hull y Dobell 1962"}
+::: {.theorem #hull-dobell name="Hull y Dobell, 1962"}
 <br>
 Un generador congruencial tiene período máximo ($p=m$) si y solo si:
 
@@ -438,7 +438,7 @@ simres::chisq.cont.test
 ##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
 ##                    method = METHOD, data.name = DNAME), RESULTS), class = "htest")
 ## }
-## <bytecode: 0x00000247f3218378>
+## <bytecode: 0x000001aeecba2c50>
 ## <environment: namespace:simres>
 ```
 
@@ -912,7 +912,7 @@ simres::rvng
 ##   # Devolver valores
 ##   return(u)
 ## }
-## <bytecode: 0x00000247e2a1ecd0>
+## <bytecode: 0x000001aeeda1f248>
 ## <environment: namespace:simres>
 ```
 

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5.2 Método de la tabla guía | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5.2 Método de la tabla guía | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -222,10 +222,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2" data-path="método-de-la-tabla-guía.html"><a href="método-de-la-tabla-guía.html"><i class="fa fa-check"></i><b>5.2</b> Método de la tabla guía</a></li>
 <li class="chapter" data-level="5.3" data-path="alias.html"><a href="alias.html"><i class="fa fa-check"></i><b>5.3</b> Método de Alias</a></li>
 <li class="chapter" data-level="5.4" data-path="simulación-de-una-variable-discreta-con-dominio-infinito.html"><a href="simulación-de-una-variable-discreta-con-dominio-infinito.html"><i class="fa fa-check"></i><b>5.4</b> Simulación de una variable discreta con dominio infinito</a></li>
-<li class="chapter" data-level="5.5" data-path="transcuant-directo.html"><a href="transcuant-directo.html"><i class="fa fa-check"></i><b>5.5</b> Cálculo directo de la función cuantil</a></li>
-<li class="chapter" data-level="5.6" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>5.6</b> Otros métodos</a></li>
-<li class="chapter" data-level="5.7" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>5.7</b> Métodos específicos para generación de distribuciones notables</a></li>
-<li class="chapter" data-level="5.8" data-path="ejercicios-discretas.html"><a href="ejercicios-discretas.html"><i class="fa fa-check"></i><b>5.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="5.5" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>5.5</b> Otros métodos</a></li>
+<li class="chapter" data-level="5.6" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>5.6</b> Métodos específicos para generación de distribuciones notables</a></li>
+<li class="chapter" data-level="5.7" data-path="ejercicios-discretas.html"><a href="ejercicios-discretas.html"><i class="fa fa-check"></i><b>5.7</b> Ejercicios</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="multivariante.html"><a href="multivariante.html"><i class="fa fa-check"></i><b>6</b> Simulación de distribuciones multivariantes</a>
 <ul>
@@ -444,7 +443,7 @@ Figura 5.3: Ilustración de la simulación de una distribución discreta mediant
 <p>En este caso, puede verse que una cota del número medio de comparaciones es:
 <span class="math display">\[E\left( N\right) \leq 1+\frac{n}{m}\]</span></p>
 <div class="conjecture">
-<p><span id="cnj:unlabeled-div-13" class="conjecture"><strong>Algoritmo 5.3  (de simulación mediante tabla guía; Chen y Asau, 1974) </strong></span><br></p>
+<p><span id="cnj:unlabeled-div-13" class="conjecture"><strong>Algoritmo 5.4  (de simulación mediante tabla guía; Chen y Asau, 1974) </strong></span><br></p>
 <p>Inicialización:</p>
 <ol style="list-style-type: decimal">
 <li><p>Hacer <span class="math inline">\(F_{1}=p_{1}\)</span>.</p></li>
@@ -491,7 +490,7 @@ Figura 5.3: Ilustración de la simulación de una distribución discreta mediant
 ##   attr(X, &quot;ncomp&quot;) &lt;- ncomp
 ##   return(X)
 ## }
-## &lt;bytecode: 0x00000240db9735b8&gt;
+## &lt;bytecode: 0x000001c227d6eb58&gt;
 ## &lt;environment: namespace:simres&gt;</code></pre>
 <div class="example">
 <p><span id="exm:binom-tabla" class="example"><strong>Ejemplo 5.3  (Simulación de una binomial mediante tabla guía) </strong></span><br></p>
@@ -499,7 +498,7 @@ Figura 5.3: Ilustración de la simulación de una distribución discreta mediant
 <div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="método-de-la-tabla-guía.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
 <span id="cb207-2"><a href="método-de-la-tabla-guía.html#cb207-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>( rx <span class="ot">&lt;-</span> <span class="fu">rpmf.table</span>(x, pmf, n<span class="dv">-1</span>, nsim) )</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.01    0.00    0.01</code></pre>
+##    0.04    0.00    0.05</code></pre>
 <p>Número medio de comparaciones:</p>
 <div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="método-de-la-tabla-guía.html#cb209-1" aria-hidden="true" tabindex="-1"></a>ncomp <span class="ot">&lt;-</span> <span class="fu">attr</span>(rx, <span class="st">&quot;ncomp&quot;</span>)</span>
 <span id="cb209-2"><a href="método-de-la-tabla-guía.html#cb209-2" aria-hidden="true" tabindex="-1"></a>ncomp<span class="sc">/</span>nsim</span></code></pre></div>
@@ -511,7 +510,7 @@ Figura 5.3: Ilustración de la simulación de una distribución discreta mediant
 <span id="cb213-2"><a href="método-de-la-tabla-guía.html#cb213-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">ylab =</span> <span class="st">&quot;frecuencia relativa&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;valores&quot;</span>)</span>
 <span id="cb213-3"><a href="método-de-la-tabla-guía.html#cb213-3" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(x, pmf, <span class="at">pch =</span> <span class="dv">4</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)  <span class="co"># Comparación teórica</span></span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:comptabla"></span>
-<img src="05-Metodos_generales_discretas_files/figure-html/comptabla-1.png" alt="Comparación de las frecuencias relativas de los valores generados, mediante el método de la tabla guía, con las probabilidades teóricas." width="70%" />
+<img src="05-Metodos_generales_discretas_files/figure-html/comptabla-1.png" alt="Comparación de las frecuencias relativas de los valores generados, mediante el método de la tabla guía, con las probabilidades teóricas." width="75%" />
 <p class="caption">
 Figura 5.4: Comparación de las frecuencias relativas de los valores generados, mediante el método de la tabla guía, con las probabilidades teóricas.
 </p>

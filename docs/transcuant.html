@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5.1 Método de la transformación cuantil | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5.1 Método de la transformación cuantil | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -222,10 +222,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2" data-path="método-de-la-tabla-guía.html"><a href="método-de-la-tabla-guía.html"><i class="fa fa-check"></i><b>5.2</b> Método de la tabla guía</a></li>
 <li class="chapter" data-level="5.3" data-path="alias.html"><a href="alias.html"><i class="fa fa-check"></i><b>5.3</b> Método de Alias</a></li>
 <li class="chapter" data-level="5.4" data-path="simulación-de-una-variable-discreta-con-dominio-infinito.html"><a href="simulación-de-una-variable-discreta-con-dominio-infinito.html"><i class="fa fa-check"></i><b>5.4</b> Simulación de una variable discreta con dominio infinito</a></li>
-<li class="chapter" data-level="5.5" data-path="transcuant-directo.html"><a href="transcuant-directo.html"><i class="fa fa-check"></i><b>5.5</b> Cálculo directo de la función cuantil</a></li>
-<li class="chapter" data-level="5.6" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>5.6</b> Otros métodos</a></li>
-<li class="chapter" data-level="5.7" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>5.7</b> Métodos específicos para generación de distribuciones notables</a></li>
-<li class="chapter" data-level="5.8" data-path="ejercicios-discretas.html"><a href="ejercicios-discretas.html"><i class="fa fa-check"></i><b>5.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="5.5" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>5.5</b> Otros métodos</a></li>
+<li class="chapter" data-level="5.6" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>5.6</b> Métodos específicos para generación de distribuciones notables</a></li>
+<li class="chapter" data-level="5.7" data-path="ejercicios-discretas.html"><a href="ejercicios-discretas.html"><i class="fa fa-check"></i><b>5.7</b> Ejercicios</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="multivariante.html"><a href="multivariante.html"><i class="fa fa-check"></i><b>6</b> Simulación de distribuciones multivariantes</a>
 <ul>
@@ -450,7 +449,7 @@ Por otro lado como <span class="math inline">\(Q\)</span> también es monótona:
 </div>
 <p>A partir de este resultado se deduce el siguiente algoritmo general para simular una distribución de probabilidad discreta.</p>
 <div class="conjecture">
-<p><span id="cnj:unlabeled-div-9" class="conjecture"><strong>Algoritmo 5.1  (de transformación cuantil) </strong></span><br></p>
+<p><span id="cnj:unlabeled-div-9" class="conjecture"><strong>Algoritmo 5.2  (de transformación cuantil) </strong></span><br></p>
 <ol style="list-style-type: decimal">
 <li><p>Generar <span class="math inline">\(U\sim \mathcal{U}\left( 0,1\right)\)</span>.</p></li>
 <li><p>Devolver <span class="math inline">\(X=Q\left( U\right)\)</span>.</p></li>
@@ -464,7 +463,7 @@ Q\left( U\right) &amp;=\inf \left\{ x_{j}:\sum_{i=1}^{j}p_{i}\geq U\right\} \\
 \end{array}\]</span></p>
 <p>Para encontrar este valor se puede emplear el siguiente algoritmo:</p>
 <div class="conjecture">
-<p><span id="cnj:unlabeled-div-10" class="conjecture"><strong>Algoritmo 5.2  (de transformación cuantil con búsqueda secuencial) </strong></span><br></p>
+<p><span id="cnj:unlabeled-div-10" class="conjecture"><strong>Algoritmo 5.3  (de transformación cuantil con búsqueda secuencial) </strong></span><br></p>
 <ol style="list-style-type: decimal">
 <li><p>Generar <span class="math inline">\(U\sim \mathcal{U}\left( 0,1\right)\)</span>.</p></li>
 <li><p>Hacer <span class="math inline">\(I=1\)</span> y <span class="math inline">\(S=p_{1}\)</span>.</p></li>
@@ -519,7 +518,7 @@ Este algoritmo está implementado en la función <a href="https://rubenfcasal.gi
 ##   attr(X, &quot;ncomp&quot;) &lt;- ncomp
 ##   return(X)
 ## }
-## &lt;bytecode: 0x00000240d979dec8&gt;
+## &lt;bytecode: 0x000001c224356658&gt;
 ## &lt;environment: namespace:simres&gt;</code></pre>
 <div class="example">
 <p><span id="exm:binom-cuant" class="example"><strong>Ejemplo 5.1  (Simulación de una binomial mediante el método de la transformación cuantil) </strong></span><br></p>
@@ -536,7 +535,7 @@ medio de comparaciones para generar cada observación.</p>
 <span id="cb183-6"><a href="transcuant.html#cb183-6" aria-hidden="true" tabindex="-1"></a>pmf <span class="ot">&lt;-</span> <span class="fu">dbinom</span>(x, n, p)</span>
 <span id="cb183-7"><a href="transcuant.html#cb183-7" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>( rx <span class="ot">&lt;-</span> <span class="fu">rpmf</span>(x, pmf, nsim) )</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.02    0.00    0.01</code></pre>
+##    0.05    0.00    0.05</code></pre>
 <p>A partir de ellas podríamos aproximar el valor esperado:</p>
 <div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="transcuant.html#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(rx)</span></code></pre></div>
 <pre><code>## [1] 4.99697</code></pre>
@@ -552,7 +551,7 @@ medio de comparaciones para generar cada observación.</p>
 <span id="cb190-3"><a href="transcuant.html#cb190-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">ylab =</span> <span class="st">&quot;frecuencia relativa&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;valor&quot;</span>)</span>
 <span id="cb190-4"><a href="transcuant.html#cb190-4" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(x, pmf, <span class="at">pch =</span> <span class="dv">4</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)  <span class="co"># Comparación teórica</span></span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:comprfmp"></span>
-<img src="05-Metodos_generales_discretas_files/figure-html/comprfmp-1.png" alt="Comparación de las frecuencias relativas de los valores generados, mediante el método de la transformación cuantil, con las probabilidades teóricas." width="70%" />
+<img src="05-Metodos_generales_discretas_files/figure-html/comprfmp-1.png" alt="Comparación de las frecuencias relativas de los valores generados, mediante el método de la transformación cuantil, con las probabilidades teóricas." width="75%" />
 <p class="caption">
 Figura 5.2: Comparación de las frecuencias relativas de los valores generados, mediante el método de la transformación cuantil, con las probabilidades teóricas.
 </p>
@@ -577,7 +576,7 @@ Figura 5.2: Comparación de las frecuencias relativas de los valores generados, 
 <div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="transcuant.html#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Máximo error absoluto </span></span>
 <span id="cb193-2"><a href="transcuant.html#cb193-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(res<span class="sc">$</span>psim <span class="sc">-</span> res<span class="sc">$</span>pteor))</span></code></pre></div>
 <pre><code>## [1] 0.0014625</code></pre>
-<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="transcuant.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Máximo error porcentual absoluto</span></span>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="transcuant.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Máximo error absoluto porcentual </span></span>
 <span id="cb195-2"><a href="transcuant.html#cb195-2" aria-hidden="true" tabindex="-1"></a><span class="dv">100</span><span class="sc">*</span><span class="fu">max</span>(<span class="fu">abs</span>(res<span class="sc">$</span>psim <span class="sc">-</span> res<span class="sc">$</span>pteor) <span class="sc">/</span> res<span class="sc">$</span>pteor)</span></code></pre></div>
 <pre><code>## [1] 15.008</code></pre>
 </div>
@@ -604,15 +603,8 @@ i &amp; 1 &amp; 2 &amp; \cdots &amp; n &amp; \cdots \\ \hline
 P\left( \mathcal{I}=i\right) &amp; p_{1} &amp; p_{2} &amp; \cdots &amp; p_{n} &amp; \cdots
 \end{array}\]</span>
 y el número de comparaciones en el paso 3 sería un valor aleatorio de esta variable.
-Una medida de la eficiencia del algoritmo de la transformación cuantil es
-el número medio de comparaciones:
-<span class="math display">\[E\left( \mathcal{I}\right) =\sum_i ip_{i}.\]</span>
-Realmente, cuando la variable toma un número finito de valores:
-<span class="math inline">\(x_{1}\)</span>, <span class="math inline">\(x_{2}\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(x_{n}\)</span>, no sería necesario hacer
-la última comprobación <span class="math inline">\(U&gt;\sum_{i=1}^{n}p_{i}=1\)</span> y se
-generaría directamente <span class="math inline">\(x_{n}\)</span>, por lo que el
-número medio de comparaciones sería:
-<span class="math display">\[\sum_{i=1}^{n-1}ip_{i}+\left( n-1\right)  p_{n}.\]</span></p>
+Una medida de la eficiencia del algoritmo de la transformación cuantil es el número medio de comparaciones<a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a>:
+<span class="math display">\[E\left( \mathcal{I}\right) =\sum_i ip_{i}.\]</span></p>
 <p>Para disminuir el número esperado de comparaciones podemos
 reordenar los valores <span class="math inline">\(x_{i}\)</span> de forma que las probabilidades
 correspondientes sean decrecientes. Esto equivale a considerar
@@ -632,7 +624,7 @@ n\right) }\geq \cdots\]</span></p>
 <span id="cb197-8"><a href="transcuant.html#cb197-8" aria-hidden="true" tabindex="-1"></a>tiempo <span class="ot">&lt;-</span> <span class="fu">proc.time</span>() <span class="sc">-</span> tini</span>
 <span id="cb197-9"><a href="transcuant.html#cb197-9" aria-hidden="true" tabindex="-1"></a>tiempo</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.02    0.00    0.01</code></pre>
+##    0.01    0.01    0.04</code></pre>
 <div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="transcuant.html#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Número de comparaciones</span></span>
 <span id="cb199-2"><a href="transcuant.html#cb199-2" aria-hidden="true" tabindex="-1"></a>ncomp <span class="ot">&lt;-</span> <span class="fu">attr</span>(rx, <span class="st">&quot;ncomp&quot;</span>)</span>
 <span id="cb199-3"><a href="transcuant.html#cb199-3" aria-hidden="true" tabindex="-1"></a>ncomp<span class="sc">/</span>nsim</span></code></pre></div>
@@ -643,9 +635,16 @@ n\right) }\geq \cdots\]</span></p>
 (implementa eficientemente el método de Alias descrito en la Sección <a href="alias.html#alias">5.3</a>):</p>
 <div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="transcuant.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>( rx <span class="ot">&lt;-</span> <span class="fu">sample</span>(x, nsim, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> pmf) )</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##       0       0       0</code></pre>
+##    0.02    0.00    0.02</code></pre>
 </div>
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="21">
+<li id="fn21"><p>Realmente, cuando la variable toma un número finito de valores: <span class="math inline">\(x_{1}\)</span>, <span class="math inline">\(x_{2}\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(x_{n}\)</span>, no sería necesario hacer
+la última comprobación <span class="math inline">\(U&gt;\sum_{i=1}^{n}p_{i}=1\)</span> y se generaría directamente <span class="math inline">\(x_{n}\)</span>, por lo que el número medio de comparaciones sería: <span class="math display">\[\sum_{i=1}^{n-1}ip_{i}+\left( n-1\right)  p_{n}.\]</span><a href="transcuant.html#fnref21" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 

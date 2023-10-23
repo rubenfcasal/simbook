@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Capítulo 5 Simulación de variables discretas | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Capítulo 5 Simulación de variables discretas | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -222,10 +222,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2" data-path="método-de-la-tabla-guía.html"><a href="método-de-la-tabla-guía.html"><i class="fa fa-check"></i><b>5.2</b> Método de la tabla guía</a></li>
 <li class="chapter" data-level="5.3" data-path="alias.html"><a href="alias.html"><i class="fa fa-check"></i><b>5.3</b> Método de Alias</a></li>
 <li class="chapter" data-level="5.4" data-path="simulación-de-una-variable-discreta-con-dominio-infinito.html"><a href="simulación-de-una-variable-discreta-con-dominio-infinito.html"><i class="fa fa-check"></i><b>5.4</b> Simulación de una variable discreta con dominio infinito</a></li>
-<li class="chapter" data-level="5.5" data-path="transcuant-directo.html"><a href="transcuant-directo.html"><i class="fa fa-check"></i><b>5.5</b> Cálculo directo de la función cuantil</a></li>
-<li class="chapter" data-level="5.6" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>5.6</b> Otros métodos</a></li>
-<li class="chapter" data-level="5.7" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>5.7</b> Métodos específicos para generación de distribuciones notables</a></li>
-<li class="chapter" data-level="5.8" data-path="ejercicios-discretas.html"><a href="ejercicios-discretas.html"><i class="fa fa-check"></i><b>5.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="5.5" data-path="otros-métodos.html"><a href="otros-métodos.html"><i class="fa fa-check"></i><b>5.5</b> Otros métodos</a></li>
+<li class="chapter" data-level="5.6" data-path="notables-disc.html"><a href="notables-disc.html"><i class="fa fa-check"></i><b>5.6</b> Métodos específicos para generación de distribuciones notables</a></li>
+<li class="chapter" data-level="5.7" data-path="ejercicios-discretas.html"><a href="ejercicios-discretas.html"><i class="fa fa-check"></i><b>5.7</b> Ejercicios</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="multivariante.html"><a href="multivariante.html"><i class="fa fa-check"></i><b>6</b> Simulación de distribuciones multivariantes</a>
 <ul>
@@ -427,6 +426,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="discretas" class="section level1 hasAnchor" number="5">
 <h1><span class="header-section-number">Capítulo 5</span> Simulación de variables discretas<a href="discretas.html#discretas" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<!-- Capítulo \@ref(discretas) -->
 <!-- 
 ---
 title: "Simulación de variables discretas"
@@ -462,12 +462,27 @@ Por ejemplo, como ya se mostró en capítulos anteriores, es habitual emplear
 código de la forma:</p>
 <div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="discretas.html#cb178-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(nsim) <span class="sc">&lt;</span> p</span></code></pre></div>
 <p>para simular una distribución <span class="math inline">\(Bernoulli(p)\)</span>.</p>
-<p>Para generar variables discretas con dominio finito en R,
-si no se dispone de un algoritmo específico más eficiente,
-es recomendable emplear:</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="discretas.html#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(valores, nsim, <span class="at">replace =</span> <span class="cn">TRUE</span>, prob)</span></code></pre></div>
-<p>Esta función del paquete base implementa eficientemente el método “alias”
-que describiremos más adelante en la Sección <a href="alias.html#alias">5.3</a>.</p>
+<p>Otro ejemplo es la distribución uniforme discreta
+en <span class="math inline">\(\{1,2,\ldots,n\}\)</span>, con función de masa de probabilidad dada por
+<span class="math display">\[p_{j}=\frac{1}{n}\text{, para }j=1,2,\ldots n.\]</span>
+Pueden generarse valores de esta distribución de forma muy eficiente truncando la distribución uniforme:</p>
+<div class="conjecture">
+<p><span id="cnj:unif-discr" class="conjecture"><strong>Algoritmo 5.1  (distribución uniforme discreta) </strong></span><br></p>
+<ol style="list-style-type: decimal">
+<li><p>Generar <span class="math inline">\(U\sim \mathcal{U}\left( 0,1\right)\)</span>.</p></li>
+<li><p>Devolver <span class="math inline">\(X=\left\lfloor nU\right\rfloor + 1\)</span>.</p></li>
+</ol>
+</div>
+<p>Sin embargo, para generar variables discretas con dominio finito en R, si no se dispone de un algoritmo específico más eficiente, es recomendable emplear la función <a href="https://rdrr.io/r/base/sample.html"><code>sample()</code></a> del paquete base.
+En el caso general<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a>:</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="discretas.html#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> valores, <span class="at">size =</span> nsim, <span class="at">replace =</span> <span class="cn">TRUE</span>, prob)</span></code></pre></div>
+<p>implementa eficientemente el método “alias” que describiremos más adelante, en la Sección <a href="alias.html#alias">5.3</a>.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="20">
+<li id="fn20"><p>En el caso de que <code>x = n</code> sea un entero (o un escalar) generará valores de una distribución uniforme discreta (equivalente a <code>sample(x = 1:n, ...)</code> o <code>sample.int(n, ...)</code>).<a href="discretas.html#fnref20" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 

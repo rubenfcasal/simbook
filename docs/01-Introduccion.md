@@ -684,10 +684,10 @@ CPUtimeprint()
 ```
 ## Tiempo última operación:
 ##    user  system elapsed 
-##    0.15    0.00    0.15 
+##    0.17    0.02    0.19 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.15    0.00    0.15
+##    0.17    0.02    0.19
 ```
 
 ```r
@@ -698,10 +698,10 @@ CPUtimeprint()
 ```
 ## Tiempo última operación:
 ##    user  system elapsed 
-##       0       0       0 
+##    0.02    0.00    0.01 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.15    0.00    0.15
+##    0.19    0.02    0.20
 ```
 
 
@@ -736,7 +736,7 @@ Hay diversos paquetes que implementan herramientas similares, por ejemplo:
     ```
     
     ```
-    ## middle: 0 sec elapsed
+    ## middle: 0.02 sec elapsed
     ```
     
     ```r
@@ -744,7 +744,7 @@ Hay diversos paquetes que implementan herramientas similares, por ejemplo:
     ```
     
     ```
-    ## outer: 0.15 sec elapsed
+    ## outer: 0.17 sec elapsed
     ```
     
     ```r
@@ -764,10 +764,10 @@ Hay diversos paquetes que implementan herramientas similares, por ejemplo:
     
     ```
     ## 'data.frame':	10 obs. of  4 variables:
-    ##  $ tic         : num  3.4 3.4 3.4 3.4 3.4 3.4 3.4 3.4 3.4 3.4
-    ##  $ toc         : num  3.4 3.4 3.4 3.4 3.4 3.4 3.4 3.4 3.4 3.4
+    ##  $ tic         : num  7.28 7.29 7.29 7.29 7.29 7.29 7.29 7.29 7.29 7.29
+    ##  $ toc         : num  7.29 7.29 7.29 7.29 7.29 7.29 7.29 7.29 7.29 7.29
     ##  $ msg         : chr  "1" "2" "3" "4" ...
-    ##  $ callback_msg: chr  "1: 0 sec elapsed" "2: 0 sec elapsed" "3: 0 sec elapsed" "4: 0 sec elapsed" ...
+    ##  $ callback_msg: chr  "1: 0.01 sec elapsed" "2: 0 sec elapsed" "3: 0 sec elapsed" "4: 0 sec elapsed" ...
     ```
     
     ```r
@@ -780,7 +780,7 @@ Hay diversos paquetes que implementan herramientas similares, por ejemplo:
     
     ```
     ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    ##       0       0       0       0       0       0
+    ##   0.000   0.000   0.000   0.001   0.000   0.010
     ```
 
 * La función [`cpu.time()`](https://rubenfcasal.github.io/simres/reference/cpu.time.html) del paquete `simres`:
