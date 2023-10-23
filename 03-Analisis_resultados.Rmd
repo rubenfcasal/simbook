@@ -36,7 +36,7 @@ Al final del capítulo se incluye una breve introducción a los problemas de est
 Supongamos que estamos interesados en aproximar la media teórica $\mu = E\left( X\right)$ a partir de una secuencia i.i.d. $X_{1}$, $X_{2}$, $\ldots$, $X_{n}$ obtenida mediante simulación, utilizando para ello la media muestral $\bar{X}_{n}$.
 Una justificación teórica de la validez de esta aproximación es *la ley (débil^[*La ley fuerte* establece la convergencia casi segura.]) de los grandes números*:
 
-::: {.theorem #khinchine name="Ley débil de los grandes números; Khintchine 1928"}
+::: {.theorem #khinchine name="Ley débil de los grandes números; Khintchine, 1928"}
 <br>
 Si $X_{1}$, $X_{2}$, $\ldots$ es una secuencia de variables aleatorias independientes e idénticamente distribuidas con media finita $E\left( X_{i}\right) =\mu$ (i.e. $E\left( \left\vert X_{i} \right\vert \right) < \infty$) entonces $\overline{X}_{n}=\left( X_{1}+\ldots +X_{n}\right) /n$ 
 converge en probabilidad a $\mu$: $$\overline{X}_{n}\ \overset{p}{ \longrightarrow }\ \mu$$

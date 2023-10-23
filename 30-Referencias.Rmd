@@ -8,8 +8,6 @@
 
 Cao, R. (2002). *Introducción a la simulación y a la teoría de colas*. NetBiblo.
 
-Cao R. y Fernández-Casal R. (2020). *Técnicas de Remuestreo*. <https://rubenfcasal.github.io/book_remuestreo>.
-
 Gentle, J.E. (2003). *Random number generation and Monte Carlo methods*. Springer‐Verlag.
 
 Jones, O. et al. (2009). *Introduction to Scientific Programming and Simulation Using R*. CRC. 
@@ -18,7 +16,7 @@ Ripley, B.D. (1987). *Stochastic Simulation*. John Wiley & Sons.
 
 Robert, C.P. y G. Casella (2010). *Introducing Monte Carlo Methods with R*. Springer. 
 
-Ross, S.M. (1999).*Simulación*. Prentice Hall.
+Ross, S.M. (1999).*Simulation*. Prentice Hall.
 
 Suess, E.A. y Trumbo, B.E. (2010). *Introduction to probability simulation and Gibbs sampling with R*. Springer.
 
@@ -26,6 +24,8 @@ Suess, E.A. y Trumbo, B.E. (2010). *Introduction to probability simulation and G
 **Bibliografía complementaria**
 
 Bratley, P., Fox, B.L. y Schrage L.E. (1987). *A guide to simulation*. Springer-Verlag.
+
+Cao R. y Fernández-Casal R. (2022). *Técnicas de Remuestreo*. <https://rubenfcasal.github.io/book_remuestreo>.
 
 Davison, A.C. y Hinkley, D.V. (1997). *Bootstrap Methods and Their Application*. Cambridge University Press.
 
@@ -42,6 +42,7 @@ Moeschlin, O., Grycko, E., Pohl, C. y Steinert, F. (1998). *Experimental stochas
 Pardo, L. y Valdés, T. (1987). *Simulación. Aplicaciones prácticas a la empresa*. Díaz de Santos.
 
 Robert, C.P. y G. Casella (2004). *Monte Carlo statistical methods*. Springer. 
+
 Shao, J. (2003). *Mathematical statistics*. Springer.
 
 
