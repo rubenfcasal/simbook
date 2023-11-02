@@ -1,6 +1,9 @@
 # Métodos Monte Carlo {#monte-carlo}
 
-```{r , child = "_global_options.Rmd"}
+<!-- Capítulo \@ref(monte-carlo) -->
+
+```{r global-options, include=FALSE}
+source("_global_options.R")
 ```
 
 <!-- 
@@ -277,7 +280,7 @@ pnorm(-4.5)  # valor teórico
 Representamos gráficamente la aproximación en función del número de simulaciones:
 ```{r mc-imp-conv, fig.cap="Convergencia de la aproximación de la integral mediante muestreo por importancia."}
 plot(cumsum(w)/1:nsim, type = "l", ylab = "Aproximación", xlab = "Iteraciones")
-abline(h = pnorm(-4.5), lty = 2)
+abline(h = pnorm(-4.5), lty = 2, col = "blue")
 ```
 
 El error estándar de la aproximación sería `sqrt(var(w * h(y))/nsim)`:
@@ -322,7 +325,7 @@ pcauchy(6) - pcauchy(2)  # Valor teórico
 Si se estudia la convergencia:
 ```{r mc-imp2-conv, fig.cap="Gráfico de convergencia de la aproximación mediante muestreo por importancia con mala densidad auxiliar."}
 plot(cumsum(w * (y > 2) * (y < 6))/1:nsim, type = "l", ylab = "Aproximación", xlab = "Iteraciones")
-abline(h = pcauchy(6) - pcauchy(2), lty = 2)
+abline(h = pcauchy(6) - pcauchy(2), lty = 2, col = "blue")
 ```
 Lo que indica es una mala elección de la densidad auxiliar.
 
@@ -740,7 +743,7 @@ points(der$optim$bestmem[1], der$optim$bestmem[2], pch = 19)
 
 ## Métodos Monte Carlo en Inferencia Estadística {#aplic-inf}
 
-*** Work in progress ***: Esta sección es muy preliminar y variará en siguientes versiones
+***Work in progress***: Esta sección es muy preliminar y variará en siguientes ediciones.
 
 <!-- 
 Pendiente: 

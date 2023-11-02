@@ -1,6 +1,9 @@
-# Técnicas de reducción de la varianza
+# Técnicas de reducción de la varianza {#red-varianza}
 
-```{r , child = '_global_options.Rmd'}
+<!-- Capítulo \@ref(red-varianza) -->
+
+```{r global-options, include=FALSE}
+source("_global_options.R")
 ```
 
 <!-- 
@@ -118,9 +121,9 @@ Representamos la función objetivo:
 ```{r }
 a <- 0; b <- 2
 ftn <- function(x) return(exp(x)/(b-a))
-curve(ftn, a, b, ylim=c(0,4))
-abline(h=0,lty=2)
-abline(v=c(a,b),lty=2)
+curve(ftn, a, b, ylim = c(0, 4))
+abline(h = 0, lty = 2)
+abline(v = c(a, b), lty = 2)
 ```
 
 Se trata de calcular la media de $e^{\mathcal{U}(0,2)}$:
@@ -130,28 +133,14 @@ teor <- (exp(b)-exp(a))/(b-a)
 teor
 ```
 
-Para la aproximación por integración Monte Carlo podemos emplear la función del capítulo anterior:
+Como se mostró en el Capítulo \@ref(monte-carlo), para calcular la aproximación por integración Monte Carlo podemos emplear la función `r cite_fsimres("mc.integral")` del paquete `r cite_simres()` (fichero [*mc.plot.R*](R/mc.plot.R)):
+
 
 ```{r }
-mc.integral <- function(fun, a, b, n, plot = TRUE) {
-  fx <- sapply(runif(n, a, b), fun) * (b - a)
-  if (plot) {
-    cumn <- 1:n
-    estint <- cumsum(fx)/cumn
-    esterr <- sqrt((cumsum(fx^2)/cumn - estint^2)/(cumn-1)) # Errores estándar
-    plot(estint, ylab = "Media y rango de error", type = "l", lwd = 2, ylim = mean(fx) + 
-           c(-1, 1) * max(esterr[-1]), xlab = "Iteraciones")
-    lines(estint + 2 * esterr, col = "darkgray", lty = 3)
-    lines(estint - 2 * esterr, col = "darkgray", lty = 3)
-    valor <- estint[n]
-    abline(h = valor, lty = 2)
-    return(list(valor = valor, error = 2 * esterr[n]))
-  } else return(list(valor = mean(fx), error = 2 * sd(fx)/sqrt(n)))
-} 
-
+library(simres)
 set.seed(54321)
 res <- mc.integral(ftn, a, b, 500)
-abline(h = teor)
+abline(h = teor, lty = 2, col = "blue")
 res
 ```
 
@@ -160,24 +149,25 @@ Para la integración Monte Carlo con variables antitéticas podríamos considera
 
 ```{r }
 mc.integrala <- function(ftn, a, b, n, plot = TRUE) {
-  # n es el nº de evaluaciones de la función objetivo (para facilitar comparaciones, solo se genera la mitad)
+  # n es el nº de evaluaciones de la función objetivo 
+  # (para facilitar comparaciones, solo se genera la mitad)
   x <- runif(n%/%2, a, b)
   # La siguiente línea solo para representar alternando
-  x <- as.numeric(matrix(c(x,a+b-x),nrow=2,byrow=TRUE))
-  # bastaría con emplear p.e. c(x,a+b-x)
+  x <- as.numeric(matrix(c(x, a + b - x), nrow = 2, byrow = TRUE))
+  # bastaría con emplear p.e. c(x, a+b-x)
   fx <- sapply(x, ftn)*(b-a)
   if (plot) {
     cumn <- 1:n
     estint <- cumsum(fx)/cumn
     esterr <- sqrt((cumsum(fx^2)/cumn - estint^2)/(cumn-1)) # Errores estándar
-    plot(estint, ylab = "Media y rango de error", type = "l", lwd = 2, ylim = mean(fx) + 
-           c(-1, 1) * max(esterr[-1]), xlab = "Iteraciones")
+    plot(estint, ylab = "Media y rango de error", type = "l", lwd = 2, 
+         ylim = mean(fx) + c(-1, 1) * max(esterr[-1]), xlab = "Iteraciones")
     lines(estint + 2 * esterr, col = "darkgray", lty = 3)
     lines(estint - 2 * esterr, col = "darkgray", lty = 3)
     valor <- estint[n]
-    abline(h = valor, lty = 2)
-    return(list(valor=estint[n],error=2*esterr[n]))
-  } else return(list(valor=mean(fx),error=2*sd(fx)/sqrt(n)))
+    abline(h = valor)
+    return(list(valor = estint[n], error = 2*esterr[n]))
+  } else return(list(valor = mean(fx), error = 2*sd(fx)/sqrt(n)))
 }
 
 set.seed(54321)
@@ -198,15 +188,16 @@ En este caso, una versión de la función anterior para integración Monte Carlo
 
 ```{r }
 mc.integrala2 <- function(ftn, a, b, n, plot = TRUE,...) {
-  # n es el nº de evaluaciones de la función objetivo (para facilitar comparaciones, solo se genera la mitad)
+  # n es el nº de evaluaciones de la función objetivo 
+  # (para facilitar comparaciones, solo se genera la mitad)
   x <- runif(n%/%2, a, b)
   # La siguiente línea solo para representar alternando
-  x <- matrix(c(x,a+b-x),nrow=2,byrow=TRUE)
+  x <- matrix(c(x, a + b - x), nrow = 2, byrow = TRUE)
   # bastaría con emplear p.e. c(x,a+b-x)
   fx <- apply(x, 1,  ftn)*(b-a)
-  corr <- cor(fx[,1], fx[,2])
+  corr <- cor(fx[, 1], fx[, 2])
   fx <- as.numeric(fx)
-  return(list(valor=mean(fx), error=2*sd(fx)/sqrt(n)*sqrt(1+corr)))
+  return(list(valor = mean(fx), error = 2 * sd(fx)/sqrt(n) * sqrt(1 + corr)))
 }
 
 set.seed(54321)
@@ -247,12 +238,12 @@ significativa de la varianza.
 
 Supóngase el siguiente problema (absolutamente artificial pero ilustrativo para comprender esta técnica). 
 Dada una muestra de tamaño 10 de una población con distribución: 
-$$X \sim \exp\left( 1 \right),$$
+$$X \sim Exp\left( 1 \right),$$
 se desea aproximar la media poblacional (es sobradamente conocido que es 1) a partir de 10 simulaciones. 
 Supongamos que para evitar que, por puro azar, exista alguna zona en la que la exponencial toma valores, no representada en la muestra simulada de 10 datos, se consideran tres estratos. 
 Por ejemplo, el del 40% de valores menores, el siguiente 50% de valores (intermedios) y el 10% de valores más grandes para esta distribución.
 
-El algoritmo de inversión (optimizado) para simular una $\exp\left(1\right)$ es:
+El algoritmo de inversión (optimizado) para simular una $Exp\left(1\right)$ es:
 
 1. Generar $U\sim \mathcal{U}\left(  0,1\right)$.
 
@@ -309,8 +300,8 @@ Continuando con el Ejemplo \@ref(exm:integrala), aproximaremos la integral emple
 mc.integrale <- function(ftn, a, b, n, k) {
   # Integración Monte Carlo con estratificación
   l <- n%/%k
-  int <- seq(a, b, len=k+1)
-  x <- runif(l*k, rep(int[-(k+1)], each=l), rep(int[-1], each=l))
+  int <- seq(a, b, len = k + 1)
+  x <- runif(l*k, rep(int[-(k + 1)], each = l), rep(int[-1], each = l))
   # l uniformes en cada uno de los intervalos [(j-1)/k , j/k]
   fx <- sapply(x, ftn)*(b-a)
   return(list(valor=mean(fx), error=2*sd(fx)/sqrt(n)))   # error mal calculado
@@ -318,7 +309,7 @@ mc.integrale <- function(ftn, a, b, n, k) {
 
 set.seed(54321)
 res <- mc.integral(ftn, a, b, 500)
-abline(h = teor)
+abline(h = teor, lty = 2, col = "blue")
 res
 
 set.seed(54321)
@@ -340,6 +331,17 @@ El tamaño de las submuestras debería incrementarse hacia el extremo superior.
 ::: {.exercise #integraleb}
 <br>
 Repetir el ejemplo anterior considerando intervalos regularmente espaciados en escala exponencial.
+
+```{r }
+# Ejemplo con k = 5
+curve(ftn, a, b, ylim = c(0, 4))
+abline(h = 0, lty = 2)
+abline(v = c(a, b), lty = 2)
+k = 5
+int <- log(seq(exp(a), exp(b), len = k + 1))
+abline(v = int, lty = 3)
+```
+
 :::
 
 

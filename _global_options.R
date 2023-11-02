@@ -17,6 +17,7 @@ is_html <- function(...) knitr:::is_html_output(...)
 knitr::opts_chunk$set(
   fig.dim = c(7, 6), fig.align = "center", fig.pos = "!htb", # fig.pos = "!htbp"
   out.width = "75%", # out.lines = 50,
+  fig.show = if(is_html()) "asis" else "hold",
   cache = TRUE, cache.path = 'cache/',
   echo = TRUE, warning = FALSE, message = FALSE,
   comment = if(is_html()) "##" else " ##"

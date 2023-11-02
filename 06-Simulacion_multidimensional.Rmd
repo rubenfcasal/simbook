@@ -1,6 +1,9 @@
 # Simulación de distribuciones multivariantes {#multivariante}
 
-```{r , child = '_global_options.Rmd'}
+<!-- Capítulo \@ref(multivariante) -->
+
+```{r global-options, include=FALSE}
+source("_global_options.R")
 ```
 
 <!-- 
@@ -582,8 +585,8 @@ Continuando con el Ejemplo \@ref(exm:funcional) anterior, consideramos los prime
 valores de una simulación incondicional como los datos:
 ```{r}
 # Indice correspondiente a los datos observados
-# idata <- t < 0.5 # Extrapolación
-idata <- t < 0.2 | t > 0.8 # Interpolación
+idata <- t < 0.5 # Extrapolación
+# idata <- t < 0.2 | t > 0.8 # Interpolación
 mu1 <- mu[idata]
 n1 <- length(mu1)
 cov.data <- x.cov[idata, idata]
@@ -689,7 +692,7 @@ y
 Para generar simulaciones condicionales podemos emplear la función `krige.conv`.
 Por ejemplo, para generar 4 simulaciones en la rejilla regular $10\times10$ en el cuadrado unidad $[0,1] \times [0,1]$ condicionadas a los valores generados en el apartado anterior podríamos emplear el siguiente código:
 
-```{r pos-sp-simcond, fig.cap="Posiciones espaciales de las simulaciones condicionales (y las de los datos)."}
+```{r pos-sp-simcond, fig.cap="Posiciones espaciales de las simulaciones condicionales (y las de los datos).", fig.dim=c(6, 7), out.width="70%"}
 # Posiciones simulación condicional
 new.nx <- c(20, 20)
 new.x <- seq(0, 1, len = new.nx[1])
@@ -703,16 +706,16 @@ set.seed(1)
 nsim.cond <- 4
 s.out <- output.control(n.predictive = nsim.cond)
 kc <- krige.conv(z, loc = new.s, output = s.out,
-                 krige = krige.control(type.krige="SK", beta = 0, cov.pars = c(1, 1)))
+            krige = krige.control(type.krige="SK", beta = 0, cov.pars = c(1, 1)))
 ```
 
 Si las representamos podemos confirmar que los valores en las posiciones $\left\{(0,0),(0,1),(1,0),(1,1)\right\}$ coinciden con los generados anteriormente.
 
-```{r, out.width="90%"}
+```{r krige-simcond, fig.cap="Simulaciones condicionales", out.width="90%"}
 # Generar gráficos
 par.old <- par(mfrow = c(2, 2), mar = c(3.5, 3.5, 1, 2), mgp = c(1.5, .5, 0))
 zlim <- range(kc$simul)     # Escala común
-# La versión actual de geoR::image.kriging() no admite múltiples gráficos en una ventana
+# La versión actual de geoR::image.kriging() no admite múltiples gráficos con mfrow
 # image(kc, val=kc$simul[,1], main="simul. cond. 1", zlim=zlim)
 # image(kc, val=kc$simul[,2], main="simul. cond. 2", zlim=zlim)
 # image(kc, val=kc$simul[,3], main="simul. cond. 3", zlim=zlim)
@@ -742,11 +745,13 @@ Los métodos para modelos lineales y modelos lineales generalizamos están imple
 Muchos otros paquetes que proporcionan modelos adicionales, implementan también los correspondientes métodos `simulate()`.
 Por ejemplo, en el caso de series de tiempo, el paquete `forecast` permite ajustar distintos tipos de modelos y generar simulaciones a partir de ellos:
 
-```{r}
+(ref:co2-forecast) Concentración atmosférica de CO2 en el observatorio de Mauna Loa (desde el principio de 1990 hasta el final de 1997; ver `r cite_fun_("datasets::co2")`).
+
+```{r co2-forecast, fig.cap="(ref:co2-forecast)"}
 library(forecast)
 data <- window(co2, 1990) # datos de co2 desde 1990
-plot(data, ylab = expression("Atmospheric concentration of CO"[2]),
-     xlim = c(1990, 2000), ylim = c(350, 375))
+plot(data, ylab = expression("Concentración atmosférica de CO"[2]),
+     xlab = "Fecha", xlim = c(1990, 2000), ylim = c(350, 375))
 # Se podrían ajustar distintos tipos de modelos
 fit <- ets(data)
 # fit <- auto.arima(data)
@@ -765,7 +770,8 @@ Para análisis adicionales nos puede interesar generar simulaciones (por defecto
 set.seed(321)
 sim.cond <- simulate(fit, 24)
 
-plot(pred)
+plot(pred, main = "", xlab = "Fecha", 
+     ylab = expression("Concentración atmosférica de CO"[2]))
 lines(sim.cond, lwd = 2, col = "red")
 ```
 
@@ -861,14 +867,14 @@ plot(rcunif, xlab = "u", ylab = "v")
 
 Podemos representar la densidad conjunta (con `sm::sm.density()`)`r latexfig("cclayton2-conjunta")`:
 
-```{r cclayton2-conjunta, fig.cap="Densidad conjunta de los valores generados con distribución bidimensional de Clayton", message=FALSE, warning=FALSE}
+```{r cclayton2-conjunta, fig.cap="Densidad conjunta de los valores generados con distribución bidimensional de Clayton", message=FALSE, warning=FALSE, fig.dim=c(10, 10)}
 # if(!require(sm)) stop('Required package `sm` not installed.')
 sm::sm.density(rcunif, xlab = "u", ylab = "v", zlab = "Density")    
 ```
 
 y las distribuciones marginales`r latexfig("cclayton2-marginales")`:
 
-```{r cclayton2-marginales, fig.cap="Distribuciones marginales de los valores generados con distribución bidimensional de Clayton.", out.width="90%", fig.width=12}
+```{r cclayton2-marginales, fig.cap="Distribuciones marginales de los valores generados con distribución bidimensional de Clayton.", fig.dim=c(12, 6), out.width="90%"}
 par.old <- par(mfrow = c(1, 2))
 hist(rcunif[,1], freq = FALSE, xlab = "u")
 abline(h = 1)
@@ -886,8 +892,9 @@ y <- rCopula(10000, clayton.cop)
 plot(y, xlab = "u", ylab = "v")
 ```    
 
+(ref:cclayton3-dispersion) Gráfico de dispersión de los valores generados con distribución trididimensional de Clayton empleando el paquete `copula`.
 
-```{r cclayton3-dispersion, fig.cap="Gráfico de dispersión de los valores generados con distribución trididimensional de Clayton empleando el paquete `copula`."}
+```{r cclayton3-dispersion, fig.cap="(ref:cclayton3-dispersion)", fig.dim=c(10, 10)}
 clayton.cop <- claytonCopula(2, dim = 3) # caso tridimensional
 y <- rCopula(10000, clayton.cop)
 # scatterplot3d::scatterplot3d(y)
@@ -902,7 +909,7 @@ rcexp <- cbind(qexp(rcunif[,1], 1), qexp(rcunif[,2], 2))
 plot(rcexp, xlab = "exp1", ylab = "exp2")  
 ```
 
-```{r cclayton-exp-marginales, fig.cap="Distribuciones marginales exponenciales de los valores generados con dependencia definida por la cópula de Clayton.", out.width="90%", fig.width=12}
+```{r cclayton-exp-marginales, fig.cap="Distribuciones marginales exponenciales de los valores generados con dependencia definida por la cópula de Clayton.", fig.dim=c(12, 6), out.width="90%"}
 # Distribuciones marginales
 par.old <- par(mfrow = c(1, 2))
 hist(rcexp[,1], freq = FALSE, xlab = "exp1")
@@ -1108,7 +1115,8 @@ rtablas[ , 1:5] # Las cinco primeras simulaciones
 A partir de las cuales podemos aproximar por simulación la distribución exacta del estadístico del contraste chi-cuadrado de independencia:
 
 ```{r chi2-plot, fig.cap="Aproximación Monte Carlo de la distribución del estadístico chi-cuadrado bajo independencia."}
-sim.stat <- apply(rtablas, 2, function(x) chisq.test(matrix(x, nrow = nrow(tabla)))$statistic)
+sim.stat <- apply(rtablas, 2, 
+                  function(x) chisq.test(matrix(x, nrow = nrow(tabla)))$statistic)
 hist(sim.stat, freq = FALSE, breaks = 'FD')
 # lines(density(sim.stat))
 # Distribución asintótica (aproximación chi-cuadrado)
