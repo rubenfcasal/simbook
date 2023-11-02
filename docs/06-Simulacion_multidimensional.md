@@ -1,5 +1,6 @@
 # Simulación de distribuciones multivariantes {#multivariante}
 
+<!-- Capítulo \@ref(multivariante) -->
 
 
 
@@ -80,7 +81,7 @@ curve(f2, add = TRUE, lty = 2)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{06-Simulacion_multidimensional_files/figure-latex/normind-plot-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/normind-plot-1} 
 
 }
 
@@ -95,7 +96,7 @@ rnorm(2, c(0, -1), c(1, 0.5))
 ```
 
 ```
-## [1] -0.6264538 -0.9081783
+ ## [1] -0.6264538 -0.9081783
 ```
 y para simular `nsim`:
 
@@ -108,12 +109,12 @@ rx
 ```
 
 ```
-##              X1         X2
-## [1,] -0.6264538 -0.9081783
-## [2,] -0.8356286 -0.2023596
-## [3,]  0.3295078 -1.4102342
-## [4,]  0.4874291 -0.6308376
-## [5,]  0.5757814 -1.1526942
+ ##              X1         X2
+ ## [1,] -0.6264538 -0.9081783
+ ## [2,] -0.8356286 -0.2023596
+ ## [3,]  0.3295078 -1.4102342
+ ## [4,]  0.4874291 -0.6308376
+ ## [5,]  0.5757814 -1.1526942
 ```
 
 
@@ -354,13 +355,13 @@ head(mu + L %*% rnorm(n))
 ```
 
 ```
-##         [,1]
-## 1 -0.6264538
-## 2 -0.5307633
-## 3 -0.5797968
-## 4 -0.2844357
-## 5 -0.1711797
-## 6 -0.2220796
+ ##         [,1]
+ ## 1 -0.6264538
+ ## 2 -0.5307633
+ ## 3 -0.5797968
+ ## 4 -0.2844357
+ ## 5 -0.1711797
+ ## 6 -0.2220796
 ```
 y para simular `nsim`:
 
@@ -377,7 +378,7 @@ lines(t, mu, lwd = 2)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{06-Simulacion_multidimensional_files/figure-latex/funcional-plot-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/funcional-plot-1} 
 
 }
 
@@ -396,35 +397,35 @@ mvrnorm
 ```
 
 ```
-## function (n = 1, mu, Sigma, tol = 1e-06, empirical = FALSE, EISPACK = FALSE) 
-## {
-##     p <- length(mu)
-##     if (!all(dim(Sigma) == c(p, p))) 
-##         stop("incompatible arguments")
-##     if (EISPACK) 
-##         stop("'EISPACK' is no longer supported by R", domain = NA)
-##     eS <- eigen(Sigma, symmetric = TRUE)
-##     ev <- eS$values
-##     if (!all(ev >= -tol * abs(ev[1L]))) 
-##         stop("'Sigma' is not positive definite")
-##     X <- matrix(rnorm(p * n), n)
-##     if (empirical) {
-##         X <- scale(X, TRUE, FALSE)
-##         X <- X %*% svd(X, nu = 0)$v
-##         X <- scale(X, FALSE, TRUE)
-##     }
-##     X <- drop(mu) + eS$vectors %*% diag(sqrt(pmax(ev, 0)), p) %*% 
-##         t(X)
-##     nm <- names(mu)
-##     if (is.null(nm) && !is.null(dn <- dimnames(Sigma))) 
-##         nm <- dn[[1L]]
-##     dimnames(X) <- list(nm, NULL)
-##     if (n == 1) 
-##         drop(X)
-##     else t(X)
-## }
-## <bytecode: 0x000001c095e74528>
-## <environment: namespace:MASS>
+ ## function (n = 1, mu, Sigma, tol = 1e-06, empirical = FALSE, EISPACK = FALSE) 
+ ## {
+ ##     p <- length(mu)
+ ##     if (!all(dim(Sigma) == c(p, p))) 
+ ##         stop("incompatible arguments")
+ ##     if (EISPACK) 
+ ##         stop("'EISPACK' is no longer supported by R", domain = NA)
+ ##     eS <- eigen(Sigma, symmetric = TRUE)
+ ##     ev <- eS$values
+ ##     if (!all(ev >= -tol * abs(ev[1L]))) 
+ ##         stop("'Sigma' is not positive definite")
+ ##     X <- matrix(rnorm(p * n), n)
+ ##     if (empirical) {
+ ##         X <- scale(X, TRUE, FALSE)
+ ##         X <- X %*% svd(X, nu = 0)$v
+ ##         X <- scale(X, FALSE, TRUE)
+ ##     }
+ ##     X <- drop(mu) + eS$vectors %*% diag(sqrt(pmax(ev, 0)), p) %*% 
+ ##         t(X)
+ ##     nm <- names(mu)
+ ##     if (is.null(nm) && !is.null(dn <- dimnames(Sigma))) 
+ ##         nm <- dn[[1L]]
+ ##     dimnames(X) <- list(nm, NULL)
+ ##     if (n == 1) 
+ ##         drop(X)
+ ##     else t(X)
+ ## }
+ ## <bytecode: 0x000001bbeb152e60>
+ ## <environment: namespace:MASS>
 ```
 
 ```r
@@ -436,7 +437,7 @@ lines(t, mu, lwd = 2)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{06-Simulacion_multidimensional_files/figure-latex/funcional-plot2-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/funcional-plot2-1} 
 
 }
 
@@ -676,8 +677,8 @@ valores de una simulación incondicional como los datos:
 
 ```r
 # Indice correspondiente a los datos observados
-# idata <- t < 0.5 # Extrapolación
-idata <- t < 0.2 | t > 0.8 # Interpolación
+idata <- t < 0.5 # Extrapolación
+# idata <- t < 0.2 | t > 0.8 # Interpolación
 mu1 <- mu[idata]
 n1 <- length(mu1)
 cov.data <- x.cov[idata, idata]
@@ -726,7 +727,7 @@ matplot(t[!idata], ycond, type = "l", lty = 3, add = TRUE)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{06-Simulacion_multidimensional_files/figure-latex/funcional-cond-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/funcional-cond-1} 
 
 }
 
@@ -762,12 +763,12 @@ z <- grf(n, grid = "reg", cov.pars = c(1, 1))
 ```
 
 ```
-## grf: generating grid  2  *  2  with  4  points
-## grf: process with  1  covariance structure(s)
-## grf: nugget effect is: tausq= 0 
-## grf: covariance model 1 is: exponential(sigmasq=1, phi=1)
-## grf: decomposition algorithm used is:  cholesky 
-## grf: End of simulation procedure. Number of realizations: 1
+ ## grf: generating grid  2  *  2  with  4  points
+ ## grf: process with  1  covariance structure(s)
+ ## grf: nugget effect is: tausq= 0 
+ ## grf: covariance model 1 is: exponential(sigmasq=1, phi=1)
+ ## grf: decomposition algorithm used is:  cholesky 
+ ## grf: End of simulation procedure. Number of realizations: 1
 ```
 
 ```r
@@ -776,11 +777,11 @@ z$coords
 ```
 
 ```
-##      x y
-## [1,] 0 0
-## [2,] 1 0
-## [3,] 0 1
-## [4,] 1 1
+ ##      x y
+ ## [1,] 0 0
+ ## [2,] 1 0
+ ## [3,] 0 1
+ ## [4,] 1 1
 ```
 
 ```r
@@ -788,7 +789,7 @@ z$data
 ```
 
 ```
-## [1] -0.62645381 -0.05969442 -0.98014198  1.09215113
+ ## [1] -0.62645381 -0.05969442 -0.98014198  1.09215113
 ```
 
 La `grf` función emplea por defecto el método de la factorización de la matriz de covarianzas,
@@ -808,11 +809,11 @@ cov.matrix
 ```
 
 ```
-##           [,1]      [,2]      [,3]      [,4]
-## [1,] 1.0000000 0.3678794 0.3678794 0.2431167
-## [2,] 0.3678794 1.0000000 0.2431167 0.3678794
-## [3,] 0.3678794 0.2431167 1.0000000 0.3678794
-## [4,] 0.2431167 0.3678794 0.3678794 1.0000000
+ ##           [,1]      [,2]      [,3]      [,4]
+ ## [1,] 1.0000000 0.3678794 0.3678794 0.2431167
+ ## [2,] 0.3678794 1.0000000 0.2431167 0.3678794
+ ## [3,] 0.3678794 0.2431167 1.0000000 0.3678794
+ ## [4,] 0.2431167 0.3678794 0.3678794 1.0000000
 ```
 
 ```r
@@ -830,11 +831,11 @@ y
 ```
 
 ```
-##             [,1]
-## [1,] -0.62645381
-## [2,] -0.05969442
-## [3,] -0.98014198
-## [4,]  1.09215113
+ ##             [,1]
+ ## [1,] -0.62645381
+ ## [2,] -0.05969442
+ ## [3,] -0.98014198
+ ## [4,]  1.09215113
 ```
 
 Para generar simulaciones condicionales podemos emplear la función `krige.conv`.
@@ -849,6 +850,20 @@ new.y <- seq(0, 1, len = new.nx[2])
 new.s <- expand.grid(x = new.x, y = new.y)
 plot(data.s, type = "p", pch = 20, asp = 1)
 points(new.s)
+
+# Simulación condicional
+set.seed(1)
+nsim.cond <- 4
+s.out <- output.control(n.predictive = nsim.cond)
+kc <- krige.conv(z, loc = new.s, output = s.out,
+            krige = krige.control(type.krige="SK", beta = 0, cov.pars = c(1, 1)))
+```
+
+```
+ ## krige.conv: results will be returned only for prediction locations inside the borders
+ ## krige.conv: model with constant mean
+ ## krige.conv: sampling from the predictive distribution (conditional simulations)
+ ## krige.conv: Kriging performed using global neighbourhood
 ```
 
 \begin{figure}[!htb]
@@ -860,22 +875,6 @@ points(new.s)
 \caption{Posiciones espaciales de las simulaciones condicionales (y las de los datos).}(\#fig:pos-sp-simcond)
 \end{figure}
 
-```r
-# Simulación condicional
-set.seed(1)
-nsim.cond <- 4
-s.out <- output.control(n.predictive = nsim.cond)
-kc <- krige.conv(z, loc = new.s, output = s.out,
-                 krige = krige.control(type.krige="SK", beta = 0, cov.pars = c(1, 1)))
-```
-
-```
-## krige.conv: results will be returned only for prediction locations inside the borders
-## krige.conv: model with constant mean
-## krige.conv: sampling from the predictive distribution (conditional simulations)
-## krige.conv: Kriging performed using global neighbourhood
-```
-
 Si las representamos podemos confirmar que los valores en las posiciones $\left\{(0,0),(0,1),(1,0),(1,1)\right\}$ coinciden con los generados anteriormente.
 
 
@@ -883,7 +882,7 @@ Si las representamos podemos confirmar que los valores en las posiciones $\left\
 # Generar gráficos
 par.old <- par(mfrow = c(2, 2), mar = c(3.5, 3.5, 1, 2), mgp = c(1.5, .5, 0))
 zlim <- range(kc$simul)     # Escala común
-# La versión actual de geoR::image.kriging() no admite múltiples gráficos en una ventana
+# La versión actual de geoR::image.kriging() no admite múltiples gráficos con mfrow
 # image(kc, val=kc$simul[,1], main="simul. cond. 1", zlim=zlim)
 # image(kc, val=kc$simul[,2], main="simul. cond. 2", zlim=zlim)
 # image(kc, val=kc$simul[,3], main="simul. cond. 3", zlim=zlim)
@@ -897,15 +896,17 @@ image(new.x, new.y, kc$simul[,,3], main="simul. cond. 3",
       xlab = "x", ylab = "y", zlim = zlim)
 image(new.x, new.y, kc$simul[,,4], main="simul. cond. 4",
       xlab = "x", ylab = "y", zlim = zlim)
-```
-
-
-
-\begin{center}\includegraphics[width=0.9\linewidth]{06-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-10-1} \end{center}
-
-```r
 par(par.old)
 ```
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.9\linewidth]{06-Simulacion_multidimensional_files/figure-latex/krige-simcond-1} 
+
+}
+
+\caption{Simulaciones condicionales}(\#fig:krige-simcond)
+\end{figure}
 
 :::
 
@@ -920,23 +921,27 @@ Los métodos para modelos lineales y modelos lineales generalizamos están imple
 Muchos otros paquetes que proporcionan modelos adicionales, implementan también los correspondientes métodos `simulate()`.
 Por ejemplo, en el caso de series de tiempo, el paquete `forecast` permite ajustar distintos tipos de modelos y generar simulaciones a partir de ellos:
 
+(ref:co2-forecast) Concentración atmosférica de CO2 en el observatorio de Mauna Loa (desde el principio de 1990 hasta el final de 1997; ver [`datasets::co2`](https://rdrr.io/r/datasets/co2.html)).
+
 
 ```r
 library(forecast)
 data <- window(co2, 1990) # datos de co2 desde 1990
-plot(data, ylab = expression("Atmospheric concentration of CO"[2]),
-     xlim = c(1990, 2000), ylim = c(350, 375))
-```
-
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{06-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-11-1} \end{center}
-
-```r
+plot(data, ylab = expression("Concentración atmosférica de CO"[2]),
+     xlab = "Fecha", xlim = c(1990, 2000), ylim = c(350, 375))
 # Se podrían ajustar distintos tipos de modelos
 fit <- ets(data)
 # fit <- auto.arima(data)
 ```
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/co2-forecast-1} 
+
+}
+
+\caption{(ref:co2-forecast)}(\#fig:co2-forecast)
+\end{figure}
 
 Podemos obtener predicciones (media de la distribución condicional) e intervalos de predicción:
 
@@ -947,31 +952,28 @@ pred
 ```
 
 ```
-##          Point Forecast    Lo 95    Hi 95
-## Jan 1998       365.1118 364.5342 365.6894
-## Feb 1998       366.1195 365.4572 366.7819
-## Mar 1998       367.0161 366.2786 367.7535
-## Apr 1998       368.2749 367.4693 369.0806
-## May 1998       368.9282 368.0596 369.7968
-## Jun 1998       368.2240 367.2967 369.1513
-## Jul 1998       366.5823 365.5997 367.5649
-## Aug 1998       364.4895 363.4546 365.5244
-## Sep 1998       362.6586 361.5738 363.7434
-## Oct 1998       362.7805 361.6479 363.9130
-## Nov 1998       364.2045 363.0262 365.3829
-## Dec 1998       365.5250 364.3025 366.7476
-## Jan 1999       366.6002 365.3349 367.8654
-## Feb 1999       367.6078 366.3013 368.9144
-## Mar 1999       368.5044 367.1578 369.8510
-## Apr 1999       369.7633 368.3777 371.1488
-## May 1999       370.4165 368.9930 371.8400
-## Jun 1999       369.7124 368.2519 371.1728
-## Jul 1999       368.0706 366.5741 369.5671
-## Aug 1999       365.9778 364.4461 367.5096
-## Sep 1999       364.1469 362.5806 365.7131
-## Oct 1999       364.2688 362.6688 365.8688
-## Nov 1999       365.6929 364.0597 367.3260
-## Dec 1999       367.0134 365.3477 368.6790
+ ##          Point Forecast    Lo 95    Hi 95
+ ## Jan 1998       365.1118 364.5342 365.6894
+ ## Feb 1998       366.1195 365.4572 366.7819
+ ## Mar 1998       367.0161 366.2786 367.7535
+ ## Apr 1998       368.2749 367.4693 369.0806
+ ## May 1998       368.9282 368.0596 369.7968
+ ## Jun 1998       368.2240 367.2967 369.1513
+ ## Jul 1998       366.5823 365.5997 367.5649
+ ## Aug 1998       364.4895 363.4546 365.5244
+ ## Sep 1998       362.6586 361.5738 363.7434
+ ## Oct 1998       362.7805 361.6479 363.9130
+ ## Nov 1998       364.2045 363.0262 365.3829
+ ## Dec 1998       365.5250 364.3025 366.7476
+ ## Jan 1999       366.6002 365.3349 367.8654
+ ## Feb 1999       367.6078 366.3013 368.9144
+ ## Mar 1999       368.5044 367.1578 369.8510
+ ## Apr 1999       369.7633 368.3777 371.1488
+ ## May 1999       370.4165 368.9930 371.8400
+ ## Jun 1999       369.7124 368.2519 371.1728
+ ## Jul 1999       368.0706 366.5741 369.5671
+ ## Aug 1999       365.9778 364.4461 367.5096
+ ##  [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
 ```
 
 Para análisis adicionales nos puede interesar generar simulaciones (por defecto de la distribución condicional, `future = TRUE`):
@@ -981,13 +983,14 @@ Para análisis adicionales nos puede interesar generar simulaciones (por defecto
 set.seed(321)
 sim.cond <- simulate(fit, 24)
 
-plot(pred)
+plot(pred, main = "", xlab = "Fecha", 
+     ylab = expression("Concentración atmosférica de CO"[2]))
 lines(sim.cond, lwd = 2, col = "red")
 ```
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{06-Simulacion_multidimensional_files/figure-latex/simulate-forecast-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/simulate-forecast-1} 
 
 }
 
@@ -1088,7 +1091,7 @@ plot(rcunif, xlab = "u", ylab = "v")
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton2-dispersion-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton2-dispersion-1} 
 
 }
 
@@ -1105,7 +1108,7 @@ sm::sm.density(rcunif, xlab = "u", ylab = "v", zlab = "Density")
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton2-conjunta-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton2-conjunta-1} 
 
 }
 
@@ -1121,6 +1124,7 @@ hist(rcunif[,1], freq = FALSE, xlab = "u")
 abline(h = 1)
 hist(rcunif[,2], freq = FALSE, xlab = "v")
 abline(h = 1)
+par(par.old)
 ```
 
 \begin{figure}[!htb]
@@ -1131,10 +1135,6 @@ abline(h = 1)
 
 \caption{Distribuciones marginales de los valores generados con distribución bidimensional de Clayton.}(\#fig:cclayton2-marginales)
 \end{figure}
-
-```r
-par(par.old)
-```
 
 Empleando el paquete *copula* [Figuras: \@ref(fig:cclayton2b-dispersion), \@ref(fig:cclayton3-dispersion)]:
 
@@ -1148,13 +1148,14 @@ plot(y, xlab = "u", ylab = "v")
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton2b-dispersion-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton2b-dispersion-1} 
 
 }
 
 \caption{Gráfico de dispersión de los valores generados con distribución bidimensional de Clayton empleando el paquete `copula`.}(\#fig:cclayton2b-dispersion)
 \end{figure}
 
+(ref:cclayton3-dispersion) Gráfico de dispersión de los valores generados con distribución trididimensional de Clayton empleando el paquete `copula`.
 
 
 ```r
@@ -1167,11 +1168,11 @@ plot3D:::points3D(y[,1], y[,2], y[, 3], colvar = NULL,
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton3-dispersion-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton3-dispersion-1} 
 
 }
 
-\caption{Gráfico de dispersión de los valores generados con distribución trididimensional de Clayton empleando el paquete `copula`.}(\#fig:cclayton3-dispersion)
+\caption{(ref:cclayton3-dispersion)}(\#fig:cclayton3-dispersion)
 \end{figure}
 
 Por ejemplo, podemos generar una muestra de una variable aleatoria bidimensional con distribuciones marginales exponenciales de parámetros 1 y 2, respectivamente (y distribución bidimensional determinada por la cópula de Clayton), transformando la muestra anterior [Figuras: \@ref(fig:cclayton-exp-conjunta), \@ref(fig:cclayton-exp-marginales)]:
@@ -1184,7 +1185,7 @@ plot(rcexp, xlab = "exp1", ylab = "exp2")
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton-exp-conjunta-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton-exp-conjunta-1} 
 
 }
 
@@ -1199,6 +1200,7 @@ hist(rcexp[,1], freq = FALSE, xlab = "exp1")
 curve(dexp(x, 1), add = TRUE)
 hist(rcexp[,2], freq = FALSE, xlab = "exp2")
 curve(dexp(x, 2), add = TRUE)
+par(par.old)
 ```
 
 \begin{figure}[!htb]
@@ -1209,10 +1211,6 @@ curve(dexp(x, 2), add = TRUE)
 
 \caption{Distribuciones marginales exponenciales de los valores generados con dependencia definida por la cópula de Clayton.}(\#fig:cclayton-exp-marginales)
 \end{figure}
-
-```r
-par(par.old)
-```
 :::
 
 
@@ -1233,11 +1231,11 @@ xy
 ```
 
 ```
-##      [,1] [,2]
-## [1,]   11   12
-## [2,]   21   22
-## [3,]   31   32
-## [4,]   41   42
+ ##      [,1] [,2]
+ ## [1,]   11   12
+ ## [2,]   21   22
+ ## [3,]   31   32
+ ## [4,]   41   42
 ```
 
 ```r
@@ -1246,7 +1244,7 @@ z
 ```
 
 ```
-## [1] 11 21 31 41 12 22 32 42
+ ## [1] 11 21 31 41 12 22 32 42
 ```
 
 ```r
@@ -1255,11 +1253,11 @@ xy
 ```
 
 ```
-##      [,1] [,2]
-## [1,]   11   12
-## [2,]   21   22
-## [3,]   31   32
-## [4,]   41   42
+ ##      [,1] [,2]
+ ## [1,]   11   12
+ ## [2,]   21   22
+ ## [3,]   31   32
+ ## [4,]   41   42
 ```
 
 Suponiendo que la primera componente toma $I$ valores distintos, la función de etiquetado para calcular el índice unidimensional a partir de uno bidimensional sería:
@@ -1273,7 +1271,7 @@ z[l(2, 1)]
 ```
 
 ```
-## [1] 21
+ ## [1] 21
 ```
 
 ```r
@@ -1281,7 +1279,7 @@ z[l(3, 2)]
 ```
 
 ```
-## [1] 32
+ ## [1] 32
 ```
 
 Para recuperar el índice bidimensional se emplearía la inversa de la función de etiquetado:
@@ -1295,7 +1293,7 @@ xy[linv(2)]
 ```
 
 ```
-## [1] 21
+ ## [1] 21
 ```
 
 ```r
@@ -1303,7 +1301,7 @@ xy[linv(7)]
 ```
 
 ```
-## [1] 32
+ ## [1] 32
 ```
 
 Realmente lo que ocurre internamente en R es que un objeto `matrix` o `array` está almacenado como un vector y admite un indexado multidimensional si está presente un atributo `dim`:
@@ -1315,11 +1313,11 @@ z
 ```
 
 ```
-##      [,1] [,2]
-## [1,]   11   12
-## [2,]   21   22
-## [3,]   31   32
-## [4,]   41   42
+ ##      [,1] [,2]
+ ## [1,]   11   12
+ ## [2,]   21   22
+ ## [3,]   31   32
+ ## [4,]   41   42
 ```
 
 ```r
@@ -1328,17 +1326,17 @@ z
 ```
 
 ```
-## , , 1
-## 
-##      [,1] [,2]
-## [1,]   11   31
-## [2,]   21   41
-## 
-## , , 2
-## 
-##      [,1] [,2]
-## [1,]   12   32
-## [2,]   22   42
+ ## , , 1
+ ## 
+ ##      [,1] [,2]
+ ## [1,]   11   31
+ ## [2,]   21   41
+ ## 
+ ## , , 2
+ ## 
+ ##      [,1] [,2]
+ ## [1,]   12   32
+ ## [2,]   22   42
 ```
 
 ```r
@@ -1347,7 +1345,7 @@ z
 ```
 
 ```
-## [1] 11 21 31 41 12 22 32 42
+ ## [1] 11 21 31 41 12 22 32 42
 ```
 
 Si la variable discreta multidimensional no tiene soporte finito, se podrían emplear métodos de codificación más avanzados (ver Cao, 2002, Sección 6.3), aunque no se podría guardar la función de masa de probabilidad en una tabla.
@@ -1369,11 +1367,11 @@ df
 ```
 
 ```
-##     n particulas calidad
-## 1 320         no   buena
-## 2  14         si   buena
-## 3  80         no    mala
-## 4  36         si    mala
+ ##     n particulas calidad
+ ## 1 320         no   buena
+ ## 2  14         si   buena
+ ## 3  80         no    mala
+ ## 4  36         si    mala
 ```
 
 En lugar de estar en el formato de un conjunto de datos (`data.frame`) puede que los datos estén en formato de tabla (`table`, `matrix`):
@@ -1385,10 +1383,10 @@ tabla
 ```
 
 ```
-##        particulas
-## calidad  no  si
-##   buena 320  14
-##   mala   80  36
+ ##        particulas
+ ## calidad  no  si
+ ##   buena 320  14
+ ##   mala   80  36
 ```
 
 Lo podemos convertir directamente a `data.frame`:
@@ -1399,11 +1397,11 @@ as.data.frame(tabla)
 ```
 
 ```
-##   calidad particulas Freq
-## 1   buena         no  320
-## 2    mala         no   80
-## 3   buena         si   14
-## 4    mala         si   36
+ ##   calidad particulas Freq
+ ## 1   buena         no  320
+ ## 2    mala         no   80
+ ## 3   buena         si   14
+ ## 4    mala         si   36
 ```
 
 En este caso estimamos^[Como ya se comentó, la simulación empleando un modelo estimado también se denomina bootstrap paramétrico.] las probabilidades a partir de las frecuencias:
@@ -1415,11 +1413,11 @@ df
 ```
 
 ```
-##     n particulas calidad          p
-## 1 320         no   buena 0.71111111
-## 2  14         si   buena 0.03111111
-## 3  80         no    mala 0.17777778
-## 4  36         si    mala 0.08000000
+ ##     n particulas calidad          p
+ ## 1 320         no   buena 0.71111111
+ ## 2  14         si   buena 0.03111111
+ ## 3  80         no    mala 0.17777778
+ ## 4  36         si    mala 0.08000000
 ```
 
 En formato tabla:
@@ -1431,10 +1429,10 @@ pij
 ```
 
 ```
-##        particulas
-## calidad         no         si
-##   buena 0.71111111 0.03111111
-##   mala  0.17777778 0.08000000
+ ##        particulas
+ ## calidad         no         si
+ ##   buena 0.71111111 0.03111111
+ ##   mala  0.17777778 0.08000000
 ```
 
 Para simular la variable bidimensional consideramos una variable unidimensional de índices:
@@ -1446,7 +1444,7 @@ z
 ```
 
 ```
-## [1] 1 2 3 4
+ ## [1] 1 2 3 4
 ```
 
 Con probabilidades:
@@ -1458,7 +1456,7 @@ pz
 ```
 
 ```
-## [1] 0.71111111 0.03111111 0.17777778 0.08000000
+ ## [1] 0.71111111 0.03111111 0.17777778 0.08000000
 ```
 
 Si las probabilidades estuviesen en una matriz, las convertiríamos a un vector con:
@@ -1469,7 +1467,7 @@ as.vector(pij)
 ```
 
 ```
-## [1] 0.71111111 0.17777778 0.03111111 0.08000000
+ ## [1] 0.71111111 0.17777778 0.03111111 0.08000000
 ```
 
 
@@ -1492,13 +1490,13 @@ head(rxy)
 ```
 
 ```
-##      particulas calidad
-## [1,] "no"       "buena"
-## [2,] "no"       "buena"
-## [3,] "no"       "buena"
-## [4,] "si"       "mala" 
-## [5,] "no"       "buena"
-## [6,] "si"       "mala"
+ ##      particulas calidad
+ ## [1,] "no"       "buena"
+ ## [2,] "no"       "buena"
+ ## [3,] "no"       "buena"
+ ## [4,] "si"       "mala" 
+ ## [5,] "no"       "buena"
+ ## [6,] "si"       "mala"
 ```
 
 Alternativamente, si queremos trabajar con data.frames:
@@ -1511,13 +1509,13 @@ head(rxy)
 ```
 
 ```
-##     particulas calidad
-## 1           no   buena
-## 1.1         no   buena
-## 1.2         no   buena
-## 4           si    mala
-## 1.3         no   buena
-## 4.1         si    mala
+ ##     particulas calidad
+ ## 1           no   buena
+ ## 1.1         no   buena
+ ## 1.2         no   buena
+ ## 4           si    mala
+ ## 1.3         no   buena
+ ## 4.1         si    mala
 ```
 
 ```r
@@ -1527,13 +1525,13 @@ head(rxy)
 ```
 
 ```
-##   particulas calidad
-## 1         no   buena
-## 2         no   buena
-## 3         no   buena
-## 4         si    mala
-## 5         no   buena
-## 6         si    mala
+ ##   particulas calidad
+ ## 1         no   buena
+ ## 2         no   buena
+ ## 3         no   buena
+ ## 4         si    mala
+ ## 5         no   buena
+ ## 6         si    mala
 ```
 
 
@@ -1552,10 +1550,10 @@ matrix(rtable, ncol = 2, dimnames = dimnames(tabla)) # Tabla de frecuencias bidi
 ```
 
 ```
-##        particulas
-## calidad  no si
-##   buena 321 78
-##   mala   15 36
+ ##        particulas
+ ## calidad  no si
+ ##   buena 321 78
+ ##   mala   15 36
 ```
 
 Aunque puede ser preferible emplear directamente `rmultinom()` si se van a generar muchas:
@@ -1568,11 +1566,11 @@ rtablas[ , 1:5] # Las cinco primeras simulaciones
 ```
 
 ```
-##      [,1] [,2] [,3] [,4] [,5]
-## [1,]  298  329  323  323  307
-## [2,]   15   21    5   15   15
-## [3,]   92   68   91   77   92
-## [4,]   45   32   31   35   36
+ ##      [,1] [,2] [,3] [,4] [,5]
+ ## [1,]  298  329  323  323  307
+ ## [2,]   15   21    5   15   15
+ ## [3,]   92   68   91   77   92
+ ## [4,]   45   32   31   35   36
 ```
 
 ::: {.example #chicuadind name="Distribución del estadístico chi-cuadrado de independencia"}
@@ -1587,11 +1585,11 @@ res
 ```
 
 ```
-## 
-## 	Pearson's Chi-squared test with Yates' continuity correction
-## 
-## data:  tabla
-## X-squared = 60.124, df = 1, p-value = 8.907e-15
+ ## 
+ ## 	Pearson's Chi-squared test with Yates' continuity correction
+ ## 
+ ## data:  tabla
+ ## X-squared = 60.124, df = 1, p-value = 8.907e-15
 ```
 
 Sin embargo la distribución exacta del estadístico del contraste es discreta y como alternativa la podríamos aproximar mediante simulación.
@@ -1605,10 +1603,10 @@ matrix(pind, nrow = nrow(tabla), dimnames = dimnames(tabla))
 ```
 
 ```
-##        particulas
-## calidad        no         si
-##   buena 0.6597531 0.08246914
-##   mala  0.2291358 0.02864198
+ ##        particulas
+ ## calidad        no         si
+ ##   buena 0.6597531 0.08246914
+ ##   mala  0.2291358 0.02864198
 ```
 
 Empleando el código anterior podemos generar las simulaciones de las tablas de contingencia (bajo independencia):
@@ -1621,18 +1619,19 @@ rtablas[ , 1:5] # Las cinco primeras simulaciones
 ```
 
 ```
-##      [,1] [,2] [,3] [,4] [,5]
-## [1,]  292  285  309  303  290
-## [2,]   96  105   97   84  113
-## [3,]   48   48   36   49   39
-## [4,]   14   12    8   14    8
+ ##      [,1] [,2] [,3] [,4] [,5]
+ ## [1,]  292  285  309  303  290
+ ## [2,]   96  105   97   84  113
+ ## [3,]   48   48   36   49   39
+ ## [4,]   14   12    8   14    8
 ```
 
 A partir de las cuales podemos aproximar por simulación la distribución exacta del estadístico del contraste chi-cuadrado de independencia:
 
 
 ```r
-sim.stat <- apply(rtablas, 2, function(x) chisq.test(matrix(x, nrow = nrow(tabla)))$statistic)
+sim.stat <- apply(rtablas, 2, 
+                  function(x) chisq.test(matrix(x, nrow = nrow(tabla)))$statistic)
 hist(sim.stat, freq = FALSE, breaks = 'FD')
 # lines(density(sim.stat))
 # Distribución asintótica (aproximación chi-cuadrado)
@@ -1641,7 +1640,7 @@ curve(dchisq(x, res$parameter), col = 'blue', add = TRUE)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{06-Simulacion_multidimensional_files/figure-latex/chi2-plot-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/chi2-plot-1} 
 
 }
 
@@ -1658,7 +1657,7 @@ pvalue.mc
 ```
 
 ```
-## [1] 0
+ ## [1] 0
 ```
 
 Esto es similar a lo que realiza la función `chisq.test()` con la opción `simulate.p.value = TRUE` (empleando el algoritmo de Patefield, 1981):
@@ -1669,12 +1668,12 @@ chisq.test(tabla, simulate.p.value = TRUE, B = 2000)
 ```
 
 ```
-## 
-## 	Pearson's Chi-squared test with simulated p-value (based on 2000
-## 	replicates)
-## 
-## data:  tabla
-## X-squared = 62.812, df = NA, p-value = 0.0004998
+ ## 
+ ## 	Pearson's Chi-squared test with simulated p-value (based on 2000
+ ## 	replicates)
+ ## 
+ ## data:  tabla
+ ## X-squared = 62.812, df = NA, p-value = 0.0004998
 ```
 
 :::

@@ -1,5 +1,6 @@
 # Integración numérica {#int-num}
 
+<!-- Apéndice \@ref(int-num) -->
 
 
 
@@ -30,7 +31,7 @@ abline(v = c(0, 1), lty = 2)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{23-Integracion_numerica_files/figure-latex/unnamed-chunk-2-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{23-Integracion_numerica_files/figure-latex/unnamed-chunk-1-1} \end{center}
 
 
 ### Método del trapezoide 
@@ -67,7 +68,7 @@ trapezoid(fun, 0, 1, 20)
 ```
 
 ```
-## [1] 0.8033325
+ ## [1] 0.8033325
 ```
 
 
@@ -110,7 +111,7 @@ simpson(fun, 0, 1, 20)
 ```
 
 ```
-## [1] 0.8000033
+ ## [1] 0.8000033
 ```
 
 El máximo error (en el caso unidimensional) viene dado por la expresión:
@@ -166,7 +167,7 @@ quadrature(fun, 0, 1)
 ```
 
 ```
-## [1] 0.8
+ ## [1] 0.8
 ```
 
 Fuente: [r-blogger Guangchuang Yu](https://www.r-bloggers.com/one-dimensional-integrals)
@@ -182,7 +183,7 @@ integrate(fun, 0, 1)  # Cuidado: fun debe ser vectorial...
 ```
 
 ```
-## 0.8 with absolute error < 8.9e-15
+ ## 0.8 with absolute error < 8.9e-15
 ```
 
 Alternativamente, para dominios acotados, se puede emplear la función `MASS::area()` (suele dar muy buenos resultados, aunque los autores la desarrollaron inicialmente para fines ilustrativos):
@@ -194,7 +195,7 @@ area(fun, 0, 1)
 ```
 
 ```
-## [1] 0.8000001
+ ## [1] 0.8000001
 ```
 
 
@@ -259,7 +260,7 @@ persp3D.f2d(f2d, -1, 1, -1, 1, 50, 50, ticktype = "detailed")
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{23-Integracion_numerica_files/figure-latex/unnamed-chunk-10-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{23-Integracion_numerica_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 
 ### Método del trapezoide 
@@ -291,7 +292,7 @@ trapezoid.f2d(f2d, -1, 1, -1, 1, 101, 101)
 ```
 
 ```
-## [1] -8.881784e-18
+ ## [1] -8.881784e-18
 ```
 
 
@@ -309,7 +310,7 @@ integrate( function(y) {
 ```
 
 ```
-## -2.775558e-17 with absolute error < 1.1e-14
+ ## -2.775558e-17 with absolute error < 1.1e-14
 ```
 
 

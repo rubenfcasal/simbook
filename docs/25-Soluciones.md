@@ -1,5 +1,6 @@
 # Soluciones ejercicios {#soluciones}
 
+<!-- Apéndice \@ref(soluciones) -->
 
 
 
@@ -62,7 +63,7 @@ sum(indice)/nsim
 ```
 
 ```
-## [1] 0.4996
+ ## [1] 0.4996
 ```
 
 Alternativamente (la frecuencia relativa es un caso particular de la media) se puede obtener de forma más simple como:
@@ -73,7 +74,7 @@ mean(indice)
 ```
 
 ```
-## [1] 0.4996
+ ## [1] 0.4996
 ```
 
 ---
@@ -94,7 +95,7 @@ mean(indice)
 ```
 
 ```
-## [1] 0.7806
+ ## [1] 0.7806
 ```
 
 ```r
@@ -102,7 +103,7 @@ pi/4
 ```
 
 ```
-## [1] 0.7853982
+ ## [1] 0.7853982
 ```
 
 ```r
@@ -111,7 +112,7 @@ pi_aprox
 ```
 
 ```
-## [1] 3.1224
+ ## [1] 3.1224
 ```
 
 Generamos el correspondiente gráfico (ver Figura \@ref(fig:simpiplot)) (los puntos con color negro tienen distribución uniforme en el círculo unidad; esto está relacionado con el método de aceptación-rechazo, ver Ejemplo \@ref(exm:ar-esfera), o con el denominado método *hit-or-miss*).
@@ -130,7 +131,7 @@ symbols(0, 0, squares = 2, inches = FALSE, add = TRUE)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{25-Soluciones_files/figure-latex/simpiplot-1} 
+{\centering \includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/simpiplot-1} 
 
 }
 
@@ -163,7 +164,7 @@ mean(x)
 ```
 
 ```
-## [1] 0.4953
+ ## [1] 0.4953
 ```
 
 ```r
@@ -172,7 +173,7 @@ barplot(100*table(x)/nsim, ylab = "Porcentaje") # Representar porcentajes
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{25-Soluciones_files/figure-latex/simberplot-1} 
+{\centering \includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/simberplot-1} 
 
 }
 
@@ -201,7 +202,7 @@ mean(x)
 ```
 
 ```
-## [1] 0.394
+ ## [1] 0.394
 ```
 
 ```r
@@ -213,7 +214,7 @@ abline(h=p, lty=2, col="red")
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{25-Soluciones_files/figure-latex/simberconv-1} 
+{\centering \includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/simberconv-1} 
 
 }
 
@@ -260,7 +261,7 @@ mean(fin)
 ```
 
 ```
-## [1] 0.692
+ ## [1] 0.692
 ```
 
 
@@ -295,7 +296,7 @@ lanz
 ```
 
 ```
-## [1] 3 5 1 6
+ ## [1] 3 5 1 6
 ```
 
 ```r
@@ -303,7 +304,7 @@ lanz
 ```
 
 ```
-## [1] TRUE
+ ## [1] TRUE
 ```
 
 ---    
@@ -325,7 +326,7 @@ mean(replicate(nsim, deMere(n)))
 ```
 
 ```
-## [1] 0.5148
+ ## [1] 0.5148
 ```
 
 ```r
@@ -333,7 +334,7 @@ mean(replicate(nsim, deMere(n)))
 ```
 
 ```
-## [1] 0.5177469
+ ## [1] 0.5177469
 ```
 
 
@@ -410,7 +411,7 @@ str(evol)
 ```
 
 ```
-##  num [1:167, 1:2000] 6 12 16 21 23 25 30 34 37 38 ...
+ ##  num [1:167, 1:2000] 6 12 16 21 23 25 30 34 37 38 ...
 ```
 
 Aproximar cuantiles (intervalos de predicción):
@@ -423,10 +424,10 @@ str(limits)
 ```
 
 ```
-##  num [1:3, 1:167] 5 6 6 10 11 12 14 16 18 18 ...
-##  - attr(*, "dimnames")=List of 2
-##   ..$ : chr [1:3] "5%" "50%" "95%"
-##   ..$ : NULL
+ ##  num [1:3, 1:167] 5 6 6 10 11 12 14 16 18 18 ...
+ ##  - attr(*, "dimnames")=List of 2
+ ##   ..$ : chr [1:3] "5%" "50%" "95%"
+ ##   ..$ : NULL
 ```
 
 Ejemplo, aproximación de los límites (y mediana) para el número de cromos en el álbum después de comprar 20 sobres:
@@ -437,8 +438,8 @@ limits[, 20]
 ```
 
 ```
-##  5% 50% 95% 
-##  55  60  64
+ ##  5% 50% 95% 
+ ##  55  60  64
 ```
 
 ```r
@@ -449,7 +450,7 @@ abline(v = limits[, 20], lty = 2)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{25-Soluciones_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 Representar las realizaciones del proceso y los intervalos de predicción puntuales:
 
@@ -462,7 +463,7 @@ matlines(1:max_len, t(limits), lty = c(2, 1, 2), col = 1)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{25-Soluciones_files/figure-latex/unnamed-chunk-15-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 
 ## Capítulo 2 [Generación de números pseudoaleatorios](gen-pseudo.html)
@@ -498,27 +499,27 @@ simres::rvng
 ```
 
 ```
-## function(n, seed = as.numeric(Sys.time()), k = 4) {
-##   seed <- seed %% 10^k
-##   aux <- 10^(2*k-k/2)
-##   aux2 <- 10^(k/2)
-##   u <- numeric(n)
-##   for(i in 1:n) {
-##     z <- seed^2
-##     seed <- trunc((z - trunc(z/aux)*aux)/aux2)
-##     u[i] <- seed/10^k
-##   }
-##   # Almacenar semilla y parámetros
-##   assign(".rng", list(seed = seed, type = "vm", parameters = list(k = k)),
-##       envir = globalenv())
-##   # .rng <<- list(seed = seed, type = "vm", parameters = list(k = k))
-##   # Para continuar con semilla y parámetros:
-##   #   with(.rng, rvng(n, seed, parameters$k))
-##   # Devolver valores
-##   return(u)
-## }
-## <bytecode: 0x00000155cb1b3050>
-## <environment: namespace:simres>
+ ## function(n, seed = as.numeric(Sys.time()), k = 4) {
+ ##   seed <- seed %% 10^k
+ ##   aux <- 10^(2*k-k/2)
+ ##   aux2 <- 10^(k/2)
+ ##   u <- numeric(n)
+ ##   for(i in 1:n) {
+ ##     z <- seed^2
+ ##     seed <- trunc((z - trunc(z/aux)*aux)/aux2)
+ ##     u[i] <- seed/10^k
+ ##   }
+ ##   # Almacenar semilla y parámetros
+ ##   assign(".rng", list(seed = seed, type = "vm", parameters = list(k = k)),
+ ##       envir = globalenv())
+ ##   # .rng <<- list(seed = seed, type = "vm", parameters = list(k = k))
+ ##   # Para continuar con semilla y parámetros:
+ ##   #   with(.rng, rvng(n, seed, parameters$k))
+ ##   # Devolver valores
+ ##   return(u)
+ ## }
+ ## <bytecode: 0x00000138ec765838>
+ ## <environment: namespace:simres>
 ```
 
 Estudiar las características del generador de cuadrados medios a partir de una secuencia de 500 valores. 
@@ -562,7 +563,7 @@ abline(h = c(1/10, 2/10, 3/10), lty = 2) # Discontinuidades
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{25-Soluciones_files/figure-latex/mixta-cuantil-plot-sol-1} 
+{\centering \includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/mixta-cuantil-plot-sol-1} 
 
 }
 
@@ -625,8 +626,8 @@ b)  El algoritmo de simulación se puede implementar a partir de la función cua
     ```
     
     ```
-    ##    user  system elapsed 
-    ##       0       0       0
+     ##    user  system elapsed 
+     ##       0       0       0
     ```
     
     ```r
@@ -635,7 +636,7 @@ b)  El algoritmo de simulación se puede implementar a partir de la función cua
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{25-Soluciones_files/figure-latex/unnamed-chunk-19-1} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/unnamed-chunk-18-1} \end{center}
     
     En este caso como no es una variable absolutamente continua mejor emplear 
     la función de distribución para compararla con la teórica:
@@ -648,5 +649,5 @@ b)  El algoritmo de simulación se puede implementar a partir de la función cua
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{25-Soluciones_files/figure-latex/unnamed-chunk-20-1} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/unnamed-chunk-19-1} \end{center}
 

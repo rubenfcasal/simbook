@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="es" xml:lang="es">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>10.4 Bootstrap basado en modelos | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="10.4 Bootstrap basado en modelos | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,28 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -273,7 +295,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.4.4" data-path="aplic-inf.html"><a href="aplic-inf.html#comparación-de-estimadores"><i class="fa fa-check"></i><b>7.4.4</b> Comparación de estimadores</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="técnicas-de-reducción-de-la-varianza.html"><a href="técnicas-de-reducción-de-la-varianza.html"><i class="fa fa-check"></i><b>8</b> Técnicas de reducción de la varianza</a>
+<li class="chapter" data-level="8" data-path="red-varianza.html"><a href="red-varianza.html"><i class="fa fa-check"></i><b>8</b> Técnicas de reducción de la varianza</a>
 <ul>
 <li class="chapter" data-level="8.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html"><i class="fa fa-check"></i><b>8.1</b> Variables antitéticas</a>
 <ul>
@@ -326,7 +348,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.3.3" data-path="boot-test.html"><a href="boot-test.html#contrastes-semiparametricos"><i class="fa fa-check"></i><b>11.3.3</b> Contrastes bootstrap semiparamétricos</a></li>
 </ul></li>
 </ul></li>
-<li class="appendix"><span><b>Apendices</b></span></li>
+<li class="appendix"><span><b>Apéndices</b></span></li>
 <li class="chapter" data-level="A" data-path="gof-aleat.html"><a href="gof-aleat.html"><i class="fa fa-check"></i><b>A</b> Bondad de Ajuste y Aleatoriedad</a>
 <ul>
 <li class="chapter" data-level="A.1" data-path="gof.html"><a href="gof.html"><i class="fa fa-check"></i><b>A.1</b> Métodos de bondad de ajuste</a>
@@ -399,7 +421,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
 <ul>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
 <li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
@@ -460,10 +482,10 @@ siendo <span class="math inline">\(\mathbf{Y} = \left( Y_{1}, \ldots, Y_{n} \rig
 Con otros métodos de regresión, como los modelos no paramétricos (ver p.e. Cao y Fernández-Casal, 2022, <a href="https://rubenfcasal.github.io/book_remuestreo/m%C3%A9todos-de-remuestreo-en-regresi%C3%B3n-no-param%C3%A9trica.html">Capítulo 7</a>), es habitual emplear bootstrap para realizar inferencias sobre la distribución condicional.</p>
 <p>En esta sección se empleará el conjunto de datos <code>Prestige</code> del paquete <code>carData</code>, considerando como variable respuesta <code>prestige</code> (puntuación de ocupaciones obtenidas a partir de una encuesta) y como variables explicativas: <code>income</code> (media de ingresos en la ocupación) y <code>education</code> (media de los años de educación).
 Para ajustar el correspondiente modelo de regresión lineal podemos emplear el siguiente código:</p>
-<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="boot-reg.html#cb584-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Prestige, <span class="at">package =</span> <span class="st">&quot;carData&quot;</span>)</span>
-<span id="cb584-2"><a href="boot-reg.html#cb584-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ?Prestige</span></span>
-<span id="cb584-3"><a href="boot-reg.html#cb584-3" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> income <span class="sc">+</span> education, <span class="at">data =</span> Prestige)</span>
-<span id="cb584-4"><a href="boot-reg.html#cb584-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code></pre></div>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="boot-reg.html#cb585-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Prestige, <span class="at">package =</span> <span class="st">&quot;carData&quot;</span>)</span>
+<span id="cb585-2"><a href="boot-reg.html#cb585-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ?Prestige</span></span>
+<span id="cb585-3"><a href="boot-reg.html#cb585-3" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> income <span class="sc">+</span> education, <span class="at">data =</span> Prestige)</span>
+<span id="cb585-4"><a href="boot-reg.html#cb585-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = prestige ~ income + education, data = Prestige)
@@ -484,27 +506,27 @@ Para ajustar el correspondiente modelo de regresión lineal podemos emplear el s
 ## Multiple R-squared:  0.798,  Adjusted R-squared:  0.7939 
 ## F-statistic: 195.6 on 2 and 99 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Como ejemplo, consideraremos que el objetivo es realizar inferencias sobre el coeficiente de determinación ajustado:</p>
-<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="boot-reg.html#cb586-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">summary</span>(modelo)</span>
-<span id="cb586-2"><a href="boot-reg.html#cb586-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(res)</span></code></pre></div>
+<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="boot-reg.html#cb587-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">summary</span>(modelo)</span>
+<span id="cb587-2"><a href="boot-reg.html#cb587-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(res)</span></code></pre></div>
 <pre><code>##  [1] &quot;call&quot;          &quot;terms&quot;         &quot;residuals&quot;     &quot;coefficients&quot; 
 ##  [5] &quot;aliased&quot;       &quot;sigma&quot;         &quot;df&quot;            &quot;r.squared&quot;    
 ##  [9] &quot;adj.r.squared&quot; &quot;fstatistic&quot;    &quot;cov.unscaled&quot;</code></pre>
-<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="boot-reg.html#cb588-1" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>adj.r.squared</span></code></pre></div>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="boot-reg.html#cb589-1" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>adj.r.squared</span></code></pre></div>
 <pre><code>## [1] 0.7939201</code></pre>
 <div id="boot-unif-reg" class="section level3 hasAnchor" number="10.4.1">
 <h3><span class="header-section-number">10.4.1</span> Remuestreo de las observaciones<a href="boot-reg.html#boot-unif-reg" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Como ya se comentó, en regresión podríamos emplear bootstrap uniforme multidimensional para el caso de diseño aleatorio, aunque hay que tener en cuenta que con este método la distribución en el remuestreo de <span class="math inline">\(\left. Y^{\ast}\right\vert _{X^{\ast}=X_i}\)</span> es degenerada.</p>
 <p>En este caso, podríamos realizar inferencias sobre el coeficiente de determinación ajustado empleando el siguiente código:</p>
-<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="boot-reg.html#cb590-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
-<span id="cb590-2"><a href="boot-reg.html#cb590-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb590-3"><a href="boot-reg.html#cb590-3" aria-hidden="true" tabindex="-1"></a>case.stat <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i) {</span>
-<span id="cb590-4"><a href="boot-reg.html#cb590-4" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> income <span class="sc">+</span> education, <span class="at">data =</span> data[i, ])</span>
-<span id="cb590-5"><a href="boot-reg.html#cb590-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(fit)<span class="sc">$</span>adj.r.squared</span>
-<span id="cb590-6"><a href="boot-reg.html#cb590-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb590-7"><a href="boot-reg.html#cb590-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb590-8"><a href="boot-reg.html#cb590-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb590-9"><a href="boot-reg.html#cb590-9" aria-hidden="true" tabindex="-1"></a>boot.case <span class="ot">&lt;-</span> <span class="fu">boot</span>(Prestige, case.stat, <span class="at">R =</span> <span class="dv">1000</span>)</span>
-<span id="cb590-10"><a href="boot-reg.html#cb590-10" aria-hidden="true" tabindex="-1"></a>boot.case</span></code></pre></div>
+<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="boot-reg.html#cb591-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb591-2"><a href="boot-reg.html#cb591-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb591-3"><a href="boot-reg.html#cb591-3" aria-hidden="true" tabindex="-1"></a>case.stat <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i) {</span>
+<span id="cb591-4"><a href="boot-reg.html#cb591-4" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> income <span class="sc">+</span> education, <span class="at">data =</span> data[i, ])</span>
+<span id="cb591-5"><a href="boot-reg.html#cb591-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(fit)<span class="sc">$</span>adj.r.squared</span>
+<span id="cb591-6"><a href="boot-reg.html#cb591-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb591-7"><a href="boot-reg.html#cb591-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb591-8"><a href="boot-reg.html#cb591-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb591-9"><a href="boot-reg.html#cb591-9" aria-hidden="true" tabindex="-1"></a>boot.case <span class="ot">&lt;-</span> <span class="fu">boot</span>(Prestige, case.stat, <span class="at">R =</span> <span class="dv">1000</span>)</span>
+<span id="cb591-10"><a href="boot-reg.html#cb591-10" aria-hidden="true" tabindex="-1"></a>boot.case</span></code></pre></div>
 <pre><code>## 
 ## ORDINARY NONPARAMETRIC BOOTSTRAP
 ## 
@@ -516,8 +538,8 @@ Para ajustar el correspondiente modelo de regresión lineal podemos emplear el s
 ## Bootstrap Statistics :
 ##      original      bias    std. error
 ## t1* 0.7939201 0.002495631   0.0315275</code></pre>
-<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="boot-reg.html#cb592-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(boot.case)</span></span>
-<span id="cb592-2"><a href="boot-reg.html#cb592-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boot.ci</span>(boot.case, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;basic&quot;</span>, <span class="st">&quot;perc&quot;</span>, <span class="st">&quot;bca&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="boot-reg.html#cb593-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(boot.case)</span></span>
+<span id="cb593-2"><a href="boot-reg.html#cb593-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boot.ci</span>(boot.case, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;basic&quot;</span>, <span class="st">&quot;perc&quot;</span>, <span class="st">&quot;bca&quot;</span>))</span></code></pre></div>
 <pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 ## Based on 1000 bootstrap replicates
 ## 
@@ -536,19 +558,19 @@ Para ajustar el correspondiente modelo de regresión lineal podemos emplear el s
 obteniéndose las réplicas bootstrap:
 <span class="math display">\[\mathbf{Y}^{\ast} = \hat{\mathbf{Y}} + \mathbf{r}^{\ast}.\]</span>
 Por ejemplo, adaptando el código en Canty (2002) para este conjunto de datos, podríamos emplear:</p>
-<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="boot-reg.html#cb594-1" aria-hidden="true" tabindex="-1"></a>pres.dat <span class="ot">&lt;-</span> Prestige</span>
-<span id="cb594-2"><a href="boot-reg.html#cb594-2" aria-hidden="true" tabindex="-1"></a>pres.dat<span class="sc">$</span>fit <span class="ot">&lt;-</span> <span class="fu">fitted</span>(modelo)</span>
-<span id="cb594-3"><a href="boot-reg.html#cb594-3" aria-hidden="true" tabindex="-1"></a>pres.dat<span class="sc">$</span>res <span class="ot">&lt;-</span> <span class="fu">residuals</span>(modelo)</span>
-<span id="cb594-4"><a href="boot-reg.html#cb594-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb594-5"><a href="boot-reg.html#cb594-5" aria-hidden="true" tabindex="-1"></a>mod.stat <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i) {</span>
-<span id="cb594-6"><a href="boot-reg.html#cb594-6" aria-hidden="true" tabindex="-1"></a>    data<span class="sc">$</span>prestige <span class="ot">&lt;-</span> data<span class="sc">$</span>fit <span class="sc">+</span> data<span class="sc">$</span>res[i]</span>
-<span id="cb594-7"><a href="boot-reg.html#cb594-7" aria-hidden="true" tabindex="-1"></a>    fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> income <span class="sc">+</span> education, <span class="at">data =</span> data)</span>
-<span id="cb594-8"><a href="boot-reg.html#cb594-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summary</span>(fit)<span class="sc">$</span>adj.r.squared</span>
-<span id="cb594-9"><a href="boot-reg.html#cb594-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb594-10"><a href="boot-reg.html#cb594-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb594-11"><a href="boot-reg.html#cb594-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb594-12"><a href="boot-reg.html#cb594-12" aria-hidden="true" tabindex="-1"></a>boot.mod <span class="ot">&lt;-</span> <span class="fu">boot</span>(pres.dat, mod.stat, <span class="at">R =</span> <span class="dv">1000</span>)</span>
-<span id="cb594-13"><a href="boot-reg.html#cb594-13" aria-hidden="true" tabindex="-1"></a>boot.mod</span></code></pre></div>
+<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="boot-reg.html#cb595-1" aria-hidden="true" tabindex="-1"></a>pres.dat <span class="ot">&lt;-</span> Prestige</span>
+<span id="cb595-2"><a href="boot-reg.html#cb595-2" aria-hidden="true" tabindex="-1"></a>pres.dat<span class="sc">$</span>fit <span class="ot">&lt;-</span> <span class="fu">fitted</span>(modelo)</span>
+<span id="cb595-3"><a href="boot-reg.html#cb595-3" aria-hidden="true" tabindex="-1"></a>pres.dat<span class="sc">$</span>res <span class="ot">&lt;-</span> <span class="fu">residuals</span>(modelo)</span>
+<span id="cb595-4"><a href="boot-reg.html#cb595-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb595-5"><a href="boot-reg.html#cb595-5" aria-hidden="true" tabindex="-1"></a>mod.stat <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i) {</span>
+<span id="cb595-6"><a href="boot-reg.html#cb595-6" aria-hidden="true" tabindex="-1"></a>    data<span class="sc">$</span>prestige <span class="ot">&lt;-</span> data<span class="sc">$</span>fit <span class="sc">+</span> data<span class="sc">$</span>res[i]</span>
+<span id="cb595-7"><a href="boot-reg.html#cb595-7" aria-hidden="true" tabindex="-1"></a>    fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> income <span class="sc">+</span> education, <span class="at">data =</span> data)</span>
+<span id="cb595-8"><a href="boot-reg.html#cb595-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summary</span>(fit)<span class="sc">$</span>adj.r.squared</span>
+<span id="cb595-9"><a href="boot-reg.html#cb595-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb595-10"><a href="boot-reg.html#cb595-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb595-11"><a href="boot-reg.html#cb595-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb595-12"><a href="boot-reg.html#cb595-12" aria-hidden="true" tabindex="-1"></a>boot.mod <span class="ot">&lt;-</span> <span class="fu">boot</span>(pres.dat, mod.stat, <span class="at">R =</span> <span class="dv">1000</span>)</span>
+<span id="cb595-13"><a href="boot-reg.html#cb595-13" aria-hidden="true" tabindex="-1"></a>boot.mod</span></code></pre></div>
 <pre><code>## 
 ## ORDINARY NONPARAMETRIC BOOTSTRAP
 ## 
@@ -560,8 +582,8 @@ Por ejemplo, adaptando el código en Canty (2002) para este conjunto de datos, p
 ## Bootstrap Statistics :
 ##      original      bias    std. error
 ## t1* 0.7939201 0.004401997  0.02671996</code></pre>
-<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="boot-reg.html#cb596-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(boot.mod)</span></span>
-<span id="cb596-2"><a href="boot-reg.html#cb596-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boot.ci</span>(boot.mod, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;basic&quot;</span>, <span class="st">&quot;perc&quot;</span>, <span class="st">&quot;bca&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="boot-reg.html#cb597-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(boot.mod)</span></span>
+<span id="cb597-2"><a href="boot-reg.html#cb597-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boot.ci</span>(boot.mod, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;basic&quot;</span>, <span class="st">&quot;perc&quot;</span>, <span class="st">&quot;bca&quot;</span>))</span></code></pre></div>
 <pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 ## Based on 1000 bootstrap replicates
 ## 
@@ -581,13 +603,13 @@ La idea es remuestrear los residuos reescalados (de forma que su varianza sea co
 <span class="math display">\[e_i = \frac{r_i}{\sqrt{1 - h_{ii}}},\]</span>
 donde <span class="math inline">\(h_{ii}\)</span> es el valor de influencia o leverage, el elemento <span class="math inline">\(i\)</span>-ésimo de la diagonal de <span class="math inline">\(H\)</span>.</p>
 <p>En <code>R</code> podríamos obtener estos residuos mediante los comandos<a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a>:</p>
-<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="boot-reg.html#cb598-1" aria-hidden="true" tabindex="-1"></a>pres.dat<span class="sc">$</span>sres <span class="ot">&lt;-</span> <span class="fu">residuals</span>(modelo)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">hatvalues</span>(modelo))</span>
-<span id="cb598-2"><a href="boot-reg.html#cb598-2" aria-hidden="true" tabindex="-1"></a>pres.dat<span class="sc">$</span>sres <span class="ot">&lt;-</span> pres.dat<span class="sc">$</span>sres <span class="sc">-</span> <span class="fu">mean</span>(pres.dat<span class="sc">$</span>sres)</span></code></pre></div>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="boot-reg.html#cb599-1" aria-hidden="true" tabindex="-1"></a>pres.dat<span class="sc">$</span>sres <span class="ot">&lt;-</span> <span class="fu">residuals</span>(modelo)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">hatvalues</span>(modelo))</span>
+<span id="cb599-2"><a href="boot-reg.html#cb599-2" aria-hidden="true" tabindex="-1"></a>pres.dat<span class="sc">$</span>sres <span class="ot">&lt;-</span> pres.dat<span class="sc">$</span>sres <span class="sc">-</span> <span class="fu">mean</span>(pres.dat<span class="sc">$</span>sres)</span></code></pre></div>
 <p>Sin embargo puede ser más cómodo emplear la función <code>Boot()</code> del paquete <code>car</code> (que internamente llama a la función <code>boot()</code>),
 como se describe en el apéndice “Bootstrapping Regression Models in R” del libro “An R Companion to Applied Regression” de Fox y Weisberg (2018), disponible <a href="https://socialsciences.mcmaster.ca/jfox/Books/Companion/appendices/Appendix-Bootstrapping.pdf">aquí</a>.</p>
 <p>Esta función es de la forma:</p>
-<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="boot-reg.html#cb599-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Boot</span>(object, <span class="at">f =</span> coef, <span class="at">labels =</span> <span class="fu">names</span>(<span class="fu">f</span>(object)), <span class="at">R =</span> <span class="dv">999</span>, </span>
-<span id="cb599-2"><a href="boot-reg.html#cb599-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">method =</span> <span class="fu">c</span>(<span class="st">&quot;case&quot;</span>, <span class="st">&quot;residual&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="boot-reg.html#cb600-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Boot</span>(object, <span class="at">f =</span> coef, <span class="at">labels =</span> <span class="fu">names</span>(<span class="fu">f</span>(object)), <span class="at">R =</span> <span class="dv">999</span>, </span>
+<span id="cb600-2"><a href="boot-reg.html#cb600-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">method =</span> <span class="fu">c</span>(<span class="st">&quot;case&quot;</span>, <span class="st">&quot;residual&quot;</span>))</span></code></pre></div>
 <p>donde:</p>
 <ul>
 <li><p><code>object</code>: es un objeto que contiene el ajuste de un modelo de regresión.</p></li>

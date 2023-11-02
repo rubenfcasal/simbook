@@ -1,3 +1,9 @@
+# Análisis de resultados de simulación {#resultados}
+
+<!-- Capítulo \@ref(resultados) -->
+
+
+
 <!-- 
 ---
 title: "Análisis de resultados de simulación"
@@ -18,11 +24,6 @@ bookdown::preview_chapter("03-Analisis_resultados.Rmd")
 knitr::purl("03-Analisis_resultados.Rmd", documentation = 2)
 knitr::spin("03-Analisis_resultados.R",knit = FALSE)
 -->
-
-# Análisis de resultados de simulación {#resultados}
-
-
-
 
 En este capítulo nos centraremos en la aproximación mediante simulación de la media teórica de un estadístico a partir de la media muestral de una secuencia de simulaciones de dicho estadístico.
 La aproximación de una probabilidad sería un caso particular considerando una variable de Bernoulli.
@@ -66,7 +67,7 @@ mean(rx)
 ```
 
 ```
-## [1] 0.5047
+ ## [1] 0.5047
 ```
 Podemos generar un gráfico con la evolución de la aproximación:
 
@@ -80,7 +81,7 @@ abline(h = p)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{03-Analisis_resultados_files/figure-latex/proporcion-1} 
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/proporcion-1} 
 
 }
 
@@ -106,7 +107,7 @@ plot(cumsum(rx)/1:nsim, type = "l", lwd = 2,
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{03-Analisis_resultados_files/figure-latex/cauchy-1} 
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/cauchy-1} 
 
 }
 
@@ -124,7 +125,7 @@ boxplot(rx)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{03-Analisis_resultados_files/figure-latex/cauchy-box-1} 
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/cauchy-box-1} 
 
 }
 
@@ -187,7 +188,7 @@ mean(rx)
 ```
 
 ```
-## [1] -0.01164814
+ ## [1] -0.01164814
 ```
 Como medida de la precisión de la aproximación podemos utilizar el error máximo:
 
@@ -196,7 +197,7 @@ Como medida de la precisión de la aproximación podemos utilizar el error máxi
 ```
 
 ```
-## [1] 0.06545382
+ ## [1] 0.06545382
 ```
 (es habitual emplear 2 en lugar de 1.96, 
 lo que se correspondería con $1 - \alpha = 0.9545$ en el caso de normalidad).
@@ -218,7 +219,7 @@ abline(h = xmed)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{03-Analisis_resultados_files/figure-latex/conv-esterr-1} 
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/conv-esterr-1} 
 
 }
 
@@ -317,7 +318,7 @@ abline(h = 1/3, col="darkgray") # Probabilidad teórica
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{03-Analisis_resultados_files/figure-latex/conv-dep-1} 
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/conv-dep-1} 
 
 }
 
@@ -331,7 +332,7 @@ est[nsim]
 ```
 
 ```
-## [1] 0.3038
+ ## [1] 0.3038
 ```
 
 Sin embargo, al ser datos dependientes, la aproximación anterior del error estándar no es adecuada:
@@ -341,7 +342,7 @@ esterr[nsim]
 ```
 
 ```
-## [1] 0.004599203
+ ## [1] 0.004599203
 ```
 
 En este caso al haber dependencia positiva se produce una subestimación del verdadero error estándar.
@@ -354,7 +355,7 @@ acf(as.numeric(rx))
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{03-Analisis_resultados_files/figure-latex/acf-depsec-1} 
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/acf-depsec-1} 
 
 }
 
@@ -373,7 +374,7 @@ acf(as.numeric(rxi))
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{03-Analisis_resultados_files/figure-latex/acf-depsec2-1} 
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/acf-depsec2-1} 
 
 }
 
@@ -396,7 +397,7 @@ abline(h = 1/3, col="darkgray")     # Prob. teor. cadenas Markov
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{03-Analisis_resultados_files/figure-latex/conv-dep2-1} 
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/conv-dep2-1} 
 
 }
 
@@ -411,7 +412,7 @@ esterr[nrxi]
 ```
 
 ```
-## [1] 0.02277402
+ ## [1] 0.02277402
 ```
 pero no sería la más eficiente para aproximar la media. Siempre es preferible emplear todas las observaciones. 
 
@@ -434,7 +435,7 @@ abline(h = 1/3, col="darkgray")     # Prob. teor. cadenas Markov
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{03-Analisis_resultados_files/figure-latex/conv-dep-lotes-1} 
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/conv-dep-lotes-1} 
 
 }
 
@@ -492,24 +493,13 @@ lines(mest + 2*mesterr, lty = 2)
 lines(mest - 2*mesterr, lty = 2)
 # Prob. teor. cadenas Markov
 abline(h = 1/3, col="darkgray")     
-```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{03-Analisis_resultados_files/figure-latex/conv-dep-nsec-1} 
-
-}
-
-\caption{Gráfico de convergencia de la media de 10 secuencias generadas de forma independiente.}(\#fig:conv-dep-nsec)
-\end{figure}
-
-```r
 # Aproximación final
 mest[nsim] # mean(rxm)
 ```
 
 ```
-## [1] 0.3089
+ ## [1] 0.3089
 ```
 
 ```r
@@ -518,8 +508,17 @@ mesterr[nsim]
 ```
 
 ```
-## [1] 0.02403491
+ ## [1] 0.02403491
 ```
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/conv-dep-nsec-1} 
+
+}
+
+\caption{Gráfico de convergencia de la media de 10 secuencias generadas de forma independiente.}(\#fig:conv-dep-nsec)
+\end{figure}
 
 :::
 
@@ -562,7 +561,7 @@ abline(h = 1/3, col="darkgray")
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{03-Analisis_resultados_files/figure-latex/unnamed-chunk-12-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 
 En estos casos puede ser recomendable ignorar los primeros valores generados (por ejemplo los primeros 2000) y recalcular los 
@@ -625,7 +624,7 @@ abline(v = nburn, lty = 2)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{03-Analisis_resultados_files/figure-latex/sim-ar1-1} 
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/sim-ar1-1} 
 
 }
 

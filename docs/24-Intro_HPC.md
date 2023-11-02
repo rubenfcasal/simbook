@@ -2,6 +2,7 @@
 
 <!-- bookdown::preview_chapter("25-Intro_HPC.Rmd") -->
 
+<!-- Apéndice \@ref(intro-hpc) -->
 
 
 
@@ -64,7 +65,7 @@ ncores
 ```
 
 ```
-## [1] 8
+ ## [1] 20
 ```
 
 ```r
@@ -80,8 +81,8 @@ system.time(res.boot <- mclapply(1:100, func)) # En Windows llama a lapply() (mc
 ```
 
 ```
-##    user  system elapsed 
-##    0.09    0.00    0.09
+ ##    user  system elapsed 
+ ##    0.05    0.00    0.05
 ```
 
 ```r
@@ -99,8 +100,8 @@ system.time(res.boot <- parSapply(cl, 1:100, func))
 ```
 
 ```
-##    user  system elapsed 
-##    0.00    0.00    0.05
+ ##    user  system elapsed 
+ ##    0.01    0.00    0.03
 ```
 
 ```r
@@ -110,10 +111,10 @@ str(res.boot)
 ```
 
 ```
-##  num [1:2, 1:100] -0.415 0.429 -0.363 0.42 -0.342 ...
-##  - attr(*, "dimnames")=List of 2
-##   ..$ : chr [1:2] "(Intercept)" "Petal.Length"
-##   ..$ : NULL
+ ##  num [1:2, 1:100] -0.415 0.429 -0.363 0.42 -0.342 ...
+ ##  - attr(*, "dimnames")=List of 2
+ ##   ..$ : chr [1:2] "(Intercept)" "Petal.Length"
+ ##   ..$ : NULL
 ```
 
 Esto también se puede realizar en Linux (`type = "FORK"`), aunque podríamos estar trabajando ya en un cluster de equipos...
@@ -160,8 +161,8 @@ system.time(res.boot <- boot(muestra, statistic, R = B))
 ```
 
 ```
-##    user  system elapsed 
-##    0.07    0.00    0.08
+ ##    user  system elapsed 
+ ##    0.02    0.00    0.02
 ```
 
 ```r
@@ -170,8 +171,8 @@ system.time(res.boot <- boot(muestra, statistic, R = B, parallel = "snow", cl = 
 ```
 
 ```
-##    user  system elapsed 
-##    0.06    0.00    0.06
+ ##    user  system elapsed 
+ ##    0.01    0.00    0.02
 ```
 
 ### Estudio de simulación {#estudio-sim-boot}
@@ -229,8 +230,8 @@ print(t.fin)
 ```
 
 ```
-##    user  system elapsed 
-##    0.00    0.02    7.06
+ ##    user  system elapsed 
+ ##    0.02    0.00    1.97
 ```
 
 ```r
@@ -247,11 +248,11 @@ res
 ```
 
 ```
-##             Cobertura Longitud
-## Normal          0.866 57.05639
-## Basic           0.860 56.97389
-## Studentized     0.900 65.72609
-## Percentil       0.868 56.97389
+ ##             Cobertura Longitud
+ ## Normal          0.858 57.78773
+ ## Basic           0.854 57.73865
+ ## Studentized     0.904 67.00259
+ ## Percentil       0.860 57.73865
 ```
 
 ```r
@@ -263,13 +264,13 @@ knitr::kable(res, digits = 3)
 \hline
   & Cobertura & Longitud\\
 \hline
-Normal & 0.866 & 57.056\\
+Normal & 0.858 & 57.788\\
 \hline
-Basic & 0.860 & 56.974\\
+Basic & 0.854 & 57.739\\
 \hline
-Studentized & 0.900 & 65.726\\
+Studentized & 0.904 & 67.003\\
 \hline
-Percentil & 0.868 & 56.974\\
+Percentil & 0.860 & 57.739\\
 \hline
 \end{tabular}
 

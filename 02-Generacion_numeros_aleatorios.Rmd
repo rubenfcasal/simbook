@@ -1,6 +1,9 @@
 # Generación de números pseudoaleatorios {#gen-pseudo}
 
-```{r , child = '_global_options.Rmd'}
+<!-- Capítulo \@ref(gen-pseudo) -->
+
+```{r global-options, include=FALSE}
+source("_global_options.R")
 ```
 
 <!--
@@ -114,7 +117,7 @@ Este es el caso del generador RANDU de IBM muy empleado en la década de los 70 
 Para ilustrar este problema podríamos emplear el conjunto de datos `randu` del paquete base `datasets` que contiene 400 tripletas de números sucesivos generados con la implementación de VAX/VMS 1.5 (de 1977, y que no se corrigió hasta la versión 2.0 de 1980). 
 Aunque también podemos emplear el siguiente código^[La función `stats::embed(u, 3)` devuelve una matriz en la que la fila i-ésima contiene los valores `u[i+2]`, `u[i+1]` y `u[i]`. Además, en lugar de la función `plot3D::points3D()` se podría utilizar la función `plot3d()` del paquete `rgl`, y rotar la figura (pulsando con el ratón) para ver los hiperplanos `rgl::plot3d(xyz)`.] `r citefig("randu")`:
 
-```{r randu, warning=FALSE, fig.cap='Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos).'}
+```{r randu, warning=FALSE, fig.cap='Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos).', fig.dim=c(10, 10)}
 library(simres)
 system.time(u <- rlcg(n = 9999, 
           seed = 543210, a = 2^16 + 3, c = 0, m = 2^31))
@@ -256,8 +259,24 @@ Ejemplo combinar salidas  generador Wichmann-Hill (1982)  https://en.wikipedia.o
 -->
 
 
-El generador *L'Ecuyer-CMRG* (L'Ecuyer, 1999), empleado como base para la generación de múltiples secuencias en el paquete `parallel`, combina dos generadores concruenciales lineales múltiples de orden $k=3$ (el periodo aproximado es $2^{191}$).
+El generador *L'Ecuyer-CMRG* [@lecuyer99], empleado como base para la generación de múltiples secuencias en el paquete `parallel`, combina dos generadores concruenciales lineales múltiples de orden $k=3$ (el periodo aproximado es $2^{191} \approx 3.1 \times 10^{57}$):
 
+$$x_{1,n} = (1403580 x_{1,n−2} − 810728 x_{1,n−3}) \bmod  2^{32} − 209$$
+$$x_{2,n} = (527612 x_{2,n−1} − 1370589 x_{2,n−3}) \bmod  2^{32} − 22853$$
+$$z_n = (x_{1,n} − x_{2,n}) \bmod  4294967087$$
+$$
+u_n =
+\left\{
+\begin{array}[c]{ll}
+z_n/4294967088 & \text{ si } z_n > 0\\
+4294967087/4294967088 & \text{ si } z_n = 0
+\end{array}
+\right.
+$$
+
+<!-- 
+
+-->
 
 ## Análisis de la calidad de un generador {#calgen}
 
@@ -381,14 +400,14 @@ Continuando con el generador congruencial RANDU, podemos pensar en estudiar la u
   
 
 ```{r}
-# Valores iniciales
-set.rng(543210, "lcg", a = 2^16 + 3, c = 0, m = 2^31)  # Establecer semilla y parámetros
+# Establecer semilla y parámetros
+set.rng(543210, "lcg", a = 2^16 + 3, c = 0, m = 2^31)  
 # set.seed(543210)
+# Valores iniciales
 n <- 500
 nsim <- 1000
 estadistico <- numeric(nsim)
 pvalor <- numeric(nsim)
-
 # Realizar contrastes
 for(isim in 1:nsim) {
   u <- rng(n)    # Generar
@@ -399,16 +418,15 @@ for(isim in 1:nsim) {
   estadistico[isim] <- tmp$statistic
   pvalor[isim] <- tmp$p.value
 }
-
 ```
 
 Por ejemplo, podemos comparar la proporción de rechazos observados con los que cabría esperar con los niveles de significación habituales:
 
 ```{r}
 {
-cat("Proporción de rechazos al 1% =", mean(pvalor < 0.01), "\n") # sum(pvalor < 0.01)/nsim
-cat("Proporción de rechazos al 5% =", mean(pvalor < 0.05), "\n")   # sum(pvalor < 0.05)/nsim
-cat("Proporción de rechazos al 10% =", mean(pvalor < 0.1), "\n")   # sum(pvalor < 0.1)/nsim
+cat("Proporción de rechazos al 1% =", mean(pvalor < 0.01), "\n")
+cat("Proporción de rechazos al 5% =", mean(pvalor < 0.05), "\n")
+cat("Proporción de rechazos al 10% =", mean(pvalor < 0.1), "\n")
 }
 ```
 
@@ -468,7 +486,7 @@ Como podemos observar, obtendríamos los mismos resultados que al analizar la di
 
 Alternativamente podríamos emplear la función [`rephtest()`](https://rubenfcasal.github.io/simres/reference/rephtest.html) del paquete `simres` (fichero [*test.R*](R/test.R)):
 
-```{r rephtest, fig.cap="Distribución de los p-valores y proporción de rechazos.", fig.width=12, fig.height=6, out.width = "90%"}
+```{r rephtest, fig.cap="Distribución de los p-valores y proporción de rechazos.", fig.dim=c(12, 6), out.width="90%"}
 
 set.rng(543210, "lcg", a = 2^16 + 3, c = 0, m = 2^31)
 # res <- rephtest(n = 30, test = chisq.cont.test, rand.gen = rng,

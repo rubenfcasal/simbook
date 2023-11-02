@@ -1,7 +1,8 @@
-# (APPENDIX) Apendices {-} 
+# (APPENDIX) Apéndices {-} 
 
 # Bondad de Ajuste y Aleatoriedad {#gof-aleat}
 
+<!-- Apéndice \@ref(gof-aleat) -->
 
 
 
@@ -54,7 +55,24 @@ H_1:F\neq F_0
 En este caso interesará distinguir principalmente entre hipótesis nulas simples (especifican un único modelo) y compuestas (especifican un conjunto o familia de modelos). 
 Por ejemplo:
 
-+------------------------------+-------------------------------------+
+* $H_0$ simple:
+  $$\left \{
+  \begin{array}{l}  
+  H_0:F= \mathcal{N}(0,1)\\
+  H_1:F\neq \mathcal{N}(0,1)
+  \end{array}
+  \right.$$
+  
+* $H_0$ compuesta:
+  $$\left \{
+  \begin{array}{l}  
+  H_0:F= \mathcal{N}(\mu,\sigma^2)\\
+  H_1:F\neq \mathcal{N}(\mu,\sigma^2)
+  \end{array}
+  \right.$$
+
+<!-- 
++------------------------------+-------------------------------------+ 
 |       $H_0$ simple           |          $H_0$ compuesta            | 
 +==============================+=====================================+
 | $\left \{                    | $\left \{                           |  
@@ -64,6 +82,7 @@ Por ejemplo:
 | \end{array}                  | \end{array}                         |
 | \right.$                     | \right.$                            |
 +------------------------------+-------------------------------------+
+-->
 
 Entre los métodos gráficos habituales estarían: histograma, gráfico de la densidad suavizada,   gráfico de tallo y hojas, gráfico de la distribución empírica (o versión suavizada) y gráficos P-P o Q-Q.
 
@@ -104,7 +123,7 @@ curve(dnorm(x, mean(datos), sd(datos)), add = TRUE)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-3-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-2-1} \end{center}
 
 Si el número de valores es muy grande (por ejemplo en el caso de secuencias aleatorias), nos puede interesar establecer la opción `breaks = "FD"` para aumentar el número de intervalos de discretización.
 En cualquier caso, como se muestra en la Figura \@ref(fig:hist-movie), la convergencia del histograma a la densidad teórica se podría considerar bastante lenta.
@@ -113,7 +132,7 @@ Alternativamente se podría considerar una estimación suave de la densidad, por
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/hist-movie-1} 
+{\centering \includegraphics[width=0.75\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/hist-movie-1} 
 
 }
 
@@ -148,7 +167,7 @@ curve(pnorm(x, mean(datos), sd(datos)), add = TRUE)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/ecdfplot-1} 
+{\centering \includegraphics[width=0.75\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/ecdfplot-1} 
 
 }
 
@@ -186,24 +205,18 @@ Ejemplo:
 ```r
 qqnorm(datos)
 qqline(datos)
-```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-4-1} \end{center}
-
-```r
 require(car)
 qqPlot(datos, "norm")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-4-2} \end{center}
-
 ```
-## [1] 10 38
+ ## [1] 10 38
 ```
+
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-3-1} \includegraphics[width=0.75\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-3-2} \end{center}
 
 
 ### Contraste chi-cuadrado de Pearson {#chi2test}
@@ -266,11 +279,11 @@ chisq.test(table(x))            # NOT 'chisq.test(x)'!
 ```
 
 ```
-## 
-## 	Chi-squared test for given probabilities
-## 
-## data:  table(x)
-## X-squared = 9.2, df = 4, p-value = 0.05629
+ ## 
+ ## 	Chi-squared test for given probabilities
+ ## 
+ ## data:  table(x)
+ ## X-squared = 9.2, df = 4, p-value = 0.05629
 ```
 
 La distribución exacta del estadístico del contraste es discreta (se podría aproximar por simulación, por ejemplo empleando los parámetros `simulate.p.value = TRUE` y `B = 2000` de la función `chisq.test()`; ver también el Ejemplo \@ref(exm:chicuadind) de la Sección \@ref(simconting) para el caso del contraste chi-cuadrado de independencia).
@@ -309,51 +322,51 @@ simres::chisq.cont.test
 ```
 
 ```
-## function(x, distribution = "norm", nclass = floor(length(x)/5),
-##                             output = TRUE, nestpar = 0, ...) {
-##   # Función distribución
-##   q.distrib <- eval(parse(text = paste("q", distribution, sep = "")))
-##   # Puntos de corte
-##   q <- q.distrib((1:(nclass - 1))/nclass, ...)
-##   tol <- sqrt(.Machine$double.eps)
-##   xbreaks <- c(min(x) - tol, q, max(x) + tol)
-##   # Gráficos y frecuencias
-##   if (output) {
-##     xhist <- hist(x, breaks = xbreaks, freq = FALSE,
-##                   lty = 2, border = "grey50")
-##     # Función densidad
-##     d.distrib <- eval(parse(text = paste("d", distribution, sep = "")))
-##     curve(d.distrib(x, ...), add = TRUE)
-##   } else {
-##     xhist <- hist(x, breaks = xbreaks, plot = FALSE)
-##   }
-##   # Cálculo estadístico y p-valor
-##   O <- xhist$counts  # Equivalente a table(cut(x, xbreaks)) pero más eficiente
-##   E <- length(x)/nclass
-##   DNAME <- deparse(substitute(x))
-##   METHOD <- "Pearson's Chi-squared test"
-##   STATISTIC <- sum((O - E)^2/E)
-##   names(STATISTIC) <- "X-squared"
-##   PARAMETER <- nclass - nestpar - 1
-##   names(PARAMETER) <- "df"
-##   PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
-##   # Preparar resultados
-##   classes <- format(xbreaks)
-##   classes <- paste("(", classes[-(nclass + 1)], ",", classes[-1], "]",
-##                    sep = "")
-##   RESULTS <- list(classes = classes, observed = O, expected = E,
-##                   residuals = (O - E)/sqrt(E))
-##   if (output) {
-##     cat("\nPearson's Chi-squared test table\n")
-##     print(as.data.frame(RESULTS))
-##   }
-##   if (any(E < 5))
-##     warning("Chi-squared approximation may be incorrect")
-##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
-##                    method = METHOD, data.name = DNAME), RESULTS), class = "htest")
-## }
-## <bytecode: 0x0000024bbdf8b2f8>
-## <environment: namespace:simres>
+ ## function(x, distribution = "norm", nclass = floor(length(x)/5),
+ ##                             output = TRUE, nestpar = 0, ...) {
+ ##   # Función distribución
+ ##   q.distrib <- eval(parse(text = paste("q", distribution, sep = "")))
+ ##   # Puntos de corte
+ ##   q <- q.distrib((1:(nclass - 1))/nclass, ...)
+ ##   tol <- sqrt(.Machine$double.eps)
+ ##   xbreaks <- c(min(x) - tol, q, max(x) + tol)
+ ##   # Gráficos y frecuencias
+ ##   if (output) {
+ ##     xhist <- hist(x, breaks = xbreaks, freq = FALSE,
+ ##                   lty = 2, border = "grey50")
+ ##     # Función densidad
+ ##     d.distrib <- eval(parse(text = paste("d", distribution, sep = "")))
+ ##     curve(d.distrib(x, ...), add = TRUE)
+ ##   } else {
+ ##     xhist <- hist(x, breaks = xbreaks, plot = FALSE)
+ ##   }
+ ##   # Cálculo estadístico y p-valor
+ ##   O <- xhist$counts  # Equivalente a table(cut(x, xbreaks)) pero más eficiente
+ ##   E <- length(x)/nclass
+ ##   DNAME <- deparse(substitute(x))
+ ##   METHOD <- "Pearson's Chi-squared test"
+ ##   STATISTIC <- sum((O - E)^2/E)
+ ##   names(STATISTIC) <- "X-squared"
+ ##   PARAMETER <- nclass - nestpar - 1
+ ##   names(PARAMETER) <- "df"
+ ##   PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
+ ##   # Preparar resultados
+ ##   classes <- format(xbreaks)
+ ##   classes <- paste("(", classes[-(nclass + 1)], ",", classes[-1], "]",
+ ##                    sep = "")
+ ##   RESULTS <- list(classes = classes, observed = O, expected = E,
+ ##                   residuals = (O - E)/sqrt(E))
+ ##   if (output) {
+ ##     cat("\nPearson's Chi-squared test table\n")
+ ##     print(as.data.frame(RESULTS))
+ ##   }
+ ##   if (any(E < 5))
+ ##     warning("Chi-squared approximation may be incorrect")
+ ##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
+ ##                    method = METHOD, data.name = DNAME), RESULTS), class = "htest")
+ ## }
+ ## <bytecode: 0x00000191bff23428>
+ ## <environment: namespace:simres>
 ```
 
 Continuando con el ejemplo anterior, podríamos contrastar normalidad mediante:
@@ -364,31 +377,31 @@ library(simres)
 chisq.cont.test(datos, distribution = "norm", nestpar = 2, mean=mean(datos), sd=sd(datos))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-7-1} \end{center}
-
 ```
-## 
-## Pearson's Chi-squared test table
-##               classes observed expected  residuals
-## 1 ( 9.06000,14.49908]        6    5.125  0.3865103
-## 2 (14.49908,16.94725]        3    5.125 -0.9386680
-## 3 (16.94725,18.77800]        4    5.125 -0.4969419
-## 4 (18.77800,20.41732]        6    5.125  0.3865103
-## 5 (20.41732,22.05663]        4    5.125 -0.4969419
-## 6 (22.05663,23.88739]        8    5.125  1.2699625
-## 7 (23.88739,26.33556]        4    5.125 -0.4969419
-## 8 (26.33556,30.77000]        6    5.125  0.3865103
+ ## 
+ ## Pearson's Chi-squared test table
+ ##               classes observed expected  residuals
+ ## 1 ( 9.06000,14.49908]        6    5.125  0.3865103
+ ## 2 (14.49908,16.94725]        3    5.125 -0.9386680
+ ## 3 (16.94725,18.77800]        4    5.125 -0.4969419
+ ## 4 (18.77800,20.41732]        6    5.125  0.3865103
+ ## 5 (20.41732,22.05663]        4    5.125 -0.4969419
+ ## 6 (22.05663,23.88739]        8    5.125  1.2699625
+ ## 7 (23.88739,26.33556]        4    5.125 -0.4969419
+ ## 8 (26.33556,30.77000]        6    5.125  0.3865103
 ```
 
 ```
-## 
-## 	Pearson's Chi-squared test
-## 
-## data:  datos
-## X-squared = 3.6829, df = 5, p-value = 0.5959
+ ## 
+ ## 	Pearson's Chi-squared test
+ ## 
+ ## data:  datos
+ ## X-squared = 3.6829, df = 5, p-value = 0.5959
 ```
+
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-6-1} \end{center}
 
 ### Contraste de Kolmogorov-Smirnov {#ks-test}
 
@@ -426,12 +439,12 @@ ks.test(datos, pnorm, mean = 20, sd = 5) # One-sample
 ```
 
 ```
-## 
-## 	Asymptotic one-sample Kolmogorov-Smirnov test
-## 
-## data:  datos
-## D = 0.13239, p-value = 0.4688
-## alternative hypothesis: two-sided
+ ## 
+ ## 	Asymptotic one-sample Kolmogorov-Smirnov test
+ ## 
+ ## data:  datos
+ ## D = 0.13239, p-value = 0.4688
+ ## alternative hypothesis: two-sided
 ```
 
 Si $H_0$ es compuesta, el procedimiento habitual es estimar los parámetros desconocidos 
@@ -453,12 +466,12 @@ ks.test(datos, pnorm, mean(datos), sd(datos)) # One-sample Kolmogorov-Smirnov te
 ```
 
 ```
-## 
-## 	Asymptotic one-sample Kolmogorov-Smirnov test
-## 
-## data:  datos
-## D = 0.097809, p-value = 0.8277
-## alternative hypothesis: two-sided
+ ## 
+ ## 	Asymptotic one-sample Kolmogorov-Smirnov test
+ ## 
+ ## data:  datos
+ ## D = 0.097809, p-value = 0.8277
+ ## alternative hypothesis: two-sided
 ```
 
 ```r
@@ -467,11 +480,11 @@ lillie.test(datos)
 ```
 
 ```
-## 
-## 	Lilliefors (Kolmogorov-Smirnov) normality test
-## 
-## data:  datos
-## D = 0.097809, p-value = 0.4162
+ ## 
+ ## 	Lilliefors (Kolmogorov-Smirnov) normality test
+ ## 
+ ## data:  datos
+ ## D = 0.097809, p-value = 0.4162
 ```
 
 ## Diagnosis de la independencia {#diag-aleat}
@@ -543,12 +556,13 @@ x2 <- mvrnorm(1, mu, t.cov) # Datos dependientes
 plot(t, mu, type="l", lwd = 2, ylim = c(-3,3), ylab = 'x')
 lines(t, x1, col = 'blue')
 lines(t, x2, col = 'red')
-legend("bottomright", legend = c("Datos independientes", "Datos dependientes"), col = c('blue', 'red'), lty = 1)
+legend("bottomright", legend = c("Datos independientes", "Datos dependientes"), 
+       col = c('blue', 'red'), lty = 1)
 ```
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-11-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-10-1} \end{center}
 
 En el caso anterior la varianza es uno con ambos procesos. 
 Las estimaciones suponiendo independencia serían:
@@ -559,7 +573,7 @@ var(x1)
 ```
 
 ```
-## [1] 0.8067621
+ ## [1] 0.8067621
 ```
 
 ```r
@@ -567,7 +581,7 @@ var(x2)
 ```
 
 ```
-## [1] 0.1108155
+ ## [1] 0.1108155
 ```
 
 En el caso de datos dependientes se produce una clara subestimación de la varianza.
@@ -607,7 +621,7 @@ El gráfico de dispersión $\{(i,X_{i}) :  i = 1, \ldots, n \}$ permite detectar
     en cuenta la variable índice, o tiempo, como variable explicativa).
     Podría indicar la presencia de un "efecto aprendizaje".
 
--   Comandos R: `plot(as.ts(x))`
+-   Código R: `plot(as.ts(x))`.
  
 Ejemplo:
 
@@ -616,6 +630,7 @@ Ejemplo:
 old.par <- par(mfrow = c(1, 2))
 plot(datos, type = 'l')
 plot(as.ts(datos))
+par(old.par)
 ```
 
 \begin{figure}[!htb]
@@ -626,10 +641,6 @@ plot(as.ts(datos))
 
 \caption{Ejemplos de gráficos secuenciales.}(\#fig:grafsec)
 \end{figure}
-
-```r
-par(old.par)
-```
 
 Es habitual que este tipo de análisis se realice sobre los residuos
 de un modelo de regresión (e.g. `datos <- residuals(modelo)`) 
@@ -649,17 +660,15 @@ plot(x2, type = 'l', ylab = '', main = 'Dependencia positiva')
 plot(x1, type = 'l', ylab = '', main = 'Independencia')
 x3 <- x2 * c(1, -1)
 plot(x3, type = 'l', ylab = '', main = 'Dependencia negativa')
-```
-
-
-
-\begin{center}\includegraphics[width=0.9\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-13-1} \end{center}
-
-```r
 par(old.par)
 ```
 
+
+
+\begin{center}\includegraphics[width=1\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-12-1} \end{center}
+
 pero suele ser preferible emplear un gráfico de dispersión retardado. 
+
 
 ### Gráfico de dispersion retardado
 
@@ -667,23 +676,23 @@ El gráfico de dispersión $\{(X_{i},X_{i+1}) :  i = 1, \ldots, n-1 \}$ permite
 detectar dependencias a un retardo (relaciones entre valores separados
 por un instante)
 
--   Comando R:`plot(x[-length(x)], x[-1], xlab = "X_t", ylab = "X_t+1")`
+-   Código R:`plot(x[-length(x)], x[-1], xlab = "X_t", ylab = "X_t+1")`
 
 
 ```r
 old.par <- par(mfrow = c(1, 3))
-plot(x2[-length(x2)], x2[-1], xlab = "X_t", ylab = "X_t+1", main = 'Dependencia positiva')
-plot(x1[-length(x1)], x1[-1], xlab = "X_t", ylab = "X_t+1", main = 'Independencia')
-plot(x3[-length(x3)], x3[-1], xlab = "X_t", ylab = "X_t+1", main = 'Dependencia negativa')
-```
-
-
-
-\begin{center}\includegraphics[width=0.9\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-14-1} \end{center}
-
-```r
+plot(x2[-length(x2)], x2[-1], xlab = "X_t", ylab = "X_t+1", 
+     main = 'Dependencia positiva')
+plot(x1[-length(x1)], x1[-1], xlab = "X_t", ylab = "X_t+1", 
+     main = 'Independencia')
+plot(x3[-length(x3)], x3[-1], xlab = "X_t", ylab = "X_t+1", 
+     main = 'Dependencia negativa')
 par(old.par)
 ```
+
+
+
+\begin{center}\includegraphics[width=1\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 Se puede generalizar al gráfico $\{(X_{i},X_{i+k}) : i = 1, \ldots, n-k \}$
 que permite detectar dependencias a $k$ retardos 
@@ -699,7 +708,7 @@ plot(datos[-length(datos)], datos[-1], xlab = "X_t", ylab = "X_t+1")
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-15-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 El correspondiente coeficiente de correlación es una medida numérica 
 del grado de relación lineal (denominado autocorrelación de orden 1).
@@ -710,7 +719,7 @@ cor(datos[-length(datos)], datos[-1])
 ```
 
 ```
-## [1] 0.01344127
+ ## [1] 0.01344127
 ```
 
 
@@ -725,7 +734,7 @@ plot(u[-length(u)], u[-1], xlab="U_t", ylab="U_t+1", pch=21, bg="white")
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/dispret-1} 
+{\centering \includegraphics[width=0.9\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/dispret-1} 
 
 }
 
@@ -755,7 +764,7 @@ $$\rho\left(  X_{i},X_{i+k}\right) = \frac{Cov\left(  X_{i},X_{i+k}\right)    }
     $$r(k)=\frac{\sum_{i=1}^{n-k}(X_{i}-\overline{X})(X_{i+k}-\overline{X})}
     {\sum_{i=1}^{n}(X_{i}-\overline{X})^{2}}$$
     
--   Comando R:`acf(x)`
+-   Código R: `acf(x)`.
 
 En caso de independencia es de esperar que las autocorrelaciones
 muestrales sean próximas a cero (valores "grandes" indicarían
@@ -767,15 +776,12 @@ old.par <- par(mfrow = c(1, 3))
 acf(x1, main = 'Independencia')
 acf(x2, main = 'Dependencia positiva')
 acf(x3, main = 'Dependencia negativa')
-```
-
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-18-1} \end{center}
-
-```r
 par(old.par)
 ```
+
+
+
+\begin{center}\includegraphics[width=1\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 Suponiendo normalidad e independencia, asintóticamente:
 $$r(k)\underset{aprox.}{\sim}N\left(  \rho(k),\frac{1}{n}\right)$$
@@ -799,7 +805,7 @@ acf(datos)  # correlaciones
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-19-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
 La función `acf` también permite estimar el covariograma^[En algunos campos, como en estadística espacial, en lugar del covariograma se suele emplear el semivariograma $\gamma(k) = C(0) - C(k)$.]. 
 
@@ -810,7 +816,7 @@ covar <- acf(x2, type = "covariance")
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-20-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
 
 ### Test de rachas
@@ -864,7 +870,7 @@ un punto de corte para dicotomizarlas. Normalmente se toma como punto de corte l
     $$p \simeq 2 P\left( Z \geq \left\vert 
     \frac{R-E(R)}{\sqrt{Var(R)}} \right\vert \right)$$
 
--   Comandos R: `tseries::runs.test(as.factor(x > median(x)))`
+-   Código R: `tseries::runs.test(as.factor(x > median(x)))`
 
 
 Ejemplo:
@@ -876,12 +882,12 @@ runs.test(as.factor(datos > median(datos)))
 ```
 
 ```
-## 
-## 	Runs Test
-## 
-## data:  as.factor(datos > median(datos))
-## Standard Normal = -0.4422, p-value = 0.6583
-## alternative hypothesis: two.sided
+ ## 
+ ## 	Runs Test
+ ## 
+ ## data:  as.factor(datos > median(datos))
+ ## Standard Normal = -0.4422, p-value = 0.6583
+ ## alternative hypothesis: two.sided
 ```
 
 Alternativamente, para evitar el cálculo del punto de corte (la mediana), requerido para dicotomizar la variable continua, se podría emplear una modificación de este contraste, el denominado test de rachas ascendentes y descendentes, en el que se generan los valores $+$ y $-$ dependiendo de si el valor de la secuencia es mayor o menor que el anterior (ver e.g. Downham, 1970). Este contraste es más adecuado para generadores aleatorios.
@@ -909,40 +915,36 @@ $$\left\{\begin{array}[c]{l}
 -   Se rechaza $H_{0}$ si el valor observado es grande ($Q\geq \chi_{m,1-\alpha}^{2}$):
     $$p=P\left(  {\chi_{m}^{2}}\geq Q\right)$$
 
--   Comandos R: 
-
-
-```r
-    Box.test(x, type=Ljung)
-    Box.test(x, lag, type=Ljung)
-```
+-   Código R: `Box.test(x, lag, type = "Ljung")`.
 
 
 Ejemplo:
 
 
 ```r
-Box.test(datos, type="Ljung") # Contrasta si la primera autocorrelación es nula 
+# Contrastar si la primera autocorrelación es nula:
+Box.test(datos, type = "Ljung") 
 ```
 
 ```
-## 
-## 	Box-Ljung test
-## 
-## data:  datos
-## X-squared = 0.0078317, df = 1, p-value = 0.9295
+ ## 
+ ## 	Box-Ljung test
+ ## 
+ ## data:  datos
+ ## X-squared = 0.0078317, df = 1, p-value = 0.9295
 ```
 
 ```r
-Box.test(datos, lag=5, type="Ljung") # Contrasta si las 5 primeras autocorrelaciones son nulas
+# Contrastar si las 5 primeras autocorrelaciones son nulas:
+Box.test(datos, lag = 5, type = "Ljung") 
 ```
 
 ```
-## 
-## 	Box-Ljung test
-## 
-## data:  datos
-## X-squared = 1.2556, df = 5, p-value = 0.9394
+ ## 
+ ## 	Box-Ljung test
+ ## 
+ ## data:  datos
+ ## X-squared = 1.2556, df = 5, p-value = 0.9394
 ```
 
 NOTA: Cuando se trabaja con residuos de un modelo lineal, para contrastar que la primera autocorrelación es cero, es preferible emplear el test de
@@ -980,11 +982,11 @@ chisq.test(f)
 ```
 
 ```
-## 
-## 	Chi-squared test for given probabilities
-## 
-## data:  f
-## X-squared = 10.26, df = 9, p-value = 0.3298
+ ## 
+ ## 	Chi-squared test for given probabilities
+ ## 
+ ## data:  f
+ ## X-squared = 10.26, df = 9, p-value = 0.3298
 ```
 
 Este código está implementado en la función `simres::freq.test()` (fichero [*test.R*](R/test.R)) y podríamos emplear:
@@ -994,7 +996,7 @@ Este código está implementado en la función `simres::freq.test()` (fichero [*
 library(simres)
 freq.test(u, nclass = k)
 # Alternativamente
-# chisq.cont.test(u, distribution = "unif", nclass = k, output = FALSE, min = 0, max = 1)
+# chisq.cont.test(u, "unif", nclass = k, output = FALSE, min = 0, max = 1)
 ```
 
 

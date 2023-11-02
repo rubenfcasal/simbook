@@ -1,5 +1,6 @@
 # Extensiones del bootstrap uniforme {#modunif}
 
+<!-- Capítulo \@ref(modunif) -->
 
 
 
@@ -71,7 +72,7 @@ curve(n/theta * (x/theta)^(n - 1), 0, theta, ylab = "Density")
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{10-Bootstrap_ext_files/figure-latex/den-max-1} 
+{\centering \includegraphics[width=0.75\linewidth]{10-Bootstrap_ext_files/figure-latex/den-max-1} 
 
 }
 
@@ -139,12 +140,13 @@ hist(estadistico, freq = FALSE, main = "", breaks = "FD",
      border = "darkgray", xlim = xlim)
 lines(density(estadistico))
 rug(estadistico, col = "darkgray")
-curve(n/theta * ((x + theta)/theta)^(n - 1), col = "blue", lty = 2, lwd = 2, add = TRUE)
+curve(n/theta * ((x + theta)/theta)^(n - 1), col = "blue", lty = 2, lwd = 2, 
+      add = TRUE)
 ```
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{10-Bootstrap_ext_files/figure-latex/boot-uniforme-maximo-1} 
+{\centering \includegraphics[width=0.75\linewidth]{10-Bootstrap_ext_files/figure-latex/boot-uniforme-maximo-1} 
 
 }
 
@@ -207,12 +209,13 @@ curve(ecdf(muestra)(x), xlim = c(-.5, 3), ylab = "F(x)", type = "s")
 curve(pnorm(x, mean(muestra), sd(muestra)), lty = 2, add = TRUE)
 # Distribución bootstrap paramétrico exponencial
 curve(pexp(x, 1/mean(muestra)), lty = 3, add = TRUE)
-legend("bottomright", legend = c("Empírica", "Aprox. normal", "Aprox. exponencial"), lty = 1:3)
+legend("bottomright", legend = c("Empírica", "Aprox. normal", "Aprox. exponencial"), 
+       lty = 1:3)
 ```
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{10-Bootstrap_ext_files/figure-latex/boot-par-aprox-1} 
+{\centering \includegraphics[width=0.75\linewidth]{10-Bootstrap_ext_files/figure-latex/boot-par-aprox-1} 
 
 }
 
@@ -250,8 +253,8 @@ IC_boot
 ```
 
 ```
-##      2.5%     97.5% 
-## 0.5319787 1.3961382
+ ##      2.5%     97.5% 
+ ## 0.5319787 1.3961382
 ```
 
 Para emplear el paquete `boot`, como se comentó en la Sección 
@@ -287,16 +290,16 @@ boot.ci(res.boot, type = "stud")
 ```
 
 ```
-## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
-## Based on 1000 bootstrap replicates
-## 
-## CALL : 
-## boot.ci(boot.out = res.boot, type = "stud")
-## 
-## Intervals : 
-## Level    Studentized     
-## 95%   ( 0.5308,  1.4061 )  
-## Calculations and Intervals on Original Scale
+ ## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+ ## Based on 1000 bootstrap replicates
+ ## 
+ ## CALL : 
+ ## boot.ci(boot.out = res.boot, type = "stud")
+ ## 
+ ## Intervals : 
+ ## Level    Studentized     
+ ## 95%   ( 0.5308,  1.4061 )  
+ ## Calculations and Intervals on Original Scale
 ```
 
 :::
@@ -342,12 +345,13 @@ hist(estadistico, freq = FALSE, main = "", breaks = "FD",
      border = "darkgray", xlim = xlim)
 lines(density(estadistico))
 rug(estadistico, col = "darkgray")
-curve(n/theta * ((x + theta)/theta)^(n - 1), col = "blue", lty = 2, lwd = 2, add = TRUE)
+curve(n/theta * ((x + theta)/theta)^(n - 1), col = "blue", lty = 2, lwd = 2, 
+      add = TRUE)
 ```
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{10-Bootstrap_ext_files/figure-latex/boot-parametrico-maximo-1} 
+{\centering \includegraphics[width=0.75\linewidth]{10-Bootstrap_ext_files/figure-latex/boot-parametrico-maximo-1} 
 
 }
 
@@ -429,7 +433,7 @@ rug(x, col = "darkgray")
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{10-Bootstrap_ext_files/figure-latex/density-1} 
+{\centering \includegraphics[width=0.75\linewidth]{10-Bootstrap_ext_files/figure-latex/density-1} 
 
 }
 
@@ -466,7 +470,7 @@ legend("bottomright", legend = c("Empírica", "Tipo núcleo"), lty = 1:2)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{10-Bootstrap_ext_files/figure-latex/pnp-1} 
+{\centering \includegraphics[width=0.75\linewidth]{10-Bootstrap_ext_files/figure-latex/pnp-1} 
 
 }
 
@@ -495,7 +499,7 @@ lines(density(x_boot), col = "blue", lwd = 2, lty = 2)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{10-Bootstrap_ext_files/figure-latex/density-sim-1} 
+{\centering \includegraphics[width=0.75\linewidth]{10-Bootstrap_ext_files/figure-latex/density-sim-1} 
 
 }
 
@@ -548,8 +552,8 @@ IC_boot
 ```
 
 ```
-##      2.5%     97.5% 
-## 0.4960975 1.1880279
+ ##      2.5%     97.5% 
+ ## 0.4960975 1.1880279
 ```
 
 Con el paquete `boot`, la recomendación es implementarlo como
@@ -579,16 +583,16 @@ boot.ci(res.boot, type = "stud")
 ```
 
 ```
-## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
-## Based on 1000 bootstrap replicates
-## 
-## CALL : 
-## boot.ci(boot.out = res.boot, type = "stud")
-## 
-## Intervals : 
-## Level    Studentized     
-## 95%   ( 0.4960,  1.1927 )  
-## Calculations and Intervals on Original Scale
+ ## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+ ## Based on 1000 bootstrap replicates
+ ## 
+ ## CALL : 
+ ## boot.ci(boot.out = res.boot, type = "stud")
+ ## 
+ ## Intervals : 
+ ## Level    Studentized     
+ ## 95%   ( 0.4960,  1.1927 )  
+ ## Calculations and Intervals on Original Scale
 ```
 
 :::
@@ -650,25 +654,25 @@ summary(modelo)
 ```
 
 ```
-## 
-## Call:
-## lm(formula = prestige ~ income + education, data = Prestige)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -19.4040  -5.3308   0.0154   4.9803  17.6889 
-## 
-## Coefficients:
-##               Estimate Std. Error t value Pr(>|t|)    
-## (Intercept) -6.8477787  3.2189771  -2.127   0.0359 *  
-## income       0.0013612  0.0002242   6.071 2.36e-08 ***
-## education    4.1374444  0.3489120  11.858  < 2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 7.81 on 99 degrees of freedom
-## Multiple R-squared:  0.798,	Adjusted R-squared:  0.7939 
-## F-statistic: 195.6 on 2 and 99 DF,  p-value: < 2.2e-16
+ ## 
+ ## Call:
+ ## lm(formula = prestige ~ income + education, data = Prestige)
+ ## 
+ ## Residuals:
+ ##      Min       1Q   Median       3Q      Max 
+ ## -19.4040  -5.3308   0.0154   4.9803  17.6889 
+ ## 
+ ## Coefficients:
+ ##               Estimate Std. Error t value Pr(>|t|)    
+ ## (Intercept) -6.8477787  3.2189771  -2.127   0.0359 *  
+ ## income       0.0013612  0.0002242   6.071 2.36e-08 ***
+ ## education    4.1374444  0.3489120  11.858  < 2e-16 ***
+ ## ---
+ ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+ ## 
+ ## Residual standard error: 7.81 on 99 degrees of freedom
+ ## Multiple R-squared:  0.798,	Adjusted R-squared:  0.7939 
+ ## F-statistic: 195.6 on 2 and 99 DF,  p-value: < 2.2e-16
 ```
 
 Como ejemplo, consideraremos que el objetivo es realizar inferencias sobre el coeficiente de determinación ajustado:
@@ -680,9 +684,9 @@ names(res)
 ```
 
 ```
-##  [1] "call"          "terms"         "residuals"     "coefficients" 
-##  [5] "aliased"       "sigma"         "df"            "r.squared"    
-##  [9] "adj.r.squared" "fstatistic"    "cov.unscaled"
+ ##  [1] "call"          "terms"         "residuals"     "coefficients" 
+ ##  [5] "aliased"       "sigma"         "df"            "r.squared"    
+ ##  [9] "adj.r.squared" "fstatistic"    "cov.unscaled"
 ```
 
 ```r
@@ -690,7 +694,7 @@ res$adj.r.squared
 ```
 
 ```
-## [1] 0.7939201
+ ## [1] 0.7939201
 ```
 
 ### Remuestreo de las observaciones {#boot-unif-reg}
@@ -714,17 +718,17 @@ boot.case
 ```
 
 ```
-## 
-## ORDINARY NONPARAMETRIC BOOTSTRAP
-## 
-## 
-## Call:
-## boot(data = Prestige, statistic = case.stat, R = 1000)
-## 
-## 
-## Bootstrap Statistics :
-##      original      bias    std. error
-## t1* 0.7939201 0.002495631   0.0315275
+ ## 
+ ## ORDINARY NONPARAMETRIC BOOTSTRAP
+ ## 
+ ## 
+ ## Call:
+ ## boot(data = Prestige, statistic = case.stat, R = 1000)
+ ## 
+ ## 
+ ## Bootstrap Statistics :
+ ##      original      bias    std. error
+ ## t1* 0.7939201 0.002495631   0.0315275
 ```
 
 ```r
@@ -733,16 +737,16 @@ boot.ci(boot.case, type = c("basic", "perc", "bca"))
 ```
 
 ```
-## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
-## Based on 1000 bootstrap replicates
-## 
-## CALL : 
-## boot.ci(boot.out = boot.case, type = c("basic", "perc", "bca"))
-## 
-## Intervals : 
-## Level      Basic              Percentile            BCa          
-## 95%   ( 0.7331,  0.8570 )   ( 0.7308,  0.8547 )   ( 0.7203,  0.8497 )  
-## Calculations and Intervals on Original Scale
+ ## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+ ## Based on 1000 bootstrap replicates
+ ## 
+ ## CALL : 
+ ## boot.ci(boot.out = boot.case, type = c("basic", "perc", "bca"))
+ ## 
+ ## Intervals : 
+ ## Level      Basic              Percentile            BCa          
+ ## 95%   ( 0.7331,  0.8570 )   ( 0.7308,  0.8547 )   ( 0.7203,  0.8497 )  
+ ## Calculations and Intervals on Original Scale
 ```
 
 
@@ -772,17 +776,17 @@ boot.mod
 ```
 
 ```
-## 
-## ORDINARY NONPARAMETRIC BOOTSTRAP
-## 
-## 
-## Call:
-## boot(data = pres.dat, statistic = mod.stat, R = 1000)
-## 
-## 
-## Bootstrap Statistics :
-##      original      bias    std. error
-## t1* 0.7939201 0.004401997  0.02671996
+ ## 
+ ## ORDINARY NONPARAMETRIC BOOTSTRAP
+ ## 
+ ## 
+ ## Call:
+ ## boot(data = pres.dat, statistic = mod.stat, R = 1000)
+ ## 
+ ## 
+ ## Bootstrap Statistics :
+ ##      original      bias    std. error
+ ## t1* 0.7939201 0.004401997  0.02671996
 ```
 
 ```r
@@ -791,17 +795,17 @@ boot.ci(boot.mod, type = c("basic", "perc", "bca"))
 ```
 
 ```
-## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
-## Based on 1000 bootstrap replicates
-## 
-## CALL : 
-## boot.ci(boot.out = boot.mod, type = c("basic", "perc", "bca"))
-## 
-## Intervals : 
-## Level      Basic              Percentile            BCa          
-## 95%   ( 0.7407,  0.8464 )   ( 0.7415,  0.8471 )   ( 0.7244,  0.8331 )  
-## Calculations and Intervals on Original Scale
-## Some BCa intervals may be unstable
+ ## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+ ## Based on 1000 bootstrap replicates
+ ## 
+ ## CALL : 
+ ## boot.ci(boot.out = boot.mod, type = c("basic", "perc", "bca"))
+ ## 
+ ## Intervals : 
+ ## Level      Basic              Percentile            BCa          
+ ## 95%   ( 0.7407,  0.8464 )   ( 0.7415,  0.8471 )   ( 0.7244,  0.8331 )  
+ ## Calculations and Intervals on Original Scale
+ ## Some BCa intervals may be unstable
 ```
 
 Sin embargo, la variabilidad de los residuos no reproduce la de los verdaderos errores, por lo que podría ser preferible (especialmente si el tamaño muestral es pequeño) emplear la modificación descrita en Davison y Hinkley (1997, Alg. 6.3, p. 271).

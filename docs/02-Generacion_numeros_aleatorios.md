@@ -1,5 +1,6 @@
 # Generación de números pseudoaleatorios {#gen-pseudo}
 
+<!-- Capítulo \@ref(gen-pseudo) -->
 
 
 
@@ -59,23 +60,23 @@ simres::rlcg
 ```
 
 ```
-## function(n, seed = as.numeric(Sys.time()), a = 7^5, c = 0, m = 2^31 - 1) {
-##   u <- numeric(n)
-##   for(i in 1:n) {
-##     seed <- (a * seed + c) %% m
-##     u[i] <- seed/m # (seed + 1)/(m + 1)
-##   }
-##   # Almacenar semilla y parámetros
-##   assign(".rng", list(seed = seed, type = "lcg",
-##           parameters = list(a = a, c = c, m = m)), envir = globalenv())
-##   # .rng <<- list(seed = seed, type = "lcg", parameters = list(a = a, c = c, m = m))
-##   # Para continuar con semilla y parámetros:
-##   #   with(.rng, rlcg(n, seed, parameters$a, parameters$c, parameters$m))
-##   # Devolver valores
-##   return(u)
-## }
-## <bytecode: 0x000001aee7a2a5a0>
-## <environment: namespace:simres>
+ ## function(n, seed = as.numeric(Sys.time()), a = 7^5, c = 0, m = 2^31 - 1) {
+ ##   u <- numeric(n)
+ ##   for(i in 1:n) {
+ ##     seed <- (a * seed + c) %% m
+ ##     u[i] <- seed/m # (seed + 1)/(m + 1)
+ ##   }
+ ##   # Almacenar semilla y parámetros
+ ##   assign(".rng", list(seed = seed, type = "lcg",
+ ##           parameters = list(a = a, c = c, m = m)), envir = globalenv())
+ ##   # .rng <<- list(seed = seed, type = "lcg", parameters = list(a = a, c = c, m = m))
+ ##   # Para continuar con semilla y parámetros:
+ ##   #   with(.rng, rlcg(n, seed, parameters$a, parameters$c, parameters$m))
+ ##   # Devolver valores
+ ##   return(u)
+ ## }
+ ## <bytecode: 0x000001d48eff9128>
+ ## <environment: namespace:simres>
 ```
 
 
@@ -143,8 +144,8 @@ system.time(u <- rlcg(n = 9999,
 ```
 
 ```
-##    user  system elapsed 
-##       0       0       0
+ ##    user  system elapsed 
+ ##       0       0       0
 ```
 
 ```r
@@ -159,7 +160,7 @@ points3D(xyz[,3], xyz[,2], xyz[,1], colvar = NULL, phi = 60,
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/randu-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/randu-1} 
 
 }
 
@@ -209,8 +210,8 @@ a)  Generar 500 valores de este generador, obtener el tiempo de CPU,
     ```
     
     ```
-    ##    user  system elapsed 
-    ##       0       0       0
+     ##    user  system elapsed 
+     ##       0       0       0
     ```
     
     ```r
@@ -220,7 +221,7 @@ a)  Generar 500 valores de este generador, obtener el tiempo de CPU,
     
     \begin{figure}[!htb]
     
-    {\centering \includegraphics[width=0.7\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/ejcona-1} 
+    {\centering \includegraphics[width=0.75\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/ejcona-1} 
     
     }
     
@@ -240,7 +241,7 @@ b)  Calcular la media de las simulaciones (`mean`) y compararla con
     ```
     
     ```
-    ## [1] 0.4999609
+     ## [1] 0.4999609
     ```
     
     La media teórica es 0.5. 
@@ -259,7 +260,7 @@ c)  Aproximar (mediante simulación) la probabilidad del intervalo
     ```
     
     ```
-    ## [1] 0.402
+     ## [1] 0.402
     ```
     
     ```r
@@ -267,7 +268,7 @@ c)  Aproximar (mediante simulación) la probabilidad del intervalo
     ```
     
     ```
-    ## [1] 0.402
+     ## [1] 0.402
     ```
 
 :::
@@ -307,7 +308,7 @@ sum(seed != .Random.seed)
 ```
 
 ```
-## [1] 1
+ ## [1] 1
 ```
 
 ```r
@@ -316,11 +317,11 @@ seed[2]; .Random.seed[2]
 ```
 
 ```
-## [1] 1
+ ## [1] 1
 ```
 
 ```
-## [1] 624
+ ## [1] 624
 ```
 
 ```r
@@ -330,7 +331,7 @@ sum(seed != .Random.seed)
 ```
 
 ```
-## [1] 624
+ ## [1] 624
 ```
 
 ```r
@@ -338,11 +339,11 @@ seed[2]; .Random.seed[2]
 ```
 
 ```
-## [1] 1
+ ## [1] 1
 ```
 
 ```
-## [1] 1
+ ## [1] 1
 ```
 
 
@@ -362,8 +363,24 @@ Ejemplo combinar salidas  generador Wichmann-Hill (1982)  https://en.wikipedia.o
 -->
 
 
-El generador *L'Ecuyer-CMRG* (L'Ecuyer, 1999), empleado como base para la generación de múltiples secuencias en el paquete `parallel`, combina dos generadores concruenciales lineales múltiples de orden $k=3$ (el periodo aproximado es $2^{191}$).
+El generador *L'Ecuyer-CMRG* [@lecuyer99], empleado como base para la generación de múltiples secuencias en el paquete `parallel`, combina dos generadores concruenciales lineales múltiples de orden $k=3$ (el periodo aproximado es $2^{191} \approx 3.1 \times 10^{57}$):
 
+$$x_{1,n} = (1403580 x_{1,n−2} − 810728 x_{1,n−3}) \bmod  2^{32} − 209$$
+$$x_{2,n} = (527612 x_{2,n−1} − 1370589 x_{2,n−3}) \bmod  2^{32} − 22853$$
+$$z_n = (x_{1,n} − x_{2,n}) \bmod  4294967087$$
+$$
+u_n =
+\left\{
+\begin{array}[c]{ll}
+z_n/4294967088 & \text{ si } z_n > 0\\
+4294967087/4294967088 & \text{ si } z_n = 0
+\end{array}
+\right.
+$$
+
+<!-- 
+
+-->
 
 ## Análisis de la calidad de un generador {#calgen}
 
@@ -395,51 +412,51 @@ simres::chisq.cont.test
 ```
 
 ```
-## function(x, distribution = "norm", nclass = floor(length(x)/5),
-##                             output = TRUE, nestpar = 0, ...) {
-##   # Función distribución
-##   q.distrib <- eval(parse(text = paste("q", distribution, sep = "")))
-##   # Puntos de corte
-##   q <- q.distrib((1:(nclass - 1))/nclass, ...)
-##   tol <- sqrt(.Machine$double.eps)
-##   xbreaks <- c(min(x) - tol, q, max(x) + tol)
-##   # Gráficos y frecuencias
-##   if (output) {
-##     xhist <- hist(x, breaks = xbreaks, freq = FALSE,
-##                   lty = 2, border = "grey50")
-##     # Función densidad
-##     d.distrib <- eval(parse(text = paste("d", distribution, sep = "")))
-##     curve(d.distrib(x, ...), add = TRUE)
-##   } else {
-##     xhist <- hist(x, breaks = xbreaks, plot = FALSE)
-##   }
-##   # Cálculo estadístico y p-valor
-##   O <- xhist$counts  # Equivalente a table(cut(x, xbreaks)) pero más eficiente
-##   E <- length(x)/nclass
-##   DNAME <- deparse(substitute(x))
-##   METHOD <- "Pearson's Chi-squared test"
-##   STATISTIC <- sum((O - E)^2/E)
-##   names(STATISTIC) <- "X-squared"
-##   PARAMETER <- nclass - nestpar - 1
-##   names(PARAMETER) <- "df"
-##   PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
-##   # Preparar resultados
-##   classes <- format(xbreaks)
-##   classes <- paste("(", classes[-(nclass + 1)], ",", classes[-1], "]",
-##                    sep = "")
-##   RESULTS <- list(classes = classes, observed = O, expected = E,
-##                   residuals = (O - E)/sqrt(E))
-##   if (output) {
-##     cat("\nPearson's Chi-squared test table\n")
-##     print(as.data.frame(RESULTS))
-##   }
-##   if (any(E < 5))
-##     warning("Chi-squared approximation may be incorrect")
-##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
-##                    method = METHOD, data.name = DNAME), RESULTS), class = "htest")
-## }
-## <bytecode: 0x000001aeecba2c50>
-## <environment: namespace:simres>
+ ## function(x, distribution = "norm", nclass = floor(length(x)/5),
+ ##                             output = TRUE, nestpar = 0, ...) {
+ ##   # Función distribución
+ ##   q.distrib <- eval(parse(text = paste("q", distribution, sep = "")))
+ ##   # Puntos de corte
+ ##   q <- q.distrib((1:(nclass - 1))/nclass, ...)
+ ##   tol <- sqrt(.Machine$double.eps)
+ ##   xbreaks <- c(min(x) - tol, q, max(x) + tol)
+ ##   # Gráficos y frecuencias
+ ##   if (output) {
+ ##     xhist <- hist(x, breaks = xbreaks, freq = FALSE,
+ ##                   lty = 2, border = "grey50")
+ ##     # Función densidad
+ ##     d.distrib <- eval(parse(text = paste("d", distribution, sep = "")))
+ ##     curve(d.distrib(x, ...), add = TRUE)
+ ##   } else {
+ ##     xhist <- hist(x, breaks = xbreaks, plot = FALSE)
+ ##   }
+ ##   # Cálculo estadístico y p-valor
+ ##   O <- xhist$counts  # Equivalente a table(cut(x, xbreaks)) pero más eficiente
+ ##   E <- length(x)/nclass
+ ##   DNAME <- deparse(substitute(x))
+ ##   METHOD <- "Pearson's Chi-squared test"
+ ##   STATISTIC <- sum((O - E)^2/E)
+ ##   names(STATISTIC) <- "X-squared"
+ ##   PARAMETER <- nclass - nestpar - 1
+ ##   names(PARAMETER) <- "df"
+ ##   PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
+ ##   # Preparar resultados
+ ##   classes <- format(xbreaks)
+ ##   classes <- paste("(", classes[-(nclass + 1)], ",", classes[-1], "]",
+ ##                    sep = "")
+ ##   RESULTS <- list(classes = classes, observed = O, expected = E,
+ ##                   residuals = (O - E)/sqrt(E))
+ ##   if (output) {
+ ##     cat("\nPearson's Chi-squared test table\n")
+ ##     print(as.data.frame(RESULTS))
+ ##   }
+ ##   if (any(E < 5))
+ ##     warning("Chi-squared approximation may be incorrect")
+ ##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
+ ##                    method = METHOD, data.name = DNAME), RESULTS), class = "htest")
+ ## }
+ ## <bytecode: 0x000001d48ef35928>
+ ## <environment: namespace:simres>
 ```
 
 ::: {.example #congru512b name="análisis de un generador congruencial continuación"}
@@ -464,38 +481,38 @@ chisq.cont.test(u, distribution = "unif",
                 nclass = 10, nestpar = 0, min = 0, max = 1)
 ```
 
+```
+ ## 
+ ## Pearson's Chi-squared test table
+ ##                          classes observed expected  residuals
+ ## 1  (-1.490116e-08, 1.000000e-01]       51       50  0.1414214
+ ## 2  ( 1.000000e-01, 2.000000e-01]       49       50 -0.1414214
+ ## 3  ( 2.000000e-01, 3.000000e-01]       49       50 -0.1414214
+ ## 4  ( 3.000000e-01, 4.000000e-01]       50       50  0.0000000
+ ## 5  ( 4.000000e-01, 5.000000e-01]       51       50  0.1414214
+ ## 6  ( 5.000000e-01, 6.000000e-01]       51       50  0.1414214
+ ## 7  ( 6.000000e-01, 7.000000e-01]       49       50 -0.1414214
+ ## 8  ( 7.000000e-01, 8.000000e-01]       50       50  0.0000000
+ ## 9  ( 8.000000e-01, 9.000000e-01]       50       50  0.0000000
+ ## 10 ( 9.000000e-01, 9.980469e-01]       50       50  0.0000000
+```
+
+```
+ ## 
+ ## 	Pearson's Chi-squared test
+ ## 
+ ## data:  u
+ ## X-squared = 0.12, df = 9, p-value = 1
+```
+
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/chisq-test-unif-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/chisq-test-unif-1} 
 
 }
 
 \caption{Gráfico resultante de aplicar la función `chisq.cont.test()` comparando el histograma de los valores generados con la densidad uniforme.}(\#fig:chisq-test-unif)
 \end{figure}
-
-```
-## 
-## Pearson's Chi-squared test table
-##                          classes observed expected  residuals
-## 1  (-1.490116e-08, 1.000000e-01]       51       50  0.1414214
-## 2  ( 1.000000e-01, 2.000000e-01]       49       50 -0.1414214
-## 3  ( 2.000000e-01, 3.000000e-01]       49       50 -0.1414214
-## 4  ( 3.000000e-01, 4.000000e-01]       50       50  0.0000000
-## 5  ( 4.000000e-01, 5.000000e-01]       51       50  0.1414214
-## 6  ( 5.000000e-01, 6.000000e-01]       51       50  0.1414214
-## 7  ( 6.000000e-01, 7.000000e-01]       49       50 -0.1414214
-## 8  ( 7.000000e-01, 8.000000e-01]       50       50  0.0000000
-## 9  ( 8.000000e-01, 9.000000e-01]       50       50  0.0000000
-## 10 ( 9.000000e-01, 9.980469e-01]       50       50  0.0000000
-```
-
-```
-## 
-## 	Pearson's Chi-squared test
-## 
-## data:  u
-## X-squared = 0.12, df = 9, p-value = 1
-```
 
 Alternativamente, por ejemplo si solo se pretende aplicar el contraste, se podría emplear  la función `simres::freq.test()` (fichero [*test.R*](R/test.R))  para este caso particular (ver Sección \@ref(freq-test)).
 
@@ -513,7 +530,7 @@ curve(punif(x, 0, 1), add = TRUE)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/empdistrunif-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/empdistrunif-1} 
 
 }
 
@@ -527,12 +544,12 @@ ks.test(u, "punif", 0, 1)
 ```
 
 ```
-## 
-## 	Asymptotic one-sample Kolmogorov-Smirnov test
-## 
-## data:  u
-## D = 0.0033281, p-value = 1
-## alternative hypothesis: two-sided
+ ## 
+ ## 	Asymptotic one-sample Kolmogorov-Smirnov test
+ ## 
+ ## data:  u
+ ## D = 0.0033281, p-value = 1
+ ## alternative hypothesis: two-sided
 ```
 
 En la Sección \@ref(gof) se describen con más detalle estos contrastes de bondad de ajuste.
@@ -546,7 +563,7 @@ plot(as.ts(u))
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/plot-sec-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/plot-sec-1} 
 
 }
 
@@ -560,7 +577,7 @@ plot(u[-nsim],u[-1])
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/plot-ret-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/plot-ret-1} 
 
 }
 
@@ -578,7 +595,7 @@ acf(u)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/plot-acf-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/plot-acf-1} 
 
 }
 
@@ -593,11 +610,11 @@ Box.test(u, lag = 10, type = "Ljung")
 ```
 
 ```
-## 
-## 	Box-Ljung test
-## 
-## data:  u
-## X-squared = 22.533, df = 10, p-value = 0.01261
+ ## 
+ ## 	Box-Ljung test
+ ## 
+ ## data:  u
+ ## X-squared = 22.533, df = 10, p-value = 0.01261
 ```
 
 :::
@@ -631,14 +648,14 @@ Continuando con el generador congruencial RANDU, podemos pensar en estudiar la u
 
 
 ```r
-# Valores iniciales
-set.rng(543210, "lcg", a = 2^16 + 3, c = 0, m = 2^31)  # Establecer semilla y parámetros
+# Establecer semilla y parámetros
+set.rng(543210, "lcg", a = 2^16 + 3, c = 0, m = 2^31)  
 # set.seed(543210)
+# Valores iniciales
 n <- 500
 nsim <- 1000
 estadistico <- numeric(nsim)
 pvalor <- numeric(nsim)
-
 # Realizar contrastes
 for(isim in 1:nsim) {
   u <- rng(n)    # Generar
@@ -656,16 +673,16 @@ Por ejemplo, podemos comparar la proporción de rechazos observados con los que 
 
 ```r
 {
-cat("Proporción de rechazos al 1% =", mean(pvalor < 0.01), "\n") # sum(pvalor < 0.01)/nsim
-cat("Proporción de rechazos al 5% =", mean(pvalor < 0.05), "\n")   # sum(pvalor < 0.05)/nsim
-cat("Proporción de rechazos al 10% =", mean(pvalor < 0.1), "\n")   # sum(pvalor < 0.1)/nsim
+cat("Proporción de rechazos al 1% =", mean(pvalor < 0.01), "\n")
+cat("Proporción de rechazos al 5% =", mean(pvalor < 0.05), "\n")
+cat("Proporción de rechazos al 10% =", mean(pvalor < 0.1), "\n")
 }
 ```
 
 ```
-## Proporción de rechazos al 1% = 0.014 
-## Proporción de rechazos al 5% = 0.051 
-## Proporción de rechazos al 10% = 0.112
+ ## Proporción de rechazos al 1% = 0.014 
+ ## Proporción de rechazos al 5% = 0.051 
+ ## Proporción de rechazos al 10% = 0.112
 ```
 
 Las proporciones de rechazo obtenidas deberían comportarse como una aproximación por simulación de los niveles teóricos.
@@ -684,7 +701,7 @@ abline(a = 0, b = 1, lty = 2)   # curve(punif(x, 0, 1), add = TRUE)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/rep-test-ecdf-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/rep-test-ecdf-1} 
 
 }
 
@@ -708,7 +725,7 @@ curve(dchisq(x, 99), add = TRUE)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/rep-test-est-1} 
+{\centering \includegraphics[width=0.75\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/rep-test-est-1} 
 
 }
 
@@ -726,12 +743,12 @@ ks.test(estadistico, "pchisq", df = 99)
 ```
 
 ```
-## 
-## 	Asymptotic one-sample Kolmogorov-Smirnov test
-## 
-## data:  estadistico
-## D = 0.023499, p-value = 0.6388
-## alternative hypothesis: two-sided
+ ## 
+ ## 	Asymptotic one-sample Kolmogorov-Smirnov test
+ ## 
+ ## data:  estadistico
+ ## D = 0.023499, p-value = 0.6388
+ ## alternative hypothesis: two-sided
 ```
 
 En este caso la distribución observada del estadístico es la que cabría esperar de una muestra de este tamaño de la distribución teórica, por tanto, según este criterio, aparentemente no habría problemas con la uniformidad de este generador (hay que recordar que estamos utilizando contrastes de hipótesis como herramienta para ver si hay algún problema con el generador, no tiene mucho sentido hablar de aceptar o rechazar una hipótesis).
@@ -744,18 +761,7 @@ Mientras que la distribución teórica del estadístico depende del contraste y 
 # Histograma
 hist(pvalor, freq = FALSE, main = "")
 abline(h=1) # curve(dunif(x,0,1), add=TRUE)
-```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/rep-test-pval-1} 
-
-}
-
-\caption{Distribución del p-valor del constraste.}(\#fig:rep-test-pval)
-\end{figure}
-
-```r
 # Test chi-cuadrado
 # chisq.cont.test(pvalor, distribution="unif", nclass=20, nestpar=0, min=0, max=1)
 # Test de Kolmogorov-Smirnov
@@ -763,13 +769,22 @@ ks.test(pvalor, "punif",  min = 0, max = 1)
 ```
 
 ```
-## 
-## 	Asymptotic one-sample Kolmogorov-Smirnov test
-## 
-## data:  pvalor
-## D = 0.023499, p-value = 0.6388
-## alternative hypothesis: two-sided
+ ## 
+ ## 	Asymptotic one-sample Kolmogorov-Smirnov test
+ ## 
+ ## data:  pvalor
+ ## D = 0.023499, p-value = 0.6388
+ ## alternative hypothesis: two-sided
 ```
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.75\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/rep-test-pval-1} 
+
+}
+
+\caption{Distribución del p-valor del constraste.}(\#fig:rep-test-pval)
+\end{figure}
 
 Como podemos observar, obtendríamos los mismos resultados que al analizar la distribución del estadístico. 
 
@@ -785,14 +800,14 @@ str(res)
 ```
 
 ```
-## List of 2
-##  $ statistics: num [1:1000] 5.2 6.8 12.4 0.8 5.6 7.6 6.4 9.6 5.2 3.2 ...
-##  $ p.values  : num [1:1000] 0.392 0.2359 0.0297 0.977 0.3471 ...
-##  - attr(*, "class")= chr "rhtest"
-##  - attr(*, "method")= chr "Chi-squared test for given probabilities"
-##  - attr(*, "names.stat")= chr "X-squared"
-##  - attr(*, "parameter")= Named num 5
-##   ..- attr(*, "names")= chr "df"
+ ## List of 2
+ ##  $ statistics: num [1:1000] 5.2 6.8 12.4 0.8 5.6 7.6 6.4 9.6 5.2 3.2 ...
+ ##  $ p.values  : num [1:1000] 0.392 0.2359 0.0297 0.977 0.3471 ...
+ ##  - attr(*, "class")= chr "rhtest"
+ ##  - attr(*, "method")= chr "Chi-squared test for given probabilities"
+ ##  - attr(*, "names.stat")= chr "X-squared"
+ ##  - attr(*, "parameter")= Named num 5
+ ##   ..- attr(*, "names")= chr "df"
 ```
 
 ```r
@@ -800,14 +815,15 @@ summary(res)
 ```
 
 ```
-## Proportion of rejections:
-##    1%    5%   10%   25%   50% 
-## 0.013 0.054 0.096 0.255 0.544
+ ## Proportion of rejections:
+ ##    1%    5%   10%   25%   50% 
+ ## 0.013 0.054 0.096 0.255 0.544
 ```
 
 ```r
 old.par <- par(mfrow = c(1, 2))
 plot(res, 2:3)
+par(old.par)
 ```
 
 \begin{figure}[!htb]
@@ -818,10 +834,6 @@ plot(res, 2:3)
 
 \caption{Distribución de los p-valores y proporción de rechazos.}(\#fig:rephtest)
 \end{figure}
-
-```r
-par(old.par)
-```
 
 :::
   
@@ -893,27 +905,27 @@ simres::rvng
 ```
 
 ```
-## function(n, seed = as.numeric(Sys.time()), k = 4) {
-##   seed <- seed %% 10^k
-##   aux <- 10^(2*k-k/2)
-##   aux2 <- 10^(k/2)
-##   u <- numeric(n)
-##   for(i in 1:n) {
-##     z <- seed^2
-##     seed <- trunc((z - trunc(z/aux)*aux)/aux2)
-##     u[i] <- seed/10^k
-##   }
-##   # Almacenar semilla y parámetros
-##   assign(".rng", list(seed = seed, type = "vm", parameters = list(k = k)),
-##       envir = globalenv())
-##   # .rng <<- list(seed = seed, type = "vm", parameters = list(k = k))
-##   # Para continuar con semilla y parámetros:
-##   #   with(.rng, rvng(n, seed, parameters$k))
-##   # Devolver valores
-##   return(u)
-## }
-## <bytecode: 0x000001aeeda1f248>
-## <environment: namespace:simres>
+ ## function(n, seed = as.numeric(Sys.time()), k = 4) {
+ ##   seed <- seed %% 10^k
+ ##   aux <- 10^(2*k-k/2)
+ ##   aux2 <- 10^(k/2)
+ ##   u <- numeric(n)
+ ##   for(i in 1:n) {
+ ##     z <- seed^2
+ ##     seed <- trunc((z - trunc(z/aux)*aux)/aux2)
+ ##     u[i] <- seed/10^k
+ ##   }
+ ##   # Almacenar semilla y parámetros
+ ##   assign(".rng", list(seed = seed, type = "vm", parameters = list(k = k)),
+ ##       envir = globalenv())
+ ##   # .rng <<- list(seed = seed, type = "vm", parameters = list(k = k))
+ ##   # Para continuar con semilla y parámetros:
+ ##   #   with(.rng, rvng(n, seed, parameters$k))
+ ##   # Devolver valores
+ ##   return(u)
+ ## }
+ ## <bytecode: 0x000001d4930c8388>
+ ## <environment: namespace:simres>
 ```
 
 

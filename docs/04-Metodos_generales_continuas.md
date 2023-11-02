@@ -1,5 +1,6 @@
 # Simulación de variables continuas {#continuas}
 
+<!-- Capítulo \@ref(continuas) -->
 
 
 
@@ -109,8 +110,8 @@ tiempo
 ```
 
 ```
-##    user  system elapsed 
-##       0       0       0
+ ##    user  system elapsed 
+ ##       0       0       0
 ```
 
 ```r
@@ -121,7 +122,7 @@ curve(dexp(x, lambda), lwd = 2, add = TRUE)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{04-Metodos_generales_continuas_files/figure-latex/exp-inv-plot-1} 
+{\centering \includegraphics[width=0.75\linewidth]{04-Metodos_generales_continuas_files/figure-latex/exp-inv-plot-1} 
 
 }
 
@@ -207,8 +208,8 @@ b)  Generar $10^{4}$ valores de la distribución doble exponencial de
     ```
     
     ```
-    ##    user  system elapsed 
-    ##    0.03    0.01    0.05
+     ##    user  system elapsed 
+     ##    0.01    0.00    0.01
     ```
 
 
@@ -223,7 +224,7 @@ c)  Representar el histograma y compararlo con la densidad teórica.
     
     \begin{figure}[!htb]
     
-    {\centering \includegraphics[width=0.7\linewidth]{04-Metodos_generales_continuas_files/figure-latex/ddexp-inv-1} 
+    {\centering \includegraphics[width=0.75\linewidth]{04-Metodos_generales_continuas_files/figure-latex/ddexp-inv-1} 
     
     }
     
@@ -445,7 +446,7 @@ abline(h = 0, lty = 3)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{04-Metodos_generales_continuas_files/figure-latex/dbeta-dunif-plot-1} 
+{\centering \includegraphics[width=0.75\linewidth]{04-Metodos_generales_continuas_files/figure-latex/dbeta-dunif-plot-1} 
 
 }
 
@@ -489,8 +490,8 @@ system.time(x <- rbeta2n(nsim, s1, s2))
 ```
 
 ```
-##    user  system elapsed 
-##    0.03    0.00    0.03
+ ##    user  system elapsed 
+ ##       0       0       0
 ```
 
 Para analizar la eficiencia podemos emplear el número de generaciones de la distribución auxiliar (siguiente sección):
@@ -503,9 +504,9 @@ cat("\nProporción de rechazos = ", 1-nsim/ngen, "\n")}
 ```
 
 ```
-## Número de generaciones =  2121
-## Número medio de generaciones =  2.121
-## Proporción de rechazos =  0.5285243
+ ## Número de generaciones =  2121
+ ## Número medio de generaciones =  2.121
+ ## Proporción de rechazos =  0.5285243
 ```
 
 Finalmente podemos representar la distribución de los valores generados y compararla con la densidad teórica:
@@ -518,7 +519,7 @@ curve(dbeta(x, s1, s2), col = 2, lwd = 2, add = TRUE)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{04-Metodos_generales_continuas_files/figure-latex/dbeta-ar-1} 
+{\centering \includegraphics[width=0.75\linewidth]{04-Metodos_generales_continuas_files/figure-latex/dbeta-ar-1} 
 
 }
 
@@ -602,7 +603,7 @@ curve(dnorm, add = TRUE)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{04-Metodos_generales_continuas_files/figure-latex/dnorm-ddexp-plot-1} 
+{\centering \includegraphics[width=0.75\linewidth]{04-Metodos_generales_continuas_files/figure-latex/dnorm-ddexp-plot-1} 
 
 }
 
@@ -619,11 +620,11 @@ optimize(f = function(x) dnorm(x)/ddexp(x), maximum = TRUE, interval = c(0, 2))
 ```
 
 ```
-## $maximum
-## [1] 1
-## 
-## $objective
-## [1] 1.315489
+ ## $maximum
+ ## [1] 1
+ ## 
+ ## $objective
+ ## [1] 1.315489
 ```
 
 Vemos que la aproximación numérica coincide con el valor óptimo real $c_{\text{opt}} \approx$  1.3154892 (que se alcanza en $x = \pm 1$).
@@ -676,8 +677,8 @@ system.time(x <- rnormARn(nsim))
 ```
 
 ```
-##    user  system elapsed 
-##    0.12    0.02    0.14
+ ##    user  system elapsed 
+ ##    0.06    0.00    0.06
 ```
 
 Evaluamos la eficiencia:
@@ -690,9 +691,9 @@ cat("\nProporción de rechazos = ", 1-nsim/ngen, "\n")}
 ```
 
 ```
-## Número de generaciones =  13178
-## Número medio de generaciones =  1.3178
-## Proporción de rechazos =  0.2411595
+ ## Número de generaciones =  13178
+ ## Número medio de generaciones =  1.3178
+ ## Proporción de rechazos =  0.2411595
 ```
 
 Estos valores serían aproximaciones por simulación de los correspondientes valores teóricos (valor medio $c \approx 1.3155$ y probabilidad de rechazo $1 - p = 1 - 1/c \approx 0.23983$). 
@@ -708,7 +709,7 @@ curve(dnorm, add = TRUE)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{04-Metodos_generales_continuas_files/figure-latex/dnorm-ar-1} 
+{\centering \includegraphics[width=0.75\linewidth]{04-Metodos_generales_continuas_files/figure-latex/dnorm-ar-1} 
 
 }
 
@@ -767,7 +768,7 @@ abline(v = 1, lty = 2)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{04-Metodos_generales_continuas_files/figure-latex/cop-lambda-1} 
+{\centering \includegraphics[width=0.75\linewidth]{04-Metodos_generales_continuas_files/figure-latex/cop-lambda-1} 
 
 }
 
@@ -796,7 +797,7 @@ lambda.opt2
 ```
 
 ```
-## [1] 0.9999987
+ ## [1] 0.9999987
 ```
 
 ```r
@@ -804,7 +805,7 @@ c.opt2
 ```
 
 ```
-## [1] 1.315489
+ ## [1] 1.315489
 ```
 
 :::
@@ -889,11 +890,11 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     ```
     
     ```
-    ## $maximum
-    ## [1] 0.7353805
-    ## 
-    ## $objective
-    ## [1] 3.303574e-08
+     ## $maximum
+     ## [1] 0.7353805
+     ## 
+     ## $objective
+     ## [1] 3.303574e-08
     ```
     
     ```r
@@ -908,7 +909,7 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     ```
     
     ```
-    ## [1] 0.7353958
+     ## [1] 0.7353958
     ```
     
     y por tanto:
@@ -920,7 +921,7 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     ```
     
     ```
-    ## [1] 3.303574e-08
+     ## [1] 3.303574e-08
     ```
     
     ```r
@@ -933,7 +934,7 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     
     \begin{figure}[!htb]
     
-    {\centering \includegraphics[width=0.7\linewidth]{04-Metodos_generales_continuas_files/figure-latex/post-pri-plot-1} 
+    {\centering \includegraphics[width=0.75\linewidth]{04-Metodos_generales_continuas_files/figure-latex/post-pri-plot-1} 
     
     }
     
@@ -963,9 +964,9 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     ```
     
     ```
-    ## Número de generaciones =  59422
-    ## Número medio de generaciones =  5.9422
-    ## Proporción de rechazos =  0.8317122
+     ## Número de generaciones =  59422
+     ## Número medio de generaciones =  5.9422
+     ## Proporción de rechazos =  0.8317122
     ```
     
     A partir de la aproximación del número medio de generaciones podemos aproximar la constante normalizadora:
@@ -986,8 +987,8 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     ```
     
     ```
-    ##       2.5%      97.5% 
-    ## 0.05001092 1.26026227
+     ##       2.5%      97.5% 
+     ## 0.05001092 1.26026227
     ```
     
     ```r
@@ -1001,7 +1002,7 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     
     \begin{figure}[!htb]
     
-    {\centering \includegraphics[width=0.7\linewidth]{04-Metodos_generales_continuas_files/figure-latex/ic-bayes-1} 
+    {\centering \includegraphics[width=0.75\linewidth]{04-Metodos_generales_continuas_files/figure-latex/ic-bayes-1} 
     
     }
     
@@ -1166,26 +1167,26 @@ simres::rcauchy.rou
 ```
 
 ```
-## function(n) {
-##   # Cauchy mediante cociente de uniformes
-##   ngen <- n
-##   u <- runif(n, 0, 1)
-##   v <- runif(n, -1, 1)
-##   x <- v/u
-##   ind <- u^2 + v^2 > 1 # TRUE si no verifica condición
-##   # Volver a generar si no verifica condición
-##   while (le <- sum(ind)){ # mientras le = sum(ind) > 0
-##     ngen <- ngen + le
-##     u <- runif(le, 0, 1)
-##     v <- runif(le, -1, 1)
-##     x[ind] <- v/u
-##     ind[ind] <- u^2 + v^2 > 1 # TRUE si no verifica condición
-##   }
-##   attr(x, "ngen") <- ngen
-##   return(x)
-## }
-## <bytecode: 0x0000026e4899c4f8>
-## <environment: namespace:simres>
+ ## function(n) {
+ ##   # Cauchy mediante cociente de uniformes
+ ##   ngen <- n
+ ##   u <- runif(n, 0, 1)
+ ##   v <- runif(n, -1, 1)
+ ##   x <- v/u
+ ##   ind <- u^2 + v^2 > 1 # TRUE si no verifica condición
+ ##   # Volver a generar si no verifica condición
+ ##   while (le <- sum(ind)){ # mientras le = sum(ind) > 0
+ ##     ngen <- ngen + le
+ ##     u <- runif(le, 0, 1)
+ ##     v <- runif(le, -1, 1)
+ ##     x[ind] <- v/u
+ ##     ind[ind] <- u^2 + v^2 > 1 # TRUE si no verifica condición
+ ##   }
+ ##   attr(x, "ngen") <- ngen
+ ##   return(x)
+ ## }
+ ## <bytecode: 0x00000251dae58120>
+ ## <environment: namespace:simres>
 ```
 
 ```r
@@ -1195,18 +1196,7 @@ rx <- simres::rcauchy.rou(nsim)
 
 hist(rx, breaks = "FD", freq = FALSE, main = "", xlim = c(-6, 6))
 curve(dcauchy, add = TRUE)
-```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{04-Metodos_generales_continuas_files/figure-latex/rcauchy-rou-1} 
-
-}
-
-\caption{Distribución de los valores generados mediante el método de cociente de uniformes.}(\#fig:rcauchy-rou)
-\end{figure}
-
-```r
 # Número generaciones
 ngen <- attr(rx, "ngen")
 {cat("Número de generaciones = ", ngen)
@@ -1215,10 +1205,19 @@ cat("\nProporción de rechazos = ", 1-nsim/ngen,"\n")}
 ```
 
 ```
-## Número de generaciones =  12751
-## Número medio de generaciones =  1.2751
-## Proporción de rechazos =  0.2157478
+ ## Número de generaciones =  12751
+ ## Número medio de generaciones =  1.2751
+ ## Proporción de rechazos =  0.2157478
 ```
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.75\linewidth]{04-Metodos_generales_continuas_files/figure-latex/rcauchy-rou-1} 
+
+}
+
+\caption{Distribución de los valores generados mediante el método de cociente de uniformes.}(\#fig:rcauchy-rou)
+\end{figure}
 
 :::
 

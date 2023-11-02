@@ -4,12 +4,13 @@ author:
   - "Rubén Fernández Casal (ruben.fcasal@udc.es)"
   - "Ricardo Cao (rcao@udc.es)"
   - "Julián Costa (julian.costa@udc.es)"
-date: "Edición: Enero de 2023. Impresión: 2023-10-24"
+date: "Edición: Enero de 2023. Impresión: 2023-11-02"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
-bibliography: [book.bib, packages.bib]
-biblio-style: apalike
+lang: es
+bibliography: ["packages.bib", "book.bib"]
+# biblio-style: "apalike"
 link-citations: yes
 github-repo: rubenfcasal/simbook
 description: "Apuntes de Simulación Estadística y Remuestreo."

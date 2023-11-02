@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="es" xml:lang="es">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>10.1 Deficiencias del bootstrap uniforme | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="10.1 Deficiencias del bootstrap uniforme | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,28 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -273,7 +295,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.4.4" data-path="aplic-inf.html"><a href="aplic-inf.html#comparación-de-estimadores"><i class="fa fa-check"></i><b>7.4.4</b> Comparación de estimadores</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="técnicas-de-reducción-de-la-varianza.html"><a href="técnicas-de-reducción-de-la-varianza.html"><i class="fa fa-check"></i><b>8</b> Técnicas de reducción de la varianza</a>
+<li class="chapter" data-level="8" data-path="red-varianza.html"><a href="red-varianza.html"><i class="fa fa-check"></i><b>8</b> Técnicas de reducción de la varianza</a>
 <ul>
 <li class="chapter" data-level="8.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html"><i class="fa fa-check"></i><b>8.1</b> Variables antitéticas</a>
 <ul>
@@ -326,7 +348,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.3.3" data-path="boot-test.html"><a href="boot-test.html#contrastes-semiparametricos"><i class="fa fa-check"></i><b>11.3.3</b> Contrastes bootstrap semiparamétricos</a></li>
 </ul></li>
 </ul></li>
-<li class="appendix"><span><b>Apendices</b></span></li>
+<li class="appendix"><span><b>Apéndices</b></span></li>
 <li class="chapter" data-level="A" data-path="gof-aleat.html"><a href="gof-aleat.html"><i class="fa fa-check"></i><b>A</b> Bondad de Ajuste y Aleatoriedad</a>
 <ul>
 <li class="chapter" data-level="A.1" data-path="gof.html"><a href="gof.html"><i class="fa fa-check"></i><b>A.1</b> Métodos de bondad de ajuste</a>
@@ -399,7 +421,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
 <ul>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
 <li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
@@ -454,7 +476,7 @@ curve(n/theta * (x/theta)^(n - 1), 0, theta, ylab = "Density")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-Bootstrap_ext_files/figure-html/den-max-1.png" alt="Función de densidad del máximo de una muestra procedente de una uniforme." width="70%" />
+<img src="10-Bootstrap_ext_files/figure-html/den-max-1.png" alt="Función de densidad del máximo de una muestra procedente de una uniforme." width="75%" />
 <p class="caption">(\#fig:den-max)Función de densidad del máximo de una muestra procedente de una uniforme.</p>
 </div>
 -->
@@ -487,29 +509,30 @@ De esta forma vemos que el bootstrap uniforme (no paramétrico) es inconsistente
 <p><span id="exm:boot-maximo-uniforme" class="example"><strong>Ejemplo 10.1  (Inferencia sobre el máximo de una distribución uniforme) </strong></span><br></p>
 <p>El siguiente código implementa el método bootstrap uniforme (también llamado naïve) para aproximar la distribución del estadístico <span class="math inline">\(R=\hat{\theta}-\theta\)</span>, para una muestra de tamaño <span class="math inline">\(n=50\)</span>, proveniente de una población con distribución
 <span class="math inline">\(\mathcal{U}\left( 0,1\right)\)</span> :</p>
-<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="deficien-unif.html#cb569-1" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb569-2"><a href="deficien-unif.html#cb569-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
-<span id="cb569-3"><a href="deficien-unif.html#cb569-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb569-4"><a href="deficien-unif.html#cb569-4" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">50</span>) <span class="sc">*</span> theta</span>
-<span id="cb569-5"><a href="deficien-unif.html#cb569-5" aria-hidden="true" tabindex="-1"></a>theta_est <span class="ot">&lt;-</span> <span class="fu">max</span>(muestra)</span>
-<span id="cb569-6"><a href="deficien-unif.html#cb569-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Remuestreo</span></span>
-<span id="cb569-7"><a href="deficien-unif.html#cb569-7" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
-<span id="cb569-8"><a href="deficien-unif.html#cb569-8" aria-hidden="true" tabindex="-1"></a>maximo <span class="ot">&lt;-</span> <span class="fu">numeric</span>(B)</span>
-<span id="cb569-9"><a href="deficien-unif.html#cb569-9" aria-hidden="true" tabindex="-1"></a>estadistico <span class="ot">&lt;-</span> <span class="fu">numeric</span>(B)</span>
-<span id="cb569-10"><a href="deficien-unif.html#cb569-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>B) {</span>
-<span id="cb569-11"><a href="deficien-unif.html#cb569-11" aria-hidden="true" tabindex="-1"></a>    remuestra <span class="ot">&lt;-</span> <span class="fu">sample</span>(muestra, n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb569-12"><a href="deficien-unif.html#cb569-12" aria-hidden="true" tabindex="-1"></a>    maximo[k] <span class="ot">&lt;-</span> <span class="fu">max</span>(remuestra)</span>
-<span id="cb569-13"><a href="deficien-unif.html#cb569-13" aria-hidden="true" tabindex="-1"></a>    estadistico[k] <span class="ot">&lt;-</span> maximo[k] <span class="sc">-</span> theta_est</span>
-<span id="cb569-14"><a href="deficien-unif.html#cb569-14" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb569-15"><a href="deficien-unif.html#cb569-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribución estadístico</span></span>
-<span id="cb569-16"><a href="deficien-unif.html#cb569-16" aria-hidden="true" tabindex="-1"></a>xlim <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span>theta<span class="sc">/</span><span class="dv">2</span>, <span class="dv">0</span>) <span class="co"># c(-theta, 0)</span></span>
-<span id="cb569-17"><a href="deficien-unif.html#cb569-17" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(estadistico, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>,  </span>
-<span id="cb569-18"><a href="deficien-unif.html#cb569-18" aria-hidden="true" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="at">xlim =</span> xlim)</span>
-<span id="cb569-19"><a href="deficien-unif.html#cb569-19" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(estadistico))</span>
-<span id="cb569-20"><a href="deficien-unif.html#cb569-20" aria-hidden="true" tabindex="-1"></a><span class="fu">rug</span>(estadistico, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>)</span>
-<span id="cb569-21"><a href="deficien-unif.html#cb569-21" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(n<span class="sc">/</span>theta <span class="sc">*</span> ((x <span class="sc">+</span> theta)<span class="sc">/</span>theta)<span class="sc">^</span>(n <span class="sc">-</span> <span class="dv">1</span>), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="deficien-unif.html#cb570-1" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb570-2"><a href="deficien-unif.html#cb570-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb570-3"><a href="deficien-unif.html#cb570-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb570-4"><a href="deficien-unif.html#cb570-4" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">50</span>) <span class="sc">*</span> theta</span>
+<span id="cb570-5"><a href="deficien-unif.html#cb570-5" aria-hidden="true" tabindex="-1"></a>theta_est <span class="ot">&lt;-</span> <span class="fu">max</span>(muestra)</span>
+<span id="cb570-6"><a href="deficien-unif.html#cb570-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Remuestreo</span></span>
+<span id="cb570-7"><a href="deficien-unif.html#cb570-7" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
+<span id="cb570-8"><a href="deficien-unif.html#cb570-8" aria-hidden="true" tabindex="-1"></a>maximo <span class="ot">&lt;-</span> <span class="fu">numeric</span>(B)</span>
+<span id="cb570-9"><a href="deficien-unif.html#cb570-9" aria-hidden="true" tabindex="-1"></a>estadistico <span class="ot">&lt;-</span> <span class="fu">numeric</span>(B)</span>
+<span id="cb570-10"><a href="deficien-unif.html#cb570-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>B) {</span>
+<span id="cb570-11"><a href="deficien-unif.html#cb570-11" aria-hidden="true" tabindex="-1"></a>    remuestra <span class="ot">&lt;-</span> <span class="fu">sample</span>(muestra, n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb570-12"><a href="deficien-unif.html#cb570-12" aria-hidden="true" tabindex="-1"></a>    maximo[k] <span class="ot">&lt;-</span> <span class="fu">max</span>(remuestra)</span>
+<span id="cb570-13"><a href="deficien-unif.html#cb570-13" aria-hidden="true" tabindex="-1"></a>    estadistico[k] <span class="ot">&lt;-</span> maximo[k] <span class="sc">-</span> theta_est</span>
+<span id="cb570-14"><a href="deficien-unif.html#cb570-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb570-15"><a href="deficien-unif.html#cb570-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribución estadístico</span></span>
+<span id="cb570-16"><a href="deficien-unif.html#cb570-16" aria-hidden="true" tabindex="-1"></a>xlim <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span>theta<span class="sc">/</span><span class="dv">2</span>, <span class="dv">0</span>) <span class="co"># c(-theta, 0)</span></span>
+<span id="cb570-17"><a href="deficien-unif.html#cb570-17" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(estadistico, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>,  </span>
+<span id="cb570-18"><a href="deficien-unif.html#cb570-18" aria-hidden="true" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="at">xlim =</span> xlim)</span>
+<span id="cb570-19"><a href="deficien-unif.html#cb570-19" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(estadistico))</span>
+<span id="cb570-20"><a href="deficien-unif.html#cb570-20" aria-hidden="true" tabindex="-1"></a><span class="fu">rug</span>(estadistico, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>)</span>
+<span id="cb570-21"><a href="deficien-unif.html#cb570-21" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(n<span class="sc">/</span>theta <span class="sc">*</span> ((x <span class="sc">+</span> theta)<span class="sc">/</span>theta)<span class="sc">^</span>(n <span class="sc">-</span> <span class="dv">1</span>), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>, </span>
+<span id="cb570-22"><a href="deficien-unif.html#cb570-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:boot-uniforme-maximo"></span>
-<img src="10-Bootstrap_ext_files/figure-html/boot-uniforme-maximo-1.png" alt="Distribución de las réplicas bootstrap (uniforme) del estadístico y distribución poblacional." width="70%" />
+<img src="10-Bootstrap_ext_files/figure-html/boot-uniforme-maximo-1.png" alt="Distribución de las réplicas bootstrap (uniforme) del estadístico y distribución poblacional." width="75%" />
 <p class="caption">
 Figura 10.1: Distribución de las réplicas bootstrap (uniforme) del estadístico y distribución poblacional.
 </p>

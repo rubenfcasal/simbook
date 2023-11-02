@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="es" xml:lang="es">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>8.2 Estratificación | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="8.2 Estratificación | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,28 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -273,7 +295,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.4.4" data-path="aplic-inf.html"><a href="aplic-inf.html#comparación-de-estimadores"><i class="fa fa-check"></i><b>7.4.4</b> Comparación de estimadores</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="técnicas-de-reducción-de-la-varianza.html"><a href="técnicas-de-reducción-de-la-varianza.html"><i class="fa fa-check"></i><b>8</b> Técnicas de reducción de la varianza</a>
+<li class="chapter" data-level="8" data-path="red-varianza.html"><a href="red-varianza.html"><i class="fa fa-check"></i><b>8</b> Técnicas de reducción de la varianza</a>
 <ul>
 <li class="chapter" data-level="8.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html"><i class="fa fa-check"></i><b>8.1</b> Variables antitéticas</a>
 <ul>
@@ -326,7 +348,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.3.3" data-path="boot-test.html"><a href="boot-test.html#contrastes-semiparametricos"><i class="fa fa-check"></i><b>11.3.3</b> Contrastes bootstrap semiparamétricos</a></li>
 </ul></li>
 </ul></li>
-<li class="appendix"><span><b>Apendices</b></span></li>
+<li class="appendix"><span><b>Apéndices</b></span></li>
 <li class="chapter" data-level="A" data-path="gof-aleat.html"><a href="gof-aleat.html"><i class="fa fa-check"></i><b>A</b> Bondad de Ajuste y Aleatoriedad</a>
 <ul>
 <li class="chapter" data-level="A.1" data-path="gof.html"><a href="gof.html"><i class="fa fa-check"></i><b>A.1</b> Métodos de bondad de ajuste</a>
@@ -399,7 +421,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
 <ul>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
 <li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
@@ -443,11 +465,11 @@ significativa de la varianza.</p>
 <p><span id="exm:estr-exp" class="example"><strong>Ejemplo 8.2  (muestreo estratificado de una exponencial) </strong></span><br></p>
 <p>Supóngase el siguiente problema (absolutamente artificial pero ilustrativo para comprender esta técnica).
 Dada una muestra de tamaño 10 de una población con distribución:
-<span class="math display">\[X \sim \exp\left( 1 \right),\]</span>
+<span class="math display">\[X \sim Exp\left( 1 \right),\]</span>
 se desea aproximar la media poblacional (es sobradamente conocido que es 1) a partir de 10 simulaciones.
 Supongamos que para evitar que, por puro azar, exista alguna zona en la que la exponencial toma valores, no representada en la muestra simulada de 10 datos, se consideran tres estratos.
 Por ejemplo, el del 40% de valores menores, el siguiente 50% de valores (intermedios) y el 10% de valores más grandes para esta distribución.</p>
-<p>El algoritmo de inversión (optimizado) para simular una <span class="math inline">\(\exp\left(1\right)\)</span> es:</p>
+<p>El algoritmo de inversión (optimizado) para simular una <span class="math inline">\(Exp\left(1\right)\)</span> es:</p>
 <ol style="list-style-type: decimal">
 <li><p>Generar <span class="math inline">\(U\sim \mathcal{U}\left( 0,1\right)\)</span>.</p></li>
 <li><p>Hacer <span class="math inline">\(X=-\ln U\)</span>.</p></li>
@@ -487,8 +509,8 @@ que es bastante menor que 1 (la varianza en el caso de muestreo aleatorio simple
 <div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="estratificación.html#cb491-1" aria-hidden="true" tabindex="-1"></a>mc.integrale <span class="ot">&lt;-</span> <span class="cf">function</span>(ftn, a, b, n, k) {</span>
 <span id="cb491-2"><a href="estratificación.html#cb491-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Integración Monte Carlo con estratificación</span></span>
 <span id="cb491-3"><a href="estratificación.html#cb491-3" aria-hidden="true" tabindex="-1"></a>  l <span class="ot">&lt;-</span> n<span class="sc">%/%</span>k</span>
-<span id="cb491-4"><a href="estratificación.html#cb491-4" aria-hidden="true" tabindex="-1"></a>  int <span class="ot">&lt;-</span> <span class="fu">seq</span>(a, b, <span class="at">len=</span>k<span class="sc">+</span><span class="dv">1</span>)</span>
-<span id="cb491-5"><a href="estratificación.html#cb491-5" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">runif</span>(l<span class="sc">*</span>k, <span class="fu">rep</span>(int[<span class="sc">-</span>(k<span class="sc">+</span><span class="dv">1</span>)], <span class="at">each=</span>l), <span class="fu">rep</span>(int[<span class="sc">-</span><span class="dv">1</span>], <span class="at">each=</span>l))</span>
+<span id="cb491-4"><a href="estratificación.html#cb491-4" aria-hidden="true" tabindex="-1"></a>  int <span class="ot">&lt;-</span> <span class="fu">seq</span>(a, b, <span class="at">len =</span> k <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb491-5"><a href="estratificación.html#cb491-5" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">runif</span>(l<span class="sc">*</span>k, <span class="fu">rep</span>(int[<span class="sc">-</span>(k <span class="sc">+</span> <span class="dv">1</span>)], <span class="at">each =</span> l), <span class="fu">rep</span>(int[<span class="sc">-</span><span class="dv">1</span>], <span class="at">each =</span> l))</span>
 <span id="cb491-6"><a href="estratificación.html#cb491-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># l uniformes en cada uno de los intervalos [(j-1)/k , j/k]</span></span>
 <span id="cb491-7"><a href="estratificación.html#cb491-7" aria-hidden="true" tabindex="-1"></a>  fx <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x, ftn)<span class="sc">*</span>(b<span class="sc">-</span>a)</span>
 <span id="cb491-8"><a href="estratificación.html#cb491-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">valor=</span><span class="fu">mean</span>(fx), <span class="at">error=</span><span class="dv">2</span><span class="sc">*</span><span class="fu">sd</span>(fx)<span class="sc">/</span><span class="fu">sqrt</span>(n)))   <span class="co"># error mal calculado</span></span>
@@ -496,14 +518,14 @@ que es bastante menor que 1 (la varianza en el caso de muestreo aleatorio simple
 <span id="cb491-10"><a href="estratificación.html#cb491-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb491-11"><a href="estratificación.html#cb491-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
 <span id="cb491-12"><a href="estratificación.html#cb491-12" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">mc.integral</span>(ftn, a, b, <span class="dv">500</span>)</span>
-<span id="cb491-13"><a href="estratificación.html#cb491-13" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> teor)</span></code></pre></div>
-<p><img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-9-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<span id="cb491-13"><a href="estratificación.html#cb491-13" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> teor, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-8-1.png" width="75%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="estratificación.html#cb492-1" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
-<pre><code>## $valor
+<pre><code>## $approx
 ## [1] 3.184612
 ## 
-## $error
-## [1] 0.1629942</code></pre>
+## $max.error
+## [1] 0.1597314</code></pre>
 <div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="estratificación.html#cb494-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
 <span id="cb494-2"><a href="estratificación.html#cb494-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mc.integrale</span>(ftn, a, b, <span class="dv">500</span>, <span class="dv">50</span>)</span></code></pre></div>
 <pre><code>## $valor
@@ -525,6 +547,14 @@ El tamaño de las submuestras debería incrementarse hacia el extremo superior.<
 <div class="exercise">
 <p><span id="exr:integraleb" class="exercise"><strong>Ejercicio 8.1  </strong></span><br>
 Repetir el ejemplo anterior considerando intervalos regularmente espaciados en escala exponencial.</p>
+<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="estratificación.html#cb498-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejemplo con k = 5</span></span>
+<span id="cb498-2"><a href="estratificación.html#cb498-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(ftn, a, b, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">4</span>))</span>
+<span id="cb498-3"><a href="estratificación.html#cb498-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb498-4"><a href="estratificación.html#cb498-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">c</span>(a, b), <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb498-5"><a href="estratificación.html#cb498-5" aria-hidden="true" tabindex="-1"></a>k <span class="ot">=</span> <span class="dv">5</span></span>
+<span id="cb498-6"><a href="estratificación.html#cb498-6" aria-hidden="true" tabindex="-1"></a>int <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">seq</span>(<span class="fu">exp</span>(a), <span class="fu">exp</span>(b), <span class="at">len =</span> k <span class="sc">+</span> <span class="dv">1</span>))</span>
+<span id="cb498-7"><a href="estratificación.html#cb498-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> int, <span class="at">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-10-1.png" width="75%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
             </section>

@@ -1,3 +1,9 @@
+# Introducción a la simulación {#intro}
+
+<!-- Capítulo \@ref(intro) -->
+
+
+
 <!-- 
 ---
 title: "Introducción a la simulación"
@@ -23,11 +29,6 @@ knitr::spin("01-Introduccion.R",knit = FALSE)
 PENDENTE:
   - cite_fsimres
 -->
-
-# Introducción a la simulación {#intro}
-
-
-
 
 Cuando pensamos en ciencia pensamos en experimentos y en modelos. 
 Se experimenta una y otra vez sobre el fenómeno real que se desea conocer mejor para, con la información así acumulada, construir un modelo teórico, que no es sino una representación simplificada (más o menos acertada) del fenómeno real.
@@ -125,7 +126,7 @@ lines(density(nsobres))
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{01-Introduccion_files/figure-latex/distr-ealbum-1} 
+{\centering \includegraphics[width=0.75\linewidth]{01-Introduccion_files/figure-latex/distr-ealbum-1} 
 
 }
 
@@ -141,7 +142,7 @@ sol
 ```
 
 ```
-## [1] 61.775
+ ## [1] 61.775
 ```
 
 <!-- 
@@ -156,7 +157,7 @@ abline(h = sol)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{01-Introduccion_files/figure-latex/unnamed-chunk-4-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{01-Introduccion_files/figure-latex/unnamed-chunk-3-1} \end{center}
 -->
 
 Número mínimo de sobres para asegurar de que se completa la colección con una probabilidad del 95\%:
@@ -168,8 +169,8 @@ ceiling(nmin)
 ```
 
 ```
-## 95% 
-##  92
+ ## 95% 
+ ##  92
 ```
 
 ```r
@@ -178,8 +179,8 @@ ceiling(nmin)*0.8
 ```
 
 ```
-##  95% 
-## 73.6
+ ##  95% 
+ ## 73.6
 ```
 
 ```r
@@ -192,7 +193,7 @@ abline(v = nmin, lty = 2)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{01-Introduccion_files/figure-latex/distr-ealbum2-1} 
+{\centering \includegraphics[width=0.75\linewidth]{01-Introduccion_files/figure-latex/distr-ealbum2-1} 
 
 }
 
@@ -201,6 +202,8 @@ abline(v = nmin, lty = 2)
 
 Por supuesto, la distribución del gasto necesario para completar la colección es esta misma reescalada.
 
+(ref:mc-plot-ealbum) Gráficos exploratorios de las simulaciones del gasto para completar la colección obtenidos con la función `simres::mc.plot()`.
+
 
 ```r
 res <- simres::mc.plot(nsobres*0.8)
@@ -208,11 +211,11 @@ res <- simres::mc.plot(nsobres*0.8)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.9\linewidth]{01-Introduccion_files/figure-latex/mc-plot-ealbum-1} 
+{\centering \includegraphics[width=1\linewidth]{01-Introduccion_files/figure-latex/mc-plot-ealbum-1} 
 
 }
 
-\caption{Gráficos exploratorios de las simulaciones del gasto para completar la colección obtenidos con la función `simres::mc.plot()`.}(\#fig:mc-plot-ealbum)
+\caption{(ref:mc-plot-ealbum)}(\#fig:mc-plot-ealbum)
 \end{figure}
 
 Aproximación del gasto medio:
@@ -223,7 +226,7 @@ res$approx  # sol*0.8
 ```
 
 ```
-## [1] 49.42
+ ## [1] 49.42
 ```
  
 En el Ejercicio \@ref(exr:album) se propone modificar este código para obtener información adicional sobre la evolución del número de cromos distintos dependiendo de los sobres comprados por un coleccionista.
@@ -380,10 +383,11 @@ Por ejemplo, el paquete [`randtoolbox`](https://CRAN.R-project.org/package=randt
 ```r
 library(randtoolbox)
 n <- 2000
-par.old <- par( mfrow=c(1,3))
+par.old <- par(mfrow = c(1, 3))
 plot(halton(n, dim = 2), xlab = 'x1', ylab = 'x2')
 plot(sobol(n, dim = 2), xlab = 'x1', ylab = 'x2')
 plot(torus(n, dim = 2), xlab = 'x1', ylab = 'x2')
+par(par.old)
 ```
 
 \begin{figure}[!htb]
@@ -394,10 +398,6 @@ plot(torus(n, dim = 2), xlab = 'x1', ylab = 'x2')
 
 \caption{Secuencias cuasi-aleatorias bidimensionales obtenidas con los métodos de Halton (izquierda), Sobol (centro) y Torus (derecha).}(\#fig:randtoolbox)
 \end{figure}
-
-```r
-par(par.old)
-```
 
 En este libro sólo consideraremos los números pseudoaleatorios y por comodidad se eliminará el prefijo "pseudo" en algunos casos.
 
@@ -590,7 +590,7 @@ set.seed(1)
 ```
 
 ```
-## [1] 10403
+ ## [1] 10403
 ```
 Los dos últimos dígitos se corresponden con el generador, las centenas con el método de generación de normales y las decenas de millar con el método uniforme discreto. 
 
@@ -682,12 +682,12 @@ CPUtimeprint()
 ```
 
 ```
-## Tiempo última operación:
-##    user  system elapsed 
-##    0.17    0.02    0.19 
-## Tiempo total operación:
-##    user  system elapsed 
-##    0.17    0.02    0.19
+ ## Tiempo última operación:
+ ##    user  system elapsed 
+ ##    0.06    0.00    0.06 
+ ## Tiempo total operación:
+ ##    user  system elapsed 
+ ##    0.06    0.00    0.06
 ```
 
 ```r
@@ -696,12 +696,12 @@ CPUtimeprint()
 ```
 
 ```
-## Tiempo última operación:
-##    user  system elapsed 
-##    0.02    0.00    0.01 
-## Tiempo total operación:
-##    user  system elapsed 
-##    0.19    0.02    0.20
+ ## Tiempo última operación:
+ ##    user  system elapsed 
+ ##       0       0       0 
+ ## Tiempo total operación:
+ ##    user  system elapsed 
+ ##    0.06    0.00    0.06
 ```
 
 
@@ -728,7 +728,7 @@ Hay diversos paquetes que implementan herramientas similares, por ejemplo:
     ```
     
     ```
-    ## inner: 0 sec elapsed
+     ## inner: 0 sec elapsed
     ```
     
     ```r
@@ -736,7 +736,7 @@ Hay diversos paquetes que implementan herramientas similares, por ejemplo:
     ```
     
     ```
-    ## middle: 0.02 sec elapsed
+     ## middle: 0 sec elapsed
     ```
     
     ```r
@@ -744,7 +744,7 @@ Hay diversos paquetes que implementan herramientas similares, por ejemplo:
     ```
     
     ```
-    ## outer: 0.17 sec elapsed
+     ## outer: 0.05 sec elapsed
     ```
     
     ```r
@@ -763,11 +763,11 @@ Hay diversos paquetes que implementan herramientas similares, por ejemplo:
     ```
     
     ```
-    ## 'data.frame':	10 obs. of  4 variables:
-    ##  $ tic         : num  7.28 7.29 7.29 7.29 7.29 7.29 7.29 7.29 7.29 7.29
-    ##  $ toc         : num  7.29 7.29 7.29 7.29 7.29 7.29 7.29 7.29 7.29 7.29
-    ##  $ msg         : chr  "1" "2" "3" "4" ...
-    ##  $ callback_msg: chr  "1: 0.01 sec elapsed" "2: 0 sec elapsed" "3: 0 sec elapsed" "4: 0 sec elapsed" ...
+     ## 'data.frame':	10 obs. of  4 variables:
+     ##  $ tic         : num  3.45 3.45 3.45 3.45 3.45 3.45 3.45 3.46 3.46 3.46
+     ##  $ toc         : num  3.45 3.45 3.45 3.45 3.45 3.45 3.46 3.46 3.46 3.46
+     ##  $ msg         : chr  "1" "2" "3" "4" ...
+     ##  $ callback_msg: chr  "1: 0 sec elapsed" "2: 0 sec elapsed" "3: 0 sec elapsed"..
     ```
     
     ```r
@@ -779,8 +779,8 @@ Hay diversos paquetes que implementan herramientas similares, por ejemplo:
     ```
     
     ```
-    ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    ##   0.000   0.000   0.000   0.001   0.000   0.010
+     ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     ##   0.000   0.000   0.000   0.001   0.000   0.010
     ```
 
 * La función [`cpu.time()`](https://rubenfcasal.github.io/simres/reference/cpu.time.html) del paquete `simres`:

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="es" xml:lang="es">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>8.3 Variables de control | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="8.3 Variables de control | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,28 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -273,7 +295,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.4.4" data-path="aplic-inf.html"><a href="aplic-inf.html#comparación-de-estimadores"><i class="fa fa-check"></i><b>7.4.4</b> Comparación de estimadores</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="técnicas-de-reducción-de-la-varianza.html"><a href="técnicas-de-reducción-de-la-varianza.html"><i class="fa fa-check"></i><b>8</b> Técnicas de reducción de la varianza</a>
+<li class="chapter" data-level="8" data-path="red-varianza.html"><a href="red-varianza.html"><i class="fa fa-check"></i><b>8</b> Técnicas de reducción de la varianza</a>
 <ul>
 <li class="chapter" data-level="8.1" data-path="variables-antitéticas.html"><a href="variables-antitéticas.html"><i class="fa fa-check"></i><b>8.1</b> Variables antitéticas</a>
 <ul>
@@ -326,7 +348,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.3.3" data-path="boot-test.html"><a href="boot-test.html#contrastes-semiparametricos"><i class="fa fa-check"></i><b>11.3.3</b> Contrastes bootstrap semiparamétricos</a></li>
 </ul></li>
 </ul></li>
-<li class="appendix"><span><b>Apendices</b></span></li>
+<li class="appendix"><span><b>Apéndices</b></span></li>
 <li class="chapter" data-level="A" data-path="gof-aleat.html"><a href="gof-aleat.html"><i class="fa fa-check"></i><b>A</b> Bondad de Ajuste y Aleatoriedad</a>
 <ul>
 <li class="chapter" data-level="A.1" data-path="gof.html"><a href="gof.html"><i class="fa fa-check"></i><b>A.1</b> Métodos de bondad de ajuste</a>
@@ -399,7 +421,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
 <ul>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
 <li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
@@ -460,32 +482,32 @@ la estimación sería:
 <p><span id="exm:integral-contr" class="example"><strong>Ejemplo 8.4  (Integración Monte Carlo con variables de control) </strong></span><br></p>
 <p>Continuando con los ejemplos <a href="variables-antitéticas.html#exm:integrala">8.1</a> y <a href="estratificación.html#exm:integrale">8.3</a>, aproximaremos la integral empleando la variable <span class="math inline">\(U\sim\mathcal{U}(0,2)\)</span> para controlar la variable <span class="math inline">\(e^{U}\)</span>.</p>
 <p>Se trata de calcular la media de <span class="math inline">\(exp(\mathcal{U}(a,b))\)</span>:</p>
-<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="variables-de-control.html#cb498-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">0</span>; b <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb498-2"><a href="variables-de-control.html#cb498-2" aria-hidden="true" tabindex="-1"></a>teor <span class="ot">&lt;-</span> (<span class="fu">exp</span>(b)<span class="sc">-</span><span class="fu">exp</span>(a))<span class="sc">/</span>(b<span class="sc">-</span>a)</span>
-<span id="cb498-3"><a href="variables-de-control.html#cb498-3" aria-hidden="true" tabindex="-1"></a>teor</span></code></pre></div>
+<div class="sourceCode" id="cb499"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb499-1"><a href="variables-de-control.html#cb499-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">0</span>; b <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb499-2"><a href="variables-de-control.html#cb499-2" aria-hidden="true" tabindex="-1"></a>teor <span class="ot">&lt;-</span> (<span class="fu">exp</span>(b)<span class="sc">-</span><span class="fu">exp</span>(a))<span class="sc">/</span>(b<span class="sc">-</span>a)</span>
+<span id="cb499-3"><a href="variables-de-control.html#cb499-3" aria-hidden="true" tabindex="-1"></a>teor</span></code></pre></div>
 <pre><code>## [1] 3.194528</code></pre>
 <p>Aproximación clásica por simulación:</p>
-<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="variables-de-control.html#cb500-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
-<span id="cb500-2"><a href="variables-de-control.html#cb500-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb500-3"><a href="variables-de-control.html#cb500-3" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">runif</span>(nsim, a, b)</span>
-<span id="cb500-4"><a href="variables-de-control.html#cb500-4" aria-hidden="true" tabindex="-1"></a>expu <span class="ot">&lt;-</span> <span class="fu">exp</span>(u)</span>
-<span id="cb500-5"><a href="variables-de-control.html#cb500-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(expu) </span></code></pre></div>
+<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb501-1"><a href="variables-de-control.html#cb501-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
+<span id="cb501-2"><a href="variables-de-control.html#cb501-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb501-3"><a href="variables-de-control.html#cb501-3" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">runif</span>(nsim, a, b)</span>
+<span id="cb501-4"><a href="variables-de-control.html#cb501-4" aria-hidden="true" tabindex="-1"></a>expu <span class="ot">&lt;-</span> <span class="fu">exp</span>(u)</span>
+<span id="cb501-5"><a href="variables-de-control.html#cb501-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(expu) </span></code></pre></div>
 <pre><code>## [1] 3.182118</code></pre>
 <p>Con variable control:</p>
-<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="variables-de-control.html#cb502-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(u, expu)</span>
-<span id="cb502-2"><a href="variables-de-control.html#cb502-2" aria-hidden="true" tabindex="-1"></a>reg <span class="ot">&lt;-</span> <span class="fu">lm</span>(expu <span class="sc">~</span> u)<span class="sc">$</span>coef</span>
-<span id="cb502-3"><a href="variables-de-control.html#cb502-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(reg, <span class="at">col=</span><span class="st">&#39;blue&#39;</span>)</span></code></pre></div>
-<p><img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb503-1"><a href="variables-de-control.html#cb503-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary(lm(expu ~ u)) # R-squared: 0.9392</span></span>
-<span id="cb503-2"><a href="variables-de-control.html#cb503-2" aria-hidden="true" tabindex="-1"></a>reg[<span class="dv">1</span>]<span class="sc">+</span>reg[<span class="dv">2</span>] <span class="co"># Coincidirá con la solución mean(expuc)</span></span></code></pre></div>
+<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb503-1"><a href="variables-de-control.html#cb503-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(u, expu)</span>
+<span id="cb503-2"><a href="variables-de-control.html#cb503-2" aria-hidden="true" tabindex="-1"></a>reg <span class="ot">&lt;-</span> <span class="fu">lm</span>(expu <span class="sc">~</span> u)<span class="sc">$</span>coef</span>
+<span id="cb503-3"><a href="variables-de-control.html#cb503-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(reg, <span class="at">col=</span><span class="st">&#39;blue&#39;</span>)</span></code></pre></div>
+<p><img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-13-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="variables-de-control.html#cb504-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary(lm(expu ~ u)) # R-squared: 0.9392</span></span>
+<span id="cb504-2"><a href="variables-de-control.html#cb504-2" aria-hidden="true" tabindex="-1"></a>reg[<span class="dv">1</span>]<span class="sc">+</span>reg[<span class="dv">2</span>] <span class="co"># Coincidirá con la solución mean(expuc)</span></span></code></pre></div>
 <pre><code>## (Intercept) 
 ##    3.204933</code></pre>
 <p>Lo siguiente ya no sería necesario:</p>
-<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb505-1"><a href="variables-de-control.html#cb505-1" aria-hidden="true" tabindex="-1"></a>expuc <span class="ot">&lt;-</span> expu <span class="sc">-</span> reg[<span class="dv">2</span>]<span class="sc">*</span>(u<span class="dv">-1</span>)</span>
-<span id="cb505-2"><a href="variables-de-control.html#cb505-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(expuc)  </span></code></pre></div>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="variables-de-control.html#cb506-1" aria-hidden="true" tabindex="-1"></a>expuc <span class="ot">&lt;-</span> expu <span class="sc">-</span> reg[<span class="dv">2</span>]<span class="sc">*</span>(u<span class="dv">-1</span>)</span>
+<span id="cb506-2"><a href="variables-de-control.html#cb506-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(expuc)  </span></code></pre></div>
 <pre><code>## [1] 3.204933</code></pre>
 <p>Estimación del porcentaje de reducción en la varianza:</p>
-<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="variables-de-control.html#cb507-1" aria-hidden="true" tabindex="-1"></a><span class="dv">100</span><span class="sc">*</span>(<span class="fu">var</span>(expu)<span class="sc">-</span><span class="fu">var</span>(expuc))<span class="sc">/</span><span class="fu">var</span>(expu)</span></code></pre></div>
+<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="variables-de-control.html#cb508-1" aria-hidden="true" tabindex="-1"></a><span class="dv">100</span><span class="sc">*</span>(<span class="fu">var</span>(expu)<span class="sc">-</span><span class="fu">var</span>(expuc))<span class="sc">/</span><span class="fu">var</span>(expu)</span></code></pre></div>
 <pre><code>## [1] 93.91555</code></pre>
 </div>
 </div>

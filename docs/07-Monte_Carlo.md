@@ -1,5 +1,6 @@
 # Métodos Monte Carlo {#monte-carlo}
 
+<!-- Capítulo \@ref(monte-carlo) -->
 
 
 
@@ -121,24 +122,13 @@ fun <- function(x) ifelse((x > 0) & (x < 1), 4 * x^4, 0)
 curve(fun, 0, 1)
 abline(h = 0, lty = 2)
 abline(v = c(0, 1), lty = 2)
-```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/int-mc-clas-1} 
-
-}
-
-\caption{Ejemplo de integral en dominio acotado.}(\#fig:int-mc-clas)
-\end{figure}
-
-```r
 set.seed(1)
 mc.integral0(fun, 0, 1, 20)
 ```
 
 ```
-## [1] 0.977663
+ ## [1] 0.977663
 ```
 
 ```r
@@ -146,7 +136,7 @@ mc.integral0(fun, 0, 1, 100)
 ```
 
 ```
-## [1] 0.7311169
+ ## [1] 0.7311169
 ```
 
 ```r
@@ -154,8 +144,17 @@ mc.integral0(fun, 0, 1, 100)
 ```
 
 ```
-## [1] 0.8304299
+ ## [1] 0.8304299
 ```
+
+\begin{figure}[!htb]
+
+{\centering \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/int-mc-clas-1} 
+
+}
+
+\caption{Ejemplo de integral en dominio acotado.}(\#fig:int-mc-clas)
+\end{figure}
 
 La función `mc.integral0` no es adecuada para analizar la convergencia de la aproximación por simulación.
 Una alternativa más eficiente para representar gráficamente la convergencia está implementada en la función  [`mc.integral()`](https://rubenfcasal.github.io/simres/reference/mc.integral.html) del paquete [`simres`](https://rubenfcasal.github.io/simres) (fichero [*mc.plot.R*](R/mc.plot.R)):
@@ -167,16 +166,16 @@ mc.integral
 ```
 
 ```
-## function(fun, a, b, n, level = 0.95, plot = TRUE, ...) {
-##   fx <- sapply(runif(n, a, b), fun) * (b - a)
-##   result <- if (plot) conv.plot(fx, level = level, ...) else {
-##     q <- qnorm((1 + level)/2)
-##     list(approx = mean(fx), max.error = q * sd(fx)/sqrt(n))
-##   }
-##   return(result)
-## }
-## <bytecode: 0x000001df4f92f7d0>
-## <environment: namespace:simres>
+ ## function(fun, a, b, n, level = 0.95, plot = TRUE, ...) {
+ ##   fx <- sapply(runif(n, a, b), fun) * (b - a)
+ ##   result <- if (plot) conv.plot(fx, level = level, ...) else {
+ ##     q <- qnorm((1 + level)/2)
+ ##     list(approx = mean(fx), max.error = q * sd(fx)/sqrt(n))
+ ##   }
+ ##   return(result)
+ ## }
+ ## <bytecode: 0x000001a110d6ee08>
+ ## <environment: namespace:simres>
 ```
 
 ```r
@@ -185,11 +184,11 @@ mc.integral(fun, 0, 1, 5000, ylim = c(0.2, 1.4))
 ```
 
 ```
-## $approx
-## [1] 0.8142206
-## 
-## $max.error
-## [1] 0.03028194
+ ## $approx
+ ## [1] 0.8142206
+ ## 
+ ## $max.error
+ ## [1] 0.03028194
 ```
 
 ```r
@@ -198,7 +197,7 @@ abline(h = 4/5, lty = 2, col = "blue")
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/mc-integral-1} 
+{\centering \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/mc-integral-1} 
 
 }
 
@@ -214,11 +213,11 @@ mc.integral(fun, 0, 1, 5000, plot = FALSE)
 ```
 
 ```
-## $approx
-## [1] 0.8142206
-## 
-## $max.error
-## [1] 0.03028194
+ ## $approx
+ ## [1] 0.8142206
+ ## 
+ ## $max.error
+ ## [1] 0.03028194
 ```
 
 **Nota**: Es importante tener en cuenta que la función `mc.integral()` solo es válida para dominio finito.
@@ -254,7 +253,7 @@ res
 ```
 
 ```
-## [1] 0.7967756
+ ## [1] 0.7967756
 ```
 
 ```r
@@ -264,7 +263,7 @@ error
 ```
 
 ```
-## [1] 0.004728174
+ ## [1] 0.004728174
 ```
 
 Esta forma de proceder permite aproximar integrales impropias en las que el dominio de integración no es acotado.
@@ -287,7 +286,7 @@ mean(x > 4.5) # mean(h(x))
 ```
 
 ```
-## [1] 0
+ ## [1] 0
 ```
 
 ```r
@@ -295,7 +294,7 @@ pnorm(-4.5)  # valor teórico P(X > 4.5)
 ```
 
 ```
-## [1] 3.397673e-06
+ ## [1] 3.397673e-06
 ```
 
 De esta forma es difícil que se generen valores (en este caso ninguno) en la región que interesaría para la aproximación de la integral:
@@ -306,7 +305,7 @@ any(x > 4.5)
 ```
 
 ```
-## [1] FALSE
+ ## [1] FALSE
 ```
 
 Como ya se comentó anteriormente, sería preferible generar más valores donde hay mayor "área", pero en este caso $f$ concentra la densidad en una región que no resulta de utilidad.
@@ -367,7 +366,7 @@ curve(dexp(x - 4.5) * escala, add = TRUE, lty = 2)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/mc-imp-int-1} 
+{\centering \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/mc-imp-int-1} 
 
 }
 
@@ -391,7 +390,7 @@ mean(w) # mean(w*h(y))
 ```
 
 ```
-## [1] 3.144811e-06
+ ## [1] 3.144811e-06
 ```
 
 ```r
@@ -399,19 +398,19 @@ pnorm(-4.5)  # valor teórico
 ```
 
 ```
-## [1] 3.397673e-06
+ ## [1] 3.397673e-06
 ```
 
 Representamos gráficamente la aproximación en función del número de simulaciones:
 
 ```r
 plot(cumsum(w)/1:nsim, type = "l", ylab = "Aproximación", xlab = "Iteraciones")
-abline(h = pnorm(-4.5), lty = 2)
+abline(h = pnorm(-4.5), lty = 2, col = "blue")
 ```
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/mc-imp-conv-1} 
+{\centering \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/mc-imp-conv-1} 
 
 }
 
@@ -425,7 +424,7 @@ sqrt(var(w)/nsim) # sd(w*h(y))/sqrt(nsim)
 ```
 
 ```
-## [1] 1.371154e-07
+ ## [1] 1.371154e-07
 ```
 Mientras que empleando la aproximación tradicional:
 
@@ -435,7 +434,7 @@ est
 ```
 
 ```
-## [1] 0
+ ## [1] 0
 ```
 
 ```r
@@ -443,7 +442,7 @@ sqrt(est * (1 - est)/nsim)
 ```
 
 ```
-## [1] 0
+ ## [1] 0
 ```
 :::
 
@@ -476,7 +475,7 @@ mean(w * (y > 2) * (y < 6))
 ```
 
 ```
-## [1] 0.09929348
+ ## [1] 0.09929348
 ```
 
 ```r
@@ -484,19 +483,19 @@ pcauchy(6) - pcauchy(2)  # Valor teórico
 ```
 
 ```
-## [1] 0.09501516
+ ## [1] 0.09501516
 ```
 
 Si se estudia la convergencia:
 
 ```r
 plot(cumsum(w * (y > 2) * (y < 6))/1:nsim, type = "l", ylab = "Aproximación", xlab = "Iteraciones")
-abline(h = pcauchy(6) - pcauchy(2), lty = 2)
+abline(h = pcauchy(6) - pcauchy(2), lty = 2, col = "blue")
 ```
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/mc-imp2-conv-1} 
+{\centering \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/mc-imp2-conv-1} 
 
 }
 
@@ -513,7 +512,7 @@ boxplot(nsim * w/sum(w))
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/mc-imp2-boxplot-1} 
+{\centering \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/mc-imp2-boxplot-1} 
 
 }
 
@@ -568,7 +567,7 @@ curve(dnorm, col = "blue", add = TRUE)
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/imp-res-1} 
+{\centering \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/imp-res-1} 
 
 }
 
@@ -652,7 +651,7 @@ curve(0.25 * dnorm(x, mu1, sd1) + 0.75 * dnorm(x, mu2, sd2), add = TRUE)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 Podemos obtener la estimación por máxima verosimilitud de los parámetros empleando la rutina `nlm` para minimizar el logaritmo (negativo) de la función de verosimilitud:
 
@@ -732,17 +731,17 @@ for (j in 1:nstarts){
 }
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-18-1} \end{center}
-
 ```
-## par =  -0.03892511 2.494589 , value = 361.5712 
-## par =  -0.03892501 2.494589 , value = 361.5712 
-## par =  -0.03892507 2.494589 , value = 361.5712 
-## par =  3.132201 0.9628536 , value = 379.3739 
-## par =  20.51013 1.71201 , value = 474.1414
+ ## par =  -0.03892511 2.494589 , value = 361.5712 
+ ## par =  -0.03892501 2.494589 , value = 361.5712 
+ ## par =  -0.03892507 2.494589 , value = 361.5712 
+ ## par =  3.132201 0.9628536 , value = 379.3739 
+ ## par =  20.51013 1.71201 , value = 474.1414
 ```
+
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 :::
 
@@ -781,7 +780,7 @@ Al tener una probabilidad no nula de aceptar una modificación “cuesta arriba�
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.7\linewidth]{images/templesimulado} 
+{\centering \includegraphics[width=0.75\linewidth]{images/templesimulado} 
 
 }
 
@@ -861,17 +860,17 @@ for (j in 1:nstarts){
 }
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-21-1} \end{center}
-
 ```
-## par =  0.0002023461 2.473437 , value = 361.6372 
-## par =  -0.182735 2.45585 , value = 362.0255 
-## par =  -0.0281341 2.484467 , value = 361.5801 
-## par =  -0.03642928 2.488626 , value = 361.5732 
-## par =  0.6814165 2.370026 , value = 374.839
+ ## par =  0.0002023461 2.473437 , value = 361.6372 
+ ## par =  -0.182735 2.45585 , value = 362.0255 
+ ## par =  -0.0281341 2.484467 , value = 361.5801 
+ ## par =  -0.03642928 2.488626 , value = 361.5732 
+ ## par =  0.6814165 2.370026 , value = 374.839
 ```
+
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-20-1} \end{center}
 
 
 Como alternativa podríamos emplear la siguiente función basada en el algoritmo del Ejemplo 5.9 de Robert y Casella (2010):
@@ -921,17 +920,17 @@ for (j in 1:nstarts) {
 }
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-22-1} \end{center}
-
 ```
-## par =  -0.2091332 2.341469 , value = 363.0035 
-## par =  -0.2986682 2.573345 , value = 363.6607 
-## par =  -0.4708455 2.425984 , value = 365.3277 
-## par =  -0.3454382 2.446332 , value = 363.5074 
-## par =  -0.1236326 2.464842 , value = 361.7403
+ ## par =  -0.2091332 2.341469 , value = 363.0035 
+ ## par =  -0.2986682 2.573345 , value = 363.6607 
+ ## par =  -0.4708455 2.425984 , value = 365.3277 
+ ## par =  -0.3454382 2.446332 , value = 363.5074 
+ ## par =  -0.1236326 2.464842 , value = 361.7403
 ```
+
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 :::
 
@@ -985,16 +984,16 @@ der <- DEoptim(tee.optim2d(like), lower, upper, DEoptim.control(itermax = 10))
 ```
 
 ```
-## Iteration: 1 bestvalit: 373.132461 bestmemit:   -0.764103    2.196961
-## Iteration: 2 bestvalit: 367.580379 bestmemit:   -0.430095    2.196961
-## Iteration: 3 bestvalit: 367.580379 bestmemit:   -0.430095    2.196961
-## Iteration: 4 bestvalit: 367.580379 bestmemit:   -0.430095    2.196961
-## Iteration: 5 bestvalit: 361.906887 bestmemit:    0.058951    2.455186
-## Iteration: 6 bestvalit: 361.906887 bestmemit:    0.058951    2.455186
-## Iteration: 7 bestvalit: 361.906887 bestmemit:    0.058951    2.455186
-## Iteration: 8 bestvalit: 361.657986 bestmemit:   -0.064005    2.452184
-## Iteration: 9 bestvalit: 361.657986 bestmemit:   -0.064005    2.452184
-## Iteration: 10 bestvalit: 361.657986 bestmemit:   -0.064005    2.452184
+ ## Iteration: 1 bestvalit: 373.132461 bestmemit:   -0.764103    2.196961
+ ## Iteration: 2 bestvalit: 367.580379 bestmemit:   -0.430095    2.196961
+ ## Iteration: 3 bestvalit: 367.580379 bestmemit:   -0.430095    2.196961
+ ## Iteration: 4 bestvalit: 367.580379 bestmemit:   -0.430095    2.196961
+ ## Iteration: 5 bestvalit: 361.906887 bestmemit:    0.058951    2.455186
+ ## Iteration: 6 bestvalit: 361.906887 bestmemit:    0.058951    2.455186
+ ## Iteration: 7 bestvalit: 361.906887 bestmemit:    0.058951    2.455186
+ ## Iteration: 8 bestvalit: 361.657986 bestmemit:   -0.064005    2.452184
+ ## Iteration: 9 bestvalit: 361.657986 bestmemit:   -0.064005    2.452184
+ ## Iteration: 10 bestvalit: 361.657986 bestmemit:   -0.064005    2.452184
 ```
 
 ```r
@@ -1005,14 +1004,14 @@ points(der$optim$bestmem[1], der$optim$bestmem[2], pch = 19)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-23-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
 :::
 
 
 ## Métodos Monte Carlo en Inferencia Estadística {#aplic-inf}
 
-*** Work in progress ***: Esta sección es muy preliminar y variará en siguientes versiones
+***Work in progress***: Esta sección es muy preliminar y variará en siguientes ediciones.
 
 <!-- 
 Pendiente: 
@@ -1113,17 +1112,17 @@ a)  Crear un conjunto de datos `muestras` con 500 muestras de tamaño
     ```
     
     ```
-    ## 'data.frame':	500 obs. of  10 variables:
-    ##  $ obs1 : num  0.642 -0.856 -0.568 -2.301 0.184 ...
-    ##  $ obs2 : num  3.483 2.216 1.1 4.305 0.677 ...
-    ##  $ obs3 : num  1.24 -1.51 -3.98 2.29 2.46 ...
-    ##  $ obs4 : num  3.286 0.947 0.953 -1.663 2.623 ...
-    ##  $ obs5 : num  3.77 -1.34 1.61 -2.46 1.11 ...
-    ##  $ obs6 : num  -2.044 0.32 3.046 0.136 3.555 ...
-    ##  $ obs7 : num  0.6186 -1.8614 4.3386 0.0996 0.8334 ...
-    ##  $ obs8 : num  -0.829 2.202 -1.688 1.534 -0.114 ...
-    ##  $ obs9 : num  0.4904 -0.6713 0.5451 -0.6517 0.0168 ...
-    ##  $ obs10: num  2.79 2.84 1.27 3.93 2.17 ...
+     ## 'data.frame':	500 obs. of  10 variables:
+     ##  $ obs1 : num  0.642 -0.856 -0.568 -2.301 0.184 ...
+     ##  $ obs2 : num  3.483 2.216 1.1 4.305 0.677 ...
+     ##  $ obs3 : num  1.24 -1.51 -3.98 2.29 2.46 ...
+     ##  $ obs4 : num  3.286 0.947 0.953 -1.663 2.623 ...
+     ##  $ obs5 : num  3.77 -1.34 1.61 -2.46 1.11 ...
+     ##  $ obs6 : num  -2.044 0.32 3.046 0.136 3.555 ...
+     ##  $ obs7 : num  0.6186 -1.8614 4.3386 0.0996 0.8334 ...
+     ##  $ obs8 : num  -0.829 2.202 -1.688 1.534 -0.114 ...
+     ##  $ obs9 : num  0.4904 -0.6713 0.5451 -0.6517 0.0168 ...
+     ##  $ obs10: num  2.79 2.84 1.27 3.93 2.17 ...
     ```
     
     Estimaciones:
@@ -1144,10 +1143,10 @@ a)  Crear un conjunto de datos `muestras` con 500 muestras de tamaño
     ```
     
     ```
-    ##               obs1     obs2     obs3    obs4     obs5     obs6      obs7
-    ## muestra1 0.6421985 3.482661 1.242483 3.28559 3.766896 -2.04443 0.6186323
-    ##                obs8      obs9    obs10     mean       sd
-    ## muestra1 -0.8293636 0.4903819 2.790091 1.344514 1.951292
+     ##               obs1     obs2     obs3    obs4     obs5     obs6      obs7
+     ## muestra1 0.6421985 3.482661 1.242483 3.28559 3.766896 -2.04443 0.6186323
+     ##                obs8      obs9    obs10     mean       sd
+     ## muestra1 -0.8293636 0.4903819 2.790091 1.344514 1.951292
     ```
     
 Normalmente emplearemos sin embargo una ordenación por columnas (cada fila se corresponderá con una generación).
@@ -1173,7 +1172,7 @@ b)  Generar el histograma (en escala de densidades) de las medias
     
     \begin{figure}[!htb]
     
-    {\centering \includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/mednorm-1} 
+    {\centering \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/mednorm-1} 
     
     }
     
@@ -1253,7 +1252,7 @@ a)  Repetir el Ejercicio \@ref(exr:distr-media) anterior considerando muestras d
     
     \begin{figure}[!htb]
     
-    {\centering \includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/medexp-1} 
+    {\centering \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/medexp-1} 
     
     }
     
@@ -1307,7 +1306,7 @@ a)  Utilizando el conjunto de datos `muestras` del ejercicio 1 (500
     ```
     
     ```
-    ## [1] 480
+     ## [1] 480
     ```
     
     ```r
@@ -1315,7 +1314,7 @@ a)  Utilizando el conjunto de datos `muestras` del ejercicio 1 (500
     ```
     
     ```
-    ## [1] 96
+     ## [1] 96
     ```
     
     ```r
@@ -1323,7 +1322,7 @@ a)  Utilizando el conjunto de datos `muestras` del ejercicio 1 (500
     ```
     
     ```
-    ## [1] 95
+     ## [1] 95
     ```
     
     Como ejemplo ilustrativo, generamos el gráfico de los primeros 50 intervalos:
@@ -1338,20 +1337,17 @@ a)  Utilizando el conjunto de datos `muestras` del ejercicio 1 (500
          xlab = "Muestra", ylab = "IC")
     arrows(1:m, ici, 1:m, ics, angle = 90, length = 0.05, code = 3, col = color)
     abline(h = mux, lty = 3)
+    detach(tmp)
     ```
     
     \begin{figure}[!htb]
     
-    {\centering \includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/cobicnorm-1} 
+    {\centering \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/cobicnorm-1} 
     
     }
     
     \caption{Cobertura de las estimaciones por IC.}(\#fig:cobicnorm)
     \end{figure}
-    
-    ```r
-    detach(tmp)
-    ```
 
 b)  Repetir el apartado anterior considerando muestras de una
     $Exp(1)$. ¿Qué ocurre con la cobertura del intervalo de
@@ -1379,7 +1375,7 @@ b)  Repetir el apartado anterior considerando muestras de una
     ```
     
     ```
-    ## [1] 469
+     ## [1] 469
     ```
     
     ```r
@@ -1387,7 +1383,7 @@ b)  Repetir el apartado anterior considerando muestras de una
     ```
     
     ```
-    ## [1] 93.8
+     ## [1] 93.8
     ```
     
     ```r
@@ -1395,7 +1391,7 @@ b)  Repetir el apartado anterior considerando muestras de una
     ```
     
     ```
-    ## [1] 95
+     ## [1] 95
     ```
     
     Como ejemplo ilustrativo, generamos el gráfico de los primeros 100 intervalos:
@@ -1410,20 +1406,17 @@ b)  Repetir el apartado anterior considerando muestras de una
          xlab = "Muestra", ylab = "IC")
     arrows(1:m, ici, 1:m, ics, angle = 90, length = 0.05, code = 3, col = color)
     abline(h = muexp, lty = 3)
+    detach(tmp)
     ```
     
     \begin{figure}[!htb]
     
-    {\centering \includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/cobicexp-1} 
+    {\centering \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/cobicexp-1} 
     
     }
     
     \caption{Cobertura de las estimaciones por IC (bajo normalidad).}(\#fig:cobicexp)
     \end{figure}
-    
-    ```r
-    detach(tmp)
-    ```
 
 c)  ¿Qué ocurre si aumentamos el tamaño muestral a 50?
     
@@ -1469,7 +1462,7 @@ abline(v=ic.sim, lty=2, col='red')
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-35-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-34-1} \end{center}
 
 
 ::: {.remark}
@@ -1559,7 +1552,7 @@ a)  Teniendo en cuenta que la variable aleatoria $X=n\hat{p}\sim\mathcal{B}(n,p)
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-40-1} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-39-1} \end{center}
     
     Fuente [Suess y Trumbo (2010)](http://www.springer.com/gp/book/9780387402734).
 
@@ -1600,7 +1593,7 @@ b)  Repetir el apartado anterior considerando intervalos de
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-41-1} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-40-1} \end{center}
 
 c)  Repetir el apartado anterior empleando simulación para aproximar
     la cobertura.
@@ -1647,7 +1640,7 @@ c)  Repetir el apartado anterior empleando simulación para aproximar
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-44-1} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-43-1} \end{center}
 
 :::
 
@@ -1710,10 +1703,10 @@ a)  Analizar el comportamiento del contraste de Kolmogorov-Smirnov
     ```
     
     ```
-    ## 
-    ## Proporción de rechazos al 1% = 0 
-    ## Proporción de rechazos al 5% = 0 
-    ## Proporción de rechazos al 10% = 0.001
+     ## 
+     ## Proporción de rechazos al 1% = 0 
+     ## Proporción de rechazos al 5% = 0 
+     ## Proporción de rechazos al 10% = 0.001
     ```
     
     Análisis de los p-valores:
@@ -1722,13 +1715,6 @@ a)  Analizar el comportamiento del contraste de Kolmogorov-Smirnov
     ```r
     hist(pvalor, freq=FALSE)
     abline(h=1, lty=2)   # curve(dunif(x,0,1), add=TRUE)
-    ```
-    
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-47-1} \end{center}
-    
-    ```r
     # Distribución empírica
     curve(ecdf(pvalor)(x), type = "s", lwd = 2, 
           main = 'Tamaño del contraste', ylab = 'Proporción de rechazos', 
@@ -1738,7 +1724,7 @@ a)  Analizar el comportamiento del contraste de Kolmogorov-Smirnov
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-47-2} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-46-1} \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-46-2} \end{center}
 
 b)  Repetir el apartado anterior considerando el test de Lilliefors
     (rutina `lillie.test` del paquete `nortest`).
@@ -1787,10 +1773,10 @@ b)  Repetir el apartado anterior considerando el test de Lilliefors
     ```
     
     ```
-    ## 
-    ## Proporción de rechazos al 1% = 0.01 
-    ## Proporción de rechazos al 5% = 0.044 
-    ## Proporción de rechazos al 10% = 0.089
+     ## 
+     ## Proporción de rechazos al 1% = 0.01 
+     ## Proporción de rechazos al 5% = 0.044 
+     ## Proporción de rechazos al 10% = 0.089
     ```
     
     Análisis de los p-valores:
@@ -1799,13 +1785,7 @@ b)  Repetir el apartado anterior considerando el test de Lilliefors
     ```r
     hist(pvalor, freq=FALSE)
     abline(h=1, lty=2)   # curve(dunif(x,0,1), add=TRUE)
-    ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-52-1} \end{center}
-    
-    ```r
     # Distribución empírica
     curve(ecdf(pvalor)(x), type = "s", lwd = 2, main = 'Tamaño del contraste', 
           ylab = 'Proporción de rechazos', xlab = 'Nivel de significación')
@@ -1814,7 +1794,7 @@ b)  Repetir el apartado anterior considerando el test de Lilliefors
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-52-2} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-51-1} \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-51-2} \end{center}
 
 c)  Repetir el apartado a) contrastando una distribución exponencial
     y considerando 500 pruebas con muestras de tamaño 30 de una $Exp(1)$.
@@ -1855,10 +1835,10 @@ c)  Repetir el apartado a) contrastando una distribución exponencial
     ```
     
     ```
-    ## 
-    ## Proporción de rechazos al 1% = 0 
-    ## Proporción de rechazos al 5% = 0.004 
-    ## Proporción de rechazos al 10% = 0.008
+     ## 
+     ## Proporción de rechazos al 1% = 0 
+     ## Proporción de rechazos al 5% = 0.004 
+     ## Proporción de rechazos al 10% = 0.008
     ```
     
     Análisis de los p-valores:
@@ -1867,13 +1847,7 @@ c)  Repetir el apartado a) contrastando una distribución exponencial
     ```r
     hist(pvalor, freq=FALSE)
     abline(h=1, lty=2)   # curve(dunif(x,0,1), add=TRUE)
-    ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-56-1} \end{center}
-    
-    ```r
     # Distribución empírica
     curve(ecdf(pvalor)(x), type = "s", lwd = 2, 
           main = 'Tamaño del contraste', ylab = 'Proporción de rechazos', 
@@ -1883,7 +1857,7 @@ c)  Repetir el apartado a) contrastando una distribución exponencial
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-56-2} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-55-1} \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-55-2} \end{center}
 
 d)  Diseñar una rutina que permita realizar el contraste KS de
     bondad de ajuste de una variable exponencial aproximando el
@@ -1958,10 +1932,10 @@ d)  Diseñar una rutina que permita realizar el contraste KS de
     ```
     
     ```
-    ## 
-    ## Proporción de rechazos al 1% = 0.008 
-    ## Proporción de rechazos al 5% = 0.058 
-    ## Proporción de rechazos al 10% = 0.106
+     ## 
+     ## Proporción de rechazos al 1% = 0.008 
+     ## Proporción de rechazos al 5% = 0.058 
+     ## Proporción de rechazos al 10% = 0.106
     ```
     
     Análisis de los p-valores:
@@ -1970,13 +1944,7 @@ d)  Diseñar una rutina que permita realizar el contraste KS de
     ```r
     hist(pvalor, freq=FALSE)
     abline(h=1, lty=2)   # curve(dunif(x,0,1), add=TRUE)
-    ```
     
-    
-    
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-60-1} \end{center}
-    
-    ```r
     # Distribución empírica
     curve(ecdf(pvalor)(x), type = "s", lwd = 2, 
           main = 'Tamaño del contraste', ylab = 'Proporción de rechazos', 
@@ -1986,7 +1954,7 @@ d)  Diseñar una rutina que permita realizar el contraste KS de
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-60-2} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-59-1} \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-59-2} \end{center}
 
 e)  Estudiar la potencia de los contrastes de los apartados c) y d),
     considerando como alternativa una distribución Weibull.
@@ -2027,7 +1995,7 @@ e)  Estudiar la potencia de los contrastes de los apartados c) y d),
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/potencia-1} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/potencia-1} \end{center}
 
 :::
 
@@ -2066,7 +2034,7 @@ curve(0.95*dnorm(x, 0, 1) + 0.05*dnorm(x, 3, 3), add = TRUE)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/contaminada-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/contaminada-1} \end{center}
 :::
 
 ::: {.remark}
@@ -2104,7 +2072,7 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
     ```
     
     ```
-    ##  num [1:100] 0.197 -0.42 1.163 -0.406 0.744 ...
+     ##  num [1:100] 0.197 -0.42 1.163 -0.406 0.744 ...
     ```
     
     ```r
@@ -2113,7 +2081,7 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-62-1} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-61-1} \end{center}
     
     Calculamos los estimadores:
     
@@ -2131,7 +2099,7 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
     ```
     
     ```
-    ## [1] 0.1459986
+     ## [1] 0.1459986
     ```
     
     ```r
@@ -2139,7 +2107,7 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
     ```
     
     ```
-    ## [1] 0.1349537
+     ## [1] 0.1349537
     ```
     
     ```r
@@ -2147,7 +2115,7 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
     ```
     
     ```
-    ## [1] 0.04453509
+     ## [1] 0.04453509
     ```
     
     ```r
@@ -2155,7 +2123,7 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
     ```
     
     ```
-    ## [1] 0.1300611
+     ## [1] 0.1300611
     ```
     
     Sesgo:
@@ -2169,7 +2137,7 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-65-1} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-64-1} \end{center}
     
     Error cuadrático:
     
@@ -2181,7 +2149,7 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
     
     
     
-    \begin{center}\includegraphics[width=0.7\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-66-1} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-65-1} \end{center}
     
     Estadísticos error cuadrático:
     
@@ -2192,8 +2160,8 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
     ```
     
     ```
-    ##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-    ## 0.0000005 0.0045072 0.0206272 0.0394917 0.0591531 0.3619587
+     ##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+     ## 0.0000005 0.0045072 0.0206272 0.0394917 0.0591531 0.3619587
     ```
     
     ```r
@@ -2202,8 +2170,8 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
     ```
     
     ```
-    ##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-    ## 0.0000001 0.0016481 0.0070625 0.0188654 0.0243903 0.2618368
+     ##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+     ## 0.0000001 0.0016481 0.0070625 0.0188654 0.0243903 0.2618368
     ```
 
 
