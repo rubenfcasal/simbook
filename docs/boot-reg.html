@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>10.4 Bootstrap basado en modelos | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="10.4 Bootstrap basado en modelos | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -364,9 +368,9 @@ div.csl-indent {
 <li class="chapter" data-level="A.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>A.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="A.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>A.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="A.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>A.2.3</b> Gráfico de dispersion retardado</a></li>
-<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
 <li class="chapter" data-level="A.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>A.2.5</b> Test de rachas</a></li>
-<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
+<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#ljungbox"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
 <li class="chapter" data-level="A.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>A.3</b> Contrastes específicos para generadores aleatorios</a>
 <ul>
@@ -421,11 +425,13 @@ div.csl-indent {
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
 <ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -471,7 +477,7 @@ Una de las aplicaciones del bootstrap semiparamétrico es el contraste de hipót
 En este caso se suele reescribir como:
 <span class="math display">\[Y = m(\mathbf{X}) + \sigma(\mathbf{X}) \varepsilon,\]</span>
 siendo <span class="math inline">\(\sigma^2(\mathbf{x}) = Var\left( \left. Y\right\vert_{\mathbf{X}=\mathbf{x}} \right)\)</span> la varianza condicional y suponiendo adicionalmente que <span class="math inline">\(\varepsilon\)</span> tiene varianza uno.
-Se podría modificar el bootstrap residual para este caso pero habría que modelizar y estimar la varianza condicional<a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a>.</p>
+Se podría modificar el bootstrap residual para este caso pero habría que modelizar y estimar la varianza condicional<a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a>.</p>
 <p>En esta sección nos centraremos en el caso de regresión lineal:
 <span class="math display">\[m_{\boldsymbol{\beta}}(\mathbf{x}) =  \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \cdots + \beta_{p}X_{p},\]</span>
 siendo <span class="math inline">\(\boldsymbol{\beta} = \left( \beta_{0}, \beta_{1}, \ldots, \beta_{p} \right)^{\top}\)</span> el vector de parámetros (desconocidos).
@@ -491,20 +497,20 @@ Para ajustar el correspondiente modelo de regresión lineal podemos emplear el s
 ## lm(formula = prestige ~ income + education, data = Prestige)
 ## 
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -19.4040  -5.3308   0.0154   4.9803  17.6889 
+##     Min      1Q  Median      3Q     Max 
+## -19.404  -5.331   0.015   4.980  17.689 
 ## 
 ## Coefficients:
-##               Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) -6.8477787  3.2189771  -2.127   0.0359 *  
-## income       0.0013612  0.0002242   6.071 2.36e-08 ***
-## education    4.1374444  0.3489120  11.858  &lt; 2e-16 ***
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -6.847779   3.218977   -2.13    0.036 *  
+## income       0.001361   0.000224    6.07  2.4e-08 ***
+## education    4.137444   0.348912   11.86  &lt; 2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 7.81 on 99 degrees of freedom
-## Multiple R-squared:  0.798,  Adjusted R-squared:  0.7939 
-## F-statistic: 195.6 on 2 and 99 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Multiple R-squared:  0.798,  Adjusted R-squared:  0.794 
+## F-statistic:  196 on 2 and 99 DF,  p-value: &lt;2e-16</code></pre>
 <p>Como ejemplo, consideraremos que el objetivo es realizar inferencias sobre el coeficiente de determinación ajustado:</p>
 <div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="boot-reg.html#cb587-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">summary</span>(modelo)</span>
 <span id="cb587-2"><a href="boot-reg.html#cb587-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(res)</span></code></pre></div>
@@ -512,7 +518,7 @@ Para ajustar el correspondiente modelo de regresión lineal podemos emplear el s
 ##  [5] &quot;aliased&quot;       &quot;sigma&quot;         &quot;df&quot;            &quot;r.squared&quot;    
 ##  [9] &quot;adj.r.squared&quot; &quot;fstatistic&quot;    &quot;cov.unscaled&quot;</code></pre>
 <div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="boot-reg.html#cb589-1" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>adj.r.squared</span></code></pre></div>
-<pre><code>## [1] 0.7939201</code></pre>
+<pre><code>## [1] 0.79392</code></pre>
 <div id="boot-unif-reg" class="section level3 hasAnchor" number="10.4.1">
 <h3><span class="header-section-number">10.4.1</span> Remuestreo de las observaciones<a href="boot-reg.html#boot-unif-reg" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Como ya se comentó, en regresión podríamos emplear bootstrap uniforme multidimensional para el caso de diseño aleatorio, aunque hay que tener en cuenta que con este método la distribución en el remuestreo de <span class="math inline">\(\left. Y^{\ast}\right\vert _{X^{\ast}=X_i}\)</span> es degenerada.</p>
@@ -536,8 +542,8 @@ Para ajustar el correspondiente modelo de regresión lineal podemos emplear el s
 ## 
 ## 
 ## Bootstrap Statistics :
-##      original      bias    std. error
-## t1* 0.7939201 0.002495631   0.0315275</code></pre>
+##     original    bias    std. error
+## t1*  0.79392 0.0024956    0.031527</code></pre>
 <div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="boot-reg.html#cb593-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(boot.case)</span></span>
 <span id="cb593-2"><a href="boot-reg.html#cb593-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boot.ci</span>(boot.case, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;basic&quot;</span>, <span class="st">&quot;perc&quot;</span>, <span class="st">&quot;bca&quot;</span>))</span></code></pre></div>
 <pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
@@ -580,8 +586,8 @@ Por ejemplo, adaptando el código en Canty (2002) para este conjunto de datos, p
 ## 
 ## 
 ## Bootstrap Statistics :
-##      original      bias    std. error
-## t1* 0.7939201 0.004401997  0.02671996</code></pre>
+##     original   bias    std. error
+## t1*  0.79392 0.004402     0.02672</code></pre>
 <div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="boot-reg.html#cb597-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(boot.mod)</span></span>
 <span id="cb597-2"><a href="boot-reg.html#cb597-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boot.ci</span>(boot.mod, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;basic&quot;</span>, <span class="st">&quot;perc&quot;</span>, <span class="st">&quot;bca&quot;</span>))</span></code></pre></div>
 <pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
@@ -602,7 +608,7 @@ siendo <span class="math inline">\(H = X\left( X^{\top}X\right)^{-1}X^{\top}\)</
 La idea es remuestrear los residuos reescalados (de forma que su varianza sea constante) y centrados <span class="math inline">\(e_i - \bar{e}\)</span>, siendo:
 <span class="math display">\[e_i = \frac{r_i}{\sqrt{1 - h_{ii}}},\]</span>
 donde <span class="math inline">\(h_{ii}\)</span> es el valor de influencia o leverage, el elemento <span class="math inline">\(i\)</span>-ésimo de la diagonal de <span class="math inline">\(H\)</span>.</p>
-<p>En <code>R</code> podríamos obtener estos residuos mediante los comandos<a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a>:</p>
+<p>En <code>R</code> podríamos obtener estos residuos mediante los comandos<a href="#fn37" class="footnote-ref" id="fnref37"><sup>37</sup></a>:</p>
 <div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="boot-reg.html#cb599-1" aria-hidden="true" tabindex="-1"></a>pres.dat<span class="sc">$</span>sres <span class="ot">&lt;-</span> <span class="fu">residuals</span>(modelo)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">hatvalues</span>(modelo))</span>
 <span id="cb599-2"><a href="boot-reg.html#cb599-2" aria-hidden="true" tabindex="-1"></a>pres.dat<span class="sc">$</span>sres <span class="ot">&lt;-</span> pres.dat<span class="sc">$</span>sres <span class="sc">-</span> <span class="fu">mean</span>(pres.dat<span class="sc">$</span>sres)</span></code></pre></div>
 <p>Sin embargo puede ser más cómodo emplear la función <code>Boot()</code> del paquete <code>car</code> (que internamente llama a la función <code>boot()</code>),
@@ -631,11 +637,11 @@ y una estimación por intervalo de confianza de este estadístico).</p>
 <!-- </div> -->
 <div class="footnotes">
 <hr />
-<ol start="35">
-<li id="fn35"><p>Alternativamente se podría emplear el denominado <em>Wild Bootstrap</em>, ver p.e. Cao y Fernández-Casal, 2022, <a href="https://rubenfcasal.github.io/book_remuestreo/m%C3%A9todos-de-remuestreo-en-regresi%C3%B3n-no-param%C3%A9trica.html#wild-bootstrap">Capítulo 7</a> para el caso de modelos de regresión no paramétricos<a href="boot-reg.html#fnref35" class="footnote-back">↩︎</a></p></li>
-<li id="fn36"><p>Para reescalar los
+<ol start="36">
+<li id="fn36"><p>Alternativamente se podría emplear el denominado <em>Wild Bootstrap</em>, ver p.e. Cao y Fernández-Casal, 2022, <a href="https://rubenfcasal.github.io/book_remuestreo/m%C3%A9todos-de-remuestreo-en-regresi%C3%B3n-no-param%C3%A9trica.html#wild-bootstrap">Capítulo 7</a> para el caso de modelos de regresión no paramétricos<a href="boot-reg.html#fnref36" class="footnote-back">↩︎</a></p></li>
+<li id="fn37"><p>Para reescalar los
 residuos de un modelo <code>gam</code> del paquete <code>mgcv</code>, como no implementa un método <code>hatvalues()</code>,
-habrá que emplear <code>influence.gam()</code> (o directamente <code>modelo.gam$hat</code>).<a href="boot-reg.html#fnref36" class="footnote-back">↩︎</a></p></li>
+habrá que emplear <code>influence.gam()</code> (o directamente <code>modelo.gam$hat</code>).<a href="boot-reg.html#fnref37" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

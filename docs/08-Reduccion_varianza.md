@@ -125,9 +125,7 @@ abline(h = 0, lty = 2)
 abline(v = c(a, b), lty = 2)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.75\linewidth]{08-Reduccion_varianza_files/figure-latex/unnamed-chunk-1-1} \end{center}
+<img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-1-1.png" width="70%" style="display: block; margin: auto;" />
 
 Se trata de calcular la media de $e^{\mathcal{U}(0,2)}$:
 
@@ -138,7 +136,7 @@ teor
 ```
 
 ```
- ## [1] 3.194528
+## [1] 3.1945
 ```
 
 Como se mostró en el Capítulo \@ref(monte-carlo), para calcular la aproximación por integración Monte Carlo podemos emplear la función [`mc.integral()`](https://rubenfcasal.github.io/simres/reference/mc.integral.html) del paquete [`simres`](https://rubenfcasal.github.io/simres) (fichero [*mc.plot.R*](R/mc.plot.R)):
@@ -150,20 +148,21 @@ library(simres)
 set.seed(54321)
 res <- mc.integral(ftn, a, b, 500)
 abline(h = teor, lty = 2, col = "blue")
+```
+
+<img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" />
+
+```r
 res
 ```
 
 ```
- ## $approx
- ## [1] 3.184612
- ## 
- ## $max.error
- ## [1] 0.1597314
+## $approx
+## [1] 3.1846
+## 
+## $max.error
+## [1] 0.15973
 ```
-
-
-
-\begin{center}\includegraphics[width=0.75\linewidth]{08-Reduccion_varianza_files/figure-latex/unnamed-chunk-3-1} \end{center}
 
 
 Para la integración Monte Carlo con variables antitéticas podríamos considerar:
@@ -194,20 +193,21 @@ mc.integrala <- function(ftn, a, b, n, plot = TRUE) {
 
 set.seed(54321)
 res <- mc.integrala(ftn, a, b, 500)
+```
+
+<img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-4-1.png" width="70%" style="display: block; margin: auto;" />
+
+```r
 res
 ```
 
 ```
- ## $valor
- ## [1] 3.222366
- ## 
- ## $error
- ## [1] 0.165086
+## $valor
+## [1] 3.2224
+## 
+## $error
+## [1] 0.16509
 ```
-
-
-
-\begin{center}\includegraphics[width=0.75\linewidth]{08-Reduccion_varianza_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 Pero aunque aparentemente converge antes, parece no haber una mejora en la precisión de la aproximación. 
 Si calculamos el porcentaje (estimado) de reducción del error:
@@ -218,7 +218,7 @@ Si calculamos el porcentaje (estimado) de reducción del error:
 ```
 
 ```
- ## [1] -1.307067
+## [1] -1.3071
 ```
 
 El problema es que en este caso se está estimando mal la varianza (asumiendo independencia).
@@ -246,11 +246,11 @@ res
 ```
 
 ```
- ## $valor
- ## [1] 3.222366
- ## 
- ## $error
- ## [1] 0.05700069
+## $valor
+## [1] 3.2224
+## 
+## $error
+## [1] 0.057001
 ```
 
 Porcentaje estimado de reducción del error:
@@ -261,7 +261,7 @@ Porcentaje estimado de reducción del error:
 ```
 
 ```
- ## [1] 64.81191
+## [1] 64.812
 ```
 
 En este caso puede verse que la reducción teórica de la varianza es del 96.7%
@@ -364,15 +364,20 @@ mc.integrale <- function(ftn, a, b, n, k) {
 set.seed(54321)
 res <- mc.integral(ftn, a, b, 500)
 abline(h = teor, lty = 2, col = "blue")
+```
+
+<img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-8-1.png" width="70%" style="display: block; margin: auto;" />
+
+```r
 res
 ```
 
 ```
- ## $approx
- ## [1] 3.184612
- ## 
- ## $max.error
- ## [1] 0.1597314
+## $approx
+## [1] 3.1846
+## 
+## $max.error
+## [1] 0.15973
 ```
 
 ```r
@@ -381,16 +386,12 @@ mc.integrale(ftn, a, b, 500, 50)
 ```
 
 ```
- ## $valor
- ## [1] 3.193338
- ## 
- ## $error
- ## [1] 0.1597952
+## $valor
+## [1] 3.1933
+## 
+## $error
+## [1] 0.1598
 ```
-
-
-
-\begin{center}\includegraphics[width=0.75\linewidth]{08-Reduccion_varianza_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
 Podríamos estudiar como varía la reducción en la varianza dependiendo del valor de $k$:
 
@@ -400,11 +401,11 @@ mc.integrale(ftn, a, b, 500, 100)
 ```
 
 ```
- ## $valor
- ## [1] 3.193927
- ## 
- ## $error
- ## [1] 0.1599089
+## $valor
+## [1] 3.1939
+## 
+## $error
+## [1] 0.15991
 ```
 
 De esta forma no se tiene en cuenta la variabilidad en el estrato.
@@ -428,9 +429,7 @@ int <- log(seq(exp(a), exp(b), len = k + 1))
 abline(v = int, lty = 3)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.75\linewidth]{08-Reduccion_varianza_files/figure-latex/unnamed-chunk-10-1} \end{center}
+<img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" />
 
 :::
 
@@ -487,7 +486,7 @@ teor
 ```
 
 ```
- ## [1] 3.194528
+## [1] 3.1945
 ```
 
 Aproximación clásica por simulación:
@@ -502,7 +501,7 @@ mean(expu)
 ```
 
 ```
- ## [1] 3.182118
+## [1] 3.1821
 ```
 
 Con variable control:
@@ -512,18 +511,19 @@ Con variable control:
 plot(u, expu)
 reg <- lm(expu ~ u)$coef
 abline(reg, col='blue')
+```
+
+<img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" />
+
+```r
 # summary(lm(expu ~ u)) # R-squared: 0.9392
 reg[1]+reg[2] # Coincidirá con la solución mean(expuc)
 ```
 
 ```
- ## (Intercept) 
- ##    3.204933
+## (Intercept) 
+##      3.2049
 ```
-
-
-
-\begin{center}\includegraphics[width=0.75\linewidth]{08-Reduccion_varianza_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 Lo siguiente ya no sería necesario:
 
@@ -534,7 +534,7 @@ mean(expuc)
 ```
 
 ```
- ## [1] 3.204933
+## [1] 3.2049
 ```
 
 Estimación del porcentaje de reducción en la varianza:
@@ -545,7 +545,7 @@ Estimación del porcentaje de reducción en la varianza:
 ```
 
 ```
- ## [1] 93.91555
+## [1] 93.916
 ```
 
 :::
@@ -613,7 +613,7 @@ mean(x) # valor teor 1/lambda = 2
 ```
 
 ```
- ## [1] 1.97439
+## [1] 1.9744
 ```
 
 ```r
@@ -622,7 +622,7 @@ var(x)
 ```
 
 ```
- ## [1] 3.669456
+## [1] 3.6695
 ```
 
 MC con  variables antitéticas:

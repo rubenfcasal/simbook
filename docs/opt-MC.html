@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>7.3 Optimización Monte Carlo | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="7.3 Optimización Monte Carlo | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -364,9 +368,9 @@ div.csl-indent {
 <li class="chapter" data-level="A.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>A.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="A.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>A.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="A.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>A.2.3</b> Gráfico de dispersion retardado</a></li>
-<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
 <li class="chapter" data-level="A.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>A.2.5</b> Test de rachas</a></li>
-<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
+<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#ljungbox"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
 <li class="chapter" data-level="A.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>A.3</b> Contrastes específicos para generadores aleatorios</a>
 <ul>
@@ -421,11 +425,13 @@ div.csl-indent {
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
 <ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -455,7 +461,7 @@ div.csl-indent {
 <span class="math display">\[\mathbf{x}_{i+1} = \mathbf{x}_i-[Hf(\mathbf{x}_i)]^{-1}\nabla f(\mathbf{x}_i),\]</span>
 donde <span class="math inline">\(Hf(\mathbf{x}_i)\)</span> es el hessiano de la función (matriz de segundas derivadas) y <span class="math inline">\(\nabla f(\mathbf{x}_i)\)</span> el gradiente (vector de primeras derivadas).
 Estos métodos normalmente funcionan muy bien cuando la función objetivo no tiene mínimos locales (ideal <span class="math inline">\(f\)</span> cuadrática).
-Los resultados obtenidos pueden ser muy malos en caso contrario (especialmente en el caso multidimensional) y dependen en gran medida del punto inicial<a href="#fn29" class="footnote-ref" id="fnref29"><sup>29</sup></a>
+Los resultados obtenidos pueden ser muy malos en caso contrario (especialmente en el caso multidimensional) y dependen en gran medida del punto inicial<a href="#fn30" class="footnote-ref" id="fnref30"><sup>30</sup></a>
 Un ejemplo donde es habitual que aparezcan este tipo de problemas es en la estimación por máxima verosimilitud (la función objetivo puede ser multimodal).</p>
 <div class="example">
 <p><span id="exm:mv-nlm" class="example"><strong>Ejemplo 7.6  (Estimación por máxima verosimilitud mediante un algoritmo de Newton) </strong></span><br></p>
@@ -475,7 +481,7 @@ Generaremos una muestra de 200 valores de esta distribución con <span class="ma
 <span id="cb372-9"><a href="opt-MC.html#cb372-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb372-10"><a href="opt-MC.html#cb372-10" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(data, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>))</span>
 <span id="cb372-11"><a href="opt-MC.html#cb372-11" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fl">0.25</span> <span class="sc">*</span> <span class="fu">dnorm</span>(x, mu1, sd1) <span class="sc">+</span> <span class="fl">0.75</span> <span class="sc">*</span> <span class="fu">dnorm</span>(x, mu2, sd2), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-13-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Podemos obtener la estimación por máxima verosimilitud de los parámetros empleando la rutina <code>nlm</code> para minimizar el logaritmo (negativo) de la función de verosimilitud:</p>
 <div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="opt-MC.html#cb373-1" aria-hidden="true" tabindex="-1"></a>like <span class="ot">&lt;-</span> <span class="cf">function</span>(mu)</span>
 <span id="cb373-2"><a href="opt-MC.html#cb373-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fu">sum</span>(<span class="fu">log</span>((<span class="fl">0.25</span> <span class="sc">*</span> <span class="fu">dnorm</span>(data, mu[<span class="dv">1</span>], sd1) <span class="sc">+</span> <span class="fl">0.75</span> <span class="sc">*</span> <span class="fu">dnorm</span>(data, mu[<span class="dv">2</span>], sd2))))</span>
@@ -536,12 +542,12 @@ los puntos iniciales y las iteraciones en la optimización numérica con <code>n
 <span id="cb376-18"><a href="opt-MC.html#cb376-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">points</span>(res<span class="sc">$</span>estimate[<span class="dv">1</span>],res<span class="sc">$</span>estimate[<span class="dv">2</span>], <span class="at">pch =</span> <span class="dv">19</span>)</span>
 <span id="cb376-19"><a href="opt-MC.html#cb376-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;par = &quot;</span>, res<span class="sc">$</span>estimate, <span class="st">&quot;, value =&quot;</span>, res<span class="sc">$</span>minimum, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
 <span id="cb376-20"><a href="opt-MC.html#cb376-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-17-1.png" width="75%" style="display: block; margin: auto;" /></p>
-<pre><code>## par =  -0.03892511 2.494589 , value = 361.5712 
-## par =  -0.03892501 2.494589 , value = 361.5712 
-## par =  -0.03892507 2.494589 , value = 361.5712 
-## par =  3.132201 0.9628536 , value = 379.3739 
-## par =  20.51013 1.71201 , value = 474.1414</code></pre>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<pre><code>## par =  -0.038925 2.4946 , value = 361.57 
+## par =  -0.038925 2.4946 , value = 361.57 
+## par =  -0.038925 2.4946 , value = 361.57 
+## par =  3.1322 0.96285 , value = 379.37 
+## par =  20.51 1.712 , value = 474.14</code></pre>
 </div>
 <div id="algoritmos-de-optimización-monte-carlo" class="section level3 hasAnchor" number="7.3.1">
 <h3><span class="header-section-number">7.3.1</span> Algoritmos de optimización Monte Carlo<a href="opt-MC.html#algoritmos-de-optimización-monte-carlo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -570,7 +576,7 @@ siempre “cuesta abajo”.</p></li>
 </ul>
 <p>Al tener una probabilidad no nula de aceptar una modificación “cuesta arriba” se trata de evitar quedar atrapado en un óptimo local (ver Figura <a href="opt-MC.html#fig:templesimulado">7.8</a>).</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:templesimulado"></span>
-<img src="images/templesimulado.png" alt="Fuente: Premchand Akella ([ppt](https://www.presentica.com/doc/11473134/simulated-annealing-pdf-document))." width="75%" />
+<img src="images/templesimulado.png" alt="Fuente: Premchand Akella ([ppt](https://www.presentica.com/doc/11473134/simulated-annealing-pdf-document))." width="70%" />
 <p class="caption">
 Figura 7.8: Fuente: Premchand Akella (<a href="https://www.presentica.com/doc/11473134/simulated-annealing-pdf-document">ppt</a>).
 </p>
@@ -602,7 +608,7 @@ Figura 7.8: Fuente: Premchand Akella (<a href="https://www.presentica.com/doc/11
 <span id="cb378-23"><a href="opt-MC.html#cb378-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># temp.ini / log(((temp - 1) %/% tmax)*tmax + exp(1))</span></span>
 <span id="cb378-24"><a href="opt-MC.html#cb378-24" aria-hidden="true" tabindex="-1"></a>PERTURB <span class="ot">&lt;-</span> <span class="cf">function</span>(par, temp, <span class="at">scale =</span> <span class="dv">1</span><span class="sc">/</span>temp.ini) </span>
 <span id="cb378-25"><a href="opt-MC.html#cb378-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rnorm</span>(<span class="fu">length</span>(par), par, <span class="dv">1</span><span class="sc">/</span>(scale<span class="sc">*</span>temp))</span></code></pre></div>
-<p>Una versión de este método está implementado<a href="#fn30" class="footnote-ref" id="fnref30"><sup>30</sup></a> en la función <code>optim()</code>:</p>
+<p>Una versión de este método está implementado<a href="#fn31" class="footnote-ref" id="fnref31"><sup>31</sup></a> en la función <code>optim()</code>:</p>
 <div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="opt-MC.html#cb379-1" aria-hidden="true" tabindex="-1"></a><span class="fu">optim</span>(par, fn, <span class="at">gr =</span> <span class="cn">NULL</span>, ..., <span class="at">method =</span> <span class="st">&quot;SANN&quot;</span>, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">maxit =</span> <span class="dv">10000</span>, <span class="at">temp =</span> <span class="dv">10</span>, <span class="at">tmax =</span> <span class="dv">10</span>)</span></code></pre></div>
 <p>El argumento <code>gr</code> permite especificar la función para generar posiciones candidatas (por defecto núcleo gausiano con escala proporcional a la temperatura actual) y permitiría resolver problemas de optimización combinatoria.
 El argumento <code>control</code> permite establecer algunas opciones adicionales:</p>
@@ -629,12 +635,12 @@ El argumento <code>control</code> permite establecer algunas opciones adicionale
 <span id="cb380-13"><a href="opt-MC.html#cb380-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">points</span>(res<span class="sc">$</span>par[<span class="dv">1</span>],res<span class="sc">$</span>par[<span class="dv">2</span>], <span class="at">pch =</span> <span class="dv">19</span>)</span>
 <span id="cb380-14"><a href="opt-MC.html#cb380-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;par = &quot;</span>, res<span class="sc">$</span>par, <span class="st">&quot;, value =&quot;</span>, res<span class="sc">$</span>value, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
 <span id="cb380-15"><a href="opt-MC.html#cb380-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-20-1.png" width="75%" style="display: block; margin: auto;" /></p>
-<pre><code>## par =  0.0002023461 2.473437 , value = 361.6372 
-## par =  -0.182735 2.45585 , value = 362.0255 
-## par =  -0.0281341 2.484467 , value = 361.5801 
-## par =  -0.03642928 2.488626 , value = 361.5732 
-## par =  0.6814165 2.370026 , value = 374.839</code></pre>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<pre><code>## par =  0.00020235 2.4734 , value = 361.64 
+## par =  -0.18274 2.4559 , value = 362.03 
+## par =  -0.028134 2.4845 , value = 361.58 
+## par =  -0.036429 2.4886 , value = 361.57 
+## par =  0.68142 2.37 , value = 374.84</code></pre>
 <p>Como alternativa podríamos emplear la siguiente función basada en el algoritmo del Ejemplo 5.9 de Robert y Casella (2010):</p>
 <div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="opt-MC.html#cb382-1" aria-hidden="true" tabindex="-1"></a>SA <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, pini, <span class="at">lower =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">upper =</span> <span class="cn">Inf</span>, <span class="at">tolerance =</span> <span class="fl">1e-04</span>, <span class="at">factor =</span> <span class="dv">1</span>) {</span>
 <span id="cb382-2"><a href="opt-MC.html#cb382-2" aria-hidden="true" tabindex="-1"></a>  temp <span class="ot">&lt;-</span> scale <span class="ot">&lt;-</span> iter <span class="ot">&lt;-</span> dif <span class="ot">&lt;-</span> <span class="dv">1</span></span>
@@ -677,12 +683,12 @@ El argumento <code>control</code> permite establecer algunas opciones adicionale
 <span id="cb382-39"><a href="opt-MC.html#cb382-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(sar, <span class="fu">points</span>(par[iter, <span class="dv">1</span>], par[iter, <span class="dv">2</span>], <span class="at">pch =</span> <span class="dv">19</span>))</span>
 <span id="cb382-40"><a href="opt-MC.html#cb382-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(sar, <span class="fu">cat</span>(<span class="st">&quot;par = &quot;</span>, par[iter, ], <span class="st">&quot;, value =&quot;</span>, value[iter], <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>))</span>
 <span id="cb382-41"><a href="opt-MC.html#cb382-41" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-21-1.png" width="75%" style="display: block; margin: auto;" /></p>
-<pre><code>## par =  -0.2091332 2.341469 , value = 363.0035 
-## par =  -0.2986682 2.573345 , value = 363.6607 
-## par =  -0.4708455 2.425984 , value = 365.3277 
-## par =  -0.3454382 2.446332 , value = 363.5074 
-## par =  -0.1236326 2.464842 , value = 361.7403</code></pre>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<pre><code>## par =  -0.20913 2.3415 , value = 363 
+## par =  -0.29867 2.5733 , value = 363.66 
+## par =  -0.47085 2.426 , value = 365.33 
+## par =  -0.34544 2.4463 , value = 363.51 
+## par =  -0.12363 2.4648 , value = 361.74</code></pre>
 </div>
 </div>
 <div id="algoritmos-genéticos" class="section level3 hasAnchor" number="7.3.3">
@@ -733,15 +739,15 @@ tipos de algoritmos.</p>
 <div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="opt-MC.html#cb386-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Por defecto fija el tamaño de la población a NP = 10*npar = 20</span></span>
 <span id="cb386-2"><a href="opt-MC.html#cb386-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Puede ser mejor dejar el valor por defecto itermax = 200</span></span>
 <span id="cb386-3"><a href="opt-MC.html#cb386-3" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(der<span class="sc">$</span>optim<span class="sc">$</span>bestmem[<span class="dv">1</span>], der<span class="sc">$</span>optim<span class="sc">$</span>bestmem[<span class="dv">2</span>], <span class="at">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-22-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="29">
-<li id="fn29"><p>Este tipo de algoritmos se denominan <em>codiciosos</em> o <em>voraces</em>, porque buscan la mejor opción a “corto plazo”.<a href="opt-MC.html#fnref29" class="footnote-back">↩︎</a></p></li>
-<li id="fn30"><p>En el fichero fuente <a href="https://svn.r-project.org/R/trunk/src/appl/optim.c">optim.c</a>.<a href="opt-MC.html#fnref30" class="footnote-back">↩︎</a></p></li>
+<ol start="30">
+<li id="fn30"><p>Este tipo de algoritmos se denominan <em>codiciosos</em> o <em>voraces</em>, porque buscan la mejor opción a “corto plazo”.<a href="opt-MC.html#fnref30" class="footnote-back">↩︎</a></p></li>
+<li id="fn31"><p>En el fichero fuente <a href="https://svn.r-project.org/R/trunk/src/appl/optim.c">optim.c</a>.<a href="opt-MC.html#fnref31" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

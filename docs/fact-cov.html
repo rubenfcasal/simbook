@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6.3 Factorización de la matriz de covarianzas | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6.3 Factorización de la matriz de covarianzas | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -364,9 +368,9 @@ div.csl-indent {
 <li class="chapter" data-level="A.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>A.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="A.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>A.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="A.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>A.2.3</b> Gráfico de dispersion retardado</a></li>
-<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
 <li class="chapter" data-level="A.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>A.2.5</b> Test de rachas</a></li>
-<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
+<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#ljungbox"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
 <li class="chapter" data-level="A.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>A.3</b> Contrastes específicos para generadores aleatorios</a>
 <ul>
@@ -421,11 +425,13 @@ div.csl-indent {
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
 <ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -473,7 +479,7 @@ donde <span class="math inline">\(H\)</span> es una matriz ortogonal (i.e. <spa
 <span class="math display">\[\mathbf{X} =\boldsymbol\mu + L\mathbf{Z}
 \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right).\]</span></li>
 </ul>
-<p>Desde el punto de vista de la eficiencia computacional la factorización de Cholesky sería la preferible. Pero en ocasiones, para evitar problemas numéricos (por ejemplo, en el caso de matrices semidefinidas positivas<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a>, i.e. con autovalores nulos) puede ser más adecuado emplear la factorización espectral.
+<p>Desde el punto de vista de la eficiencia computacional la factorización de Cholesky sería la preferible. Pero en ocasiones, para evitar problemas numéricos (por ejemplo, en el caso de matrices semidefinidas positivas<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a>, i.e. con autovalores nulos) puede ser más adecuado emplear la factorización espectral.
 En el primer caso el algoritmo sería el siguiente:</p>
 <div class="conjecture">
 <p><span id="cnj:mnorm-fact" class="conjecture"><strong>Algoritmo 6.2  (de simulación de una normal multivariante) </strong></span><br></p>
@@ -512,13 +518,13 @@ habrá que transponer el resultado:</p>
 <p>Si queremos simular una realización:</p>
 <div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="fact-cov.html#cb228-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
 <span id="cb228-2"><a href="fact-cov.html#cb228-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mu <span class="sc">+</span> L <span class="sc">%*%</span> <span class="fu">rnorm</span>(n))</span></code></pre></div>
-<pre><code>##         [,1]
-## 1 -0.6264538
-## 2 -0.5307633
-## 3 -0.5797968
-## 4 -0.2844357
-## 5 -0.1711797
-## 6 -0.2220796</code></pre>
+<pre><code>##       [,1]
+## 1 -0.62645
+## 2 -0.53076
+## 3 -0.57980
+## 4 -0.28444
+## 5 -0.17118
+## 6 -0.22208</code></pre>
 <p>y para simular <code>nsim</code>:</p>
 
 <div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="fact-cov.html#cb230-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(nsim <span class="sc">*</span> n), <span class="at">nrow =</span> n)</span>
@@ -527,7 +533,7 @@ habrá que transponer el resultado:</p>
 <span id="cb230-4"><a href="fact-cov.html#cb230-4" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(t, x, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">3.5</span>, <span class="fl">3.5</span>))</span>
 <span id="cb230-5"><a href="fact-cov.html#cb230-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, mu, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:funcional-plot"></span>
-<img src="06-Simulacion_multidimensional_files/figure-html/funcional-plot-1.png" alt="Realizaciones del proceso funcional del Ejemplo 6.4, obtenidas a partir de la factorización de Cholesky." width="75%" />
+<img src="06-Simulacion_multidimensional_files/figure-html/funcional-plot-1.png" alt="Realizaciones del proceso funcional del Ejemplo 6.4, obtenidas a partir de la factorización de Cholesky." width="70%" />
 <p class="caption">
 Figura 6.2: Realizaciones del proceso funcional del Ejemplo <a href="fact-cov.html#exm:funcional">6.4</a>, obtenidas a partir de la factorización de Cholesky.
 </p>
@@ -564,14 +570,14 @@ del paquete <code>MASS</code> que emplea la factorización espectral (<code>eige
 ##         drop(X)
 ##     else t(X)
 ## }
-## &lt;bytecode: 0x000002703323dc80&gt;
+## &lt;bytecode: 0x000002831c943b08&gt;
 ## &lt;environment: namespace:MASS&gt;</code></pre>
 <div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="fact-cov.html#cb233-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(nsim, mu, x.cov)</span>
 <span id="cb233-2"><a href="fact-cov.html#cb233-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb233-3"><a href="fact-cov.html#cb233-3" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(t, <span class="fu">t</span>(x), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span>
 <span id="cb233-4"><a href="fact-cov.html#cb233-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, mu, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:funcional-plot2"></span>
-<img src="06-Simulacion_multidimensional_files/figure-html/funcional-plot2-1.png" alt="Realizaciones del proceso funcional del Ejemplo 6.4, obtenidas empleando la función MASS::mvrnorm." width="75%" />
+<img src="06-Simulacion_multidimensional_files/figure-html/funcional-plot2-1.png" alt="Realizaciones del proceso funcional del Ejemplo 6.4, obtenidas empleando la función MASS::mvrnorm." width="70%" />
 <p class="caption">
 Figura 6.3: Realizaciones del proceso funcional del Ejemplo <a href="fact-cov.html#exm:funcional">6.4</a>, obtenidas empleando la función <code>MASS::mvrnorm</code>.
 </p>
@@ -581,8 +587,8 @@ Figura 6.3: Realizaciones del proceso funcional del Ejemplo <a href="fact-cov.ht
 </div>
 <div class="footnotes">
 <hr />
-<ol start="24">
-<li id="fn24"><p>También se habla de matrices definidas no negativas (<em>non negative definite matrices</em>) o de matrices no estrictamente definidas positivas.<a href="fact-cov.html#fnref24" class="footnote-back">↩︎</a></p></li>
+<ol start="25">
+<li id="fn25"><p>También se habla de matrices definidas no negativas (<em>non negative definite matrices</em>) o de matrices no estrictamente definidas positivas.<a href="fact-cov.html#fnref25" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

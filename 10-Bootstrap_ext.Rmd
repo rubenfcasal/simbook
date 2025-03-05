@@ -64,7 +64,7 @@ $$g\left( x \right) =\frac{n}{\theta }\left( \frac{x}{\theta } \right)^{n-1},
 \text{ si }x\in \left[ 0,\theta \right] .$$
 <!-- 
 Tomando, por ejemplo, $\theta =1$ y $n=50$, esta función de densidad resulta
-`r latexfig("den-max")`:
+`r latexfig2(den-max)`:
 ```{r den-max, fig.cap="Función de densidad del máximo de una muestra procedente de una uniforme."}
 theta <- 1
 n <- 50
@@ -108,7 +108,7 @@ De esta forma vemos que el bootstrap uniforme (no paramétrico) es inconsistente
 <br>
 
 El siguiente código implementa el método bootstrap uniforme (también llamado naïve) para aproximar la distribución del estadístico $R=\hat{\theta}-\theta$, para una muestra de tamaño $n=50$, proveniente de una población con distribución
-$\mathcal{U}\left( 0,1\right)$ `r latexfig("boot-uniforme-maximo")`:
+$\mathcal{U}\left( 0,1\right)$ `r latexfig2(boot-uniforme-maximo)`:
 
 ```{r boot-uniforme-maximo, fig.cap="Distribución de las réplicas bootstrap (uniforme) del estadístico y distribución poblacional."}
 theta <- 1
@@ -179,7 +179,7 @@ es el contraste de hipótesis que se tratará en la Sección \@ref(contrastes-pa
 Continuando con el Ejemplo \@ref(exm:media-dt-desconocida) del tiempo de vida de microorganismos, podríamos pensar en emplear bootstrap paramétrico para calcular un intervalo de confianza para la media poblacional.
 
 La valided de los resultados dependerá en gran medida de que el modelo paramétrico sea adecuado para describir la variabilidad de los datos. 
-En este caso parece razonable asumir una distribución exponencial (no lo es que el modelo admita tiempos de vida negativos, como ocurriría al asumir normalidad)`r latexfig("boot-par-aprox")`:
+En este caso parece razonable asumir una distribución exponencial (no lo es que el modelo admita tiempos de vida negativos, como ocurriría al asumir normalidad)`r latexfig2(boot-par-aprox)`:
 
 ```{r boot-par-aprox, fig.cap="Distribución empírica de la muestra de tiempos de vida de microorganismos y aproximaciones paramétricas."}
 muestra <- simres::lifetimes
@@ -278,7 +278,7 @@ distribución en muestreo de
 $R=R\left( \mathbf{X},F \right) =\hat{\theta}-\theta$.
 
 Para implementarlo en la práctica podríamos emplear un código muy similar al 
-del ejemplo original `r latexfig("boot-parametrico-maximo")`:
+del ejemplo original `r latexfig2(boot-parametrico-maximo)`:
 
 ```{r boot-parametrico-maximo, fig.cap="Distribución bootstrap paramétrica y distribución poblacional."}
 # Remuestreo
@@ -373,8 +373,8 @@ rug(x, col = "darkgray")
 ```
 
 Alternativamente podríamos emplear implementaciones en otros paquetes de `R`.
-Uno de los más empleados es `ks` (Duong, 2019), que admite estimación incondicional y condicional multidimensional.
-También se podrían emplear los paquetes `KernSmooth` (Wand y Ripley, 2019), `sm` (Bowman y Azzalini, 2019), `np` (Tristen y Jeffrey, 2019), `kedd` (Guidoum, 2019), `features` (Duong y Matt, 2019) y `npsp` (Fernández-Casal, 2019), entre otros.
+Uno de los más empleados es `r cite_pkg(ks)` (Duong, 2019), que admite estimación incondicional y condicional multidimensional.
+También se podrían emplear los paquetes `r cite_pkg(KernSmooth)` (Wand y Ripley, 2019), `r cite_pkg(sm)` (Bowman y Azzalini, 2019), `r cite_cran(np)` (Tristen y Jeffrey, 2019), `r cite_pkg(kedd)` (Guidoum, 2019), `r cite_cran(features)` (Duong y Matt, 2019) y `r cite_pkg(npsp)` (Fernández-Casal, 2019), entre otros.
 
 La función de distribución asociada al estimador tipo núcleo de la función de densidad viene dada por
 $$\begin{aligned}
@@ -389,7 +389,7 @@ K\left( \frac{y-X_i}{h} \right) dy \\
 donde $\mathbb{K}$ es la función de distribución asociada al núcleo $K$, es decir
 $$\mathbb{K}\left( t \right) =\int_{-\infty }^{t}K\left(u \right) du.$$
 
-Por ejemplo, en el caso de del conjunto de datos de precipitaciones, el siguiente código compara la estimación tipo núcleo de la distribución con la empírica`r latexfig("pnp")`:
+Por ejemplo, en el caso de del conjunto de datos de precipitaciones, el siguiente código compara la estimación tipo núcleo de la distribución con la empírica`r latexfig2(pnp)`:
 
 ```{r pnp, fig.cap="Estimación empírica y tipo núcleo de la función de distribución de `precip`. "}
 Fn <- ecdf(precip)
@@ -404,7 +404,7 @@ El primer paso consistiría en elegir (aleatoriamente y con equiprobabilidad) un
 Este último paso puede realizarse simulando un valor $V$ con densidad $K$ y haciendo $X_i+hV$.
 Por tanto, podemos pensar que el bootstrap suavizado parte del bootstrap uniforme ($X_i^{\ast}=X_{\left\lfloor nU_i\right\rfloor +1}$) y añade una perturbación ($hV_i$), cuya magnitud viene dada por el parámetro de suavizado ($h$) y cuya forma imita a la de una variable aleatoria ($V_i$) con densidad $K$.
 
-Por ejemplo, la función `density()` emplea por defecto un núcleo gaussiano, y como se muestra en la ayuda de esta función, podemos emplear un código como el siguiente para obtener `nsim` simulaciones`r citefig("density-sim")`:
+Por ejemplo, la función `density()` emplea por defecto un núcleo gaussiano, y como se muestra en la ayuda de esta función, podemos emplear un código como el siguiente para obtener `nsim` simulaciones`r cite_fig(density-sim)`:
 ```{r density-sim, fig.cap="Estimaciónes tipo núcleo de las densidades de `precip` y de una simulación."}
 ## simulation from a density() fit:
 # a kernel density fit is an equally-weighted mixture.

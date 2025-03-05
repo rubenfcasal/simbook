@@ -268,7 +268,7 @@ IC_boot
 
 El método $BCa$ (bias-corrected and accelerated) propuesto por Efron (1987) considera una transformación de forma que la distribución se aproxime a la normalidad, construye el intervalo en esa escala asumiendo normalidad y transforma el resultado a la escala original empleando la distribución bootstrap.
 El intervalo obtenido es de la forma:
-$$\hat{I}_{perc}=\left( x_{\alpha /2}, x_{1-\alpha /2}  \right),$$
+$$\hat{I}_{bca}=\left( x_{\alpha /2}, x_{1-\alpha /2}  \right),$$
 donde        
 $$x_u = \hat G^{-1}\left(\Phi\left(z + \frac{z + z_u}{1-a(z+z_u)}\right)  \right),$$
 siendo $\hat G$ la distribución empírica de $\hat{\theta}^{\ast}$, $\Phi(z)$ la función de distribución de la normal estándar, $z_u = \Phi^{-1}(u)$ el correspondiente cuantil y:
@@ -278,6 +278,13 @@ siendo $\hat G$ la distribución empírica de $\hat{\theta}^{\ast}$, $\Phi(z)$ l
 
 Podemos obtener este intervalo de confianza estableciendo `type = "bca"` (o `type = "all"`) en la llamada a la función `boot.ci()` (ver Ejemplo \@ref(exm:media-dt-desconocida-boot)).
 Para más detalles ver Sección 5.3.2 de Davison y Hinkley (1997).
+
+<!-- 
+Normal score transformation (NST)
+Rank-based inverse normal transformation
+https://rdrr.io/cran/rcompanion/man/blom.html
+-->
+
 
 
 ::: {.exercise #boot-unif-multi-ic}
@@ -638,7 +645,7 @@ Como ejemplo estudiaremos el caso de contrastar una distribución exponencial
 considerando 500 pruebas con muestras de tamaño 30 de una $Exp(1)$ 
 y 200 réplicas bootstrap (para disminuir el tiempo de computación).
 
-```{r ks-boot-plot, fig.dim = c(12, 12), out.width = "90%", fig.cap="Distribución del p-valor (izquierda) y tamaño (proporción de rechazos bajo la hipótesis nula; derecha), aproximados por  Monte Carlo, para el contraste de Kolmogorov-Smirnov (arriba) y el correspondiente contraste boostrap paramétrico (abajo)."}
+```{r ks-boot-plot, cache=TRUE, fig.dim = c(12, 12), out.width = "90%", fig.cap="Distribución del p-valor (izquierda) y tamaño (proporción de rechazos bajo la hipótesis nula; derecha), aproximados por  Monte Carlo, para el contraste de Kolmogorov-Smirnov (arriba) y el correspondiente contraste boostrap paramétrico (abajo)."}
 # Valores iniciales
 set.seed(1)
 nx <- 30

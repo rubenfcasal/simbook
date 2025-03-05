@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>10.3 Bootstrap suavizado | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="10.3 Bootstrap suavizado | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -364,9 +368,9 @@ div.csl-indent {
 <li class="chapter" data-level="A.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>A.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="A.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>A.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="A.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>A.2.3</b> Gráfico de dispersion retardado</a></li>
-<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
 <li class="chapter" data-level="A.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>A.2.5</b> Test de rachas</a></li>
-<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
+<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#ljungbox"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
 <li class="chapter" data-level="A.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>A.3</b> Contrastes específicos para generadores aleatorios</a>
 <ul>
@@ -421,11 +425,13 @@ div.csl-indent {
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
 <ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -502,14 +508,14 @@ en pulgadas de lluvia, de 70 ciudades de Estados Unidos.</p>
 <span id="cb578-11"><a href="modunif-boot-suav.html#cb578-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(npden, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
 <span id="cb578-12"><a href="modunif-boot-suav.html#cb578-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rug</span>(x, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:density"></span>
-<img src="10-Bootstrap_ext_files/figure-html/density-1.png" alt="Estimación tipo núcleo de la densidad de `precip`." width="75%" />
+<img src="10-Bootstrap_ext_files/figure-html/density-1.png" alt="Estimación tipo núcleo de la densidad de `precip`." width="70%" />
 <p class="caption">
 Figura 10.4: Estimación tipo núcleo de la densidad de <code>precip</code>.
 </p>
 </div>
 <p>Alternativamente podríamos emplear implementaciones en otros paquetes de <code>R</code>.
-Uno de los más empleados es <code>ks</code> (Duong, 2019), que admite estimación incondicional y condicional multidimensional.
-También se podrían emplear los paquetes <code>KernSmooth</code> (Wand y Ripley, 2019), <code>sm</code> (Bowman y Azzalini, 2019), <code>np</code> (Tristen y Jeffrey, 2019), <code>kedd</code> (Guidoum, 2019), <code>features</code> (Duong y Matt, 2019) y <code>npsp</code> (Fernández-Casal, 2019), entre otros.</p>
+Uno de los más empleados es <a href="https://www.mvstat.net/mvksa/"><code>ks</code></a> (Duong, 2019), que admite estimación incondicional y condicional multidimensional.
+También se podrían emplear los paquetes <a href="https://CRAN.R-project.org/package=KernSmooth"><code>KernSmooth</code></a> (Wand y Ripley, 2019), <a href="https://CRAN.R-project.org/package=sm"><code>sm</code></a> (Bowman y Azzalini, 2019), <a href="https://CRAN.R-project.org/package=np"><code>np</code></a> (Tristen y Jeffrey, 2019), <a href="https://gitlab.com/iagogv/kedd"><code>kedd</code></a> (Guidoum, 2019), <a href="https://CRAN.R-project.org/package=features"><code>features</code></a> (Duong y Matt, 2019) y <a href="https://rubenfcasal.github.io/npsp/"><code>npsp</code></a> (Fernández-Casal, 2019), entre otros.</p>
 <p>La función de distribución asociada al estimador tipo núcleo de la función de densidad viene dada por
 <span class="math display">\[\begin{aligned}
 \hat{F}_{h}\left( x \right) &amp;= \int_{-\infty }^{x}\hat{f}_{h}\left( y \right) dy
@@ -529,7 +535,7 @@ donde <span class="math inline">\(\mathbb{K}\)</span> es la función de distribu
 <span id="cb579-4"><a href="modunif-boot-suav.html#cb579-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(Fnp, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>) </span>
 <span id="cb579-5"><a href="modunif-boot-suav.html#cb579-5" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Empírica&quot;</span>, <span class="st">&quot;Tipo núcleo&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:pnp"></span>
-<img src="10-Bootstrap_ext_files/figure-html/pnp-1.png" alt="Estimación empírica y tipo núcleo de la función de distribución de `precip`. " width="75%" />
+<img src="10-Bootstrap_ext_files/figure-html/pnp-1.png" alt="Estimación empírica y tipo núcleo de la función de distribución de `precip`. " width="70%" />
 <p class="caption">
 Figura 10.5: Estimación empírica y tipo núcleo de la función de distribución de <code>precip</code>.
 </p>
@@ -550,7 +556,7 @@ Por tanto, podemos pensar que el bootstrap suavizado parte del bootstrap uniform
 <span id="cb580-9"><a href="modunif-boot-suav.html#cb580-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(npden, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
 <span id="cb580-10"><a href="modunif-boot-suav.html#cb580-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(x_boot), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:density-sim"></span>
-<img src="10-Bootstrap_ext_files/figure-html/density-sim-1.png" alt="Estimaciónes tipo núcleo de las densidades de `precip` y de una simulación." width="75%" />
+<img src="10-Bootstrap_ext_files/figure-html/density-sim-1.png" alt="Estimaciónes tipo núcleo de las densidades de `precip` y de una simulación." width="70%" />
 <p class="caption">
 Figura 10.6: Estimaciónes tipo núcleo de las densidades de <code>precip</code> y de una simulación.
 </p>
@@ -592,8 +598,8 @@ Es fácil observar que en el caso extremo <span class="math inline">\(h=0\)</spa
 <span id="cb581-27"><a href="modunif-boot-suav.html#cb581-27" aria-hidden="true" tabindex="-1"></a>IC_boot <span class="ot">&lt;-</span> <span class="fu">c</span>(ic_inf_boot, ic_sup_boot)</span>
 <span id="cb581-28"><a href="modunif-boot-suav.html#cb581-28" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(IC_boot) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">-</span>alfa<span class="sc">/</span><span class="dv">2</span>), <span class="st">&quot;%&quot;</span>)</span>
 <span id="cb581-29"><a href="modunif-boot-suav.html#cb581-29" aria-hidden="true" tabindex="-1"></a>IC_boot</span></code></pre></div>
-<pre><code>##      2.5%     97.5% 
-## 0.4960975 1.1880279</code></pre>
+<pre><code>##   2.5%  97.5% 
+## 0.4961 1.1880</code></pre>
 <p>Con el paquete <code>boot</code>, la recomendación es implementarlo como
 un bootstrap paramétrico:</p>
 <div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="modunif-boot-suav.html#cb583-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>

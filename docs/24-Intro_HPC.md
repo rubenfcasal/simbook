@@ -65,7 +65,7 @@ ncores
 ```
 
 ```
- ## [1] 20
+## [1] 20
 ```
 
 ```r
@@ -81,8 +81,8 @@ system.time(res.boot <- mclapply(1:100, func)) # En Windows llama a lapply() (mc
 ```
 
 ```
- ##    user  system elapsed 
- ##    0.05    0.00    0.05
+##    user  system elapsed 
+##    0.03    0.01    0.05
 ```
 
 ```r
@@ -100,8 +100,8 @@ system.time(res.boot <- parSapply(cl, 1:100, func))
 ```
 
 ```
- ##    user  system elapsed 
- ##    0.01    0.00    0.03
+##    user  system elapsed 
+##    0.00    0.00    0.01
 ```
 
 ```r
@@ -111,10 +111,10 @@ str(res.boot)
 ```
 
 ```
- ##  num [1:2, 1:100] -0.415 0.429 -0.363 0.42 -0.342 ...
- ##  - attr(*, "dimnames")=List of 2
- ##   ..$ : chr [1:2] "(Intercept)" "Petal.Length"
- ##   ..$ : NULL
+##  num [1:2, 1:100] -0.415 0.429 -0.363 0.42 -0.342 ...
+##  - attr(*, "dimnames")=List of 2
+##   ..$ : chr [1:2] "(Intercept)" "Petal.Length"
+##   ..$ : NULL
 ```
 
 Esto también se puede realizar en Linux (`type = "FORK"`), aunque podríamos estar trabajando ya en un cluster de equipos...
@@ -161,8 +161,8 @@ system.time(res.boot <- boot(muestra, statistic, R = B))
 ```
 
 ```
- ##    user  system elapsed 
- ##    0.02    0.00    0.02
+##    user  system elapsed 
+##    0.03    0.00    0.03
 ```
 
 ```r
@@ -171,8 +171,8 @@ system.time(res.boot <- boot(muestra, statistic, R = B, parallel = "snow", cl = 
 ```
 
 ```
- ##    user  system elapsed 
- ##    0.01    0.00    0.02
+##    user  system elapsed 
+##    0.03    0.00    0.03
 ```
 
 ### Estudio de simulación {#estudio-sim-boot}
@@ -230,8 +230,8 @@ print(t.fin)
 ```
 
 ```
- ##    user  system elapsed 
- ##    0.02    0.00    1.97
+##    user  system elapsed 
+##    0.03    0.00    1.92
 ```
 
 ```r
@@ -248,11 +248,11 @@ res
 ```
 
 ```
- ##             Cobertura Longitud
- ## Normal          0.858 57.78773
- ## Basic           0.854 57.73865
- ## Studentized     0.904 67.00259
- ## Percentil       0.860 57.73865
+##             Cobertura Longitud
+## Normal          0.858   57.788
+## Basic           0.854   57.739
+## Studentized     0.904   67.003
+## Percentil       0.860   57.739
 ```
 
 ```r
@@ -260,19 +260,13 @@ knitr::kable(res, digits = 3)
 ```
 
 
-\begin{tabular}{l|r|r}
-\hline
-  & Cobertura & Longitud\\
-\hline
-Normal & 0.858 & 57.788\\
-\hline
-Basic & 0.854 & 57.739\\
-\hline
-Studentized & 0.904 & 67.003\\
-\hline
-Percentil & 0.860 & 57.739\\
-\hline
-\end{tabular}
+
+|            | Cobertura| Longitud|
+|:-----------|---------:|--------:|
+|Normal      |     0.858|   57.788|
+|Basic       |     0.854|   57.739|
+|Studentized |     0.904|   67.003|
+|Percentil   |     0.860|   57.739|
 
 
 El último paso es finalizar el cluster:

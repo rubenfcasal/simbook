@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9.1 Introducción | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9.1 Introducción | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -364,9 +368,9 @@ div.csl-indent {
 <li class="chapter" data-level="A.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>A.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="A.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>A.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="A.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>A.2.3</b> Gráfico de dispersion retardado</a></li>
-<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
 <li class="chapter" data-level="A.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>A.2.5</b> Test de rachas</a></li>
-<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
+<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#ljungbox"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
 <li class="chapter" data-level="A.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>A.3</b> Contrastes específicos para generadores aleatorios</a>
 <ul>
@@ -421,11 +425,13 @@ div.csl-indent {
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
 <ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -466,7 +472,7 @@ valor del estadístico en la muestra bootstrap (réplica bootstrap del estadíst
 <p>para <span class="math inline">\(b = 1,\ldots ,B\)</span>.</p>
 <p>La idea original (bootstrap natural, Efron) es que la variabilidad de <span class="math inline">\(\hat{\theta}_{b}^{\ast }\)</span> en torno a <span class="math inline">\(\hat{\theta}\)</span> aproxima la variabilidad de <span class="math inline">\(\hat{\theta}\)</span> en torno a <span class="math inline">\(\theta\)</span>: <strong>la distribución de</strong> <span class="math inline">\(\hat{\theta}_{b}^{\ast }-\hat{\theta}\)</span> (en el universo bootstrap) <strong>aproxima la distribución de </strong> <span class="math inline">\(\hat{\theta}-\theta\)</span> (en la población).</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-1"></span>
-<img src="images/bootstrap.png" alt="Esquema de la idea del boostrap (de Efron)." width="75%" />
+<img src="images/bootstrap.png" alt="Esquema de la idea del boostrap (de Efron)." width="70%" />
 <p class="caption">
 Figura 9.1: Esquema de la idea del boostrap (de Efron).
 </p>
@@ -489,7 +495,7 @@ Figura 9.1: Esquema de la idea del boostrap (de Efron).
 <span id="cb518-4"><a href="boot-intro.html#cb518-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(dnorm, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb518-5"><a href="boot-intro.html#cb518-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> mean_teor, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:muestra-sim"></span>
-<img src="09-Bootstrap_files/figure-html/muestra-sim-1.png" alt="Distribución de la muestra simulada (y distribución teórica en azul)." width="75%" />
+<img src="09-Bootstrap_files/figure-html/muestra-sim-1.png" alt="Distribución de la muestra simulada (y distribución teórica en azul)." width="70%" />
 <p class="caption">
 Figura 9.2: Distribución de la muestra simulada (y distribución teórica en azul).
 </p>
@@ -505,7 +511,7 @@ Alternativamente podríamos asumir un modelo paramétrico y estimar los parámet
 <span id="cb519-7"><a href="boot-intro.html#cb519-7" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Empírica&quot;</span>, <span class="st">&quot;Aprox. paramétrica&quot;</span>, <span class="st">&quot;Teórica&quot;</span>),</span>
 <span id="cb519-8"><a href="boot-intro.html#cb519-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>,<span class="st">&quot;black&quot;</span>, <span class="st">&quot;blue&quot;</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:muestra-sim-aprox"></span>
-<img src="09-Bootstrap_files/figure-html/muestra-sim-aprox-1.png" alt="Distribución teórica de la muestra simulada y distintas aproximaciones." width="75%" />
+<img src="09-Bootstrap_files/figure-html/muestra-sim-aprox-1.png" alt="Distribución teórica de la muestra simulada y distintas aproximaciones." width="70%" />
 <p class="caption">
 Figura 9.3: Distribución teórica de la muestra simulada y distintas aproximaciones.
 </p>
@@ -530,7 +536,7 @@ Figura 9.3: Distribución teórica de la muestra simulada y distintas aproximaci
 <span id="cb521-9"><a href="boot-intro.html#cb521-9" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, mean_teor, sd_teor<span class="sc">/</span><span class="fu">sqrt</span>(n)), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb521-10"><a href="boot-intro.html#cb521-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:mean-boot-perc"></span>
-<img src="09-Bootstrap_files/figure-html/mean-boot-perc-1.png" alt="Aproximación de la distribución de la media muestral centrada mediante bootstrap percentil (uniforme)." width="75%" />
+<img src="09-Bootstrap_files/figure-html/mean-boot-perc-1.png" alt="Aproximación de la distribución de la media muestral centrada mediante bootstrap percentil (uniforme)." width="70%" />
 <p class="caption">
 Figura 9.4: Aproximación de la distribución de la media muestral centrada mediante bootstrap percentil (uniforme).
 </p>
@@ -542,19 +548,19 @@ Figura 9.4: Aproximación de la distribución de la media muestral centrada medi
 <span id="cb522-4"><a href="boot-intro.html#cb522-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="dv">0</span>, sd_teor<span class="sc">/</span><span class="fu">sqrt</span>(n)), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb522-5"><a href="boot-intro.html#cb522-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:mean-boot-basico"></span>
-<img src="09-Bootstrap_files/figure-html/mean-boot-basico-1.png" alt="Aproximación de la distribución de la media muestral mediante bootstrap natural (uniforme)." width="75%" />
+<img src="09-Bootstrap_files/figure-html/mean-boot-basico-1.png" alt="Aproximación de la distribución de la media muestral mediante bootstrap natural (uniforme)." width="70%" />
 <p class="caption">
 Figura 9.5: Aproximación de la distribución de la media muestral mediante bootstrap natural (uniforme).
 </p>
 </div>
-<p>Sin embargo, asintóticamente ambos procedimientos son equivalentes<a href="#fn31" class="footnote-ref" id="fnref31"><sup>31</sup></a> y pueden dar lugar a los mismos resultados en determinados problemas de inferencia.
+<p>Sin embargo, asintóticamente ambos procedimientos son equivalentes<a href="#fn32" class="footnote-ref" id="fnref32"><sup>32</sup></a> y pueden dar lugar a los mismos resultados en determinados problemas de inferencia.
 Por ejemplo en la aproximación del sesgo y de la varianza de un estimador (Sección <a href="sesgo-prec.html#sesgo-prec">11.1</a>):</p>
 <div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb523-1"><a href="boot-intro.html#cb523-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sesgo (teor=0)</span></span>
 <span id="cb523-2"><a href="boot-intro.html#cb523-2" aria-hidden="true" tabindex="-1"></a>mean_boot <span class="sc">-</span> estadistico <span class="co"># mean(estadistico_boot - estadistico)</span></span></code></pre></div>
-<pre><code>## [1] 0.004714973</code></pre>
+<pre><code>## [1] 0.004715</code></pre>
 <div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="boot-intro.html#cb525-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Error estándar</span></span>
 <span id="cb525-2"><a href="boot-intro.html#cb525-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(estadistico_boot) <span class="co"># sd(estadistico_boot - estadistico)</span></span></code></pre></div>
-<pre><code>## [1] 0.08610306</code></pre>
+<pre><code>## [1] 0.086103</code></pre>
 <div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="boot-intro.html#cb527-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Error estándar teórico</span></span>
 <span id="cb527-2"><a href="boot-intro.html#cb527-2" aria-hidden="true" tabindex="-1"></a>sd_teor<span class="sc">/</span><span class="fu">sqrt</span>(n) </span></code></pre></div>
 <pre><code>## [1] 0.1</code></pre>
@@ -562,8 +568,8 @@ Por ejemplo en la aproximación del sesgo y de la varianza de un estimador (Secc
 </div>
 <div class="footnotes">
 <hr />
-<ol start="31">
-<li id="fn31"><p>Por este motivo en algunas referencias más teóricas no se diferencia entre ambos métodos y se denominan simplemente bootstrap percentil.<a href="boot-intro.html#fnref31" class="footnote-back">↩︎</a></p></li>
+<ol start="32">
+<li id="fn32"><p>Por este motivo en algunas referencias más teóricas no se diferencia entre ambos métodos y se denominan simplemente bootstrap percentil.<a href="boot-intro.html#fnref32" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

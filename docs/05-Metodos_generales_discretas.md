@@ -137,14 +137,10 @@ Para encontrar este valor se puede emplear el siguiente algoritmo:
 Este algoritmo no es muy eficiente, especialmente si el número de posibles valores de la variable es grande.
 
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.8\linewidth]{images/cuantil-sim} 
-
-}
-
-\caption{Ilustración de la simulación de una distribución discreta mediante transformación cuantil (con búsqueda secuencial).}(\#fig:cuantil-movie)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="images/cuantil-movie.gif" alt="Ilustración de la simulación de una distribución discreta mediante transformación cuantil (con búsqueda secuencial)." width="80%" />
+<p class="caption">(\#fig:cuantil-movie)Ilustración de la simulación de una distribución discreta mediante transformación cuantil (con búsqueda secuencial).</p>
+</div>
 
 ::: {.remark}
 El algoritmo anterior es válido independientemente de que los valores que toma la variable estén ordenados.
@@ -180,26 +176,26 @@ rpmf
 ```
 
 ```
- ## function(x, prob = 1/length(x), n = 1000, as.factor = FALSE) {
- ##   # Numero de comparaciones
- ##   ncomp <- 0
- ##   # Inicializar FD
- ##   Fx <- cumsum(prob)
- ##   # Simular
- ##   X <- numeric(n)
- ##   U <- runif(n)
- ##   for(j in 1:n) {
- ##     i <- 1
- ##     while (Fx[i] < U[j]) i <- i + 1
- ##     X[j] <- x[i]
- ##     ncomp <- ncomp + i
- ##   }
- ##   if(as.factor) X <- factor(X, levels = x)
- ##   attr(X, "ncomp") <- ncomp
- ##   return(X)
- ## }
- ## <bytecode: 0x00000140885386f8>
- ## <environment: namespace:simres>
+## function(x, prob = 1/length(x), n = 1000, as.factor = FALSE) {
+##   # Numero de comparaciones
+##   ncomp <- 0
+##   # Inicializar FD
+##   Fx <- cumsum(prob)
+##   # Simular
+##   X <- numeric(n)
+##   U <- runif(n)
+##   for(j in 1:n) {
+##     i <- 1
+##     while (Fx[i] < U[j]) i <- i + 1
+##     X[j] <- x[i]
+##     ncomp <- ncomp + i
+##   }
+##   if(as.factor) X <- factor(X, levels = x)
+##   attr(X, "ncomp") <- ncomp
+##   return(X)
+## }
+## <bytecode: 0x00000206dd3d6b28>
+## <environment: namespace:simres>
 ```
 
 ::: {.example #binom-cuant name="Simulación de una binomial mediante el método de la transformación cuantil"}
@@ -225,8 +221,8 @@ system.time( rx <- rpmf(x, pmf, nsim) )
 ```
 
 ```
- ##    user  system elapsed 
- ##    0.01    0.00    0.01
+##    user  system elapsed 
+##    0.03    0.00    0.03
 ```
 
 A partir de ellas podríamos aproximar el valor esperado:
@@ -236,7 +232,7 @@ mean(rx)
 ```
 
 ```
- ## [1] 4.99697
+## [1] 4.997
 ```
 aunque en este caso el valor teórico es conocido $np$ = 5.
 
@@ -248,7 +244,7 @@ ncomp/nsim
 ```
 
 ```
- ## [1] 5.99697
+## [1] 5.997
 ```
 
 ```r
@@ -264,14 +260,10 @@ plot(res, ylab = "frecuencia relativa", xlab = "valor")
 points(x, pmf, pch = 4, col = "blue")  # Comparación teórica
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.75\linewidth]{05-Metodos_generales_discretas_files/figure-latex/comprfmp-1} 
-
-}
-
-\caption{Comparación de las frecuencias relativas de los valores generados, mediante el método de la transformación cuantil, con las probabilidades teóricas.}(\#fig:comprfmp)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="05-Metodos_generales_discretas_files/figure-html/comprfmp-1.png" alt="Comparación de las frecuencias relativas de los valores generados, mediante el método de la transformación cuantil, con las probabilidades teóricas." width="70%" />
+<p class="caption">(\#fig:comprfmp)Comparación de las frecuencias relativas de los valores generados, mediante el método de la transformación cuantil, con las probabilidades teóricas.</p>
+</div>
 
 También podríamos realizar comparaciones numéricas:
 
@@ -283,18 +275,18 @@ print(res, digits = 2)
 ```
 
 ```
- ##     x    psim   pteor
- ## 1   0 0.00100 0.00098
- ## 2   1 0.00981 0.00977
- ## 3   2 0.04457 0.04395
- ## 4   3 0.11865 0.11719
- ## 5   4 0.20377 0.20508
- ## 6   5 0.24477 0.24609
- ## 7   6 0.20593 0.20508
- ## 8   7 0.11631 0.11719
- ## 9   8 0.04415 0.04395
- ## 10  9 0.01021 0.00977
- ## 11 10 0.00083 0.00098
+##     x    psim   pteor
+## 1   0 0.00100 0.00098
+## 2   1 0.00981 0.00977
+## 3   2 0.04457 0.04395
+## 4   3 0.11865 0.11719
+## 5   4 0.20377 0.20508
+## 6   5 0.24477 0.24609
+## 7   6 0.20593 0.20508
+## 8   7 0.11631 0.11719
+## 9   8 0.04415 0.04395
+## 10  9 0.01021 0.00977
+## 11 10 0.00083 0.00098
 ```
 
 ```r
@@ -303,7 +295,7 @@ max(abs(res$psim - res$pteor))
 ```
 
 ```
- ## [1] 0.0014625
+## [1] 0.0014625
 ```
 
 ```r
@@ -312,7 +304,7 @@ max(abs(res$psim - res$pteor))
 ```
 
 ```
- ## [1] 15.008
+## [1] 15.008
 ```
 :::
 
@@ -376,8 +368,8 @@ tiempo
 ```
 
 ```
- ##    user  system elapsed 
- ##    0.02    0.00    0.02
+##    user  system elapsed 
+##       0       0       0
 ```
 
 ```r
@@ -387,7 +379,7 @@ ncomp/nsim
 ```
 
 ```
- ## [1] 3.08369
+## [1] 3.0837
 ```
 
 ```r
@@ -395,7 +387,7 @@ sum((1:length(x))*pmf[ind]) # Valor teórico
 ```
 
 ```
- ## [1] 3.083984
+## [1] 3.084
 ```
 
 Como ya se comentó, en R se recomienda emplear la función `sample()` 
@@ -407,8 +399,8 @@ system.time( rx <- sample(x, nsim, replace = TRUE, prob = pmf) )
 ```
 
 ```
- ##    user  system elapsed 
- ##    0.02    0.00    0.01
+##    user  system elapsed 
+##       0       0       0
 ```
 
 :::
@@ -426,14 +418,10 @@ El punto de partida para un valor $U$ será $g_{j_{0}}$ con:
 $$j_{0}=\left\lfloor mU\right\rfloor +1$$
 
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.8\linewidth]{images/tabla-sim} 
-
-}
-
-\caption{Ilustración de la simulación de una distribución discreta mediante tabla guía.}(\#fig:tabla-movie)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="images/tabla-movie.gif" alt="Ilustración de la simulación de una distribución discreta mediante tabla guía." width="80%" />
+<p class="caption">(\#fig:tabla-movie)Ilustración de la simulación de una distribución discreta mediante tabla guía.</p>
+</div>
 
 En este caso, puede verse que una cota del número medio de comparaciones es:
 $$E\left( N\right) \leq 1+\frac{n}{m}$$
@@ -479,31 +467,31 @@ rpmf.table
 ```
 
 ```
- ## function(x, prob = 1/length(x), m, n = 1000, as.factor = FALSE) {
- ##   # Inicializar tabla y FD
- ##   Fx <- cumsum(prob)
- ##   g <- rep(1,m)
- ##   i <- 1
- ##   for(j in 2:m) {
- ##     while (Fx[i] < (j-1)/m) i <- i + 1
- ##     g[j] <- i
- ##   }
- ##   ncomp <- i - 1
- ##   # Generar valores
- ##   X <- numeric(n)
- ##   U <- runif(n)
- ##   for(j in 1:n) {
- ##     i <- i0 <- g[floor(U[j] * m) + 1]
- ##     while (Fx[i] < U[j]) i <- i + 1
- ##     ncomp <- ncomp + i - i0
- ##     X[j] <- x[i]
- ##   }
- ##   if(as.factor) X <- factor(X, levels = x)
- ##   attr(X, "ncomp") <- ncomp
- ##   return(X)
- ## }
- ## <bytecode: 0x0000014088be2db0>
- ## <environment: namespace:simres>
+## function(x, prob = 1/length(x), m, n = 1000, as.factor = FALSE) {
+##   # Inicializar tabla y FD
+##   Fx <- cumsum(prob)
+##   g <- rep(1,m)
+##   i <- 1
+##   for(j in 2:m) {
+##     while (Fx[i] < (j-1)/m) i <- i + 1
+##     g[j] <- i
+##   }
+##   ncomp <- i - 1
+##   # Generar valores
+##   X <- numeric(n)
+##   U <- runif(n)
+##   for(j in 1:n) {
+##     i <- i0 <- g[floor(U[j] * m) + 1]
+##     while (Fx[i] < U[j]) i <- i + 1
+##     ncomp <- ncomp + i - i0
+##     X[j] <- x[i]
+##   }
+##   if(as.factor) X <- factor(X, levels = x)
+##   attr(X, "ncomp") <- ncomp
+##   return(X)
+## }
+## <bytecode: 0x00000206e0b3f4f0>
+## <environment: namespace:simres>
 ```
 
 ::: {.example #binom-tabla name="Simulación de una binomial mediante tabla guía"}
@@ -518,8 +506,8 @@ system.time( rx <- rpmf.table(x, pmf, n-1, nsim) )
 ```
 
 ```
- ##    user  system elapsed 
- ##    0.01    0.00    0.02
+##    user  system elapsed 
+##    0.03    0.00    0.03
 ```
 
 Número medio de comparaciones:
@@ -530,7 +518,7 @@ ncomp/nsim
 ```
 
 ```
- ## [1] 0.55951
+## [1] 0.55951
 ```
 
 ```r
@@ -538,7 +526,7 @@ sum((1:length(x))*pmf) # Numero esperado con búsqueda secuencial
 ```
 
 ```
- ## [1] 6
+## [1] 6
 ```
 
 Análisis de los resultados:
@@ -549,14 +537,10 @@ plot(res, ylab = "frecuencia relativa", xlab = "valores")
 points(x, pmf, pch = 4, col = "blue")  # Comparación teórica
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.75\linewidth]{05-Metodos_generales_discretas_files/figure-latex/comptabla-1} 
-
-}
-
-\caption{Comparación de las frecuencias relativas de los valores generados, mediante el método de la tabla guía, con las probabilidades teóricas.}(\#fig:comptabla)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="05-Metodos_generales_discretas_files/figure-html/comptabla-1.png" alt="Comparación de las frecuencias relativas de los valores generados, mediante el método de la tabla guía, con las probabilidades teóricas." width="70%" />
+<p class="caption">(\#fig:comptabla)Comparación de las frecuencias relativas de los valores generados, mediante el método de la tabla guía, con las probabilidades teóricas.</p>
+</div>
 
 :::
 
@@ -600,14 +584,10 @@ La idea es "tomar prestada" parte de la probabilidad de los valores más probabl
 
 :::
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.9\linewidth]{05-Metodos_generales_discretas_files/figure-latex/unnamed-chunk-14-1} 
-
-}
-
-\caption{Pasos del algoritmo de inicialización del método Alias.}(\#fig:unnamed-chunk-14)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="05-Metodos_generales_discretas_files/figure-html/unnamed-chunk-14-1.png" alt="Pasos del algoritmo de inicialización del método Alias." width="90%" />
+<p class="caption">(\#fig:unnamed-chunk-14)Pasos del algoritmo de inicialización del método Alias.</p>
+</div>
 
 El algoritmo para generar las simulaciones es el estándar del método de composición:
 
@@ -634,32 +614,32 @@ rpmf.alias
 ```
 
 ```
- ## function(x, prob = 1/length(x), n = 1000, as.factor = FALSE) {
- ##   # Inicializar tablas
- ##   a <- numeric(length(x))
- ##   q <- prob*length(x)
- ##   low <- q < 1
- ##   high <- which(!low)
- ##   low <- which(low)
- ##   while (length(high) && length(low)) {
- ##     l <- low[1]
- ##     h <- high[1]
- ##     a[l] <- h
- ##     q[h] <- q[h] - (1 - q[l])
- ##     if (q[h] < 1) {
- ##       high <- high[-1]
- ##       low[1] <- h
- ##     } else low <- low[-1]
- ##   } # while
- ##   # Generar valores
- ##   V <- runif(n)
- ##   i <- floor(runif(n)*length(x)) + 1
- ##   X <- x[ ifelse( V < q[i], i, a[i]) ]
- ##   if(as.factor) X <- factor(X, levels = x)
- ##   return(X)
- ## }
- ## <bytecode: 0x00000140837a06c0>
- ## <environment: namespace:simres>
+## function(x, prob = 1/length(x), n = 1000, as.factor = FALSE) {
+##   # Inicializar tablas
+##   a <- numeric(length(x))
+##   q <- prob*length(x)
+##   low <- q < 1
+##   high <- which(!low)
+##   low <- which(low)
+##   while (length(high) && length(low)) {
+##     l <- low[1]
+##     h <- high[1]
+##     a[l] <- h
+##     q[h] <- q[h] - (1 - q[l])
+##     if (q[h] < 1) {
+##       high <- high[-1]
+##       low[1] <- h
+##     } else low <- low[-1]
+##   } # while
+##   # Generar valores
+##   V <- runif(n)
+##   i <- floor(runif(n)*length(x)) + 1
+##   X <- x[ ifelse( V < q[i], i, a[i]) ]
+##   if(as.factor) X <- factor(X, levels = x)
+##   return(X)
+## }
+## <bytecode: 0x00000206e358da30>
+## <environment: namespace:simres>
 ```
 
 
@@ -676,8 +656,8 @@ system.time( rx <- rpmf.alias(x, pmf, nsim) )
 ```
 
 ```
- ##    user  system elapsed 
- ##       0       0       0
+##    user  system elapsed 
+##    0.02    0.00    0.02
 ```
 
 Análisis de los resultados:
@@ -688,14 +668,10 @@ plot(res, ylab = "frecuencia relativa", xlab = "valores")
 points(x, pmf, pch = 4, col = "blue")  # Comparación teórica
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.75\linewidth]{05-Metodos_generales_discretas_files/figure-latex/compalias-1} 
-
-}
-
-\caption{Comparación de las frecuencias relativas de los valores generados, mediante el método de alias, con las probabilidades teóricas.}(\#fig:compalias)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="05-Metodos_generales_discretas_files/figure-html/compalias-1.png" alt="Comparación de las frecuencias relativas de los valores generados, mediante el método de alias, con las probabilidades teóricas." width="70%" />
+<p class="caption">(\#fig:compalias)Comparación de las frecuencias relativas de los valores generados, mediante el método de alias, con las probabilidades teóricas.</p>
+</div>
 
 :::
 
@@ -843,18 +819,14 @@ ifelse(x < 0, 0,
 Como es una función vectorial podemos emplear `curve()` para representarla:
 
 ```r
-curve(fdistr, from = -0.1, to = 1.1, type = 's', main = '')
+curve(fdistr, from = -0.1, to = 1.1, main = '')
 abline(h = c(1/10, 2/10, 3/10), lty = 2) # Discontinuidades
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.75\linewidth]{05-Metodos_generales_discretas_files/figure-latex/mixta-cuantil-plot-1} 
-
-}
-
-\caption{Función de distribución mixta (con discontinuidades en 0 y 1/5).}(\#fig:mixta-cuantil-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="05-Metodos_generales_discretas_files/figure-html/mixta-cuantil-plot-1.png" alt="Función de distribución mixta (con discontinuidades en 0 y 1/5)." width="70%" />
+<p class="caption">(\#fig:mixta-cuantil-plot)Función de distribución mixta (con discontinuidades en 0 y 1/5).</p>
+</div>
 
 a)  Diseñar un algoritmo basado en el método de inversión generalizado 
     para generar observaciones de esta variable.

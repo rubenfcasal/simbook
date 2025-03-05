@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>7.4 Métodos Monte Carlo en Inferencia Estadística | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="7.4 Métodos Monte Carlo en Inferencia Estadística | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -364,9 +368,9 @@ div.csl-indent {
 <li class="chapter" data-level="A.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>A.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="A.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>A.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="A.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>A.2.3</b> Gráfico de dispersion retardado</a></li>
-<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
 <li class="chapter" data-level="A.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>A.2.5</b> Test de rachas</a></li>
-<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
+<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#ljungbox"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
 <li class="chapter" data-level="A.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>A.3</b> Contrastes específicos para generadores aleatorios</a>
 <ul>
@@ -421,11 +425,13 @@ div.csl-indent {
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
 <ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -534,10 +540,10 @@ una de las muestras.</p>
 <p>La fila <code>muestras[i,]</code> contiene las observaciones de la i-ésima muestra y
 la correspondiente media y desviación típica.</p>
 <div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="aplic-inf.html#cb392-1" aria-hidden="true" tabindex="-1"></a>muestras[<span class="dv">1</span>,]</span></code></pre></div>
-<pre><code>##               obs1     obs2     obs3    obs4     obs5     obs6      obs7
-## muestra1 0.6421985 3.482661 1.242483 3.28559 3.766896 -2.04443 0.6186323
-##                obs8      obs9    obs10     mean       sd
-## muestra1 -0.8293636 0.4903819 2.790091 1.344514 1.951292</code></pre></li>
+<pre><code>##            obs1   obs2   obs3   obs4   obs5    obs6    obs7     obs8
+## muestra1 0.6422 3.4827 1.2425 3.2856 3.7669 -2.0444 0.61863 -0.82936
+##             obs9  obs10   mean     sd
+## muestra1 0.49038 2.7901 1.3445 1.9513</code></pre></li>
 </ol>
 <p>Normalmente emplearemos sin embargo una ordenación por columnas (cada fila se corresponderá con una generación).</p>
 <ol start="2" style="list-style-type: lower-alpha">
@@ -555,7 +561,7 @@ muestrales y compararlo con la densidad teórica.</p>
 <span id="cb394-9"><a href="aplic-inf.html#cb394-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Valor esperado de la media muestral (teórico)</span></span>
 <span id="cb394-10"><a href="aplic-inf.html#cb394-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> mux, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:mednorm"></span>
-<img src="07-Monte_Carlo_files/figure-html/mednorm-1.png" alt="Distribución de la media muestral de una distribución normal." width="75%" />
+<img src="07-Monte_Carlo_files/figure-html/mednorm-1.png" alt="Distribución de la media muestral de una distribución normal." width="70%" />
 <p class="caption">
 Figura 7.9: Distribución de la media muestral de una distribución normal.
 </p>
@@ -605,7 +611,7 @@ aunque dependerá de las características de la distribución de <span class="ma
 <span id="cb399-9"><a href="aplic-inf.html#cb399-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Valor esperado de la media muestral (teórico)</span></span>
 <span id="cb399-10"><a href="aplic-inf.html#cb399-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>muexp, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:medexp"></span>
-<img src="07-Monte_Carlo_files/figure-html/medexp-1.png" alt="Distribución de la media muestral de una distribución exponencial y distribución asintótica." width="75%" />
+<img src="07-Monte_Carlo_files/figure-html/medexp-1.png" alt="Distribución de la media muestral de una distribución exponencial y distribución asintótica." width="70%" />
 <p class="caption">
 Figura 7.10: Distribución de la media muestral de una distribución exponencial y distribución asintótica.
 </p>
@@ -656,7 +662,7 @@ cobertura de estas estimaciones por IC.</p>
 <span id="cb407-7"><a href="aplic-inf.html#cb407-7" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="dv">1</span><span class="sc">:</span>m, ici, <span class="dv">1</span><span class="sc">:</span>m, ics, <span class="at">angle =</span> <span class="dv">90</span>, <span class="at">length =</span> <span class="fl">0.05</span>, <span class="at">code =</span> <span class="dv">3</span>, <span class="at">col =</span> color)</span>
 <span id="cb407-8"><a href="aplic-inf.html#cb407-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> mux, <span class="at">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:cobicnorm"></span>
-<img src="07-Monte_Carlo_files/figure-html/cobicnorm-1.png" alt="Cobertura de las estimaciones por IC." width="75%" />
+<img src="07-Monte_Carlo_files/figure-html/cobicnorm-1.png" alt="Cobertura de las estimaciones por IC." width="70%" />
 <p class="caption">
 Figura 7.11: Cobertura de las estimaciones por IC.
 </p>
@@ -690,7 +696,7 @@ confianza obtenido bajo normalidad?</p>
 <span id="cb416-7"><a href="aplic-inf.html#cb416-7" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="dv">1</span><span class="sc">:</span>m, ici, <span class="dv">1</span><span class="sc">:</span>m, ics, <span class="at">angle =</span> <span class="dv">90</span>, <span class="at">length =</span> <span class="fl">0.05</span>, <span class="at">code =</span> <span class="dv">3</span>, <span class="at">col =</span> color)</span>
 <span id="cb416-8"><a href="aplic-inf.html#cb416-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> muexp, <span class="at">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:cobicexp"></span>
-<img src="07-Monte_Carlo_files/figure-html/cobicexp-1.png" alt="Cobertura de las estimaciones por IC (bajo normalidad)." width="75%" />
+<img src="07-Monte_Carlo_files/figure-html/cobicexp-1.png" alt="Cobertura de las estimaciones por IC (bajo normalidad)." width="70%" />
 <p class="caption">
 Figura 7.12: Cobertura de las estimaciones por IC (bajo normalidad).
 </p>
@@ -730,7 +736,7 @@ con el bootstrap percentil; en este caso el estimador es insesgado…):</p>
 <span id="cb418-24"><a href="aplic-inf.html#cb418-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 0.4714233 1.8059094</span></span>
 <span id="cb418-25"><a href="aplic-inf.html#cb418-25" aria-hidden="true" tabindex="-1"></a><span class="co"># IP (aprox.) </span></span>
 <span id="cb418-26"><a href="aplic-inf.html#cb418-26" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>ic.sim, <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&#39;red&#39;</span>) </span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-34-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-34-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div class="remark">
 <p><span id="unlabeled-div-19" class="remark"><em>Nota:</em>. </span>Estimaciones puntuales, por intervalo de confianza y contrastes de hipótesis
 para la media con varianza desconocida bajo normalidad
@@ -785,7 +791,7 @@ de <span class="math inline">\(p\)</span> (<code>p.teor &lt;- seq(1/n, 1 - 1/n, 
 <p>Gráfico coberturas:</p>
 <div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="aplic-inf.html#cb423-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(p.teor, p.cov, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="dv">4</span> <span class="sc">*</span> alpha, <span class="dv">1</span>))</span>
 <span id="cb423-2"><a href="aplic-inf.html#cb423-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span> <span class="sc">-</span> alpha, <span class="at">lty =</span> <span class="dv">2</span>) </span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-39-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-39-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Fuente <a href="http://www.springer.com/gp/book/9780387402734">Suess y Trumbo (2010)</a>.</p></li>
 <li><p>Repetir el apartado anterior considerando intervalos de
 confianza Agresti-Coull (<span class="math inline">\(a=2\)</span>).</p>
@@ -816,7 +822,7 @@ confianza Agresti-Coull (<span class="math inline">\(a=2\)</span>).</p>
 <span id="cb424-24"><a href="aplic-inf.html#cb424-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico coberturas:</span></span>
 <span id="cb424-25"><a href="aplic-inf.html#cb424-25" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(p.teor, p.cov, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="dv">4</span> <span class="sc">*</span> alpha, <span class="dv">1</span>))</span>
 <span id="cb424-26"><a href="aplic-inf.html#cb424-26" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span> <span class="sc">-</span> alpha, <span class="at">lty =</span> <span class="dv">2</span>) </span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-40-1.png" width="75%" style="display: block; margin: auto;" /></p></li>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-40-1.png" width="70%" style="display: block; margin: auto;" /></p></li>
 <li><p>Repetir el apartado anterior empleando simulación para aproximar
 la cobertura.</p>
 <p>Parámetros:</p>
@@ -844,7 +850,7 @@ la cobertura.</p>
 <p>Representar:</p>
 <div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="aplic-inf.html#cb427-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(p.teor, p.cov, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="dv">4</span> <span class="sc">*</span> alpha, <span class="dv">1</span>))</span>
 <span id="cb427-2"><a href="aplic-inf.html#cb427-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span> <span class="sc">-</span> alpha, <span class="at">lty =</span> <span class="dv">2</span>) </span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-43-1.png" width="75%" style="display: block; margin: auto;" /></p></li>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-43-1.png" width="70%" style="display: block; margin: auto;" /></p></li>
 </ol>
 </div>
 <p>Como ya se comentó, el caso de ajustar un modelo a los datos y realizar simulaciones a partir de ese modelo ajustado para aproximar las características de interés de un estadístico, se denomina también bootstrap paramétrico.
@@ -893,13 +899,13 @@ de la distribución del <span class="math inline">\(p\)</span>-valor a la de ref
 <p>Análisis de los p-valores:</p>
 <div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="aplic-inf.html#cb432-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pvalor, <span class="at">freq=</span><span class="cn">FALSE</span>)</span>
 <span id="cb432-2"><a href="aplic-inf.html#cb432-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">1</span>, <span class="at">lty=</span><span class="dv">2</span>)   <span class="co"># curve(dunif(x,0,1), add=TRUE)</span></span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-46-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-46-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="aplic-inf.html#cb433-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribución empírica</span></span>
 <span id="cb433-2"><a href="aplic-inf.html#cb433-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">ecdf</span>(pvalor)(x), <span class="at">type =</span> <span class="st">&quot;s&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, </span>
 <span id="cb433-3"><a href="aplic-inf.html#cb433-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">&#39;Tamaño del contraste&#39;</span>, <span class="at">ylab =</span> <span class="st">&#39;Proporción de rechazos&#39;</span>, </span>
 <span id="cb433-4"><a href="aplic-inf.html#cb433-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&#39;Nivel de significación&#39;</span>)</span>
 <span id="cb433-5"><a href="aplic-inf.html#cb433-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="dv">0</span>, <span class="at">b=</span><span class="dv">1</span>, <span class="at">lty=</span><span class="dv">2</span>)   <span class="co"># curve(punif(x, 0, 1), add = TRUE)</span></span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-46-2.png" width="75%" style="display: block; margin: auto;" /></p></li>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-46-2.png" width="70%" style="display: block; margin: auto;" /></p></li>
 <li><p>Repetir el apartado anterior considerando el test de Lilliefors
 (rutina <code>lillie.test</code> del paquete <code>nortest</code>).</p>
 <div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="aplic-inf.html#cb434-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nortest, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
@@ -932,12 +938,12 @@ de la distribución del <span class="math inline">\(p\)</span>-valor a la de ref
 <p>Análisis de los p-valores:</p>
 <div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="aplic-inf.html#cb439-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pvalor, <span class="at">freq=</span><span class="cn">FALSE</span>)</span>
 <span id="cb439-2"><a href="aplic-inf.html#cb439-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">1</span>, <span class="at">lty=</span><span class="dv">2</span>)   <span class="co"># curve(dunif(x,0,1), add=TRUE)</span></span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-51-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-51-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="aplic-inf.html#cb440-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribución empírica</span></span>
 <span id="cb440-2"><a href="aplic-inf.html#cb440-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">ecdf</span>(pvalor)(x), <span class="at">type =</span> <span class="st">&quot;s&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">main =</span> <span class="st">&#39;Tamaño del contraste&#39;</span>, </span>
 <span id="cb440-3"><a href="aplic-inf.html#cb440-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">&#39;Proporción de rechazos&#39;</span>, <span class="at">xlab =</span> <span class="st">&#39;Nivel de significación&#39;</span>)</span>
 <span id="cb440-4"><a href="aplic-inf.html#cb440-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="dv">0</span>, <span class="at">b=</span><span class="dv">1</span>, <span class="at">lty=</span><span class="dv">2</span>)   <span class="co"># curve(punif(x, 0, 1), add = TRUE)</span></span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-51-2.png" width="75%" style="display: block; margin: auto;" /></p></li>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-51-2.png" width="70%" style="display: block; margin: auto;" /></p></li>
 <li><p>Repetir el apartado a) contrastando una distribución exponencial
 y considerando 500 pruebas con muestras de tamaño 30 de una <span class="math inline">\(Exp(1)\)</span>.</p>
 <p>Valores iniciales:</p>
@@ -967,13 +973,13 @@ y considerando 500 pruebas con muestras de tamaño 30 de una <span class="math i
 <p>Análisis de los p-valores:</p>
 <div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="aplic-inf.html#cb445-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pvalor, <span class="at">freq=</span><span class="cn">FALSE</span>)</span>
 <span id="cb445-2"><a href="aplic-inf.html#cb445-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">1</span>, <span class="at">lty=</span><span class="dv">2</span>)   <span class="co"># curve(dunif(x,0,1), add=TRUE)</span></span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-55-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-55-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="aplic-inf.html#cb446-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribución empírica</span></span>
 <span id="cb446-2"><a href="aplic-inf.html#cb446-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">ecdf</span>(pvalor)(x), <span class="at">type =</span> <span class="st">&quot;s&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, </span>
 <span id="cb446-3"><a href="aplic-inf.html#cb446-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">&#39;Tamaño del contraste&#39;</span>, <span class="at">ylab =</span> <span class="st">&#39;Proporción de rechazos&#39;</span>, </span>
 <span id="cb446-4"><a href="aplic-inf.html#cb446-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&#39;Nivel de significación&#39;</span>)</span>
 <span id="cb446-5"><a href="aplic-inf.html#cb446-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="dv">0</span>, <span class="at">b=</span><span class="dv">1</span>, <span class="at">lty=</span><span class="dv">2</span>)   <span class="co"># curve(punif(x, 0, 1), add = TRUE) </span></span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-55-2.png" width="75%" style="display: block; margin: auto;" /></p></li>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-55-2.png" width="70%" style="display: block; margin: auto;" /></p></li>
 <li><p>Diseñar una rutina que permita realizar el contraste KS de
 bondad de ajuste de una variable exponencial aproximando el
 <span class="math inline">\(p\)</span>-valor por simulación y repetir el apartado anterior
@@ -1032,13 +1038,13 @@ empleando esta rutina.</p>
 <p>Análisis de los p-valores:</p>
 <div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="aplic-inf.html#cb452-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pvalor, <span class="at">freq=</span><span class="cn">FALSE</span>)</span>
 <span id="cb452-2"><a href="aplic-inf.html#cb452-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">1</span>, <span class="at">lty=</span><span class="dv">2</span>)   <span class="co"># curve(dunif(x,0,1), add=TRUE)</span></span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-59-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-59-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="aplic-inf.html#cb453-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribución empírica</span></span>
 <span id="cb453-2"><a href="aplic-inf.html#cb453-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">ecdf</span>(pvalor)(x), <span class="at">type =</span> <span class="st">&quot;s&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, </span>
 <span id="cb453-3"><a href="aplic-inf.html#cb453-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">&#39;Tamaño del contraste&#39;</span>, <span class="at">ylab =</span> <span class="st">&#39;Proporción de rechazos&#39;</span>, </span>
 <span id="cb453-4"><a href="aplic-inf.html#cb453-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&#39;Nivel de significación&#39;</span>)</span>
 <span id="cb453-5"><a href="aplic-inf.html#cb453-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="dv">0</span>, <span class="at">b=</span><span class="dv">1</span>, <span class="at">lty=</span><span class="dv">2</span>)   <span class="co"># curve(punif(x, 0, 1), add = TRUE) </span></span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-59-2.png" width="75%" style="display: block; margin: auto;" /></p></li>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-59-2.png" width="70%" style="display: block; margin: auto;" /></p></li>
 <li><p>Estudiar la potencia de los contrastes de los apartados c) y d),
 considerando como alternativa una distribución Weibull.</p>
 <p>La distribución exponencial es un caso particular de la Weibull:
@@ -1069,7 +1075,7 @@ Estudiamos lo que ocurre al desplazar <code>dweibull(x, shape, 1/ratex)</code> c
 <span id="cb454-21"><a href="aplic-inf.html#cb454-21" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;shape&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Proporción de rechazos&quot;</span>)</span>
 <span id="cb454-22"><a href="aplic-inf.html#cb454-22" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(shapex, preject2, <span class="at">lty =</span> <span class="dv">2</span>)</span>
 <span id="cb454-23"><a href="aplic-inf.html#cb454-23" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> alfa, <span class="at">v =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/potencia-1.png" width="75%" style="display: block; margin: auto;" /></p></li>
+<p><img src="07-Monte_Carlo_files/figure-html/potencia-1.png" width="70%" style="display: block; margin: auto;" /></p></li>
 </ol>
 </div>
 <p>El estadístico de Kolmogorov-Smirnov <code>Dn = max(c(DMinus, DPlus))</code> tiene ventajas desde el
@@ -1094,7 +1100,7 @@ dat.sim &lt;- rnorm(n, 3*p.sim, 1+2*p.sim)</code></pre>
 <p>Podemos comparar la densidad objetivo con la de los valores contaminados:</p>
 <div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="aplic-inf.html#cb456-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="dv">0</span>, <span class="dv">1</span>), <span class="sc">-</span><span class="dv">3</span>, <span class="dv">12</span>, <span class="at">ylab =</span> <span class="st">&#39;densidad&#39;</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
 <span id="cb456-2"><a href="aplic-inf.html#cb456-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fl">0.95</span><span class="sc">*</span><span class="fu">dnorm</span>(x, <span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span> <span class="fl">0.05</span><span class="sc">*</span><span class="fu">dnorm</span>(x, <span class="dv">3</span>, <span class="dv">3</span>), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/contaminada-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="07-Monte_Carlo_files/figure-html/contaminada-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div class="remark">
 <p><span id="unlabeled-div-20" class="remark"><em>Nota:</em>. </span>Como se comentó en la Sección <a href="composicion.html#composicion">4.4</a>, también es habitual simular este tipo de datos generando un porcentaje alto de valores (en este caso un 95%) de la distribución base (<span class="math inline">\(N(0,1)\)</span>) y el resto (5%) de la distibución “contaminadora” (<span class="math inline">\(N(3,3^2)\)</span>), aunque se suele considerar un porcentaje de contaminación del 1% o inferior (además, como en este caso concreto no va importar el orden, no sería necesario combinar aleatoriamente los valores).</p>
@@ -1121,37 +1127,37 @@ media no contaminada 0).</p>
 <div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="aplic-inf.html#cb458-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dat.sim[,<span class="dv">1</span>])</span></code></pre></div>
 <pre><code>##  num [1:100] 0.197 -0.42 1.163 -0.406 0.744 ...</code></pre>
 <div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="aplic-inf.html#cb460-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(dat.sim[,<span class="dv">1</span>])</span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-61-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-61-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Calculamos los estimadores:</p>
 <div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="aplic-inf.html#cb461-1" aria-hidden="true" tabindex="-1"></a>mean.sim <span class="ot">&lt;-</span> <span class="fu">apply</span>(dat.sim, <span class="dv">2</span>, mean)</span>
 <span id="cb461-2"><a href="aplic-inf.html#cb461-2" aria-hidden="true" tabindex="-1"></a>median.sim <span class="ot">&lt;-</span> <span class="fu">apply</span>(dat.sim, <span class="dv">2</span>, median)</span></code></pre></div>
 <p>Estimamos sus características:</p>
 <div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="aplic-inf.html#cb462-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(mean.sim) <span class="co"># Coincide con el sesgo (media teórica es 0)</span></span></code></pre></div>
-<pre><code>## [1] 0.1459986</code></pre>
+<pre><code>## [1] 0.146</code></pre>
 <div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="aplic-inf.html#cb464-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(mean.sim)</span></code></pre></div>
-<pre><code>## [1] 0.1349537</code></pre>
+<pre><code>## [1] 0.13495</code></pre>
 <div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="aplic-inf.html#cb466-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(median.sim) <span class="co"># Coincide con el sesgo (media teórica es 0)</span></span></code></pre></div>
-<pre><code>## [1] 0.04453509</code></pre>
+<pre><code>## [1] 0.044535</code></pre>
 <div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="aplic-inf.html#cb468-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(median.sim)</span></code></pre></div>
-<pre><code>## [1] 0.1300611</code></pre>
+<pre><code>## [1] 0.13006</code></pre>
 <p>Sesgo:</p>
 <div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="aplic-inf.html#cb470-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(mean.sim<span class="sc">-</span>xmed, median.sim<span class="sc">-</span>xmed, </span>
 <span id="cb470-2"><a href="aplic-inf.html#cb470-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">names=</span><span class="fu">c</span>(<span class="st">&quot;Media&quot;</span>,<span class="st">&quot;Mediana&quot;</span>), <span class="at">ylab=</span><span class="st">&quot;Sesgo&quot;</span>)</span>
 <span id="cb470-3"><a href="aplic-inf.html#cb470-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-64-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-64-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Error cuadrático:</p>
 <div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="aplic-inf.html#cb471-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>((mean.sim<span class="sc">-</span>xmed)<span class="sc">^</span><span class="dv">2</span>, (median.sim<span class="sc">-</span>xmed)<span class="sc">^</span><span class="dv">2</span>, </span>
 <span id="cb471-2"><a href="aplic-inf.html#cb471-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">names=</span><span class="fu">c</span>(<span class="st">&quot;Media&quot;</span>,<span class="st">&quot;Mediana&quot;</span>), <span class="at">ylab=</span><span class="st">&quot;Error cuadrático&quot;</span>)</span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-65-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-65-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Estadísticos error cuadrático:</p>
 <div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="aplic-inf.html#cb472-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SE media</span></span>
 <span id="cb472-2"><a href="aplic-inf.html#cb472-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>((mean.sim<span class="sc">-</span>xmed)<span class="sc">^</span><span class="dv">2</span>) </span></code></pre></div>
-<pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-## 0.0000005 0.0045072 0.0206272 0.0394917 0.0591531 0.3619587</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## 0.00000 0.00451 0.02063 0.03949 0.05915 0.36196</code></pre>
 <div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="aplic-inf.html#cb474-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SE mediana</span></span>
 <span id="cb474-2"><a href="aplic-inf.html#cb474-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>((median.sim<span class="sc">-</span>xmed)<span class="sc">^</span><span class="dv">2</span>) </span></code></pre></div>
-<pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-## 0.0000001 0.0016481 0.0070625 0.0188654 0.0243903 0.2618368</code></pre></li>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## 0.00000 0.00165 0.00706 0.01886 0.02439 0.26184</code></pre></li>
 </ol>
 
 </div>

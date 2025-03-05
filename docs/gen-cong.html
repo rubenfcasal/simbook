@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2.1 Generadores congruenciales lineales | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2.1 Generadores congruenciales lineales | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -364,9 +368,9 @@ div.csl-indent {
 <li class="chapter" data-level="A.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>A.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="A.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>A.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="A.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>A.2.3</b> Gráfico de dispersion retardado</a></li>
-<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
 <li class="chapter" data-level="A.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>A.2.5</b> Test de rachas</a></li>
-<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
+<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#ljungbox"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
 <li class="chapter" data-level="A.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>A.3</b> Contrastes específicos para generadores aleatorios</a>
 <ul>
@@ -421,11 +425,13 @@ div.csl-indent {
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
 <ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -458,11 +464,12 @@ x_{i}  &amp; = (ax_{i-1}+c) \bmod m \\
 u_{i}  &amp; = \dfrac{x_{i}}{m} \\
 i  &amp; =1,2,\ldots
 \end{aligned}\]</span>
-donde <span class="math inline">\(a\)</span> (<em>multiplicador</em>), <span class="math inline">\(c\)</span> (<em>incremento</em>) y <span class="math inline">\(m\)</span> (<em>módulo</em>) son enteros positivos<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> fijados de antemano (los parámetros de este generador). Si <span class="math inline">\(c=0\)</span> el generador se denomina congruencial <em>multiplicativo</em> (Lehmer, 1951) y en caso contrario se dice que es <em>mixto</em> (Rotenburg, 1960).</p>
+donde <span class="math inline">\(a\)</span> (<em>multiplicador</em>), <span class="math inline">\(c\)</span> (<em>incremento</em>) y <span class="math inline">\(m\)</span> (<em>módulo</em>) son enteros positivos<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> fijados de antemano (los parámetros de este generador). Si <span class="math inline">\(c=0\)</span> el generador se denomina congruencial <em>multiplicativo</em> (Lehmer, 1951) y en caso contrario se dice que es <em>mixto</em> (Rotenburg, 1960).</p>
 <p>Obviamente los parámetros y la semilla determinan los valores generados, que también se pueden obtener de forma no recursiva:
 <span class="math display">\[x_{i}=\left( a^{i}x_0+c\frac{a^{i}-1}{a-1}\right) \bmod m\]</span></p>
-<p>Este método está implementado<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> en la función <code>rlcg()</code> del paquete <a href="https://rubenfcasal.github.io/simres"><code>simres</code></a>, imitando el funcionamiento del generador uniforme de R (ver también <code>simres::rng()</code>; fichero <a href="R/rng.R"><em>rng.R</em></a>):</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="gen-cong.html#cb37-1" aria-hidden="true" tabindex="-1"></a>simres<span class="sc">::</span>rlcg</span></code></pre></div>
+<p>Este método está implementado<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> en la función <a href="https://rubenfcasal.github.io/simres/reference/set.rng.html"><code>rlcg()</code></a> del paquete <a href="https://rubenfcasal.github.io/simres"><code>simres</code></a>, imitando el funcionamiento del generador uniforme de R (fichero <a href="R/rng.R"><em>rng.R</em></a>):</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="gen-cong.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(simres)</span>
+<span id="cb37-2"><a href="gen-cong.html#cb37-2" aria-hidden="true" tabindex="-1"></a>rlcg</span></code></pre></div>
 <pre><code>## function(n, seed = as.numeric(Sys.time()), a = 7^5, c = 0, m = 2^31 - 1) {
 ##   u &lt;- numeric(n)
 ##   for(i in 1:n) {
@@ -478,23 +485,24 @@ donde <span class="math inline">\(a\)</span> (<em>multiplicador</em>), <span cla
 ##   # Devolver valores
 ##   return(u)
 ## }
-## &lt;bytecode: 0x00000239854a5308&gt;
+## &lt;bytecode: 0x0000023f06518b48&gt;
 ## &lt;environment: namespace:simres&gt;</code></pre>
+<p>Aunque puede resultar más cómodo, especialmente si se van a generar múltiples secuencias, utilizar la función <code>set.rng()</code> con <code>type = "lcg"</code> para seleccionar este generador y posteriormente <code>rng()</code> para obtener las secuencias.</p>
 <p>Ejemplos de parámetros:</p>
 <ul>
 <li><p><span class="math inline">\(c=0\)</span>, <span class="math inline">\(a=2^{16}+3=65539\)</span> y <span class="math inline">\(m=2^{31}\)</span>, generador <em>RANDU</em> de IBM
 (<strong>no recomendable</strong> como veremos más adelante).</p></li>
-<li><p><span class="math inline">\(c=0\)</span>, <span class="math inline">\(a=7^{5}=16807\)</span> y <span class="math inline">\(m=2^{31}-1\)</span> (primo de Mersenne), Park y Miller (1988)
+<li><p><span class="math inline">\(c=0\)</span>, <span class="math inline">\(a=7^{5}=16807\)</span> y <span class="math inline">\(m=2^{31}-1\)</span> (primo de Mersenne), <span class="citation">Park y Miller (<a href="#ref-park1988" role="doc-biblioref">1988</a>)</span>
 <em>minimal standar</em>, empleado por las librerías IMSL y NAG.</p></li>
 <li><p><span class="math inline">\(c=0\)</span>, <span class="math inline">\(a=48271\)</span> y <span class="math inline">\(m=2^{31}-1\)</span> actualización del <em>minimal standar</em>
-propuesta por Park, Miller y Stockmeyer (1993).</p></li>
+propuesta por <span class="citation">Park et al. (<a href="#ref-park1993" role="doc-biblioref">1993</a>)</span>.</p></li>
 </ul>
 <p>A pesar de su simplicidad, una adecuada elección de los parámetros permite obtener de manera eficiente secuencias de números “aparentemente” i.i.d. <span class="math inline">\(\mathcal{U}(0,1)\)</span>.
 Durante los primeros años, el procedimiento habitual consistía en escoger <span class="math inline">\(m\)</span> de forma que se pudiera realizar eficientemente la operación del módulo, aprovechando la arquitectura del ordenador (por ejemplo <span class="math inline">\(m = 2^{31}\)</span> si se emplean enteros con signo de 32 bits).
 Posteriormente se seleccionaban <span class="math inline">\(c\)</span> y <span class="math inline">\(a\)</span> de forma que el período <span class="math inline">\(p\)</span> fuese lo más largo posible (o suficientemente largo), empleando los resultados mostrados a continuación.</p>
 <div class="theorem">
 <p><span id="thm:hull-dobell" class="theorem"><strong>Teorema 2.1  (Hull y Dobell, 1962) </strong></span><br>
-Un generador congruencial tiene período máximo (<span class="math inline">\(p=m\)</span>) si y solo si:</p>
+Un generador congruencial tiene período máximo <span class="math inline">\(p = m\)</span> si y solo si:</p>
 <ol style="list-style-type: decimal">
 <li><p><span class="math inline">\(c\)</span> y <span class="math inline">\(m\)</span> son primos relativos (i.e. <span class="math inline">\(m.c.d.(c, m) = 1\)</span>).</p></li>
 <li><p><span class="math inline">\(a-1\)</span> es múltiplo de todos los factores primos de <span class="math inline">\(m\)</span> (i.e.
@@ -505,55 +513,51 @@ ser (i.e. <span class="math inline">\(m \equiv 0 \bmod 4\Rightarrow a \equiv 1 
 </div>
 <p>Algunas consecuencias:</p>
 <ul>
-<li><p>Si <span class="math inline">\(m\)</span> primo, <span class="math inline">\(p=m\)</span> si y solo si <span class="math inline">\(a=1\)</span>.</p></li>
-<li><p>Un generador multiplicativo no cumple la condición 1 (<span class="math inline">\(m.c.d.(0, m)=m\)</span>).</p></li>
+<li><p>Un generador multiplicativo no cumple la condición 1 (<span class="math inline">\(m.c.d.(0, m) = m\)</span>).</p></li>
+<li><p>Si <span class="math inline">\(m\)</span> primo y <span class="math inline">\(c \neq 0\)</span>, <span class="math inline">\(p = m\)</span> si y solo si <span class="math inline">\(a = 1\)</span>.</p></li>
 </ul>
 <div class="theorem">
 <p><span id="thm:unlabeled-div-2" class="theorem"><strong>Teorema 2.2  </strong></span><br>
-Un generador multiplicativo tiene período máximo (<span class="math inline">\(p=m-1\)</span>) si:</p>
+Un generador multiplicativo tiene período máximo <span class="math inline">\(p = m-1\)</span> si:</p>
 <ol style="list-style-type: decimal">
 <li><p><span class="math inline">\(m\)</span> es primo.</p></li>
 <li><p><span class="math inline">\(a\)</span> es una raiz primitiva de <span class="math inline">\(m\)</span> (i.e. el menor entero <span class="math inline">\(q\)</span> tal
-que <span class="math inline">\(a^{q}=1 \bmod m\)</span> es <span class="math inline">\(q=m-1\)</span>).</p></li>
+que <span class="math inline">\(a^q = 1 \bmod m\)</span> es <span class="math inline">\(q = m-1\)</span>).</p></li>
 </ol>
 </div>
 <p>Sin embargo, además de preocuparse de la longitud del ciclo, sería mucho más importante que las secuencias generadas se comporten de forma similar a muestras aleatorias simple de una <span class="math inline">\(\mathcal{U}(0,1)\)</span>.
 Uno de los principales problemas con este tipo de generadores (y con muchos otros) es que los valores generados pueden mostrar una estructura reticular.
 Este es el caso del generador RANDU de IBM muy empleado en la década de los 70 y que muestra una clara estructura reticular cuando se consideran más de dos dimensiones (aunque ya se detectó este problema en 1963 se siguió utilizando hasta los 90).
 Para ilustrar este problema podríamos emplear el conjunto de datos <code>randu</code> del paquete base <code>datasets</code> que contiene 400 tripletas de números sucesivos generados con la implementación de VAX/VMS 1.5 (de 1977, y que no se corrigió hasta la versión 2.0 de 1980).
-Aunque también podemos emplear el siguiente código<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> (ver Figura <a href="gen-cong.html#fig:randu">2.1</a>):</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="gen-cong.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(simres)</span>
-<span id="cb39-2"><a href="gen-cong.html#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(u <span class="ot">&lt;-</span> <span class="fu">rlcg</span>(<span class="at">n =</span> <span class="dv">9999</span>, </span>
-<span id="cb39-3"><a href="gen-cong.html#cb39-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">seed =</span> <span class="dv">543210</span>, <span class="at">a =</span> <span class="dv">2</span><span class="sc">^</span><span class="dv">16</span> <span class="sc">+</span> <span class="dv">3</span>, <span class="at">c =</span> <span class="dv">0</span>, <span class="at">m =</span> <span class="dv">2</span><span class="sc">^</span><span class="dv">31</span>))</span></code></pre></div>
+Aunque también podemos emplear el siguiente código<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a> (ver Figura <a href="gen-cong.html#fig:randu">2.1</a>):</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="gen-cong.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(u <span class="ot">&lt;-</span> <span class="fu">rlcg</span>(<span class="at">n =</span> <span class="dv">9999</span>, </span>
+<span id="cb39-2"><a href="gen-cong.html#cb39-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">seed =</span> <span class="dv">543210</span>, <span class="at">a =</span> <span class="dv">2</span><span class="sc">^</span><span class="dv">16</span> <span class="sc">+</span> <span class="dv">3</span>, <span class="at">c =</span> <span class="dv">0</span>, <span class="at">m =</span> <span class="dv">2</span><span class="sc">^</span><span class="dv">31</span>))</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.00    0.00    0.02</code></pre>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="gen-cong.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># xyz &lt;- matrix(u, ncol = 3, byrow = TRUE)</span></span>
-<span id="cb41-2"><a href="gen-cong.html#cb41-2" aria-hidden="true" tabindex="-1"></a>xyz <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">embed</span>(u, <span class="dv">3</span>)</span>
-<span id="cb41-3"><a href="gen-cong.html#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plot3D)</span>
-<span id="cb41-4"><a href="gen-cong.html#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># points3D(xyz[,1], xyz[,2], xyz[,3], colvar = NULL, phi = 60, </span></span>
-<span id="cb41-5"><a href="gen-cong.html#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="co">#          theta = -50, pch = 21, cex = 0.2)</span></span>
+##       0       0       0</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="gen-cong.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plot3D)</span>
+<span id="cb41-2"><a href="gen-cong.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co"># xyz &lt;- matrix(u, ncol = 3, byrow = TRUE)</span></span>
+<span id="cb41-3"><a href="gen-cong.html#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="co"># points3D(xyz[,1], xyz[,2], xyz[,3], colvar = NULL, phi = 60, </span></span>
+<span id="cb41-4"><a href="gen-cong.html#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co">#          theta = -50, pch = 21, cex = 0.2)</span></span>
+<span id="cb41-5"><a href="gen-cong.html#cb41-5" aria-hidden="true" tabindex="-1"></a>xyz <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">embed</span>(u, <span class="dv">3</span>)</span>
 <span id="cb41-6"><a href="gen-cong.html#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="fu">points3D</span>(xyz[,<span class="dv">3</span>], xyz[,<span class="dv">2</span>], xyz[,<span class="dv">1</span>], <span class="at">colvar =</span> <span class="cn">NULL</span>, <span class="at">phi =</span> <span class="dv">60</span>, </span>
 <span id="cb41-7"><a href="gen-cong.html#cb41-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">theta =</span> <span class="sc">-</span><span class="dv">50</span>, <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">cex =</span> <span class="fl">0.2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:randu"></span>
-<img src="02-Generacion_numeros_aleatorios_files/figure-html/randu-1.png" alt="Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)." width="75%" />
+<img src="02-Generacion_numeros_aleatorios_files/figure-html/randu-1.png" alt="Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)." width="70%" />
 <p class="caption">
 Figura 2.1: Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos).
 </p>
 </div>
 <p>En general todos los generadores de este tipo van a presentar estructuras reticulares.
-Marsaglia (1968) demostró que las k-uplas de un generadores multiplicativo están contenidas en a lo sumo <span class="math inline">\(\left(k!m\right)^{1/k}\)</span> hiperplanos paralelos (<code>r</code>trunc((factorial(3)*2<sup>31)</sup>(1/3))` como máximo con <span class="math inline">\(k=3\)</span> y <span class="math inline">\(m=2^{31}\)</span>).
+Marsaglia (1968) demostró que las k-uplas de un generadores multiplicativo están contenidas en a lo sumo <span class="math inline">\(\left(k!m\right)^{1/k}\)</span> hiperplanos paralelos (2344 como máximo con <span class="math inline">\(k=3\)</span> y <span class="math inline">\(m=2^{31}\)</span>).
 Por tanto habría que seleccionar adecuadamente los parámetros del generador congruencial de forma que la estructura reticular sea imperceptible, teniendo en cuenta el número de datos que se pretende generar (por ejemplo de forma que la distancia mínima entre los puntos sea próxima a la esperada en teoría).
-Para más detalles sobre la estructura reticular ver por ejemplo Ripley (1987, Sección 2.7).</p>
+Para más detalles sobre la estructura reticular ver por ejemplo <span class="citation">Ripley (<a href="#ref-ripley1987stochastic" role="doc-biblioref">1987, sec. 2.7</a>)</span>.</p>
 <!-- 
 PENDIENTE: 
 Ejercicio aleatoriedad dígitos menos significativos (ejemplo sample)
 9*a(n-2)-6*a(n-1)+a(n) = 0 mod 2^31 en RANDU con periodo 2^29
-$a$ es una raiz primitiva de $m$ en Park y Miller
+$a$ es una raíz primitiva de $m$ en Park y Miller
 -->
-<p>Se han propuesto diversas pruebas (ver Sección <a href="calgen.html#calgen">2.3</a>) para
-determinar si un generador tiene problemas de este tipo y se han
-realizado numerosos estudios para determinadas familias (e.g. Park y
-Miller, 1988, estudiaron los multiplicadores adecuados para <span class="math inline">\(m=2^{31}-1\)</span>).
+<p>Se han propuesto diversas pruebas (ver Sección <a href="calgen.html#calgen">2.3</a>) para determinar si un generador tiene problemas de este tipo y se han realizado numerosos estudios para determinadas familias <span class="citation">(e.g. <a href="#ref-park1988" role="doc-biblioref">Park y Miller, 1988</a>, estudiaron los multiplicadores adecuados para <span class="math inline">\(m=2^{31}-1\)</span>)</span>.
 En ciertos contextos muy exigentes (por ejemplo en criptografía), se recomienda considerar un “periodo de seguridad” <span class="math inline">\(\approx \sqrt{p}\)</span> para evitar este tipo de problemas.</p>
 <p>Aunque estos generadores tienen limitaciones en su capacidad para producir secuencias muy largas de números i.i.d. <span class="math inline">\(\mathcal{U}(0,1)\)</span>, son un elemento básico en generadores más avanzados (incluyendo el empleado por defecto en R) como veremos en la siguiente sección.</p>
 <div class="example">
@@ -563,48 +567,53 @@ En ciertos contextos muy exigentes (por ejemplo en criptografía), se recomienda
 x_{n+1}  &amp; =(5x_{n}+1)\ \bmod\ 512,\nonumber\\
 u_{n+1}  &amp; =\frac{x_{n+1}}{512},\ n=0,1,\dots\nonumber
 \end{aligned}\]</span></p>
-<ol style="list-style-type: lower-alpha">
-<li><p>Generar 500 valores de este generador, obtener el tiempo de CPU,
-representar su distribución mediante un histograma (en escala
-de densidades) y compararla con la densidad teórica.</p>
+<p>Generamos 500 valores de este generador, obteniendo de paso el tiempo de CPU requerido:</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="gen-cong.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.rng</span>(<span class="dv">321</span>, <span class="st">&quot;lcg&quot;</span>, <span class="at">a =</span> <span class="dv">5</span>, <span class="at">c =</span> <span class="dv">1</span>, <span class="at">m =</span> <span class="dv">512</span>)  <span class="co"># Establecer semilla y parámetros</span></span>
 <span id="cb42-2"><a href="gen-cong.html#cb42-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">500</span></span>
-<span id="cb42-3"><a href="gen-cong.html#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(u <span class="ot">&lt;-</span> <span class="fu">rng</span>(nsim)) </span></code></pre></div>
+<span id="cb42-3"><a href="gen-cong.html#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(u <span class="ot">&lt;-</span> <span class="fu">rng</span>(nsim))</span></code></pre></div>
 <pre><code>##    user  system elapsed 
 ##       0       0       0</code></pre>
+<p>Representamos la distribución de los valores generados mediante un histograma, en escala de densidades, de forma que podemos compararla con la densidad teórica:</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="gen-cong.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(u, <span class="at">freq =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb44-2"><a href="gen-cong.html#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span>)                   <span class="co"># Densidad uniforme</span></span></code></pre></div>
+<span id="cb44-2"><a href="gen-cong.html#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="co"># Densidad uniforme</span></span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ejcona"></span>
-<img src="02-Generacion_numeros_aleatorios_files/figure-html/ejcona-1.png" alt="Histograma de los valores generados." width="75%" />
+<img src="02-Generacion_numeros_aleatorios_files/figure-html/ejcona-1.png" alt="Histograma de los valores generados." width="70%" />
 <p class="caption">
 Figura 2.2: Histograma de los valores generados.
 </p>
 </div>
-<p>En este caso concreto la distribución de los valores generados es aparentemente más uniforme de lo que cabría esperar, lo que induciría a sospechar de la calidad de este generador (ver Ejemplo <a href="calgen.html#exm:congru512b">2.2</a> en Sección <a href="calgen.html#calgen">2.3</a>).</p></li>
-<li><p>Calcular la media de las simulaciones (<code>mean</code>) y compararla con
-la teórica.</p>
-<p>La aproximación por simulación de la media teórica es:</p>
+<p>En este caso concreto la distribución de los valores generados es aparentemente más uniforme de lo que cabría esperar, lo que induciría a sospechar de la calidad de este generador (ver Ejemplo <a href="calgen.html#exm:congru512b">2.2</a> en Sección <a href="calgen.html#calgen">2.3</a>).</p>
+<p>A partir de los valores generados podríamos aproximar características de la distribución teórica.
+Por ejemplo, la aproximación por simulación la media teórica sería:</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="gen-cong.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(u)</span></code></pre></div>
-<pre><code>## [1] 0.4999609</code></pre>
-<p>La media teórica es 0.5.
-Error absoluto <span class="math inline">\(3.90625\times 10^{-5}\)</span>.</p></li>
-<li><p>Aproximar (mediante simulación) la probabilidad del intervalo
-<span class="math inline">\((0.4;0.8)\)</span> y compararla con la teórica.</p>
-<p>La probabilidad teórica es 0.8 - 0.4 = 0.4</p>
-<p>La aproximación mediante simulación:</p>
+<pre><code>## [1] 0.49996</code></pre>
+<p>Como se puede observar, esta aproximación es muy cercana al valor teórico 0.5 (el error absoluto es <span class="math inline">\(3.90625\times 10^{-5}\)</span>).</p>
+<p>Como ejemplo adicional, la aproximación (mediante simulación) de la probabilidad del intervalo <span class="math inline">\((0.4, 0.8)\)</span> sería:</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="gen-cong.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>((<span class="fl">0.4</span> <span class="sc">&lt;</span> u) <span class="sc">&amp;</span> (u <span class="sc">&lt;</span> <span class="fl">0.8</span>))<span class="sc">/</span>nsim</span></code></pre></div>
 <pre><code>## [1] 0.402</code></pre>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="gen-cong.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((<span class="fl">0.4</span> <span class="sc">&lt;</span> u) <span class="sc">&amp;</span> (u <span class="sc">&lt;</span> <span class="fl">0.8</span>))     <span class="co"># Alternativa</span></span></code></pre></div>
-<pre><code>## [1] 0.402</code></pre></li>
-</ol>
+<pre><code>## [1] 0.402</code></pre>
+<p>Si la comparamos con la probabilidad teórica (<span class="math inline">\(0.8 - 0.4 = 0.4\)</span>), también observamos que es muy próxima, lo que podría aumentar las sospechas de que este generador no reproduce adecuadamente la variabilidad de una distribución <span class="math inline">\(\mathcal{U}(0,1)\)</span> (en el Ejemplo <a href="calgen.html#exm:congru512b">2.2</a> se realizará un análisis más riguroso de la calidad de este generador).</p>
+</div>
+</div>
+<h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-park1988" class="csl-entry">
+Park, S. K., y Miller, K. W. (1988). Random number generators: good ones are hard to find. <em>Communications of the <span>ACM</span></em>, <em>31</em>(10), 1192-1201. <a href="https://doi.org/10.1145/63039.63042">https://doi.org/10.1145/63039.63042</a>
+</div>
+<div id="ref-park1993" class="csl-entry">
+Park, S. K., Miller, K. W., y Stockmeyer, P. K. (1993). Technical correspondence: Response. <em>Communications of the <span>ACM</span></em>, <em>36</em>(7), 108-110.
+</div>
+<div id="ref-ripley1987stochastic" class="csl-entry">
+Ripley, B. D. (1987). <em>Stochastic Simulation</em>. Wiley. <a href="https://www.wiley.com/en-us/Stochastic+Simulation-p-9780470009604">https://www.wiley.com/en-us/Stochastic+Simulation-p-9780470009604</a>
 </div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="6">
-<li id="fn6"><p>Se supone además que <span class="math inline">\(a\)</span>, <span class="math inline">\(c\)</span> y <span class="math inline">\(x_0\)</span> son menores que <span class="math inline">\(m\)</span>, ya que, dadas las propiedades algebraicas de la suma y el producto en el conjunto de clases de resto módulo <span class="math inline">\(m\)</span> (que es un anillo), cualquier otra elección de valores mayores o iguales que <span class="math inline">\(m\)</span> tiene un equivalente verificando esta restricción.<a href="gen-cong.html#fnref6" class="footnote-back">↩︎</a></p></li>
-<li id="fn7"><p>Aunque de forma no muy eficiente. Para evitar problemas computacionales, se recomienda realizar el cálculo de los valores empleando el método de Schrage (ver Bratley <em>et al.</em>, 1987; L’Ecuyer, 1988).<a href="gen-cong.html#fnref7" class="footnote-back">↩︎</a></p></li>
-<li id="fn8"><p>La función <code>stats::embed(u, 3)</code> devuelve una matriz en la que la fila i-ésima contiene los valores <code>u[i+2]</code>, <code>u[i+1]</code> y <code>u[i]</code>. Además, en lugar de la función <code>plot3D::points3D()</code> se podría utilizar la función <code>plot3d()</code> del paquete <code>rgl</code>, y rotar la figura (pulsando con el ratón) para ver los hiperplanos <code>rgl::plot3d(xyz)</code>.<a href="gen-cong.html#fnref8" class="footnote-back">↩︎</a></p></li>
+<ol start="7">
+<li id="fn7"><p>Se supone además que <span class="math inline">\(a\)</span>, <span class="math inline">\(c\)</span> y <span class="math inline">\(x_0\)</span> son menores que <span class="math inline">\(m\)</span>, ya que, dadas las propiedades algebraicas de la suma y el producto en el conjunto de clases de resto módulo <span class="math inline">\(m\)</span> (que es un anillo), cualquier otra elección de valores mayores o iguales que <span class="math inline">\(m\)</span> tiene un equivalente verificando esta restricción.<a href="gen-cong.html#fnref7" class="footnote-back">↩︎</a></p></li>
+<li id="fn8"><p>Aunque de forma no muy eficiente. Para evitar problemas computacionales, se recomienda realizar el cálculo de los valores empleando el método de Schrage (ver Bratley <em>et al.</em>, 1987; L’Ecuyer, 1988).<a href="gen-cong.html#fnref8" class="footnote-back">↩︎</a></p></li>
+<li id="fn9"><p>La función <code>stats::embed(u, 3)</code> devuelve una matriz en la que la fila i-ésima contiene los valores <code>u[i+2]</code>, <code>u[i+1]</code> y <code>u[i]</code>. Además, en lugar de la función <code>plot3D::points3D()</code> se podría utilizar la función <code>plot3d()</code> del paquete <code>rgl</code>, y rotar la figura (pulsando con el ratón) para ver los hiperplanos <code>rgl::plot3d(xyz)</code>.<a href="gen-cong.html#fnref9" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

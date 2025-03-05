@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>C.3 Ejemplos | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="C.3 Ejemplos | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -364,9 +368,9 @@ div.csl-indent {
 <li class="chapter" data-level="A.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>A.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="A.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>A.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="A.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>A.2.3</b> Gráfico de dispersion retardado</a></li>
-<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
 <li class="chapter" data-level="A.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>A.2.5</b> Test de rachas</a></li>
-<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
+<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#ljungbox"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
 <li class="chapter" data-level="A.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>A.3</b> Contrastes específicos para generadores aleatorios</a>
 <ul>
@@ -421,11 +425,13 @@ div.csl-indent {
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
 <ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -450,32 +456,32 @@ div.csl-indent {
 <h2><span class="header-section-number">C.3</span> Ejemplos<a href="ejemplos.html#ejemplos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Si se emplea el paquete <code>parallel</code> en sistemas tipo Unix (Linux, Mac OS X, …), se podría evaluar en paralelo una función llamando directamente a <code>mclapply()</code>.
 Por defecto empleará todos los núcleos disponibles, pero se puede especificar un número menor mediante el argumento <code>mc.cores</code>.</p>
-<div class="sourceCode" id="cb727"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb727-1"><a href="ejemplos.html#cb727-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(parallel)</span>
-<span id="cb727-2"><a href="ejemplos.html#cb727-2" aria-hidden="true" tabindex="-1"></a>ncores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>()</span>
-<span id="cb727-3"><a href="ejemplos.html#cb727-3" aria-hidden="true" tabindex="-1"></a>ncores</span></code></pre></div>
+<div class="sourceCode" id="cb729"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb729-1"><a href="ejemplos.html#cb729-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(parallel)</span>
+<span id="cb729-2"><a href="ejemplos.html#cb729-2" aria-hidden="true" tabindex="-1"></a>ncores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>()</span>
+<span id="cb729-3"><a href="ejemplos.html#cb729-3" aria-hidden="true" tabindex="-1"></a>ncores</span></code></pre></div>
 <pre><code>## [1] 20</code></pre>
-<div class="sourceCode" id="cb729"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb729-1"><a href="ejemplos.html#cb729-1" aria-hidden="true" tabindex="-1"></a>func <span class="ot">&lt;-</span> <span class="cf">function</span>(k) {</span>
-<span id="cb729-2"><a href="ejemplos.html#cb729-2" aria-hidden="true" tabindex="-1"></a>  i_boot <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(iris), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb729-3"><a href="ejemplos.html#cb729-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(Petal.Width <span class="sc">~</span> Petal.Length, <span class="at">data =</span> iris[i_boot, ])<span class="sc">$</span>coefficients</span>
-<span id="cb729-4"><a href="ejemplos.html#cb729-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb729-5"><a href="ejemplos.html#cb729-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb729-6"><a href="ejemplos.html#cb729-6" aria-hidden="true" tabindex="-1"></a><span class="fu">RNGkind</span>(<span class="st">&quot;L&#39;Ecuyer-CMRG&quot;</span>) <span class="co"># Establecemos Pierre L&#39;Ecuyer&#39;s RngStreams...</span></span>
-<span id="cb729-7"><a href="ejemplos.html#cb729-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb729-8"><a href="ejemplos.html#cb729-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb729-9"><a href="ejemplos.html#cb729-9" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(res.boot <span class="ot">&lt;-</span> <span class="fu">mclapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, func)) <span class="co"># En Windows llama a lapply() (mc.cores = 1)</span></span></code></pre></div>
+<div class="sourceCode" id="cb731"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb731-1"><a href="ejemplos.html#cb731-1" aria-hidden="true" tabindex="-1"></a>func <span class="ot">&lt;-</span> <span class="cf">function</span>(k) {</span>
+<span id="cb731-2"><a href="ejemplos.html#cb731-2" aria-hidden="true" tabindex="-1"></a>  i_boot <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(iris), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb731-3"><a href="ejemplos.html#cb731-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(Petal.Width <span class="sc">~</span> Petal.Length, <span class="at">data =</span> iris[i_boot, ])<span class="sc">$</span>coefficients</span>
+<span id="cb731-4"><a href="ejemplos.html#cb731-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb731-5"><a href="ejemplos.html#cb731-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb731-6"><a href="ejemplos.html#cb731-6" aria-hidden="true" tabindex="-1"></a><span class="fu">RNGkind</span>(<span class="st">&quot;L&#39;Ecuyer-CMRG&quot;</span>) <span class="co"># Establecemos Pierre L&#39;Ecuyer&#39;s RngStreams...</span></span>
+<span id="cb731-7"><a href="ejemplos.html#cb731-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb731-8"><a href="ejemplos.html#cb731-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb731-9"><a href="ejemplos.html#cb731-9" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(res.boot <span class="ot">&lt;-</span> <span class="fu">mclapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, func)) <span class="co"># En Windows llama a lapply() (mc.cores = 1)</span></span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.03    0.00    0.03</code></pre>
-<div class="sourceCode" id="cb731"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb731-1"><a href="ejemplos.html#cb731-1" aria-hidden="true" tabindex="-1"></a><span class="co"># res.boot &lt;- mclapply(1:100, func, mc.cores = ncores - 1) # En Windows genera un error si mc.cores &gt; 1</span></span></code></pre></div>
+##    0.03    0.01    0.05</code></pre>
+<div class="sourceCode" id="cb733"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb733-1"><a href="ejemplos.html#cb733-1" aria-hidden="true" tabindex="-1"></a><span class="co"># res.boot &lt;- mclapply(1:100, func, mc.cores = ncores - 1) # En Windows genera un error si mc.cores &gt; 1</span></span></code></pre></div>
 <p>En Windows habría que crear previamente un cluster, llamar a una de las funciones <code>par*apply()</code> y finalizar el cluster:</p>
-<div class="sourceCode" id="cb732"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb732-1"><a href="ejemplos.html#cb732-1" aria-hidden="true" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(ncores <span class="sc">-</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">&quot;PSOCK&quot;</span>)</span>
-<span id="cb732-2"><a href="ejemplos.html#cb732-2" aria-hidden="true" tabindex="-1"></a><span class="fu">clusterSetRNGStream</span>(cl, <span class="dv">1</span>) <span class="co"># Establecemos Pierre L&#39;Ecuyer&#39;s RngStreams con semilla 1...</span></span>
-<span id="cb732-3"><a href="ejemplos.html#cb732-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb732-4"><a href="ejemplos.html#cb732-4" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(res.boot <span class="ot">&lt;-</span> <span class="fu">parSapply</span>(cl, <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, func))</span></code></pre></div>
+<div class="sourceCode" id="cb734"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb734-1"><a href="ejemplos.html#cb734-1" aria-hidden="true" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(ncores <span class="sc">-</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">&quot;PSOCK&quot;</span>)</span>
+<span id="cb734-2"><a href="ejemplos.html#cb734-2" aria-hidden="true" tabindex="-1"></a><span class="fu">clusterSetRNGStream</span>(cl, <span class="dv">1</span>) <span class="co"># Establecemos Pierre L&#39;Ecuyer&#39;s RngStreams con semilla 1...</span></span>
+<span id="cb734-3"><a href="ejemplos.html#cb734-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb734-4"><a href="ejemplos.html#cb734-4" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(res.boot <span class="ot">&lt;-</span> <span class="fu">parSapply</span>(cl, <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, func))</span></code></pre></div>
 <pre><code>##    user  system elapsed 
 ##    0.00    0.00    0.01</code></pre>
-<div class="sourceCode" id="cb734"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb734-1"><a href="ejemplos.html#cb734-1" aria-hidden="true" tabindex="-1"></a><span class="co"># stopCluster(cl)</span></span>
-<span id="cb734-2"><a href="ejemplos.html#cb734-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb734-3"><a href="ejemplos.html#cb734-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(res.boot)</span></code></pre></div>
+<div class="sourceCode" id="cb736"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb736-1"><a href="ejemplos.html#cb736-1" aria-hidden="true" tabindex="-1"></a><span class="co"># stopCluster(cl)</span></span>
+<span id="cb736-2"><a href="ejemplos.html#cb736-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb736-3"><a href="ejemplos.html#cb736-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(res.boot)</span></code></pre></div>
 <pre><code>##  num [1:2, 1:100] -0.415 0.429 -0.363 0.42 -0.342 ...
 ##  - attr(*, &quot;dimnames&quot;)=List of 2
 ##   ..$ : chr [1:2] &quot;(Intercept)&quot; &quot;Petal.Length&quot;
@@ -483,10 +489,10 @@ Por defecto empleará todos los núcleos disponibles, pero se puede especificar 
 <p>Esto también se puede realizar en Linux (<code>type = "FORK"</code>), aunque podríamos estar trabajando ya en un cluster de equipos…</p>
 <p>También podríamos emplear balance de carga si el tiempo de computación es variable (e.g. <code>parLapplyLB()</code> o <code>clusterApplyLB()</code>) pero no sería recomendable si se emplean números pseudo-aleatorios (los resultados no serían reproducibles).</p>
 <p>Además, empleando las herramientas del paquete <code>snow</code> se puede representar el uso del cluster (<em>experimental</em> en Windows):</p>
-<div class="sourceCode" id="cb736"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb736-1"><a href="ejemplos.html#cb736-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(snow)</span></span>
-<span id="cb736-2"><a href="ejemplos.html#cb736-2" aria-hidden="true" tabindex="-1"></a>ctime <span class="ot">&lt;-</span> snow<span class="sc">::</span><span class="fu">snow.time</span>(snow<span class="sc">::</span><span class="fu">parSapply</span>(cl, <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, func))</span>
-<span id="cb736-3"><a href="ejemplos.html#cb736-3" aria-hidden="true" tabindex="-1"></a>ctime</span>
-<span id="cb736-4"><a href="ejemplos.html#cb736-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ctime)</span></code></pre></div>
+<div class="sourceCode" id="cb738"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb738-1"><a href="ejemplos.html#cb738-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(snow)</span></span>
+<span id="cb738-2"><a href="ejemplos.html#cb738-2" aria-hidden="true" tabindex="-1"></a>ctime <span class="ot">&lt;-</span> snow<span class="sc">::</span><span class="fu">snow.time</span>(snow<span class="sc">::</span><span class="fu">parSapply</span>(cl, <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, func))</span>
+<span id="cb738-3"><a href="ejemplos.html#cb738-3" aria-hidden="true" tabindex="-1"></a>ctime</span>
+<span id="cb738-4"><a href="ejemplos.html#cb738-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ctime)</span></code></pre></div>
 <p>Hay que tener en cuenta la sobrecarga adicional debida a la comunicación entre nodos al paralelizar (especialmente con el enfoque de socket).</p>
 <div id="procesamiento-en-paralelo-con-la-función-boot" class="section level3 hasAnchor" number="14.3.1">
 <h3><span class="header-section-number">C.3.1</span> Procesamiento en paralelo con la función <code>boot()</code><a href="ejemplos.html#procesamiento-en-paralelo-con-la-función-boot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -494,95 +500,95 @@ Por defecto empleará todos los núcleos disponibles, pero se puede especificar 
 <code>parallel = c("no", "multicore", "snow")</code>, <code>ncpus</code>, <code>cl</code>.
 Si <code>parallel = "snow"</code> se crea un clúster en la máquina local durante la ejecución, salvo que se establezca con el parámetro <code>cl</code>.</p>
 <p>Veamos un ejemplo empleando una muestra simulada:</p>
-<div class="sourceCode" id="cb737"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb737-1"><a href="ejemplos.html#cb737-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb737-2"><a href="ejemplos.html#cb737-2" aria-hidden="true" tabindex="-1"></a>rate <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
-<span id="cb737-3"><a href="ejemplos.html#cb737-3" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>rate</span>
-<span id="cb737-4"><a href="ejemplos.html#cb737-4" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> rate)</span>
-<span id="cb737-5"><a href="ejemplos.html#cb737-5" aria-hidden="true" tabindex="-1"></a>media <span class="ot">&lt;-</span> <span class="fu">mean</span>(muestra)</span>
-<span id="cb737-6"><a href="ejemplos.html#cb737-6" aria-hidden="true" tabindex="-1"></a>desv <span class="ot">&lt;-</span> <span class="fu">sd</span>(muestra)</span>
-<span id="cb737-7"><a href="ejemplos.html#cb737-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb737-8"><a href="ejemplos.html#cb737-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
-<span id="cb737-9"><a href="ejemplos.html#cb737-9" aria-hidden="true" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
-<span id="cb737-10"><a href="ejemplos.html#cb737-10" aria-hidden="true" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i]</span>
-<span id="cb737-11"><a href="ejemplos.html#cb737-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">mean</span>(remuestra), <span class="fu">var</span>(remuestra)<span class="sc">/</span><span class="fu">length</span>(remuestra))</span>
-<span id="cb737-12"><a href="ejemplos.html#cb737-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb737-13"><a href="ejemplos.html#cb737-13" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
-<span id="cb737-14"><a href="ejemplos.html#cb737-14" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb737-15"><a href="ejemplos.html#cb737-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb737-16"><a href="ejemplos.html#cb737-16" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> B))</span></code></pre></div>
+<div class="sourceCode" id="cb739"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb739-1"><a href="ejemplos.html#cb739-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb739-2"><a href="ejemplos.html#cb739-2" aria-hidden="true" tabindex="-1"></a>rate <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
+<span id="cb739-3"><a href="ejemplos.html#cb739-3" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>rate</span>
+<span id="cb739-4"><a href="ejemplos.html#cb739-4" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> rate)</span>
+<span id="cb739-5"><a href="ejemplos.html#cb739-5" aria-hidden="true" tabindex="-1"></a>media <span class="ot">&lt;-</span> <span class="fu">mean</span>(muestra)</span>
+<span id="cb739-6"><a href="ejemplos.html#cb739-6" aria-hidden="true" tabindex="-1"></a>desv <span class="ot">&lt;-</span> <span class="fu">sd</span>(muestra)</span>
+<span id="cb739-7"><a href="ejemplos.html#cb739-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb739-8"><a href="ejemplos.html#cb739-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb739-9"><a href="ejemplos.html#cb739-9" aria-hidden="true" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
+<span id="cb739-10"><a href="ejemplos.html#cb739-10" aria-hidden="true" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i]</span>
+<span id="cb739-11"><a href="ejemplos.html#cb739-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">mean</span>(remuestra), <span class="fu">var</span>(remuestra)<span class="sc">/</span><span class="fu">length</span>(remuestra))</span>
+<span id="cb739-12"><a href="ejemplos.html#cb739-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb739-13"><a href="ejemplos.html#cb739-13" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
+<span id="cb739-14"><a href="ejemplos.html#cb739-14" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb739-15"><a href="ejemplos.html#cb739-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb739-16"><a href="ejemplos.html#cb739-16" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> B))</span></code></pre></div>
 <pre><code>##    user  system elapsed 
 ##    0.03    0.00    0.03</code></pre>
-<div class="sourceCode" id="cb739"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb739-1"><a href="ejemplos.html#cb739-1" aria-hidden="true" tabindex="-1"></a><span class="co"># system.time(res.boot &lt;- boot(muestra, statistic, R = B, parallel = &quot;snow&quot;))</span></span>
-<span id="cb739-2"><a href="ejemplos.html#cb739-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> B, <span class="at">parallel =</span> <span class="st">&quot;snow&quot;</span>, <span class="at">cl =</span> cl))</span></code></pre></div>
+<div class="sourceCode" id="cb741"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb741-1"><a href="ejemplos.html#cb741-1" aria-hidden="true" tabindex="-1"></a><span class="co"># system.time(res.boot &lt;- boot(muestra, statistic, R = B, parallel = &quot;snow&quot;))</span></span>
+<span id="cb741-2"><a href="ejemplos.html#cb741-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> B, <span class="at">parallel =</span> <span class="st">&quot;snow&quot;</span>, <span class="at">cl =</span> cl))</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.02    0.00    0.01</code></pre>
+##    0.03    0.00    0.03</code></pre>
 </div>
 <div id="estudio-sim-boot" class="section level3 hasAnchor" number="14.3.2">
 <h3><span class="header-section-number">C.3.2</span> Estudio de simulación<a href="ejemplos.html#estudio-sim-boot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Si se trata de un estudio más complejo, como por ejemplo un estudio de simulación en el que se emplea bootstrap, la recomendación sería tratar de paralelizar en el nivel superior para minimizar la sobrecarga debida a la comunicación entre nodos.</p>
 <p>Por ejemplo, a continuación se realiza un estudio de simulación comparando las probabilidades de cobertura y las longitudes de los intervalos de confianza implementados en la función <code>boot.ci()</code>.</p>
-<div class="sourceCode" id="cb741"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb741-1"><a href="ejemplos.html#cb741-1" aria-hidden="true" tabindex="-1"></a>t.ini <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
-<span id="cb741-2"><a href="ejemplos.html#cb741-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb741-3"><a href="ejemplos.html#cb741-3" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">500</span></span>
-<span id="cb741-4"><a href="ejemplos.html#cb741-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb741-5"><a href="ejemplos.html#cb741-5" aria-hidden="true" tabindex="-1"></a>getSimulation <span class="ot">&lt;-</span> <span class="cf">function</span>(isim, <span class="at">B =</span> <span class="dv">2000</span>, <span class="at">n =</span> <span class="dv">30</span>, <span class="at">alfa =</span> <span class="fl">0.1</span>, <span class="at">mu =</span> <span class="dv">100</span>) {</span>
-<span id="cb741-6"><a href="ejemplos.html#cb741-6" aria-hidden="true" tabindex="-1"></a>    rate <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>mu <span class="co"># 0.01</span></span>
-<span id="cb741-7"><a href="ejemplos.html#cb741-7" aria-hidden="true" tabindex="-1"></a>    resnames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Cobertura&quot;</span>, <span class="st">&quot;Longitud&quot;</span>)</span>
-<span id="cb741-8"><a href="ejemplos.html#cb741-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># intervals &lt;- c(&quot;Normal&quot;, &quot;Percentil&quot;, &quot;Percentil-t&quot;, &quot;Percentil-t simetrizado&quot;)</span></span>
-<span id="cb741-9"><a href="ejemplos.html#cb741-9" aria-hidden="true" tabindex="-1"></a>    intervals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Normal&quot;</span>, <span class="st">&quot;Basic&quot;</span>, <span class="st">&quot;Studentized&quot;</span>, <span class="st">&quot;Percentil&quot;</span>, <span class="st">&quot;BCa&quot;</span>)</span>
-<span id="cb741-10"><a href="ejemplos.html#cb741-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">names</span>(intervals) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;normal&quot;</span>,<span class="st">&quot;basic&quot;</span>, <span class="st">&quot;student&quot;</span>, <span class="st">&quot;percent&quot;</span>, <span class="st">&quot;bca&quot;</span>)</span>
-<span id="cb741-11"><a href="ejemplos.html#cb741-11" aria-hidden="true" tabindex="-1"></a>    intervals <span class="ot">&lt;-</span> intervals[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
-<span id="cb741-12"><a href="ejemplos.html#cb741-12" aria-hidden="true" tabindex="-1"></a>    resultados <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">dim =</span> <span class="fu">c</span>(<span class="fu">length</span>(resnames), <span class="fu">length</span>(intervals)))</span>
-<span id="cb741-13"><a href="ejemplos.html#cb741-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dimnames</span>(resultados) <span class="ot">&lt;-</span> <span class="fu">list</span>(resnames, intervals)</span>
-<span id="cb741-14"><a href="ejemplos.html#cb741-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># for (isim in 1:nsim) { # isim &lt;- 1</span></span>
-<span id="cb741-15"><a href="ejemplos.html#cb741-15" aria-hidden="true" tabindex="-1"></a>    muestra <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> <span class="fl">0.01</span>)</span>
-<span id="cb741-16"><a href="ejemplos.html#cb741-16" aria-hidden="true" tabindex="-1"></a>    media <span class="ot">&lt;-</span> <span class="fu">mean</span>(muestra)</span>
-<span id="cb741-17"><a href="ejemplos.html#cb741-17" aria-hidden="true" tabindex="-1"></a>    desv <span class="ot">&lt;-</span> <span class="fu">sd</span>(muestra)</span>
-<span id="cb741-18"><a href="ejemplos.html#cb741-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># boot()</span></span>
-<span id="cb741-19"><a href="ejemplos.html#cb741-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">library</span>(boot)</span>
-<span id="cb741-20"><a href="ejemplos.html#cb741-20" aria-hidden="true" tabindex="-1"></a>    statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
-<span id="cb741-21"><a href="ejemplos.html#cb741-21" aria-hidden="true" tabindex="-1"></a>      remuestra <span class="ot">&lt;-</span> data[i]</span>
-<span id="cb741-22"><a href="ejemplos.html#cb741-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="fu">mean</span>(remuestra), <span class="fu">var</span>(remuestra)<span class="sc">/</span><span class="fu">length</span>(remuestra))</span>
-<span id="cb741-23"><a href="ejemplos.html#cb741-23" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb741-24"><a href="ejemplos.html#cb741-24" aria-hidden="true" tabindex="-1"></a>    res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> B)</span>
-<span id="cb741-25"><a href="ejemplos.html#cb741-25" aria-hidden="true" tabindex="-1"></a>    res <span class="ot">&lt;-</span> <span class="fu">boot.ci</span>(res.boot, <span class="at">conf =</span> <span class="dv">1</span> <span class="sc">-</span> alfa)</span>
-<span id="cb741-26"><a href="ejemplos.html#cb741-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Intervalos</span></span>
-<span id="cb741-27"><a href="ejemplos.html#cb741-27" aria-hidden="true" tabindex="-1"></a>    res <span class="ot">&lt;-</span> <span class="fu">sapply</span>(res[<span class="fu">names</span>(intervals)], <span class="cf">function</span>(x) {</span>
-<span id="cb741-28"><a href="ejemplos.html#cb741-28" aria-hidden="true" tabindex="-1"></a>      l <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
-<span id="cb741-29"><a href="ejemplos.html#cb741-29" aria-hidden="true" tabindex="-1"></a>      x[<span class="fu">c</span>(l<span class="dv">-1</span>, l)]</span>
-<span id="cb741-30"><a href="ejemplos.html#cb741-30" aria-hidden="true" tabindex="-1"></a>    })</span>
-<span id="cb741-31"><a href="ejemplos.html#cb741-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># resultados</span></span>
-<span id="cb741-32"><a href="ejemplos.html#cb741-32" aria-hidden="true" tabindex="-1"></a>    resultados[<span class="dv">1</span>, ] <span class="ot">&lt;-</span> <span class="fu">apply</span>(res, <span class="dv">2</span>,</span>
-<span id="cb741-33"><a href="ejemplos.html#cb741-33" aria-hidden="true" tabindex="-1"></a>                                   <span class="cf">function</span>(ic) (ic[<span class="dv">1</span>] <span class="sc">&lt;</span> mu) <span class="sc">&amp;&amp;</span> (mu <span class="sc">&lt;</span> ic[<span class="dv">2</span>])) <span class="co"># Cobertura</span></span>
-<span id="cb741-34"><a href="ejemplos.html#cb741-34" aria-hidden="true" tabindex="-1"></a>    resultados[<span class="dv">2</span>, ] <span class="ot">&lt;-</span> <span class="fu">apply</span>(res, <span class="dv">2</span>, diff) <span class="co"># Longitud</span></span>
-<span id="cb741-35"><a href="ejemplos.html#cb741-35" aria-hidden="true" tabindex="-1"></a>    resultados</span>
-<span id="cb741-36"><a href="ejemplos.html#cb741-36" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb741-37"><a href="ejemplos.html#cb741-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb741-38"><a href="ejemplos.html#cb741-38" aria-hidden="true" tabindex="-1"></a>parallel<span class="sc">::</span><span class="fu">clusterSetRNGStream</span>(cl)</span>
-<span id="cb741-39"><a href="ejemplos.html#cb741-39" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">parLapply</span>(cl, <span class="dv">1</span><span class="sc">:</span>nsim, getSimulation)</span>
-<span id="cb741-40"><a href="ejemplos.html#cb741-40" aria-hidden="true" tabindex="-1"></a><span class="co"># stopCluster(cl)</span></span>
-<span id="cb741-41"><a href="ejemplos.html#cb741-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb741-42"><a href="ejemplos.html#cb741-42" aria-hidden="true" tabindex="-1"></a><span class="co"># result</span></span>
-<span id="cb741-43"><a href="ejemplos.html#cb741-43" aria-hidden="true" tabindex="-1"></a>t.fin <span class="ot">&lt;-</span> <span class="fu">proc.time</span>() <span class="sc">-</span> t.ini</span>
-<span id="cb741-44"><a href="ejemplos.html#cb741-44" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(t.fin)</span></code></pre></div>
+<div class="sourceCode" id="cb743"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb743-1"><a href="ejemplos.html#cb743-1" aria-hidden="true" tabindex="-1"></a>t.ini <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
+<span id="cb743-2"><a href="ejemplos.html#cb743-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb743-3"><a href="ejemplos.html#cb743-3" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb743-4"><a href="ejemplos.html#cb743-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb743-5"><a href="ejemplos.html#cb743-5" aria-hidden="true" tabindex="-1"></a>getSimulation <span class="ot">&lt;-</span> <span class="cf">function</span>(isim, <span class="at">B =</span> <span class="dv">2000</span>, <span class="at">n =</span> <span class="dv">30</span>, <span class="at">alfa =</span> <span class="fl">0.1</span>, <span class="at">mu =</span> <span class="dv">100</span>) {</span>
+<span id="cb743-6"><a href="ejemplos.html#cb743-6" aria-hidden="true" tabindex="-1"></a>    rate <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>mu <span class="co"># 0.01</span></span>
+<span id="cb743-7"><a href="ejemplos.html#cb743-7" aria-hidden="true" tabindex="-1"></a>    resnames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Cobertura&quot;</span>, <span class="st">&quot;Longitud&quot;</span>)</span>
+<span id="cb743-8"><a href="ejemplos.html#cb743-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># intervals &lt;- c(&quot;Normal&quot;, &quot;Percentil&quot;, &quot;Percentil-t&quot;, &quot;Percentil-t simetrizado&quot;)</span></span>
+<span id="cb743-9"><a href="ejemplos.html#cb743-9" aria-hidden="true" tabindex="-1"></a>    intervals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Normal&quot;</span>, <span class="st">&quot;Basic&quot;</span>, <span class="st">&quot;Studentized&quot;</span>, <span class="st">&quot;Percentil&quot;</span>, <span class="st">&quot;BCa&quot;</span>)</span>
+<span id="cb743-10"><a href="ejemplos.html#cb743-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">names</span>(intervals) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;normal&quot;</span>,<span class="st">&quot;basic&quot;</span>, <span class="st">&quot;student&quot;</span>, <span class="st">&quot;percent&quot;</span>, <span class="st">&quot;bca&quot;</span>)</span>
+<span id="cb743-11"><a href="ejemplos.html#cb743-11" aria-hidden="true" tabindex="-1"></a>    intervals <span class="ot">&lt;-</span> intervals[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb743-12"><a href="ejemplos.html#cb743-12" aria-hidden="true" tabindex="-1"></a>    resultados <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">dim =</span> <span class="fu">c</span>(<span class="fu">length</span>(resnames), <span class="fu">length</span>(intervals)))</span>
+<span id="cb743-13"><a href="ejemplos.html#cb743-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dimnames</span>(resultados) <span class="ot">&lt;-</span> <span class="fu">list</span>(resnames, intervals)</span>
+<span id="cb743-14"><a href="ejemplos.html#cb743-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># for (isim in 1:nsim) { # isim &lt;- 1</span></span>
+<span id="cb743-15"><a href="ejemplos.html#cb743-15" aria-hidden="true" tabindex="-1"></a>    muestra <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> <span class="fl">0.01</span>)</span>
+<span id="cb743-16"><a href="ejemplos.html#cb743-16" aria-hidden="true" tabindex="-1"></a>    media <span class="ot">&lt;-</span> <span class="fu">mean</span>(muestra)</span>
+<span id="cb743-17"><a href="ejemplos.html#cb743-17" aria-hidden="true" tabindex="-1"></a>    desv <span class="ot">&lt;-</span> <span class="fu">sd</span>(muestra)</span>
+<span id="cb743-18"><a href="ejemplos.html#cb743-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># boot()</span></span>
+<span id="cb743-19"><a href="ejemplos.html#cb743-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">library</span>(boot)</span>
+<span id="cb743-20"><a href="ejemplos.html#cb743-20" aria-hidden="true" tabindex="-1"></a>    statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
+<span id="cb743-21"><a href="ejemplos.html#cb743-21" aria-hidden="true" tabindex="-1"></a>      remuestra <span class="ot">&lt;-</span> data[i]</span>
+<span id="cb743-22"><a href="ejemplos.html#cb743-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="fu">mean</span>(remuestra), <span class="fu">var</span>(remuestra)<span class="sc">/</span><span class="fu">length</span>(remuestra))</span>
+<span id="cb743-23"><a href="ejemplos.html#cb743-23" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb743-24"><a href="ejemplos.html#cb743-24" aria-hidden="true" tabindex="-1"></a>    res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> B)</span>
+<span id="cb743-25"><a href="ejemplos.html#cb743-25" aria-hidden="true" tabindex="-1"></a>    res <span class="ot">&lt;-</span> <span class="fu">boot.ci</span>(res.boot, <span class="at">conf =</span> <span class="dv">1</span> <span class="sc">-</span> alfa)</span>
+<span id="cb743-26"><a href="ejemplos.html#cb743-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Intervalos</span></span>
+<span id="cb743-27"><a href="ejemplos.html#cb743-27" aria-hidden="true" tabindex="-1"></a>    res <span class="ot">&lt;-</span> <span class="fu">sapply</span>(res[<span class="fu">names</span>(intervals)], <span class="cf">function</span>(x) {</span>
+<span id="cb743-28"><a href="ejemplos.html#cb743-28" aria-hidden="true" tabindex="-1"></a>      l <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb743-29"><a href="ejemplos.html#cb743-29" aria-hidden="true" tabindex="-1"></a>      x[<span class="fu">c</span>(l<span class="dv">-1</span>, l)]</span>
+<span id="cb743-30"><a href="ejemplos.html#cb743-30" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb743-31"><a href="ejemplos.html#cb743-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># resultados</span></span>
+<span id="cb743-32"><a href="ejemplos.html#cb743-32" aria-hidden="true" tabindex="-1"></a>    resultados[<span class="dv">1</span>, ] <span class="ot">&lt;-</span> <span class="fu">apply</span>(res, <span class="dv">2</span>,</span>
+<span id="cb743-33"><a href="ejemplos.html#cb743-33" aria-hidden="true" tabindex="-1"></a>                                   <span class="cf">function</span>(ic) (ic[<span class="dv">1</span>] <span class="sc">&lt;</span> mu) <span class="sc">&amp;&amp;</span> (mu <span class="sc">&lt;</span> ic[<span class="dv">2</span>])) <span class="co"># Cobertura</span></span>
+<span id="cb743-34"><a href="ejemplos.html#cb743-34" aria-hidden="true" tabindex="-1"></a>    resultados[<span class="dv">2</span>, ] <span class="ot">&lt;-</span> <span class="fu">apply</span>(res, <span class="dv">2</span>, diff) <span class="co"># Longitud</span></span>
+<span id="cb743-35"><a href="ejemplos.html#cb743-35" aria-hidden="true" tabindex="-1"></a>    resultados</span>
+<span id="cb743-36"><a href="ejemplos.html#cb743-36" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb743-37"><a href="ejemplos.html#cb743-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb743-38"><a href="ejemplos.html#cb743-38" aria-hidden="true" tabindex="-1"></a>parallel<span class="sc">::</span><span class="fu">clusterSetRNGStream</span>(cl)</span>
+<span id="cb743-39"><a href="ejemplos.html#cb743-39" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">parLapply</span>(cl, <span class="dv">1</span><span class="sc">:</span>nsim, getSimulation)</span>
+<span id="cb743-40"><a href="ejemplos.html#cb743-40" aria-hidden="true" tabindex="-1"></a><span class="co"># stopCluster(cl)</span></span>
+<span id="cb743-41"><a href="ejemplos.html#cb743-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb743-42"><a href="ejemplos.html#cb743-42" aria-hidden="true" tabindex="-1"></a><span class="co"># result</span></span>
+<span id="cb743-43"><a href="ejemplos.html#cb743-43" aria-hidden="true" tabindex="-1"></a>t.fin <span class="ot">&lt;-</span> <span class="fu">proc.time</span>() <span class="sc">-</span> t.ini</span>
+<span id="cb743-44"><a href="ejemplos.html#cb743-44" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(t.fin)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.02    0.00    1.89</code></pre>
-<div class="sourceCode" id="cb743"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb743-1"><a href="ejemplos.html#cb743-1" aria-hidden="true" tabindex="-1"></a>resnames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Cobertura&quot;</span>, <span class="st">&quot;Longitud&quot;</span>)</span>
-<span id="cb743-2"><a href="ejemplos.html#cb743-2" aria-hidden="true" tabindex="-1"></a>intervals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Normal&quot;</span>, <span class="st">&quot;Basic&quot;</span>, <span class="st">&quot;Studentized&quot;</span>, <span class="st">&quot;Percentil&quot;</span>, <span class="st">&quot;BCa&quot;</span>)</span>
-<span id="cb743-3"><a href="ejemplos.html#cb743-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(intervals) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;normal&quot;</span>,<span class="st">&quot;basic&quot;</span>, <span class="st">&quot;student&quot;</span>, <span class="st">&quot;percent&quot;</span>, <span class="st">&quot;bca&quot;</span>)</span>
-<span id="cb743-4"><a href="ejemplos.html#cb743-4" aria-hidden="true" tabindex="-1"></a>intervals <span class="ot">&lt;-</span> intervals[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
-<span id="cb743-5"><a href="ejemplos.html#cb743-5" aria-hidden="true" tabindex="-1"></a>resultados <span class="ot">&lt;-</span> <span class="fu">sapply</span>(result, <span class="cf">function</span>(x) x)</span>
-<span id="cb743-6"><a href="ejemplos.html#cb743-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(resultados) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">length</span>(resnames), <span class="fu">length</span>(intervals), nsim)</span>
-<span id="cb743-7"><a href="ejemplos.html#cb743-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(resultados) <span class="ot">&lt;-</span> <span class="fu">list</span>(resnames, intervals, <span class="cn">NULL</span>)</span>
-<span id="cb743-8"><a href="ejemplos.html#cb743-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb743-9"><a href="ejemplos.html#cb743-9" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">apply</span>(resultados, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), mean))</span>
-<span id="cb743-10"><a href="ejemplos.html#cb743-10" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
+##    0.03    0.00    1.92</code></pre>
+<div class="sourceCode" id="cb745"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb745-1"><a href="ejemplos.html#cb745-1" aria-hidden="true" tabindex="-1"></a>resnames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Cobertura&quot;</span>, <span class="st">&quot;Longitud&quot;</span>)</span>
+<span id="cb745-2"><a href="ejemplos.html#cb745-2" aria-hidden="true" tabindex="-1"></a>intervals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Normal&quot;</span>, <span class="st">&quot;Basic&quot;</span>, <span class="st">&quot;Studentized&quot;</span>, <span class="st">&quot;Percentil&quot;</span>, <span class="st">&quot;BCa&quot;</span>)</span>
+<span id="cb745-3"><a href="ejemplos.html#cb745-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(intervals) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;normal&quot;</span>,<span class="st">&quot;basic&quot;</span>, <span class="st">&quot;student&quot;</span>, <span class="st">&quot;percent&quot;</span>, <span class="st">&quot;bca&quot;</span>)</span>
+<span id="cb745-4"><a href="ejemplos.html#cb745-4" aria-hidden="true" tabindex="-1"></a>intervals <span class="ot">&lt;-</span> intervals[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb745-5"><a href="ejemplos.html#cb745-5" aria-hidden="true" tabindex="-1"></a>resultados <span class="ot">&lt;-</span> <span class="fu">sapply</span>(result, <span class="cf">function</span>(x) x)</span>
+<span id="cb745-6"><a href="ejemplos.html#cb745-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(resultados) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">length</span>(resnames), <span class="fu">length</span>(intervals), nsim)</span>
+<span id="cb745-7"><a href="ejemplos.html#cb745-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(resultados) <span class="ot">&lt;-</span> <span class="fu">list</span>(resnames, intervals, <span class="cn">NULL</span>)</span>
+<span id="cb745-8"><a href="ejemplos.html#cb745-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb745-9"><a href="ejemplos.html#cb745-9" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">apply</span>(resultados, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), mean))</span>
+<span id="cb745-10"><a href="ejemplos.html#cb745-10" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
 <pre><code>##             Cobertura Longitud
-## Normal          0.858 57.78773
-## Basic           0.854 57.73865
-## Studentized     0.904 67.00259
-## Percentil       0.860 57.73865</code></pre>
-<div class="sourceCode" id="cb745"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb745-1"><a href="ejemplos.html#cb745-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(res, <span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
+## Normal          0.858   57.788
+## Basic           0.854   57.739
+## Studentized     0.904   67.003
+## Percentil       0.860   57.739</code></pre>
+<div class="sourceCode" id="cb747"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb747-1"><a href="ejemplos.html#cb747-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(res, <span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -615,7 +621,7 @@ Si <code>parallel = "snow"</code> se crea un clúster en la máquina local duran
 </tbody>
 </table>
 <p>El último paso es finalizar el cluster:</p>
-<div class="sourceCode" id="cb746"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb746-1"><a href="ejemplos.html#cb746-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stopCluster</span>(cl)</span></code></pre></div>
+<div class="sourceCode" id="cb748"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb748-1"><a href="ejemplos.html#cb748-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stopCluster</span>(cl)</span></code></pre></div>
 
 </div>
 </div>

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1.3 Números aleatorios en R | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1.3 Números aleatorios en R | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -364,9 +368,9 @@ div.csl-indent {
 <li class="chapter" data-level="A.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>A.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="A.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>A.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="A.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>A.2.3</b> Gráfico de dispersion retardado</a></li>
-<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
 <li class="chapter" data-level="A.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>A.2.5</b> Test de rachas</a></li>
-<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
+<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#ljungbox"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
 <li class="chapter" data-level="A.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>A.3</b> Contrastes específicos para generadores aleatorios</a>
 <ul>
@@ -421,11 +425,13 @@ div.csl-indent {
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
 <ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -460,11 +466,11 @@ Por ejemplo, <code>runif(n, min = 0, max = 1)</code>, generaría <code>n</code> 
 <li><p><code>simulate()</code>: genera realizaciones de la respuesta de un modelo ajustado.</p></li>
 </ul>
 <p>Además están disponibles otros paquetes que implementan distribuciones adicionales (ver <a href="https://cran.r-project.org/view=Distributions">CRAN Task View: Probability Distributions</a>).
-Entre ellos podríamos destacar los paquetes <a href="http://distr.r-forge.r-project.org"><code>distr</code></a> (clases S4; con extensiones en otros paquetes) y <a href="https://alan-turing-institute.github.io/distr6/index.html"><code>distr6</code></a> (clases R6).</p>
+Entre ellos podríamos destacar los paquetes <a href="http://distr.r-forge.r-project.org"><code>distr</code></a> (clases S4; con extensiones en otros paquetes) y <a href="https://alexpghayes.github.io/distributions3/"><code>distributions3</code></a> (clases S3)<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>.</p>
 <p>La semilla se almacena en <code>.Random.seed</code>:</p>
 <ul>
 <li><p>Inicialmente no existe.
-La recomendación es establecerla con <code>set.seed()</code>, en caso contrario se generará a partir del reloj del sistema<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> cuando se necesite.</p></li>
+La recomendación es establecerla con <code>set.seed()</code>, en caso contrario se generará a partir del reloj del sistema<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a> cuando se necesite.</p></li>
 <li><p>Se almacena como un objeto oculto en el entorno de trabajo (o entorno global <code>.GlobalEnv</code>). Con las opciones por defecto de R, si al terminar una sesión almacenamos el entorno (en un fichero <em>.RData</em>), al iniciar una nueva sesión se restaurará también la semilla (y se podría continuar con las simulaciones).</p></li>
 <li><p>Es un vector de enteros cuya estructura depende del tipo de generador (en la Sección <a href="ext-cong.html#ext-cong">2.2</a> se dan algunos detalles sobre la configuración por defecto), por lo que no debería ser modificado manualmente.<br />
 Puede ser recomendable almacenar (el objeto completo) antes de generar simulaciones, e.g. <code>seed &lt;- .Random.seed</code>. Esto permite reproducir los resultados y facilita la depuración de posibles errores.</p></li>
@@ -512,7 +518,7 @@ en 623 dimensiones.</p></li>
 (se tratará más adelante):
 “Kinderman-Ramage”, “Buggy Kinderman-Ramage”,
 “Ahrens-Dieter”, “Box-Muller”, <strong>“Inversion”</strong> , o “user-supplied”.</p></li>
-<li><p><code>sample.kind</code> selecciona el método de generación de uniformes discretas (el empleado por la función <code>sample()</code>, que cambió ligeramente<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a> a partir de la versión 3.6.0 de R): “Rounding” (versión anterior a 3.6.0) o <strong>“Rejection”</strong>.</p></li>
+<li><p><code>sample.kind</code> selecciona el método de generación de uniformes discretas (el empleado por la función <code>sample()</code>, que cambió ligeramente<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> a partir de la versión 3.6.0 de R): “Rounding” (versión anterior a 3.6.0) o <strong>“Rejection”</strong>.</p></li>
 </ul>
 <p>Estas opciones están codificadas (con índices comenzando en 0) en el primer componente de la semilla:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="rrng.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
@@ -522,27 +528,25 @@ en 623 dimensiones.</p></li>
 </div>
 <div id="paquetes-de-r" class="section level3 hasAnchor" number="1.3.2">
 <h3><span class="header-section-number">1.3.2</span> Paquetes de R<a href="rrng.html#paquetes-de-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<!-- 
-Pendiente: [``](https://CRAN.R-project.org/package=)
--->
 <p>Otros paquetes de R que pueden ser de interés:</p>
 <ul>
-<li><p><code>setRNG</code> contiene herramientas que facilitan operar con la semilla
-(dentro de funciones,…).</p></li>
-<li><p><code>random</code> permite la descarga de números “true random” desde <a href="https://www.random.org">RANDOM.ORG</a>.</p></li>
-<li><p><code>randtoolbox</code> implementa generadores más recientes (<code>rngWELL</code>) y
+<li><p><a href="https://CRAN.R-project.org/package=setRNG"><code>setRNG</code></a> contiene herramientas que facilitan operar con la semilla
+(e.g. dentro de funciones).</p></li>
+<li><p><a href="https://CRAN.R-project.org/package=random"><code>random</code></a> permite la descarga de números “true random” desde
+<a href="https://www.random.org">RANDOM.ORG</a>.</p></li>
+<li><p><a href="https://CRAN.R-project.org/package=randtoolbox"><code>randtoolbox</code></a> implementa generadores más recientes (<code>rngWELL</code>) y
 generación de secuencias cuasi-aleatorias.</p></li>
-<li><p><code>RDieHarder</code> implementa diversos contrastes para el análisis de la
+<li><p><a href="https://CRAN.R-project.org/package=RDieHarder"><code>RDieHarder</code></a> implementa diversos contrastes para el análisis de la
 calidad de un generador y varios generadores.</p></li>
-<li><p><a href="http://statmath.wu.ac.at/unuran"><code>Runuran</code></a> interfaz para la librería UNU.RAN para la
-generación (automática) de variables aleatorias no uniformes (ver Hörmann et al., 2004).</p></li>
-<li><p><code>rsprng</code>, <code>rstream</code> y <code>rlecuyer</code> implementan la generación de múltiples
-secuencias (para programación paralela).</p></li>
-<li><p><code>gls</code>, <code>rngwell19937</code>, <code>randaes</code>, <code>SuppDists</code>, <code>lhs</code>, <code>mc2d</code>,
-<code>fOptions</code>, …</p></li>
+<li><p><a href="https://CRAN.R-project.org/package=Runuran"><code>Runuran</code></a> interfaz para la librería UNU.RAN para la generación
+(automática) de variables aleatorias no uniformes <span class="citation">(ver <a href="#ref-hormann2004" role="doc-biblioref">Hörmann et al., 2004</a>)</span>.</p></li>
+<li><p><a href="https://CRAN.R-project.org/package=rsprng"><code>rsprng</code></a>, <a href="https://CRAN.R-project.org/package=rstream"><code>rstream</code></a> y <a href="https://CRAN.R-project.org/package=rlecuyer"><code>rlecuyer</code></a> implementan
+la generación de múltiples secuencias (para programación paralela).</p></li>
 </ul>
 <!-- 
 PENDIENTE: Paquetes de simulación 
+-   `gls`, `rngwell19937`, `randaes`, `SuppDists`, `lhs`, `mc2d`,
+    `fOptions`, ...
 -->
 </div>
 <div id="tiempo-de-cpu" class="section level3 hasAnchor" number="1.3.3">
@@ -558,8 +562,7 @@ tiempo &lt;- proc.time() - tini</code></pre></li>
 <li><p><code>system.time(expresión)</code>: muestra el tiempo de computación (real y
 de CPU) de expresión.</p></li>
 </ul>
-<p>Por ejemplo, podríamos emplear las siguientes funciones para
-ir midiendo los tiempos de CPU durante una simulación:</p>
+<p>Por ejemplo, podríamos emplear las siguientes funciones para ir midiendo los tiempos de CPU durante una simulación:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="rrng.html#cb22-1" aria-hidden="true" tabindex="-1"></a>CPUtimeini <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
 <span id="cb22-2"><a href="rrng.html#cb22-2" aria-hidden="true" tabindex="-1"></a>  .tiempo.ini <span class="ot">&lt;&lt;-</span> <span class="fu">proc.time</span>()</span>
 <span id="cb22-3"><a href="rrng.html#cb22-3" aria-hidden="true" tabindex="-1"></a>  .tiempo.last <span class="ot">&lt;&lt;-</span> .tiempo.ini</span>
@@ -573,9 +576,7 @@ ir midiendo los tiempos de CPU durante una simulación:</p>
 <span id="cb22-11"><a href="rrng.html#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(tmp<span class="sc">-</span>.tiempo.ini)</span>
 <span id="cb22-12"><a href="rrng.html#cb22-12" aria-hidden="true" tabindex="-1"></a>  .tiempo.last <span class="ot">&lt;&lt;-</span> tmp</span>
 <span id="cb22-13"><a href="rrng.html#cb22-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>Llamando a <code>CPUtimeini()</code> donde se quiere empezar a contar,
-y a <code>CPUtimeprint()</code> para imprimir el tiempo total
-y el tiempo desde la última llamada a una de estas funciones.
+<p>Llamando a <code>CPUtimeini()</code> donde se quiere empezar a contar, y a <code>CPUtimeprint()</code> para imprimir el tiempo total y el tiempo desde la última llamada a una de estas funciones.
 Ejemplo:</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="rrng.html#cb23-1" aria-hidden="true" tabindex="-1"></a>funtest <span class="ot">&lt;-</span> <span class="cf">function</span>(n) <span class="fu">mad</span>(<span class="fu">runif</span>(n)) </span>
 <span id="cb23-2"><a href="rrng.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">CPUtimeini</span>()</span>
@@ -583,24 +584,28 @@ Ejemplo:</p>
 <span id="cb23-4"><a href="rrng.html#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">CPUtimeprint</span>()</span></code></pre></div>
 <pre><code>## Tiempo última operación:
 ##    user  system elapsed 
-##    0.16    0.00    0.16 
+##    0.02    0.01    0.03 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.16    0.00    0.16</code></pre>
+##    0.02    0.01    0.03</code></pre>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="rrng.html#cb25-1" aria-hidden="true" tabindex="-1"></a>result2 <span class="ot">&lt;-</span> <span class="fu">funtest</span>(<span class="dv">10</span><span class="sc">^</span><span class="dv">3</span>)</span>
 <span id="cb25-2"><a href="rrng.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">CPUtimeprint</span>()</span></code></pre></div>
 <pre><code>## Tiempo última operación:
 ##    user  system elapsed 
-##    0.01    0.00    0.01 
+##       0       0       0 
 ## Tiempo total operación:
 ##    user  system elapsed 
-##    0.17    0.00    0.17</code></pre>
-<p>Hay diversos paquetes que implementan herramientas similares, por ejemplo:</p>
+##    0.02    0.01    0.03</code></pre>
+<p>La función <a href="https://rubenfcasal.github.io/simres/reference/cpu.time.html"><code>cpu.time()</code></a> del paquete <a href="https://rubenfcasal.github.io/simres"><code>simres</code></a> implementa una aproximación similar:</p>
 <ul>
-<li><p>El paquete <code>tictoc</code>:</p>
+<li><p><code>cpu.time(restart = TRUE)</code>: inicia el temporizador y almacena el tiempo de inicio.</p></li>
+<li><p><code>cpu.time()</code>: calcula el tiempo (real y de CPU) total (desde tiempo de inicio) y parcial (desde la última llamada a esta función).</p></li>
+</ul>
+<p>Si se desea ir almacenando automáticamente los tiempos de computación, puede ser recomendable emplear las funciones <a href="https://rdrr.io/pkg/tictoc/man/tic.html"><code>tic()</code></a> y <a href="https://rdrr.io/pkg/tictoc/man/tic.html"><code>toc()</code></a> del paquete <a href="https://github.com/jabiru/tictoc"><code>tictoc</code></a>:</p>
 <ul>
 <li><p><code>tic("mensaje")</code>: inicia el temporizador y almacena el tiempo de inicio junto con el mensaje en una pila.</p></li>
-<li><p><code>toc()</code>: calcula el tiempo transcurrido desde la llamada correspondiente a <code>tic()</code>.</p>
+<li><p><a href="https://rdrr.io/pkg/tictoc/man/tic.html"><code>toc()</code></a>: calcula el tiempo transcurrido desde la llamada correspondiente a <a href="https://rdrr.io/pkg/tictoc/man/tic.html"><code>tic()</code></a>.</p></li>
+</ul>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="rrng.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tictoc)</span>
 <span id="cb27-2"><a href="rrng.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Timing nested code</span></span>
 <span id="cb27-3"><a href="rrng.html#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tic</span>(<span class="st">&quot;outer&quot;</span>)</span>
@@ -614,7 +619,7 @@ Ejemplo:</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="rrng.html#cb29-1" aria-hidden="true" tabindex="-1"></a>   <span class="fu">toc</span>() <span class="co"># middle</span></span></code></pre></div>
 <pre><code>## middle: 0 sec elapsed</code></pre>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="rrng.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>() <span class="co"># outer</span></span></code></pre></div>
-<pre><code>## outer: 0.14 sec elapsed</code></pre>
+<pre><code>## outer: 0.05 sec elapsed</code></pre>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="rrng.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Timing in a loop and analyzing the results later using tic.log().</span></span>
 <span id="cb33-2"><a href="rrng.html#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tic.clearlog</span>()</span>
 <span id="cb33-3"><a href="rrng.html#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
@@ -628,38 +633,38 @@ Ejemplo:</p>
 <span id="cb33-11"><a href="rrng.html#cb33-11" aria-hidden="true" tabindex="-1"></a>log.times <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind.data.frame, <span class="fu">tic.log</span>(<span class="at">format =</span> <span class="cn">FALSE</span>))</span>
 <span id="cb33-12"><a href="rrng.html#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(log.times)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    10 obs. of  4 variables:
-##  $ tic         : num  4.26 4.26 4.26 4.26 4.26 4.26 4.26 4.26 4.26 4.26
-##  $ toc         : num  4.26 4.26 4.26 4.26 4.26 4.26 4.26 4.26 4.26 4.26
+##  $ tic         : num  2.67 2.67 2.67 2.67 2.67 2.67 2.67 2.67 2.67 2.68
+##  $ toc         : num  2.67 2.67 2.67 2.67 2.67 2.67 2.67 2.67 2.68 2.68
 ##  $ msg         : chr  &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
-##  $ callback_msg: chr  &quot;1: 0 sec elapsed&quot; &quot;2: 0 sec elapsed&quot; &quot;3: 0 sec elapsed&quot;..</code></pre>
+##  $ callback_msg: chr  &quot;1: 0 sec elapsed&quot; &quot;2: 0 sec elapsed&quot; &quot;3: 0 sec &quot;..</code></pre>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="rrng.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tic.clearlog</span>()</span>
 <span id="cb35-2"><a href="rrng.html#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-3"><a href="rrng.html#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="co"># timings &lt;- unlist(lapply(log.lst, function(x) x$toc - x$tic))</span></span>
 <span id="cb35-4"><a href="rrng.html#cb35-4" aria-hidden="true" tabindex="-1"></a>log.times<span class="sc">$</span>timings <span class="ot">&lt;-</span> <span class="fu">with</span>(log.times, toc <span class="sc">-</span> tic)</span>
 <span id="cb35-5"><a href="rrng.html#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(log.times<span class="sc">$</span>timings)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##       0       0       0       0       0       0</code></pre></li>
-</ul></li>
-<li><p>La función <a href="https://rubenfcasal.github.io/simres/reference/cpu.time.html"><code>cpu.time()</code></a> del paquete <code>simres</code>:</p>
-<ul>
-<li><p><code>cpu.time(restart = TRUE)</code>: inicia el temporizador y almacena el tiempo de inicio.</p></li>
-<li><p><code>cpu.time()</code>: calcula el tiempo (real y de CPU) total (desde tiempo de inicio) y parcial (desde la última llamada a esta función).</p></li>
-</ul></li>
-</ul>
+##   0.000   0.000   0.000   0.001   0.000   0.010</code></pre>
 <p>Hay que tener en cuenta que, por construcción, aunque se realicen en la mismas condiciones (en el mismo equipo), los tiempos de CPU en R pueden variar “ligeramente” entre ejecuciones.
 Si se quieren estudiar tiempos de computación de forma más precisa, se recomendaría promediar los tiempos de varias ejecuciones.
-Para ello se pueden emplear las herramientas del paquete <a href="https://CRAN.R-project.org/package=microbenchmark"><code>microbenchmark</code></a>.
+Para ello se pueden emplear las herramientas del paquete <a href="https://github.com/joshuaulrich/microbenchmark/"><code>microbenchmark</code></a>.
 No obstante, para los fines de este libro no será necesaria tanta precisión.</p>
 <p>Finalmente, si los tiempos de computación no fuesen asumibles, para identificar los cuellos de botella y mejorar el código para optimizar la velocidad, podríamos emplear la función <code>Rprof(fichero)</code>.
 Esta función permite evaluar el rendimiento muestreando la pila en intervalos para determinar en que funciones se emplea el tiempo de computación.
 Después de ejecutar el código, llamando a <code>Rprof(NULL)</code> se desactiva el muestreo y con <code>summaryRprof(fichero)</code> se muestran los resultados (para analizarlos puede resultar de utilidad el paquete <a href="https://CRAN.R-project.org/package=proftools"><code>proftools</code></a>).</p>
 </div>
 </div>
+<h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-hormann2004" class="csl-entry">
+Hörmann, W., Leydold, J., y Derflinger, G. (2004). <em>Automatic Nonuniform Random Variate Generation</em>. Springer. <a href="https://link.springer.com/book/10.1007/978-3-662-05946-3">https://link.springer.com/book/10.1007/978-3-662-05946-3</a>
+</div>
+</div>
 <div class="footnotes">
 <hr />
 <ol start="4">
-<li id="fn4"><p>y del identificador asignado por el sistema operativo al proceso.<a href="rrng.html#fnref4" class="footnote-back">↩︎</a></p></li>
-<li id="fn5"><p>Para evitar problemas de redondeo con tamaños extremadamente grandes; ver bug <a href="https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=17494">PR#17494</a>.<a href="rrng.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>El paquete <a href="https://cran.r-project.org/package=distr6"><code>distr6</code></a>, que implementa clases R6, está actualmente archivado.<a href="rrng.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>y del identificador asignado por el sistema operativo al proceso.<a href="rrng.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>Para evitar problemas de redondeo con tamaños extremadamente grandes; ver bug <a href="https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=17494">PR#17494</a>.<a href="rrng.html#fnref6" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

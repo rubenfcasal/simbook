@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4.3 Modificaciones del método de aceptación-rechazo | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4.3 Modificaciones del método de aceptación-rechazo | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -364,9 +368,9 @@ div.csl-indent {
 <li class="chapter" data-level="A.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>A.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="A.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>A.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="A.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>A.2.3</b> Gráfico de dispersion retardado</a></li>
-<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
 <li class="chapter" data-level="A.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>A.2.5</b> Test de rachas</a></li>
-<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
+<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#ljungbox"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
 <li class="chapter" data-level="A.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>A.3</b> Contrastes específicos para generadores aleatorios</a>
 <ul>
@@ -421,11 +425,13 @@ div.csl-indent {
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
 <ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -461,15 +467,15 @@ Para evitar evaluaciones de la densidad se puede emplear una función “squeeze
 <p><span id="cnj:marsaglia" class="conjecture"><strong>Algoritmo 4.4  (Marsaglia, 1977) </strong></span><br></p>
 <ol style="list-style-type: decimal">
 <li><p>Generar <span class="math inline">\(U \sim \mathcal{U}(0, 1)\)</span> y <span class="math inline">\(T\sim g\)</span>.</p></li>
-<li><p>Si <span class="math inline">\(c\cdot U\cdot g\left( T\right) \leq s\left( T\right)\)</span> devolver <span class="math inline">\(X=T\)</span>,</p>
+<li><p>Si <span class="math inline">\(c\cdot U\cdot g(T) \leq s(T)\)</span> devolver <span class="math inline">\(X=T\)</span>,</p>
 <p>en caso contrario</p>
-<p>2.a. si <span class="math inline">\(c\cdot U\cdot g\left( T\right) \leq f\left( T\right)\)</span>
+<p>2.a. si <span class="math inline">\(c\cdot U\cdot g(T) \leq f(T)\)</span>
 devolver <span class="math inline">\(X=T\)</span>,</p>
 <p>2.b. en caso contrario volver al paso 1.</p></li>
 </ol>
 </div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:squeeze"></span>
-<img src="images/squeeze.png" alt="Ilustración del algoritmo de aceptación-rechazo con envolvente inferior (función &quot;squeeze&quot;)." width="80%" />
+<img src="images/squeeze.png" alt="Ilustración del algoritmo de aceptación-rechazo con envolvente inferior (función &quot;squeeze&quot;)." width="70%" />
 <p class="caption">
 Figura 4.12: Ilustración del algoritmo de aceptación-rechazo con envolvente inferior (función “squeeze”).
 </p>
@@ -510,21 +516,17 @@ donde <span class="math inline">\(g_n(x)\)</span> es una mixtura discreta de dis
 <p><span id="cnj:gilks" class="conjecture"><strong>Algoritmo 4.5  (Gilks, 1992) </strong></span><br></p>
 <ol style="list-style-type: decimal">
 <li><p>Inicializar <span class="math inline">\(n\)</span> y <span class="math inline">\(s_n\)</span>.</p></li>
-<li><p>Generar <span class="math inline">\(U \sim \mathcal{U}(0, 1)\)</span> y
-<span class="math inline">\(T\sim g_n\)</span>.</p></li>
-<li><p>Si <span class="math inline">\(U\cdot G_n\left( T\right) \leq s_n\left( T\right)\)</span>
-devolver <span class="math inline">\(X=T\)</span>,</p>
+<li><p>Generar <span class="math inline">\(U \sim \mathcal{U}(0, 1)\)</span> y <span class="math inline">\(T\sim g_n\)</span>.</p></li>
+<li><p>Si <span class="math inline">\(U\cdot G_n(T) \leq s_n(T)\)</span> devolver <span class="math inline">\(X=T\)</span>,</p>
 <p>en caso contrario,</p>
-<p>3.a Si <span class="math inline">\(U\cdot G_n\left( T\right) \leq f\left( T\right)\)</span>
-devolver <span class="math inline">\(X=T\)</span>.</p>
-<p>3.b Hacer <span class="math inline">\(n=n+1\)</span>, añadir <span class="math inline">\(T\)</span> a <span class="math inline">\(S_n\)</span>
-y actualizar <span class="math inline">\(s_n\)</span> y <span class="math inline">\(G_n\)</span>.</p></li>
+<p>3.a Si <span class="math inline">\(U\cdot G_n(T) \leq f(T)\)</span> devolver <span class="math inline">\(X=T\)</span>.</p>
+<p>3.b Hacer <span class="math inline">\(n=n+1\)</span>, añadir <span class="math inline">\(T\)</span> a <span class="math inline">\(S_n\)</span> y actualizar <span class="math inline">\(s_n\)</span> y <span class="math inline">\(G_n\)</span>.</p></li>
 <li><p>Volver al paso 2.</p></li>
 </ol>
 </div>
-<p>Gilks y Wild (1992) propusieron una ligera modificación empleando tangentes para construir la cota superior, de esta forma se obtiene un método más eficiente pero requiere especificar la derivada de la densidad objetivo (ver Figura <a href="modAR.html#fig:squeeze">4.12</a>).</p>
+<p><span class="citation">Gilks y Wild (<a href="#ref-gilks1992" role="doc-biblioref">1992</a>)</span> propusieron una ligera modificación empleando tangentes para construir la cota superior, de esta forma se obtiene un método más eficiente pero requiere especificar la derivada de la densidad objetivo (ver Figura <a href="modAR.html#fig:squeeze">4.12</a>).</p>
 <p>La mayoría de las densidades de la familia exponencial de distribuciones son log-cóncavas.
-Hörmann (1995) extendió esta aproximación al caso de densidades <span class="math inline">\(T_{c}\)</span>-cóncavas:
+<span class="citation">Hörmann (<a href="#ref-hormann1995" role="doc-biblioref">1995</a>)</span> extendió esta aproximación al caso de densidades <span class="math inline">\(T_{c}\)</span>-cóncavas:
 <span class="math display">\[T_{c}(x) = signo(c)x^{c} \\ T_{0}(x) = \log (x).\]</span>
 Aparte de la transformación logarítmica, la transformación <span class="math inline">\(T_{-1/2}(x)=-1/\sqrt{x}\)</span> es habitualmente la más empleada.</p>
 </div>
@@ -534,14 +536,14 @@ Aparte de la transformación logarítmica, la transformación <span class="math 
 <p>Si <span class="math inline">\((U,V)\)</span> se distribuye uniformemente sobre:
 <span class="math display">\[C_{f^{\ast}} = \left\{ (u, v) \in \mathbb{R}^{2} :
 0&lt;u\leq \sqrt{f^{\ast}(v/u)} \right\},\]</span>
-siendo <span class="math inline">\(f^{\ast}\)</span> una función no negativa integrable (cuasi-densidad), entonces <span class="math inline">\(X=V/U\)</span> tiene función de densidad proporcional a <span class="math inline">\(f^{\ast}\)</span> (Kinderman y Monahan, 1977).
+siendo <span class="math inline">\(f^{\ast}\)</span> una función no negativa integrable (cuasi-densidad), entonces <span class="math inline">\(X=V/U\)</span> tiene función de densidad proporcional a <span class="math inline">\(f^{\ast}\)</span> [kinderman1977].
 Además <span class="math inline">\(C_{f^{\ast}}\)</span> tiene área finita, por lo que pueden generarse fácilmente los valores <span class="math inline">\((U,V)\)</span> con distribución <span class="math inline">\(\mathcal{U}\left(C_{f^{\ast}}\right)\)</span> a partir de componentes uniformes unidimensionales (aceptando los puntos dentro de <span class="math inline">\(C_{f^{\ast}}\)</span>).</p>
 <p>De modo análogo al método de aceptación-rechazo, hay modificaciones para acelerar los cálculos y automatizar el proceso, construyendo regiones mediante polígonos:
 <span class="math display">\[C_{i}\subset C_{f^{\ast}}\subset C_{s}.\]</span>
 También se puede extender al caso multivariante y considerar transformaciones adicionales.
-Ver por ejemplo el paquete <a href="https://paulnorthrop.github.io/rust/index.html"><code>rust</code></a>.</p>
+Ver por ejemplo el paquete <a href="https://paulnorthrop.github.io/rust/"><code>rust</code></a>.</p>
 <div class="example">
-<p><span id="exm:cauchy-rou" class="example"><strong>Ejemplo 4.5  (simulación de la distribución de Cauchy mediante cociente de uniformes) </strong></span><br></p>
+<p><span id="exm:cauchy-rou" class="example"><strong>Ejemplo 4.6  (simulación de la distribución de Cauchy mediante cociente de uniformes) </strong></span><br></p>
 <p>Si consideramos la distribución de Cauchy:
 <span class="math display">\[f(x) = \frac{1}{\pi (1 + x^2)} \text{, } x\in \mathbb{R},\]</span>
 eliminando la constante por comodidad <span class="math inline">\(f(x) \propto 1/(1 + x^2)\)</span>, se tiene que:
@@ -571,16 +573,17 @@ dando como resultando que <span class="math inline">\(C_{f^{\ast}}\)</span> es e
 ##   attr(x, &quot;ngen&quot;) &lt;- ngen
 ##   return(x)
 ## }
-## &lt;bytecode: 0x000001a317f07928&gt;
+## &lt;bytecode: 0x000002a7613e41b0&gt;
 ## &lt;environment: namespace:simres&gt;</code></pre>
 <div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="modAR.html#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
 <span id="cb175-2"><a href="modAR.html#cb175-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
 <span id="cb175-3"><a href="modAR.html#cb175-3" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> simres<span class="sc">::</span><span class="fu">rcauchy.rou</span>(nsim)</span>
 <span id="cb175-4"><a href="modAR.html#cb175-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb175-5"><a href="modAR.html#cb175-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(rx, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="dv">6</span>))</span>
-<span id="cb175-6"><a href="modAR.html#cb175-6" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(dcauchy, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<span id="cb175-6"><a href="modAR.html#cb175-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(rx))</span>
+<span id="cb175-7"><a href="modAR.html#cb175-7" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(dcauchy, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rcauchy-rou"></span>
-<img src="04-Metodos_generales_continuas_files/figure-html/rcauchy-rou-1.png" alt="Distribución de los valores generados mediante el método de cociente de uniformes." width="75%" />
+<img src="04-Metodos_generales_continuas_files/figure-html/rcauchy-rou-1.png" alt="Distribución de los valores generados mediante el método de cociente de uniformes." width="70%" />
 <p class="caption">
 Figura 4.13: Distribución de los valores generados mediante el método de cociente de uniformes.
 </p>
@@ -592,8 +595,17 @@ Figura 4.13: Distribución de los valores generados mediante el método de cocie
 <span id="cb176-5"><a href="modAR.html#cb176-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Proporción de rechazos = &quot;</span>, <span class="dv">1</span><span class="sc">-</span>nsim<span class="sc">/</span>ngen,<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)}</span></code></pre></div>
 <pre><code>## Número de generaciones =  12751
 ## Número medio de generaciones =  1.2751
-## Proporción de rechazos =  0.2157478</code></pre>
+## Proporción de rechazos =  0.21575</code></pre>
 </div>
+</div>
+</div>
+<h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-gilks1992" class="csl-entry">
+Gilks, W. R., y Wild, P. (1992). Adaptive Rejection Sampling for Gibbs Sampling. <em>Applied Statistics</em>, <em>41</em>(2), 337-348. <a href="https://doi.org/10.2307/2347565">https://doi.org/10.2307/2347565</a>
+</div>
+<div id="ref-hormann1995" class="csl-entry">
+Hörmann, W. (1995). A rejection technique for sampling from T-concave distributions. <em>ACM Transactions on Mathematical Software (TOMS)</em>, <em>21</em>(2), 182-193.
 </div>
 </div>
             </section>

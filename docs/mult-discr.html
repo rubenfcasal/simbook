@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6.7 Simulación de distribuciones multivariantes discretas | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6.7 Simulación de distribuciones multivariantes discretas | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -364,9 +368,9 @@ div.csl-indent {
 <li class="chapter" data-level="A.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>A.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="A.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>A.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="A.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>A.2.3</b> Gráfico de dispersion retardado</a></li>
-<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
 <li class="chapter" data-level="A.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>A.2.5</b> Test de rachas</a></li>
-<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
+<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#ljungbox"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
 <li class="chapter" data-level="A.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>A.3</b> Contrastes específicos para generadores aleatorios</a>
 <ul>
@@ -421,11 +425,13 @@ div.csl-indent {
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
 <ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -451,7 +457,7 @@ div.csl-indent {
 <p>En el caso de una distribución <span class="math inline">\(d\)</span>-dimensional discreta el procedimiento habitual es simular una variable aleatoria discreta unidimensional equivalente.
 Este tipo de procedimientos son conocidos como métodos de etiquetado o codificación y la idea básica consistiría en construir un indice unidimensional equivalente al indice multidimensional, mediante una función de etiquetado
 <span class="math inline">\(l(\mathbf{i}) = l\left(i_1, i_2, \ldots,i_d \right) \in \mathbb{N}\)</span>.</p>
-<p>Si la variable discreta multidimensional tiene soporte finito, este tipo de recodificación se puede hacer de forma automática en R cambiando simplemente el indexado<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a> (empleando la función <code>as.vector()</code> para cambiar a un indexado unidimensional y posteriormente las funciones <code>as.matrix()</code>, o <code>as.array()</code>, para reconstruir el indexado multidimensional).</p>
+<p>Si la variable discreta multidimensional tiene soporte finito, este tipo de recodificación se puede hacer de forma automática en R cambiando simplemente el indexado<a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a> (empleando la función <code>as.vector()</code> para cambiar a un indexado unidimensional y posteriormente las funciones <code>as.matrix()</code>, o <code>as.array()</code>, para reconstruir el indexado multidimensional).</p>
 <p>Como ejemplo ilustrativo, en el caso bidimensional, podríamos emplear el siguiente código:</p>
 <div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="mult-discr.html#cb267-1" aria-hidden="true" tabindex="-1"></a>xy <span class="ot">&lt;-</span> <span class="fu">outer</span>(<span class="dv">10</span><span class="sc">*</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="st">&quot;+&quot;</span>)</span>
 <span id="cb267-2"><a href="mult-discr.html#cb267-2" aria-hidden="true" tabindex="-1"></a>xy</span></code></pre></div>
@@ -515,7 +521,7 @@ No obstante, se podría emplear el indexado anterior si todas las componentes me
 <div id="simulación-de-una-variable-discreta-bidimensional" class="section level3 hasAnchor" number="6.7.1">
 <h3><span class="header-section-number">6.7.1</span> Simulación de una variable discreta bidimensional<a href="mult-discr.html#simulación-de-una-variable-discreta-bidimensional" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Consideramos datos recogidos en un estudio de mejora de calidad en una fábrica de semiconductores.
-Se obtuvo una muestra de obleas que se clasificaron dependiendo de si se encontraron partículas en la matriz que producía la oblea y de si la calidad de oblea era buena (para más detalles ver Hall, 1994).</p>
+Se obtuvo una muestra de obleas que se clasificaron dependiendo de si se encontraron partículas en la matriz que producía la oblea y de si la calidad de oblea era buena <span class="citation">(para más detalles ver <a href="#ref-hall1994" role="doc-biblioref">Hall, 1994</a>)</span>.</p>
 <div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="mult-discr.html#cb287-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">320</span>, <span class="dv">14</span>, <span class="dv">80</span>, <span class="dv">36</span>)</span>
 <span id="cb287-2"><a href="mult-discr.html#cb287-2" aria-hidden="true" tabindex="-1"></a>particulas <span class="ot">&lt;-</span> <span class="fu">gl</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;si&quot;</span>))</span>
 <span id="cb287-3"><a href="mult-discr.html#cb287-3" aria-hidden="true" tabindex="-1"></a>calidad <span class="ot">&lt;-</span> <span class="fu">gl</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;buena&quot;</span>, <span class="st">&quot;mala&quot;</span>))</span>
@@ -540,21 +546,21 @@ Se obtuvo una muestra de obleas que se clasificaron dependiendo de si se encontr
 ## 2    mala         no   80
 ## 3   buena         si   14
 ## 4    mala         si   36</code></pre>
-<p>En este caso estimamos<a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a> las probabilidades a partir de las frecuencias:</p>
+<p>En este caso estimamos<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a> las probabilidades a partir de las frecuencias:</p>
 <div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="mult-discr.html#cb293-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>p <span class="ot">&lt;-</span> df<span class="sc">$</span>n<span class="sc">/</span><span class="fu">sum</span>(df<span class="sc">$</span>n)</span>
 <span id="cb293-2"><a href="mult-discr.html#cb293-2" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
-<pre><code>##     n particulas calidad          p
-## 1 320         no   buena 0.71111111
-## 2  14         si   buena 0.03111111
-## 3  80         no    mala 0.17777778
-## 4  36         si    mala 0.08000000</code></pre>
+<pre><code>##     n particulas calidad        p
+## 1 320         no   buena 0.711111
+## 2  14         si   buena 0.031111
+## 3  80         no    mala 0.177778
+## 4  36         si    mala 0.080000</code></pre>
 <p>En formato tabla:</p>
 <div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="mult-discr.html#cb295-1" aria-hidden="true" tabindex="-1"></a>pij <span class="ot">&lt;-</span> tabla<span class="sc">/</span><span class="fu">sum</span>(tabla)</span>
 <span id="cb295-2"><a href="mult-discr.html#cb295-2" aria-hidden="true" tabindex="-1"></a>pij</span></code></pre></div>
 <pre><code>##        particulas
-## calidad         no         si
-##   buena 0.71111111 0.03111111
-##   mala  0.17777778 0.08000000</code></pre>
+## calidad       no       si
+##   buena 0.711111 0.031111
+##   mala  0.177778 0.080000</code></pre>
 <p>Para simular la variable bidimensional consideramos una variable unidimensional de índices:</p>
 <div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="mult-discr.html#cb297-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df)</span>
 <span id="cb297-2"><a href="mult-discr.html#cb297-2" aria-hidden="true" tabindex="-1"></a>z</span></code></pre></div>
@@ -562,10 +568,10 @@ Se obtuvo una muestra de obleas que se clasificaron dependiendo de si se encontr
 <p>Con probabilidades:</p>
 <div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="mult-discr.html#cb299-1" aria-hidden="true" tabindex="-1"></a>pz <span class="ot">&lt;-</span> df<span class="sc">$</span>p</span>
 <span id="cb299-2"><a href="mult-discr.html#cb299-2" aria-hidden="true" tabindex="-1"></a>pz</span></code></pre></div>
-<pre><code>## [1] 0.71111111 0.03111111 0.17777778 0.08000000</code></pre>
+<pre><code>## [1] 0.711111 0.031111 0.177778 0.080000</code></pre>
 <p>Si las probabilidades estuviesen en una matriz, las convertiríamos a un vector con:</p>
 <div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="mult-discr.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.vector</span>(pij)</span></code></pre></div>
-<pre><code>## [1] 0.71111111 0.17777778 0.03111111 0.08000000</code></pre>
+<pre><code>## [1] 0.711111 0.177778 0.031111 0.080000</code></pre>
 <p>Si simulamos la variable unidimensional:</p>
 <div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="mult-discr.html#cb303-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
 <span id="cb303-2"><a href="mult-discr.html#cb303-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">20</span></span>
@@ -606,7 +612,7 @@ Se obtuvo una muestra de obleas que se clasificaron dependiendo de si se encontr
 <div id="simconting" class="section level3 hasAnchor" number="6.7.2">
 <h3><span class="header-section-number">6.7.2</span> Simulación de tablas de contingencia<a href="mult-discr.html#simconting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Podríamos emplear el código anterior para simular tablas de contingencia.
-En estos casos se suele mantener fijo el tamaño de la muestra, igual al total de la tabla<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a>:</p>
+En estos casos se suele mantener fijo el tamaño de la muestra, igual al total de la tabla<a href="#fn29" class="footnote-ref" id="fnref29"><sup>29</sup></a>:</p>
 <div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="mult-discr.html#cb310-1" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="fu">sum</span>(n)</span>
 <span id="cb310-2"><a href="mult-discr.html#cb310-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
 <span id="cb310-3"><a href="mult-discr.html#cb310-3" aria-hidden="true" tabindex="-1"></a>rz <span class="ot">&lt;-</span> <span class="fu">sample</span>(z, nsim, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> pz)</span>
@@ -634,15 +640,15 @@ En estos casos se suele mantener fijo el tamaño de la muestra, igual al total d
 ##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
 ## 
 ## data:  tabla
-## X-squared = 60.124, df = 1, p-value = 8.907e-15</code></pre>
+## X-squared = 60.1, df = 1, p-value = 8.9e-15</code></pre>
 <p>Sin embargo la distribución exacta del estadístico del contraste es discreta y como alternativa la podríamos aproximar mediante simulación.</p>
 <p>Para simular bajo independencia podemos estimar las probabilidades a partir de las frecuencias marginales de la tabla de contingencia:</p>
 <div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="mult-discr.html#cb316-1" aria-hidden="true" tabindex="-1"></a>pind <span class="ot">&lt;-</span> (<span class="fu">rowSums</span>(tabla) <span class="sc">%o%</span> <span class="fu">colSums</span>(tabla))<span class="sc">/</span>(<span class="fu">sum</span>(tabla)<span class="sc">^</span><span class="dv">2</span>)</span>
 <span id="cb316-2"><a href="mult-discr.html#cb316-2" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span>(pind, <span class="at">nrow =</span> <span class="fu">nrow</span>(tabla), <span class="at">dimnames =</span> <span class="fu">dimnames</span>(tabla))</span></code></pre></div>
 <pre><code>##        particulas
-## calidad        no         si
-##   buena 0.6597531 0.08246914
-##   mala  0.2291358 0.02864198</code></pre>
+## calidad      no       si
+##   buena 0.65975 0.082469
+##   mala  0.22914 0.028642</code></pre>
 <p>Empleando el código anterior podemos generar las simulaciones de las tablas de contingencia (bajo independencia):</p>
 <div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="mult-discr.html#cb318-1" aria-hidden="true" tabindex="-1"></a>ntsim <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
 <span id="cb318-2"><a href="mult-discr.html#cb318-2" aria-hidden="true" tabindex="-1"></a>rtablas <span class="ot">&lt;-</span> <span class="fu">rmultinom</span>(ntsim, <span class="fu">sum</span>(n), pind)</span>
@@ -660,7 +666,7 @@ En estos casos se suele mantener fijo el tamaño de la muestra, igual al total d
 <span id="cb320-5"><a href="mult-discr.html#cb320-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribución asintótica (aproximación chi-cuadrado)</span></span>
 <span id="cb320-6"><a href="mult-discr.html#cb320-6" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dchisq</span>(x, res<span class="sc">$</span>parameter), <span class="at">col =</span> <span class="st">&#39;blue&#39;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>) </span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:chi2-plot"></span>
-<img src="06-Simulacion_multidimensional_files/figure-html/chi2-plot-1.png" alt="Aproximación Monte Carlo de la distribución del estadístico chi-cuadrado bajo independencia." width="75%" />
+<img src="06-Simulacion_multidimensional_files/figure-html/chi2-plot-1.png" alt="Aproximación Monte Carlo de la distribución del estadístico chi-cuadrado bajo independencia." width="70%" />
 <p class="caption">
 Figura 6.16: Aproximación Monte Carlo de la distribución del estadístico chi-cuadrado bajo independencia.
 </p>
@@ -670,25 +676,34 @@ Figura 6.16: Aproximación Monte Carlo de la distribución del estadístico chi-
 <span id="cb321-2"><a href="mult-discr.html#cb321-2" aria-hidden="true" tabindex="-1"></a>pvalue.mc <span class="ot">&lt;-</span> <span class="fu">mean</span>(sim.stat <span class="sc">&gt;=</span> obs.stat)</span>
 <span id="cb321-3"><a href="mult-discr.html#cb321-3" aria-hidden="true" tabindex="-1"></a>pvalue.mc</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<p>Esto es similar a lo que realiza la función <code>chisq.test()</code> con la opción <code>simulate.p.value = TRUE</code> (empleando el algoritmo de Patefield, 1981):</p>
+<p>Esto es similar a lo que realiza la función <code>chisq.test()</code> con la opción <code>simulate.p.value = TRUE</code> <span class="citation">(empleando el algoritmo de <a href="#ref-patefield1981" role="doc-biblioref">Patefield, 1981</a>)</span>:</p>
 <div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="mult-discr.html#cb323-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(tabla, <span class="at">simulate.p.value =</span> <span class="cn">TRUE</span>, <span class="at">B =</span> <span class="dv">2000</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test with simulated p-value (based on 2000
 ##  replicates)
 ## 
 ## data:  tabla
-## X-squared = 62.812, df = NA, p-value = 0.0004998</code></pre>
+## X-squared = 62.8, df = NA, p-value = 5e-04</code></pre>
 </div>
 
 </div>
 </div>
 <!-- </div> -->
+<h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-hall1994" class="csl-entry">
+Hall, S. W. (1994). Analysis of defectivity of semiconductor wafers by contingency table. <em>Proceedings of the Institute of Environmental Sciences</em>, <em>1</em>, 177-183.
+</div>
+<div id="ref-patefield1981" class="csl-entry">
+Patefield, W. M. (1981). Algorithm <span>AS</span> 159: An Efficient Method of Generating Random R <span class="math inline">\(\times\)</span> C Tables with Given Row and Column Totals. <em>Applied Statistics</em>, <em>30</em>(1), 91-97. <a href="https://doi.org/10.2307/2346669">https://doi.org/10.2307/2346669</a>
+</div>
+</div>
 <div class="footnotes">
 <hr />
-<ol start="26">
-<li id="fn26"><p>En R podemos obtener el índice multidimensional empleando la función <code>arrayInd(ind, .dim, ...)</code>, siendo <code>ind</code> un vector de índices unidimensionales.<a href="mult-discr.html#fnref26" class="footnote-back">↩︎</a></p></li>
-<li id="fn27"><p>Como ya se comentó, la simulación empleando un modelo estimado también se denomina bootstrap paramétrico.<a href="mult-discr.html#fnref27" class="footnote-back">↩︎</a></p></li>
-<li id="fn28"><p>También se podría fijar una de las distribuciones de frecuencias marginales y simular las correspondientes distribuciones condicionadas.<a href="mult-discr.html#fnref28" class="footnote-back">↩︎</a></p></li>
+<ol start="27">
+<li id="fn27"><p>En R podemos obtener el índice multidimensional empleando la función <code>arrayInd(ind, .dim, ...)</code>, siendo <code>ind</code> un vector de índices unidimensionales.<a href="mult-discr.html#fnref27" class="footnote-back">↩︎</a></p></li>
+<li id="fn28"><p>Como ya se comentó, la simulación empleando un modelo estimado también se denomina bootstrap paramétrico.<a href="mult-discr.html#fnref28" class="footnote-back">↩︎</a></p></li>
+<li id="fn29"><p>También se podría fijar una de las distribuciones de frecuencias marginales y simular las correspondientes distribuciones condicionadas.<a href="mult-discr.html#fnref29" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

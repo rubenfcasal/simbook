@@ -132,7 +132,7 @@ El valor del estadístico en la muestra es:
 estadistico <- mean(muestra)
 ```
 
-Representamos la distribución de la muestra`r latexfig("muestra-sim")`:
+Representamos la distribución de la muestra`r latexfig2(muestra-sim)`:
 ```{r muestra-sim, fig.cap="Distribución de la muestra simulada (y distribución teórica en azul)."}
 hist(muestra, freq = FALSE, xlim = c(-3, 3),
      main = '', xlab = 'x', ylab = 'densidad')
@@ -142,7 +142,7 @@ abline(v = mean_teor, col = "blue", lty = 2)
 ```
 
 Como aproximación de la distribución poblacional, desconocida en la práctica, siempre podemos considerar la distribución empírica (o una versión suavizada: bootstrap suavizado; Sección \@ref(modunif-boot-suav)). 
-Alternativamente podríamos asumir un modelo paramétrico y estimar los parámetros a partir de la muestra (bootstrap paramétrico; Sección \@ref(modunif-boot-par)`r latexfig("muestra-sim-aprox")`.
+Alternativamente podríamos asumir un modelo paramétrico y estimar los parámetros a partir de la muestra (bootstrap paramétrico; Sección \@ref(modunif-boot-par)`r latexfig2(muestra-sim-aprox)`.
 ```{r muestra-sim-aprox, fig.cap="Distribución teórica de la muestra simulada y distintas aproximaciones."}
 # Distribución bootstrap uniforme
 curve(ecdf(muestra)(x), xlim = c(-3, 3), ylab = "F(x)", type = "s")
@@ -272,7 +272,7 @@ muestra_boot <- sample(muestra, replace = TRUE)
 ::: {.example #media-dt-desconocida name="Inferencia sobre la media con varianza desconocida"}
 <br> 
 
-Como ejemplo consideramos la muestra de tiempos de vida de microorganismos `lifetimes` del paquete `simres``r latexfig("microorganismos", output = is_latex())`: 
+Como ejemplo consideramos la muestra de tiempos de vida de microorganismos `lifetimes` del paquete `simres``r latexfig2(microorganismos)`: 
 ```{r microorganismos, fig.cap="Distribución del tiempo de vida de una muestra de microorganismos."}
 library(simres)
 muestra <- lifetimes
@@ -564,7 +564,7 @@ estándar de los estadísticos; ver Sección \@ref(sesgo-prec)):
 res.boot
 ```
 y el método `plot()` que genera gráficas básicas de diagnosis
-de los resultados (correspondientes al estadístico determinado por el parámetro `index`, por defecto `= 1`): `r latexfig("plot-res-boot", output = is_latex())`
+de los resultados (correspondientes al estadístico determinado por el parámetro `index`, por defecto `= 1`): `r latexfig2(plot-res-boot)`
 
 ```{r plot-res-boot, fig.dim=c(12, 6), out.width="90%", fig.cap='Gráficos de diagnóstico de los resultados bootstrap para la media muestral de los tiempos de vida de microorganismos.'}
 plot(res.boot)

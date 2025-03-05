@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3.1 Convergencia | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3.1 Convergencia | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -364,9 +368,9 @@ div.csl-indent {
 <li class="chapter" data-level="A.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>A.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="A.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>A.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="A.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>A.2.3</b> Gráfico de dispersion retardado</a></li>
-<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
 <li class="chapter" data-level="A.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>A.2.5</b> Test de rachas</a></li>
-<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
+<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#ljungbox"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
 <li class="chapter" data-level="A.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>A.3</b> Contrastes específicos para generadores aleatorios</a>
 <ul>
@@ -421,11 +425,13 @@ div.csl-indent {
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
 <ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -449,7 +455,7 @@ div.csl-indent {
 <div id="convergencia" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> Convergencia<a href="convergencia.html#convergencia" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Supongamos que estamos interesados en aproximar la media teórica <span class="math inline">\(\mu = E\left( X\right)\)</span> a partir de una secuencia i.i.d. <span class="math inline">\(X_{1}\)</span>, <span class="math inline">\(X_{2}\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(X_{n}\)</span> obtenida mediante simulación, utilizando para ello la media muestral <span class="math inline">\(\bar{X}_{n}\)</span>.
-Una justificación teórica de la validez de esta aproximación es <em>la ley (débil<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>) de los grandes números</em>:</p>
+Una justificación teórica de la validez de esta aproximación es <em>la ley (débil<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>) de los grandes números</em>:</p>
 <div class="theorem">
 <p><span id="thm:khinchine" class="theorem"><strong>Teorema 3.1  (Ley débil de los grandes números; Khintchine, 1928) </strong></span><br>
 Si <span class="math inline">\(X_{1}\)</span>, <span class="math inline">\(X_{2}\)</span>, <span class="math inline">\(\ldots\)</span> es una secuencia de variables aleatorias independientes e idénticamente distribuidas con media finita <span class="math inline">\(E\left( X_{i}\right) =\mu\)</span> (i.e. <span class="math inline">\(E\left( \left\vert X_{i} \right\vert \right) &lt; \infty\)</span>) entonces <span class="math inline">\(\overline{X}_{n}=\left( X_{1}+\ldots +X_{n}\right) /n\)</span>
@@ -473,9 +479,9 @@ Es decir, para cualquier <span class="math inline">\(\varepsilon &gt;0\)</span>:
 <span id="cb96-2"><a href="convergencia.html#cb96-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Proporción muestral&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
 <span id="cb96-3"><a href="convergencia.html#cb96-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(rx), <span class="at">lty =</span> <span class="dv">2</span>)</span>
 <span id="cb96-4"><a href="convergencia.html#cb96-4" aria-hidden="true" tabindex="-1"></a><span class="co"># valor teórico</span></span>
-<span id="cb96-5"><a href="convergencia.html#cb96-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> p) </span></code></pre></div>
+<span id="cb96-5"><a href="convergencia.html#cb96-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> p, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) </span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:proporcion"></span>
-<img src="03-Analisis_resultados_files/figure-html/proporcion-1.png" alt="Aproximación de la proporción en función del número de generaciones." width="75%" />
+<img src="03-Analisis_resultados_files/figure-html/proporcion-1.png" alt="Aproximación de la proporción en función del número de generaciones." width="70%" />
 <p class="caption">
 Figura 3.1: Aproximación de la proporción en función del número de generaciones.
 </p>
@@ -491,7 +497,7 @@ Un ejemplo conocido es la distribución de Cauchy:</p>
 <span id="cb97-4"><a href="convergencia.html#cb97-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">cumsum</span>(rx)<span class="sc">/</span><span class="dv">1</span><span class="sc">:</span>nsim, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, </span>
 <span id="cb97-5"><a href="convergencia.html#cb97-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Número de generaciones&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Media muestral&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:cauchy"></span>
-<img src="03-Analisis_resultados_files/figure-html/cauchy-1.png" alt="Evolución de la media muestral de una distribución de Cauchy en función del número de generaciones." width="75%" />
+<img src="03-Analisis_resultados_files/figure-html/cauchy-1.png" alt="Evolución de la media muestral de una distribución de Cauchy en función del número de generaciones." width="70%" />
 <p class="caption">
 Figura 3.2: Evolución de la media muestral de una distribución de Cauchy en función del número de generaciones.
 </p>
@@ -501,7 +507,7 @@ además de realizar otros análisis descriptivos de las simulaciones.
 Por ejemplo, en este caso podemos observar los valores que producen estos saltos mediante un gráfico de cajas:</p>
 <div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="convergencia.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(rx)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:cauchy-box"></span>
-<img src="03-Analisis_resultados_files/figure-html/cauchy-box-1.png" alt="Gráfico de cajas de 10000 generaciones de una distribución de Cauchy." width="75%" />
+<img src="03-Analisis_resultados_files/figure-html/cauchy-box-1.png" alt="Gráfico de cajas de 10000 generaciones de una distribución de Cauchy." width="70%" />
 <p class="caption">
 Figura 3.3: Gráfico de cajas de 10000 generaciones de una distribución de Cauchy.
 </p>
@@ -516,7 +522,7 @@ insesgado de <span class="math inline">\(Var\left( \overline{X}_{n}\right) =\sig
 donde:
 <span class="math display">\[\widehat{S}_{n}^{2}=\dfrac{1}{n-1}\sum\limits_{i=1}^{n}\left( X_{i}-
 \overline{X}\right) ^{2}\]</span>
-es la cuasi-varianza muestral<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>.</p>
+es la cuasi-varianza muestral<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>.</p>
 <p>Los valores obtenidos servirían como medidas básicas de la precisión de la aproximación, aunque su principal aplicación es la construcción de intervalos de confianza.
 Si se endurecen las suposiciones de la ley débil de los grandes números (Teorema <a href="convergencia.html#thm:khinchine">3.1</a>), exigiendo la existencia de varianza finita (<span class="math inline">\(E\left( X_{i}^2 \right) &lt; \infty\)</span>), se dispone de un resultado más preciso sobre las variaciones de la aproximación por simulación en torno al límite teórico.</p>
 <div class="theorem">
@@ -545,10 +551,10 @@ Pero una ventaja es que este error no depende del número de dimensiones (en el 
 <span id="cb99-5"><a href="convergencia.html#cb99-5" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(nsim, xmed, xsd)</span></code></pre></div>
 <p>La aproximación por simulación de la media será:</p>
 <div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="convergencia.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(rx)</span></code></pre></div>
-<pre><code>## [1] -0.01164814</code></pre>
+<pre><code>## [1] -0.011648</code></pre>
 <p>Como medida de la precisión de la aproximación podemos utilizar el error máximo:</p>
 <div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="convergencia.html#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span><span class="fu">sd</span>(rx)<span class="sc">/</span><span class="fu">sqrt</span>(nsim)</span></code></pre></div>
-<pre><code>## [1] 0.06545382</code></pre>
+<pre><code>## [1] 0.065454</code></pre>
 <p>(es habitual emplear 2 en lugar de 1.96,
 lo que se correspondería con <span class="math inline">\(1 - \alpha = 0.9545\)</span> en el caso de normalidad).
 Podemos añadir también los correspondientes intervalos de confianza al gráfico de convergencia:</p>
@@ -563,7 +569,7 @@ Podemos añadir también los correspondientes intervalos de confianza al gráfic
 <span id="cb104-9"><a href="convergencia.html#cb104-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(est <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span>esterr, <span class="at">lty=</span><span class="dv">3</span>)</span>
 <span id="cb104-10"><a href="convergencia.html#cb104-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> xmed)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:conv-esterr"></span>
-<img src="03-Analisis_resultados_files/figure-html/conv-esterr-1.png" alt="Gráfico de convergencia incluyendo el error de la aproximación." width="75%" />
+<img src="03-Analisis_resultados_files/figure-html/conv-esterr-1.png" alt="Gráfico de convergencia incluyendo el error de la aproximación." width="70%" />
 <p class="caption">
 Figura 3.4: Gráfico de convergencia incluyendo el error de la aproximación.
 </p>
@@ -574,10 +580,10 @@ Figura 3.4: Gráfico de convergencia incluyendo el error de la aproximación.
 </div>
 <div class="footnotes">
 <hr />
-<ol start="10">
-<li id="fn10"><p><em>La ley fuerte</em> establece la convergencia casi segura.<a href="convergencia.html#fnref10" class="footnote-back">↩︎</a></p></li>
-<li id="fn11"><p>Esto sería también válido para el caso de una proporción, donde <span class="math inline">\(E(X) = p\)</span>, <span class="math inline">\(Var(X) = p(1-p)\)</span> y <span class="math inline">\(\hat{p}_{n} = \overline{X}_{n}\)</span>, obteniéndose que: <span class="math display">\[\widehat{Var}\left( \hat{p}_{n}\right) = \frac{\widehat{S}_n^{2}}{n} = \frac{\hat{p}_{n}(1-\hat{p}_{n})}{n-1},\]</span> aunque lo más habitual es emplear: <span class="math display">\[\frac{S_n^{2}}{n} = \frac{\hat{p}_{n}(1-\hat{p}_{n})}{n},\]</span>
-donde <span class="math inline">\(S_n^{2}\)</span> es la varianza muestral. Hay que tener en cuenta que en simulación el número de generaciones es normalmente grande y en la práctica no va haber diferencias apreciables.<a href="convergencia.html#fnref11" class="footnote-back">↩︎</a></p></li>
+<ol start="11">
+<li id="fn11"><p><em>La ley fuerte</em> establece la convergencia casi segura.<a href="convergencia.html#fnref11" class="footnote-back">↩︎</a></p></li>
+<li id="fn12"><p>Esto sería también válido para el caso de una proporción, donde <span class="math inline">\(E(X) = p\)</span>, <span class="math inline">\(Var(X) = p(1-p)\)</span> y <span class="math inline">\(\hat{p}_{n} = \overline{X}_{n}\)</span>, obteniéndose que: <span class="math display">\[\widehat{Var}\left( \hat{p}_{n}\right) = \frac{\widehat{S}_n^{2}}{n} = \frac{\hat{p}_{n}(1-\hat{p}_{n})}{n-1},\]</span> aunque lo más habitual es emplear: <span class="math display">\[\frac{S_n^{2}}{n} = \frac{\hat{p}_{n}(1-\hat{p}_{n})}{n},\]</span>
+donde <span class="math inline">\(S_n^{2}\)</span> es la varianza muestral. Hay que tener en cuenta que en simulación el número de generaciones es normalmente grande y en la práctica no va a haber diferencias apreciables.<a href="convergencia.html#fnref12" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

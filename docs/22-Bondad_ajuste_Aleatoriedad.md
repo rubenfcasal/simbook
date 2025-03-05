@@ -37,7 +37,7 @@ Los procedimientos habituales incluyen métodos descriptivos (principalmente gr�
 
 En este apéndice se describen brevemente algunos de los métodos clásicos, principalmente con la idea de que pueden ser de utilidad para evaluar resultados de simulación y para la construcción de modelos del sistema real (e.g. para modelar variables que se tratarán como entradas del modelo general). Se empleará principalmente el enfoque de la estadística no paramétrica, aunque también se mostrarán algunas pequeñas diferencias entre su uso en inferencia y en simulación.
 
-Los métodos genéricos no son muy adecuados para evaluar generadores aleatorios (e.g. L’Ecuyer y Simard, 2007).
+Los métodos genéricos no son muy adecuados para evaluar generadores aleatorios [e.g. @lecuyer07].
 La recomendación sería emplear baterías de contrastes recientes, como las descritas en la Sección \@ref(baterias).
 No obstante, en la última sección se describirán, únicamente con fines  ilustrativos, algunos de los primeros métodos diseñados específicamente para generadores aleatorios. 
 
@@ -95,7 +95,7 @@ Además de los específicos de normalidad ($H_0:F= \mathcal{N}(\mu,\sigma^2)$): 
 Se agrupan los datos en intervalos $I_{k}=\left[  L_{k-1},L_{k}\right)$ con $k=1, \ldots, K$ y a cada intervalo se le asocia un valor (altura de la barra) igual a la frecuencia absoluta de ese intervalo $n_k = \sum_{i=1}^{n}\mathbf{1}\left( X_i \in [L_{k-1},L_{k}) \right)$, si la longitud de los intervalos es constante, o proporcional a dicha frecuencia (de forma que el área coincida con la frecuencia relativa y pueda ser comparado con una función de densidad):
 $$\hat{f}_n(x)=\frac{n_{i}}{n\left(  L_{k}-L_{k-1}\right)}$$
 
-Como ya se ha visto anteriormente, en R podemos generar este gráfico con la función `hist()` del paquete base. 
+Como ya se ha visto anteriormente, en R podemos generar este gráfico con la función [`hist()`](https://rdrr.io/r/graphics/hist.html) del paquete base. 
 Algunos de los principales parámetros (con los valores por defecto) son los siguientes:
 
 ```r
@@ -121,25 +121,17 @@ hist(datos, freq = FALSE)
 curve(dnorm(x, mean(datos), sd(datos)), add = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.75\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-2-1} \end{center}
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-2-1.png" width="70%" style="display: block; margin: auto;" />
 
 Si el número de valores es muy grande (por ejemplo en el caso de secuencias aleatorias), nos puede interesar establecer la opción `breaks = "FD"` para aumentar el número de intervalos de discretización.
 En cualquier caso, como se muestra en la Figura \@ref(fig:hist-movie), la convergencia del histograma a la densidad teórica se podría considerar bastante lenta.
 Alternativamente se podría considerar una estimación suave de la densidad, por ejemplo empleando la estimación tipo núcleo implementada en la función `density()`.
 
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.75\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/hist-movie-1} 
-
-}
-
-\caption{Convergencia del histograma a la densidad teórica.}(\#fig:hist-movie)
-\end{figure}
-
-
+<div class="figure" style="text-align: center">
+<img src="images/hist-movie.gif" alt="Convergencia del histograma a la densidad teórica." width="70%" />
+<p class="caption">(\#fig:hist-movie)Convergencia del histograma a la densidad teórica.</p>
+</div>
 
 
 ### Función de distribución empírica {#empdistr}
@@ -154,7 +146,7 @@ $$F_n(x)=\left \{
 \end{array}
 \right.$$
 
-
+En R podemos obtener la función de distribución empírica con [`ecdf()`](https://rdrr.io/r/stats/ecdf.html) (el objeto que devuelve es una función).
 
 Ejemplo:
 
@@ -165,14 +157,10 @@ curve(ecdf(datos)(x), xlim = extendrange(datos), type = 's',
 curve(pnorm(x, mean(datos), sd(datos)), add = TRUE)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.75\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/ecdfplot-1} 
-
-}
-
-\caption{Comparación de la distribución empírica de los datos de ejemplo con la función de distribución de la aproximación normal.}(\#fig:ecdfplot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/ecdfplot-1.png" alt="Comparación de la distribución empírica de los datos de ejemplo con la función de distribución de la aproximación normal." width="70%" />
+<p class="caption">(\#fig:ecdfplot)Comparación de la distribución empírica de los datos de ejemplo con la función de distribución de la aproximación normal.</p>
+</div>
 
 La función de distribución empírica se corresponde con una variable aleatoria discreta que toma los valores
 $X_1,\ldots ,X_n$ todos ellos con probabilidad $\frac{1}{n}$.
@@ -205,18 +193,20 @@ Ejemplo:
 ```r
 qqnorm(datos)
 qqline(datos)
+```
 
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" />
+
+```r
 require(car)
 qqPlot(datos, "norm")
 ```
 
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-3-2.png" width="70%" style="display: block; margin: auto;" />
+
 ```
- ## [1] 10 38
+## [1] 10 38
 ```
-
-
-
-\begin{center}\includegraphics[width=0.75\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-3-1} \includegraphics[width=0.75\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-3-2} \end{center}
 
 
 ### Contraste chi-cuadrado de Pearson {#chi2test}
@@ -269,7 +259,7 @@ Si realizamos el contraste a partir del p-valor o nivel crítico:
 $$p=P\left(  {\chi_{k-r-1}^2\geq \sum \limits_{i=1}^{k}{\frac{(n_{i}-e_{i})^2}{e_{i}}}}\right)$$
 rechazaremos $H_0$ si $p\leq \alpha$ (y cuanto menor sea se rechazará con mayor seguridad) y aceptaremos $H_0$ si $p>$ $\alpha$ (con mayor seguridad cuanto mayor sea).
 
-Este método está implementado en la función `chisq.test()` para el caso discreto (no corrige los grados de libertad).
+Este método está implementado en la función [`chisq.test()`](https://rdrr.io/r/stats/chisq.test.html) para el caso discreto (no corrige los grados de libertad).
 Ejemplo:
 
 
@@ -279,11 +269,11 @@ chisq.test(table(x))            # NOT 'chisq.test(x)'!
 ```
 
 ```
- ## 
- ## 	Chi-squared test for given probabilities
- ## 
- ## data:  table(x)
- ## X-squared = 9.2, df = 4, p-value = 0.05629
+## 
+## 	Chi-squared test for given probabilities
+## 
+## data:  table(x)
+## X-squared = 3.1, df = 4, p-value = 0.54
 ```
 
 La distribución exacta del estadístico del contraste es discreta (se podría aproximar por simulación, por ejemplo empleando los parámetros `simulate.p.value = TRUE` y `B = 2000` de la función `chisq.test()`; ver también el Ejemplo \@ref(exm:chicuadind) de la Sección \@ref(simconting) para el caso del contraste chi-cuadrado de independencia).
@@ -314,7 +304,7 @@ frecuencia esperada $\geq5$:
 Si la variable de interés es continua, una forma de garantizar que $e_{i}\geq5$ consiste en tomar un número de intervalos $k\leq \lfloor n/5 \rfloor$ y de forma que sean equiprobables $p_{i}=1/k$,
 considerando los puntos críticos $x_{i/k}$ de la distribución bajo $H_0$.
 
-Por ejemplo, se podría emplear la función `simres::chisq.cont.test()` (fichero [*test.R*](R/test.R)), que imita a las incluidas en R:
+Por ejemplo, se podría emplear la función [`simres::chisq.cont.test()`](https://rubenfcasal.github.io/simres/reference/chisq.cont.test.html) (fichero [*test.R*](R/test.R)), que imita a las incluidas en R:
 
 
 ```r
@@ -322,51 +312,51 @@ simres::chisq.cont.test
 ```
 
 ```
- ## function(x, distribution = "norm", nclass = floor(length(x)/5),
- ##                             output = TRUE, nestpar = 0, ...) {
- ##   # Función distribución
- ##   q.distrib <- eval(parse(text = paste("q", distribution, sep = "")))
- ##   # Puntos de corte
- ##   q <- q.distrib((1:(nclass - 1))/nclass, ...)
- ##   tol <- sqrt(.Machine$double.eps)
- ##   xbreaks <- c(min(x) - tol, q, max(x) + tol)
- ##   # Gráficos y frecuencias
- ##   if (output) {
- ##     xhist <- hist(x, breaks = xbreaks, freq = FALSE,
- ##                   lty = 2, border = "grey50")
- ##     # Función densidad
- ##     d.distrib <- eval(parse(text = paste("d", distribution, sep = "")))
- ##     curve(d.distrib(x, ...), add = TRUE)
- ##   } else {
- ##     xhist <- hist(x, breaks = xbreaks, plot = FALSE)
- ##   }
- ##   # Cálculo estadístico y p-valor
- ##   O <- xhist$counts  # Equivalente a table(cut(x, xbreaks)) pero más eficiente
- ##   E <- length(x)/nclass
- ##   DNAME <- deparse(substitute(x))
- ##   METHOD <- "Pearson's Chi-squared test"
- ##   STATISTIC <- sum((O - E)^2/E)
- ##   names(STATISTIC) <- "X-squared"
- ##   PARAMETER <- nclass - nestpar - 1
- ##   names(PARAMETER) <- "df"
- ##   PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
- ##   # Preparar resultados
- ##   classes <- format(xbreaks)
- ##   classes <- paste("(", classes[-(nclass + 1)], ",", classes[-1], "]",
- ##                    sep = "")
- ##   RESULTS <- list(classes = classes, observed = O, expected = E,
- ##                   residuals = (O - E)/sqrt(E))
- ##   if (output) {
- ##     cat("\nPearson's Chi-squared test table\n")
- ##     print(as.data.frame(RESULTS))
- ##   }
- ##   if (any(E < 5))
- ##     warning("Chi-squared approximation may be incorrect")
- ##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
- ##                    method = METHOD, data.name = DNAME), RESULTS), class = "htest")
- ## }
- ## <bytecode: 0x00000191bff23428>
- ## <environment: namespace:simres>
+## function(x, distribution = "norm", nclass = floor(length(x)/5),
+##                             output = TRUE, nestpar = 0, ...) {
+##   # Función distribución
+##   q.distrib <- eval(parse(text = paste("q", distribution, sep = "")))
+##   # Puntos de corte
+##   q <- q.distrib((1:(nclass - 1))/nclass, ...)
+##   tol <- sqrt(.Machine$double.eps)
+##   xbreaks <- c(min(x) - tol, q, max(x) + tol)
+##   # Gráficos y frecuencias
+##   if (output) {
+##     xhist <- hist(x, breaks = xbreaks, freq = FALSE,
+##                   lty = 2, border = "grey50")
+##     # Función densidad
+##     d.distrib <- eval(parse(text = paste("d", distribution, sep = "")))
+##     curve(d.distrib(x, ...), add = TRUE)
+##   } else {
+##     xhist <- hist(x, breaks = xbreaks, plot = FALSE)
+##   }
+##   # Cálculo estadístico y p-valor
+##   O <- xhist$counts  # Equivalente a table(cut(x, xbreaks)) pero más eficiente
+##   E <- length(x)/nclass
+##   DNAME <- deparse(substitute(x))
+##   METHOD <- "Pearson's Chi-squared test"
+##   STATISTIC <- sum((O - E)^2/E)
+##   names(STATISTIC) <- "X-squared"
+##   PARAMETER <- nclass - nestpar - 1
+##   names(PARAMETER) <- "df"
+##   PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
+##   # Preparar resultados
+##   classes <- format(xbreaks)
+##   classes <- paste("(", classes[-(nclass + 1)], ",", classes[-1], "]",
+##                    sep = "")
+##   RESULTS <- list(classes = classes, observed = O, expected = E,
+##                   residuals = (O - E)/sqrt(E))
+##   if (output) {
+##     cat("\nPearson's Chi-squared test table\n")
+##     print(as.data.frame(RESULTS))
+##   }
+##   if (any(E < 5))
+##     warning("Chi-squared approximation may be incorrect")
+##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
+##                    method = METHOD, data.name = DNAME), RESULTS), class = "htest")
+## }
+## <bytecode: 0x0000019b309f5db8>
+## <environment: namespace:simres>
 ```
 
 Continuando con el ejemplo anterior, podríamos contrastar normalidad mediante:
@@ -377,31 +367,29 @@ library(simres)
 chisq.cont.test(datos, distribution = "norm", nestpar = 2, mean=mean(datos), sd=sd(datos))
 ```
 
-```
- ## 
- ## Pearson's Chi-squared test table
- ##               classes observed expected  residuals
- ## 1 ( 9.06000,14.49908]        6    5.125  0.3865103
- ## 2 (14.49908,16.94725]        3    5.125 -0.9386680
- ## 3 (16.94725,18.77800]        4    5.125 -0.4969419
- ## 4 (18.77800,20.41732]        6    5.125  0.3865103
- ## 5 (20.41732,22.05663]        4    5.125 -0.4969419
- ## 6 (22.05663,23.88739]        8    5.125  1.2699625
- ## 7 (23.88739,26.33556]        4    5.125 -0.4969419
- ## 8 (26.33556,30.77000]        6    5.125  0.3865103
-```
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-6-1.png" width="70%" style="display: block; margin: auto;" />
 
 ```
- ## 
- ## 	Pearson's Chi-squared test
- ## 
- ## data:  datos
- ## X-squared = 3.6829, df = 5, p-value = 0.5959
+## 
+## Pearson's Chi-squared test table
+##           classes observed expected residuals
+## 1 ( 9.060,14.499]        6    5.125   0.38651
+## 2 (14.499,16.947]        3    5.125  -0.93867
+## 3 (16.947,18.778]        4    5.125  -0.49694
+## 4 (18.778,20.417]        6    5.125   0.38651
+## 5 (20.417,22.057]        4    5.125  -0.49694
+## 6 (22.057,23.887]        8    5.125   1.26996
+## 7 (23.887,26.336]        4    5.125  -0.49694
+## 8 (26.336,30.770]        6    5.125   0.38651
 ```
 
-
-
-\begin{center}\includegraphics[width=0.75\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-6-1} \end{center}
+```
+## 
+## 	Pearson's Chi-squared test
+## 
+## data:  datos
+## X-squared = 3.68, df = 5, p-value = 0.6
+```
 
 ### Contraste de Kolmogorov-Smirnov {#ks-test}
 
@@ -423,7 +411,7 @@ Si $H_0$ es simple y $F_0$ es continua, la distribución del estadístico $D_n$ 
 Esta distribución está tabulada (para tamaños muestrales grandes se utiliza la aproximación asintótica). 
 Se rechaza $H_0$ si el valor observado $d$ del estadístico es significativamente grande:
 $$p = P \left( D_n \geq d \right) \leq \alpha.$$
-Este método está implementado en la función `ks.test()` del paquete base de R:
+Este método está implementado en la función [`ks.test()`](https://rdrr.io/r/stats/ks.test.html) del paquete base de R:
 
 ```r
 ks.test(x, y, ...)
@@ -439,12 +427,12 @@ ks.test(datos, pnorm, mean = 20, sd = 5) # One-sample
 ```
 
 ```
- ## 
- ## 	Asymptotic one-sample Kolmogorov-Smirnov test
- ## 
- ## data:  datos
- ## D = 0.13239, p-value = 0.4688
- ## alternative hypothesis: two-sided
+## 
+## 	Asymptotic one-sample Kolmogorov-Smirnov test
+## 
+## data:  datos
+## D = 0.132, p-value = 0.47
+## alternative hypothesis: two-sided
 ```
 
 Si $H_0$ es compuesta, el procedimiento habitual es estimar los parámetros desconocidos 
@@ -455,7 +443,7 @@ $D_n$ pueden ser demasiado conservativos (los $p$-valores tenderán a ser mayore
 lo que deberían) y se tenderá a aceptar la hipótesis nula (puede ser preferible aproximar el $p$-valor mediante simulación; como se muestra en el Ejercicio \@ref(exr:ks-test-sim) de la Sección \@ref(contrastes)). 
 
 Para evitar este problema, en el caso de contrastar normalidad se desarrolló el test 
-de Lilliefors, implementado en la función `lillie.test()` del paquete `nortest` 
+de Lilliefors, implementado en la función [`lillie.test()`](https://rdrr.io/pkg/nortest/man/lillie.test.html) del paquete [`nortest`](https://CRAN.R-project.org/package=nortest) 
 (también hay versiones en este paquete para los métodos de Cramer-von Mises y
 Anderson-Darling).
 
@@ -466,12 +454,12 @@ ks.test(datos, pnorm, mean(datos), sd(datos)) # One-sample Kolmogorov-Smirnov te
 ```
 
 ```
- ## 
- ## 	Asymptotic one-sample Kolmogorov-Smirnov test
- ## 
- ## data:  datos
- ## D = 0.097809, p-value = 0.8277
- ## alternative hypothesis: two-sided
+## 
+## 	Asymptotic one-sample Kolmogorov-Smirnov test
+## 
+## data:  datos
+## D = 0.0978, p-value = 0.83
+## alternative hypothesis: two-sided
 ```
 
 ```r
@@ -480,49 +468,38 @@ lillie.test(datos)
 ```
 
 ```
- ## 
- ## 	Lilliefors (Kolmogorov-Smirnov) normality test
- ## 
- ## data:  datos
- ## D = 0.097809, p-value = 0.4162
+## 
+## 	Lilliefors (Kolmogorov-Smirnov) normality test
+## 
+## data:  datos
+## D = 0.0978, p-value = 0.42
 ```
 
 ## Diagnosis de la independencia {#diag-aleat}
 
 
-Los métodos "clásicos" de inferencia estadística se basan en
-suponer que las observaciones $X_{1},\ldots,X_{n}$ son una muestra 
-aleatoria simple (m.a.s.) de $X$. Por tanto suponen que
-las observaciones son independientes (o los errores, en el caso de un 
-modelo de regresión).
+Los métodos "clásicos" de inferencia estadística se basan en suponer que las observaciones $X_{1},\ldots,X_{n}$ son una muestra aleatoria simple (m.a.s.) de $X$.
+Por tanto suponen que las observaciones son independientes (o los errores, en el caso de un modelo de regresión).
+La ausencia de aleatoriedad es difícil de corregir y puede influir notablemente en el análisis estadístico.
 
--   La ausencia de aleatoriedad es difícil de corregir y puede influir
-    notablemente en el análisis estadístico.
+Si existe dependencia entre las observaciones muestrales (e.g. el conocimiento de $X_{i}$ proporciona información sobre los valores de $X_{i+1}$, $X_{i+2}$, $\ldots$), los métodos "clásicos" no serán en principio adecuados (pueden conducir a conclusiones erróneas).
 
--   Si existe dependencia entre las observaciones muestrales (e.g.
-    el conocimiento de $X_{i}$ proporciona información sobre los valores
-    de $X_{i+1}$, $X_{i+2}$, $\ldots$), los métodos "clásicos" no serán
-    en principio adecuados (pueden conducir a conclusiones erróneas).
+-   Esto es debido principalmente a que introduce un sesgo en los
+    estimadores de las varianzas (diseñados asumiendo independencia).
 
-    -   Esto es debido principalmente a que introduce un sesgo en los
-        estimadores de las varianzas (diseñados asumiendo independencia).
-
-    -   Los correspondientes intervalos de confianza y
-        contrastes de hipótesis tendrán una confianza o una potencia
-        distinta de la que deberían (aunque las estimaciones de los parámetros
-        pueden no verse muy afectadas).
+-   Los correspondientes intervalos de confianza y
+    contrastes de hipótesis tendrán una confianza o una potencia
+    distinta de la que deberían (aunque las estimaciones de los parámetros
+    pueden no verse muy afectadas).
     
 
 Si $X_{1}$ e $X_{2}$ son independientes ($Cov(X_{1},X_{2})=0$):
-    $$Var(X_{1}+X_{2})=Var(X_{1})+Var(X_{2})$$
+$$Var(X_{1}+X_{2})=Var(X_{1})+Var(X_{2})$$
 
 En el caso general (dependencia):
-    $$Var(X_{1}+X_{2})=Var(X_{1})+Var(X_{2})+2Cov(X_{1},X_{2})$$
+$$Var(X_{1}+X_{2})=Var(X_{1})+Var(X_{2})+2Cov(X_{1},X_{2})$$
 
-Típicamente $Cov(X_{1},X_{2})>0$ por lo que con los métodos
-"clásicos" (basados en independencia) se suelen producir
-subestimaciones de las varianzas (IC más estrechos y tendencia a
-rechazar $H_{0}$ en contrastes).
+Típicamente $Cov(X_{1},X_{2})>0$ por lo que con los métodos "clásicos" (basados en independencia) se suelen producir subestimaciones de las varianzas (IC más estrechos y tendencia a rechazar $H_0$ en contrastes).
 
 ::: {.example #sim-dep name="Datos simulados dependientes"}
 <br>
@@ -560,9 +537,7 @@ legend("bottomright", legend = c("Datos independientes", "Datos dependientes"),
        col = c('blue', 'red'), lty = 1)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.75\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-10-1} \end{center}
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" />
 
 En el caso anterior la varianza es uno con ambos procesos. 
 Las estimaciones suponiendo independencia serían:
@@ -573,7 +548,7 @@ var(x1)
 ```
 
 ```
- ## [1] 0.8067621
+## [1] 0.80676
 ```
 
 ```r
@@ -581,10 +556,10 @@ var(x2)
 ```
 
 ```
- ## [1] 0.1108155
+## [1] 0.10992
 ```
 
-En el caso de datos dependientes se produce una clara subestimación de la varianza.
+En el caso de datos dependientes se produce una clara subestimación de la varianza al emplear el estimador clásico.
 
 :::
 
@@ -613,16 +588,12 @@ Entre los métodos para detectar este tipo de dependencia destacaríamos:
 
 ### Gráfico secuencial
 
-El gráfico de dispersión $\{(i,X_{i}) :  i = 1, \ldots, n \}$ permite detectar la presencia de un efecto temporal (en la tendencia o en la variabilidad).
+El gráfico de dispersión $\{(i, X_{i}) : i = 1, \ldots, n \}$ permite detectar la presencia de un efecto temporal (en la tendencia o en la variabilidad).
+En R podemos generar este gráfico con el comando `plot(as.ts(x))`, aunque sería necesario haber conservado el orden de recogida de los datos (alternativamente se puede guardar el orden o la fecha en una variable adicional). 
 
--   Es importante mantener/guardar el orden de recogida de los datos.
+Si se observa algún tipo de tendencia, los datos no serían aparentemente homogéneos (debería tenerse en cuenta la variable índice, o tiempo, como variable explicativa).
+También podría indicar la presencia de un "efecto aprendizaje".
 
--   Si existe una tendencia los datos no son homogéneos (debería tenerse
-    en cuenta la variable índice, o tiempo, como variable explicativa).
-    Podría indicar la presencia de un "efecto aprendizaje".
-
--   Código R: `plot(as.ts(x))`.
- 
 Ejemplo:
 
 
@@ -630,17 +601,16 @@ Ejemplo:
 old.par <- par(mfrow = c(1, 2))
 plot(datos, type = 'l')
 plot(as.ts(datos))
-par(old.par)
 ```
 
-\begin{figure}[!htb]
+<div class="figure" style="text-align: center">
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/grafsec-1.png" alt="Ejemplos de gráficos secuenciales." width="90%" />
+<p class="caption">(\#fig:grafsec)Ejemplos de gráficos secuenciales.</p>
+</div>
 
-{\centering \includegraphics[width=0.9\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/grafsec-1} 
-
-}
-
-\caption{Ejemplos de gráficos secuenciales.}(\#fig:grafsec)
-\end{figure}
+```r
+par(old.par)
+```
 
 Es habitual que este tipo de análisis se realice sobre los residuos
 de un modelo de regresión (e.g. `datos <- residuals(modelo)`) 
@@ -660,12 +630,13 @@ plot(x2, type = 'l', ylab = '', main = 'Dependencia positiva')
 plot(x1, type = 'l', ylab = '', main = 'Independencia')
 x3 <- x2 * c(1, -1)
 plot(x3, type = 'l', ylab = '', main = 'Dependencia negativa')
-par(old.par)
 ```
 
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-12-1.png" width="100%" style="display: block; margin: auto;" />
 
-
-\begin{center}\includegraphics[width=1\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-12-1} \end{center}
+```r
+par(old.par)
+```
 
 pero suele ser preferible emplear un gráfico de dispersión retardado. 
 
@@ -674,9 +645,12 @@ pero suele ser preferible emplear un gráfico de dispersión retardado.
 
 El gráfico de dispersión $\{(X_{i},X_{i+1}) :  i = 1, \ldots, n-1 \}$ permite
 detectar dependencias a un retardo (relaciones entre valores separados
-por un instante)
+por un instante).
+En R podemos generar este gráfico con el comando:
 
--   Código R:`plot(x[-length(x)], x[-1], xlab = "X_t", ylab = "X_t+1")`
+```r
+plot(x[-length(x)], x[-1], xlab = "X_t", ylab = "X_t+1")
+```
 
 
 ```r
@@ -687,16 +661,15 @@ plot(x1[-length(x1)], x1[-1], xlab = "X_t", ylab = "X_t+1",
      main = 'Independencia')
 plot(x3[-length(x3)], x3[-1], xlab = "X_t", ylab = "X_t+1", 
      main = 'Dependencia negativa')
+```
+
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-14-1.png" width="100%" style="display: block; margin: auto;" />
+
+```r
 par(old.par)
 ```
 
-
-
-\begin{center}\includegraphics[width=1\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-13-1} \end{center}
-
-Se puede generalizar al gráfico $\{(X_{i},X_{i+k}) : i = 1, \ldots, n-k \}$
-que permite detectar dependencias a $k$ retardos 
-(separadas $k$ instantes).
+Se puede generalizar al gráfico $\{(X_{i},X_{i+k}) : i = 1, \ldots, n-k \}$ que permite detectar dependencias a $k$ retardos (separadas $k$ instantes).
 
 Ejemplo:
 
@@ -706,12 +679,9 @@ Ejemplo:
 plot(datos[-length(datos)], datos[-1], xlab = "X_t", ylab = "X_t+1")
 ```
 
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" />
 
-
-\begin{center}\includegraphics[width=0.75\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-14-1} \end{center}
-
-El correspondiente coeficiente de correlación es una medida numérica 
-del grado de relación lineal (denominado autocorrelación de orden 1).
+El correspondiente coeficiente de correlación es una medida numérica del grado de relación lineal (denominada autocorrelación de orden 1).
 
 
 ```r
@@ -719,27 +689,24 @@ cor(datos[-length(datos)], datos[-1])
 ```
 
 ```
- ## [1] 0.01344127
+## [1] 0.013441
 ```
 
 
 ::: {.example #ret-gen name="Calidad de un generador aleatorio"}
 <br>
 
-En el caso de una secuencia muy grande de número pseudoaleatorios (supuestamente independientes), sería muy dificil distinguir un patrón a partir del gráfico anterior. La recomendación en R sería utilizar puntos con color de relleno:
+En el caso de una secuencia muy grande de número pseudoaleatorios (supuestamente independientes), sería muy difícil distinguir un patrón a partir del gráfico anterior. 
+La recomendación en R sería utilizar puntos con color de relleno:
 
 ```r
 plot(u[-length(u)], u[-1], xlab="U_t", ylab="U_t+1", pch=21, bg="white")
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.9\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/dispret-1} 
-
-}
-
-\caption{Ejemplos de gráficos de dispensión retardados de dos secuencias de longitud 10000.}(\#fig:dispret)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/dispret-1.png" alt="Ejemplos de gráficos de dispensión retardados de dos secuencias de longitud 10000." width="90%" />
+<p class="caption">(\#fig:dispret)Ejemplos de gráficos de dispensión retardados de dos secuencias de longitud 10000.</p>
+</div>
 
 Si se observa algún tipo de patrón indicaría dependencia (se podría considerar como una versión descriptiva del denominado “Parking lot test”).
 Se puede generalizar también a $d$-uplas $(X_{t+1},X_{t+2},\ldots,X_{t+d})$ 
@@ -748,7 +715,7 @@ Se puede generalizar también a $d$-uplas $(X_{t+1},X_{t+2},\ldots,X_{t+d})$
 :::
 
 
-### El correlograma
+### El correlograma {#correlograma}
 
 Para estudiar si el grado de relación (lineal) entre $X_{i}$ e
 $X_{i+k}$ podemos utilizar el coeficiente de correlación:
@@ -756,19 +723,15 @@ $X_{i+k}$ podemos utilizar el coeficiente de correlación:
 $$\rho\left(  X_{i},X_{i+k}\right) = \frac{Cov\left(  X_{i},X_{i+k}\right)    }
 {\sigma\left(  X_{i}\right)  \sigma\left(  X_{i+k}\right)  }$$
 
--   En el caso de datos homogéneos (estacionarios) la correlación sería función únicamente del salto:
-    $$\rho\left(  X_{i},X_{i+k}\right)  \equiv\rho\left(  k\right)$$
-    denominada función de autocorrelación simple (fas) o correlograma.
+En el caso de datos homogéneos (estacionarios) la correlación sería función únicamente del salto:
+$$\rho\left(  X_{i},X_{i+k}\right)  \equiv\rho\left(  k\right)$$
+denominada función de autocorrelación simple (fas) o correlograma.
 
--   Su estimador es el correlograma muestral:
-    $$r(k)=\frac{\sum_{i=1}^{n-k}(X_{i}-\overline{X})(X_{i+k}-\overline{X})}
-    {\sum_{i=1}^{n}(X_{i}-\overline{X})^{2}}$$
-    
--   Código R: `acf(x)`.
+Su estimador es el correlograma muestral:
+$$r(k)=\frac{\sum_{i=1}^{n-k}(X_{i}-\overline{X})(X_{i+k}-\overline{X})}
+{\sum_{i=1}^{n}(X_{i}-\overline{X})^{2}}$$
 
-En caso de independencia es de esperar que las autocorrelaciones
-muestrales sean próximas a cero (valores "grandes" indicarían
-dependencia positiva o negativa según el signo).
+En R podemos calcular las autocorrelaciones, y generar el gráfico correspondiente, con la función [`acf()`](https://rdrr.io/r/stats/acf.html).    
 
 
 ```r
@@ -776,25 +739,24 @@ old.par <- par(mfrow = c(1, 3))
 acf(x1, main = 'Independencia')
 acf(x2, main = 'Dependencia positiva')
 acf(x3, main = 'Dependencia negativa')
+```
+
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-18-1.png" width="100%" style="display: block; margin: auto;" />
+
+```r
 par(old.par)
 ```
 
-
-
-\begin{center}\includegraphics[width=1\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-17-1} \end{center}
+En caso de independencia es de esperar que las autocorrelaciones muestrales sean próximas a cero (valores "grandes" indicarían correlación positiva o negativa según el signo).
 
 Suponiendo normalidad e independencia, asintóticamente:
 $$r(k)\underset{aprox.}{\sim}N\left(  \rho(k),\frac{1}{n}\right)$$
+Por tanto, si el tamaño muestral es grande, podríamos aceptar $H_0:\rho\left(  k\right) = 0$ si:
+$$|r(k)|<\dfrac{2}{\sqrt{n}}$$
 
--   Si el tamaño muestral es grande, podríamos aceptar $H_{0}:$
-    $\rho\left(  k\right) = 0$ si:$$|r(k)|<\dfrac{2}{\sqrt{n}}$$
-
--   En el *gráfico de autocorrelaciones muestrales* (también
-    denominado correlograma) se representan las estimaciones $r(k)$
-    de las autocorrelaciones correspondientes a los primeros retardos
-    (típicamente $k<n/4$) y las correspondientes bandas de confianza
-    (para detectar dependencias significativas).
-
+En el *gráfico de autocorrelaciones muestrales* (también denominado correlograma) se representan las estimaciones $r(k)$ de las autocorrelaciones correspondientes a los primeros retardos (típicamente $k<n/4$) y los correspondientes intervalos de confianza bajo $H_0$ (para detectar correlaciones significativas).
+No obstante, hay que tener en cuenta que estos intervalos de confianza son puntuales.
+Aunque las verdaderas correlaciones sean nulas, al aumentar el número de saltos aumenta la probabilidad de que alguna correlación muestral no esté contenida en el intervalo (no sería de extrañar que alguna esté un poco por fuera de los límites).
 
 Ejemplo:
 
@@ -803,75 +765,60 @@ Ejemplo:
 acf(datos)  # correlaciones
 ```
 
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;" />
 
-
-\begin{center}\includegraphics[width=0.75\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-18-1} \end{center}
-
-La función `acf` también permite estimar el covariograma^[En algunos campos, como en estadística espacial, en lugar del covariograma se suele emplear el semivariograma $\gamma(k) = C(0) - C(k)$.]. 
+La función `acf()` también permite estimar el covariograma^[En algunos campos, como en estadística espacial, en lugar del covariograma se suele emplear el semivariograma $\gamma(k) = C(0) - C(k)$.]. 
 
 
 ```r
 covar <- acf(x2, type = "covariance")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.75\linewidth]{22-Bondad_ajuste_Aleatoriedad_files/figure-latex/unnamed-chunk-19-1} \end{center}
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 ### Test de rachas
 
-Permite contrastar si el orden de aparición de dos valores de una
-variable dicotómica es aleatorio.
-Supongamos que $X$ toma los valores $+$ y $-$
-y que observamos una muestra del tipo:
+Permite contrastar si el orden de aparición de dos valores de una variable dicotómica es aleatorio.
+Supongamos que $X$ toma los valores $+$ y $-$ y que observamos una muestra del tipo:
 $$++++---+++--++++++----$$ 
 y nos interesa contrastar:
 
 $$\left\{ \begin{array}[c]{l}
-    H_{0}:\mathit{La\ muestra\ es\ aleatoria}\\
-    H_{1}:\mathit{La\ muestra\ no\ es\ aleatoria}
-\end{array}
-\right.$$
+    H_0:\mathit{La\ muestra\ es\ aleatoria}\\
+    H_1:\mathit{La\ muestra\ no\ es\ aleatoria}
+\end{array}\right.$$
 
-Una *racha* es una secuencia de observaciones iguales (o
-similares):
+Una *racha* es una secuencia de observaciones iguales (o similares):
 $$\underbrace{++++}_{1}\underbrace{---}_{2}\underbrace{+++}_{3}
 \underbrace{--}_{4}\underbrace{++++++}_{5}\underbrace{----}_{6}$$
 
+Una muestra con "muchas" o "pocas" rachas sugeriría que la muestra no es aleatoria (con dependencia negativa o positiva, respectivamente).
+Por tanto se puede emplear como estadístico del contraste:
+$$R=\text{"Número total de rachas en la muestra"}$$
 
--   Una muestra con "muchas" o "pocas" rachas sugeriría que la muestra
-    no es aleatoria (con dependencia negativa o positiva, respec.).
+Bajo la hipótesis nula de aleatoriedad:
+$$R\underset{aprox.}{\sim}N\left(  1+\frac{2n_{1}n_{2}}{n},
+\frac{2n_{1}n_{2}(2n_{1}n_{2}-n)}{n^{2}(n-1)}\right)$$
+siendo $n_{1}$ y  $n_{2}$ el número de signos $+$ y $-$ en la muestra, respectivamente ($n_{1}+n_{2}=n$).
+Para tamaños muéstrales pequeños ($n<40$), esta aproximación no es buena y conviene utilizar la distribución exacta (o utilizar corrección por continuidad). 
+Los valores críticos de esta distribución están tabulados.
 
--   Estadístico del contraste:
-    $$R=\text{"Número total de rachas en la muestra"}$$
+Este contraste se emplea también para variables continuas, se fija un punto de corte para dicotomizarlas. 
+Normalmente se toma como punto de corte la mediana.
+En ese caso, si $k=n_{1}$ ($\simeq n_{2}$):
+$$R\underset{aprox.}{\sim}N\left(  k+1,\frac{k(k-1)}{2k-1}\right)$$
 
--   Bajo la hipótesis nula de aleatoriedad:
-    $$R\underset{aprox.}{\sim}N\left(  1+\frac{2n_{1}n_{2}}{n},
-    \frac{2n_{1}n_{2}(2n_{1}n_{2}-n)}{n^{2}(n-1)}\right)$$
-    siendo $n_{1}$ y  $n_{2}$ el número de signos $+$ y $-$ en la muestra, 
-    respectivamente ($n_{1}+n_{2}=n$).
-    Para tamaños muéstrales pequeños ($n<40$), esta aproximación
-    no es buena y conviene utilizar la distribución exacta (o utilizar
-    corrección por continuidad). Los valores críticos de esta
-    distribución están tabulados.
+Se rechaza la hipótesis nula de aleatoriedad si el número de rachas es significativamente pequeño o grande.
+Si el tamaño muestral es grande, el $p$-valor será:
+$$p \simeq 2 P\left( Z \geq \left\vert 
+\frac{R-E(R)}{\sqrt{Var(R)}} \right\vert \right)$$
 
+En R podemos realizar este contraste con el comando:
 
-Este contraste se emplea también para variables continuas, se fija
-un punto de corte para dicotomizarlas. Normalmente se toma como punto de corte la mediana.
-
--   En este caso si $k=n_{1}$ ($\simeq n_{2}$):
-    $$R\underset{aprox.}{\sim}N\left(  k+1,\frac{k(k-1)}{2k-1}\right)$$
-
--   Se rechaza la hipótesis nula de aleatoriedad si el número de rachas
-    es significativamente pequeño o grande.
-
--   Si el tamaño muestral es grande, el $p$-valor será:
-    $$p \simeq 2 P\left( Z \geq \left\vert 
-    \frac{R-E(R)}{\sqrt{Var(R)}} \right\vert \right)$$
-
--   Código R: `tseries::runs.test(as.factor(x > median(x)))`
-
+```r
+tseries::runs.test(as.factor(x > median(x)))
+```
 
 Ejemplo:
 
@@ -882,41 +829,36 @@ runs.test(as.factor(datos > median(datos)))
 ```
 
 ```
- ## 
- ## 	Runs Test
- ## 
- ## data:  as.factor(datos > median(datos))
- ## Standard Normal = -0.4422, p-value = 0.6583
- ## alternative hypothesis: two.sided
+## 
+## 	Runs Test
+## 
+## data:  as.factor(datos > median(datos))
+## Standard Normal = -0.442, p-value = 0.66
+## alternative hypothesis: two.sided
 ```
 
-Alternativamente, para evitar el cálculo del punto de corte (la mediana), requerido para dicotomizar la variable continua, se podría emplear una modificación de este contraste, el denominado test de rachas ascendentes y descendentes, en el que se generan los valores $+$ y $-$ dependiendo de si el valor de la secuencia es mayor o menor que el anterior (ver e.g. Downham, 1970). Este contraste es más adecuado para generadores aleatorios.
+Alternativamente, para evitar el cálculo del punto de corte (la mediana), requerido para dicotomizar la variable continua, se podría emplear una modificación de este contraste, el denominado test de rachas ascendentes y descendentes, en el que se generan los valores $+$ y $-$ dependiendo de si el valor de la secuencia es mayor o menor que el anterior [ver e.g. @downham1970]. 
+Este contraste es más adecuado para generadores aleatorios.
 
 
-### El contraste de Ljung-Box
+### El contraste de Ljung-Box {#ljungbox}
 
-Es un test muy utilizado (en series de tiempo) para contrastar la 
-hipótesis de independencia.
-Se contrasta la hipótesis nula de que las primeras $m$
-autocorrelaciones son cero:
+Es un test muy utilizado (en series de tiempo) para contrastar la hipótesis de independencia.
+Se contrasta la hipótesis nula de que las primeras $m$ autocorrelaciones son cero:
 $$\left\{\begin{array}[c]{l}
-    H_{0}:\rho_{1}=\rho_{2}=\ldots=\rho_{m}=0\\
-    H_{1}:\rho_{i}\neq0\text{ para algún } i
-\end{array}
-\right.$$ 
+    H_0:\rho_{1}=\rho_{2}=\ldots=\rho_{m}=0\\
+    H_1:\rho_{i}\neq0\text{ para algún } i
+\end{array}\right.$$ 
 
--   Se elige un $m$ tal que la estimación $r(m)$ de
-    $\rho_{m}=\rho(m)$ sea "fiable" (e.g. $10\log_{10}n$).
+Normalmente se elige $m$ de forma que la estimación $r(m)$ de $\rho_{m}=\rho(m)$ sea "fiable" (e.g. $m = 10\log_{10}n$ o $m = n/4$).
 
--   El estadístico del contraste:
-  $$Q=n(n+2)\sum_{k=1}^{m}\frac{r(k)^{2}}{n-k}\underset{aprox.}{\sim}\chi
-    _{m}^{2}\text{, si }H_{0}\text{ es cierta.}$$
+El estadístico del contraste es:
+$$Q=n(n+2)\sum_{k=1}^{m}\frac{r(k)^{2}}{n-k}\underset{aprox.}{\sim}\chi
+_{m}^{2}\text{, si }H_0\text{ es cierta.}$$
+Se rechaza $H_0$ si el valor observado de este estadístico es grande ($Q\geq \chi_{m,1-\alpha}^{2}$) o, equivalentemente, si el p-valor es pequeño:
+$$p=P\left( {\chi_{m}^{2}}\geq Q\right)$$
 
--   Se rechaza $H_{0}$ si el valor observado es grande ($Q\geq \chi_{m,1-\alpha}^{2}$):
-    $$p=P\left(  {\chi_{m}^{2}}\geq Q\right)$$
-
--   Código R: `Box.test(x, lag, type = "Ljung")`.
-
+Este contraste está implementado en la función [`Box.test()`](https://rdrr.io/r/stats/box.test.html), estableciendo el argumento `lag` igual al número de saltos $m$ y `type = "Ljung"`.
 
 Ejemplo:
 
@@ -927,11 +869,11 @@ Box.test(datos, type = "Ljung")
 ```
 
 ```
- ## 
- ## 	Box-Ljung test
- ## 
- ## data:  datos
- ## X-squared = 0.0078317, df = 1, p-value = 0.9295
+## 
+## 	Box-Ljung test
+## 
+## data:  datos
+## X-squared = 0.00783, df = 1, p-value = 0.93
 ```
 
 ```r
@@ -940,11 +882,11 @@ Box.test(datos, lag = 5, type = "Ljung")
 ```
 
 ```
- ## 
- ## 	Box-Ljung test
- ## 
- ## data:  datos
- ## X-squared = 1.2556, df = 5, p-value = 0.9394
+## 
+## 	Box-Ljung test
+## 
+## data:  datos
+## X-squared = 1.26, df = 5, p-value = 0.94
 ```
 
 NOTA: Cuando se trabaja con residuos de un modelo lineal, para contrastar que la primera autocorrelación es cero, es preferible emplear el test de
@@ -982,11 +924,11 @@ chisq.test(f)
 ```
 
 ```
- ## 
- ## 	Chi-squared test for given probabilities
- ## 
- ## data:  f
- ## X-squared = 10.26, df = 9, p-value = 0.3298
+## 
+## 	Chi-squared test for given probabilities
+## 
+## data:  f
+## X-squared = 10.3, df = 9, p-value = 0.33
 ```
 
 Este código está implementado en la función `simres::freq.test()` (fichero [*test.R*](R/test.R)) y podríamos emplear:
@@ -1060,7 +1002,7 @@ P(\text{5 enteros diferentes}) & = 0.3024,
 \end{aligned}$$
 procediendo también a agrupar las dos primeras modalidades.
 
-En el caso general de considerar $d$-uplas (manos de $d$ cartas con $K$ posibilidades cada una), la probabilidad de obtener $c$ valores (cartas) diferentes es (e.g. Knuth, 2002, Sección 3.3.2, p. 64):
+En el caso general de considerar $d$-uplas (manos de $d$ cartas con $K$ posibilidades cada una), la probabilidad de obtener $c$ valores (cartas) diferentes es [e.g. @knuth2002, Sección 3.3.2, p. 64]:
 $$P(C=c) = \frac{K!}{(K-c)!K^d}S(d,c),$$
 donde $S(d,c)$ es el número de Stirling de segunda clase, definido como el número de formas que existen de hacer una partición de un conjunto de $d$ elementos en $c$ subconjuntos: 
 $$S(d,c) = \frac{1}{c!}\sum_{i=0}^{c} (-1)^{i} \binom{c}{i} (c-i)^d.$$
@@ -1081,7 +1023,7 @@ tanto, resulta posible calcular la distribución de probabilidad de $Q$.
 De esta forma podemos utilizar los valores calculados de las probabilidades
 $$P( Q = K ), P( Q = K+1 ),\ldots, P( Q = M -1 ), P( Q \geq M ),$$ 
 para obtener las frecuencias esperadas de cada clase y confrontarlas con las
-observadas vía el estadístico chi-cuadrado (e.g. Knuth, 2002, Sección 3.3.2, p. 65).
+observadas vía el estadístico chi-cuadrado [e.g. @knuth2002, Sección 3.3.2, p. 65].
 
 Existen varias elecciones comunes de $K$ y $M$.
 Tomando $K=5$ con clases $Q=5$, $Q=6$, $\ldots$, $Q=19$, $Q\geq20$, las probabilidades vendrían dadas por:

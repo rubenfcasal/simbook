@@ -106,14 +106,10 @@ para $b = 1,\ldots ,B$.
 
 La idea original (bootstrap natural, Efron) es que la variabilidad de $\hat{\theta}_{b}^{\ast }$ en torno a $\hat{\theta}$ aproxima la variabilidad de $\hat{\theta}$ en torno a $\theta$: **la distribución de** $\hat{\theta}_{b}^{\ast }-\hat{\theta}$ (en el universo bootstrap) **aproxima la distribución de ** $\hat{\theta}-\theta$ (en la población).
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.75\linewidth]{images/bootstrap} 
-
-}
-
-\caption{Esquema de la idea del boostrap (de Efron).}(\#fig:unnamed-chunk-1)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="images/bootstrap.png" alt="Esquema de la idea del boostrap (de Efron)." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-1)Esquema de la idea del boostrap (de Efron).</p>
+</div>
 
 En general podríamos decir que **la muestra es a la población** **lo que la muestra bootstrap es a la muestra**.
 
@@ -136,7 +132,7 @@ El valor del estadístico en la muestra es:
 estadistico <- mean(muestra)
 ```
 
-Representamos la distribución de la muestra [Figura \@ref(fig:muestra-sim)]:
+Representamos la distribución de la muestra:
 
 ```r
 hist(muestra, freq = FALSE, xlim = c(-3, 3),
@@ -146,17 +142,13 @@ curve(dnorm, col = "blue", add = TRUE)
 abline(v = mean_teor, col = "blue", lty = 2)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.75\linewidth]{09-Bootstrap_files/figure-latex/muestra-sim-1} 
-
-}
-
-\caption{Distribución de la muestra simulada (y distribución teórica en azul).}(\#fig:muestra-sim)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="09-Bootstrap_files/figure-html/muestra-sim-1.png" alt="Distribución de la muestra simulada (y distribución teórica en azul)." width="70%" />
+<p class="caption">(\#fig:muestra-sim)Distribución de la muestra simulada (y distribución teórica en azul).</p>
+</div>
 
 Como aproximación de la distribución poblacional, desconocida en la práctica, siempre podemos considerar la distribución empírica (o una versión suavizada: bootstrap suavizado; Sección \@ref(modunif-boot-suav)). 
-Alternativamente podríamos asumir un modelo paramétrico y estimar los parámetros a partir de la muestra (bootstrap paramétrico; Sección \@ref(modunif-boot-par) [Figura \@ref(fig:muestra-sim-aprox)].
+Alternativamente podríamos asumir un modelo paramétrico y estimar los parámetros a partir de la muestra (bootstrap paramétrico; Sección \@ref(modunif-boot-par).
 
 ```r
 # Distribución bootstrap uniforme
@@ -169,14 +161,10 @@ legend("bottomright", legend = c("Empírica", "Aprox. paramétrica", "Teórica")
        lty = c(1, 2, 1), col = c("black","black", "blue"))
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.75\linewidth]{09-Bootstrap_files/figure-latex/muestra-sim-aprox-1} 
-
-}
-
-\caption{Distribución teórica de la muestra simulada y distintas aproximaciones.}(\#fig:muestra-sim-aprox)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="09-Bootstrap_files/figure-html/muestra-sim-aprox-1.png" alt="Distribución teórica de la muestra simulada y distintas aproximaciones." width="70%" />
+<p class="caption">(\#fig:muestra-sim-aprox)Distribución teórica de la muestra simulada y distintas aproximaciones.</p>
+</div>
 
 En este caso (bootstrap uniforme) generamos las réplicas bootstrap empleando la distribución empírica:
 
@@ -206,14 +194,10 @@ curve(dnorm(x, mean_teor, sd_teor/sqrt(n)), col = "blue", add = TRUE)
 abline(v = 0, col = "blue", lty = 2)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.75\linewidth]{09-Bootstrap_files/figure-latex/mean-boot-perc-1} 
-
-}
-
-\caption{Aproximación de la distribución de la media muestral centrada mediante bootstrap percentil (uniforme).}(\#fig:mean-boot-perc)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="09-Bootstrap_files/figure-html/mean-boot-perc-1.png" alt="Aproximación de la distribución de la media muestral centrada mediante bootstrap percentil (uniforme)." width="70%" />
+<p class="caption">(\#fig:mean-boot-perc)Aproximación de la distribución de la media muestral centrada mediante bootstrap percentil (uniforme).</p>
+</div>
 
 Sin embargo, especialmente si el estimador es sesgado, puede ser preferible emplear la distribución de $\hat{\theta}_{b}^{\ast }-\hat{\theta}$ como aproximación de la distribución de $\hat{\theta}-\theta$ (bootstrap natural, básico o percentil básico):
 
@@ -226,14 +210,10 @@ curve(dnorm(x, 0, sd_teor/sqrt(n)), col = "blue", add = TRUE)
 abline(v = 0, col = "blue", lty = 2)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.75\linewidth]{09-Bootstrap_files/figure-latex/mean-boot-basico-1} 
-
-}
-
-\caption{Aproximación de la distribución de la media muestral mediante bootstrap natural (uniforme).}(\#fig:mean-boot-basico)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="09-Bootstrap_files/figure-html/mean-boot-basico-1.png" alt="Aproximación de la distribución de la media muestral mediante bootstrap natural (uniforme)." width="70%" />
+<p class="caption">(\#fig:mean-boot-basico)Aproximación de la distribución de la media muestral mediante bootstrap natural (uniforme).</p>
+</div>
 
 Sin embargo, asintóticamente ambos procedimientos son equivalentes^[Por este motivo en algunas referencias más teóricas no se diferencia entre ambos métodos y se denominan simplemente bootstrap percentil.] y pueden dar lugar a los mismos resultados en determinados problemas de inferencia.
 Por ejemplo en la aproximación del sesgo y de la varianza de un estimador (Sección \@ref(sesgo-prec)):
@@ -245,7 +225,7 @@ mean_boot - estadistico # mean(estadistico_boot - estadistico)
 ```
 
 ```
- ## [1] 0.004714973
+## [1] 0.004715
 ```
 
 ```r
@@ -254,7 +234,7 @@ sd(estadistico_boot) # sd(estadistico_boot - estadistico)
 ```
 
 ```
- ## [1] 0.08610306
+## [1] 0.086103
 ```
 
 ```r
@@ -263,7 +243,7 @@ sd_teor/sqrt(n)
 ```
 
 ```
- ## [1] 0.1
+## [1] 0.1
 ```
 
 :::
@@ -337,7 +317,7 @@ muestra_boot <- sample(muestra, replace = TRUE)
 ::: {.example #media-dt-desconocida name="Inferencia sobre la media con varianza desconocida"}
 <br> 
 
-Como ejemplo consideramos la muestra de tiempos de vida de microorganismos `lifetimes` del paquete `simres` [Figura \@ref(fig:microorganismos)]: 
+Como ejemplo consideramos la muestra de tiempos de vida de microorganismos `lifetimes` del paquete `simres`: 
 
 ```r
 library(simres)
@@ -346,8 +326,8 @@ summary(muestra)
 ```
 
 ```
- ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- ##  0.1430  0.2650  0.6110  0.8053  1.1200  2.0800
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.143   0.265   0.611   0.805   1.120   2.080
 ```
 
 ```r
@@ -355,14 +335,10 @@ hist(muestra)
 rug(muestra)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.75\linewidth]{09-Bootstrap_files/figure-latex/microorganismos-1} 
-
-}
-
-\caption{Distribución del tiempo de vida de una muestra de microorganismos.}(\#fig:microorganismos)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="09-Bootstrap_files/figure-html/microorganismos-1.png" alt="Distribución del tiempo de vida de una muestra de microorganismos." width="70%" />
+<p class="caption">(\#fig:microorganismos)Distribución del tiempo de vida de una muestra de microorganismos.</p>
+</div>
 
 Supongamos que queremos obtener una estimación por intervalo de confianza de su vida media a partir de los 15 valores observados mediante bootstrap uniforme considerando el estadístico
 $$R=R\left( \mathbf{X},F \right) =\sqrt{n}\frac{\bar{X}-\mu }{S_{n-1}},$$
@@ -437,8 +413,8 @@ pto_crit
 ```
 
 ```
- ##      2.5%     97.5% 
- ## -3.002197  1.877302
+##    2.5%   97.5% 
+## -3.0022  1.8773
 ```
 
 A partir de los cuales obtenemos la correspondiente estimación por IC boostrap:
@@ -455,8 +431,8 @@ IC_boot
 ```
 
 ```
- ##      2.5%     97.5% 
- ## 0.5030131 1.2888063
+##    2.5%   97.5% 
+## 0.50301 1.28881
 ```
 
 Este procedimiento para la construcción de intervalos de confianza se denomina *método percentil-t* y se tratará en la Sección \@ref(boot-ic-stud).
@@ -472,14 +448,10 @@ pto_crit_t <- qt(1 - alfa/2, n - 1)
 abline(v = c(-pto_crit_t, pto_crit_t), col = "blue", lty = 2)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.75\linewidth]{09-Bootstrap_files/figure-latex/mean-boot-stud-1} 
-
-}
-
-\caption{Aproximación de la distribución de la media muestral studentizada mediante bootstrap uniforme.}(\#fig:mean-boot-stud)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="09-Bootstrap_files/figure-html/mean-boot-stud-1.png" alt="Aproximación de la distribución de la media muestral studentizada mediante bootstrap uniforme." width="70%" />
+<p class="caption">(\#fig:mean-boot-stud)Aproximación de la distribución de la media muestral studentizada mediante bootstrap uniforme.</p>
+</div>
 
 En este caso la distribución bootstrap del estadístico es más asimétrica, por lo que el intervalo de confianza no está centrado en la media,
 al contrario que el obtenido con la aproximación tradicional.
@@ -490,9 +462,9 @@ t.test(muestra)$conf.int
 ```
 
 ```
- ## [1] 0.4599374 1.1507292
- ## attr(,"conf.level")
- ## [1] 0.95
+## [1] 0.45994 1.15073
+## attr(,"conf.level")
+## [1] 0.95
 ```
 
 :::
@@ -508,12 +480,12 @@ str(iris)
 ```
 
 ```
- ## 'data.frame':	150 obs. of  5 variables:
- ##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
- ##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
- ##  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
- ##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
- ##  $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 ..
+## 'data.frame':	150 obs. of  5 variables:
+##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+##  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
+##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
+##  $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1..
 ```
 
 ```r
@@ -526,12 +498,12 @@ str(data_boot)
 ```
 
 ```
- ## 'data.frame':	150 obs. of  5 variables:
- ##  $ Sepal.Length: num  5.1 5.6 6.2 4.8 5.5 6.2 5.5 5.6 5 6.5 ...
- ##  $ Sepal.Width : num  3.8 2.5 2.9 3.1 2.3 2.9 2.6 2.8 3.6 3 ...
- ##  $ Petal.Length: num  1.9 3.9 4.3 1.6 4 4.3 4.4 4.9 1.4 5.8 ...
- ##  $ Petal.Width : num  0.4 1.1 1.3 0.2 1.3 1.3 1.2 2 0.2 2.2 ...
- ##  $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 2 2 1 2 2 2 3 ..
+## 'data.frame':	150 obs. of  5 variables:
+##  $ Sepal.Length: num  5.1 5.6 6.2 4.8 5.5 6.2 5.5 5.6 5 6.5 ...
+##  $ Sepal.Width : num  3.8 2.5 2.9 3.1 2.3 2.9 2.6 2.8 3.6 3 ...
+##  $ Petal.Length: num  1.9 3.9 4.3 1.6 4 4.3 4.4 4.9 1.4 5.8 ...
+##  $ Petal.Width : num  0.4 1.1 1.3 0.2 1.3 1.3 1.2 2 0.2 2.2 ...
+##  $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 2 2 1 2..
 ```
 
 Esta forma de proceder es la que emplea por defecto el paquete `boot` que describiremos más adelante (Sección \@ref(intro-pkgboot)).
@@ -555,7 +527,7 @@ cor(Prestige$income, Prestige$prestige)
 ```
 
 ```
- ## [1] 0.7149057
+## [1] 0.71491
 ```
 Para realizar inferencias sobre el coeficiente de correlación, como aproximación más simple, se puede considerar que la distribución muestral de $r$ es aproximadamente normal de media $\rho$ y varianza
 $$Var(r) \approx \frac{1 - \rho^2}{n - 2}.$$
@@ -634,8 +606,8 @@ res.boot
 ```
 
 ```
- ## Estadístico       Sesgo  Error Std. 
- ## 0.805333333 0.003173267 0.154099013
+## Estadístico       Sesgo  Error Std. 
+##   0.8053333   0.0031733   0.1540990
 ```
 
 La función `boot.strap0()` anterior no es adecuada para el caso multivariante
@@ -698,8 +670,9 @@ names(res.boot)
 ```
 
 ```
- ##  [1] "t0"        "t"         "R"         "data"      "seed"      "statistic"
- ##  [7] "sim"       "call"      "stype"     "strata"    "weights"
+##  [1] "t0"        "t"         "R"         "data"      "seed"     
+##  [6] "statistic" "sim"       "call"      "stype"     "strata"   
+## [11] "weights"
 ```
 Además de los parámetros de entrada (incluyendo los valores por defecto), contiene tres componentes adicionales:
 
@@ -722,34 +695,30 @@ res.boot
 ```
 
 ```
- ## 
- ## ORDINARY NONPARAMETRIC BOOTSTRAP
- ## 
- ## 
- ## Call:
- ## boot(data = muestra, statistic = statistic, R = 1000)
- ## 
- ## 
- ## Bootstrap Statistics :
- ##      original      bias    std. error
- ## t1* 0.8053333 0.003173267   0.1583306
+## 
+## ORDINARY NONPARAMETRIC BOOTSTRAP
+## 
+## 
+## Call:
+## boot(data = muestra, statistic = statistic, R = 1000)
+## 
+## 
+## Bootstrap Statistics :
+##     original    bias    std. error
+## t1*  0.80533 0.0031733     0.15833
 ```
 y el método `plot()` que genera gráficas básicas de diagnosis
-de los resultados (correspondientes al estadístico determinado por el parámetro `index`, por defecto `= 1`):  [Figura \@ref(fig:plot-res-boot)]
+de los resultados (correspondientes al estadístico determinado por el parámetro `index`, por defecto `= 1`): 
 
 
 ```r
 plot(res.boot)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.9\linewidth]{09-Bootstrap_files/figure-latex/plot-res-boot-1} 
-
-}
-
-\caption{Gráficos de diagnóstico de los resultados bootstrap para la media muestral de los tiempos de vida de microorganismos.}(\#fig:plot-res-boot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="09-Bootstrap_files/figure-html/plot-res-boot-1.png" alt="Gráficos de diagnóstico de los resultados bootstrap para la media muestral de los tiempos de vida de microorganismos." width="90%" />
+<p class="caption">(\#fig:plot-res-boot)Gráficos de diagnóstico de los resultados bootstrap para la media muestral de los tiempos de vida de microorganismos.</p>
+</div>
 
 Es recomendable examinar la distribución bootstrap del estimador (o estadístico) para detectar posibles problemas.
 Como en este caso puede ocurrir que el estadístico bootstrap tome pocos valores distintos, lo que indicaría que el número de réplicas bootstrap es insuficiente o que hay algún problema con método de remuestreo empleado. 
@@ -827,18 +796,18 @@ res.boot
 ```
 
 ```
- ## 
- ## ORDINARY NONPARAMETRIC BOOTSTRAP
- ## 
- ## 
- ## Call:
- ## boot(data = muestra, statistic = statistic, R = 1000)
- ## 
- ## 
- ## Bootstrap Statistics :
- ##      original       bias    std. error
- ## t1* 0.8053333  0.003173267 0.158330646
- ## t2* 0.0259338 -0.002155755 0.007594682
+## 
+## ORDINARY NONPARAMETRIC BOOTSTRAP
+## 
+## 
+## Call:
+## boot(data = muestra, statistic = statistic, R = 1000)
+## 
+## 
+## Bootstrap Statistics :
+##     original     bias    std. error
+## t1* 0.805333  0.0031733   0.1583306
+## t2* 0.025934 -0.0021558   0.0075947
 ```
 
 ```r
@@ -846,19 +815,19 @@ boot.ci(res.boot)
 ```
 
 ```
- ## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
- ## Based on 1000 bootstrap replicates
- ## 
- ## CALL : 
- ## boot.ci(boot.out = res.boot)
- ## 
- ## Intervals : 
- ## Level      Normal              Basic             Studentized     
- ## 95%   ( 0.4918,  1.1125 )   ( 0.4825,  1.0980 )   ( 0.4715,  1.2320 )  
- ## 
- ## Level     Percentile            BCa          
- ## 95%   ( 0.5127,  1.1282 )   ( 0.5384,  1.1543 )  
- ## Calculations and Intervals on Original Scale
+## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+## Based on 1000 bootstrap replicates
+## 
+## CALL : 
+## boot.ci(boot.out = res.boot)
+## 
+## Intervals : 
+## Level      Normal              Basic             Studentized     
+## 95%   ( 0.4918,  1.1125 )   ( 0.4825,  1.0980 )   ( 0.4715,  1.2320 )  
+## 
+## Level     Percentile            BCa          
+## 95%   ( 0.5127,  1.1282 )   ( 0.5384,  1.1543 )  
+## Calculations and Intervals on Original Scale
 ```
 
 El intervalo marcado como `Studentized` se obtuvo empleando el mismo estadístico del Ejemplo \@ref(exm:media-dt-desconocida).
@@ -923,31 +892,27 @@ res.boot
 ```
 
 ```
- ## 
- ## ORDINARY NONPARAMETRIC BOOTSTRAP
- ## 
- ## 
- ## Call:
- ## boot(data = Prestige, statistic = statistic, R = B)
- ## 
- ## 
- ## Bootstrap Statistics :
- ##      original      bias    std. error
- ## t1* 0.7149057 0.006306905  0.04406473
+## 
+## ORDINARY NONPARAMETRIC BOOTSTRAP
+## 
+## 
+## Call:
+## boot(data = Prestige, statistic = statistic, R = B)
+## 
+## 
+## Bootstrap Statistics :
+##     original    bias    std. error
+## t1*  0.71491 0.0063069    0.044065
 ```
 
 ```r
 plot(res.boot)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.9\linewidth]{09-Bootstrap_files/figure-latex/plot-boot-multi-1} 
-
-}
-
-\caption{Gráficos de diagnóstico para la distribución bootstrap del coeficiente de correlación.}(\#fig:plot-boot-multi)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="09-Bootstrap_files/figure-html/plot-boot-multi-1.png" alt="Gráficos de diagnóstico para la distribución bootstrap del coeficiente de correlación." width="90%" />
+<p class="caption">(\#fig:plot-boot-multi)Gráficos de diagnóstico para la distribución bootstrap del coeficiente de correlación.</p>
+</div>
 
 En este caso podemos observar que la distribución bootstrap del estimador es asimétrica, por lo que asumir que su distribución es normal podría no ser adecuado (por ejemplo para la construcción de intervalos de confianza, que se tratarán en la Sección \@ref(icboot-trans)).
 
@@ -961,14 +926,10 @@ estadistico_boot <- res.boot$t - res.boot$t0
 hist(estadistico_boot)
 ```
 
-\begin{figure}[!htb]
-
-{\centering \includegraphics[width=0.75\linewidth]{09-Bootstrap_files/figure-latex/plot-boot-basico-1} 
-
-}
-
-\caption{Distribución bootstrap del estadístico percentil básico para el coeficiente de correlación.}(\#fig:plot-boot-basico)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="09-Bootstrap_files/figure-html/plot-boot-basico-1.png" alt="Distribución bootstrap del estadístico percentil básico para el coeficiente de correlación." width="70%" />
+<p class="caption">(\#fig:plot-boot-basico)Distribución bootstrap del estadístico percentil básico para el coeficiente de correlación.</p>
+</div>
 
 Podemos emplear la distribución empírica del estadístico bootstrap $R^{\ast} = \hat \theta^{\ast} - \hat \theta$ para aproximar la característica de interés de la distribución en el muestreo de $R = \hat \theta - \theta$.
 Por ejemplo, para aproximar $\psi(u) = P\left( R \leq u \right)$ podríamos emplear la frecuencia relativa: 
@@ -982,7 +943,7 @@ sum(estadistico_boot <= u)/B
 ```
 
 ```
- ## [1] 0.427
+## [1] 0.427
 ```
 
 ```r
@@ -991,7 +952,7 @@ mean(estadistico_boot <= u)
 ```
 
 ```
- ## [1] 0.427
+## [1] 0.427
 ```
 
 

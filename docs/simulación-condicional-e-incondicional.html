@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6.5 Simulación condicional e incondicional | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6.5 Simulación condicional e incondicional | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -364,9 +368,9 @@ div.csl-indent {
 <li class="chapter" data-level="A.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>A.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="A.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>A.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="A.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>A.2.3</b> Gráfico de dispersion retardado</a></li>
-<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
 <li class="chapter" data-level="A.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>A.2.5</b> Test de rachas</a></li>
-<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
+<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#ljungbox"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
 <li class="chapter" data-level="A.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>A.3</b> Contrastes específicos para generadores aleatorios</a>
 <ul>
@@ -421,11 +425,13 @@ div.csl-indent {
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
 <ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -537,7 +543,7 @@ valores de una simulación incondicional como los datos:</p>
 <span id="cb236-10"><a href="simulación-condicional-e-incondicional.html#cb236-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   Simulaciones condicionales</span></span>
 <span id="cb236-11"><a href="simulación-condicional-e-incondicional.html#cb236-11" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(t[<span class="sc">!</span>idata], ycond, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">add =</span> <span class="cn">TRUE</span>) </span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:funcional-cond"></span>
-<img src="06-Simulacion_multidimensional_files/figure-html/funcional-cond-1.png" alt="Realizaciones condicionales (líneas de puntos) del proceso funcional del Ejemplo 6.7 (datos: línea continua, tendencia/media incondicional: linea gruesa continua, predicción/media condicional: linea gruesa discontinua)." width="75%" />
+<img src="06-Simulacion_multidimensional_files/figure-html/funcional-cond-1.png" alt="Realizaciones condicionales (líneas de puntos) del proceso funcional del Ejemplo 6.7 (datos: línea continua, tendencia/media incondicional: linea gruesa continua, predicción/media condicional: linea gruesa discontinua)." width="70%" />
 <p class="caption">
 Figura 6.4: Realizaciones condicionales (líneas de puntos) del proceso funcional del Ejemplo <a href="simulación-condicional-e-incondicional.html#exm:funcionalcond">6.7</a> (datos: línea continua, tendencia/media incondicional: linea gruesa continua, predicción/media condicional: linea gruesa discontinua).
 </p>
@@ -575,7 +581,7 @@ mediante la función <code>grf</code>:</p>
 ## [3,] 0 1
 ## [4,] 1 1</code></pre>
 <div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="simulación-condicional-e-incondicional.html#cb241-1" aria-hidden="true" tabindex="-1"></a>z<span class="sc">$</span>data</span></code></pre></div>
-<pre><code>## [1] -0.62645381 -0.05969442 -0.98014198  1.09215113</code></pre>
+<pre><code>## [1] -0.626454 -0.059694 -0.980142  1.092151</code></pre>
 <p>La <code>grf</code> función emplea por defecto el método de la factorización de la matriz de covarianzas,
 sin embargo, si se desean obtener múltiples realizaciones, en lugar de llamar repetidamente a esta función (lo que implicaría factorizar repetidamente la matriz de covarianzas),
 puede ser preferible emplear un código similar al siguiente (de forma que solo se realiza una vez dicha factorización, y suponiendo además que no es necesario conservar las distintas realizaciones):</p>
@@ -587,11 +593,11 @@ puede ser preferible emplear un código similar al siguiente (de forma que solo 
 <span id="cb243-6"><a href="simulación-condicional-e-incondicional.html#cb243-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de varianzas covarianzas</span></span>
 <span id="cb243-7"><a href="simulación-condicional-e-incondicional.html#cb243-7" aria-hidden="true" tabindex="-1"></a>cov.matrix <span class="ot">&lt;-</span> <span class="fu">varcov.spatial</span>(<span class="at">coords=</span>data.s, <span class="at">cov.pars=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))<span class="sc">$</span>varcov</span>
 <span id="cb243-8"><a href="simulación-condicional-e-incondicional.html#cb243-8" aria-hidden="true" tabindex="-1"></a>cov.matrix</span></code></pre></div>
-<pre><code>##           [,1]      [,2]      [,3]      [,4]
-## [1,] 1.0000000 0.3678794 0.3678794 0.2431167
-## [2,] 0.3678794 1.0000000 0.2431167 0.3678794
-## [3,] 0.3678794 0.2431167 1.0000000 0.3678794
-## [4,] 0.2431167 0.3678794 0.3678794 1.0000000</code></pre>
+<pre><code>##         [,1]    [,2]    [,3]    [,4]
+## [1,] 1.00000 0.36788 0.36788 0.24312
+## [2,] 0.36788 1.00000 0.24312 0.36788
+## [3,] 0.36788 0.24312 1.00000 0.36788
+## [4,] 0.24312 0.36788 0.36788 1.00000</code></pre>
 <div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="simulación-condicional-e-incondicional.html#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simular valores</span></span>
 <span id="cb245-2"><a href="simulación-condicional-e-incondicional.html#cb245-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
 <span id="cb245-3"><a href="simulación-condicional-e-incondicional.html#cb245-3" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">chol</span>(cov.matrix))</span>
@@ -603,11 +609,11 @@ puede ser preferible emplear un código similar al siguiente (de forma que solo 
 <span id="cb245-9"><a href="simulación-condicional-e-incondicional.html#cb245-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># calcular estadísticos, errores,...</span></span>
 <span id="cb245-10"><a href="simulación-condicional-e-incondicional.html#cb245-10" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb245-11"><a href="simulación-condicional-e-incondicional.html#cb245-11" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div>
-<pre><code>##             [,1]
-## [1,] -0.62645381
-## [2,] -0.05969442
-## [3,] -0.98014198
-## [4,]  1.09215113</code></pre>
+<pre><code>##           [,1]
+## [1,] -0.626454
+## [2,] -0.059694
+## [3,] -0.980142
+## [4,]  1.092151</code></pre>
 <p>Para generar simulaciones condicionales podemos emplear la función <code>krige.conv</code>.
 Por ejemplo, para generar 4 simulaciones en la rejilla regular <span class="math inline">\(10\times10\)</span> en el cuadrado unidad <span class="math inline">\([0,1] \times [0,1]\)</span> condicionadas a los valores generados en el apartado anterior podríamos emplear el siguiente código:</p>
 <div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="simulación-condicional-e-incondicional.html#cb247-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Posiciones simulación condicional</span></span>
@@ -664,7 +670,7 @@ Figura 6.6: Simulaciones condicionales
 <h3><span class="header-section-number">6.5.2</span> Simulación condicional a partir de un modelo ajustado<a href="simulación-condicional-e-incondicional.html#simulación-condicional-a-partir-de-un-modelo-ajustado" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>En la práctica normalmente se ajusta un modelo a los datos observados y posteriormente se obtienen las simulaciones condicionadas empleando el modelo ajustado
 (esto también se denomina bootstrap paramétrico condicional).</p>
-<p>En R se incluye una función genérica<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a> <code>simulate()</code> que permite generar respuestas a partir de modelos ajustados (siempre que esté implementado el método correspondiente al tipo de modelo).
+<p>En R se incluye una función genérica<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a> <code>simulate()</code> que permite generar respuestas a partir de modelos ajustados (siempre que esté implementado el método correspondiente al tipo de modelo).
 Los métodos para modelos lineales y modelos lineales generalizamos están implementados en el paquete base <code>stats</code>.
 Muchos otros paquetes que proporcionan modelos adicionales, implementan también los correspondientes métodos <code>simulate()</code>.
 Por ejemplo, en el caso de series de tiempo, el paquete <code>forecast</code> permite ajustar distintos tipos de modelos y generar simulaciones a partir de ellos:</p>
@@ -674,7 +680,7 @@ Por ejemplo, en el caso de series de tiempo, el paquete <code>forecast</code> pe
 <span id="cb252-3"><a href="simulación-condicional-e-incondicional.html#cb252-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(data, <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;Concentración atmosférica de CO&quot;</span>[<span class="dv">2</span>]),</span>
 <span id="cb252-4"><a href="simulación-condicional-e-incondicional.html#cb252-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Fecha&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1990</span>, <span class="dv">2000</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">350</span>, <span class="dv">375</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:co2-forecast"></span>
-<img src="06-Simulacion_multidimensional_files/figure-html/co2-forecast-1.png" alt="Concentración atmosférica de CO2 en el observatorio de Mauna Loa (desde el principio de 1990 hasta el final de 1997; ver datasets::co2)." width="75%" />
+<img src="06-Simulacion_multidimensional_files/figure-html/co2-forecast-1.png" alt="Concentración atmosférica de CO2 en el observatorio de Mauna Loa (desde el principio de 1990 hasta el final de 1997; ver datasets::co2)." width="70%" />
 <p class="caption">
 Figura 6.7: Concentración atmosférica de CO2 en el observatorio de Mauna Loa (desde el principio de 1990 hasta el final de 1997; ver <a href="https://rdrr.io/r/datasets/co2.html"><code>datasets::co2</code></a>).
 </p>
@@ -685,27 +691,27 @@ Figura 6.7: Concentración atmosférica de CO2 en el observatorio de Mauna Loa (
 <p>Podemos obtener predicciones (media de la distribución condicional) e intervalos de predicción:</p>
 <div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="simulación-condicional-e-incondicional.html#cb254-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> <span class="dv">24</span>, <span class="at">level =</span> <span class="dv">95</span>)</span>
 <span id="cb254-2"><a href="simulación-condicional-e-incondicional.html#cb254-2" aria-hidden="true" tabindex="-1"></a>pred</span></code></pre></div>
-<pre><code>##          Point Forecast    Lo 95    Hi 95
-## Jan 1998       365.1118 364.5342 365.6894
-## Feb 1998       366.1195 365.4572 366.7819
-## Mar 1998       367.0161 366.2786 367.7535
-## Apr 1998       368.2749 367.4693 369.0806
-## May 1998       368.9282 368.0596 369.7968
-## Jun 1998       368.2240 367.2967 369.1513
-## Jul 1998       366.5823 365.5997 367.5649
-## Aug 1998       364.4895 363.4546 365.5244
-## Sep 1998       362.6586 361.5738 363.7434
-## Oct 1998       362.7805 361.6479 363.9130
-## Nov 1998       364.2045 363.0262 365.3829
-## Dec 1998       365.5250 364.3025 366.7476
-## Jan 1999       366.6002 365.3349 367.8654
-## Feb 1999       367.6078 366.3013 368.9144
-## Mar 1999       368.5044 367.1578 369.8510
-## Apr 1999       369.7633 368.3777 371.1488
-## May 1999       370.4165 368.9930 371.8400
-## Jun 1999       369.7124 368.2519 371.1728
-## Jul 1999       368.0706 366.5741 369.5671
-## Aug 1999       365.9778 364.4461 367.5096
+<pre><code>##          Point Forecast  Lo 95  Hi 95
+## Jan 1998         365.11 364.53 365.69
+## Feb 1998         366.12 365.46 366.78
+## Mar 1998         367.02 366.28 367.75
+## Apr 1998         368.27 367.47 369.08
+## May 1998         368.93 368.06 369.80
+## Jun 1998         368.22 367.30 369.15
+## Jul 1998         366.58 365.60 367.56
+## Aug 1998         364.49 363.45 365.52
+## Sep 1998         362.66 361.57 363.74
+## Oct 1998         362.78 361.65 363.91
+## Nov 1998         364.20 363.03 365.38
+## Dec 1998         365.53 364.30 366.75
+## Jan 1999         366.60 365.33 367.87
+## Feb 1999         367.61 366.30 368.91
+## Mar 1999         368.50 367.16 369.85
+## Apr 1999         369.76 368.38 371.15
+## May 1999         370.42 368.99 371.84
+## Jun 1999         369.71 368.25 371.17
+## Jul 1999         368.07 366.57 369.57
+## Aug 1999         365.98 364.45 367.51
 ##  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 4 rows ]</code></pre>
 <p>Para análisis adicionales nos puede interesar generar simulaciones (por defecto de la distribución condicional, <code>future = TRUE</code>):</p>
 <div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="simulación-condicional-e-incondicional.html#cb256-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">321</span>)</span>
@@ -715,18 +721,24 @@ Figura 6.7: Concentración atmosférica de CO2 en el observatorio de Mauna Loa (
 <span id="cb256-5"><a href="simulación-condicional-e-incondicional.html#cb256-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;Concentración atmosférica de CO&quot;</span>[<span class="dv">2</span>]))</span>
 <span id="cb256-6"><a href="simulación-condicional-e-incondicional.html#cb256-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(sim.cond, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:simulate-forecast"></span>
-<img src="06-Simulacion_multidimensional_files/figure-html/simulate-forecast-1.png" alt="Ejemplo de una serie de tiempo (datos observados de co2 en el observatorio Mauna Loa), predicciones futuras (en azul; media distribución condicional) y simulación condicional (en rojo) obtenidas a partir de un modelo ajustado." width="75%" />
+<img src="06-Simulacion_multidimensional_files/figure-html/simulate-forecast-1.png" alt="Ejemplo de una serie de tiempo (datos observados de co2 en el observatorio Mauna Loa), predicciones futuras (en azul; media distribución condicional) y simulación condicional (en rojo) obtenidas a partir de un modelo ajustado." width="70%" />
 <p class="caption">
 Figura 6.8: Ejemplo de una serie de tiempo (datos observados de co2 en el observatorio Mauna Loa), predicciones futuras (en azul; media distribución condicional) y simulación condicional (en rojo) obtenidas a partir de un modelo ajustado.
 </p>
 </div>
-<p>Para más detalles ver Hyndman y Athanasopoulos (2018, secciones <a href="https://otexts.com/fpp2/prediction-intervals.html">4.3</a> y <a href="https://otexts.com/fpp2/bootstrap.html">11.4</a>).</p>
+<p>Para más detalles ver las secciones <a href="https://otexts.com/fpp2/prediction-intervals.html">4.3</a> y <a href="https://otexts.com/fpp2/bootstrap.html">11.4</a>) de <span class="citation">Hyndman y Athanasopoulos (<a href="#ref-hyndman2018" role="doc-biblioref">2018</a>)</span>.</p>
+</div>
+</div>
+<h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-hyndman2018" class="csl-entry">
+Hyndman, R. J., y Athanasopoulos, G. (2018). <em>Forecasting: principles and practice (2nd edition)</em>. OTexts. <a href="https://otexts.com/fpp2">https://otexts.com/fpp2</a>
 </div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="25">
-<li id="fn25"><p>Se pueden implementar métodos específicos para cada tipo (clase) de objeto; en este caso para cada tipo de modelo ajustado y podemos mostrar los disponibles mediante el comando <code>methods(simulate)</code>.<a href="simulación-condicional-e-incondicional.html#fnref25" class="footnote-back">↩︎</a></p></li>
+<ol start="26">
+<li id="fn26"><p>Se pueden implementar métodos específicos para cada tipo (clase) de objeto; en este caso para cada tipo de modelo ajustado y podemos mostrar los disponibles mediante el comando <code>methods(simulate)</code>.<a href="simulación-condicional-e-incondicional.html#fnref26" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

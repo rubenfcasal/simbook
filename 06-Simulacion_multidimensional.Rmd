@@ -165,7 +165,7 @@ Escribir una función que implemente el algoritmo del ejemplo anterior, emplearl
 ::: {.example #ar-esfera name="distribución uniforme en la esfera"}
 <br>
 
-Supongamos que el objetivo es simular puntos uniformemente distribuidos sobre la “esfera” unitaria $d$-dimensional `r citefig("simpiplot")`:
+Supongamos que el objetivo es simular puntos uniformemente distribuidos sobre la “esfera” unitaria $d$-dimensional `r cite_fig(simpiplot)`:
 $$C_d=\left\{  \left( x_1, x_2, \ldots, x_d \right) \in \mathbb{R}^d
 : x_1^2 + x_2^2 + \cdots + x_d^2 \leq1 \right\}.$$
 
@@ -775,12 +775,12 @@ plot(pred, main = "", xlab = "Fecha",
 lines(sim.cond, lwd = 2, col = "red")
 ```
 
-Para más detalles ver Hyndman y Athanasopoulos (2018, secciones [4.3](https://otexts.com/fpp2/prediction-intervals.html) y [11.4](https://otexts.com/fpp2/bootstrap.html)).
+Para más detalles ver las secciones [4.3](https://otexts.com/fpp2/prediction-intervals.html) y [11.4](https://otexts.com/fpp2/bootstrap.html)) de @hyndman2018.
 
 
 ## Simulación basada en cópulas
 
-Una cópula es una función de distribución multidimensional con distribuciones marginales uniformes (e.g. Nelsen, 2006; Hofert, 2018).
+Una cópula es una función de distribución multidimensional con distribuciones marginales uniformes [e.g. @nelsen2006; @hofert2018].
 Se emplean principalmente para la construcción de distribuciones multivariantes a partir de distribuciones marginales (también en análisis de dependencia y medidas de asociación).
 La idea es que la estructura de dependencia no depende de las distribuciones marginales. 
 
@@ -857,7 +857,7 @@ rcclayton <- function(alpha, n) {
 }
 ```
 
-Utilizando esta función generamos una muestra de tamaño 10000 y representamos gráficamente los valores obtenidos`r latexfig("cclayton2-dispersion")`:
+Utilizando esta función generamos una muestra de tamaño 10000 y representamos gráficamente los valores obtenidos`r latexfig2(cclayton2-dispersion)`:
 
 ```{r cclayton2-dispersion, fig.cap="Gráfico de dispersión de los valores generados con distribución bidimensional de Clayton."}
 set.seed(54321)
@@ -865,14 +865,14 @@ rcunif <- rcclayton(2, 10000)
 plot(rcunif, xlab = "u", ylab = "v")
 ```
 
-Podemos representar la densidad conjunta (con `sm::sm.density()`)`r latexfig("cclayton2-conjunta")`:
+Podemos representar la densidad conjunta (con `sm::sm.density()`)`r latexfig2(cclayton2-conjunta)`:
 
 ```{r cclayton2-conjunta, fig.cap="Densidad conjunta de los valores generados con distribución bidimensional de Clayton", message=FALSE, warning=FALSE, fig.dim=c(10, 10)}
 # if(!require(sm)) stop('Required package `sm` not installed.')
 sm::sm.density(rcunif, xlab = "u", ylab = "v", zlab = "Density")    
 ```
 
-y las distribuciones marginales`r latexfig("cclayton2-marginales")`:
+y las distribuciones marginales`r latexfig2(cclayton2-marginales)`:
 
 ```{r cclayton2-marginales, fig.cap="Distribuciones marginales de los valores generados con distribución bidimensional de Clayton.", fig.dim=c(12, 6), out.width="90%"}
 par.old <- par(mfrow = c(1, 2))
@@ -883,7 +883,7 @@ abline(h = 1)
 par(par.old)
 ```
 
-Empleando el paquete *copula*`r latexfig("cclayton2b-dispersion", "cclayton3-dispersion")`:
+Empleando el paquete *copula* `r latexfig2(cclayton2b-dispersion, cclayton3-dispersion)`:
 
 ```{r cclayton2b-dispersion, fig.cap="Gráfico de dispersión de los valores generados con distribución bidimensional de Clayton empleando el paquete `copula`."}
 if(!require(copula)) stop('Required pakage `copula` not installed.')
@@ -902,7 +902,7 @@ plot3D:::points3D(y[,1], y[,2], y[, 3], colvar = NULL,
                   xlab = "u1", ylab = "u2", zlab = "u3") 
 ```
 
-Por ejemplo, podemos generar una muestra de una variable aleatoria bidimensional con distribuciones marginales exponenciales de parámetros 1 y 2, respectivamente (y distribución bidimensional determinada por la cópula de Clayton), transformando la muestra anterior`r latexfig("cclayton-exp-conjunta", "cclayton-exp-marginales")`:
+Por ejemplo, podemos generar una muestra de una variable aleatoria bidimensional con distribuciones marginales exponenciales de parámetros 1 y 2, respectivamente (y distribución bidimensional determinada por la cópula de Clayton), transformando la muestra anterior`r latexfig2(cclayton-exp-conjunta, cclayton-exp-marginales)`:
 
 ```{r cclayton-exp-conjunta, message=FALSE, warning=FALSE, fig.cap="Gráfico de dispersión de los valores generados con distribución exponencial y dependencia definida por la cópula de Clayton."}
 rcexp <- cbind(qexp(rcunif[,1], 1), qexp(rcunif[,2], 2))
@@ -978,7 +978,7 @@ No obstante, se podría emplear el indexado anterior si todas las componentes me
 ### Simulación de una variable discreta bidimensional
 
 Consideramos datos recogidos en un estudio de mejora de calidad en una fábrica de semiconductores. 
-Se obtuvo una muestra de obleas que se clasificaron dependiendo de si se encontraron partículas en la matriz que producía la oblea y de si la calidad de oblea era buena (para más detalles ver Hall, 1994).
+Se obtuvo una muestra de obleas que se clasificaron dependiendo de si se encontraron partículas en la matriz que producía la oblea y de si la calidad de oblea era buena [para más detalles ver @hall1994].
 
 ```{r }
 n <- c(320, 14, 80, 36)
@@ -1131,7 +1131,7 @@ pvalue.mc <- mean(sim.stat >= obs.stat)
 pvalue.mc
 ```
 
-Esto es similar a lo que realiza la función `chisq.test()` con la opción `simulate.p.value = TRUE` (empleando el algoritmo de Patefield, 1981):
+Esto es similar a lo que realiza la función `chisq.test()` con la opción `simulate.p.value = TRUE` [empleando el algoritmo de @patefield1981]:
 
 ```{r}
 chisq.test(tabla, simulate.p.value = TRUE, B = 2000)

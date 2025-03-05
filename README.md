@@ -15,7 +15,7 @@ Se puede acceder a la versión en línea a través del siguiente enlace:
 donde puede descargarse en formato [pdf](https://rubenfcasal.github.io/simbook/Simulacion.pdf).
 
 
-Para poder ejecutar los ejemplos mostrados en el libro es recomendable emplear el paquete `r cite_simres()`, ***no disponible actualmente en CRAN***, aunque se puede instalar la versión de desarrollo en [GitHub](https://github.com/rubenfcasal/simres)):
+Para poder ejecutar los ejemplos mostrados en el libro es recomendable emplear el paquete [`simres`](https://rubenfcasal.github.io/simres), ***no disponible actualmente en CRAN***, aunque se puede instalar la versión de desarrollo en [GitHub](https://github.com/rubenfcasal/simres)):
 ```{r eval=FALSE}
 # install.packages("remotes")
 remotes::install_github("rubenfcasal/simres")

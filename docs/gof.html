@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>A.1 Métodos de bondad de ajuste | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="A.1 Métodos de bondad de ajuste | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -364,9 +368,9 @@ div.csl-indent {
 <li class="chapter" data-level="A.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>A.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="A.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>A.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="A.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>A.2.3</b> Gráfico de dispersion retardado</a></li>
-<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
 <li class="chapter" data-level="A.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>A.2.5</b> Test de rachas</a></li>
-<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
+<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#ljungbox"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
 <li class="chapter" data-level="A.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>A.3</b> Contrastes específicos para generadores aleatorios</a>
 <ul>
@@ -421,11 +425,13 @@ div.csl-indent {
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
 <ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -493,7 +499,7 @@ Además de los específicos de normalidad (<span class="math inline">\(H_0:F= \m
 <h3><span class="header-section-number">A.1.1</span> Histograma<a href="gof.html#histograma" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Se agrupan los datos en intervalos <span class="math inline">\(I_{k}=\left[ L_{k-1},L_{k}\right)\)</span> con <span class="math inline">\(k=1, \ldots, K\)</span> y a cada intervalo se le asocia un valor (altura de la barra) igual a la frecuencia absoluta de ese intervalo <span class="math inline">\(n_k = \sum_{i=1}^{n}\mathbf{1}\left( X_i \in [L_{k-1},L_{k}) \right)\)</span>, si la longitud de los intervalos es constante, o proporcional a dicha frecuencia (de forma que el área coincida con la frecuencia relativa y pueda ser comparado con una función de densidad):
 <span class="math display">\[\hat{f}_n(x)=\frac{n_{i}}{n\left(  L_{k}-L_{k-1}\right)}\]</span></p>
-<p>Como ya se ha visto anteriormente, en R podemos generar este gráfico con la función <code>hist()</code> del paquete base.
+<p>Como ya se ha visto anteriormente, en R podemos generar este gráfico con la función <a href="https://rdrr.io/r/graphics/hist.html"><code>hist()</code></a> del paquete base.
 Algunos de los principales parámetros (con los valores por defecto) son los siguientes:</p>
 <div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb660-1"><a href="gof.html#cb660-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">breaks =</span> <span class="st">&quot;Sturges&quot;</span>, <span class="at">freq =</span> <span class="cn">NULL</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>, ...)</span></code></pre></div>
 <ul>
@@ -509,12 +515,12 @@ Algunos de los principales parámetros (con los valores por defecto) son los sig
 <span id="cb661-5"><a href="gof.html#cb661-5" aria-hidden="true" tabindex="-1"></a>  <span class="fl">14.35</span>,<span class="fl">11.14</span>,<span class="fl">9.93</span>,<span class="fl">20.22</span>,<span class="fl">17.73</span>,<span class="fl">19.05</span>)</span>
 <span id="cb661-6"><a href="gof.html#cb661-6" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(datos, <span class="at">freq =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb661-7"><a href="gof.html#cb661-7" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="fu">mean</span>(datos), <span class="fu">sd</span>(datos)), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-2-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-2-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Si el número de valores es muy grande (por ejemplo en el caso de secuencias aleatorias), nos puede interesar establecer la opción <code>breaks = "FD"</code> para aumentar el número de intervalos de discretización.
 En cualquier caso, como se muestra en la Figura <a href="gof.html#fig:hist-movie">A.1</a>, la convergencia del histograma a la densidad teórica se podría considerar bastante lenta.
 Alternativamente se podría considerar una estimación suave de la densidad, por ejemplo empleando la estimación tipo núcleo implementada en la función <code>density()</code>.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:hist-movie"></span>
-<img src="images/hist-movie.gif" alt="Convergencia del histograma a la densidad teórica." width="75%" />
+<img src="images/hist-movie.gif" alt="Convergencia del histograma a la densidad teórica." width="70%" />
 <p class="caption">
 Figura A.1: Convergencia del histograma a la densidad teórica.
 </p>
@@ -531,13 +537,14 @@ Para obtener las frecuencias relativas acumuladas, se ordena la muestra <span cl
 1 &amp; \text{si } &amp; X_{\left(  n\right)  }\leq x
 \end{array}
 \right.\]</span></p>
+<p>En R podemos obtener la función de distribución empírica con <a href="https://rdrr.io/r/stats/ecdf.html"><code>ecdf()</code></a> (el objeto que devuelve es una función).</p>
 <p>Ejemplo:</p>
 <div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb662-1"><a href="gof.html#cb662-1" aria-hidden="true" tabindex="-1"></a>fn <span class="ot">&lt;-</span> <span class="fu">ecdf</span>(datos)</span>
 <span id="cb662-2"><a href="gof.html#cb662-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">ecdf</span>(datos)(x), <span class="at">xlim =</span> <span class="fu">extendrange</span>(datos), <span class="at">type =</span> <span class="st">&#39;s&#39;</span>, </span>
 <span id="cb662-3"><a href="gof.html#cb662-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">&#39;distribution function&#39;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
 <span id="cb662-4"><a href="gof.html#cb662-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">pnorm</span>(x, <span class="fu">mean</span>(datos), <span class="fu">sd</span>(datos)), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ecdfplot"></span>
-<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/ecdfplot-1.png" alt="Comparación de la distribución empírica de los datos de ejemplo con la función de distribución de la aproximación normal." width="75%" />
+<img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/ecdfplot-1.png" alt="Comparación de la distribución empírica de los datos de ejemplo con la función de distribución de la aproximación normal." width="70%" />
 <p class="caption">
 Figura A.2: Comparación de la distribución empírica de los datos de ejemplo con la función de distribución de la aproximación normal.
 </p>
@@ -564,14 +571,14 @@ siendo <span class="math inline">\(F_n\)</span> la función de distribución emp
 Si <span class="math inline">\(H_0\)</span> es cierta, la nube de puntos estará en torno a la recta <span class="math inline">\(y=x\)</span> (probabilidades observadas próximas a las esperadas bajo <span class="math inline">\(H_0\)</span>).</p>
 <p>El gráfico Q-Q (cuantil-cuantil) es equivalente al anterior pero en la escala de la variable:
 <span class="math display">\[\left\{ \left( q_{i}, x_{(i)}\right) : i=1, \cdots, n \right\}\]</span>
-siendo <span class="math inline">\(x_{(i)}\)</span> los cuantiles observados y <span class="math inline">\(q_{i}=F_0^{-1}(p_{i})\)</span> los esperados<a href="#fn43" class="footnote-ref" id="fnref43"><sup>43</sup></a> bajo <span class="math inline">\(H_0\)</span>.</p>
+siendo <span class="math inline">\(x_{(i)}\)</span> los cuantiles observados y <span class="math inline">\(q_{i}=F_0^{-1}(p_{i})\)</span> los esperados<a href="#fn44" class="footnote-ref" id="fnref44"><sup>44</sup></a> bajo <span class="math inline">\(H_0\)</span>.</p>
 <p>Ejemplo:</p>
 <div class="sourceCode" id="cb663"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb663-1"><a href="gof.html#cb663-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(datos)</span>
 <span id="cb663-2"><a href="gof.html#cb663-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(datos)</span></code></pre></div>
-<p><img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-3-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb664"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb664-1"><a href="gof.html#cb664-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(car)</span>
 <span id="cb664-2"><a href="gof.html#cb664-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqPlot</span>(datos, <span class="st">&quot;norm&quot;</span>)</span></code></pre></div>
-<p><img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-3-2.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-3-2.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre><code>## [1] 10 38</code></pre>
 </div>
 <div id="chi2test" class="section level3 hasAnchor" number="12.1.4">
@@ -697,7 +704,7 @@ Por tanto se rechaza <span class="math inline">\(H_0\)</span>, para un nivel de 
 <p>Si realizamos el contraste a partir del p-valor o nivel crítico:
 <span class="math display">\[p=P\left(  {\chi_{k-r-1}^2\geq \sum \limits_{i=1}^{k}{\frac{(n_{i}-e_{i})^2}{e_{i}}}}\right)\]</span>
 rechazaremos <span class="math inline">\(H_0\)</span> si <span class="math inline">\(p\leq \alpha\)</span> (y cuanto menor sea se rechazará con mayor seguridad) y aceptaremos <span class="math inline">\(H_0\)</span> si <span class="math inline">\(p&gt;\)</span> <span class="math inline">\(\alpha\)</span> (con mayor seguridad cuanto mayor sea).</p>
-<p>Este método está implementado en la función <code>chisq.test()</code> para el caso discreto (no corrige los grados de libertad).
+<p>Este método está implementado en la función <a href="https://rdrr.io/r/stats/chisq.test.html"><code>chisq.test()</code></a> para el caso discreto (no corrige los grados de libertad).
 Ejemplo:</p>
 <div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb666-1"><a href="gof.html#cb666-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">trunc</span>(<span class="dv">5</span> <span class="sc">*</span> <span class="fu">runif</span>(<span class="dv">100</span>))</span>
 <span id="cb666-2"><a href="gof.html#cb666-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(x))            <span class="co"># NOT &#39;chisq.test(x)&#39;!</span></span></code></pre></div>
@@ -705,7 +712,7 @@ Ejemplo:</p>
 ##  Chi-squared test for given probabilities
 ## 
 ## data:  table(x)
-## X-squared = 3.9, df = 4, p-value = 0.4197</code></pre>
+## X-squared = 3.1, df = 4, p-value = 0.54</code></pre>
 <p>La distribución exacta del estadístico del contraste es discreta (se podría aproximar por simulación, por ejemplo empleando los parámetros <code>simulate.p.value = TRUE</code> y <code>B = 2000</code> de la función <code>chisq.test()</code>; ver también el Ejemplo <a href="mult-discr.html#exm:chicuadind">6.10</a> de la Sección <a href="mult-discr.html#simconting">6.7.2</a> para el caso del contraste chi-cuadrado de independencia).
 Para que la aproximación continua <span class="math inline">\(\chi^2\)</span> sea válida:</p>
 <ul>
@@ -729,7 +736,7 @@ problema con una de las adyacentes.</p></li>
 </ul>
 <p>Si la variable de interés es continua, una forma de garantizar que <span class="math inline">\(e_{i}\geq5\)</span> consiste en tomar un número de intervalos <span class="math inline">\(k\leq \lfloor n/5 \rfloor\)</span> y de forma que sean equiprobables <span class="math inline">\(p_{i}=1/k\)</span>,
 considerando los puntos críticos <span class="math inline">\(x_{i/k}\)</span> de la distribución bajo <span class="math inline">\(H_0\)</span>.</p>
-<p>Por ejemplo, se podría emplear la función <code>simres::chisq.cont.test()</code> (fichero <a href="R/test.R"><em>test.R</em></a>), que imita a las incluidas en R:</p>
+<p>Por ejemplo, se podría emplear la función <a href="https://rubenfcasal.github.io/simres/reference/chisq.cont.test.html"><code>simres::chisq.cont.test()</code></a> (fichero <a href="R/test.R"><em>test.R</em></a>), que imita a las incluidas en R:</p>
 <div class="sourceCode" id="cb668"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb668-1"><a href="gof.html#cb668-1" aria-hidden="true" tabindex="-1"></a>simres<span class="sc">::</span>chisq.cont.test</span></code></pre></div>
 <pre><code>## function(x, distribution = &quot;norm&quot;, nclass = floor(length(x)/5),
 ##                             output = TRUE, nestpar = 0, ...) {
@@ -774,28 +781,28 @@ considerando los puntos críticos <span class="math inline">\(x_{i/k}\)</span> d
 ##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
 ##                    method = METHOD, data.name = DNAME), RESULTS), class = &quot;htest&quot;)
 ## }
-## &lt;bytecode: 0x0000024dfce67a40&gt;
+## &lt;bytecode: 0x0000019b309f5db8&gt;
 ## &lt;environment: namespace:simres&gt;</code></pre>
 <p>Continuando con el ejemplo anterior, podríamos contrastar normalidad mediante:</p>
 <div class="sourceCode" id="cb670"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb670-1"><a href="gof.html#cb670-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(simres)</span>
 <span id="cb670-2"><a href="gof.html#cb670-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.cont.test</span>(datos, <span class="at">distribution =</span> <span class="st">&quot;norm&quot;</span>, <span class="at">nestpar =</span> <span class="dv">2</span>, <span class="at">mean=</span><span class="fu">mean</span>(datos), <span class="at">sd=</span><span class="fu">sd</span>(datos))</span></code></pre></div>
-<p><img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-6-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-6-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## Pearson&#39;s Chi-squared test table
-##               classes observed expected  residuals
-## 1 ( 9.06000,14.49908]        6    5.125  0.3865103
-## 2 (14.49908,16.94725]        3    5.125 -0.9386680
-## 3 (16.94725,18.77800]        4    5.125 -0.4969419
-## 4 (18.77800,20.41732]        6    5.125  0.3865103
-## 5 (20.41732,22.05663]        4    5.125 -0.4969419
-## 6 (22.05663,23.88739]        8    5.125  1.2699625
-## 7 (23.88739,26.33556]        4    5.125 -0.4969419
-## 8 (26.33556,30.77000]        6    5.125  0.3865103</code></pre>
+##           classes observed expected residuals
+## 1 ( 9.060,14.499]        6    5.125   0.38651
+## 2 (14.499,16.947]        3    5.125  -0.93867
+## 3 (16.947,18.778]        4    5.125  -0.49694
+## 4 (18.778,20.417]        6    5.125   0.38651
+## 5 (20.417,22.057]        4    5.125  -0.49694
+## 6 (22.057,23.887]        8    5.125   1.26996
+## 7 (23.887,26.336]        4    5.125  -0.49694
+## 8 (26.336,30.770]        6    5.125   0.38651</code></pre>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test
 ## 
 ## data:  datos
-## X-squared = 3.6829, df = 5, p-value = 0.5959</code></pre>
+## X-squared = 3.68, df = 5, p-value = 0.6</code></pre>
 </div>
 <div id="ks-test" class="section level3 hasAnchor" number="12.1.5">
 <h3><span class="header-section-number">A.1.5</span> Contraste de Kolmogorov-Smirnov<a href="gof.html#ks-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -815,7 +822,7 @@ D_n  &amp; =\max_{1\leq i\leq n}\left \{  \frac{i}n-F_0(X_{(i)}),F_0(X_{(i)})-\f
 Esta distribución está tabulada (para tamaños muestrales grandes se utiliza la aproximación asintótica).
 Se rechaza <span class="math inline">\(H_0\)</span> si el valor observado <span class="math inline">\(d\)</span> del estadístico es significativamente grande:
 <span class="math display">\[p = P \left( D_n \geq d \right) \leq \alpha.\]</span>
-Este método está implementado en la función <code>ks.test()</code> del paquete base de R:</p>
+Este método está implementado en la función <a href="https://rdrr.io/r/stats/ks.test.html"><code>ks.test()</code></a> del paquete base de R:</p>
 <div class="sourceCode" id="cb673"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb673-1"><a href="gof.html#cb673-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(x, y, ...)</span></code></pre></div>
 <p>donde <code>x</code> es un vector que contiene los datos, <code>y</code> es una función de distribución
 (o una cadena de texto que la especifica; también puede ser otro vector de datos
@@ -826,7 +833,7 @@ para el contraste de dos muestras) y <code>...</code> representa los parámetros
 ##  Asymptotic one-sample Kolmogorov-Smirnov test
 ## 
 ## data:  datos
-## D = 0.13239, p-value = 0.4688
+## D = 0.132, p-value = 0.47
 ## alternative hypothesis: two-sided</code></pre>
 <p>Si <span class="math inline">\(H_0\)</span> es compuesta, el procedimiento habitual es estimar los parámetros desconocidos
 por máxima verosimilitud y emplear <span class="math inline">\(\hat{F}_0\)</span> en lugar de <span class="math inline">\(F_0\)</span>.
@@ -835,7 +842,7 @@ que <span class="math inline">\(F_0\)</span> a la distribución empírica, por l
 <span class="math inline">\(D_n\)</span> pueden ser demasiado conservativos (los <span class="math inline">\(p\)</span>-valores tenderán a ser mayores de
 lo que deberían) y se tenderá a aceptar la hipótesis nula (puede ser preferible aproximar el <span class="math inline">\(p\)</span>-valor mediante simulación; como se muestra en el Ejercicio <a href="aplic-inf.html#exr:ks-test-sim">7.6</a> de la Sección <a href="aplic-inf.html#contrastes">7.4.3</a>).</p>
 <p>Para evitar este problema, en el caso de contrastar normalidad se desarrolló el test
-de Lilliefors, implementado en la función <code>lillie.test()</code> del paquete <code>nortest</code>
+de Lilliefors, implementado en la función <a href="https://rdrr.io/pkg/nortest/man/lillie.test.html"><code>lillie.test()</code></a> del paquete <a href="https://CRAN.R-project.org/package=nortest"><code>nortest</code></a>
 (también hay versiones en este paquete para los métodos de Cramer-von Mises y
 Anderson-Darling).</p>
 <p>Por ejemplo:</p>
@@ -844,7 +851,7 @@ Anderson-Darling).</p>
 ##  Asymptotic one-sample Kolmogorov-Smirnov test
 ## 
 ## data:  datos
-## D = 0.097809, p-value = 0.8277
+## D = 0.0978, p-value = 0.83
 ## alternative hypothesis: two-sided</code></pre>
 <div class="sourceCode" id="cb678"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb678-1"><a href="gof.html#cb678-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nortest)</span>
 <span id="cb678-2"><a href="gof.html#cb678-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lillie.test</span>(datos)</span></code></pre></div>
@@ -852,13 +859,13 @@ Anderson-Darling).</p>
 ##  Lilliefors (Kolmogorov-Smirnov) normality test
 ## 
 ## data:  datos
-## D = 0.097809, p-value = 0.4162</code></pre>
+## D = 0.0978, p-value = 0.42</code></pre>
 </div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="43">
-<li id="fn43"><p>Típicamente <span class="math inline">\(\left \{ p_{i}=\frac{\left(i-0.5 \right)}n : i=1, \cdots, n \right\}\)</span>.<a href="gof.html#fnref43" class="footnote-back">↩︎</a></p></li>
+<ol start="44">
+<li id="fn44"><p>Típicamente <span class="math inline">\(\left \{ p_{i}=\frac{\left(i-0.5 \right)}n : i=1, \cdots, n \right\}\)</span>.<a href="gof.html#fnref44" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

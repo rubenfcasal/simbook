@@ -129,8 +129,8 @@ mc.integral0(fun, 0, 1, 100)
 mc.integral0(fun, 0, 1, 100)
 ```
 
-La función `mc.integral0` no es adecuada para analizar la convergencia de la aproximación por simulación.
-Una alternativa más eficiente para representar gráficamente la convergencia está implementada en la función  `r cite_fsimres("mc.integral")` del paquete `r cite_simres()` (fichero [*mc.plot.R*](R/mc.plot.R)):
+La función `mc.integral0()` no es adecuada para analizar la convergencia de la aproximación por simulación.
+Una alternativa más eficiente para representar gráficamente la convergencia está implementada en la función `r cite_fgithub(mc.integral)` del paquete `r cite_github()` (fichero [*mc.plot.R*](R/mc.plot.R)):
 
 ```{r mc-integral, fig.cap="Convergencia de la aproximación de la integral mediante simulación."}
 library(simres)
@@ -147,7 +147,7 @@ set.seed(1)
 mc.integral(fun, 0, 1, 5000, plot = FALSE)
 ```
 
-**Nota**: Es importante tener en cuenta que la función `mc.integral()` solo es válida para dominio finito.
+**Nota**: Es importante tener en cuenta que la función `r cite_fgithub(mc.integral)` solo es válida para dominio finito.
 
 :::
 
@@ -342,9 +342,9 @@ boxplot(nsim * w/sum(w))
 
 Cuando $f$ y/o $g$ son cuasi-densidades, para evitar calcular constantes normalizadoras, se emplea como aproximación:
 $$\theta \approx \frac{\sum\limits_{i=1}^n w(y_i) h\left( y_i\right) }{ \sum\limits_{i=1}^n w(y_i)}.$$
-De hecho este estimador es empleado muchas veces en lugar del anterior ya que, aunque en general no es insesgado, puede ser más eficiente si $w(Y)$ y $w(Y)h(Y)$ están altamente correlacionadas (e.g. Liu, 2004, p.35).
+De hecho este estimador es empleado muchas veces en lugar del anterior ya que, aunque en general no es insesgado, puede ser más eficiente si $w(Y)$ y $w(Y)h(Y)$ están altamente correlacionadas [e.g. @liu2004, p.35].
 
-Adicionalmente, puede verse que con un muestreo de $\left\{y_1, y_2, \ldots, y_n \right\}$ ponderado por $w(y_i)$ (prob. $=w(y_i)\left/ \sum\nolimits_{i=1}^n w(y_i) \right.$ ) se obtiene una simulación aproximada de $f$ (*Sample importance resampling*, Rubin, 1987).
+Adicionalmente, puede verse que con un muestreo de $\left\{y_1, y_2, \ldots, y_n \right\}$ ponderado por $w(y_i)$ (prob. $=w(y_i)\left/ \sum\nolimits_{i=1}^n w(y_i) \right.$ ) se obtiene una simulación aproximada de $f$ [*Sample importance resampling*, @rubin1987].
 
 
 ::: {.example #mc-imp-sample name="simulación de normal estándar a partir de Cauchy; Sampling Importance Resampling"}
@@ -560,7 +560,7 @@ En cada paso se reemplaza la aproximación actual por un valor aleatorio “cerc
 -   Al ir disminuyendo la temperatura los cambios tienden a ser
     siempre “cuesta abajo”.
 
-Al tener una probabilidad no nula de aceptar una modificación “cuesta arriba” se trata de evitar quedar atrapado en un óptimo local `r citefig("templesimulado")`.
+Al tener una probabilidad no nula de aceptar una modificación “cuesta arriba” se trata de evitar quedar atrapado en un óptimo local `r cite_fig(templesimulado)`.
 
 ```{r templesimulado, echo=FALSE, fig.cap= "Fuente: Premchand Akella ([ppt](https://www.presentica.com/doc/11473134/simulated-annealing-pdf-document)).",}
 # ![](templesimulado.png)
@@ -1457,7 +1457,7 @@ d)  Diseñar una rutina que permita realizar el contraste KS de
     
     Realizar contrastes
     
-    ```{r ks.exp.sim}
+    ```{r ks.exp.sim, cache=TRUE}
     for(isim in 1:nsim) {
       rx <- rexp(nx, ratex)
       # tmp <- ks.test(rx, "pexp", 1/mean(rx))
@@ -1500,7 +1500,7 @@ e)  Estudiar la potencia de los contrastes de los apartados c) y d),
     CUIDADO: las simulaciones pueden requerir de mucho tiempo de computación
     (consideramos valores pequeños de `nx` y `nsim` en datos y en `ks.exp.sim`).
     
-    ```{r potencia}
+    ```{r potencia, cache=TRUE}
     set.seed(54321)
     nx <- 20
     ratex <- 1    # Puede ser interesante representarlo variando rate

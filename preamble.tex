@@ -1,12 +1,23 @@
+\usepackage[default]{fontsetup}
 \usepackage{booktabs}
-\usepackage[a4paper, top=3.25cm, bottom=2.5cm, left=3cm, right=2.5cm]{geometry}
+\usepackage{lmodern}
+\usepackage[a4paper, top=3.25cm, bottom=2.5cm, inner=2.5cm, outer=2.5cm]{geometry}
+%\usepackage[papersize={19cm, 24cm}, top=2.5cm, bottom=2cm, inner=2.5cm, outer=2cm]{geometry}
 %\usepackage{animate}
 %\usepackage{fontspec}
 %\setmainfont{Arial}
 % ---------------------------
+\usepackage{emptypage}
+% líneas viudas y huérfanas
+\widowpenalty=500
+\clubpenalty=500
+% ---------------------------
+% Space above/below an [h] float (default 12pt)
+\setlength{\intextsep}{18pt}
 % Leyendas de figuras y tablas
 \usepackage{caption}
 \captionsetup{font=small, labelfont=bf, margin={.08\textwidth}}
+%\captionsetup{font=small, labelfont=bf, margin={.08\textwidth, .02\textwidth}}
 % ---------------------------
 % Espacio después de teorema
 % https://tex.stackexchange.com/questions/37797/theorem-environment-line-break-after-label
@@ -36,6 +47,7 @@
 \theoremstyle{nonumberplain}
 \theoremheaderfont{\normalfont\itshape}
 \theoremseparator{:}
+% \theorempostskip{\bigskipamount} % PENDIENTE
 % \theorempostwork{\hrule}
 \newtheorem{remark}{Nota}
 \newtheorem{solution}{Solución}
@@ -51,16 +63,45 @@
 \else
   \usepackage[spanish,es-tabla]{babel}
 \fi
+\usepackage{csquotes}
+% Añadir bibliografía en el índice
+\usepackage[nottoc,notlot,notlof]{tocbibind}
+\addto\captionsspanish{\renewcommand{\contentsname}{\'Indice}}
+% ---------------------------
+% Encabezados
+\usepackage{fancyhdr}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[LO]{\itshape\nouppercase{\rightmark}}
+\fancyhead[RE]{\itshape\nouppercase{\leftmark}}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{13.2pt}
 % ---------------------------
 % Code chunks
 % https://github.com/tidymodels/TMwR/blob/main/latex_extras/preamble.tex
 %\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\},fontsize=\small}
+%\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\},fontsize=\small, xleftmargin=2mm}
 \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}, xleftmargin=2mm}
 \renewcommand{\CommentTok}[1]{\textcolor[rgb]{0.41,0.41,0.41}{\texttt{#1}}}
 % https://tex.stackexchange.com/questions/161678/decreasing-font-size-in-verbatim
+% https://tex.stackexchange.com/questions/56970/how-can-i-set-stretch-of-verbatim-to-be-different-than-global-setting
+\usepackage[nodisplayskipstretch]{setspace} \setstretch{1.2}
+%\usepackage{etoolbox}
+% Interlineado code chunk
+\preto{\Shaded}{\vspace{0.2\baselineskip}\edef\tempstretch{\baselinestretch}\par\setstretch{1}}
+\appto{\endShaded}{\vspace{-\tempstretch\baselineskip}\vspace{1.2\baselineskip}}
+% Interlineado resultados y tamaño
+%\preto{\verbatim}{\edef\tempstretch{\baselinestretch}\par\setstretch{1}\small}
+%\appto{\endverbatim}{\vspace{-\tempstretch\baselineskip}\normalsize\vspace{1.2\baselineskip}}
+\preto{\verbatim}{\edef\tempstretch{\baselinestretch}\par\setstretch{1}}
+\appto{\endverbatim}{\vspace{-\tempstretch\baselineskip}\vspace{1.2\baselineskip}}
 % ---------------------------
-% Warning: Package microtype Warning: Unable to apply patch `footnote' on input line 214.
-% https://github.com/schlcht/microtype/issues/11
+% Notas al pie
+\let\oldfootnote\footnote
+\renewcommand\footnote[1]{\oldfootnote{\hspace{2mm}#1}}
+% ---------------------------
 \usepackage{microtype}
-\usepackage{setspace}
 \usepackage{hyperref}

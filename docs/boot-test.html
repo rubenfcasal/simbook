@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>11.3 Contrastes de hipótesis bootstrap | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="11.3 Contrastes de hipótesis bootstrap | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -364,9 +368,9 @@ div.csl-indent {
 <li class="chapter" data-level="A.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>A.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="A.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>A.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="A.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>A.2.3</b> Gráfico de dispersion retardado</a></li>
-<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
 <li class="chapter" data-level="A.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>A.2.5</b> Test de rachas</a></li>
-<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
+<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#ljungbox"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
 <li class="chapter" data-level="A.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>A.3</b> Contrastes específicos para generadores aleatorios</a>
 <ul>
@@ -421,11 +425,13 @@ div.csl-indent {
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
 <ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -472,7 +478,7 @@ del riesgo asumible al rechazar <span class="math inline">\(H_0\)</span> siendo 
 denominado nivel de significación.
 Se determina una región de rechazo (RR) a partir de los valores que tiende
 a tomar el estadístico cuando <span class="math inline">\(H_1\)</span> es cierta,
-de forma que<a href="#fn38" class="footnote-ref" id="fnref38"><sup>38</sup></a>:
+de forma que<a href="#fn39" class="footnote-ref" id="fnref39"><sup>39</sup></a>:
 <span class="math display">\[P\left( D\in RR \mid H_0\text{ cierta}\right) =\alpha.\]</span>
 Se rechaza la hipótesis nula cuando el valor observado del
 estadístico <span class="math inline">\(\hat{d}=D\left( x_1,\ldots ,x_n;H_0\right)\)</span> pertenece
@@ -738,7 +744,7 @@ entre <span class="math inline">\(\mathbf{X}\)</span> e <span class="math inline
 <span class="math display">\[H_0: F_{Y \mid \mathbf{X}} = F_Y\]</span>
 o equivalentemente que <span class="math inline">\(\mathbf{X}\)</span> no influye en la distribución de <span class="math inline">\(Y\)</span>.</p>
 <p>En este caso los valores de la respuesta serían intercambiables bajo la hipótesis nula,
-por lo que podríamos obtener las remuestras manteniendo fijos los valores<a href="#fn39" class="footnote-ref" id="fnref39"><sup>39</sup></a>
+por lo que podríamos obtener las remuestras manteniendo fijos los valores<a href="#fn40" class="footnote-ref" id="fnref40"><sup>40</sup></a>
 <span class="math inline">\(\mathbf{X}_i\)</span> y permutando los <span class="math inline">\(Y_i\)</span>. Es decir:</p>
 <ol style="list-style-type: decimal">
 <li><p>Generar <span class="math inline">\(Y^{\ast}_i\)</span>, con <span class="math inline">\(i=1,\ldots, n\)</span>, mediante muestreo
@@ -762,7 +768,7 @@ de 7 perros domésticos.</p>
 <span id="cb619-2"><a href="boot-test.html#cb619-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&#39;dogs&#39;</span>, <span class="at">package =</span> <span class="st">&quot;boot&quot;</span>)</span>
 <span id="cb619-3"><a href="boot-test.html#cb619-3" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(dogs)</span></span>
 <span id="cb619-4"><a href="boot-test.html#cb619-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(dogs<span class="sc">$</span>mvo, dogs<span class="sc">$</span>lvp)</span></code></pre></div>
-<pre><code>## [1] 0.8536946</code></pre>
+<pre><code>## [1] 0.85369</code></pre>
 <div class="sourceCode" id="cb621"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb621-1"><a href="boot-test.html#cb621-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with(dogs, cor(mvo, lvp))</span></span></code></pre></div>
 <p>Como ya se comentó, para realizar inferencias sobre <span class="math inline">\(\rho\)</span> podemos emplear la función <code>cor.test()</code>:</p>
 <div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="boot-test.html#cb622-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(dogs<span class="sc">$</span>mvo, dogs<span class="sc">$</span>lvp)</span></code></pre></div>
@@ -770,13 +776,13 @@ de 7 perros domésticos.</p>
 ##  Pearson&#39;s product-moment correlation
 ## 
 ## data:  dogs$mvo and dogs$lvp
-## t = 3.6655, df = 5, p-value = 0.01451
+## t = 3.67, df = 5, p-value = 0.015
 ## alternative hypothesis: true correlation is not equal to 0
 ## 95 percent confidence interval:
-##  0.2818014 0.9780088
+##  0.28180 0.97801
 ## sample estimates:
-##       cor 
-## 0.8536946</code></pre>
+##     cor 
+## 0.85369</code></pre>
 <div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="boot-test.html#cb624-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with(dogs, cor.test(mvo, lvp))</span></span></code></pre></div>
 <p>Esta función realiza el contraste <span class="math inline">\(H_0: \rho = 0\)</span> empleando el estadístico:
 <span class="math display">\[\frac{r\sqrt{n - 2}}{\sqrt{1 - r^2}} \underset{aprox}{\sim } t_{n-2},\]</span>
@@ -790,13 +796,13 @@ Por ejemplo, para contrastar <span class="math inline">\(H_0: \rho \leq 0\)</spa
 ##  Pearson&#39;s product-moment correlation
 ## 
 ## data:  dogs$mvo and dogs$lvp
-## t = 3.6655, df = 5, p-value = 0.007255
+## t = 3.67, df = 5, p-value = 0.0073
 ## alternative hypothesis: true correlation is greater than 0
 ## 95 percent confidence interval:
-##  0.4195889 1.0000000
+##  0.41959 1.00000
 ## sample estimates:
-##       cor 
-## 0.8536946</code></pre>
+##     cor 
+## 0.85369</code></pre>
 <p>Para realizar el contraste con la función <code>boot</code> podríamos
 emplear el siguiente código:</p>
 <div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb627-1"><a href="boot-test.html#cb627-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
@@ -812,7 +818,7 @@ para aproximar el <span class="math inline">\(p\)</span>-valor:</p>
 <div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="boot-test.html#cb628-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(res.boot<span class="sc">$</span>t, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span><span class="st">&quot;&quot;</span>)</span>
 <span id="cb628-2"><a href="boot-test.html#cb628-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> res.boot<span class="sc">$</span>t0, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:perm-test-cor"></span>
-<img src="11-Bootstrap_aplic_files/figure-html/perm-test-cor-1.png" alt="Distribución del estadístico del contraste bajo la hipótesis nula aproximada mediante permutación de las observaciones." width="75%" />
+<img src="11-Bootstrap_aplic_files/figure-html/perm-test-cor-1.png" alt="Distribución del estadístico del contraste bajo la hipótesis nula aproximada mediante permutación de las observaciones." width="70%" />
 <p class="caption">
 Figura 11.4: Distribución del estadístico del contraste bajo la hipótesis nula aproximada mediante permutación de las observaciones.
 </p>
@@ -865,20 +871,20 @@ podemos emplear el siguiente código:</p>
 ## lm(formula = prestige ~ income + education, data = Prestige)
 ## 
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -19.4040  -5.3308   0.0154   4.9803  17.6889 
+##     Min      1Q  Median      3Q     Max 
+## -19.404  -5.331   0.015   4.980  17.689 
 ## 
 ## Coefficients:
-##               Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) -6.8477787  3.2189771  -2.127   0.0359 *  
-## income       0.0013612  0.0002242   6.071 2.36e-08 ***
-## education    4.1374444  0.3489120  11.858  &lt; 2e-16 ***
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -6.847779   3.218977   -2.13    0.036 *  
+## income       0.001361   0.000224    6.07  2.4e-08 ***
+## education    4.137444   0.348912   11.86  &lt; 2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 7.81 on 99 degrees of freedom
-## Multiple R-squared:  0.798,  Adjusted R-squared:  0.7939 
-## F-statistic: 195.6 on 2 and 99 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Multiple R-squared:  0.798,  Adjusted R-squared:  0.794 
+## F-statistic:  196 on 2 and 99 DF,  p-value: &lt;2e-16</code></pre>
 <p>También podemos obtener el valor observado del estadístico <span class="math inline">\(F\)</span>
 a partir de los resultados del método <code>summary.lm()</code>:</p>
 <div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="boot-test.html#cb636-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">summary</span>(modelo)</span>
@@ -887,8 +893,8 @@ a partir de los resultados del método <code>summary.lm()</code>:</p>
 <span id="cb636-4"><a href="boot-test.html#cb636-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> res<span class="sc">$</span>fstatistic[<span class="dv">2</span>]</span>
 <span id="cb636-5"><a href="boot-test.html#cb636-5" aria-hidden="true" tabindex="-1"></a>dfr <span class="ot">&lt;-</span> res<span class="sc">$</span>fstatistic[<span class="dv">3</span>]</span>
 <span id="cb636-6"><a href="boot-test.html#cb636-6" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>fstatistic</span></code></pre></div>
-<pre><code>##    value    numdf    dendf 
-## 195.5505   2.0000  99.0000</code></pre>
+<pre><code>##  value  numdf  dendf 
+## 195.55   2.00  99.00</code></pre>
 <p>o haciendo los cálculos a mano:</p>
 <div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="boot-test.html#cb638-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(Prestige)</span>
 <span id="cb638-2"><a href="boot-test.html#cb638-2" aria-hidden="true" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="dv">3</span></span>
@@ -898,7 +904,7 @@ a partir de los resultados del método <code>summary.lm()</code>:</p>
 <span id="cb638-6"><a href="boot-test.html#cb638-6" aria-hidden="true" tabindex="-1"></a>inc.mse <span class="ot">&lt;-</span> (rss0 <span class="sc">-</span> rss)<span class="sc">/</span>(q <span class="sc">-</span> q0)  <span class="co"># Incremento en varibilidad explicada</span></span>
 <span id="cb638-7"><a href="boot-test.html#cb638-7" aria-hidden="true" tabindex="-1"></a>msr <span class="ot">&lt;-</span>  rss<span class="sc">/</span>(n <span class="sc">-</span> q)               <span class="co"># Variabilidad residual</span></span>
 <span id="cb638-8"><a href="boot-test.html#cb638-8" aria-hidden="true" tabindex="-1"></a>inc.mse<span class="sc">/</span>msr</span></code></pre></div>
-<pre><code>## [1] 195.5505</code></pre>
+<pre><code>## [1] 195.55</code></pre>
 <p>Desde el punto de vista de comparación de modelos, el modelo
 reducido bajo la hipótesis nula es:</p>
 <div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb640-1"><a href="boot-test.html#cb640-1" aria-hidden="true" tabindex="-1"></a>modelo0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> Prestige)</span></code></pre></div>
@@ -908,13 +914,13 @@ reducido bajo la hipótesis nula es:</p>
 ## 
 ## Model 1: prestige ~ 1
 ## Model 2: prestige ~ income + education
-##   Res.Df     RSS Df Sum of Sq      F    Pr(&gt;F)    
-## 1    101 29895.4                                  
-## 2     99  6038.9  2     23857 195.55 &lt; 2.2e-16 ***
+##   Res.Df   RSS Df Sum of Sq   F Pr(&gt;F)    
+## 1    101 29895                            
+## 2     99  6039  2     23857 196 &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Para aproximar la distribución de este estadístico bajo <span class="math inline">\(H_0\)</span> podríamos adaptar
-el bootstrap semiparamétrico<a href="#fn40" class="footnote-ref" id="fnref40"><sup>40</sup></a> descrito en la Sección <a href="boot-reg.html#boot-residual">10.4.2</a>:</p>
+el bootstrap semiparamétrico<a href="#fn41" class="footnote-ref" id="fnref41"><sup>41</sup></a> descrito en la Sección <a href="boot-reg.html#boot-residual">10.4.2</a>:</p>
 <div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="boot-test.html#cb643-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
 <span id="cb643-2"><a href="boot-test.html#cb643-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb643-3"><a href="boot-test.html#cb643-3" aria-hidden="true" tabindex="-1"></a>pres.dat <span class="ot">&lt;-</span> Prestige</span>
@@ -941,12 +947,12 @@ el bootstrap semiparamétrico<a href="#fn40" class="footnote-ref" id="fnref40"><
 ## 
 ## 
 ## Bootstrap Statistics :
-##     original    bias    std. error
-## t1* 195.5505 -194.4866    1.096335</code></pre>
+##     original  bias    std. error
+## t1*   195.55 -194.49      1.0963</code></pre>
 <div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="boot-test.html#cb645-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(boot.mod<span class="sc">$</span>t, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
 <span id="cb645-2"><a href="boot-test.html#cb645-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">pf</span>(x, df, dfr, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:semipar-test-plot"></span>
-<img src="11-Bootstrap_aplic_files/figure-html/semipar-test-plot-1.png" alt="Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico." width="75%" />
+<img src="11-Bootstrap_aplic_files/figure-html/semipar-test-plot-1.png" alt="Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico." width="70%" />
 <p class="caption">
 Figura 11.5: Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico.
 </p>
@@ -1003,8 +1009,8 @@ y remuestrear los residuos reescalados y centrados.</p>
 ## 
 ## 
 ## Bootstrap Statistics :
-##       original   bias    std. error
-## t1* 0.01164396 1.029746    1.029715</code></pre>
+##     original  bias    std. error
+## t1* 0.011644  1.0297      1.0297</code></pre>
 <p>En la aproximación del <span class="math inline">\(p\)</span>-valor hay que tener en cuenta que al modificar los residuos
 <code>boot.mod$t0</code> no va a coincidir con el valor observado del estadístico,
 almacenado en <code>stat</code> (por tanto habría que ignorar <code>original</code> y <code>bias</code>
@@ -1013,7 +1019,7 @@ la función <code>Boot()</code> del paquete <code>car</code> corrige este proble
 <div class="sourceCode" id="cb652"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb652-1"><a href="boot-test.html#cb652-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(boot.mod<span class="sc">$</span>t, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
 <span id="cb652-2"><a href="boot-test.html#cb652-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">pf</span>(x, df, dfr, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:boot-semipar-test-plot"></span>
-<img src="11-Bootstrap_aplic_files/figure-html/boot-semipar-test-plot-1.png" alt="Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico." width="75%" />
+<img src="11-Bootstrap_aplic_files/figure-html/boot-semipar-test-plot-1.png" alt="Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico." width="70%" />
 <p class="caption">
 Figura 11.7: Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico.
 </p>
@@ -1044,7 +1050,7 @@ Figura 11.8: Efecto de las variables explicativas en el modelo (gráficos de res
 </p>
 </div>
 <p>En este caso podría ser razonable considerar un efecto cuadrático
-de la variable <code>income</code><a href="#fn41" class="footnote-ref" id="fnref41"><sup>41</sup></a></p>
+de la variable <code>income</code><a href="#fn42" class="footnote-ref" id="fnref42"><sup>42</sup></a></p>
 <div class="sourceCode" id="cb656"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb656-1"><a href="boot-test.html#cb656-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> income <span class="sc">+</span> <span class="fu">I</span>(income<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> education, <span class="at">data =</span> Prestige)</span>
 <span id="cb656-2"><a href="boot-test.html#cb656-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code></pre></div>
 <pre><code>## 
@@ -1053,20 +1059,20 @@ de la variable <code>income</code><a href="#fn41" class="footnote-ref" id="fnref
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -15.732  -4.900  -0.057   4.598  18.459 
+## -15.731  -4.900  -0.057   4.598  18.459 
 ## 
 ## Coefficients:
-##               Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) -1.135e+01  3.272e+00  -3.470 0.000775 ***
-## income       3.294e-03  5.669e-04   5.810 7.79e-08 ***
-## I(income^2) -7.967e-08  2.169e-08  -3.673 0.000390 ***
-## education    3.809e+00  3.407e-01  11.179  &lt; 2e-16 ***
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -1.14e+01   3.27e+00   -3.47  0.00078 ***
+## income       3.29e-03   5.67e-04    5.81  7.8e-08 ***
+## I(income^2) -7.97e-08   2.17e-08   -3.67  0.00039 ***
+## education    3.81e+00   3.41e-01   11.18  &lt; 2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 7.36 on 98 degrees of freedom
-## Multiple R-squared:  0.8224, Adjusted R-squared:  0.817 
-## F-statistic: 151.3 on 3 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Multiple R-squared:  0.822,  Adjusted R-squared:  0.817 
+## F-statistic:  151 on 3 and 98 DF,  p-value: &lt;2e-16</code></pre>
 <p>Para comparar el ajuste de este modelo respecto al del anterior, podemos
 realizar un contraste empleando la función <code>anova()</code>:</p>
 <div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb658-1"><a href="boot-test.html#cb658-1" aria-hidden="true" tabindex="-1"></a>modelo0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> income <span class="sc">+</span> education, <span class="at">data =</span> Prestige)</span>
@@ -1075,9 +1081,9 @@ realizar un contraste empleando la función <code>anova()</code>:</p>
 ## 
 ## Model 1: prestige ~ income + education
 ## Model 2: prestige ~ income + I(income^2) + education
-##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
-## 1     99 6038.9                                  
-## 2     98 5308.0  1     730.8 13.492 0.0003904 ***
+##   Res.Df  RSS Df Sum of Sq    F  Pr(&gt;F)    
+## 1     99 6039                              
+## 2     98 5308  1       731 13.5 0.00039 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Contrastar si el efecto de <code>income</code> es lineal mediante bootstrap residual,
@@ -1095,22 +1101,22 @@ estadístico para rechazar <span class="math inline">\(H_0\)</span> con un nivel
 
 <div class="footnotes">
 <hr />
-<ol start="38">
-<li id="fn38"><p>Aunque cuando la hipótesis nula es compuesta:
-<span class="math inline">\(P\left( D\in RR \mid H_0\text{ cierta}\right) \leq \alpha\)</span>.<a href="boot-test.html#fnref38" class="footnote-back">↩︎</a></p></li>
-<li id="fn39"><p>Nótese que
+<ol start="39">
+<li id="fn39"><p>Aunque cuando la hipótesis nula es compuesta:
+<span class="math inline">\(P\left( D\in RR \mid H_0\text{ cierta}\right) \leq \alpha\)</span>.<a href="boot-test.html#fnref39" class="footnote-back">↩︎</a></p></li>
+<li id="fn40"><p>Nótese que
 no se hace ninguna suposición sobre el tipo de covariables,
-podrían ser categóricas, numéricas o una combinación de ambas.<a href="boot-test.html#fnref39" class="footnote-back">↩︎</a></p></li>
-<li id="fn40"><p>En este caso también podríamos emplear un contraste
-de permutaciones.<a href="boot-test.html#fnref40" class="footnote-back">↩︎</a></p></li>
-<li id="fn41"><p>Para ajustar un modelo polinómico
+podrían ser categóricas, numéricas o una combinación de ambas.<a href="boot-test.html#fnref40" class="footnote-back">↩︎</a></p></li>
+<li id="fn41"><p>En este caso también podríamos emplear un contraste
+de permutaciones.<a href="boot-test.html#fnref41" class="footnote-back">↩︎</a></p></li>
+<li id="fn42"><p>Para ajustar un modelo polinómico
 puede ser recomendable, especialmente si el grado del polinomio es alto,
 emplear la función <code>poly()</code> ya que utiliza polinomios ortogonales.
 En el caso cuadrático, al emplear <code>y ~ x + I(x^2)</code>
 estaremos considerando <span class="math inline">\(1, x, x^2\)</span>, mientras que <code>y ~ poly(x, 2)</code> considerará
 polinomios de Legendre de la forma <span class="math inline">\(1, x, \frac{1}{2}(3x^2-1)\)</span>.
 En este caso concreto, obtendríamos una parametrización equivalente
-empleando <code>modelo &lt;- lm(prestige ~ poly(income, 2) + education, data = Prestige)</code>.<a href="boot-test.html#fnref41" class="footnote-back">↩︎</a></p></li>
+empleando <code>modelo &lt;- lm(prestige ~ poly(income, 2) + education, data = Prestige)</code>.<a href="boot-test.html#fnref42" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>11.2 Intervalos de confianza bootstrap | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="11.2 Intervalos de confianza bootstrap | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -364,9 +368,9 @@ div.csl-indent {
 <li class="chapter" data-level="A.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>A.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="A.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>A.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="A.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>A.2.3</b> Gráfico de dispersion retardado</a></li>
-<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
 <li class="chapter" data-level="A.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>A.2.5</b> Test de rachas</a></li>
-<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
+<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#ljungbox"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
 <li class="chapter" data-level="A.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>A.3</b> Contrastes específicos para generadores aleatorios</a>
 <ul>
@@ -421,11 +425,13 @@ div.csl-indent {
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
 <ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -547,15 +553,15 @@ Así se obtiene el intervalo de confianza bootstrap
 <span id="cb605-24"><a href="boot-ic.html#cb605-24" aria-hidden="true" tabindex="-1"></a>IC_boot <span class="ot">&lt;-</span> <span class="fu">c</span>(ic_inf_boot, ic_sup_boot)</span>
 <span id="cb605-25"><a href="boot-ic.html#cb605-25" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(IC_boot) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">-</span>alfa<span class="sc">/</span><span class="dv">2</span>), <span class="st">&quot;%&quot;</span>)</span>
 <span id="cb605-26"><a href="boot-ic.html#cb605-26" aria-hidden="true" tabindex="-1"></a>IC_boot</span></code></pre></div>
-<pre><code>##      2.5%     97.5% 
-## 0.4334742 1.1771924</code></pre>
+<pre><code>##    2.5%   97.5% 
+## 0.43347 1.17719</code></pre>
 </div>
 </div>
 <div id="boot-ic-bca" class="section level3 hasAnchor" number="11.2.5">
 <h3><span class="header-section-number">11.2.5</span> Método BCa<a href="boot-ic.html#boot-ic-bca" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>El método <span class="math inline">\(BCa\)</span> (bias-corrected and accelerated) propuesto por Efron (1987) considera una transformación de forma que la distribución se aproxime a la normalidad, construye el intervalo en esa escala asumiendo normalidad y transforma el resultado a la escala original empleando la distribución bootstrap.
 El intervalo obtenido es de la forma:
-<span class="math display">\[\hat{I}_{perc}=\left( x_{\alpha /2}, x_{1-\alpha /2}  \right),\]</span>
+<span class="math display">\[\hat{I}_{bca}=\left( x_{\alpha /2}, x_{1-\alpha /2}  \right),\]</span>
 donde<br />
 <span class="math display">\[x_u = \hat G^{-1}\left(\Phi\left(z + \frac{z + z_u}{1-a(z+z_u)}\right)  \right),\]</span>
 siendo <span class="math inline">\(\hat G\)</span> la distribución empírica de <span class="math inline">\(\hat{\theta}^{\ast}\)</span>, <span class="math inline">\(\Phi(z)\)</span> la función de distribución de la normal estándar, <span class="math inline">\(z_u = \Phi^{-1}(u)\)</span> el correspondiente cuantil y:</p>
@@ -565,6 +571,11 @@ siendo <span class="math inline">\(\hat G\)</span> la distribución empírica de
 </ul>
 <p>Podemos obtener este intervalo de confianza estableciendo <code>type = "bca"</code> (o <code>type = "all"</code>) en la llamada a la función <code>boot.ci()</code> (ver Ejemplo <a href="intro-paquetes.html#exm:media-dt-desconocida-boot">9.3</a>).
 Para más detalles ver Sección 5.3.2 de Davison y Hinkley (1997).</p>
+<!-- 
+Normal score transformation (NST)
+Rank-based inverse normal transformation
+https://rdrr.io/cran/rcompanion/man/blom.html
+-->
 <div class="exercise">
 <p><span id="exr:boot-unif-multi-ic" class="exercise"><strong>Ejercicio 11.2  </strong></span><br></p>
 <p>Como continuación del ejemplo mostrado en la Sección <a href="intro-paquetes.html#boot-unif-multi">9.3.3</a>, y de los Ejercicios <a href="boot-unif.html#exr:unif-multi">9.1</a> y <a href="sesgo-prec.html#exr:unif-multi-sesgo-var">11.1</a>, emplear el paquete <code>boot</code> para obtener estimaciones por intervalo de confianza del coeficiente de correlación lineal <span class="math inline">\(r\)</span> entre <code>prestige</code> e <code>income</code> del conjunto de datos <code>Prestige</code> (mediante bootstrap uniforme multidimensional).
@@ -597,7 +608,7 @@ Suponiendo que <span class="math inline">\((X, Y)\)</span> es normal bivariante 
 <span class="math display">\[Z \sim \mathcal{N}\left( \frac{1}{2}\ln \left( \frac{1+\rho}{1-\rho} \right), \frac{1}{n-3} \right).\]</span>
 El intervalo de confianza asintótico se obtiene empleando la aproximación normal tradicional en la escala <span class="math inline">\(Z\)</span> y aplicando posteriormente la transformación inversa:
 <span class="math display">\[r = \frac{\exp(2Z)-1}{\exp(2Z)+1} = \operatorname{tanh}(Z).\]</span></p>
-<p>Esta aproximación está implementada en la función <code>cor.test()</code> del paquete base <code>stat</code> de R<a href="#fn37" class="footnote-ref" id="fnref37"><sup>37</sup></a>, además de que también realiza el contraste <span class="math inline">\(H_0: \rho = 0\)</span> empleando el estadístico <a href="boot-ic.html#eq:cor-t">(11.1)</a>.</p>
+<p>Esta aproximación está implementada en la función <code>cor.test()</code> del paquete base <code>stat</code> de R<a href="#fn38" class="footnote-ref" id="fnref38"><sup>38</sup></a>, además de que también realiza el contraste <span class="math inline">\(H_0: \rho = 0\)</span> empleando el estadístico <a href="boot-ic.html#eq:cor-t">(11.1)</a>.</p>
 <p>Continuando con el ejemplo de la Sección <a href="intro-paquetes.html#boot-unif-multi">9.3.3</a> (y de los Ejercicios <a href="boot-unif.html#exr:unif-multi">9.1</a>, <a href="sesgo-prec.html#exr:unif-multi-sesgo-var">11.1</a> y <a href="boot-ic.html#exr:boot-unif-multi-ic">11.2</a>), para obtener un intervalo de confianza para el coeficiente de correlación lineal entre las variables <code>income</code> y <code>prestige</code> del conjunto de datos <code>Prestige</code>, podríamos emplear el siguiente código:</p>
 <div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="boot-ic.html#cb607-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Prestige, <span class="at">package=</span><span class="st">&quot;carData&quot;</span>)</span>
 <span id="cb607-2"><a href="boot-ic.html#cb607-2" aria-hidden="true" tabindex="-1"></a><span class="co"># with(Prestige, cor.test(income, prestige))</span></span>
@@ -606,13 +617,13 @@ El intervalo de confianza asintótico se obtiene empleando la aproximación norm
 ##  Pearson&#39;s product-moment correlation
 ## 
 ## data:  Prestige$income and Prestige$prestige
-## t = 10.224, df = 100, p-value &lt; 2.2e-16
+## t = 10.2, df = 100, p-value &lt;2e-16
 ## alternative hypothesis: true correlation is not equal to 0
 ## 95 percent confidence interval:
-##  0.6044711 0.7983807
+##  0.60447 0.79838
 ## sample estimates:
-##       cor 
-## 0.7149057</code></pre>
+##     cor 
+## 0.71491</code></pre>
 <p>También es de esperar que mejore la precisión de los intervalos de confianza bootstrap si se emplea una transformación que estabilice la varianza del estimador, especialmente en el caso del método basado en la aproximación normal y del bootstrap percentil básico.
 La función <code>boot.ci()</code> del paquete <code>boot</code> permite obtener intervalos de confianza calculados en una escala transformada del estadístico, mediante los parámetros:</p>
 <ul>
@@ -656,7 +667,7 @@ Los intervalos se calculan en la escala de <span class="math inline">\(h(t)\)</s
 <span id="cb611-2"><a href="boot-ic.html#cb611-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(ht, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
 <span id="cb611-3"><a href="boot-ic.html#cb611-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="at">mean=</span><span class="fu">mean</span>(ht), <span class="at">sd=</span><span class="fu">sd</span>(ht)), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:icboot-trans-plot"></span>
-<img src="11-Bootstrap_aplic_files/figure-html/icboot-trans-plot-1.png" alt="Distribución bootstrap en la escala transformada." width="75%" />
+<img src="11-Bootstrap_aplic_files/figure-html/icboot-trans-plot-1.png" alt="Distribución bootstrap en la escala transformada." width="70%" />
 <p class="caption">
 Figura 11.1: Distribución bootstrap en la escala transformada.
 </p>
@@ -665,8 +676,8 @@ Figura 11.1: Distribución bootstrap en la escala transformada.
 </div>
 <div class="footnotes">
 <hr />
-<ol start="37">
-<li id="fn37"><p>Se puede obtener el código tecleando en la consola <code>stats:::cor.test.default</code>.<a href="boot-ic.html#fnref37" class="footnote-back">↩︎</a></p></li>
+<ol start="38">
+<li id="fn38"><p>Se puede obtener el código tecleando en la consola <code>stats:::cor.test.default</code>.<a href="boot-ic.html#fnref38" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

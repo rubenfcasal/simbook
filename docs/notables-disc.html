@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5.6 Métodos específicos para generación de distribuciones notables | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5.6 Métodos específicos para generación de distribuciones notables | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -364,9 +368,9 @@ div.csl-indent {
 <li class="chapter" data-level="A.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>A.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="A.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>A.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="A.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>A.2.3</b> Gráfico de dispersion retardado</a></li>
-<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
 <li class="chapter" data-level="A.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>A.2.5</b> Test de rachas</a></li>
-<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
+<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#ljungbox"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
 <li class="chapter" data-level="A.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>A.3</b> Contrastes específicos para generadores aleatorios</a>
 <ul>
@@ -421,11 +425,13 @@ div.csl-indent {
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
 <ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -450,7 +456,7 @@ div.csl-indent {
 <h2><span class="header-section-number">5.6</span> Métodos específicos para generación de distribuciones notables<a href="notables-disc.html#notables-disc" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Los comentarios al principio de la Sección <a href="notables-cont.html#notables-cont">4.5</a> para el caso de variables continuas serían válidos también para distribuciones notables discretas.</p>
 <p>Entre los distintos métodos disponibles para la generación de las distribuciones discretas más conocidas podríamos destacar el de la distribución binomial negativa mediante el método de composición (Sección <a href="composicion.html#composicion">4.4</a>).</p>
-<p>La distribución binomial negativa, <span class="math inline">\(BN(r, p)\)</span>, puede interpretarse como el número de fracasos antes del <span class="math inline">\(r\)</span>-ésimo éxito<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a> y su función de masa de probabilidad es
+<p>La distribución binomial negativa, <span class="math inline">\(BN(r, p)\)</span>, puede interpretarse como el número de fracasos antes del <span class="math inline">\(r\)</span>-ésimo éxito<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a> y su función de masa de probabilidad es
 <span class="math display">\[P(X = i) = \binom{i+r-1}i p^r (1-p)^i \text{, para }i=0,1,\ldots\]</span></p>
 <p>A partir de la propiedad
 <span class="math display">\[X|_{Y} \sim \text{Pois}\left(  Y\right)  \text{, }Y \sim \operatorname{Gamma} \left( r, \frac{p}{1-p}\right)  \Rightarrow X \sim BN(r, p)\]</span>
@@ -467,8 +473,8 @@ se puede deducir el siguiente método específico de simulación.</p>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="23">
-<li id="fn23"><p>La distribución binomial negativa es una generalización de la geométrica y, debido a su reproductividad en el parámetro <span class="math inline">\(r\)</span>, podría simularse como suma de <span class="math inline">\(r\)</span> variables geométricas. Sin embargo, este algoritmo puede ser muy costoso en tiempo de computación si <span class="math inline">\(r\)</span> es elevado.<a href="notables-disc.html#fnref23" class="footnote-back">↩︎</a></p></li>
+<ol start="24">
+<li id="fn24"><p>La distribución binomial negativa es una generalización de la geométrica y, debido a su reproductividad en el parámetro <span class="math inline">\(r\)</span>, podría simularse como suma de <span class="math inline">\(r\)</span> variables geométricas. Sin embargo, este algoritmo puede ser muy costoso en tiempo de computación si <span class="math inline">\(r\)</span> es elevado.<a href="notables-disc.html#fnref24" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

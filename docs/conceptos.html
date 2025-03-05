@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1.1 Conceptos básicos | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1.1 Conceptos básicos | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -364,9 +368,9 @@ div.csl-indent {
 <li class="chapter" data-level="A.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>A.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="A.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>A.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="A.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>A.2.3</b> Gráfico de dispersion retardado</a></li>
-<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
 <li class="chapter" data-level="A.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>A.2.5</b> Test de rachas</a></li>
-<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
+<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#ljungbox"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
 <li class="chapter" data-level="A.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>A.3</b> Contrastes específicos para generadores aleatorios</a>
 <ul>
@@ -421,11 +425,13 @@ div.csl-indent {
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
 <ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -462,10 +468,13 @@ Habría dos tipos de modelos:</p>
 <li><p>Modelos estocásticos (con componente aleatoria): tienen en cuenta la incertidumbre asociada al modelo. Tradicionalmente se supone que esta incertidumbre es debida a que no se dispone de toda la información sobre las variables que influyen en el fenómeno en estudio (puede ser debida simplemente a que haya errores de medida), lo que se conoce como <em>aleatoriedad aparente</em>:</p>
 <blockquote>
 <p>“Nothing in Nature is random… a thing appears random only through the incompleteness of our knowledge.”</p>
-<p>— Spinoza, Baruch (Ethics, 1677)</p>
+<p>— <span class="citation">Spinoza (<a href="#ref-spinoza1667ethics" role="doc-biblioref">1677</a>)</span></p>
 </blockquote>
 <p>aunque hoy en día gana peso la idea de la física cuántica de que en el fondo hay una <em>aleatoriedad intrínseca</em><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p></li>
 </ul>
+<!--
+> --- Spinoza, Baruch (Ethics, 1677) 
+-->
 <p>La modelización es una etapa presente en la mayor parte de los trabajos de investigación, especialmente en las ciencias experimentales.
 El modelo debería considerar las variables más relevantes para explicar el fenómeno en estudio y las principales relaciones entre ellas.
 La inferencia estadística proporciona herramientas para estimar los parámetros y contrastar la validez de un modelo estocástico a partir de los datos observados.</p>
@@ -513,7 +522,7 @@ Aproximación por simulación
 <span id="cb4-2"><a href="conceptos.html#cb4-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Número de sobres&quot;</span>)</span>
 <span id="cb4-3"><a href="conceptos.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(nsobres))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:distr-ealbum"></span>
-<img src="01-Introduccion_files/figure-html/distr-ealbum-1.png" alt="Aproximación por simulación de la distribución del número de sobres para completar la colección." width="75%" />
+<img src="01-Introduccion_files/figure-html/distr-ealbum-1.png" alt="Aproximación por simulación de la distribución del número de sobres para completar la colección." width="70%" />
 <p class="caption">
 Figura 1.1: Aproximación por simulación de la distribución del número de sobres para completar la colección.
 </p>
@@ -532,7 +541,7 @@ plot(1:nsim, cumsum(nsobres)/1:nsim, type = "l",
 abline(h = sol)
 ```
 
-<img src="01-Introduccion_files/figure-html/unnamed-chunk-3-1.png" width="75%" style="display: block; margin: auto;" />
+<img src="01-Introduccion_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" />
 -->
 <p>Número mínimo de sobres para asegurar de que se completa la colección con una probabilidad del 95%:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="conceptos.html#cb7-1" aria-hidden="true" tabindex="-1"></a>nmin <span class="ot">&lt;-</span> <span class="fu">quantile</span>(nsobres, <span class="at">probs =</span> <span class="fl">0.95</span>)</span>
@@ -549,7 +558,7 @@ abline(h = sol)
 <span id="cb11-4"><a href="conceptos.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> sol)</span>
 <span id="cb11-5"><a href="conceptos.html#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> nmin, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:distr-ealbum2"></span>
-<img src="01-Introduccion_files/figure-html/distr-ealbum2-1.png" alt="Aproximaciones por simulación de la distribución del número de sobres para completar la colección, de su valor esperado (línea vertical continua) y del cuantil 0.95 (línea vertical discontinua)." width="75%" />
+<img src="01-Introduccion_files/figure-html/distr-ealbum2-1.png" alt="Aproximaciones por simulación de la distribución del número de sobres para completar la colección, de su valor esperado (línea vertical continua) y del cuantil 0.95 (línea vertical discontinua)." width="70%" />
 <p class="caption">
 Figura 1.2: Aproximaciones por simulación de la distribución del número de sobres para completar la colección, de su valor esperado (línea vertical continua) y del cuantil 0.95 (línea vertical discontinua).
 </p>
@@ -570,21 +579,14 @@ Figura 1.3: Gráficos exploratorios de las simulaciones del gasto para completar
 </div>
 <div id="ventajas-e-inconvenientes-de-la-simulación" class="section level3 hasAnchor" number="1.1.2">
 <h3><span class="header-section-number">1.1.2</span> Ventajas e inconvenientes de la simulación<a href="conceptos.html#ventajas-e-inconvenientes-de-la-simulación" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Ventajas (Shannon, 1975):</p>
+<p>A modo de resumen, la simulación presenta ventajas respecto a la experimentación real o a la resolución analítica en las siguientes situaciones <span class="citation">(que coinciden en gran medida con las ya descritas por <a href="#ref-shannon1975systems" role="doc-biblioref">Shannon, 1975</a>)</span>:</p>
 <ul>
-<li><p>Cuando la resolución analítica no puede llevarse a cabo.</p></li>
-<li><p>Cuando existen medios de resolver analíticamente el problema
-pero dicha resolución es complicada y costosa
-(o solo proporciona una solución aproximada).</p></li>
-<li><p>Si se desea experimentar antes de que exista el sistema
-(pruebas para la construcción de un sistema).</p></li>
-<li><p>Cuando es imposible experimentar sobre el sistema real
-por ser dicha experimentación destructiva.</p></li>
-<li><p>En ocasiones en las que la experimentación sobre el sistema es
-posible pero no ética.</p></li>
-<li><p>En sistemas que evolucionan muy lentamente en el tiempo.</p></li>
+<li><p>Cuando la resolución analítica no puede llevarse a cabo (todavía no se han desarrollado métodos analíticos para resolver el modelo matemático, como es el caso de algunos modelos de colas).</p></li>
+<li><p>Cuando existen medios para resolver analíticamente el problema, pero dicha resolución es demasiado complicada o ardua (comparada con la simplicidad de la solución mediante simulación), o asumen simplificaciones (hipótesis estructurales) que no son muy realistas (y en el mejor de los casos proporcionarían una solución aproximada).</p></li>
+<li><p>Si resulta imposible experimentar sobre el sistema real (en ese momento no existe), resulta demasiado complicado (e.g. misiones espaciales), es demasiado costoso (e.g. requieren pruebas destructivas), o no es ético (e.g. dispersión de contaminantes o pruebas nucleares).</p></li>
+<li><p>En sistemas que evolucionan muy lentamente en el tiempo (la simulación permitiría observar la evolución del proceso acelerando o ralentizando el tiempo).</p></li>
 </ul>
-<p>El principal incoveniente puede ser el tiempo de computación necesario, aunque gracias a la gran potencia de cálculo de los computadores actuales, se puede obtener rápidamente una solución aproximada en la mayor parte de los problemas susceptibles de ser modelizados.
+<p>El principal inconveniente puede ser el tiempo de computación necesario, aunque gracias a la gran potencia de cálculo de los computadores actuales, se puede obtener rápidamente una solución aproximada en la mayor parte de los problemas susceptibles de ser modelizados.
 Además siempre están presentes los posibles problemas debidos a emplear un modelo:</p>
 <ul>
 <li><p>La construcción de un buen modelo puede ser una tarea muy costosa
@@ -617,7 +619,16 @@ Los principales campos de aplicación son:</p>
 <li><p>Criptografía: Protocolos de comunicación segura…</p></li>
 <li><p>Física: Simulación de fenómenos naturales…</p></li>
 </ul>
-<p>En los capítulos <a href="aplic-inf.html#aplic-inf">7.4</a> y <a href="monte-carlo.html#monte-carlo">7</a> nos centraremos en algunas de las aplicaciones de utilidad en Estadística.</p>
+<p>En el Capítulo <a href="monte-carlo.html#monte-carlo">7</a> se describen las principales aplicaciones. En la Sección <a href="aplic-inf.html#aplic-inf">7.4</a>, y a partir del Capítulo <a href="bootstrap.html#bootstrap">9</a> (donde se introducen los métodos de remuestreo bootstrap), nos centraremos en las más empleadas en Estadística.</p>
+</div>
+</div>
+<h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-shannon1975systems" class="csl-entry">
+Shannon, R. E. (1975). <em>Systems Simulation: The Art and Science</em>. Prentice-Hall.
+</div>
+<div id="ref-spinoza1667ethics" class="csl-entry">
+Spinoza, B. (1677). <em>Ethics</em>.
 </div>
 </div>
 <div class="footnotes">

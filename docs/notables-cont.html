@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4.5 Métodos específicos para la generación de algunas distribuciones notables | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4.5 Métodos específicos para la generación de algunas distribuciones notables | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -120,6 +120,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -364,9 +368,9 @@ div.csl-indent {
 <li class="chapter" data-level="A.2.1" data-path="diag-aleat.html"><a href="diag-aleat.html#métodos-para-detectar-dependencia"><i class="fa fa-check"></i><b>A.2.1</b> Métodos para detectar dependencia</a></li>
 <li class="chapter" data-level="A.2.2" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-secuencial"><i class="fa fa-check"></i><b>A.2.2</b> Gráfico secuencial</a></li>
 <li class="chapter" data-level="A.2.3" data-path="diag-aleat.html"><a href="diag-aleat.html#gráfico-de-dispersion-retardado"><i class="fa fa-check"></i><b>A.2.3</b> Gráfico de dispersion retardado</a></li>
-<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#el-correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
+<li class="chapter" data-level="A.2.4" data-path="diag-aleat.html"><a href="diag-aleat.html#correlograma"><i class="fa fa-check"></i><b>A.2.4</b> El correlograma</a></li>
 <li class="chapter" data-level="A.2.5" data-path="diag-aleat.html"><a href="diag-aleat.html#test-de-rachas"><i class="fa fa-check"></i><b>A.2.5</b> Test de rachas</a></li>
-<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#el-contraste-de-ljung-box"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
+<li class="chapter" data-level="A.2.6" data-path="diag-aleat.html"><a href="diag-aleat.html#ljungbox"><i class="fa fa-check"></i><b>A.2.6</b> El contraste de Ljung-Box</a></li>
 </ul></li>
 <li class="chapter" data-level="A.3" data-path="contrastes-específicos-para-generadores-aleatorios.html"><a href="contrastes-específicos-para-generadores-aleatorios.html"><i class="fa fa-check"></i><b>A.3</b> Contrastes específicos para generadores aleatorios</a>
 <ul>
@@ -421,11 +425,13 @@ div.csl-indent {
 <li class="chapter" data-level="D.3.1" data-path="capítulo-5-simulación-de-variables-discretas.html"><a href="capítulo-5-simulación-de-variables-discretas.html#sol-mixta-cuantil"><i class="fa fa-check"></i><b>D.3.1</b> Ejercicio 5.1</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a>
 <ul>
+<li class="chapter" data-level="" data-path="bibliografía-básica.html"><a href="bibliografía-básica.html"><i class="fa fa-check"></i>Bibliografía básica</a></li>
+<li class="chapter" data-level="" data-path="bibliografía-complementaria.html"><a href="bibliografía-complementaria.html"><i class="fa fa-check"></i>Bibliografía complementaria</a></li>
 <li class="chapter" data-level="" data-path="links.html"><a href="links.html"><i class="fa fa-check"></i>Enlaces</a></li>
-<li class="chapter" data-level="" data-path="bibliografía-completa.html"><a href="bibliografía-completa.html"><i class="fa fa-check"></i>Bibliografía completa</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="bibliografía.html"><a href="bibliografía.html"><i class="fa fa-check"></i>Bibliografía</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -449,7 +455,7 @@ div.csl-indent {
 <div id="notables-cont" class="section level2 hasAnchor" number="4.5">
 <h2><span class="header-section-number">4.5</span> Métodos específicos para la generación de algunas distribuciones notables<a href="notables-cont.html#notables-cont" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>En el pasado se ha realizado un esfuerzo considerable para desarrollar métodos eficientes para la simulación de las distribuciones de probabilidad más importantes.
-Estos algoritmos se describen en la mayoría de los libros clásicos de simulación (e.g. Cao, 2002, Capítulo 5)<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a>, principalmente porque resultaba necesario implementar estos métodos durante el desarrollo de software estadístico.
+Estos algoritmos se describen en la mayoría de los libros clásicos de simulación (e.g. Cao, 2002, Capítulo 5)<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a>, principalmente porque resultaba necesario implementar estos métodos durante el desarrollo de software estadístico.
 Hoy en día estos algoritmos están disponibles en numerosas bibliotecas y no es necesario su implementación (por ejemplo, se puede recurrir a R o emplear su librería matemática disponible en <a href="https://svn.r-project.org/R/trunk/src/nmath" class="uri">https://svn.r-project.org/R/trunk/src/nmath</a>).
 Sin embargo, además de que muchos de ellos servirían como ilustración de la aplicación de los métodos generales expuestos en secciones anteriores, pueden servir como punto de partida para la generación de otras distribuciones.</p>
 <p>Entre los distintos métodos disponibles para la generación de las distribuciones continuas más conocidas podríamos destacar:</p>
@@ -510,7 +516,7 @@ algoritmo de Jöhnk (1964).</p>
 <p>El método resulta extremadamente ineficiente para <span class="math inline">\(a\)</span> ó <span class="math inline">\(b\)</span> mayores que 1.
 Esto es debido a que la condición <span class="math inline">\(S\leq1\)</span> del paso 3 puede tardar muchísimo en verificarse.
 Por este motivo, el algoritmo de Jöhnk sólo es recomendable para <span class="math inline">\(a&lt;1\)</span> y <span class="math inline">\(b&lt;1\)</span>.
-Como remedio a esto puede usarse el algoritmo de Cheng (1978) que es algo más complicado de implementar<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a> pero mucho más eficiente.</p>
+Como remedio a esto puede usarse el algoritmo de Cheng (1978) que es algo más complicado de implementar<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a> pero mucho más eficiente.</p>
 <div class="conjecture">
 <p><span id="cnj:cheng" class="conjecture"><strong>Algoritmo 4.11  (Cheng, 1978) </strong></span><br></p>
 <p>Inicialización:</p>
@@ -533,9 +539,9 @@ Como remedio a esto puede usarse el algoritmo de Cheng (1978) que es algo más c
 <!-- </div> -->
 <div class="footnotes">
 <hr />
-<ol start="18">
-<li id="fn18"><p>Cuidado con la notación y la parametrización empleadas, puede variar entre referencias. Por ejemplo, en Cao (2002) la notación de la distribución Gamma es ligeramente distinta a la empleada en R y en el presente libro.<a href="notables-cont.html#fnref18" class="footnote-back">↩︎</a></p></li>
-<li id="fn19"><p>R implementa este algoritmo en el fichero fuente <a href="https://svn.r-project.org/R/trunk/src/nmath/rbeta.c">rbeta.c</a>.<a href="notables-cont.html#fnref19" class="footnote-back">↩︎</a></p></li>
+<ol start="19">
+<li id="fn19"><p>Cuidado con la notación y la parametrización empleadas, puede variar entre referencias. Por ejemplo, en Cao (2002) la notación de la distribución Gamma es ligeramente distinta a la empleada en R y en el presente libro.<a href="notables-cont.html#fnref19" class="footnote-back">↩︎</a></p></li>
+<li id="fn20"><p>R implementa este algoritmo en el fichero fuente <a href="https://svn.r-project.org/R/trunk/src/nmath/rbeta.c">rbeta.c</a>.<a href="notables-cont.html#fnref20" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
