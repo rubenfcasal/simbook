@@ -215,11 +215,11 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="4.1" data-path="inversion.html"><a href="inversion.html"><i class="fa fa-check"></i><b>4.1</b> Método de inversión</a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="inversion.html"><a href="inversion.html#algunas-distribuciones-que-pueden-simularse-por-el-método-de-inversión"><i class="fa fa-check"></i><b>4.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
+<li class="chapter" data-level="4.1.1" data-path="inversion.html"><a href="inversion.html#ejemplos-inv"><i class="fa fa-check"></i><b>4.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
 <li class="chapter" data-level="4.1.2" data-path="inversion.html"><a href="inversion.html#ventajas-e-inconvenientes"><i class="fa fa-check"></i><b>4.1.2</b> Ventajas e inconvenientes</a></li>
 <li class="chapter" data-level="4.1.3" data-path="inversion.html"><a href="inversion.html#inversión-aproximada"><i class="fa fa-check"></i><b>4.1.3</b> Inversión aproximada</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>4.2</b> Método de aceptación rechazo</a>
+<li class="chapter" data-level="4.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>4.2</b> Método de aceptación-rechazo</a>
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="AR.html"><a href="AR.html#algoritmo"><i class="fa fa-check"></i><b>4.2.1</b> Algoritmo</a></li>
 <li class="chapter" data-level="4.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>4.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
@@ -255,7 +255,7 @@ div.csl-indent {
 <li class="chapter" data-level="6" data-path="multivariante.html"><a href="multivariante.html"><i class="fa fa-check"></i><b>6</b> Simulación de distribuciones multivariantes</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="simulación-de-componentes-independientes.html"><a href="simulación-de-componentes-independientes.html"><i class="fa fa-check"></i><b>6.1</b> Simulación de componentes independientes</a></li>
-<li class="chapter" data-level="6.2" data-path="el-método-de-aceptaciónrechazo.html"><a href="el-método-de-aceptaciónrechazo.html"><i class="fa fa-check"></i><b>6.2</b> El método de aceptación/rechazo</a></li>
+<li class="chapter" data-level="6.2" data-path="el-método-de-aceptación-rechazo.html"><a href="el-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>6.2</b> El método de aceptación-rechazo</a></li>
 <li class="chapter" data-level="6.3" data-path="fact-cov.html"><a href="fact-cov.html"><i class="fa fa-check"></i><b>6.3</b> Factorización de la matriz de covarianzas</a></li>
 <li class="chapter" data-level="6.4" data-path="distrcond.html"><a href="distrcond.html"><i class="fa fa-check"></i><b>6.4</b> Método de las distribuciones condicionadas</a></li>
 <li class="chapter" data-level="6.5" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html"><i class="fa fa-check"></i><b>6.5</b> Simulación condicional e incondicional</a>
@@ -487,17 +487,17 @@ Para ello, como se mostró en capítulos anteriores, consideraríamos una aproxi
 <div class="example">
 <p><span id="exm:boot-simul-sesgo-var" class="example"><strong>Ejemplo 11.1  (media y media truncada) </strong></span><br></p>
 <p>Como ejemplo consideramos la aproximación del sesgo y de la varianza de la media y la media truncada al 10% como estimadores de la media teórica del tiempo de vida de microorganismos mediante bootstrap uniforme (ver Ejercicio <a href="intro-paquetes.html#exr:boot-simul-mediana">9.2</a>).</p>
-<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="sesgo-prec.html#cb601-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
-<span id="cb601-2"><a href="sesgo-prec.html#cb601-2" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> simres<span class="sc">::</span>lifetimes</span>
-<span id="cb601-3"><a href="sesgo-prec.html#cb601-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb601-4"><a href="sesgo-prec.html#cb601-4" aria-hidden="true" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
-<span id="cb601-5"><a href="sesgo-prec.html#cb601-5" aria-hidden="true" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i]</span>
-<span id="cb601-6"><a href="sesgo-prec.html#cb601-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">mean</span>(remuestra), <span class="fu">mean</span>(remuestra, <span class="at">trim =</span> <span class="fl">0.1</span>))</span>
-<span id="cb601-7"><a href="sesgo-prec.html#cb601-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb601-8"><a href="sesgo-prec.html#cb601-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb601-9"><a href="sesgo-prec.html#cb601-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb601-10"><a href="sesgo-prec.html#cb601-10" aria-hidden="true" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> <span class="dv">1000</span>)</span>
-<span id="cb601-11"><a href="sesgo-prec.html#cb601-11" aria-hidden="true" tabindex="-1"></a>res.boot</span></code></pre></div>
+<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="sesgo-prec.html#cb620-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb620-2"><a href="sesgo-prec.html#cb620-2" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> simres<span class="sc">::</span>lifetimes</span>
+<span id="cb620-3"><a href="sesgo-prec.html#cb620-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb620-4"><a href="sesgo-prec.html#cb620-4" aria-hidden="true" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
+<span id="cb620-5"><a href="sesgo-prec.html#cb620-5" aria-hidden="true" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i]</span>
+<span id="cb620-6"><a href="sesgo-prec.html#cb620-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">mean</span>(remuestra), <span class="fu">mean</span>(remuestra, <span class="at">trim =</span> <span class="fl">0.1</span>))</span>
+<span id="cb620-7"><a href="sesgo-prec.html#cb620-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb620-8"><a href="sesgo-prec.html#cb620-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb620-9"><a href="sesgo-prec.html#cb620-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb620-10"><a href="sesgo-prec.html#cb620-10" aria-hidden="true" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> <span class="dv">1000</span>)</span>
+<span id="cb620-11"><a href="sesgo-prec.html#cb620-11" aria-hidden="true" tabindex="-1"></a>res.boot</span></code></pre></div>
 <pre><code>## 
 ## ORDINARY NONPARAMETRIC BOOTSTRAP
 ## 
@@ -512,13 +512,13 @@ Para ello, como se mostró en capítulos anteriores, consideraríamos una aproxi
 ## t2*  0.75823 0.0119027     0.17394</code></pre>
 <p>Lamentablemente la función <code>print.boot()</code> calcula las aproximaciones bootstrap del sesgo y de la precisión pero no las almacena.
 En el caso más simple podríamos obtenerlas con el siguiente código:</p>
-<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="sesgo-prec.html#cb603-1" aria-hidden="true" tabindex="-1"></a>op <span class="ot">&lt;-</span> <span class="fu">with</span>(res.boot, <span class="fu">cbind</span>(</span>
-<span id="cb603-2"><a href="sesgo-prec.html#cb603-2" aria-hidden="true" tabindex="-1"></a>  t0, <span class="fu">apply</span>(t, <span class="dv">2</span>, mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span>  t0,</span>
-<span id="cb603-3"><a href="sesgo-prec.html#cb603-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apply</span>(t, <span class="dv">2</span>, sd, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb603-4"><a href="sesgo-prec.html#cb603-4" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb603-5"><a href="sesgo-prec.html#cb603-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(op) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;t&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(res.boot<span class="sc">$</span>t), <span class="st">&quot;*&quot;</span>)</span>
-<span id="cb603-6"><a href="sesgo-prec.html#cb603-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(op) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;original&quot;</span>, <span class="st">&quot;bias  &quot;</span>, <span class="st">&quot; std. error&quot;</span>)</span>
-<span id="cb603-7"><a href="sesgo-prec.html#cb603-7" aria-hidden="true" tabindex="-1"></a>op</span></code></pre></div>
+<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="sesgo-prec.html#cb622-1" aria-hidden="true" tabindex="-1"></a>op <span class="ot">&lt;-</span> <span class="fu">with</span>(res.boot, <span class="fu">cbind</span>(</span>
+<span id="cb622-2"><a href="sesgo-prec.html#cb622-2" aria-hidden="true" tabindex="-1"></a>  t0, <span class="fu">apply</span>(t, <span class="dv">2</span>, mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span>  t0,</span>
+<span id="cb622-3"><a href="sesgo-prec.html#cb622-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apply</span>(t, <span class="dv">2</span>, sd, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb622-4"><a href="sesgo-prec.html#cb622-4" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb622-5"><a href="sesgo-prec.html#cb622-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(op) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;t&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(res.boot<span class="sc">$</span>t), <span class="st">&quot;*&quot;</span>)</span>
+<span id="cb622-6"><a href="sesgo-prec.html#cb622-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(op) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;original&quot;</span>, <span class="st">&quot;bias  &quot;</span>, <span class="st">&quot; std. error&quot;</span>)</span>
+<span id="cb622-7"><a href="sesgo-prec.html#cb622-7" aria-hidden="true" tabindex="-1"></a>op</span></code></pre></div>
 <pre><code>##     original    bias    std. error
 ## t1*  0.80533 0.0031733     0.15833
 ## t2*  0.75823 0.0119027     0.17394</code></pre>
@@ -570,42 +570,42 @@ Para más detalles, ver <a href="https://rubenfcasal.github.io/book_remuestreo/j
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": true,
-"facebook": false,
-"twitter": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/rubenfcasal/simbook/edit/master/11-Bootstrap_aplic.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["Simulacion.pdf"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rubenfcasal/simbook/edit/master/11-Bootstrap_aplic.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["Simulacion.pdf"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>

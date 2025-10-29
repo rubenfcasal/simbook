@@ -62,18 +62,22 @@ $$g\left( x \right) =\frac{n}{\theta }\left( \frac{x}{\theta } \right)^{n-1},
 \text{ si }x\in \left[ 0,\theta \right] .$$
 <!-- 
 Tomando, por ejemplo, $\theta =1$ y $n=50$, esta función de densidad resulta
-:
+ [Figura \@ref(fig:den-max)]:
 
-```r
+``` r
 theta <- 1
 n <- 50
 curve(n/theta * (x/theta)^(n - 1), 0, theta, ylab = "Density")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="10-Bootstrap_ext_files/figure-html/den-max-1.png" alt="Función de densidad del máximo de una muestra procedente de una uniforme." width="70%" />
-<p class="caption">(\#fig:den-max)Función de densidad del máximo de una muestra procedente de una uniforme.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{10-Bootstrap_ext_files/figure-latex/den-max-1} 
+
+}
+
+\caption{Función de densidad del máximo de una muestra procedente de una uniforme.}(\#fig:den-max)
+\end{figure}
 -->
 Lo que confirma que $\hat{\theta}$ es un estimador sesgado de $\theta$, puesto que se tiene que $\hat{\theta}\leq \theta$ con probabilidad 1.
 A partir de esta densidad podemos calcular fácilmente el sesgo del estimador:
@@ -112,10 +116,10 @@ De esta forma vemos que el bootstrap uniforme (no paramétrico) es inconsistente
 <br>
 
 El siguiente código implementa el método bootstrap uniforme (también llamado naïve) para aproximar la distribución del estadístico $R=\hat{\theta}-\theta$, para una muestra de tamaño $n=50$, proveniente de una población con distribución
-$\mathcal{U}\left( 0,1\right)$ :
+$\mathcal{U}\left( 0,1\right)$  [Figura \@ref(fig:boot-uniforme-maximo)]:
 
 
-```r
+``` r
 theta <- 1
 n <- 50
 set.seed(1)
@@ -140,10 +144,14 @@ curve(n/theta * ((x + theta)/theta)^(n - 1), col = "blue", lty = 2, lwd = 2,
       add = TRUE)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="10-Bootstrap_ext_files/figure-html/boot-uniforme-maximo-1.png" alt="Distribución de las réplicas bootstrap (uniforme) del estadístico y distribución poblacional." width="70%" />
-<p class="caption">(\#fig:boot-uniforme-maximo)Distribución de las réplicas bootstrap (uniforme) del estadístico y distribución poblacional.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{10-Bootstrap_ext_files/figure-latex/boot-uniforme-maximo-1} 
+
+}
+
+\caption{Distribución de las réplicas bootstrap (uniforme) del estadístico y distribución poblacional.}(\#fig:boot-uniforme-maximo)
+\end{figure}
 
 Este problema podría evitarse empleando el bootstrap paramétrico descrito a continuación (ver Ejemplo \@ref(exm:boot-maximo-parametrico)).
 
@@ -189,10 +197,10 @@ es el contraste de hipótesis que se tratará en la Sección \@ref(contrastes-pa
 Continuando con el Ejemplo \@ref(exm:media-dt-desconocida) del tiempo de vida de microorganismos, podríamos pensar en emplear bootstrap paramétrico para calcular un intervalo de confianza para la media poblacional.
 
 La valided de los resultados dependerá en gran medida de que el modelo paramétrico sea adecuado para describir la variabilidad de los datos. 
-En este caso parece razonable asumir una distribución exponencial (no lo es que el modelo admita tiempos de vida negativos, como ocurriría al asumir normalidad):
+En este caso parece razonable asumir una distribución exponencial (no lo es que el modelo admita tiempos de vida negativos, como ocurriría al asumir normalidad) [Figura \@ref(fig:boot-par-aprox)]:
 
 
-```r
+``` r
 muestra <- simres::lifetimes
 # Distribución bootstrap uniforme
 # plot(ecdf(muestra), xlim = c(-.5, 3), ylab = "F(x)")
@@ -205,15 +213,19 @@ legend("bottomright", legend = c("Empírica", "Aprox. normal", "Aprox. exponenci
        lty = 1:3)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="10-Bootstrap_ext_files/figure-html/boot-par-aprox-1.png" alt="Distribución empírica de la muestra de tiempos de vida de microorganismos y aproximaciones paramétricas." width="70%" />
-<p class="caption">(\#fig:boot-par-aprox)Distribución empírica de la muestra de tiempos de vida de microorganismos y aproximaciones paramétricas.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{10-Bootstrap_ext_files/figure-latex/boot-par-aprox-1} 
+
+}
+
+\caption{Distribución empírica de la muestra de tiempos de vida de microorganismos y aproximaciones paramétricas.}(\#fig:boot-par-aprox)
+\end{figure}
 
 Podemos modificar fácilmente el código mostrado en el Ejemplo \@ref(exm:media-dt-desconocida), de forma que se emplee bootstrap paramétrico (exponencial):
 
 
-```r
+``` r
 n <- length(muestra)
 alfa <- 0.05
 # Estimaciones muestrales
@@ -241,8 +253,8 @@ IC_boot
 ```
 
 ```
-##    2.5%   97.5% 
-## 0.53198 1.39614
+ ##    2.5%   97.5% 
+ ## 0.53198 1.39614
 ```
 
 Para emplear el paquete `boot`, como se comentó en la Sección 
@@ -257,7 +269,7 @@ Por ejemplo, para calcular el intervalo de confianza para la media del
 tiempo de vida de los microorganismos, podríamos utilizar el siguiente código:
 
 
-```r
+``` r
 library(boot)
 ran.gen.exp <- function(data, mle) {
     # Función para generar muestras aleatorias exponenciales
@@ -278,16 +290,16 @@ boot.ci(res.boot, type = "stud")
 ```
 
 ```
-## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
-## Based on 1000 bootstrap replicates
-## 
-## CALL : 
-## boot.ci(boot.out = res.boot, type = "stud")
-## 
-## Intervals : 
-## Level    Studentized     
-## 95%   ( 0.5308,  1.4061 )  
-## Calculations and Intervals on Original Scale
+ ## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+ ## Based on 1000 bootstrap replicates
+ ## 
+ ## CALL : 
+ ## boot.ci(boot.out = res.boot, type = "stud")
+ ## 
+ ## Intervals : 
+ ## Level    Studentized     
+ ## 95%   ( 0.5308,  1.4061 )  
+ ## Calculations and Intervals on Original Scale
 ```
 
 :::
@@ -314,10 +326,10 @@ distribución en muestreo de
 $R=R\left( \mathbf{X},F \right) =\hat{\theta}-\theta$.
 
 Para implementarlo en la práctica podríamos emplear un código muy similar al 
-del ejemplo original :
+del ejemplo original  [Figura \@ref(fig:boot-parametrico-maximo)]:
 
 
-```r
+``` r
 # Remuestreo
 B <- 2000
 maximo <- numeric(B)
@@ -337,10 +349,14 @@ curve(n/theta * ((x + theta)/theta)^(n - 1), col = "blue", lty = 2, lwd = 2,
       add = TRUE)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="10-Bootstrap_ext_files/figure-html/boot-parametrico-maximo-1.png" alt="Distribución bootstrap paramétrica y distribución poblacional." width="70%" />
-<p class="caption">(\#fig:boot-parametrico-maximo)Distribución bootstrap paramétrica y distribución poblacional.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{10-Bootstrap_ext_files/figure-latex/boot-parametrico-maximo-1} 
+
+}
+
+\caption{Distribución bootstrap paramétrica y distribución poblacional.}(\#fig:boot-parametrico-maximo)
+\end{figure}
 
 :::
 
@@ -400,7 +416,7 @@ Como ejemplo consideraremos el conjunto de datos `precip`, que contiene el prome
 en pulgadas de lluvia, de 70 ciudades de Estados Unidos.
 
 
-```r
+``` r
 x <- precip
 h <- bw.SJ(x)
 npden <- density(x, bw = h)
@@ -415,10 +431,14 @@ lines(npden, lwd = 2)
 rug(x, col = "darkgray")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="10-Bootstrap_ext_files/figure-html/density-1.png" alt="Estimación tipo núcleo de la densidad de `precip`." width="70%" />
-<p class="caption">(\#fig:density)Estimación tipo núcleo de la densidad de `precip`.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{10-Bootstrap_ext_files/figure-latex/density-1} 
+
+}
+
+\caption{Estimación tipo núcleo de la densidad de `precip`.}(\#fig:density)
+\end{figure}
 
 Alternativamente podríamos emplear implementaciones en otros paquetes de `R`.
 Uno de los más empleados es [`ks`](https://www.mvstat.net/mvksa/) (Duong, 2019), que admite estimación incondicional y condicional multidimensional.
@@ -437,10 +457,10 @@ K\left( \frac{y-X_i}{h} \right) dy \\
 donde $\mathbb{K}$ es la función de distribución asociada al núcleo $K$, es decir
 $$\mathbb{K}\left( t \right) =\int_{-\infty }^{t}K\left(u \right) du.$$
 
-Por ejemplo, en el caso de del conjunto de datos de precipitaciones, el siguiente código compara la estimación tipo núcleo de la distribución con la empírica:
+Por ejemplo, en el caso de del conjunto de datos de precipitaciones, el siguiente código compara la estimación tipo núcleo de la distribución con la empírica [Figura \@ref(fig:pnp)]:
 
 
-```r
+``` r
 Fn <- ecdf(precip)
 curve(Fn, xlim = c(0, 75), ylab = "F(x)", type = "s")
 Fnp <- function(x) sapply(x, function(y) mean(pnorm(y, precip, h)))
@@ -448,10 +468,14 @@ curve(Fnp, lty = 2, add = TRUE)
 legend("bottomright", legend = c("Empírica", "Tipo núcleo"), lty = 1:2)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="10-Bootstrap_ext_files/figure-html/pnp-1.png" alt="Estimación empírica y tipo núcleo de la función de distribución de `precip`. " width="70%" />
-<p class="caption">(\#fig:pnp)Estimación empírica y tipo núcleo de la función de distribución de `precip`. </p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{10-Bootstrap_ext_files/figure-latex/pnp-1} 
+
+}
+
+\caption{Estimación empírica y tipo núcleo de la función de distribución de `precip`. }(\#fig:pnp)
+\end{figure}
 
 Tendiendo en cuenta que el estimador $\hat{f}_{h}\left( x \right)$ es una combinación lineal convexa de funciones de densidad, $K_{h}\left(x-X_i \right)$, con pesos $\frac{1}{n}$, podemos simular valores $X^{\ast}$, procedentes de esta distribución empleando el método de composición descrito en la Sección \@ref(composicion).
 El primer paso consistiría en elegir (aleatoriamente y con equiprobabilidad) un índice $i\in \left\{ 1,\ldots ,n\right\}$, y posteriormente simular $X^{\ast}$ a partir de la densidad $K_{h}\left(\cdot -X_i \right)$. 
@@ -460,7 +484,7 @@ Por tanto, podemos pensar que el bootstrap suavizado parte del bootstrap uniform
 
 Por ejemplo, la función `density()` emplea por defecto un núcleo gaussiano, y como se muestra en la ayuda de esta función, podemos emplear un código como el siguiente para obtener `nsim` simulaciones(ver Figura \@ref(fig:density-sim)):
 
-```r
+``` r
 ## simulation from a density() fit:
 # a kernel density fit is an equally-weighted mixture.
 nsim <- 1e6
@@ -473,10 +497,14 @@ plot(npden, main = "")
 lines(density(x_boot), col = "blue", lwd = 2, lty = 2)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="10-Bootstrap_ext_files/figure-html/density-sim-1.png" alt="Estimaciónes tipo núcleo de las densidades de `precip` y de una simulación." width="70%" />
-<p class="caption">(\#fig:density-sim)Estimaciónes tipo núcleo de las densidades de `precip` y de una simulación.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{10-Bootstrap_ext_files/figure-latex/density-sim-1} 
+
+}
+
+\caption{Estimaciónes tipo núcleo de las densidades de `precip` y de una simulación.}(\#fig:density-sim)
+\end{figure}
 
 En el boostrap suavizado, la distribución de una observación $X_i^{\ast}$ de la remuestra bootstrap es continua (puede tomar infinitos valores), mientras que en el bootstrap uniforme es discreta.
 De esta forma se pueden evitar algunos de los problemas del bootstrap uniforme, como los descritos en la Sección \@ref(deficien-unif).
@@ -491,7 +519,7 @@ Continuando con el Ejemplo \@ref(exm:media-dt-desconocida) del tiempo de vida de
 
 
 
-```r
+``` r
 muestra <- simres::lifetimes
 n <- length(muestra)
 alfa <- 0.05
@@ -524,14 +552,14 @@ IC_boot
 ```
 
 ```
-##   2.5%  97.5% 
-## 0.4961 1.1880
+ ##   2.5%  97.5% 
+ ## 0.4961 1.1880
 ```
 
 Con el paquete `boot`, la recomendación es implementarlo como
 un bootstrap paramétrico:
 
-```r
+``` r
 library(boot)
 ran.gen.smooth <- function(data, mle) {
     # Función para generar muestras aleatorias mediante 
@@ -555,16 +583,16 @@ boot.ci(res.boot, type = "stud")
 ```
 
 ```
-## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
-## Based on 1000 bootstrap replicates
-## 
-## CALL : 
-## boot.ci(boot.out = res.boot, type = "stud")
-## 
-## Intervals : 
-## Level    Studentized     
-## 95%   ( 0.4960,  1.1927 )  
-## Calculations and Intervals on Original Scale
+ ## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+ ## Based on 1000 bootstrap replicates
+ ## 
+ ## CALL : 
+ ## boot.ci(boot.out = res.boot, type = "stud")
+ ## 
+ ## Intervals : 
+ ## Level    Studentized     
+ ## 95%   ( 0.4960,  1.1927 )  
+ ## Calculations and Intervals on Original Scale
 ```
 
 :::
@@ -618,7 +646,7 @@ En esta sección se empleará el conjunto de datos `Prestige` del paquete `carDa
 Para ajustar el correspondiente modelo de regresión lineal podemos emplear el siguiente código:
 
 
-```r
+``` r
 data(Prestige, package = "carData")
 # ?Prestige
 modelo <- lm(prestige ~ income + education, data = Prestige)
@@ -626,47 +654,47 @@ summary(modelo)
 ```
 
 ```
-## 
-## Call:
-## lm(formula = prestige ~ income + education, data = Prestige)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -19.404  -5.331   0.015   4.980  17.689 
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(>|t|)    
-## (Intercept) -6.847779   3.218977   -2.13    0.036 *  
-## income       0.001361   0.000224    6.07  2.4e-08 ***
-## education    4.137444   0.348912   11.86  < 2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 7.81 on 99 degrees of freedom
-## Multiple R-squared:  0.798,	Adjusted R-squared:  0.794 
-## F-statistic:  196 on 2 and 99 DF,  p-value: <2e-16
+ ## 
+ ## Call:
+ ## lm(formula = prestige ~ income + education, data = Prestige)
+ ## 
+ ## Residuals:
+ ##     Min      1Q  Median      3Q     Max 
+ ## -19.404  -5.331   0.015   4.980  17.689 
+ ## 
+ ## Coefficients:
+ ##              Estimate Std. Error t value Pr(>|t|)    
+ ## (Intercept) -6.847779   3.218977   -2.13    0.036 *  
+ ## income       0.001361   0.000224    6.07  2.4e-08 ***
+ ## education    4.137444   0.348912   11.86  < 2e-16 ***
+ ## ---
+ ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+ ## 
+ ## Residual standard error: 7.81 on 99 degrees of freedom
+ ## Multiple R-squared:  0.798,	Adjusted R-squared:  0.794 
+ ## F-statistic:  196 on 2 and 99 DF,  p-value: <2e-16
 ```
 
 Como ejemplo, consideraremos que el objetivo es realizar inferencias sobre el coeficiente de determinación ajustado:
 
 
-```r
+``` r
 res <- summary(modelo)
 names(res)
 ```
 
 ```
-##  [1] "call"          "terms"         "residuals"     "coefficients" 
-##  [5] "aliased"       "sigma"         "df"            "r.squared"    
-##  [9] "adj.r.squared" "fstatistic"    "cov.unscaled"
+ ##  [1] "call"          "terms"         "residuals"     "coefficients" 
+ ##  [5] "aliased"       "sigma"         "df"            "r.squared"    
+ ##  [9] "adj.r.squared" "fstatistic"    "cov.unscaled"
 ```
 
-```r
+``` r
 res$adj.r.squared
 ```
 
 ```
-## [1] 0.79392
+ ## [1] 0.79392
 ```
 
 ### Remuestreo de las observaciones {#boot-unif-reg}
@@ -676,7 +704,7 @@ Como ya se comentó, en regresión podríamos emplear bootstrap uniforme multidi
 En este caso, podríamos realizar inferencias sobre el coeficiente de determinación ajustado empleando el siguiente código:
 
 
-```r
+``` r
 library(boot)
 
 case.stat <- function(data, i) {
@@ -690,35 +718,35 @@ boot.case
 ```
 
 ```
-## 
-## ORDINARY NONPARAMETRIC BOOTSTRAP
-## 
-## 
-## Call:
-## boot(data = Prestige, statistic = case.stat, R = 1000)
-## 
-## 
-## Bootstrap Statistics :
-##     original    bias    std. error
-## t1*  0.79392 0.0024956    0.031527
+ ## 
+ ## ORDINARY NONPARAMETRIC BOOTSTRAP
+ ## 
+ ## 
+ ## Call:
+ ## boot(data = Prestige, statistic = case.stat, R = 1000)
+ ## 
+ ## 
+ ## Bootstrap Statistics :
+ ##     original    bias    std. error
+ ## t1*  0.79392 0.0024956    0.031527
 ```
 
-```r
+``` r
 # plot(boot.case)
 boot.ci(boot.case, type = c("basic", "perc", "bca"))
 ```
 
 ```
-## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
-## Based on 1000 bootstrap replicates
-## 
-## CALL : 
-## boot.ci(boot.out = boot.case, type = c("basic", "perc", "bca"))
-## 
-## Intervals : 
-## Level      Basic              Percentile            BCa          
-## 95%   ( 0.7331,  0.8570 )   ( 0.7308,  0.8547 )   ( 0.7203,  0.8497 )  
-## Calculations and Intervals on Original Scale
+ ## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+ ## Based on 1000 bootstrap replicates
+ ## 
+ ## CALL : 
+ ## boot.ci(boot.out = boot.case, type = c("basic", "perc", "bca"))
+ ## 
+ ## Intervals : 
+ ## Level      Basic              Percentile            BCa          
+ ## 95%   ( 0.7331,  0.8570 )   ( 0.7308,  0.8547 )   ( 0.7203,  0.8497 )  
+ ## Calculations and Intervals on Original Scale
 ```
 
 
@@ -731,7 +759,7 @@ $$\mathbf{Y}^{\ast} = \hat{\mathbf{Y}} + \mathbf{r}^{\ast}.$$
 Por ejemplo, adaptando el código en Canty (2002) para este conjunto de datos, podríamos emplear:
 
 
-```r
+``` r
 pres.dat <- Prestige
 pres.dat$fit <- fitted(modelo)
 pres.dat$res <- residuals(modelo)
@@ -748,36 +776,36 @@ boot.mod
 ```
 
 ```
-## 
-## ORDINARY NONPARAMETRIC BOOTSTRAP
-## 
-## 
-## Call:
-## boot(data = pres.dat, statistic = mod.stat, R = 1000)
-## 
-## 
-## Bootstrap Statistics :
-##     original   bias    std. error
-## t1*  0.79392 0.004402     0.02672
+ ## 
+ ## ORDINARY NONPARAMETRIC BOOTSTRAP
+ ## 
+ ## 
+ ## Call:
+ ## boot(data = pres.dat, statistic = mod.stat, R = 1000)
+ ## 
+ ## 
+ ## Bootstrap Statistics :
+ ##     original   bias    std. error
+ ## t1*  0.79392 0.004402     0.02672
 ```
 
-```r
+``` r
 # plot(boot.mod)
 boot.ci(boot.mod, type = c("basic", "perc", "bca"))
 ```
 
 ```
-## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
-## Based on 1000 bootstrap replicates
-## 
-## CALL : 
-## boot.ci(boot.out = boot.mod, type = c("basic", "perc", "bca"))
-## 
-## Intervals : 
-## Level      Basic              Percentile            BCa          
-## 95%   ( 0.7407,  0.8464 )   ( 0.7415,  0.8471 )   ( 0.7244,  0.8331 )  
-## Calculations and Intervals on Original Scale
-## Some BCa intervals may be unstable
+ ## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+ ## Based on 1000 bootstrap replicates
+ ## 
+ ## CALL : 
+ ## boot.ci(boot.out = boot.mod, type = c("basic", "perc", "bca"))
+ ## 
+ ## Intervals : 
+ ## Level      Basic              Percentile            BCa          
+ ## 95%   ( 0.7407,  0.8464 )   ( 0.7415,  0.8471 )   ( 0.7244,  0.8331 )  
+ ## Calculations and Intervals on Original Scale
+ ## Some BCa intervals may be unstable
 ```
 
 Sin embargo, la variabilidad de los residuos no reproduce la de los verdaderos errores, por lo que podría ser preferible (especialmente si el tamaño muestral es pequeño) emplear la modificación descrita en Davison y Hinkley (1997, Alg. 6.3, p. 271).
@@ -793,7 +821,7 @@ residuos de un modelo `gam` del paquete `mgcv`, como no implementa un método `h
 habrá que emplear `influence.gam()` (o directamente `modelo.gam$hat`).]:
 
 
-```r
+``` r
 pres.dat$sres <- residuals(modelo)/sqrt(1 - hatvalues(modelo))
 pres.dat$sres <- pres.dat$sres - mean(pres.dat$sres)
 ```
@@ -803,7 +831,7 @@ como se describe en el apéndice "Bootstrapping Regression Models in R" del libr
 
 Esta función es de la forma:
 
-```r
+``` r
 Boot(object, f = coef, labels = names(f(object)), R = 999, 
      method = c("case", "residual"))
 ```

@@ -215,11 +215,11 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="4.1" data-path="inversion.html"><a href="inversion.html"><i class="fa fa-check"></i><b>4.1</b> Método de inversión</a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="inversion.html"><a href="inversion.html#algunas-distribuciones-que-pueden-simularse-por-el-método-de-inversión"><i class="fa fa-check"></i><b>4.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
+<li class="chapter" data-level="4.1.1" data-path="inversion.html"><a href="inversion.html#ejemplos-inv"><i class="fa fa-check"></i><b>4.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
 <li class="chapter" data-level="4.1.2" data-path="inversion.html"><a href="inversion.html#ventajas-e-inconvenientes"><i class="fa fa-check"></i><b>4.1.2</b> Ventajas e inconvenientes</a></li>
 <li class="chapter" data-level="4.1.3" data-path="inversion.html"><a href="inversion.html#inversión-aproximada"><i class="fa fa-check"></i><b>4.1.3</b> Inversión aproximada</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>4.2</b> Método de aceptación rechazo</a>
+<li class="chapter" data-level="4.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>4.2</b> Método de aceptación-rechazo</a>
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="AR.html"><a href="AR.html#algoritmo"><i class="fa fa-check"></i><b>4.2.1</b> Algoritmo</a></li>
 <li class="chapter" data-level="4.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>4.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
@@ -255,7 +255,7 @@ div.csl-indent {
 <li class="chapter" data-level="6" data-path="multivariante.html"><a href="multivariante.html"><i class="fa fa-check"></i><b>6</b> Simulación de distribuciones multivariantes</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="simulación-de-componentes-independientes.html"><a href="simulación-de-componentes-independientes.html"><i class="fa fa-check"></i><b>6.1</b> Simulación de componentes independientes</a></li>
-<li class="chapter" data-level="6.2" data-path="el-método-de-aceptaciónrechazo.html"><a href="el-método-de-aceptaciónrechazo.html"><i class="fa fa-check"></i><b>6.2</b> El método de aceptación/rechazo</a></li>
+<li class="chapter" data-level="6.2" data-path="el-método-de-aceptación-rechazo.html"><a href="el-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>6.2</b> El método de aceptación-rechazo</a></li>
 <li class="chapter" data-level="6.3" data-path="fact-cov.html"><a href="fact-cov.html"><i class="fa fa-check"></i><b>6.3</b> Factorización de la matriz de covarianzas</a></li>
 <li class="chapter" data-level="6.4" data-path="distrcond.html"><a href="distrcond.html"><i class="fa fa-check"></i><b>6.4</b> Método de las distribuciones condicionadas</a></li>
 <li class="chapter" data-level="6.5" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html"><i class="fa fa-check"></i><b>6.5</b> Simulación condicional e incondicional</a>
@@ -456,25 +456,52 @@ div.csl-indent {
 <h2><span class="header-section-number">5.6</span> Métodos específicos para generación de distribuciones notables<a href="notables-disc.html#notables-disc" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Los comentarios al principio de la Sección <a href="notables-cont.html#notables-cont">4.5</a> para el caso de variables continuas serían válidos también para distribuciones notables discretas.</p>
 <p>Entre los distintos métodos disponibles para la generación de las distribuciones discretas más conocidas podríamos destacar el de la distribución binomial negativa mediante el método de composición (Sección <a href="composicion.html#composicion">4.4</a>).</p>
-<p>La distribución binomial negativa, <span class="math inline">\(BN(r, p)\)</span>, puede interpretarse como el número de fracasos antes del <span class="math inline">\(r\)</span>-ésimo éxito<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a> y su función de masa de probabilidad es
+<p>La distribución binomial negativa, <span class="math inline">\(\mathcal{BN}(r, p)\)</span>, puede interpretarse como el número de fracasos antes del <span class="math inline">\(r\)</span>-ésimo éxito<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a> y su función de masa de probabilidad es
 <span class="math display">\[P(X = i) = \binom{i+r-1}i p^r (1-p)^i \text{, para }i=0,1,\ldots\]</span></p>
-<p>A partir de la propiedad
-<span class="math display">\[X|_{Y} \sim \text{Pois}\left(  Y\right)  \text{, }Y \sim \operatorname{Gamma} \left( r, \frac{p}{1-p}\right)  \Rightarrow X \sim BN(r, p)\]</span>
+<p>A partir de la propiedad <span class="citation">(ver e.g. <a href="#ref-devroye1986" role="doc-biblioref">Devroye, 1986, pp. 488-489</a>)</span>
+<span class="math display">\[X|_{Y} \sim \mathcal{Pois}\left(  Y\right)  \text{, }Y \sim \mathcal{Gamma} \left( r, \frac{p}{1-p}\right)  \Rightarrow X \sim \mathcal{BN}(r, p)\]</span>
 se puede deducir el siguiente método específico de simulación.</p>
 <div class="conjecture">
 <p><span id="cnj:bin-neg" class="conjecture"><strong>Algoritmo 5.8  (distribución binomial negativa) </strong></span><br></p>
 <ol style="list-style-type: decimal">
-<li><p>Simular <span class="math inline">\(L \sim \operatorname{Gamma}\left( r, \frac{p}{1-p} \right)\)</span>.</p></li>
-<li><p>Simular <span class="math inline">\(X \sim Pois \left( L\right)\)</span>.</p></li>
+<li><p>Simular <span class="math inline">\(L \sim \mathcal{Gamma}\left( r, \frac{p}{1-p} \right)\)</span>.</p></li>
+<li><p>Simular <span class="math inline">\(X \sim \mathcal{Pois} \left( L\right)\)</span>.</p></li>
 <li><p>Devolver <span class="math inline">\(X\)</span>.</p></li>
 </ol>
 </div>
-<p>Por este motivo se denominada también a esta distribución <em>Gamma-Poisson</em>. Empleando una aproximación similar podríamos generar otras distribuciones, como la <em>Beta-Binomial</em>, empleadas habitualmente en inferencia bayesiana.</p>
+<p>La función <a href="https://rdrr.io/r/stats/NegBinomial.html"><code>rnbinom()</code></a> implementa este algoritmo internamente<a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a>,
+y podemos imitar su funcionamiento con el siguiente código:</p>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="notables-disc.html#cb219-1" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb219-2"><a href="notables-disc.html#cb219-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb219-3"><a href="notables-disc.html#cb219-3" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
+<span id="cb219-4"><a href="notables-disc.html#cb219-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb219-5"><a href="notables-disc.html#cb219-5" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fu">rgamma</span>(nsim, r, p<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>p))</span>
+<span id="cb219-6"><a href="notables-disc.html#cb219-6" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> <span class="fu">rpois</span>(nsim, lambda)</span></code></pre></div>
+<p>Como comprobación de que el algoritmo está bien implementado (es un método exacto de simulación), comparamos las aproximaciones de las probabilidades de los valores generados con los valores teóricos:</p>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="notables-disc.html#cb220-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">table</span>(rx)<span class="sc">/</span>nsim</span>
+<span id="cb220-2"><a href="notables-disc.html#cb220-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">ylab =</span> <span class="st">&quot;frecuencia relativa&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;valores&quot;</span>)</span>
+<span id="cb220-3"><a href="notables-disc.html#cb220-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span><span class="fu">max</span>(<span class="fu">as.numeric</span>(<span class="fu">names</span>(res)))</span>
+<span id="cb220-4"><a href="notables-disc.html#cb220-4" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(x, <span class="fu">dnbinom</span>(x, r, p), <span class="at">pch =</span> <span class="dv">4</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)  <span class="co"># Comparación teórica</span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:compcomp"></span>
+<img src="05-Metodos_generales_discretas_files/figure-html/compcomp-1.png" alt="Comparación de las frecuencias relativas de los valores generados de la distribución binomial negativa, mediante composición, con las probabilidades teóricas." width="75%" />
+<p class="caption">
+Figura 5.8: Comparación de las frecuencias relativas de los valores generados de la distribución binomial negativa, mediante composición, con las probabilidades teóricas.
+</p>
+</div>
+<p>Esta propiedad es el motivo de que a la distribución geométrica se la denomine también distribución <em>Gamma-Poisson</em>.
+Empleando una aproximación similar podríamos generar otras distribuciones, como la <em>Beta-Binomial</em>, empleadas habitualmente en inferencia bayesiana.</p>
+</div>
+<h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-devroye1986" class="csl-entry">
+Devroye, L. (1986). <em>Non-Uniform Random Variate Generation</em>. Springer. <a href="https://link.springer.com/book/10.1007/978-1-4613-8643-8">https://link.springer.com/book/10.1007/978-1-4613-8643-8</a>
+</div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="24">
-<li id="fn24"><p>La distribución binomial negativa es una generalización de la geométrica y, debido a su reproductividad en el parámetro <span class="math inline">\(r\)</span>, podría simularse como suma de <span class="math inline">\(r\)</span> variables geométricas. Sin embargo, este algoritmo puede ser muy costoso en tiempo de computación si <span class="math inline">\(r\)</span> es elevado.<a href="notables-disc.html#fnref24" class="footnote-back">↩︎</a></p></li>
+<ol start="26">
+<li id="fn26"><p>La distribución binomial negativa es una generalización de la geométrica y, debido a su reproductividad en el parámetro <span class="math inline">\(r\)</span>, podría simularse como suma de <span class="math inline">\(r\)</span> variables geométricas. Sin embargo, este algoritmo puede ser muy costoso en tiempo de computación si <span class="math inline">\(r\)</span> es elevado.<a href="notables-disc.html#fnref26" class="footnote-back">↩︎</a></p></li>
+<li id="fn27"><p>En el fichero <a href="https://svn.r-project.org/R/trunk/src/nmath/rnbinom.c"><em>rnbinom.c</em></a> de su librería matemática <a href="https://svn.r-project.org/R/trunk/src/nmath"><em>nmath</em></a>.<a href="notables-disc.html#fnref27" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -497,42 +524,42 @@ se puede deducir el siguiente método específico de simulación.</p>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": true,
-"facebook": false,
-"twitter": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/rubenfcasal/simbook/edit/master/05-Metodos_generales_discretas.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["Simulacion.pdf"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rubenfcasal/simbook/edit/master/05-Metodos_generales_discretas.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["Simulacion.pdf"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>

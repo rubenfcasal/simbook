@@ -215,11 +215,11 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="4.1" data-path="inversion.html"><a href="inversion.html"><i class="fa fa-check"></i><b>4.1</b> Método de inversión</a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="inversion.html"><a href="inversion.html#algunas-distribuciones-que-pueden-simularse-por-el-método-de-inversión"><i class="fa fa-check"></i><b>4.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
+<li class="chapter" data-level="4.1.1" data-path="inversion.html"><a href="inversion.html#ejemplos-inv"><i class="fa fa-check"></i><b>4.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
 <li class="chapter" data-level="4.1.2" data-path="inversion.html"><a href="inversion.html#ventajas-e-inconvenientes"><i class="fa fa-check"></i><b>4.1.2</b> Ventajas e inconvenientes</a></li>
 <li class="chapter" data-level="4.1.3" data-path="inversion.html"><a href="inversion.html#inversión-aproximada"><i class="fa fa-check"></i><b>4.1.3</b> Inversión aproximada</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>4.2</b> Método de aceptación rechazo</a>
+<li class="chapter" data-level="4.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>4.2</b> Método de aceptación-rechazo</a>
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="AR.html"><a href="AR.html#algoritmo"><i class="fa fa-check"></i><b>4.2.1</b> Algoritmo</a></li>
 <li class="chapter" data-level="4.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>4.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
@@ -255,7 +255,7 @@ div.csl-indent {
 <li class="chapter" data-level="6" data-path="multivariante.html"><a href="multivariante.html"><i class="fa fa-check"></i><b>6</b> Simulación de distribuciones multivariantes</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="simulación-de-componentes-independientes.html"><a href="simulación-de-componentes-independientes.html"><i class="fa fa-check"></i><b>6.1</b> Simulación de componentes independientes</a></li>
-<li class="chapter" data-level="6.2" data-path="el-método-de-aceptaciónrechazo.html"><a href="el-método-de-aceptaciónrechazo.html"><i class="fa fa-check"></i><b>6.2</b> El método de aceptación/rechazo</a></li>
+<li class="chapter" data-level="6.2" data-path="el-método-de-aceptación-rechazo.html"><a href="el-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>6.2</b> El método de aceptación-rechazo</a></li>
 <li class="chapter" data-level="6.3" data-path="fact-cov.html"><a href="fact-cov.html"><i class="fa fa-check"></i><b>6.3</b> Factorización de la matriz de covarianzas</a></li>
 <li class="chapter" data-level="6.4" data-path="distrcond.html"><a href="distrcond.html"><i class="fa fa-check"></i><b>6.4</b> Método de las distribuciones condicionadas</a></li>
 <li class="chapter" data-level="6.5" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html"><i class="fa fa-check"></i><b>6.5</b> Simulación condicional e incondicional</a>
@@ -484,45 +484,45 @@ La idea básica es que si la densidad <span class="math inline">\(g\)</span> tie
 <span class="math display">\[g(x) = \lambda e^{-\lambda (x - t)}\text{, }x&gt;t,\]</span>
 (podemos emplear <code>dexp(y - t)</code> para evaluar esta densidad y <code>rexp(n) + t</code> para generar valores).</p>
 <p>En primer lugar comparamos <span class="math inline">\(h(x)f(x)\)</span> con la densidad auxiliar reescalada, <span class="math inline">\(g(x)f(4.5)\)</span>, para comprobar si es una buena elección:</p>
-<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="muestreo-importancia.html#cb350-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x), <span class="fl">4.5</span>, <span class="dv">6</span>, <span class="at">ylab =</span> <span class="st">&quot;dnorm(x) y dexp(x-4.5)*k&quot;</span>)</span>
-<span id="cb350-2"><a href="muestreo-importancia.html#cb350-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fl">4.5</span>)</span>
-<span id="cb350-3"><a href="muestreo-importancia.html#cb350-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>)</span>
-<span id="cb350-4"><a href="muestreo-importancia.html#cb350-4" aria-hidden="true" tabindex="-1"></a>escala <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(<span class="fl">4.5</span>)  <span class="co"># Reescalado para comparación...</span></span>
-<span id="cb350-5"><a href="muestreo-importancia.html#cb350-5" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dexp</span>(x <span class="sc">-</span> <span class="fl">4.5</span>) <span class="sc">*</span> escala, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">lty =</span> <span class="dv">2</span>)  </span></code></pre></div>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="muestreo-importancia.html#cb367-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x), <span class="fl">4.5</span>, <span class="dv">6</span>, <span class="at">ylab =</span> <span class="st">&quot;dnorm(x) y dexp(x-4.5)*k&quot;</span>)</span>
+<span id="cb367-2"><a href="muestreo-importancia.html#cb367-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fl">4.5</span>)</span>
+<span id="cb367-3"><a href="muestreo-importancia.html#cb367-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>)</span>
+<span id="cb367-4"><a href="muestreo-importancia.html#cb367-4" aria-hidden="true" tabindex="-1"></a>escala <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(<span class="fl">4.5</span>)  <span class="co"># Reescalado para comparación...</span></span>
+<span id="cb367-5"><a href="muestreo-importancia.html#cb367-5" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dexp</span>(x <span class="sc">-</span> <span class="fl">4.5</span>) <span class="sc">*</span> escala, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">lty =</span> <span class="dv">2</span>)  </span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:mc-imp-int"></span>
-<img src="07-Monte_Carlo_files/figure-html/mc-imp-int-1.png" alt="Objetivo a integrar (densidad objetivo truncada) y densidad auxiliar reescalada." width="70%" />
+<img src="07-Monte_Carlo_files/figure-html/mc-imp-int-1.png" alt="Objetivo a integrar (densidad objetivo truncada) y densidad auxiliar reescalada." width="75%" />
 <p class="caption">
 Figura 7.3: Objetivo a integrar (densidad objetivo truncada) y densidad auxiliar reescalada.
 </p>
 </div>
 <p>Generamos valores de la densidad auxiliar y calculamos los pesos:</p>
-<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="muestreo-importancia.html#cb351-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb351-2"><a href="muestreo-importancia.html#cb351-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">3</span></span>
-<span id="cb351-3"><a href="muestreo-importancia.html#cb351-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rexp</span>(nsim) <span class="sc">+</span> <span class="fl">4.5</span>    <span class="co">#  Y ~ g</span></span>
-<span id="cb351-4"><a href="muestreo-importancia.html#cb351-4" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(y)<span class="sc">/</span><span class="fu">dexp</span>(y <span class="sc">-</span> <span class="fl">4.5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="muestreo-importancia.html#cb368-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb368-2"><a href="muestreo-importancia.html#cb368-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">3</span></span>
+<span id="cb368-3"><a href="muestreo-importancia.html#cb368-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rexp</span>(nsim) <span class="sc">+</span> <span class="fl">4.5</span>    <span class="co">#  Y ~ g</span></span>
+<span id="cb368-4"><a href="muestreo-importancia.html#cb368-4" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(y)<span class="sc">/</span><span class="fu">dexp</span>(y <span class="sc">-</span> <span class="fl">4.5</span>)</span></code></pre></div>
 <p>La aproximación por simulación sería <code>mean(w * h(y))</code>:</p>
-<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="muestreo-importancia.html#cb352-1" aria-hidden="true" tabindex="-1"></a><span class="co"># h(x) &lt;- function(x) x &gt; 4.5  # (1 si x &gt; 4.5 =&gt; h(y) = 1)</span></span>
-<span id="cb352-2"><a href="muestreo-importancia.html#cb352-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(w) <span class="co"># mean(w*h(y))</span></span></code></pre></div>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="muestreo-importancia.html#cb369-1" aria-hidden="true" tabindex="-1"></a><span class="co"># h(x) &lt;- function(x) x &gt; 4.5  # (1 si x &gt; 4.5 =&gt; h(y) = 1)</span></span>
+<span id="cb369-2"><a href="muestreo-importancia.html#cb369-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(w) <span class="co"># mean(w*h(y))</span></span></code></pre></div>
 <pre><code>## [1] 3.1448e-06</code></pre>
-<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="muestreo-importancia.html#cb354-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="sc">-</span><span class="fl">4.5</span>)  <span class="co"># valor teórico</span></span></code></pre></div>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="muestreo-importancia.html#cb371-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="sc">-</span><span class="fl">4.5</span>)  <span class="co"># valor teórico</span></span></code></pre></div>
 <pre><code>## [1] 3.3977e-06</code></pre>
 <p>Representamos gráficamente la aproximación en función del número de simulaciones:</p>
-<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="muestreo-importancia.html#cb356-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">cumsum</span>(w)<span class="sc">/</span><span class="dv">1</span><span class="sc">:</span>nsim, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Aproximación&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Iteraciones&quot;</span>)</span>
-<span id="cb356-2"><a href="muestreo-importancia.html#cb356-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="fl">4.5</span>), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="muestreo-importancia.html#cb373-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">cumsum</span>(w)<span class="sc">/</span><span class="dv">1</span><span class="sc">:</span>nsim, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Aproximación&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Iteraciones&quot;</span>)</span>
+<span id="cb373-2"><a href="muestreo-importancia.html#cb373-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="fl">4.5</span>), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:mc-imp-conv"></span>
-<img src="07-Monte_Carlo_files/figure-html/mc-imp-conv-1.png" alt="Convergencia de la aproximación de la integral mediante muestreo por importancia." width="70%" />
+<img src="07-Monte_Carlo_files/figure-html/mc-imp-conv-1.png" alt="Convergencia de la aproximación de la integral mediante muestreo por importancia." width="75%" />
 <p class="caption">
 Figura 7.4: Convergencia de la aproximación de la integral mediante muestreo por importancia.
 </p>
 </div>
 <p>El error estándar de la aproximación sería <code>sqrt(var(w * h(y))/nsim)</code>:</p>
-<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="muestreo-importancia.html#cb357-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">var</span>(w)<span class="sc">/</span>nsim) <span class="co"># sd(w*h(y))/sqrt(nsim)   </span></span></code></pre></div>
+<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="muestreo-importancia.html#cb374-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">var</span>(w)<span class="sc">/</span>nsim) <span class="co"># sd(w*h(y))/sqrt(nsim)   </span></span></code></pre></div>
 <pre><code>## [1] 1.3712e-07</code></pre>
 <p>Mientras que empleando la aproximación tradicional:</p>
-<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="muestreo-importancia.html#cb359-1" aria-hidden="true" tabindex="-1"></a>est <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">rnorm</span>(nsim) <span class="sc">&gt;</span> <span class="fl">4.5</span>)</span>
-<span id="cb359-2"><a href="muestreo-importancia.html#cb359-2" aria-hidden="true" tabindex="-1"></a>est</span></code></pre></div>
+<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="muestreo-importancia.html#cb376-1" aria-hidden="true" tabindex="-1"></a>est <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">rnorm</span>(nsim) <span class="sc">&gt;</span> <span class="fl">4.5</span>)</span>
+<span id="cb376-2"><a href="muestreo-importancia.html#cb376-2" aria-hidden="true" tabindex="-1"></a>est</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="muestreo-importancia.html#cb361-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(est <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> est)<span class="sc">/</span>nsim)</span></code></pre></div>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="muestreo-importancia.html#cb378-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(est <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> est)<span class="sc">/</span>nsim)</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 </div>
 <div class="example">
@@ -535,20 +535,20 @@ como en el Ejemplo <a href="muestreo-importancia.html#exm:mc-imp-sample">7.5</a>
 <p>Se trata de aproximar <code>pcauchy(6) - pcauchy(2)</code>,
 i.e. <code>f(y) = dcauchy(y)</code> y <code>h(y) = (y &gt; 2) * (y &lt; 6)</code>,
 empleando muestreo por importancia con <code>g(y) = dnorm(y)</code>.</p>
-<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="muestreo-importancia.html#cb363-1" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">5</span></span>
-<span id="cb363-2"><a href="muestreo-importancia.html#cb363-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4321</span>)</span>
-<span id="cb363-3"><a href="muestreo-importancia.html#cb363-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(nsim)</span>
-<span id="cb363-4"><a href="muestreo-importancia.html#cb363-4" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">dcauchy</span>(y)<span class="sc">/</span><span class="fu">dnorm</span>(y) <span class="co"># w &lt;- w/sum(w) si alguna es una cuasidensidad</span></span></code></pre></div>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="muestreo-importancia.html#cb380-1" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">5</span></span>
+<span id="cb380-2"><a href="muestreo-importancia.html#cb380-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4321</span>)</span>
+<span id="cb380-3"><a href="muestreo-importancia.html#cb380-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(nsim)</span>
+<span id="cb380-4"><a href="muestreo-importancia.html#cb380-4" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">dcauchy</span>(y)<span class="sc">/</span><span class="fu">dnorm</span>(y) <span class="co"># w &lt;- w/sum(w) si alguna es una cuasidensidad</span></span></code></pre></div>
 <p>La aproximación por simulación es <code>mean(w(y) * h(y))</code>:</p>
-<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="muestreo-importancia.html#cb364-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(w <span class="sc">*</span> (y <span class="sc">&gt;</span> <span class="dv">2</span>) <span class="sc">*</span> (y <span class="sc">&lt;</span> <span class="dv">6</span>)) </span></code></pre></div>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="muestreo-importancia.html#cb381-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(w <span class="sc">*</span> (y <span class="sc">&gt;</span> <span class="dv">2</span>) <span class="sc">*</span> (y <span class="sc">&lt;</span> <span class="dv">6</span>)) </span></code></pre></div>
 <pre><code>## [1] 0.099293</code></pre>
-<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="muestreo-importancia.html#cb366-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pcauchy</span>(<span class="dv">6</span>) <span class="sc">-</span> <span class="fu">pcauchy</span>(<span class="dv">2</span>)  <span class="co"># Valor teórico</span></span></code></pre></div>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="muestreo-importancia.html#cb383-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pcauchy</span>(<span class="dv">6</span>) <span class="sc">-</span> <span class="fu">pcauchy</span>(<span class="dv">2</span>)  <span class="co"># Valor teórico</span></span></code></pre></div>
 <pre><code>## [1] 0.095015</code></pre>
 <p>Si se estudia la convergencia:</p>
-<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="muestreo-importancia.html#cb368-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">cumsum</span>(w <span class="sc">*</span> (y <span class="sc">&gt;</span> <span class="dv">2</span>) <span class="sc">*</span> (y <span class="sc">&lt;</span> <span class="dv">6</span>))<span class="sc">/</span><span class="dv">1</span><span class="sc">:</span>nsim, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Aproximación&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Iteraciones&quot;</span>)</span>
-<span id="cb368-2"><a href="muestreo-importancia.html#cb368-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">pcauchy</span>(<span class="dv">6</span>) <span class="sc">-</span> <span class="fu">pcauchy</span>(<span class="dv">2</span>), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="muestreo-importancia.html#cb385-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">cumsum</span>(w <span class="sc">*</span> (y <span class="sc">&gt;</span> <span class="dv">2</span>) <span class="sc">*</span> (y <span class="sc">&lt;</span> <span class="dv">6</span>))<span class="sc">/</span><span class="dv">1</span><span class="sc">:</span>nsim, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Aproximación&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Iteraciones&quot;</span>)</span>
+<span id="cb385-2"><a href="muestreo-importancia.html#cb385-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">pcauchy</span>(<span class="dv">6</span>) <span class="sc">-</span> <span class="fu">pcauchy</span>(<span class="dv">2</span>), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:mc-imp2-conv"></span>
-<img src="07-Monte_Carlo_files/figure-html/mc-imp2-conv-1.png" alt="Gráfico de convergencia de la aproximación mediante muestreo por importancia con mala densidad auxiliar." width="70%" />
+<img src="07-Monte_Carlo_files/figure-html/mc-imp2-conv-1.png" alt="Gráfico de convergencia de la aproximación mediante muestreo por importancia con mala densidad auxiliar." width="75%" />
 <p class="caption">
 Figura 7.5: Gráfico de convergencia de la aproximación mediante muestreo por importancia con mala densidad auxiliar.
 </p>
@@ -556,9 +556,9 @@ Figura 7.5: Gráfico de convergencia de la aproximación mediante muestreo por i
 <p>Lo que indica es una mala elección de la densidad auxiliar.</p>
 <p>La distribución de los pesos debería ser homogénea.
 Por ejemplo, si los reescalamos para que su suma sea el número de valores generados, deberían tomar valores en torno a uno:</p>
-<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="muestreo-importancia.html#cb369-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(nsim <span class="sc">*</span> w<span class="sc">/</span><span class="fu">sum</span>(w))  </span></code></pre></div>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="muestreo-importancia.html#cb386-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(nsim <span class="sc">*</span> w<span class="sc">/</span><span class="fu">sum</span>(w))  </span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:mc-imp2-boxplot"></span>
-<img src="07-Monte_Carlo_files/figure-html/mc-imp2-boxplot-1.png" alt="Gráfico de cajas de los pesos del muestreo por importancia reescalados (de forma que su media es 1)." width="70%" />
+<img src="07-Monte_Carlo_files/figure-html/mc-imp2-boxplot-1.png" alt="Gráfico de cajas de los pesos del muestreo por importancia reescalados (de forma que su media es 1)." width="75%" />
 <p class="caption">
 Figura 7.6: Gráfico de cajas de los pesos del muestreo por importancia reescalados (de forma que su media es 1).
 </p>
@@ -574,26 +574,26 @@ De hecho este estimador es empleado muchas veces en lugar del anterior ya que, a
 <p><span id="exm:mc-imp-sample" class="example"><strong>Ejemplo 7.5  (simulación de normal estándar a partir de Cauchy; Sampling Importance Resampling) </strong></span><br></p>
 <p>Generamos 1000 simulaciones de una distribución (aprox.) <span class="math inline">\(N(0,1)\)</span> (densidad objetivo) mediante remuestreo del muestreo por importancia de <span class="math inline">\(10^{5}\)</span> valores de una <span class="math inline">\(Cauchy(0,1)\)</span> (densidad auxiliar).</p>
 <p><strong>Nota</strong>: En este caso <code>f(y) = dnorm(y)</code> y <code>g(y) = dcauchy(y)</code>, al revés del Ejemplo <a href="muestreo-importancia.html#exm:mc-imp2">7.4</a> anterior.</p>
-<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="muestreo-importancia.html#cb370-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Densidad objetivo</span></span>
-<span id="cb370-2"><a href="muestreo-importancia.html#cb370-2" aria-hidden="true" tabindex="-1"></a><span class="co"># f &lt;- dnorm # f &lt;- function(x) ....</span></span>
-<span id="cb370-3"><a href="muestreo-importancia.html#cb370-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb370-4"><a href="muestreo-importancia.html#cb370-4" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">3</span></span>
-<span id="cb370-5"><a href="muestreo-importancia.html#cb370-5" aria-hidden="true" tabindex="-1"></a><span class="co"># El nº de simulaciones de la densidad auxiliar debe ser mucho mayor:</span></span>
-<span id="cb370-6"><a href="muestreo-importancia.html#cb370-6" aria-hidden="true" tabindex="-1"></a>nsim2 <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">5</span></span>
-<span id="cb370-7"><a href="muestreo-importancia.html#cb370-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4321</span>)</span>
-<span id="cb370-8"><a href="muestreo-importancia.html#cb370-8" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rcauchy</span>(nsim2)</span>
-<span id="cb370-9"><a href="muestreo-importancia.html#cb370-9" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(y)<span class="sc">/</span><span class="fu">dcauchy</span>(y) <span class="co"># w &lt;- w/sum(w) si alguna es una cuasidensidad</span></span>
-<span id="cb370-10"><a href="muestreo-importancia.html#cb370-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb370-11"><a href="muestreo-importancia.html#cb370-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Si se pidiera aproximar una integral</span></span>
-<span id="cb370-12"><a href="muestreo-importancia.html#cb370-12" aria-hidden="true" tabindex="-1"></a><span class="co"># h(y) = y si es la media # h &lt;- function(y) y</span></span>
-<span id="cb370-13"><a href="muestreo-importancia.html#cb370-13" aria-hidden="true" tabindex="-1"></a><span class="co"># mean(w * h(y))</span></span></code></pre></div>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="muestreo-importancia.html#cb387-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Densidad objetivo</span></span>
+<span id="cb387-2"><a href="muestreo-importancia.html#cb387-2" aria-hidden="true" tabindex="-1"></a><span class="co"># f &lt;- dnorm # f &lt;- function(x) ....</span></span>
+<span id="cb387-3"><a href="muestreo-importancia.html#cb387-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb387-4"><a href="muestreo-importancia.html#cb387-4" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">3</span></span>
+<span id="cb387-5"><a href="muestreo-importancia.html#cb387-5" aria-hidden="true" tabindex="-1"></a><span class="co"># El nº de simulaciones de la densidad auxiliar debe ser mucho mayor:</span></span>
+<span id="cb387-6"><a href="muestreo-importancia.html#cb387-6" aria-hidden="true" tabindex="-1"></a>nsim2 <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">5</span></span>
+<span id="cb387-7"><a href="muestreo-importancia.html#cb387-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4321</span>)</span>
+<span id="cb387-8"><a href="muestreo-importancia.html#cb387-8" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rcauchy</span>(nsim2)</span>
+<span id="cb387-9"><a href="muestreo-importancia.html#cb387-9" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(y)<span class="sc">/</span><span class="fu">dcauchy</span>(y) <span class="co"># w &lt;- w/sum(w) si alguna es una cuasidensidad</span></span>
+<span id="cb387-10"><a href="muestreo-importancia.html#cb387-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb387-11"><a href="muestreo-importancia.html#cb387-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Si se pidiera aproximar una integral</span></span>
+<span id="cb387-12"><a href="muestreo-importancia.html#cb387-12" aria-hidden="true" tabindex="-1"></a><span class="co"># h(y) = y si es la media # h &lt;- function(y) y</span></span>
+<span id="cb387-13"><a href="muestreo-importancia.html#cb387-13" aria-hidden="true" tabindex="-1"></a><span class="co"># mean(w * h(y))</span></span></code></pre></div>
 <p>Sampling Importance Resampling:</p>
-<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="muestreo-importancia.html#cb371-1" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> <span class="fu">sample</span>(y, nsim, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> w<span class="sc">/</span><span class="fu">sum</span>(w))</span>
-<span id="cb371-2"><a href="muestreo-importancia.html#cb371-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(rx, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>))</span>
-<span id="cb371-3"><a href="muestreo-importancia.html#cb371-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(rx))</span>
-<span id="cb371-4"><a href="muestreo-importancia.html#cb371-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(dnorm, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="muestreo-importancia.html#cb388-1" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> <span class="fu">sample</span>(y, nsim, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> w<span class="sc">/</span><span class="fu">sum</span>(w))</span>
+<span id="cb388-2"><a href="muestreo-importancia.html#cb388-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(rx, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>))</span>
+<span id="cb388-3"><a href="muestreo-importancia.html#cb388-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(rx))</span>
+<span id="cb388-4"><a href="muestreo-importancia.html#cb388-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(dnorm, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:imp-res"></span>
-<img src="07-Monte_Carlo_files/figure-html/imp-res-1.png" alt="Distribución de los valores generados mediante remuestreo por importancia y densidad objetivo." width="70%" />
+<img src="07-Monte_Carlo_files/figure-html/imp-res-1.png" alt="Distribución de los valores generados mediante remuestreo por importancia y densidad objetivo." width="75%" />
 <p class="caption">
 Figura 7.7: Distribución de los valores generados mediante remuestreo por importancia y densidad objetivo.
 </p>
@@ -656,42 +656,42 @@ Rubin, D. B. (1987). The calculation of posterior distributions by data augmenta
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": true,
-"facebook": false,
-"twitter": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/rubenfcasal/simbook/edit/master/07-Monte_Carlo.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["Simulacion.pdf"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rubenfcasal/simbook/edit/master/07-Monte_Carlo.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["Simulacion.pdf"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>

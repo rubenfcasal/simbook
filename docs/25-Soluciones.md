@@ -47,7 +47,7 @@ a)  Aproximar mediante simulación $P\left(X + Y \leq 0 \right)$ y
 Generamos `nsim = 10000` valores del proceso bidimensional:
 
 
-```r
+``` r
 set.seed(1)
 nsim <- 10000
 x <- runif(nsim, -1, 1)
@@ -57,24 +57,24 @@ y <- runif(nsim, -1, 1)
 La probabilidad teórica es 1/2 y la aproximación por simulación es la frecuencia relativa del suceso en los valores generados (para calcularla podemos aprovechar que R maneja internamente los valores lógicos como 1, `TRUE`, y 0, `FALSE`):
 
 
-```r
+``` r
 indice <- (x + y < 0)
 sum(indice)/nsim
 ```
 
 ```
-## [1] 0.4996
+ ## [1] 0.4996
 ```
 
 Alternativamente (la frecuencia relativa es un caso particular de la media) se puede obtener de forma más simple como:
 
 
-```r
+``` r
 mean(indice)
 ```
 
 ```
-## [1] 0.4996
+ ## [1] 0.4996
 ```
 
 ---
@@ -85,7 +85,7 @@ b)  Aproximar el valor de $\pi$ mediante simulación a partir de
 ---
 
 
-```r
+``` r
 set.seed(1)
 n <- 10000
 x <- runif(n, -1, 1)
@@ -95,30 +95,30 @@ mean(indice)
 ```
 
 ```
-## [1] 0.7806
+ ## [1] 0.7806
 ```
 
-```r
+``` r
 pi/4
 ```
 
 ```
-## [1] 0.7854
+ ## [1] 0.7854
 ```
 
-```r
+``` r
 pi_aprox <- 4*mean(indice)
 pi_aprox
 ```
 
 ```
-## [1] 3.1224
+ ## [1] 3.1224
 ```
 
 Generamos el correspondiente gráfico (ver Figura \@ref(fig:simpiplot)) (los puntos con color negro tienen distribución uniforme en el círculo unidad; esto está relacionado con el método de aceptación-rechazo, ver Ejemplo \@ref(exm:ar-esfera), o con el denominado método *hit-or-miss*).
 
 
-```r
+``` r
 # Colores y símbolos dependiendo de si el índice correspondiente es verdadero:
 color <- ifelse(indice, "black", "red") 
 simbolo <- ifelse(indice, 1, 4)
@@ -129,10 +129,14 @@ symbols(0, 0, circles = 1, inches = FALSE, add = TRUE)
 symbols(0, 0, squares = 2, inches = FALSE, add = TRUE)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="25-Soluciones_files/figure-html/simpiplot-1.png" alt="Valores generados con distribución uniforme bidimensional, con colores y símbolos indicando si están dentro del círculo unidad." width="70%" />
-<p class="caption">(\#fig:simpiplot)Valores generados con distribución uniforme bidimensional, con colores y símbolos indicando si están dentro del círculo unidad.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/simpiplot-1} 
+
+}
+
+\caption{Valores generados con distribución uniforme bidimensional, con colores y símbolos indicando si están dentro del círculo unidad.}(\#fig:simpiplot)
+\end{figure}
 
 
 
@@ -152,7 +156,7 @@ a)  Empleando la función `sample`, obtener 1000 simulaciones del
 ---    
 
 
-```r
+``` r
 set.seed(1)
 nsim <- 10000
 x <- sample(c(cara = 1, cruz = 0), nsim, replace = TRUE, prob = c(0.5,0.5))
@@ -160,17 +164,21 @@ mean(x)
 ```
 
 ```
-## [1] 0.4953
+ ## [1] 0.4953
 ```
 
-```r
+``` r
 barplot(100*table(x)/nsim, ylab = "Porcentaje") # Representar porcentajes 
 ```
 
-<div class="figure" style="text-align: center">
-<img src="25-Soluciones_files/figure-html/simberplot-1.png" alt="Frecuencias relativas de los valores generados con distribución Bernoulli (aproximaciones por simulación de las probabilidades teóricas)." width="70%" />
-<p class="caption">(\#fig:simberplot)Frecuencias relativas de los valores generados con distribución Bernoulli (aproximaciones por simulación de las probabilidades teóricas).</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/simberplot-1} 
+
+}
+
+\caption{Frecuencias relativas de los valores generados con distribución Bernoulli (aproximaciones por simulación de las probabilidades teóricas).}(\#fig:simberplot)
+\end{figure}
 
 ---
 
@@ -184,7 +192,7 @@ b)  En R pueden generarse valores de la distribución de Bernoulli
 ---
 
 
-```r
+``` r
 set.seed(1)
 nsim <- 1000
 p <- 0.4
@@ -194,20 +202,24 @@ mean(x)
 ```
 
 ```
-## [1] 0.394
+ ## [1] 0.394
 ```
 
-```r
+``` r
 n <- 1:nsim
 plot(n, cumsum(x)/n, type="l", ylab="Proporción de caras", 
      xlab="Número de lanzamientos", ylim=c(0,1))
 abline(h=p, lty=2, col="red")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="25-Soluciones_files/figure-html/simberconv-1.png" alt="Gráfico de convergencia de la aproximación por simulación a la probabilidad teórica." width="70%" />
-<p class="caption">(\#fig:simberconv)Gráfico de convergencia de la aproximación por simulación a la probabilidad teórica.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/simberconv-1} 
+
+}
+
+\caption{Gráfico de convergencia de la aproximación por simulación a la probabilidad teórica.}(\#fig:simberconv)
+\end{figure}
 
 
 ### Ejercicio [1.3](ejercicios.html#exr:circuito) {#sol-circuito}
@@ -218,7 +230,8 @@ Simular el paso de corriente a través del siguiente circuito, donde
 figuran las probabilidades de que pase corriente por cada uno de los
 interruptores:
 
-<img src="images/circuito2.png" width="50%" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics[width=0.5\linewidth]{images/circuito2} \end{center}
 
 Considerar que cada interruptor es una variable aleatoria de Bernoulli independiente
 para simular 1000 valores de cada una de ellas.
@@ -232,7 +245,7 @@ El entero 0 es equivalente a `FALSE` y cualquier entero distinto de 0 a `TRUE`.
 ---
 
 
-```r
+``` r
 set.seed(1)
 nsim <- 10000
 x1 <- rbinom(nsim, size=1, prob=0.8)
@@ -248,7 +261,7 @@ mean(fin)
 ```
 
 ```
-## [1] 0.692
+ ## [1] 0.692
 ```
 
 
@@ -271,7 +284,7 @@ a)  Escribir una función que simule el lanzamiento de $n$ dados. El
 ---    
 
 
-```r
+``` r
 deMere <- function(n = 4){
   lanz <- sample(1:6, replace=TRUE, size=n)
   return(6 %in% lanz)
@@ -283,15 +296,15 @@ lanz
 ```
 
 ```
-## [1] 3 5 1 6
+ ## [1] 3 5 1 6
 ```
 
-```r
+``` r
 6 %in% lanz
 ```
 
 ```
-## [1] TRUE
+ ## [1] TRUE
 ```
 
 ---    
@@ -305,7 +318,7 @@ b)  Utilizar la función anterior para simular $nsim=10000$ jugadas
 ---    
 
 
-```r
+``` r
 set.seed(1)
 n <- 4
 nsim <- 10000
@@ -313,15 +326,15 @@ mean(replicate(nsim, deMere(n)))
 ```
 
 ```
-## [1] 0.5148
+ ## [1] 0.5148
 ```
 
-```r
+``` r
 1-(5/6)^n
 ```
 
 ```
-## [1] 0.51775
+ ## [1] 0.51775
 ```
 
 
@@ -340,7 +353,7 @@ Continuando con el ejemplo de la Sección \@ref(ealbum)
 Generamos `nsim = 2000` simulaciones de coleccionistas de cromos:
 
 
-```r
+``` r
 # Parámetros
 n <- 75 # Número total de cromos
 m <- 6  # Número de cromos en cada sobre
@@ -383,14 +396,14 @@ for (isim in 1:nsim) {
 `evol` contiene las realizaciones de la cadena de Markov.
 
 
-```r
+``` r
 # plot(evol[[1]], type = "l")
 ```
 
 Combinar realizaciones del proceso (evoluciones del número de cromos):
 
 
-```r
+``` r
 # Se extienden a la máxima longitud
 max_len <- max(lengths(evol)) # max(sapply(evol, length))
 evol <- sapply(evol, function(x) c(x, rep(n, max_len - length(x))))
@@ -398,55 +411,59 @@ str(evol)
 ```
 
 ```
-##  num [1:167, 1:2000] 6 12 16 21 23 25 30 34 37 38 ...
+ ##  num [1:167, 1:2000] 6 12 16 21 23 25 30 34 37 38 ...
 ```
 
 Aproximar cuantiles (intervalos de predicción):
 
 
-```r
+``` r
 alpha <- 0.05
 limits <- apply(evol, 1, quantile, probs = c(alpha, 0.5, 1-alpha))
 str(limits)
 ```
 
 ```
-##  num [1:3, 1:167] 5 6 6 10 11 12 14 16 18 18 ...
-##  - attr(*, "dimnames")=List of 2
-##   ..$ : chr [1:3] "5%" "50%" "95%"
-##   ..$ : NULL
+ ##  num [1:3, 1:167] 5 6 6 10 11 12 14 16 18 18 ...
+ ##  - attr(*, "dimnames")=List of 2
+ ##   ..$ : chr [1:3] "5%" "50%" "95%"
+ ##   ..$ : NULL
 ```
 
 Ejemplo, aproximación de los límites (y mediana) para el número de cromos en el álbum después de comprar 20 sobres:
 
 
-```r
+``` r
 limits[, 20]
 ```
 
 ```
-##  5% 50% 95% 
-##  55  60  64
+ ##  5% 50% 95% 
+ ##  55  60  64
 ```
 
-```r
+``` r
 hist(evol[20, ], breaks = "FD", freq = FALSE,
      main = "", xlab = "Número de cromos distintos (en 20 sobres)")
 abline(v = limits[, 20], lty = 2)
 ```
 
-<img src="25-Soluciones_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 Representar las realizaciones del proceso y los intervalos de predicción puntuales:
 
 
-```r
+``` r
 matplot(1:max_len, evol, type = "l", col = "lightgray", lty = 1,
     xlab="Número de sobres", ylab="Número de cromos distintos")
 matlines(1:max_len, t(limits), lty = c(2, 1, 2), col = 1)
 ```
 
-<img src="25-Soluciones_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 
 ## Capítulo 2 [Generación de números pseudoaleatorios](gen-pseudo.html)
@@ -477,32 +494,32 @@ $$x_{i+1}=\left\lfloor \left(  x_{i}^2-\left\lfloor \dfrac{x_{i}^2}{10^{(2k-\fra
 Este algoritmo está implementado en la función `simres::rvng()` (ver también `simres::rng()`; fichero [*rng.R*](R/rng.R)):
 
 
-```r
+``` r
 simres::rvng
 ```
 
 ```
-## function(n, seed = as.numeric(Sys.time()), k = 4) {
-##   seed <- seed %% 10^k
-##   aux <- 10^(2*k-k/2)
-##   aux2 <- 10^(k/2)
-##   u <- numeric(n)
-##   for(i in 1:n) {
-##     z <- seed^2
-##     seed <- trunc((z - trunc(z/aux)*aux)/aux2)
-##     u[i] <- seed/10^k
-##   }
-##   # Almacenar semilla y parámetros
-##   assign(".rng", list(seed = seed, type = "vm", parameters = list(k = k)),
-##       envir = globalenv())
-##   # .rng <<- list(seed = seed, type = "vm", parameters = list(k = k))
-##   # Para continuar con semilla y parámetros:
-##   #   with(.rng, rvng(n, seed, parameters$k))
-##   # Devolver valores
-##   return(u)
-## }
-## <bytecode: 0x0000028036a1fd90>
-## <environment: namespace:simres>
+ ## function(n, seed = as.numeric(Sys.time()), k = 4) {
+ ##   seed <- seed %% 10^k
+ ##   aux <- 10^(2*k-k/2)
+ ##   aux2 <- 10^(k/2)
+ ##   u <- numeric(n)
+ ##   for(i in 1:n) {
+ ##     z <- seed^2
+ ##     seed <- trunc((z - trunc(z/aux)*aux)/aux2)
+ ##     u[i] <- seed/10^k
+ ##   }
+ ##   # Almacenar semilla y parámetros
+ ##   assign(".rng", list(seed = seed, type = "vm", parameters = list(k = k)),
+ ##       envir = globalenv())
+ ##   # .rng <<- list(seed = seed, type = "vm", parameters = list(k = k))
+ ##   # Para continuar con semilla y parámetros:
+ ##   #   with(.rng, rvng(n, seed, parameters$k))
+ ##   # Devolver valores
+ ##   return(u)
+ ## }
+ ## <bytecode: 0x000001bcdf0c7388>
+ ## <environment: namespace:simres>
 ```
 
 Estudiar las características del generador de cuadrados medios a partir de una secuencia de 500 valores. 
@@ -529,7 +546,7 @@ x+\frac{1}{10} & \mbox{si $x\in[\frac{1}{5},\frac{9}{10}]$}\\
 
 Esta función está implementada en el siguiente código:
 
-```r
+``` r
 fdistr <- function(x) {
 ifelse(x < 0, 0,
     ifelse(x < 1/5, x/2 + 1/10,
@@ -539,15 +556,19 @@ ifelse(x < 0, 0,
 
 Como es una función vectorial podemos emplear `curve()` para representarla:
 
-```r
+``` r
 curve(fdistr, from = -0.1, to = 1.1, main = '')
 abline(h = c(1/10, 2/10, 3/10), lty = 2) # Discontinuidades
 ```
 
-<div class="figure" style="text-align: center">
-<img src="25-Soluciones_files/figure-html/mixta-cuantil-plot-sol-1.png" alt="Función de distribución mixta (con discontinuidades en 0 y 1/5)." width="70%" />
-<p class="caption">(\#fig:mixta-cuantil-plot-sol)Función de distribución mixta (con discontinuidades en 0 y 1/5).</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/mixta-cuantil-plot-sol-1} 
+
+}
+
+\caption{Función de distribución mixta (con discontinuidades en 0 y 1/5).}(\#fig:mixta-cuantil-plot-sol)
+\end{figure}
 
 **Nota**: Esta variable toma los valores 0 y 1/5 con probabilidad 1/10.
 
@@ -585,7 +606,7 @@ b)  El algoritmo de simulación se puede implementar a partir de la función cua
     (vectorial):   
 
     
-    ```r
+    ``` r
     # Función cuantil:
     fquant <- function(u) 
       ifelse(u < 1/10, 0,
@@ -598,31 +619,35 @@ b)  El algoritmo de simulación se puede implementar a partir de la función cua
     Ejemplo:
     
     
-    ```r
+    ``` r
     set.seed(1)
     nsim <- 10^4
     system.time(simx <- rx(nsim))
     ```
     
     ```
-    ##    user  system elapsed 
-    ##    0.01    0.00    0.01
+     ##    user  system elapsed 
+     ##       0       0       0
     ```
     
-    ```r
+    ``` r
     hist(simx, breaks = "FD", freq = FALSE)
     ```
     
-    <img src="25-Soluciones_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/unnamed-chunk-18-1} \end{center}
     
     En este caso como no es una variable absolutamente continua mejor emplear 
     la función de distribución para compararla con la teórica:
     
     
-    ```r
+    ``` r
     curve(ecdf(simx)(x), from= -0.1, to = 1.1, type = "s")
     curve(fdistr(x), type = "s", lty = 2, add = TRUE)
     ```
     
-    <img src="25-Soluciones_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/unnamed-chunk-19-1} \end{center}
 

@@ -215,11 +215,11 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="4.1" data-path="inversion.html"><a href="inversion.html"><i class="fa fa-check"></i><b>4.1</b> Método de inversión</a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="inversion.html"><a href="inversion.html#algunas-distribuciones-que-pueden-simularse-por-el-método-de-inversión"><i class="fa fa-check"></i><b>4.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
+<li class="chapter" data-level="4.1.1" data-path="inversion.html"><a href="inversion.html#ejemplos-inv"><i class="fa fa-check"></i><b>4.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
 <li class="chapter" data-level="4.1.2" data-path="inversion.html"><a href="inversion.html#ventajas-e-inconvenientes"><i class="fa fa-check"></i><b>4.1.2</b> Ventajas e inconvenientes</a></li>
 <li class="chapter" data-level="4.1.3" data-path="inversion.html"><a href="inversion.html#inversión-aproximada"><i class="fa fa-check"></i><b>4.1.3</b> Inversión aproximada</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>4.2</b> Método de aceptación rechazo</a>
+<li class="chapter" data-level="4.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>4.2</b> Método de aceptación-rechazo</a>
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="AR.html"><a href="AR.html#algoritmo"><i class="fa fa-check"></i><b>4.2.1</b> Algoritmo</a></li>
 <li class="chapter" data-level="4.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>4.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
@@ -255,7 +255,7 @@ div.csl-indent {
 <li class="chapter" data-level="6" data-path="multivariante.html"><a href="multivariante.html"><i class="fa fa-check"></i><b>6</b> Simulación de distribuciones multivariantes</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="simulación-de-componentes-independientes.html"><a href="simulación-de-componentes-independientes.html"><i class="fa fa-check"></i><b>6.1</b> Simulación de componentes independientes</a></li>
-<li class="chapter" data-level="6.2" data-path="el-método-de-aceptaciónrechazo.html"><a href="el-método-de-aceptaciónrechazo.html"><i class="fa fa-check"></i><b>6.2</b> El método de aceptación/rechazo</a></li>
+<li class="chapter" data-level="6.2" data-path="el-método-de-aceptación-rechazo.html"><a href="el-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>6.2</b> El método de aceptación-rechazo</a></li>
 <li class="chapter" data-level="6.3" data-path="fact-cov.html"><a href="fact-cov.html"><i class="fa fa-check"></i><b>6.3</b> Factorización de la matriz de covarianzas</a></li>
 <li class="chapter" data-level="6.4" data-path="distrcond.html"><a href="distrcond.html"><i class="fa fa-check"></i><b>6.4</b> Método de las distribuciones condicionadas</a></li>
 <li class="chapter" data-level="6.5" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html"><i class="fa fa-check"></i><b>6.5</b> Simulación condicional e incondicional</a>
@@ -527,32 +527,32 @@ Así se obtiene el intervalo de confianza bootstrap
 <div class="example">
 <p><span id="exm:media-ic-stu-sim" class="example"><strong>Ejemplo 11.2  (IC bootstrap para la media mediante el método percentil-*t* simetrizado) </strong></span><br></p>
 <p>Continuando con el Ejemplo <a href="boot-unif.html#exm:media-dt-desconocida">9.2</a> de inferencia sobre la media con varianza desconocida, podríamos obtener una estimación por intervalo de confianza del tiempo de vida medio de los microorganismos empleando el método bootstrap percentil-<em>t</em> simetrizado con el siguiente código:</p>
-<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="boot-ic.html#cb605-1" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> simres<span class="sc">::</span>lifetimes</span>
-<span id="cb605-2"><a href="boot-ic.html#cb605-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(muestra)</span>
-<span id="cb605-3"><a href="boot-ic.html#cb605-3" aria-hidden="true" tabindex="-1"></a>alfa <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
-<span id="cb605-4"><a href="boot-ic.html#cb605-4" aria-hidden="true" tabindex="-1"></a>x_barra <span class="ot">&lt;-</span> <span class="fu">mean</span>(muestra)</span>
-<span id="cb605-5"><a href="boot-ic.html#cb605-5" aria-hidden="true" tabindex="-1"></a>cuasi_dt <span class="ot">&lt;-</span> <span class="fu">sd</span>(muestra)</span>
-<span id="cb605-6"><a href="boot-ic.html#cb605-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb605-7"><a href="boot-ic.html#cb605-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Remuestreo</span></span>
-<span id="cb605-8"><a href="boot-ic.html#cb605-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb605-9"><a href="boot-ic.html#cb605-9" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb605-10"><a href="boot-ic.html#cb605-10" aria-hidden="true" tabindex="-1"></a>estadistico_boot <span class="ot">&lt;-</span> <span class="fu">numeric</span>(B)</span>
-<span id="cb605-11"><a href="boot-ic.html#cb605-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>B) {</span>
-<span id="cb605-12"><a href="boot-ic.html#cb605-12" aria-hidden="true" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> <span class="fu">sample</span>(muestra, n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb605-13"><a href="boot-ic.html#cb605-13" aria-hidden="true" tabindex="-1"></a>  x_barra_boot <span class="ot">&lt;-</span> <span class="fu">mean</span>(remuestra)</span>
-<span id="cb605-14"><a href="boot-ic.html#cb605-14" aria-hidden="true" tabindex="-1"></a>  cuasi_dt_boot <span class="ot">&lt;-</span> <span class="fu">sd</span>(remuestra)</span>
-<span id="cb605-15"><a href="boot-ic.html#cb605-15" aria-hidden="true" tabindex="-1"></a>  estadistico_boot[k] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(n) <span class="sc">*</span> <span class="fu">abs</span>(x_barra_boot <span class="sc">-</span> x_barra)<span class="sc">/</span>cuasi_dt_boot</span>
-<span id="cb605-16"><a href="boot-ic.html#cb605-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb605-17"><a href="boot-ic.html#cb605-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb605-18"><a href="boot-ic.html#cb605-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Aproximación bootstrap del pto crítico</span></span>
-<span id="cb605-19"><a href="boot-ic.html#cb605-19" aria-hidden="true" tabindex="-1"></a>pto_crit <span class="ot">&lt;-</span> <span class="fu">quantile</span>(estadistico_boot, <span class="dv">1</span> <span class="sc">-</span> alfa)</span>
-<span id="cb605-20"><a href="boot-ic.html#cb605-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb605-21"><a href="boot-ic.html#cb605-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Construcción del IC</span></span>
-<span id="cb605-22"><a href="boot-ic.html#cb605-22" aria-hidden="true" tabindex="-1"></a>ic_inf_boot <span class="ot">&lt;-</span> x_barra <span class="sc">-</span> pto_crit <span class="sc">*</span> cuasi_dt<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
-<span id="cb605-23"><a href="boot-ic.html#cb605-23" aria-hidden="true" tabindex="-1"></a>ic_sup_boot <span class="ot">&lt;-</span> x_barra <span class="sc">+</span> pto_crit <span class="sc">*</span> cuasi_dt<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
-<span id="cb605-24"><a href="boot-ic.html#cb605-24" aria-hidden="true" tabindex="-1"></a>IC_boot <span class="ot">&lt;-</span> <span class="fu">c</span>(ic_inf_boot, ic_sup_boot)</span>
-<span id="cb605-25"><a href="boot-ic.html#cb605-25" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(IC_boot) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">-</span>alfa<span class="sc">/</span><span class="dv">2</span>), <span class="st">&quot;%&quot;</span>)</span>
-<span id="cb605-26"><a href="boot-ic.html#cb605-26" aria-hidden="true" tabindex="-1"></a>IC_boot</span></code></pre></div>
+<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="boot-ic.html#cb624-1" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> simres<span class="sc">::</span>lifetimes</span>
+<span id="cb624-2"><a href="boot-ic.html#cb624-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(muestra)</span>
+<span id="cb624-3"><a href="boot-ic.html#cb624-3" aria-hidden="true" tabindex="-1"></a>alfa <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb624-4"><a href="boot-ic.html#cb624-4" aria-hidden="true" tabindex="-1"></a>x_barra <span class="ot">&lt;-</span> <span class="fu">mean</span>(muestra)</span>
+<span id="cb624-5"><a href="boot-ic.html#cb624-5" aria-hidden="true" tabindex="-1"></a>cuasi_dt <span class="ot">&lt;-</span> <span class="fu">sd</span>(muestra)</span>
+<span id="cb624-6"><a href="boot-ic.html#cb624-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb624-7"><a href="boot-ic.html#cb624-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Remuestreo</span></span>
+<span id="cb624-8"><a href="boot-ic.html#cb624-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb624-9"><a href="boot-ic.html#cb624-9" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb624-10"><a href="boot-ic.html#cb624-10" aria-hidden="true" tabindex="-1"></a>estadistico_boot <span class="ot">&lt;-</span> <span class="fu">numeric</span>(B)</span>
+<span id="cb624-11"><a href="boot-ic.html#cb624-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>B) {</span>
+<span id="cb624-12"><a href="boot-ic.html#cb624-12" aria-hidden="true" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> <span class="fu">sample</span>(muestra, n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb624-13"><a href="boot-ic.html#cb624-13" aria-hidden="true" tabindex="-1"></a>  x_barra_boot <span class="ot">&lt;-</span> <span class="fu">mean</span>(remuestra)</span>
+<span id="cb624-14"><a href="boot-ic.html#cb624-14" aria-hidden="true" tabindex="-1"></a>  cuasi_dt_boot <span class="ot">&lt;-</span> <span class="fu">sd</span>(remuestra)</span>
+<span id="cb624-15"><a href="boot-ic.html#cb624-15" aria-hidden="true" tabindex="-1"></a>  estadistico_boot[k] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(n) <span class="sc">*</span> <span class="fu">abs</span>(x_barra_boot <span class="sc">-</span> x_barra)<span class="sc">/</span>cuasi_dt_boot</span>
+<span id="cb624-16"><a href="boot-ic.html#cb624-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb624-17"><a href="boot-ic.html#cb624-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb624-18"><a href="boot-ic.html#cb624-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Aproximación bootstrap del pto crítico</span></span>
+<span id="cb624-19"><a href="boot-ic.html#cb624-19" aria-hidden="true" tabindex="-1"></a>pto_crit <span class="ot">&lt;-</span> <span class="fu">quantile</span>(estadistico_boot, <span class="dv">1</span> <span class="sc">-</span> alfa)</span>
+<span id="cb624-20"><a href="boot-ic.html#cb624-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb624-21"><a href="boot-ic.html#cb624-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Construcción del IC</span></span>
+<span id="cb624-22"><a href="boot-ic.html#cb624-22" aria-hidden="true" tabindex="-1"></a>ic_inf_boot <span class="ot">&lt;-</span> x_barra <span class="sc">-</span> pto_crit <span class="sc">*</span> cuasi_dt<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
+<span id="cb624-23"><a href="boot-ic.html#cb624-23" aria-hidden="true" tabindex="-1"></a>ic_sup_boot <span class="ot">&lt;-</span> x_barra <span class="sc">+</span> pto_crit <span class="sc">*</span> cuasi_dt<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
+<span id="cb624-24"><a href="boot-ic.html#cb624-24" aria-hidden="true" tabindex="-1"></a>IC_boot <span class="ot">&lt;-</span> <span class="fu">c</span>(ic_inf_boot, ic_sup_boot)</span>
+<span id="cb624-25"><a href="boot-ic.html#cb624-25" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(IC_boot) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">-</span>alfa<span class="sc">/</span><span class="dv">2</span>), <span class="st">&quot;%&quot;</span>)</span>
+<span id="cb624-26"><a href="boot-ic.html#cb624-26" aria-hidden="true" tabindex="-1"></a>IC_boot</span></code></pre></div>
 <pre><code>##    2.5%   97.5% 
 ## 0.43347 1.17719</code></pre>
 </div>
@@ -608,11 +608,11 @@ Suponiendo que <span class="math inline">\((X, Y)\)</span> es normal bivariante 
 <span class="math display">\[Z \sim \mathcal{N}\left( \frac{1}{2}\ln \left( \frac{1+\rho}{1-\rho} \right), \frac{1}{n-3} \right).\]</span>
 El intervalo de confianza asintótico se obtiene empleando la aproximación normal tradicional en la escala <span class="math inline">\(Z\)</span> y aplicando posteriormente la transformación inversa:
 <span class="math display">\[r = \frac{\exp(2Z)-1}{\exp(2Z)+1} = \operatorname{tanh}(Z).\]</span></p>
-<p>Esta aproximación está implementada en la función <code>cor.test()</code> del paquete base <code>stat</code> de R<a href="#fn38" class="footnote-ref" id="fnref38"><sup>38</sup></a>, además de que también realiza el contraste <span class="math inline">\(H_0: \rho = 0\)</span> empleando el estadístico <a href="boot-ic.html#eq:cor-t">(11.1)</a>.</p>
+<p>Esta aproximación está implementada en la función <code>cor.test()</code> del paquete base <code>stat</code> de R<a href="#fn41" class="footnote-ref" id="fnref41"><sup>41</sup></a>, además de que también realiza el contraste <span class="math inline">\(H_0: \rho = 0\)</span> empleando el estadístico <a href="boot-ic.html#eq:cor-t">(11.1)</a>.</p>
 <p>Continuando con el ejemplo de la Sección <a href="intro-paquetes.html#boot-unif-multi">9.3.3</a> (y de los Ejercicios <a href="boot-unif.html#exr:unif-multi">9.1</a>, <a href="sesgo-prec.html#exr:unif-multi-sesgo-var">11.1</a> y <a href="boot-ic.html#exr:boot-unif-multi-ic">11.2</a>), para obtener un intervalo de confianza para el coeficiente de correlación lineal entre las variables <code>income</code> y <code>prestige</code> del conjunto de datos <code>Prestige</code>, podríamos emplear el siguiente código:</p>
-<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="boot-ic.html#cb607-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Prestige, <span class="at">package=</span><span class="st">&quot;carData&quot;</span>)</span>
-<span id="cb607-2"><a href="boot-ic.html#cb607-2" aria-hidden="true" tabindex="-1"></a><span class="co"># with(Prestige, cor.test(income, prestige))</span></span>
-<span id="cb607-3"><a href="boot-ic.html#cb607-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Prestige<span class="sc">$</span>income, Prestige<span class="sc">$</span>prestige)</span></code></pre></div>
+<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="boot-ic.html#cb626-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Prestige, <span class="at">package=</span><span class="st">&quot;carData&quot;</span>)</span>
+<span id="cb626-2"><a href="boot-ic.html#cb626-2" aria-hidden="true" tabindex="-1"></a><span class="co"># with(Prestige, cor.test(income, prestige))</span></span>
+<span id="cb626-3"><a href="boot-ic.html#cb626-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Prestige<span class="sc">$</span>income, Prestige<span class="sc">$</span>prestige)</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s product-moment correlation
 ## 
@@ -635,22 +635,22 @@ Los intervalos se calculan en la escala de <span class="math inline">\(h(t)\)</s
 (empleada por algunos métodos para aproximar la varianza en la escala transformada mediante el método delta).</p></li>
 </ul>
 <p>Por ejemplo, para considerar la transformación <span class="math inline">\(Z\)</span> de Fisher en este caso, se podría emplear el siguiente código:</p>
-<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb609-1"><a href="boot-ic.html#cb609-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
-<span id="cb609-2"><a href="boot-ic.html#cb609-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb609-3"><a href="boot-ic.html#cb609-3" aria-hidden="true" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
-<span id="cb609-4"><a href="boot-ic.html#cb609-4" aria-hidden="true" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i, ]</span>
-<span id="cb609-5"><a href="boot-ic.html#cb609-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>(remuestra<span class="sc">$</span>income, remuestra<span class="sc">$</span>prestige)</span>
-<span id="cb609-6"><a href="boot-ic.html#cb609-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb609-7"><a href="boot-ic.html#cb609-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb609-8"><a href="boot-ic.html#cb609-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb609-9"><a href="boot-ic.html#cb609-9" aria-hidden="true" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(Prestige, statistic, <span class="at">R =</span> <span class="dv">1000</span>)</span>
-<span id="cb609-10"><a href="boot-ic.html#cb609-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb609-11"><a href="boot-ic.html#cb609-11" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="cf">function</span>(t) <span class="fu">atanh</span>(t)</span>
-<span id="cb609-12"><a href="boot-ic.html#cb609-12" aria-hidden="true" tabindex="-1"></a>hdot <span class="ot">&lt;-</span> <span class="cf">function</span>(t) <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span> <span class="sc">-</span> t<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb609-13"><a href="boot-ic.html#cb609-13" aria-hidden="true" tabindex="-1"></a>hinv <span class="ot">&lt;-</span> <span class="cf">function</span>(t) <span class="fu">tanh</span>(t)</span>
-<span id="cb609-14"><a href="boot-ic.html#cb609-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb609-15"><a href="boot-ic.html#cb609-15" aria-hidden="true" tabindex="-1"></a><span class="co"># boot.ci(res.boot, type = &quot;norm&quot;, h = h)</span></span>
-<span id="cb609-16"><a href="boot-ic.html#cb609-16" aria-hidden="true" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot, <span class="at">type =</span> <span class="st">&quot;norm&quot;</span>, <span class="at">h =</span> h, <span class="at">hdot =</span> hdot, <span class="at">hinv =</span> hinv)</span></code></pre></div>
+<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="boot-ic.html#cb628-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb628-2"><a href="boot-ic.html#cb628-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb628-3"><a href="boot-ic.html#cb628-3" aria-hidden="true" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
+<span id="cb628-4"><a href="boot-ic.html#cb628-4" aria-hidden="true" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i, ]</span>
+<span id="cb628-5"><a href="boot-ic.html#cb628-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>(remuestra<span class="sc">$</span>income, remuestra<span class="sc">$</span>prestige)</span>
+<span id="cb628-6"><a href="boot-ic.html#cb628-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb628-7"><a href="boot-ic.html#cb628-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb628-8"><a href="boot-ic.html#cb628-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb628-9"><a href="boot-ic.html#cb628-9" aria-hidden="true" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(Prestige, statistic, <span class="at">R =</span> <span class="dv">1000</span>)</span>
+<span id="cb628-10"><a href="boot-ic.html#cb628-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb628-11"><a href="boot-ic.html#cb628-11" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="cf">function</span>(t) <span class="fu">atanh</span>(t)</span>
+<span id="cb628-12"><a href="boot-ic.html#cb628-12" aria-hidden="true" tabindex="-1"></a>hdot <span class="ot">&lt;-</span> <span class="cf">function</span>(t) <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span> <span class="sc">-</span> t<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb628-13"><a href="boot-ic.html#cb628-13" aria-hidden="true" tabindex="-1"></a>hinv <span class="ot">&lt;-</span> <span class="cf">function</span>(t) <span class="fu">tanh</span>(t)</span>
+<span id="cb628-14"><a href="boot-ic.html#cb628-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb628-15"><a href="boot-ic.html#cb628-15" aria-hidden="true" tabindex="-1"></a><span class="co"># boot.ci(res.boot, type = &quot;norm&quot;, h = h)</span></span>
+<span id="cb628-16"><a href="boot-ic.html#cb628-16" aria-hidden="true" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot, <span class="at">type =</span> <span class="st">&quot;norm&quot;</span>, <span class="at">h =</span> h, <span class="at">hdot =</span> hdot, <span class="at">hinv =</span> hinv)</span></code></pre></div>
 <pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 ## Based on 1000 bootstrap replicates
 ## 
@@ -663,11 +663,11 @@ Los intervalos se calculan en la escala de <span class="math inline">\(h(t)\)</s
 ## 95%   ( 0.6016,  0.7858 )  
 ## Calculations on Transformed Scale;  Intervals on Original Scale</code></pre>
 <p>Esto sería en principio preferible a trabajar en la escala original, ya que la distribución bootstrap en la escala transformada se aproximaría más a la normalidad:</p>
-<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="boot-ic.html#cb611-1" aria-hidden="true" tabindex="-1"></a>ht <span class="ot">&lt;-</span> <span class="fu">h</span>(res.boot<span class="sc">$</span>t)</span>
-<span id="cb611-2"><a href="boot-ic.html#cb611-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(ht, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb611-3"><a href="boot-ic.html#cb611-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="at">mean=</span><span class="fu">mean</span>(ht), <span class="at">sd=</span><span class="fu">sd</span>(ht)), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="boot-ic.html#cb630-1" aria-hidden="true" tabindex="-1"></a>ht <span class="ot">&lt;-</span> <span class="fu">h</span>(res.boot<span class="sc">$</span>t)</span>
+<span id="cb630-2"><a href="boot-ic.html#cb630-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(ht, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb630-3"><a href="boot-ic.html#cb630-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="at">mean=</span><span class="fu">mean</span>(ht), <span class="at">sd=</span><span class="fu">sd</span>(ht)), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:icboot-trans-plot"></span>
-<img src="11-Bootstrap_aplic_files/figure-html/icboot-trans-plot-1.png" alt="Distribución bootstrap en la escala transformada." width="70%" />
+<img src="11-Bootstrap_aplic_files/figure-html/icboot-trans-plot-1.png" alt="Distribución bootstrap en la escala transformada." width="75%" />
 <p class="caption">
 Figura 11.1: Distribución bootstrap en la escala transformada.
 </p>
@@ -676,8 +676,8 @@ Figura 11.1: Distribución bootstrap en la escala transformada.
 </div>
 <div class="footnotes">
 <hr />
-<ol start="38">
-<li id="fn38"><p>Se puede obtener el código tecleando en la consola <code>stats:::cor.test.default</code>.<a href="boot-ic.html#fnref38" class="footnote-back">↩︎</a></p></li>
+<ol start="41">
+<li id="fn41"><p>Se puede obtener el código tecleando en la consola <code>stats:::cor.test.default</code>.<a href="boot-ic.html#fnref41" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -700,42 +700,42 @@ Figura 11.1: Distribución bootstrap en la escala transformada.
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": true,
-"facebook": false,
-"twitter": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/rubenfcasal/simbook/edit/master/11-Bootstrap_aplic.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["Simulacion.pdf"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rubenfcasal/simbook/edit/master/11-Bootstrap_aplic.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["Simulacion.pdf"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>

@@ -215,11 +215,11 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="4.1" data-path="inversion.html"><a href="inversion.html"><i class="fa fa-check"></i><b>4.1</b> Método de inversión</a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="inversion.html"><a href="inversion.html#algunas-distribuciones-que-pueden-simularse-por-el-método-de-inversión"><i class="fa fa-check"></i><b>4.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
+<li class="chapter" data-level="4.1.1" data-path="inversion.html"><a href="inversion.html#ejemplos-inv"><i class="fa fa-check"></i><b>4.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
 <li class="chapter" data-level="4.1.2" data-path="inversion.html"><a href="inversion.html#ventajas-e-inconvenientes"><i class="fa fa-check"></i><b>4.1.2</b> Ventajas e inconvenientes</a></li>
 <li class="chapter" data-level="4.1.3" data-path="inversion.html"><a href="inversion.html#inversión-aproximada"><i class="fa fa-check"></i><b>4.1.3</b> Inversión aproximada</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>4.2</b> Método de aceptación rechazo</a>
+<li class="chapter" data-level="4.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>4.2</b> Método de aceptación-rechazo</a>
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="AR.html"><a href="AR.html#algoritmo"><i class="fa fa-check"></i><b>4.2.1</b> Algoritmo</a></li>
 <li class="chapter" data-level="4.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>4.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
@@ -255,7 +255,7 @@ div.csl-indent {
 <li class="chapter" data-level="6" data-path="multivariante.html"><a href="multivariante.html"><i class="fa fa-check"></i><b>6</b> Simulación de distribuciones multivariantes</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="simulación-de-componentes-independientes.html"><a href="simulación-de-componentes-independientes.html"><i class="fa fa-check"></i><b>6.1</b> Simulación de componentes independientes</a></li>
-<li class="chapter" data-level="6.2" data-path="el-método-de-aceptaciónrechazo.html"><a href="el-método-de-aceptaciónrechazo.html"><i class="fa fa-check"></i><b>6.2</b> El método de aceptación/rechazo</a></li>
+<li class="chapter" data-level="6.2" data-path="el-método-de-aceptación-rechazo.html"><a href="el-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>6.2</b> El método de aceptación-rechazo</a></li>
 <li class="chapter" data-level="6.3" data-path="fact-cov.html"><a href="fact-cov.html"><i class="fa fa-check"></i><b>6.3</b> Factorización de la matriz de covarianzas</a></li>
 <li class="chapter" data-level="6.4" data-path="distrcond.html"><a href="distrcond.html"><i class="fa fa-check"></i><b>6.4</b> Método de las distribuciones condicionadas</a></li>
 <li class="chapter" data-level="6.5" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html"><i class="fa fa-check"></i><b>6.5</b> Simulación condicional e incondicional</a>
@@ -465,37 +465,32 @@ Se distingue entre tres tipos de secuencias:</p>
 <h3><span class="header-section-number">1.2.1</span> Números aleatorios puros<a href="tipos-de-números-aleatorios.html#números-aleatorios-puros" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Normalmente son obtenidos por procesos físicos (loterías, ruletas, ruidos…) y, hasta hace una décadas, se almacenaban en <em>tablas de dígitos aleatorios</em>.
 Por ejemplo, en 1955 la Corporación RAND publicó el libro <a href="https://www.rand.org/pubs/monograph_reports/MR1418.html"><em>A Million Random Digits with 100,000 Normal Deviates</em></a> que contenía números aleatorios generados mediante una ruleta electrónica conectada a una computadora (ver Figura <a href="tipos-de-números-aleatorios.html#fig:randbook">1.4</a>).</p>
+
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:randbook"></span>
-<img src="images/RAND.png" alt="Líneas 10580-10594, columnas 21-40, del libro *A Million Random Digits with 100,000 Normal Deviates*." width="30%" />
+<img src="images/RAND.png" alt="Líneas 10580-10594, columnas 21-40, del libro A Million Random Digits with 100,000 Normal Deviates (Fuente: Wikimedia Commons)." width="30%" />
 <p class="caption">
-Figura 1.4: Líneas 10580-10594, columnas 21-40, del libro <em>A Million Random Digits with 100,000 Normal Deviates</em>.
+Figura 1.4: Líneas 10580-10594, columnas 21-40, del libro <em>A Million Random Digits with 100,000 Normal Deviates</em> (Fuente: <a href="https://es.wikipedia.org/wiki/Un_mill%C3%B3n_de_d%C3%ADgitos_aleatorios_con_100.000_desviaciones_normales">Wikimedia Commons</a>).
 </p>
 </div>
-<!-- 
-Pendiente:
-Leyenda markdown
--->
-<p>El procedimiento que se utilizaba para seleccionar de una tabla, de forma manual, números aleatorios
-en un rango de 1 a <em>m</em> era el siguiente:</p>
+<p>El procedimiento que se utilizaba para seleccionar de una tabla, de forma manual, números aleatorios en un rango de <span class="math inline">\(1\)</span> a <span class="math inline">\(m\)</span> era el siguiente:</p>
 <ul>
 <li><p>Se selecciona al azar un punto de inicio en la tabla
 y la dirección que se seguirá.</p></li>
-<li><p>Se agrupan los dígitos de forma que “cubran” el valor de <em>m</em>.</p></li>
-<li><p>Se va avanzado en la dirección elegida, seleccionando los valores menores o iguales que <em>m</em> y descartando el resto.</p></li>
+<li><p>Se agrupan los dígitos de forma que “cubran” el valor de <span class="math inline">\(m\)</span>.</p></li>
+<li><p>Se va avanzado en la dirección elegida, seleccionando los valores menores o iguales que <span class="math inline">\(m\)</span> y descartando el resto.</p></li>
 </ul>
-<p>Hoy en día están disponibles generadores de números aleatorios “online”, por ejemplo:</p>
-<ul>
-<li><p><a href="http://www.random.org/integers">RANDOM.ORG</a>: ruido atmosférico
-(ver paquete <code>random</code> en R).</p></li>
-<li><p><a href="http://www.fourmilab.ch/hotbits">HotBits</a>: desintegración radiactiva.</p></li>
-</ul>
-<p>Aunque para un uso profesional es recomendable emplear generadores implementados mediante hardware (ver e.g. <a href="https://en.wikipedia.org/wiki/Hardware_random_number_generator">Wikipedia: Hardware random number generator</a>.
-Por ejemplo, los procesadores recientes de Intel o de AMD incorporan esta funcionalidad (ver e.g. <a href="http://software.intel.com/en-us/articles/intel-digital-random-number-generator-drng-software-implementation-guide">Intel Digital Random Number Generator (DRNG) Software Implementation Guide</a>).
+<p>Hoy en día están disponibles generadores de números aleatorios “online”.
+Por ejemplo, el dominio <a href="http://www.random.org/integers">RANDOM.ORG</a> proporciona números “verdaderamente” aleatorios obtenidos a partir de ruido atmosférico (ver paquete <a href="https://CRAN.R-project.org/package=random"><code>random</code></a> de R).
+Aunque para un uso profesional es recomendable emplear generadores implementados mediante hardware (ver e.g. <a href="https://en.wikipedia.org/wiki/Hardware_random_number_generator">Wikipedia: Hardware random number generator</a>).
+Los procesadores recientes de Intel o de AMD incorporan esta funcionalidad, mediante la instrucción <code>RDSEED</code> integrada en la CPU<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.
 Sus principales aplicaciones hoy en día son en criptografía y juegos de azar, donde resulta especialmente importante su impredecibilidad.</p>
+<!-- 
+[HotBits](http://www.fourmilab.ch/hotbits): desintegración radiactiva.
+-->
 <p>El uso de números aleatorios puros presenta dos grandes inconvenientes.
 El principal para su aplicación en el campo de la Estadística (y en otros casos) es que los valores generados deberían ser independientes e idénticamente distribuidos con distribución conocida, algo que resulta difícil (o imposible) de garantizar.
 Siempre está presente la posible aparición de sesgos, principalmente debidos a fallos del sistema o interferencias.
-Por ejemplo, en el caso de la máquina RAND, fallos mecánicos en el sistema de grabación de los datos causaron problemas de aleatoriedad (Hacking, 1965, p. 129).</p>
+Por ejemplo, en el caso de la máquina RAND, fallos mecánicos en el sistema de grabación de los datos causaron problemas de aleatoriedad <span class="citation">(<a href="#ref-hacking1965" role="doc-biblioref">Hacking, 1965, p. 118</a>)</span>.</p>
 <p>El otro inconveniente estaría relacionado con su reproducibilidad, por lo que habría que almacenarlos en tablas si se quieren volver a reproducir los resultados.
 A partir de la década de 1960, al disponer de computadoras de mayor velocidad, empezó a resultar más eficiente generar valores mediante software en lugar de leerlos de tablas.</p>
 </div>
@@ -521,11 +516,11 @@ Figura 1.5: Secuencias cuasi-aleatorias bidimensionales obtenidas con los métod
 </div>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="tipos-de-números-aleatorios.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(par.old)</span>
 <span id="cb16-2"><a href="tipos-de-números-aleatorios.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">detach</span>(<span class="st">&quot;package:randtoolbox&quot;</span>)</span></code></pre></div>
-<p>En este libro sólo consideraremos los números pseudoaleatorios y por comodidad se eliminará el prefijo “pseudo” en algunos casos.</p>
+<p>En este libro sólo consideraremos los números pseudoaleatorios y por comodidad se eliminará el prefijo “pseudo” en muchos casos.</p>
 </div>
 <div id="números-pseudo-aleatorios" class="section level3 hasAnchor" number="1.2.3">
 <h3><span class="header-section-number">1.2.3</span> Números pseudo-aleatorios<a href="tipos-de-números-aleatorios.html#números-pseudo-aleatorios" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>La mayoría de los métodos de simulación se basan en la posibilidad de generar números pseudoaleatorios que imiten las propiedades de valores independientes de la distribución <span class="math inline">\(\mathcal{U}(0,1)\)</span>, es decir, que imiten las propiedades de una muestra aleatoria simple<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> de esta distribución.</p>
+<p>La mayoría de los métodos de simulación se basan en la posibilidad de generar números pseudoaleatorios que imiten las propiedades de valores independientes de la distribución <span class="math inline">\(\mathcal{U}(0,1)\)</span>, es decir, que imiten las propiedades de una muestra aleatoria simple<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> de esta distribución.</p>
 <p>El procedimiento habitual para obtener estas secuencias es emplear un algoritmo recursivo denominado <em>generador</em>:</p>
 <p><span class="math display">\[x_{i} = f\left( x_{i-1}, x_{i-2}, \cdots, x_{i-k}\right)\]</span></p>
 <p>donde:</p>
@@ -591,6 +586,9 @@ Estos métodos son muy simples, aunque con las opciones adecuadas podrían ser u
 </div>
 <h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-hacking1965" class="csl-entry">
+Hacking, I. (1965). <em>Logic of Statistical Inference</em>. Cambridge University Press.
+</div>
 <div id="ref-matsumoto1998" class="csl-entry">
 Matsumoto, M., y Nishimura, T. (1998). Mersenne twister: A 623-dimensionally equidistributed uniform pseudo-random number generator. <em><span>ACM</span> Transactions on Modeling and Computer Simulation</em>, <em>8</em>(1), 3-30. <a href="https://doi.org/10.1145/272991.272995">https://doi.org/10.1145/272991.272995</a>
 </div>
@@ -598,7 +596,8 @@ Matsumoto, M., y Nishimura, T. (1998). Mersenne twister: A 623-dimensionally equ
 <div class="footnotes">
 <hr />
 <ol start="3">
-<li id="fn3"><p>Aunque hay que distinguir entre secuencia y muestra. En un problema de inferencia, en principio estamos interesados en una característica desconocida de la población. En cambio, en un problema de simulación “la población” es el modelo y lo conocemos por completo (no obstante el problema de simulación puede surgir como solución de un problema de inferencia).<a href="tipos-de-números-aleatorios.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Para un uso intensivo, la recomendación es utilizar la instrucción <code>RDRAND</code> que emplea un generador de números pseudoaleatorios alimentado por el generador de números aleatorios “verdaderos” (tomando periódicamente la semilla de <code>RDSEED</code>). Para más detalles ver, por ejemplo, <a href="http://software.intel.com/en-us/articles/intel-digital-random-number-generator-drng-software-implementation-guide">Intel Digital Random Number Generator (DRNG) Software Implementation Guide</a>.<a href="tipos-de-números-aleatorios.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>Aunque hay que distinguir entre secuencia y muestra. En un problema de inferencia, en principio estamos interesados en una característica desconocida de la población. En cambio, en un problema de simulación “la población” es el modelo y lo conocemos por completo (no obstante el problema de simulación puede surgir como solución de un problema de inferencia).<a href="tipos-de-números-aleatorios.html#fnref4" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -621,42 +620,42 @@ Matsumoto, M., y Nishimura, T. (1998). Mersenne twister: A 623-dimensionally equ
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": true,
-"facebook": false,
-"twitter": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/rubenfcasal/simbook/edit/master/01-Introduccion.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["Simulacion.pdf"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rubenfcasal/simbook/edit/master/01-Introduccion.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["Simulacion.pdf"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>

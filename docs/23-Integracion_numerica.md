@@ -22,14 +22,16 @@ $$\int_0^1 4x^4 dx = \frac{4}{5}$$.
 
 
 
-```r
+``` r
 fun <- function(x) return(4 * x^4)
 curve(fun, 0, 1)
 abline(h = 0, lty = 2)
 abline(v = c(0, 1), lty = 2)
 ```
 
-<img src="23-Integracion_numerica_files/figure-html/unnamed-chunk-1-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{23-Integracion_numerica_files/figure-latex/unnamed-chunk-1-1} \end{center}
 
 
 ### Método del trapezoide 
@@ -42,7 +44,7 @@ $$\int_a^b f(x)\, dx \approx \frac{h}{2} [f(a)+2f(a+h)+2f(a+2h)+...+f(b)]$$
 
 
 
-```r
+``` r
 trapezoid.vec <- function(f.vec, h = 0.01) {
 # Integración numérica unidimensional entre a y b
 # utilizando el método del trapezoide 
@@ -66,7 +68,7 @@ trapezoid(fun, 0, 1, 20)
 ```
 
 ```
-## [1] 0.80333
+ ## [1] 0.80333
 ```
 
 
@@ -89,7 +91,7 @@ f(x_0)+2\sum_{j=1}^{(n/2)-1}f(x_{2j})+ 4\sum_{j=1}^{n/2}f(x_{2j-1})+f(x_n) \bigg
 
 
 
-```r
+``` r
 simpson <- function(fun, a, b, n = 100) { 
 # Integración numérica de fnt entre a y b
 # utilizando la regla de Simpson con n subdivisiones
@@ -109,7 +111,7 @@ simpson(fun, 0, 1, 20)
 ```
 
 ```
-## [1] 0.8
+ ## [1] 0.8
 ```
 
 El máximo error (en el caso unidimensional) viene dado por la expresión:
@@ -125,7 +127,7 @@ puede interesar ir añadiendo puntos sólo en los lugares donde se mejore la apr
 
 
 
-```r
+``` r
 quadrature <- function(fun, a, b, tol=1e-8) {
 	# numerical integration using adaptive quadrature
 
@@ -165,7 +167,7 @@ quadrature(fun, 0, 1)
 ```
 
 ```
-## [1] 0.8
+ ## [1] 0.8
 ```
 
 Fuente: [r-blogger Guangchuang Yu](https://www.r-bloggers.com/one-dimensional-integrals)
@@ -176,24 +178,24 @@ Fuente: [r-blogger Guangchuang Yu](https://www.r-bloggers.com/one-dimensional-in
 La función `integrate()` implementa un método de cuadratura adaptativa que admite límites infinitos 
 
 
-```r
+``` r
 integrate(fun, 0, 1)  # Cuidado: fun debe ser vectorial...
 ```
 
 ```
-## 0.8 with absolute error < 8.9e-15
+ ## 0.8 with absolute error < 8.9e-15
 ```
 
 Alternativamente, para dominios acotados, se puede emplear la función `MASS::area()` (suele dar muy buenos resultados, aunque los autores la desarrollaron inicialmente para fines ilustrativos):
 
 
-```r
+``` r
 require(MASS)
 area(fun, 0, 1)
 ```
 
 ```
-## [1] 0.8
+ ## [1] 0.8
 ```
 
 
@@ -209,7 +211,7 @@ $$\int_{-1}^{1} \int_{-1}^{1} \left( x^2 - y^2 \right) dx dy = 0$$.
 
 
 
-```r
+``` r
 f2d <- function(x,y) x^2 - y^2
 ```
 
@@ -217,7 +219,7 @@ Es habitual (especialmente en simulación) que la función se evalúe en una rej
 
 
 
-```r
+``` r
 ax = -1
 ay = -1
 bx = 1
@@ -241,7 +243,7 @@ del paquete `npsp`).
 
 
 
-```r
+``` r
 if(!require(plot3D)) stop('Required pakage `plot3D` not installed.')
 
 # persp3D(z = z, x = x, y = y)
@@ -256,7 +258,9 @@ persp3D.f2d <- function(f2d, ax=-1, bx=1, ay=-1, by=1, nx=21, ny=21, ...) {
 persp3D.f2d(f2d, -1, 1, -1, 1, 50, 50, ticktype = "detailed") 
 ```
 
-<img src="23-Integracion_numerica_files/figure-html/unnamed-chunk-9-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{23-Integracion_numerica_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 
 ### Método del trapezoide 
@@ -265,7 +269,7 @@ Error $O(n^{-\frac{2}{d}})$.
 
 
 
-```r
+``` r
 trapezoid.mat <- function(z, hx, hy) { 
 # Integración numérica bidimensional
 # utilizando el método del trapezoide (se aproxima f linealmente)
@@ -288,7 +292,7 @@ trapezoid.f2d(f2d, -1, 1, -1, 1, 101, 101)
 ```
 
 ```
-## [1] -8.8818e-18
+ ## [1] -8.8818e-18
 ```
 
 
@@ -298,7 +302,7 @@ Suponiendo que la función es vectorial, podemos emplear:
 
 
 
-```r
+``` r
 integrate( function(y) {
     sapply(y, function(y) {
       integrate(function(x) f2d(x,y), ax, bx)$value }) }, 
@@ -306,7 +310,7 @@ integrate( function(y) {
 ```
 
 ```
-## -2.7756e-17 with absolute error < 1.1e-14
+ ## -2.7756e-17 with absolute error < 1.1e-14
 ```
 
 
@@ -314,7 +318,7 @@ Si la función no es vectorial y solo admite parámetros escalares:
 
 
 
-```r
+``` r
 integrate(function(y) {
     sapply(y, function(y) {
       integrate(function(x) {

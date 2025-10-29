@@ -58,17 +58,17 @@ Si se emplea el paquete `parallel` en sistemas tipo Unix (Linux, Mac OS X, ...),
 Por defecto empleará todos los núcleos disponibles, pero se puede especificar un número menor mediante el argumento `mc.cores`. 
 
 
-```r
+``` r
 library(parallel)
 ncores <- detectCores()
 ncores
 ```
 
 ```
-## [1] 20
+ ## [1] 20
 ```
 
-```r
+``` r
 func <- function(k) {
   i_boot <- sample(nrow(iris), replace = TRUE)
   lm(Petal.Width ~ Petal.Length, data = iris[i_boot, ])$coefficients
@@ -81,18 +81,18 @@ system.time(res.boot <- mclapply(1:100, func)) # En Windows llama a lapply() (mc
 ```
 
 ```
-##    user  system elapsed 
-##    0.03    0.01    0.05
+ ##    user  system elapsed 
+ ##    0.04    0.00    0.05
 ```
 
-```r
+``` r
 # res.boot <- mclapply(1:100, func, mc.cores = ncores - 1) # En Windows genera un error si mc.cores > 1
 ```
 
 En Windows habría que crear previamente un cluster, llamar a una de las funciones `par*apply()` y finalizar el cluster:
 
 
-```r
+``` r
 cl <- makeCluster(ncores - 1, type = "PSOCK")
 clusterSetRNGStream(cl, 1) # Establecemos Pierre L'Ecuyer's RngStreams con semilla 1...
 
@@ -100,21 +100,21 @@ system.time(res.boot <- parSapply(cl, 1:100, func))
 ```
 
 ```
-##    user  system elapsed 
-##    0.00    0.00    0.01
+ ##    user  system elapsed 
+ ##    0.00    0.00    0.01
 ```
 
-```r
+``` r
 # stopCluster(cl)
 
 str(res.boot)
 ```
 
 ```
-##  num [1:2, 1:100] -0.415 0.429 -0.363 0.42 -0.342 ...
-##  - attr(*, "dimnames")=List of 2
-##   ..$ : chr [1:2] "(Intercept)" "Petal.Length"
-##   ..$ : NULL
+ ##  num [1:2, 1:100] -0.415 0.429 -0.363 0.42 -0.342 ...
+ ##  - attr(*, "dimnames")=List of 2
+ ##   ..$ : chr [1:2] "(Intercept)" "Petal.Length"
+ ##   ..$ : NULL
 ```
 
 Esto también se puede realizar en Linux (`type = "FORK"`), aunque podríamos estar trabajando ya en un cluster de equipos...
@@ -123,7 +123,7 @@ También podríamos emplear balance de carga si el tiempo de computación es var
 
 Además, empleando las herramientas del paquete `snow` se puede representar el uso del cluster (*experimental* en Windows):
 
-```r
+``` r
 # library(snow)
 ctime <- snow::snow.time(snow::parSapply(cl, 1:100, func))
 ctime
@@ -141,7 +141,7 @@ Si `parallel = "snow"` se crea un clúster en la máquina local durante la ejecu
 
 Veamos un ejemplo empleando una muestra simulada:
 
-```r
+``` r
 n <- 100
 rate <- 0.01
 mu <- 1/rate
@@ -161,18 +161,18 @@ system.time(res.boot <- boot(muestra, statistic, R = B))
 ```
 
 ```
-##    user  system elapsed 
-##    0.03    0.00    0.03
+ ##    user  system elapsed 
+ ##    0.03    0.00    0.03
 ```
 
-```r
+``` r
 # system.time(res.boot <- boot(muestra, statistic, R = B, parallel = "snow"))
 system.time(res.boot <- boot(muestra, statistic, R = B, parallel = "snow", cl = cl))
 ```
 
 ```
-##    user  system elapsed 
-##    0.03    0.00    0.03
+ ##    user  system elapsed 
+ ##    0.03    0.00    0.03
 ```
 
 ### Estudio de simulación {#estudio-sim-boot}
@@ -182,7 +182,7 @@ Si se trata de un estudio más complejo, como por ejemplo un estudio de simulaci
 Por ejemplo, a continuación se realiza un estudio de simulación comparando las probabilidades de cobertura y las longitudes de los intervalos de confianza implementados en la función `boot.ci()`.
 
 
-```r
+``` r
 t.ini <- proc.time()
 
 nsim <- 500
@@ -230,11 +230,11 @@ print(t.fin)
 ```
 
 ```
-##    user  system elapsed 
-##    0.03    0.00    1.92
+ ##    user  system elapsed 
+ ##     0.0     0.0     1.9
 ```
 
-```r
+``` r
 resnames <- c("Cobertura", "Longitud")
 intervals <- c("Normal", "Basic", "Studentized", "Percentil", "BCa")
 names(intervals) <- c("normal","basic", "student", "percent", "bca")
@@ -248,30 +248,36 @@ res
 ```
 
 ```
-##             Cobertura Longitud
-## Normal          0.858   57.788
-## Basic           0.854   57.739
-## Studentized     0.904   67.003
-## Percentil       0.860   57.739
+ ##             Cobertura Longitud
+ ## Normal          0.858   57.788
+ ## Basic           0.854   57.739
+ ## Studentized     0.904   67.003
+ ## Percentil       0.860   57.739
 ```
 
-```r
+``` r
 knitr::kable(res, digits = 3)
 ```
 
 
-
-|            | Cobertura| Longitud|
-|:-----------|---------:|--------:|
-|Normal      |     0.858|   57.788|
-|Basic       |     0.854|   57.739|
-|Studentized |     0.904|   67.003|
-|Percentil   |     0.860|   57.739|
+\begin{tabular}{l|r|r}
+\hline
+  & Cobertura & Longitud\\
+\hline
+Normal & 0.858 & 57.788\\
+\hline
+Basic & 0.854 & 57.739\\
+\hline
+Studentized & 0.904 & 67.003\\
+\hline
+Percentil & 0.860 & 57.739\\
+\hline
+\end{tabular}
 
 
 El último paso es finalizar el cluster:
 
-```r
+``` r
 stopCluster(cl)
 ```
 

@@ -27,7 +27,7 @@ knitr::purl("06-Simulacion_multidimensional.Rmd", documentation = 2)
 knitr::spin("06-Simulacion_multidimensional.R",knit = FALSE)
 -->
 
-La simulación de vectores aleatorios $\mathbf{X} =\left( X_1, X_2, \ldots, X_d\right)$ que sigan cierta distribución dada no es tarea siempre sencilla. 
+La simulación de vectores aleatorios $\mathbf{X} = \left( X_1, X_2, \ldots, X_d\right)$ que sigan cierta distribución dada no es tarea siempre sencilla. 
 En general, no resulta una extensión inmediata del caso unidimensional, aunque muchos de los algoritmos descritos en los temas anteriores (como el de aceptación-rechazo o el de composición) son válidos para distribuciones multivariantes.
 En este caso sin embargo, puede ser mucho más difícil cumplir los requerimientos (e.g. encontrar una densidad auxiliar adecuada) y los algoritmos obtenidos pueden ser computacionalmente poco eficientes (especialmente si el número de dimensiones es grande).
 
@@ -42,9 +42,8 @@ Las dificultades aparecerán cuando se quiera simular componentes con una determ
 ::: {.example #normind name="simulación de normales independientes"}
 <br>
 
-Si $\boldsymbol\mu =\left( \mu_1,\mu_2,\ldots,\mu_d\right)^t$ es un vector (de medias) y
-$\Sigma$ es una matriz $d \times d$ definida positiva (de varianzas-covarianzas), el vector aleatorio $\mathbf{X}$ sigue una distribución normal multivariante con esos parámetros, 
-$\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right)$, 
+Si $\boldsymbol{\mu} = \left( \mu_1, \mu_2, \ldots, \mu_d \right)^t$ es un vector (de medias) y $\Sigma$ es una matriz $d \times d$ definida positiva (de varianzas-covarianzas), el vector aleatorio $\mathbf{X}$ sigue una distribución normal multivariante con esos parámetros, 
+$\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol{\mu},\Sigma \right)$, 
 si su función de densidad es de la forma:
 $$f(\mathbf x) = \frac{1}{(2\pi)^{n/2}|\Sigma|^{1/2}}
 \exp \left( -\frac{1}{2} ( \mathbf x - \boldsymbol \mu)^t \Sigma^{-1} (\mathbf x - \boldsymbol \mu)
@@ -95,7 +94,7 @@ rx
 ```
 
 
-## El método de aceptación/rechazo
+## El método de aceptación-rechazo
 
 El algoritmo de aceptación-rechazo es el mismo que el del caso univariante descrito en la Sección \@ref(AR), la única diferencia es que las densidades son multidimensionales.
 Supongamos que la densidad objetivo $f$ y la densidad
@@ -107,119 +106,204 @@ El algoritmo sería:
 
 1. Generar $U\sim \mathcal{U}\left( 0,1\right)$.
 
-2. Generar $\mathbf{T} = \left( T_1,T_2,\ldots,T_d\right) \sim g$.
+2. Generar $\mathbf{T} = ( T_1, T_2, \ldots, T_d) \sim g$.
 
-3.  Si $c\cdot U\cdot g\left( T_1,T_2,\ldots,T_d\right) \leq f\left( T_1,T_2,\ldots,T_d\right)$
-    devolver $\mathbf{X}=\mathbf{T}$.
+3.  Si $c \cdot U \cdot g( T_1, T_2, \ldots, T_d) \leq f( T_1, T_2, \ldots, T_d)$
+    devolver $\mathbf{X}= \mathbf{T}$.
 
     En caso contrario volver al paso 1.
 
-Por ejemplo, de forma análoga al caso unidimensional, en el caso de una densidad
-acotada en un hipercubo (intervalo cerrado multidimensional) siempre podríamos considerar
-una uniforme como densidad auxiliar. 
+Por ejemplo, de forma análoga al caso unidimensional, en el caso de una densidad acotada en un hipercubo (intervalo cerrado multidimensional) siempre podríamos considerar una uniforme como densidad auxiliar. 
 
 ::: {.example #ar-bidim name="distribución bidimensional acotada"}
 <br>
 
 Supongamos que estamos interesados en generar valores de una variable aleatoria bidimensional
 $\left( X,Y\right)$ con función de densidad: 
-$$f(x,y)=\left\{ 
+$$f(x,y)= \left\{ 
 \begin{array}{cl}
 \frac{3}{16}\left( 2-\left( x^2+y^2\right) \right)  & \text{si }x\in
-\lbrack -1,1]\text{ e }y\in \lbrack -1,1] \\ 
+[-1, 1]\text{ e }y \in [-1, 1] \\ 
 0 & \text{en otro caso}
 \end{array}
 \right.$$
 
-Podríamos considerar como densidad auxiliar la uniforme en $\left[  -1,1\right]  \times\left[
--1,1\right]$:
+Podríamos considerar como densidad auxiliar la uniforme en $[-1, 1] \times [-1, 1]$:
 
-$$g\left( x, y \right)  =\left\{
+$$g\left( x, y \right) = \left\{
 \begin{array}{ll}
-\frac{1}{4} & \text{si }x\in \lbrack -1,1]\text{ e }y\in \lbrack -1,1] \\
+\frac{1}{4} & \text{si }x \in [-1, 1] \text{ e }y\in [-1, 1] \\
 0 &  \text{en otro caso}
 \end{array}\right.$$ 
 
-Como $f(x, y) \leq M = f(0,0) = \frac38$, tomando $c=\frac{M}{g(x,y)} = \frac32$ 
+Como $f(x, y) \leq M = f(0,0) = \frac38$, tomando $c= \frac{M}{g(x,y)} = \frac32$ 
 tendríamos que $f(x,y) \leq cg(x,y) = M$ y el algoritmo sería:
 
 1.  Generar $U \sim \mathcal{U}\left( 0, 1\right)$.
 
 2.  Generar $T_1, T_2  \sim \mathcal{U}\left( -1, 1 \right)$.
 
-3.  Si $M \cdot U\leq f\left( T_1, T_2 \right)$
-    devolver $\mathbf{X} = \left( T_1, T_2 \right)$.
+3.  Si $M \cdot U\leq f(T_1, T_2)$
+    devolver $\mathbf{X} = (T_1, T_2)$.
 
 4.  En caso contrario volver al paso 1.
 
 En este caso, la condición de aceptación del paso 3 simplificada sería:
 $U \leq 1 - \left( T_1^2 + T_2^2 \right) / 2$.
+
+Si queremos implementar este algoritmo en R, podemos comenzar por 
+definir y representar la densidad objetivo con el siguiente código:
+
+```{r}
+f <- function(x, y) 3 * (2 - x^2 - y^2) / 16
+
+persp.f2D <- function(f2d, ax=-1, bx=1, ay=-1, by=1, nx=21, ny=21, ...) { 
+  x <- seq(ax, bx, length = nx)
+  y <- seq(ay, by, length = ny)
+  z <- outer(x, y, f2d)
+  plot3D::persp3D(x, y, z, ...)
+}
+
+persp.f2D(f, -1, 1, -1, 1, 50, 50, ticktype = "detailed")
+```
+
+Las siguientes funciones implementan el método de aceptación-rechazo para simular 
+valores de la densidad objetivo (de forma similar al los ejemplos mostrados 
+para el caso unidimensional, incluyendo también una variable global `ngen` 
+para contar el número de generaciones de la distribución auxiliar):
+
+```{r}
+ngen <- 0 
+
+rf <- function() {
+  # Simulación por aceptación-rechazo a partir de uniforme
+  m <- 3/8
+  while (TRUE) {
+    u <- runif(1)
+    x <- runif(2, -1, 1)
+    ngen <<- ngen + 1
+    if (m*u <= f(x[1], x[2])) return(x)
+  }
+}
+
+rfn <- function(n = 1000) {
+  ngen <<- 0
+  # Simulación n valores
+  x <- matrix(nrow = n, ncol = 2)
+  for(i in 1:n) x[i , ] <- rf()
+  return(x)
+}
+```
+
+Empleando esta última función podemos generar 1000 observaciones de la 
+distribución objetivo, obteniendo de paso el tiempo de CPU:
+
+```{r}
+set.seed(1)
+nsim <- 1000
+# ngen <- 0
+system.time(x <- rfn(nsim))
+# plot(x)
+```
+
+Podemos obtener el número medio de generaciones de la distribución auxiliar 
+(la aproximación por simulación) y utilizarlo para evaluar la eficiencia
+(la comparación con el valor teórico serviría para evaluar si el algoritmo
+está bien implementado):
+
+```{r}
+{cat("Número de generaciones = ", ngen)
+cat("\nNúmero medio de generaciones = ", ngen/nsim)
+cat("\nProporción de rechazos = ", 1-nsim/ngen, "\n")}
+
+# Valores teóricos:
+c <- 3/2
+c
+1 - 1/c
+```
+
+Si queremos representar gráficamente la distribución de los valores generados
+para compararla con la densidad objetivo, como esta presenta discontinuidades
+en los extremos del intervalo $[-1, 1] \times [-1, 1]$, puede resultar de interés 
+las funciones `ks::histde` o `ks::kde.boundary()` (para obtener una estimación 
+no paramétrica de la densidad con soporte acotado):
+
+```{r}
+library(ks)
+# hist2d <- histde(x, xmin = c(-1, -1), xmax = c(1, 1))  
+# plot(hist2d)
+# Cuidado: puede requerir de bastante tiempo de computación
+fhat <- kde.boundary(x, xmin = c(-1, -1), xmax = c(1, 1), boundary.kernel = "linear")  
+plot(fhat, display = "persp")
+```
+
 :::
 
 ::: {.exercise #ar-bidim-r name="distribución bidimensional acotada"}
 <br>
 
-Escribir una función que implemente el algoritmo del ejemplo anterior, emplearla para generar 1000 observaciones y representar gráficamente su distribución (puede resultar de interés la función `sm::sm.density()` o las herramientas del paquete `ks`).
+Supongamos que estamos interesados en una variable aleatoria bidimensional 
+$\left( X,Y\right)$ con función de densidad: 
+$$f(x,y)=\left\{ 
+\begin{array}{cl}
+\frac{1}{12}(4-xy) & \text{si } 0 \le x \le 2 ,  0 \le y \le 2\\ 
+0 & \text{en otro caso}
+\end{array}
+\right.$$
+
+a) Describir un algoritmo basado en el método de aceptación-rechazo,
+   considerando como densidad auxiliar una uniforme, que permita
+   generar observaciones de esta distribución.
+   ¿Cuál sería el valor esperado de generaciones de la densidad auxiliar?
+
+b) Escribir una función que implemente este algoritmo, emplearla para generar 
+   1000 observaciones y representar gráficamente su distribución.
+
 :::
 
 ::: {.example #ar-esfera name="distribución uniforme en la esfera"}
 <br>
 
-Supongamos que el objetivo es simular puntos uniformemente distribuidos sobre la “esfera” unitaria $d$-dimensional `r cite_fig(simpiplot)`:
-$$C_d=\left\{  \left( x_1, x_2, \ldots, x_d \right) \in \mathbb{R}^d
+Supongamos que el objetivo es simular puntos uniformemente distribuidos sobre la “esfera” (bola) unitaria $d$-dimensional `r cite_fig(simpiplot)`:
+$$C_d= \left\{  \left( x_1, x_2, \ldots, x_d \right) \in \mathbb{R}^d
 : x_1^2 + x_2^2 + \cdots + x_d^2 \leq1 \right\}.$$
 
-Denotando por $V_d\left( 1\right)$, el “volumen” (la medida) de la
+Denotando por $V_d (1)$, el “volumen” (la medida) de la
 esfera $d$-dimensional de radio $1$ (en general, la de radio $r$
-verifica $V_d\left( r\right)  =r^{d}V_d\left( 1\right)$), se tiene: 
-$$f\left( x_1,x_2,\ldots,x_d\right)  =\left\{
+verifica $V_d\left( r\right) = r^d V_d (1)$), se tiene: 
+$$f\left( x_1,x_2,\ldots,x_d\right) = \left\{
 \begin{array}{ll}
-\frac{1}{V_d\left( 1\right)  } & \text{si } \left( x_1, x_2, \ldots
-,x_d\right)  \in C_d\\
+\frac{1}{V_d (1)  } & \text{si } \left( x_1, x_2, \ldots ,x_d\right)  \in C_d\\
 0 & \text{si } \left( x_1,x_2,\ldots,x_d\right)  \notin C_d
 \end{array} \right.$$ 
 
-Para simular valores en $\mathbb{R}^{d}$, con densidad $f$,
+Para simular valores en $\mathbb{R}^d$, con densidad $f$,
 podemos utilizar como distribución auxiliar una
-$\mathcal{U}\left( \left[  -1,1\right]  \times\left[
--1,1\right]  \times\overset{\text{d}}{\cdots}\times\left[  -1,1\right]
-\right)  = \mathcal{U}\left( \left[  -1,1\right]^{d}\right)$, dada por:
-$$g\left( x_1,x_2,\ldots,x_d\right)  =\left\{
+$\mathcal{U}\left( [-1, 1]  \times [-1, 1] \times \overset{\text{d}}{\cdots} \times [-1, 1] \right) = \mathcal{U}\left( [-1, 1]^d\right)$, dada por:
+$$g\left( x_1,x_2,\ldots,x_d\right) = \left\{
 \begin{array}{ll}
-\frac{1}{2^{d}} & \text{si } x_i\in\left[  -1,1\right], \text{ para todo }
+\frac{1}{2^d} & \text{si } x_i \in [-1, 1], \text{ para todo }
 i=1,2,\ldots,d\\
 0 &  \text{en otro caso}
 \end{array}\right.$$ 
 
-La constante $c$ óptima para la utilización del método de
-aceptación/rechazo es:
-$$c=\max_{\{\mathbf{x}:g\left( \mathbf{x}\right) > 0\}}
-\frac{f\left( \mathbf{x}\right)  }{g\left( \mathbf{x}\right)  }
-=\frac{\frac{1}{V_d\left( 1\right)  }}{\frac{1}{2^{d}}}
-=\frac{2^{d}}{V_d\left( 1\right)}$$
-y la condición de aceptación $cUg\left( \mathbf{T}\right)
-\leq f\left( \mathbf{T}\right)$  se convierte en:
-$$\frac{2^{d}}{V_d\left( 1\right)  }U\frac{1}{2^{d}}1_{\left[  -1,1\right]
-^{d}}\left( \mathbf{T}\right)  \leq\frac{1}{V_d\left( 1\right)
-}1_{C_d}\left( \mathbf{T}\right),$$ 
-o, lo que es lo mismo, $U1_{\left[  -1,1\right]^{d}}\left( \mathbf
-{T}\right)  \leq1_{C_d}\left( \mathbf{T}\right)$. 
-Dado que el número aleatorio $U$ está en el intervalo $(0,1)$ y que las funciones
-indicadoras valen $0$ ó $1$, esta condición equivale a que $1_{\left[
--1,1\right]  ^{d}}\left( \mathbf{T}\right)  =1_{C_d}\left(
-\mathbf{T}\right)$, es decir, a que
-$\mathbf{T}\in C_d$, por tanto, a que se verifique:
-$$T_1^2+T_2^2+\cdots+T_d^2\leq1.$$
+La simulación de $T \sim \mathcal{U}\left( [-1, 1]^d \right)$  puede hacerse trivialmente mediante $T_i \sim \mathcal{U}\left( -1, 1 \right)$ para cada $i=1,2,\ldots,d$, ya que las componentes son independientes.
 
-Por otra parte, la simulación de $T \sim \mathcal{U}\left( \left[  -1,1\right]
-^{d}\right)$  puede hacerse trivialmente mediante
-$T_i \sim \mathcal{U}\left( -1, 1 \right)$ 
-para cada $i=1,2,\ldots,d$, ya que las
-componentes son independientes. Como el valor de $U$ es superfluo en
-este caso, el algoritmo queda:
+Por otra parte, la constante $c$ óptima para la utilización del método de aceptación-rechazo es:
+$$c= \max_{\{\mathbf{x}:g(\mathbf{x}) > 0\}}
+\frac{f(\mathbf{x})}{g(\mathbf{x})}
+= \frac{\frac{1}{V_d (1)}}{\frac{1}{2^d}}
+= \frac{2^d}{V_d (1)}$$
+y la condición de aceptación $cUg(\mathbf{T}) \leq f(\mathbf{T})$  se convierte en:
+$$\frac{2^d}{V_d (1)}U\frac{1}{2^d}1_{[-1, 1]^d}(\mathbf{T})  \leq\frac{1}{V_d (1)}1_{C_d}(\mathbf{T}),$$ 
+o, lo que es lo mismo, 
+$U 1_{[-1, 1]^d}(\mathbf{T}) \leq 1_{C_d}(\mathbf{T})$. 
+Dado que $U > 0$ (con probabilidad $1$) y que $1_{[-1, 1]^d}(\mathbf{T}) = 1$, esta condición equivale a que $1_{C_d}(\mathbf{T}) = 1$ (no puede ser $0$), es decir, a que $\mathbf{T} \in C_d$, por tanto, a que se verifique:
+$$T_1^2 + T_2^2 + \cdots + T_d^2 \leq 1.$$
 
-1. Simular $V_1,V_2,\ldots,V_d \sim  \mathcal{U}\left(
-0,1\right)$  independientes.
+Como el valor de $U$ es superfluo en este caso, el algoritmo queda:
+
+1. Simular $V_1, V_2, \ldots, V_d \sim \mathcal{U}(0,1)$  independientes.
 
 2. Para $i = 1, 2, \ldots, d$ hacer $T_i = 2V_i - 1$.
 
@@ -229,18 +313,24 @@ este caso, el algoritmo queda:
 
 Ver el Ejercicio \@ref(exr:simpi) para el caso de $d=2$.
 
-Usando las fórmulas del “volumen” de una “esfera” $d$-dimensional:
-$$V_d\left( r\right)  =\left\{
+Usando la fórmula del volumen de una “esfera” $d$-dimensional:
+$$V_d (r) = \frac{\pi^\frac{d}{2}}{\Gamma\left(\frac{d}{2} + 1\right)}r^d= \left\{
 \begin{array}{ll}
-\dfrac{\pi^{d/2}r^{d}}{\left( d/2\right)  !} & \text{si } d \text{ es par}\\
-\dfrac{2^{\left\lfloor \frac{d}{2}\right\rfloor +1}\pi^{\left\lfloor \frac{d}{2}\right\rfloor }r^{d}}{1\cdot3\cdot5\cdots d} & \text{si } d \text{ es impar}
+\dfrac{\pi^{d/2}r^d}{\left( d/2\right)  !} & \text{si } d \text{ es par}\\
+\dfrac{2^{\left\lfloor \frac{d}{2}\right\rfloor +1}\pi^{\left\lfloor \frac{d}{2}\right\rfloor }r^d}{1\cdot3\cdot5\cdots d} & \text{si } d \text{ es impar}
 \end{array}\right.$$ 
-puede verse que el número medio de iteraciones del algoritmo, dado por la constante
-$c=\frac{2^{d}}{V_d\left(1 \right)}$, puede llegar a ser enormemente grande. 
-Así, si $d=2$ se tiene $c=1.27$, si $d=3$ se tiene $c=1.91$, si $d=4$ entonces $c=3.24$ y para
-$d=10$ resulta $c=401.5$ que es un valor que hace que el algoritmo sea
-tremendamente lento en dimensión $10$.
-Esto está relacionado con la *maldición de la dimensionalidad* (curse of dimensionality), a medida que aumenta el número de dimensiones el volumen de la "frontera" crece exponencialmente (ver p.e. Fernández-Casal et al, 2021, [Sección 1.4](https://rubenfcasal.github.io/aprendizaje_estadistico/dimen-curse.html)).
+puede verse que el número medio de iteraciones del algoritmo, dado por la constante $c = \frac{2^d}{V_d (1)}$, puede llegar a ser enormemente grande. 
+Así, si $d=2$ se tiene $c=1.27$, si $d=3$ se tiene $c=1.91$, si $d=4$ entonces $c=3.24$ y para $d=10$ resulta $c=401.5$ que es un valor que hace que el algoritmo sea tremendamente lento en dimensión $10$.
+
+```{r}
+vball <- function(d, r) pi^(d/2) * r^d / gamma(d/2 + 1)
+c.opt <- function(d) 2^d / vball(d, 1)
+c.opt(2:10)
+curve(c.opt, 2, 12, xlab = "d", ylab = "c")
+```
+
+Esto está relacionado con la *maldición de la dimensionalidad* (curse of dimensionality), a medida que aumenta el número de dimensiones el volumen de la "frontera" crece exponencialmente [ver p.e. @mpaebook2024, [sec. 1.4](https://rubenfcasal.github.io/aprendizaje_estadistico/dimen-curse.html)].
+
 :::
 
 ## Factorización de la matriz de covarianzas {#fact-cov}
@@ -257,9 +347,9 @@ En el caso de normalidad, el resultado general es el siguiente.
 
 ::: {.proposition}
 <br>
-Si $\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right)$ y $A$ es una matriz $p\times d$, de
+Si $\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol{\mu},\Sigma \right)$ y $A$ es una matriz $p\times d$, de
 rango máximo, con $p\leq d$, entonces:
-$$A\mathbf{X} \sim \mathcal{N}_{p}\left(A\boldsymbol\mu,A\Sigma A^t\right).$$
+$$A\mathbf{X} \sim \mathcal{N}_{p}\left(A\boldsymbol{\mu},A\Sigma A^t\right).$$
 :::
 
 Partiendo de $\mathbf{Z} \sim \mathcal{N}_d\left( \mathbf{0},I_d\right)$, se podrían considerar distintas factorizaciones de la matriz de covarianzas:
@@ -268,11 +358,11 @@ Partiendo de $\mathbf{Z} \sim \mathcal{N}_d\left( \mathbf{0},I_d\right)$, se pod
   $\Sigma=H\Lambda H^t =H\Lambda^{1/2}(H\Lambda^{1/2})^t$,
   donde $H$ es una matriz ortogonal (i.e. $H^{-1}=H^{t}$), cuyas columnas son los autovectores de la matriz $\Sigma$, y $\Lambda$ es una matriz diagonal, cuya diagonal esta formada por los correspondientes autovalores (positivos). De donde se deduce que:
 
-$$\mathbf{X} =\boldsymbol\mu + H\Lambda^{1/2}\mathbf{Z} \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right).$$
+$$\mathbf{X} = \boldsymbol{\mu} + H\Lambda^{1/2}\mathbf{Z} \sim \mathcal{N}_d\left( \boldsymbol{\mu},\Sigma \right).$$
 
 * Factorización de Cholesky: $\Sigma=LL^t$, donde $L$ es una matriz triangular inferior (fácilmente invertible), por lo que: 
-  $$\mathbf{X} =\boldsymbol\mu + L\mathbf{Z} 
-  \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right).$$
+  $$\mathbf{X} = \boldsymbol{\mu} + L\mathbf{Z} 
+  \sim \mathcal{N}_d\left( \boldsymbol{\mu},\Sigma \right).$$
 
 Desde el punto de vista de la eficiencia computacional la factorización de Cholesky sería la preferible. Pero en ocasiones, para evitar problemas numéricos (por ejemplo, en el caso de matrices semidefinidas positivas^[También se habla de matrices definidas no negativas (*non negative definite matrices*) o de matrices no estrictamente definidas positivas.], i.e. con autovalores nulos) puede ser más adecuado emplear la factorización espectral.
 En el primer caso el algoritmo sería el siguiente:
@@ -282,10 +372,10 @@ En el primer caso el algoritmo sería el siguiente:
 
 1.  Obtener la factorización de Cholesky $\Sigma=LL^t$.
 
-2.  Simular $\mathbf{Z} =\left( Z_1,Z_2,\ldots,Z_d\right)$
+2.  Simular $\mathbf{Z} = \left( Z_1,Z_2,\ldots,Z_d\right)$
     i.i.d. $\mathcal{N}\left( 0,1\right)$.
 
-3.  Hacer $\mathbf{X} = \boldsymbol\mu + L\mathbf{Z}$.
+3.  Hacer $\mathbf{X} = \boldsymbol{\mu} + L\mathbf{Z}$.
 
 4.  Repetir los pasos 2 y 3 las veces necesarias.
 
@@ -299,7 +389,7 @@ hará que emplear $L=U^t.$
 <br>
 
 Supongamos que el objetivo es generar una muestra de tamaño `nsim` de la variable funcional:
-$$X(t)=\sin\left(  2\pi t\right)  +\varepsilon\left(  t\right)$$
+$$X(t)= \sin\left(  2\pi t\right)  +\varepsilon\left(  t\right)$$
 con $0\leq t \leq1$ y $Cov(\varepsilon\left( t_1 \right) ,
 \varepsilon\left( t_2 \right) ) = e^{-\left\Vert t_1-t_2 \right\Vert }$, 
 considerando 100 puntos de discretización (se puede pensar también que es un proceso temporal).
@@ -355,17 +445,17 @@ lines(t, mu, lwd = 2)
 
 :::
 
-Otros métodos para variables continuas relacionados con la factorización de la matriz de covarianzas son el método FFT (transformada rápida de Fourier; e.g. Davies y Harte, 1987) o el *Circular embedding* (Dietrich and Newsam, 1997), que realmente son el mismo.
+Otros métodos para variables continuas relacionados con la factorización de la matriz de covarianzas son el método FFT [transformada rápida de Fourier, e.g. @davies1987] o el *Circular embedding* [@dietrich1997], que realmente son el mismo.
 
 
 ## Método de las distribuciones condicionadas {#distrcond}
 
 Teniendo en cuenta que:
-$$f\left( x_1,x_2,\ldots,x_d\right)  =f_1\left( x_1\right)  \cdot
+$$f\left( x_1,x_2,\ldots,x_d\right) =f_1\left( x_1\right)  \cdot
 f_2\left( x_2|x_1\right)  \cdots f_d\left( x_d|x_1,x_2,\ldots,x_{d-1}\right),$$
 donde las densidades condicionales pueden obtenerse a partir de las
 correspondientes marginales:
-$$f_i\left( x_i|x_1,x_2,\ldots,x_{i-1}\right)  =\frac{f_{1,\ldots
+$$f_i\left( x_i|x_1,x_2,\ldots,x_{i-1}\right) = \frac{f_{1,\ldots
 ,i}\left( x_1,x_2,\ldots,x_i\right)  }{f_{1,\ldots,i-1}\left(
 x_1,x_2,\ldots,x_{i-1}\right)},$$
 
@@ -378,7 +468,7 @@ se obtiene el siguiente algoritmo general:
 2.  Desde $i=2$ hasta $d$ generar 
     $X_i \sim f_i\left( \cdot|X_1,X_2,\ldots,X_{i-1}\right)$.
 
-3.  Devolver $\mathbf{X} =\left( X_1,X_2,\ldots,X_d\right)$.
+3.  Devolver $\mathbf{X} = \left( X_1,X_2,\ldots,X_d\right)$.
 
 :::
 
@@ -395,44 +485,44 @@ constante en el círculo:
 $$C = \left\{ \left( x_1, x_2 \right)  \in \mathbb{R}^2 : x_1^2 + x_2^2 \leq 1 \right\}.$$
 
 Su función de densidad viene dada por:
-$$f\left( x_1,x_2\right)  =\left\{
+$$f\left( x_1,x_2\right) = \left\{
 \begin{array}{ll}
 \frac{1}{\pi} & \text{si } \left( x_1,x_2\right)  \in C\\
 0 & \text{si } \left( x_1,x_2\right)  \notin C
 \end{array}\right.$$ 
 
 La densidad marginal de la primera variable resulta:
-$$f_1\left( x_1\right)  =\int_{-\sqrt{1-x_1^2}}^{+\sqrt{1-x_1^2}}\frac{1}{\pi}dx_2
-=\frac{2\sqrt{1-x_1^2}}{\pi}
+$$f_1\left( x_1\right) = \int_{-\sqrt{1-x_1^2}}^{+\sqrt{1-x_1^2}}\frac{1}{\pi}dx_2
+= \frac{2\sqrt{1-x_1^2}}{\pi}
 \text{ si }x_1\in\left[-1,1\right],$$ 
 es decir: 
-$$f_1\left( x_1\right)  =\left\{
+$$f_1\left( x_1\right) = \left\{
 \begin{array}{ll}
-\frac{2}{\pi}\sqrt{1-x_1^2} & \text{si } x_1\in\left[  -1,1\right]  \\
+\frac{2}{\pi}\sqrt{1-x_1^2} & \text{si } x_1\in[-1, 1]  \\
 0 & \text{si } x_1\notin\left[ -1,1\right]  
 \end{array}\right.$$ 
 
 Además:
-$$f_2\left( x_2|x_1\right) = \frac{f\left( x_1,x_2\right)  }{f_1\left( x_1\right)} = \frac{\frac{1}{\pi}}{\frac{2\sqrt{1-x_1^2}}{\pi}}=\frac{1}{2\sqrt{1-x_1^2}}\text{, si }x_2\in\left[
+$$f_2\left( x_2|x_1\right) = \frac{f\left( x_1,x_2\right)  }{f_1\left( x_1\right)} = \frac{\frac{1}{\pi}}{\frac{2\sqrt{1-x_1^2}}{\pi}}= \frac{1}{2\sqrt{1-x_1^2}}\text{, si }x_2\in\left[
 -\sqrt{1-x_1^2},\sqrt{1-x_1^2}\right]$$ 
 valiendo cero en otro caso. 
 Se tiene entonces que:
 $$X_2|X_1 \sim \mathcal{U}\left(  -\sqrt{1-X_1^2},\sqrt{1-X_1^2}\right),$$
-siempre que $X_1\in\left[  -1,1\right]$.
+siempre que $X_1\in[-1, 1]$.
 
 Finalmente, el algoritmo resulta:
 
 1. Simular $X_1$ con densidad $f_1\left(
-x_1\right)  =\frac{2}{\pi}\sqrt{1-x_1^2}1_{\{|x_1|\leq1\}}$.
+x_1\right) = \frac{2}{\pi}\sqrt{1-x_1^2}1_{\{|x_1|\leq1\}}$.
 
 2. Simular $X_2$ con densidad $\mathcal{U}\left(
 -\sqrt{1-X_1^2},\sqrt{1-X_1^2}\right)$.
 
-3. Devolver $\mathbf{X}=\left( X_1,X_2\right)
+3. Devolver $\mathbf{X}= \left( X_1,X_2\right)
 ^t$.
 
 Para el paso 1 puede utilizarse, por ejemplo, el método de
-aceptación/rechazo, pues se trata de una densidad acotada definida en un
+aceptación-rechazo, pues se trata de una densidad acotada definida en un
 intervalo acotado.
 
 :::
@@ -462,7 +552,7 @@ f(x_1,x_2) &= \frac{1}{2 \pi \sigma_1 \sigma_2 \sqrt{1-\rho^2}} \\
 \right)
 \end{aligned}$$
 
-de donde se deduce (ver e.g. Cao, 2002, p.88; o ecuaciones \@ref(eq:mediacond) y \@ref(eq:varcond) en la Sección \@ref(condnormal)) que:
+de donde se deduce [ver e.g. @cao2002, p.88] que:
 
 $$f_1( x_1 ) = \frac{1}{\sigma_1\sqrt{2\pi}}
 \exp\left( -\frac{(x_1 - \mu_1)^{2}}{2\sigma_1^{2}}\right)$$
@@ -491,7 +581,7 @@ y el algoritmo sería el siguiente:
 
 2.  Hacer $X_1 = \mu_1 + \sigma_1 Z_1$.
 
-3.  Hacer $X_2 =\mu_2 + \sigma_2 \rho Z_1
+3.  Hacer $X_2 = \mu_2 + \sigma_2 \rho Z_1
     + \sigma_2  \sqrt{1-\rho^2} Z_2$.
 
 :::
@@ -502,16 +592,16 @@ $$L = \begin{pmatrix}
  \sigma_2 \rho &  \sigma_2  \sqrt{1-\rho^2}
 \end{pmatrix}$$
 
-Además, esta aproximación puede generalizarse al caso multidimensional, ver Sección \@ref(condnormal).
+Este método puede generalizarse al caso multidimensional (ver ecuaciones \@ref(eq:mediacond) y \@ref(eq:varcond) en la Sección \@ref(condnormal)).
 
 
 ::: {.exercise #cond2d}
 <br>
 
 Considerando la variable aleatoria bidimensional del Ejemplo \@ref(exm:ar-bidim) y teniendo en cuenta que la densidad marginal de la variable $X$ es:
-$$f_{X}(x)=\left\{ 
+$$f_{X}(x)= \left\{ 
 \begin{array}{cl}
-\frac{1}{8}\left( 5-3x^2\right)  & \text{si }x\in \lbrack -1,1] \\ 
+\frac{1}{8}\left( 5-3x^2\right)  & \text{si }x\in [-1, 1] \\ 
 0 & \text{en otro caso}
 \end{array}
 \right.$$
@@ -544,34 +634,34 @@ para simular los valores de forma conjunta.
 
 ### Simulación condicional de una normal multivariante {#condnormal}
 
-Si $\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol\mu,\Sigma \right)$ es tal que $\mathbf{X}$, $\boldsymbol\mu$ y $\boldsymbol\Sigma$ se particionan de la forma:
+Si $\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol{\mu},\Sigma \right)$ es tal que $\mathbf{X}$, $\boldsymbol{\mu}$ y $\Sigma$ se particionan de la forma:
 $$\mathbf{X} =
 \begin{pmatrix}
  \mathbf{X}_1 \\
  \mathbf{X}_2
 \end{pmatrix},  
-\boldsymbol\mu =
+\boldsymbol{\mu} =
 \begin{pmatrix}
- \boldsymbol\mu_1 \\
- \boldsymbol\mu_2
+ \boldsymbol{\mu_1} \\
+ \boldsymbol{\mu_2}
 \end{pmatrix}, 
-\boldsymbol\Sigma =
+\Sigma =
 \begin{pmatrix}
- \boldsymbol\Sigma_{11} & \boldsymbol\Sigma_{12} \\
- \boldsymbol\Sigma_{21} & \boldsymbol\Sigma_{22}
+ \Sigma_{11} & \Sigma_{12} \\
+ \Sigma_{21} & \Sigma_{22}
 \end{pmatrix},$$
 suponiendo que $\mathbf{X}_1$ se corresponde con los valores observados y $\mathbf{X}_2$ con los que se pretende simular,
-entonces puede verse (e.g. Ripley, 1987) que la distribución de $\mathbf{X}_2 | \mathbf{X}_1$ es normal con:
+entonces puede verse [e.g. @ripley1987stochastic] que la distribución de $\mathbf{X}_2 | \mathbf{X}_1$ es normal con:
 
 \begin{equation}
-E \left( \mathbf{X}_2 | \mathbf{X}_1 \right) = \boldsymbol\mu_2 + \boldsymbol\Sigma_{21} \boldsymbol\Sigma_{11}^{-1}
-\left(  \mathbf{X}_1 - \boldsymbol\mu_1 \right), 
+E \left( \mathbf{X}_2 | \mathbf{X}_1 \right) = \boldsymbol{\mu_2} + \Sigma_{21} \Sigma_{11}^{-1}
+\left(  \mathbf{X}_1 - \boldsymbol{\mu_1} \right), 
 (\#eq:mediacond)
 \end{equation}
 
 \begin{equation}
 Cov \left( \mathbf{X}_2 | \mathbf{X}_1 \right) =
-\boldsymbol\Sigma_{22} - \boldsymbol\Sigma_{21} \boldsymbol\Sigma_{11}^{-1} \boldsymbol\Sigma_{12}.
+\Sigma_{22} - \Sigma_{21} \Sigma_{11}^{-1} \Sigma_{12}.
 (\#eq:varcond)
 \end{equation}
 
@@ -800,10 +890,10 @@ Siendo el recíproco también cierto.
 Además de las cópulas Gausianas, es una de las familias de cópulas más utilizadas.
 Son de la forma:
 $$C(x_1,x_2,\dots,x_d)
-=\Psi^{-1}\left( \sum_{i=1}^d\Psi\left( F_i(x_i)\right)\right),$$
+= \Psi^{-1}\left( \sum_{i=1}^d\Psi\left( F_i(x_i)\right)\right),$$
 siendo $\Psi$ su función generadora.
 
-Una condición suficiente para que sea una cópula multidimensional válida es que $\Psi(1)=0$, $\lim \limits_{x\ \rightarrow0}\Psi(x)=\infty$, $\Psi^{\prime}(x)<0$ y $\Psi^{\prime \prime}(x)>0$.
+Una condición suficiente para que sea una cópula multidimensional válida es que $\Psi(1)=0$, $\lim \limits_{x\ \rightarrow0}\Psi(x)= \infty$, $\Psi^{\prime}(x)<0$ y $\Psi^{\prime \prime}(x)>0$.
 
 **Ejemplos**:
 
@@ -811,12 +901,12 @@ Una condición suficiente para que sea una cópula multidimensional válida es q
     $\Psi(x)=-\ln(x)$,
     $$F(x,y)=F_1(x)F_2(y).$$
 
-*   Cópula de Clayton: $\Psi(x)=\frac{1}{\alpha}\left( x^{-\alpha
-    }-1\right) ;\alpha>0$,
+*   Cópula de Clayton: 
+    $\Psi(x)= \frac{1}{\alpha}\left( x^{-\alpha}-1\right) ;\ \alpha>0$,
     $$F(x,y)=(F_1(x)^{-\alpha}+F_2(y)^{-\alpha}-1)^{-1/\alpha}.$$
 
 *   Cópula de Gumbel:
-    $\Psi(x)=\left( -\ln(x)\right)^{\alpha};\alpha \geq1$
+    $\Psi(x)= \left( -\ln(x)\right)^{\alpha} ;\ \alpha \geq1$
 
 
 ### Simulación
@@ -951,7 +1041,7 @@ z[l(3, 2)]
 ```
 
 Para recuperar el índice bidimensional se emplearía la inversa de la función de etiquetado:
-$$l^{-1}( k )  =\left(  (k -1) \operatorname{mod} I  + 1, \left\lfloor \frac{k - 1}{I}\right\rfloor + 1\right)$$
+$$l^{-1}( k ) = \left(  (k -1) \operatorname{mod} I  + 1, \left\lfloor \frac{k - 1}{I}\right\rfloor + 1\right)$$
 
 ```{r}
 linv <- function(k) cbind((k - 1) %% nx + 1, floor((k - 1)/nx) + 1)

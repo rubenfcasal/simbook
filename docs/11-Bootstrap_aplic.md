@@ -79,7 +79,7 @@ $R^{\ast (1)}, \ldots, R^{\ast (B)}$.
 Como ejemplo consideramos la aproximación del sesgo y de la varianza de la media y la media truncada al 10\% como estimadores de la media teórica del tiempo de vida de microorganismos mediante bootstrap uniforme (ver Ejercicio \@ref(exr:boot-simul-mediana)). 
 
 
-```r
+``` r
 library(boot)
 muestra <- simres::lifetimes
 
@@ -94,25 +94,25 @@ res.boot
 ```
 
 ```
-## 
-## ORDINARY NONPARAMETRIC BOOTSTRAP
-## 
-## 
-## Call:
-## boot(data = muestra, statistic = statistic, R = 1000)
-## 
-## 
-## Bootstrap Statistics :
-##     original    bias    std. error
-## t1*  0.80533 0.0031733     0.15833
-## t2*  0.75823 0.0119027     0.17394
+ ## 
+ ## ORDINARY NONPARAMETRIC BOOTSTRAP
+ ## 
+ ## 
+ ## Call:
+ ## boot(data = muestra, statistic = statistic, R = 1000)
+ ## 
+ ## 
+ ## Bootstrap Statistics :
+ ##     original    bias    std. error
+ ## t1*  0.80533 0.0031733     0.15833
+ ## t2*  0.75823 0.0119027     0.17394
 ```
 
 Lamentablemente la función `print.boot()` calcula las aproximaciones bootstrap del sesgo y de la precisión pero no las almacena. 
 En el caso más simple podríamos obtenerlas con el siguiente código:
 
 
-```r
+``` r
 op <- with(res.boot, cbind(
   t0, apply(t, 2, mean, na.rm = TRUE) -  t0,
   apply(t, 2, sd, na.rm = TRUE)
@@ -123,9 +123,9 @@ op
 ```
 
 ```
-##     original    bias    std. error
-## t1*  0.80533 0.0031733     0.15833
-## t2*  0.75823 0.0119027     0.17394
+ ##     original    bias    std. error
+ ## t1*  0.80533 0.0031733     0.15833
+ ## t2*  0.75823 0.0119027     0.17394
 ```
 
 :::
@@ -254,7 +254,7 @@ $$\hat{I}_{simstud}=\left( \hat{\theta} - x_{1-\alpha}\sqrt{\widehat{Var}(\hat \
 Continuando con el Ejemplo \@ref(exm:media-dt-desconocida) de inferencia sobre la media con varianza desconocida, podríamos obtener una estimación por intervalo de confianza del tiempo de vida medio de los microorganismos empleando el método bootstrap percentil-*t* simetrizado con el siguiente código:
 
 
-```r
+``` r
 muestra <- simres::lifetimes
 n <- length(muestra)
 alfa <- 0.05
@@ -284,8 +284,8 @@ IC_boot
 ```
 
 ```
-##    2.5%   97.5% 
-## 0.43347 1.17719
+ ##    2.5%   97.5% 
+ ## 0.43347 1.17719
 ```
 
 ::: 
@@ -360,24 +360,24 @@ Esta aproximación está implementada en la función `cor.test()` del paquete ba
 Continuando con el ejemplo de la Sección \@ref(boot-unif-multi) (y de los Ejercicios \@ref(exr:unif-multi), \@ref(exr:unif-multi-sesgo-var) y \@ref(exr:boot-unif-multi-ic)), para obtener un intervalo de confianza para el coeficiente de correlación lineal entre las variables `income` y `prestige` del conjunto de datos `Prestige`, podríamos emplear el siguiente código:
 
 
-```r
+``` r
 data(Prestige, package="carData")
 # with(Prestige, cor.test(income, prestige))
 cor.test(Prestige$income, Prestige$prestige)
 ```
 
 ```
-## 
-## 	Pearson's product-moment correlation
-## 
-## data:  Prestige$income and Prestige$prestige
-## t = 10.2, df = 100, p-value <2e-16
-## alternative hypothesis: true correlation is not equal to 0
-## 95 percent confidence interval:
-##  0.60447 0.79838
-## sample estimates:
-##     cor 
-## 0.71491
+ ## 
+ ## 	Pearson's product-moment correlation
+ ## 
+ ## data:  Prestige$income and Prestige$prestige
+ ## t = 10.2, df = 100, p-value <2e-16
+ ## alternative hypothesis: true correlation is not equal to 0
+ ## 95 percent confidence interval:
+ ##  0.60447 0.79838
+ ## sample estimates:
+ ##     cor 
+ ## 0.71491
 ```
 
 También es de esperar que mejore la precisión de los intervalos de confianza bootstrap si se emplea una transformación que estabilice la varianza del estimador, especialmente en el caso del método basado en la aproximación normal y del bootstrap percentil básico. 
@@ -394,7 +394,7 @@ La función `boot.ci()` del paquete `boot` permite obtener intervalos de confian
 
 Por ejemplo, para considerar la transformación $Z$ de Fisher en este caso, se podría emplear el siguiente código:
 
-```r
+``` r
 library(boot)
 
 statistic <- function(data, i){
@@ -414,32 +414,36 @@ boot.ci(res.boot, type = "norm", h = h, hdot = hdot, hinv = hinv)
 ```
 
 ```
-## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
-## Based on 1000 bootstrap replicates
-## 
-## CALL : 
-## boot.ci(boot.out = res.boot, type = "norm", h = h, hdot = hdot, 
-##     hinv = hinv)
-## 
-## Intervals : 
-## Level      Normal        
-## 95%   ( 0.6016,  0.7858 )  
-## Calculations on Transformed Scale;  Intervals on Original Scale
+ ## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+ ## Based on 1000 bootstrap replicates
+ ## 
+ ## CALL : 
+ ## boot.ci(boot.out = res.boot, type = "norm", h = h, hdot = hdot, 
+ ##     hinv = hinv)
+ ## 
+ ## Intervals : 
+ ## Level      Normal        
+ ## 95%   ( 0.6016,  0.7858 )  
+ ## Calculations on Transformed Scale;  Intervals on Original Scale
 ```
 
 Esto sería en principio preferible a trabajar en la escala original, ya que la distribución bootstrap en la escala transformada se aproximaría más a la normalidad:
 
 
-```r
+``` r
 ht <- h(res.boot$t)
 hist(ht, freq = FALSE, breaks = "FD", main = "")
 curve(dnorm(x, mean=mean(ht), sd=sd(ht)), lty = 2, add = TRUE)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="11-Bootstrap_aplic_files/figure-html/icboot-trans-plot-1.png" alt="Distribución bootstrap en la escala transformada." width="70%" />
-<p class="caption">(\#fig:icboot-trans-plot)Distribución bootstrap en la escala transformada.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{11-Bootstrap_aplic_files/figure-latex/icboot-trans-plot-1} 
+
+}
+
+\caption{Distribución bootstrap en la escala transformada.}(\#fig:icboot-trans-plot)
+\end{figure}
 
 
 ## Contrastes de hipótesis bootstrap {#boot-test}
@@ -594,7 +598,7 @@ del estadístico es significativamente grande:
 $$p = P \left( D_n \geq d \right) \leq \alpha.$$
 Este método está implementado en la función `ks.test()` del paquete base de R:
 
-```r
+``` r
 ks.test(x, y, ...)
 ```
 donde `x` es un vector que contiene los datos, `y` es una función de distribución 
@@ -617,7 +621,7 @@ una $\mathcal{N}(0,1)$ (estudiaremos el *tamaño de los contrastes*).
 
 
 
-```r
+``` r
 # Valores iniciales
 library(nortest)
 set.seed(1)
@@ -643,7 +647,7 @@ para los distintos niveles de significación.
 
 
 
-```r
+``` r
 old.par <- par(mfrow=c(2, 2))
 # Test de KS
   # Histograma
@@ -661,16 +665,17 @@ abline(h=1, lty=2)   # curve(dunif(x,0,1), add=TRUE)
 curve(ecdf(pvalor.lil)(x), type = "s", lwd = 2, main = '', 
       ylab = 'Proporción de rechazos',  xlab = 'Nivel de significación')
 abline(a=0, b=1, lty=2)   # curve(punif(x, 0, 1), add = TRUE)
-```
-
-<div class="figure" style="text-align: center">
-<img src="11-Bootstrap_aplic_files/figure-html/ks-lil-plot-1.png" alt="Distribución del p-valor (izquierda) y tamaño (proporción de rechazos bajo la hipótesis nula; derecha), aproximados por Monte Carlo, para el contraste de Kolmogorov-Smirnov (arriba) y el de Lilliefors (abajo)." width="90%" />
-<p class="caption">(\#fig:ks-lil-plot)Distribución del p-valor (izquierda) y tamaño (proporción de rechazos bajo la hipótesis nula; derecha), aproximados por Monte Carlo, para el contraste de Kolmogorov-Smirnov (arriba) y el de Lilliefors (abajo).</p>
-</div>
-
-```r
 par(old.par)
 ```
+
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.9\linewidth]{11-Bootstrap_aplic_files/figure-latex/ks-lil-plot-1} 
+
+}
+
+\caption{Distribución del p-valor (izquierda) y tamaño (proporción de rechazos bajo la hipótesis nula; derecha), aproximados por Monte Carlo, para el contraste de Kolmogorov-Smirnov (arriba) y el de Lilliefors (abajo).}(\#fig:ks-lil-plot)
+\end{figure}
 
 En el caso del contraste de Kolmogorov-Smirnov (KS) se observa que el $p$-valor 
 tiende a tomar valores grandes y por tanto se rechaza la hipótesis nula 
@@ -688,7 +693,7 @@ bondad de ajuste de una variable exponencial aproximando el
 $p$-valor mediante bootstrap paramétrico:
 
 
-```r
+``` r
 ks.exp.boot <- function(x, nboot = 10^3) {
   DNAME <- deparse(substitute(x))
   METHOD <- "Kolmogorov-Smirnov Test of pexp by bootstrap" 
@@ -753,16 +758,17 @@ abline(h=1, lty=2)   # curve(dunif(x,0,1), add=TRUE)
 curve(ecdf(pvalor.ks.boot)(x), type = "s", lwd = 2, main = '', 
       ylab = 'Proporción de rechazos',  xlab = 'Nivel de significación')
 abline(a=0, b=1, lty=2)   # curve(punif(x, 0, 1), add = TRUE)
-```
-
-<div class="figure" style="text-align: center">
-<img src="11-Bootstrap_aplic_files/figure-html/ks-boot-plot-1.png" alt="Distribución del p-valor (izquierda) y tamaño (proporción de rechazos bajo la hipótesis nula; derecha), aproximados por  Monte Carlo, para el contraste de Kolmogorov-Smirnov (arriba) y el correspondiente contraste boostrap paramétrico (abajo)." width="90%" />
-<p class="caption">(\#fig:ks-boot-plot)Distribución del p-valor (izquierda) y tamaño (proporción de rechazos bajo la hipótesis nula; derecha), aproximados por  Monte Carlo, para el contraste de Kolmogorov-Smirnov (arriba) y el correspondiente contraste boostrap paramétrico (abajo).</p>
-</div>
-
-``` r
 par(old.par)
 ```
+
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.9\linewidth]{11-Bootstrap_aplic_files/figure-latex/ks-boot-plot-1} 
+
+}
+
+\caption{Distribución del p-valor (izquierda) y tamaño (proporción de rechazos bajo la hipótesis nula; derecha), aproximados por  Monte Carlo, para el contraste de Kolmogorov-Smirnov (arriba) y el correspondiente contraste boostrap paramétrico (abajo).}(\#fig:ks-boot-plot)
+\end{figure}
 
 El estadístico de Kolmogorov-Smirnov `Dn = max(c(DMinus, DPlus))` tiene ventajas desde el
 punto de vista teórico, pero puede no ser muy potente para detectar diferencias entre la
@@ -814,7 +820,7 @@ oxígeno cardíaco (`mvo`) y la presión ventricular izquierda (`lvp`)
 de 7 perros domésticos.
 
 
-```r
+``` r
 library(boot)
 data('dogs', package = "boot")
 # plot(dogs)
@@ -822,34 +828,34 @@ cor(dogs$mvo, dogs$lvp)
 ```
 
 ```
-## [1] 0.85369
+ ## [1] 0.85369
 ```
 
-```r
+``` r
 # with(dogs, cor(mvo, lvp))
 ```
 
 Como ya se comentó, para realizar inferencias sobre $\rho$ podemos emplear la función `cor.test()`:
 
-```r
+``` r
 cor.test(dogs$mvo, dogs$lvp)
 ```
 
 ```
-## 
-## 	Pearson's product-moment correlation
-## 
-## data:  dogs$mvo and dogs$lvp
-## t = 3.67, df = 5, p-value = 0.015
-## alternative hypothesis: true correlation is not equal to 0
-## 95 percent confidence interval:
-##  0.28180 0.97801
-## sample estimates:
-##     cor 
-## 0.85369
+ ## 
+ ## 	Pearson's product-moment correlation
+ ## 
+ ## data:  dogs$mvo and dogs$lvp
+ ## t = 3.67, df = 5, p-value = 0.015
+ ## alternative hypothesis: true correlation is not equal to 0
+ ## 95 percent confidence interval:
+ ##  0.28180 0.97801
+ ## sample estimates:
+ ##     cor 
+ ## 0.85369
 ```
 
-```r
+``` r
 # with(dogs, cor.test(mvo, lvp))
 ```
 Esta función realiza el contraste $H_0: \rho = 0$ empleando el estadístico:
@@ -860,28 +866,28 @@ Alternativamente se pueden realizar contrastes unilaterales estableciendo
 el parámetro `alternative` igual a `"less"` o `"greater"`.
 Por ejemplo, para contrastar $H_0: \rho \leq 0$ podríamos emplear:
 
-```r
+``` r
 cor.test(dogs$mvo, dogs$lvp, alternative = "greater")
 ```
 
 ```
-## 
-## 	Pearson's product-moment correlation
-## 
-## data:  dogs$mvo and dogs$lvp
-## t = 3.67, df = 5, p-value = 0.0073
-## alternative hypothesis: true correlation is greater than 0
-## 95 percent confidence interval:
-##  0.41959 1.00000
-## sample estimates:
-##     cor 
-## 0.85369
+ ## 
+ ## 	Pearson's product-moment correlation
+ ## 
+ ## data:  dogs$mvo and dogs$lvp
+ ## t = 3.67, df = 5, p-value = 0.0073
+ ## alternative hypothesis: true correlation is greater than 0
+ ## 95 percent confidence interval:
+ ##  0.41959 1.00000
+ ## sample estimates:
+ ##     cor 
+ ## 0.85369
 ```
 
 Para realizar el contraste con la función `boot` podríamos
 emplear el siguiente código:
 
-```r
+``` r
 library(boot)
 
 statistic <- function(data, i) cor(data$mvo, data$lvp[i])
@@ -895,40 +901,44 @@ Posteriormente emplearíamos las réplicas (almacenadas en `res.boot$t`) y el va
 observado del estadístico del contraste (almacenado en `res.boot$t0`)
 para aproximar el $p$-valor:
 
-```r
+``` r
 hist(res.boot$t, freq = FALSE, main ="")
 abline(v = res.boot$t0, lty = 2)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="11-Bootstrap_aplic_files/figure-html/perm-test-cor-1.png" alt="Distribución del estadístico del contraste bajo la hipótesis nula aproximada mediante permutación de las observaciones." width="70%" />
-<p class="caption">(\#fig:perm-test-cor)Distribución del estadístico del contraste bajo la hipótesis nula aproximada mediante permutación de las observaciones.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{11-Bootstrap_aplic_files/figure-latex/perm-test-cor-1} 
+
+}
+
+\caption{Distribución del estadístico del contraste bajo la hipótesis nula aproximada mediante permutación de las observaciones.}(\#fig:perm-test-cor)
+\end{figure}
 
 Por ejemplo, para el contraste unilateral $H_0: \rho \leq 0$ 
 (`alternative = "greater"`), obtendríamos:
 
-```r
+``` r
 pval.greater <- mean(res.boot$t >= res.boot$t0)
 pval.greater
 ```
 
 ```
-## [1] 0.009
+ ## [1] 0.009
 ```
 
 Mientras que para realizar el contraste bilateral $H_0: \rho = 0$
 (`alternative = "two.sided"`), sin asumir que 
 la distribución del estadístico de contraste es simétrica:
 
-```r
+``` r
 pval.less <- mean(res.boot$t <= res.boot$t0)
 pval <- 2*min(pval.less, pval.greater)
 pval
 ```
 
 ```
-## [1] 0.018
+ ## [1] 0.018
 ```
 
 :::
@@ -945,7 +955,7 @@ descrito en la Sección \@ref(boot-residual).
 En esta sección nos centraremos en inferencia sobre modelos de regresión lineales (aunque el procedimiento sería análogo en el caso de modelos más generales), empleando como ejemplo el conjunto de datos `Prestige` del paquete `carData`, considerando como variable respuesta `prestige` (puntuación de ocupaciones obtenidas a partir de una encuesta) y como variables explicativas: `income` (media de ingresos en la ocupación) y `education` (media de los años de educación).
 
 
-```r
+``` r
 data(Prestige, package = "carData")
 # ?Prestige
 ```
@@ -969,38 +979,38 @@ para contrastar si `income` y `education` influyen linealmente en `prestige`
 podemos emplear el siguiente código:
 
 
-```r
+``` r
 modelo <- lm(prestige ~ income + education, data = Prestige)
 summary(modelo)
 ```
 
 ```
-## 
-## Call:
-## lm(formula = prestige ~ income + education, data = Prestige)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -19.404  -5.331   0.015   4.980  17.689 
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(>|t|)    
-## (Intercept) -6.847779   3.218977   -2.13    0.036 *  
-## income       0.001361   0.000224    6.07  2.4e-08 ***
-## education    4.137444   0.348912   11.86  < 2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 7.81 on 99 degrees of freedom
-## Multiple R-squared:  0.798,	Adjusted R-squared:  0.794 
-## F-statistic:  196 on 2 and 99 DF,  p-value: <2e-16
+ ## 
+ ## Call:
+ ## lm(formula = prestige ~ income + education, data = Prestige)
+ ## 
+ ## Residuals:
+ ##     Min      1Q  Median      3Q     Max 
+ ## -19.404  -5.331   0.015   4.980  17.689 
+ ## 
+ ## Coefficients:
+ ##              Estimate Std. Error t value Pr(>|t|)    
+ ## (Intercept) -6.847779   3.218977   -2.13    0.036 *  
+ ## income       0.001361   0.000224    6.07  2.4e-08 ***
+ ## education    4.137444   0.348912   11.86  < 2e-16 ***
+ ## ---
+ ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+ ## 
+ ## Residual standard error: 7.81 on 99 degrees of freedom
+ ## Multiple R-squared:  0.798,	Adjusted R-squared:  0.794 
+ ## F-statistic:  196 on 2 and 99 DF,  p-value: <2e-16
 ```
 
 También podemos obtener el valor observado del estadístico $F$ 
 a partir de los resultados del método `summary.lm()`:
 
 
-```r
+``` r
 res <- summary(modelo)
 # names(res)
 stat <- res$fstatistic[1]
@@ -1010,14 +1020,14 @@ res$fstatistic
 ```
 
 ```
-##  value  numdf  dendf 
-## 195.55   2.00  99.00
+ ##  value  numdf  dendf 
+ ## 195.55   2.00  99.00
 ```
 
 o haciendo los cálculos a mano:
 
 
-```r
+``` r
 n <- nrow(Prestige)
 q <- 3
 q0 <- 1
@@ -1029,34 +1039,34 @@ inc.mse/msr
 ```
 
 ```
-## [1] 195.55
+ ## [1] 195.55
 ```
 
 Desde el punto de vista de comparación de modelos, el modelo
 reducido bajo la hipótesis nula es:
 
 
-```r
+``` r
 modelo0 <- lm(prestige ~ 1, data = Prestige)
 ```
 
 y podemos realizar el contraste mediante la función `anova()`
 
 
-```r
+``` r
 anova(modelo0, modelo)
 ```
 
 ```
-## Analysis of Variance Table
-## 
-## Model 1: prestige ~ 1
-## Model 2: prestige ~ income + education
-##   Res.Df   RSS Df Sum of Sq   F Pr(>F)    
-## 1    101 29895                            
-## 2     99  6039  2     23857 196 <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+ ## Analysis of Variance Table
+ ## 
+ ## Model 1: prestige ~ 1
+ ## Model 2: prestige ~ income + education
+ ##   Res.Df   RSS Df Sum of Sq   F Pr(>F)    
+ ## 1    101 29895                            
+ ## 2     99  6039  2     23857 196 <2e-16 ***
+ ## ---
+ ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
 Para aproximar la distribución de este estadístico bajo $H_0$ podríamos adaptar 
@@ -1064,7 +1074,7 @@ el bootstrap semiparamétrico^[En este caso también podríamos emplear un contr
 de permutaciones.] descrito en la Sección \@ref(boot-residual):
 
 
-```r
+``` r
 library(boot)
 
 pres.dat <- Prestige
@@ -1085,38 +1095,40 @@ boot.mod
 ```
 
 ```
-## 
-## ORDINARY NONPARAMETRIC BOOTSTRAP
-## 
-## 
-## Call:
-## boot(data = pres.dat, statistic = mod.stat, R = 1000)
-## 
-## 
-## Bootstrap Statistics :
-##     original  bias    std. error
-## t1*   195.55 -194.49      1.0963
+ ## 
+ ## ORDINARY NONPARAMETRIC BOOTSTRAP
+ ## 
+ ## 
+ ## Call:
+ ## boot(data = pres.dat, statistic = mod.stat, R = 1000)
+ ## 
+ ## 
+ ## Bootstrap Statistics :
+ ##     original  bias    std. error
+ ## t1*   195.55 -194.49      1.0963
 ```
 
-```r
+``` r
 hist(boot.mod$t, freq = FALSE, breaks = "FD", main = "")
 curve(pf(x, df, dfr, lower.tail = FALSE), lty = 2, add = TRUE)
-```
 
-<div class="figure" style="text-align: center">
-<img src="11-Bootstrap_aplic_files/figure-html/semipar-test-plot-1.png" alt="Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico." width="70%" />
-<p class="caption">(\#fig:semipar-test-plot)Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico.</p>
-</div>
-
-```r
 # pval <- mean(boot.mod$t >= boot.mod$t0)
 pval <- mean(boot.mod$t >= stat)
 pval
 ```
 
 ```
-## [1] 0
+ ## [1] 0
 ```
+
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{11-Bootstrap_aplic_files/figure-latex/semipar-test-plot-1} 
+
+}
+
+\caption{Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico.}(\#fig:semipar-test-plot)
+\end{figure}
 
 Procediendo de esta forma sin embargo estaríamos sobreestimando la variabilidad
 del error cuando la hipótesis nula es falsa (la variabilidad no explicada por la 
@@ -1127,29 +1139,30 @@ De esta forma reproduciríamos la variabilidad del error de forma consistente
 tanto bajo la hipótesis alternativa como bajo la nula.
 
 
-```r
+``` r
 old.par <- par(mfrow=c(1,2))
 # Variabilidad residual con el modelo reducido
 hist(residuals(modelo0), xlim = c(-50, 50), main = "")
 # Variabilidad residual con el modelo completo
 hist(residuals(modelo), xlim = c(-50, 50), main = "")
-```
-
-<div class="figure" style="text-align: center">
-<img src="11-Bootstrap_aplic_files/figure-html/semipar-var-plot-1.png" alt="Variabilidad residual con el modelo reducido (izquierda) y con el modelo completo (derecha)." width="90%" />
-<p class="caption">(\#fig:semipar-var-plot)Variabilidad residual con el modelo reducido (izquierda) y con el modelo completo (derecha).</p>
-</div>
-
-```r
 par(old.par)
 ```
+
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.9\linewidth]{11-Bootstrap_aplic_files/figure-latex/semipar-var-plot-1} 
+
+}
+
+\caption{Variabilidad residual con el modelo reducido (izquierda) y con el modelo completo (derecha).}(\#fig:semipar-var-plot)
+\end{figure}
 
 Adicionalmente, como se mostró en la Sección \@ref(boot-residual), se puede emplear
 la modificación propuesta en Davison y Hinkley (1997, Alg. 6.3, p. 271)
 y remuestrear los residuos reescalados y centrados.
 
 
-```r
+``` r
 pres.dat <- Prestige
 # pres.dat$fit0 <- mean(Prestige$prestige)
 # pres.dat$fit0 <- predict(modelo0)
@@ -1170,17 +1183,17 @@ boot.mod
 ```
 
 ```
-## 
-## ORDINARY NONPARAMETRIC BOOTSTRAP
-## 
-## 
-## Call:
-## boot(data = pres.dat, statistic = mod.stat, R = 1000)
-## 
-## 
-## Bootstrap Statistics :
-##     original  bias    std. error
-## t1* 0.011644  1.0297      1.0297
+ ## 
+ ## ORDINARY NONPARAMETRIC BOOTSTRAP
+ ## 
+ ## 
+ ## Call:
+ ## boot(data = pres.dat, statistic = mod.stat, R = 1000)
+ ## 
+ ## 
+ ## Bootstrap Statistics :
+ ##     original  bias    std. error
+ ## t1* 0.011644  1.0297      1.0297
 ```
 
 En la aproximación del $p$-valor hay que tener en cuenta que al modificar los residuos
@@ -1190,24 +1203,26 @@ en `Bootstrap Statistics`;
 la función `Boot()` del paquete `car` corrige este problema).
 
 
-```r
+``` r
 hist(boot.mod$t, freq = FALSE, breaks = "FD", main = "")
 curve(pf(x, df, dfr, lower.tail = FALSE), lty = 2, add = TRUE)
-```
 
-<div class="figure" style="text-align: center">
-<img src="11-Bootstrap_aplic_files/figure-html/boot-semipar-test-plot-1.png" alt="Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico." width="70%" />
-<p class="caption">(\#fig:boot-semipar-test-plot)Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico.</p>
-</div>
-
-```r
 pval <- mean(boot.mod$t >= stat)
 pval
 ```
 
 ```
-## [1] 0
+ ## [1] 0
 ```
+
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{11-Bootstrap_aplic_files/figure-latex/boot-semipar-test-plot-1} 
+
+}
+
+\caption{Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico.}(\#fig:boot-semipar-test-plot)
+\end{figure}
 
 En el caso de modelos no lineales (o otros tipos de modelos lineales) puede ser 
 complicado aproximar los grados de libertad para el cálculo del estadístico $F$, 
@@ -1228,14 +1243,18 @@ de alguna de las variables explicativas. Por ejemplo, si generamos los gráficos
 parciales de residuos obtendríamos:
 
 
-```r
+``` r
 car::crPlots(modelo)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="11-Bootstrap_aplic_files/figure-html/semipar-crplot-1.png" alt="Efecto de las variables explicativas en el modelo (gráficos de residuos)." width="90%" />
-<p class="caption">(\#fig:semipar-crplot)Efecto de las variables explicativas en el modelo (gráficos de residuos).</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.9\linewidth]{11-Bootstrap_aplic_files/figure-latex/semipar-crplot-1} 
+
+}
+
+\caption{Efecto de las variables explicativas en el modelo (gráficos de residuos).}(\#fig:semipar-crplot)
+\end{figure}
 
 En este caso podría ser razonable considerar un efecto cuadrático
 de la variable `income`^[Para ajustar un modelo polinómico
@@ -1248,53 +1267,53 @@ En este caso concreto, obtendríamos una parametrización equivalente
 empleando `modelo <- lm(prestige ~ poly(income, 2) + education, data = Prestige)`.]
 
 
-```r
+``` r
 modelo <- lm(prestige ~ income + I(income^2) + education, data = Prestige)
 summary(modelo)
 ```
 
 ```
-## 
-## Call:
-## lm(formula = prestige ~ income + I(income^2) + education, data = Prestige)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -15.731  -4.900  -0.057   4.598  18.459 
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(>|t|)    
-## (Intercept) -1.14e+01   3.27e+00   -3.47  0.00078 ***
-## income       3.29e-03   5.67e-04    5.81  7.8e-08 ***
-## I(income^2) -7.97e-08   2.17e-08   -3.67  0.00039 ***
-## education    3.81e+00   3.41e-01   11.18  < 2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 7.36 on 98 degrees of freedom
-## Multiple R-squared:  0.822,	Adjusted R-squared:  0.817 
-## F-statistic:  151 on 3 and 98 DF,  p-value: <2e-16
+ ## 
+ ## Call:
+ ## lm(formula = prestige ~ income + I(income^2) + education, data = Prestige)
+ ## 
+ ## Residuals:
+ ##     Min      1Q  Median      3Q     Max 
+ ## -15.731  -4.900  -0.057   4.598  18.459 
+ ## 
+ ## Coefficients:
+ ##              Estimate Std. Error t value Pr(>|t|)    
+ ## (Intercept) -1.14e+01   3.27e+00   -3.47  0.00078 ***
+ ## income       3.29e-03   5.67e-04    5.81  7.8e-08 ***
+ ## I(income^2) -7.97e-08   2.17e-08   -3.67  0.00039 ***
+ ## education    3.81e+00   3.41e-01   11.18  < 2e-16 ***
+ ## ---
+ ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+ ## 
+ ## Residual standard error: 7.36 on 98 degrees of freedom
+ ## Multiple R-squared:  0.822,	Adjusted R-squared:  0.817 
+ ## F-statistic:  151 on 3 and 98 DF,  p-value: <2e-16
 ```
 
 Para comparar el ajuste de este modelo respecto al del anterior, podemos
 realizar un contraste empleando la función `anova()`:
 
 
-```r
+``` r
 modelo0 <- lm(prestige ~ income + education, data = Prestige)
 anova(modelo0, modelo)
 ```
 
 ```
-## Analysis of Variance Table
-## 
-## Model 1: prestige ~ income + education
-## Model 2: prestige ~ income + I(income^2) + education
-##   Res.Df  RSS Df Sum of Sq    F  Pr(>F)    
-## 1     99 6039                              
-## 2     98 5308  1       731 13.5 0.00039 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+ ## Analysis of Variance Table
+ ## 
+ ## Model 1: prestige ~ income + education
+ ## Model 2: prestige ~ income + I(income^2) + education
+ ##   Res.Df  RSS Df Sum of Sq    F  Pr(>F)    
+ ## 1     99 6039                              
+ ## 2     98 5308  1       731 13.5 0.00039 ***
+ ## ---
+ ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
 Contrastar si el efecto de `income` es lineal mediante bootstrap residual, 

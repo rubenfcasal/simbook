@@ -215,11 +215,11 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="4.1" data-path="inversion.html"><a href="inversion.html"><i class="fa fa-check"></i><b>4.1</b> Método de inversión</a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="inversion.html"><a href="inversion.html#algunas-distribuciones-que-pueden-simularse-por-el-método-de-inversión"><i class="fa fa-check"></i><b>4.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
+<li class="chapter" data-level="4.1.1" data-path="inversion.html"><a href="inversion.html#ejemplos-inv"><i class="fa fa-check"></i><b>4.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
 <li class="chapter" data-level="4.1.2" data-path="inversion.html"><a href="inversion.html#ventajas-e-inconvenientes"><i class="fa fa-check"></i><b>4.1.2</b> Ventajas e inconvenientes</a></li>
 <li class="chapter" data-level="4.1.3" data-path="inversion.html"><a href="inversion.html#inversión-aproximada"><i class="fa fa-check"></i><b>4.1.3</b> Inversión aproximada</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>4.2</b> Método de aceptación rechazo</a>
+<li class="chapter" data-level="4.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>4.2</b> Método de aceptación-rechazo</a>
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="AR.html"><a href="AR.html#algoritmo"><i class="fa fa-check"></i><b>4.2.1</b> Algoritmo</a></li>
 <li class="chapter" data-level="4.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>4.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
@@ -255,7 +255,7 @@ div.csl-indent {
 <li class="chapter" data-level="6" data-path="multivariante.html"><a href="multivariante.html"><i class="fa fa-check"></i><b>6</b> Simulación de distribuciones multivariantes</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="simulación-de-componentes-independientes.html"><a href="simulación-de-componentes-independientes.html"><i class="fa fa-check"></i><b>6.1</b> Simulación de componentes independientes</a></li>
-<li class="chapter" data-level="6.2" data-path="el-método-de-aceptaciónrechazo.html"><a href="el-método-de-aceptaciónrechazo.html"><i class="fa fa-check"></i><b>6.2</b> El método de aceptación/rechazo</a></li>
+<li class="chapter" data-level="6.2" data-path="el-método-de-aceptación-rechazo.html"><a href="el-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>6.2</b> El método de aceptación-rechazo</a></li>
 <li class="chapter" data-level="6.3" data-path="fact-cov.html"><a href="fact-cov.html"><i class="fa fa-check"></i><b>6.3</b> Factorización de la matriz de covarianzas</a></li>
 <li class="chapter" data-level="6.4" data-path="distrcond.html"><a href="distrcond.html"><i class="fa fa-check"></i><b>6.4</b> Método de las distribuciones condicionadas</a></li>
 <li class="chapter" data-level="6.5" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html"><i class="fa fa-check"></i><b>6.5</b> Simulación condicional e incondicional</a>
@@ -493,10 +493,10 @@ pares de variables con correlación negativa:</p>
 <li><p><span class="math inline">\(1-U\)</span> para simular la variable antitética <span class="math inline">\(Y\)</span>.</p></li>
 </ul>
 <p>En el caso general, si <span class="math inline">\(X=h\left( U_{1},\ldots,U_{d}\right)\)</span> y
-<span class="math inline">\(h\)</span> es monótona puede verse (e.g. Ross, 1997) que
+<span class="math inline">\(h\)</span> es monótona puede verse <span class="citation">(e.g. <a href="#ref-ross1999" role="doc-biblioref">Ross, 1999</a>)</span> que
 <span class="math inline">\(Y=h\left( 1-U_{1},\ldots,1-U_{d}\right)\)</span> está negativamente
 correlada con <span class="math inline">\(X\)</span>.</p>
-<p>Si <span class="math inline">\(X\sim \mathcal{N}(\mu,\sigma)\)</span> puede tomarse como variable
+<p>Si <span class="math inline">\(X\sim \mathcal{N}(\mu,\sigma^2)\)</span> puede tomarse como variable
 antitética <span class="math display">\[Y=2\mu-X\]</span>
 En general esto es válido para cualquier variable
 simétrica repecto a un parámetro <span class="math inline">\(\mu\)</span>.
@@ -510,55 +510,55 @@ que emplearemos para aproximar:
 <span class="math display">\[E\left(  e^{\mathcal{U}(0,2)}\right)  =\int_{0}^{2}\frac{1}{2}e^{x}dx \approx 3.194,\]</span>
 representando gráficamente la aproximación en función de <span class="math inline">\(n\)</span>.</p>
 <p>Representamos la función objetivo:</p>
-<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="variables-antitéticas.html#cb476-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">0</span>; b <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb476-2"><a href="variables-antitéticas.html#cb476-2" aria-hidden="true" tabindex="-1"></a>ftn <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">return</span>(<span class="fu">exp</span>(x)<span class="sc">/</span>(b<span class="sc">-</span>a))</span>
-<span id="cb476-3"><a href="variables-antitéticas.html#cb476-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(ftn, a, b, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">4</span>))</span>
-<span id="cb476-4"><a href="variables-antitéticas.html#cb476-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb476-5"><a href="variables-antitéticas.html#cb476-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">c</span>(a, b), <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-1-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="variables-antitéticas.html#cb495-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">0</span>; b <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb495-2"><a href="variables-antitéticas.html#cb495-2" aria-hidden="true" tabindex="-1"></a>ftn <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">return</span>(<span class="fu">exp</span>(x)<span class="sc">/</span>(b<span class="sc">-</span>a))</span>
+<span id="cb495-3"><a href="variables-antitéticas.html#cb495-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(ftn, a, b, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">4</span>))</span>
+<span id="cb495-4"><a href="variables-antitéticas.html#cb495-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb495-5"><a href="variables-antitéticas.html#cb495-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">c</span>(a, b), <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-1-1.png" width="75%" style="display: block; margin: auto;" /></p>
 <p>Se trata de calcular la media de <span class="math inline">\(e^{\mathcal{U}(0,2)}\)</span>:</p>
-<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="variables-antitéticas.html#cb477-1" aria-hidden="true" tabindex="-1"></a>teor <span class="ot">&lt;-</span> (<span class="fu">exp</span>(b)<span class="sc">-</span><span class="fu">exp</span>(a))<span class="sc">/</span>(b<span class="sc">-</span>a)</span>
-<span id="cb477-2"><a href="variables-antitéticas.html#cb477-2" aria-hidden="true" tabindex="-1"></a>teor</span></code></pre></div>
+<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb496-1"><a href="variables-antitéticas.html#cb496-1" aria-hidden="true" tabindex="-1"></a>teor <span class="ot">&lt;-</span> (<span class="fu">exp</span>(b)<span class="sc">-</span><span class="fu">exp</span>(a))<span class="sc">/</span>(b<span class="sc">-</span>a)</span>
+<span id="cb496-2"><a href="variables-antitéticas.html#cb496-2" aria-hidden="true" tabindex="-1"></a>teor</span></code></pre></div>
 <pre><code>## [1] 3.1945</code></pre>
 <p>Como se mostró en el Capítulo <a href="monte-carlo.html#monte-carlo">7</a>, para calcular la aproximación por integración Monte Carlo podemos emplear la función <a href="https://rubenfcasal.github.io/simres/reference/mc.integral.html"><code>mc.integral()</code></a> del paquete <a href="https://rubenfcasal.github.io/simres"><code>simres</code></a> (fichero <a href="R/mc.plot.R"><em>mc.plot.R</em></a>):</p>
-<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="variables-antitéticas.html#cb479-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(simres)</span>
-<span id="cb479-2"><a href="variables-antitéticas.html#cb479-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
-<span id="cb479-3"><a href="variables-antitéticas.html#cb479-3" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">mc.integral</span>(ftn, a, b, <span class="dv">500</span>)</span>
-<span id="cb479-4"><a href="variables-antitéticas.html#cb479-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> teor, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
-<p><img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="variables-antitéticas.html#cb480-1" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
+<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="variables-antitéticas.html#cb498-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(simres)</span>
+<span id="cb498-2"><a href="variables-antitéticas.html#cb498-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
+<span id="cb498-3"><a href="variables-antitéticas.html#cb498-3" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">mc.integral</span>(ftn, a, b, <span class="dv">500</span>)</span>
+<span id="cb498-4"><a href="variables-antitéticas.html#cb498-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> teor, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-3-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb499"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb499-1"><a href="variables-antitéticas.html#cb499-1" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
 <pre><code>## $approx
 ## [1] 3.1846
 ## 
 ## $max.error
 ## [1] 0.15973</code></pre>
 <p>Para la integración Monte Carlo con variables antitéticas podríamos considerar:</p>
-<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="variables-antitéticas.html#cb482-1" aria-hidden="true" tabindex="-1"></a>mc.integrala <span class="ot">&lt;-</span> <span class="cf">function</span>(ftn, a, b, n, <span class="at">plot =</span> <span class="cn">TRUE</span>) {</span>
-<span id="cb482-2"><a href="variables-antitéticas.html#cb482-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># n es el nº de evaluaciones de la función objetivo </span></span>
-<span id="cb482-3"><a href="variables-antitéticas.html#cb482-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># (para facilitar comparaciones, solo se genera la mitad)</span></span>
-<span id="cb482-4"><a href="variables-antitéticas.html#cb482-4" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n<span class="sc">%/%</span><span class="dv">2</span>, a, b)</span>
-<span id="cb482-5"><a href="variables-antitéticas.html#cb482-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># La siguiente línea solo para representar alternando</span></span>
-<span id="cb482-6"><a href="variables-antitéticas.html#cb482-6" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">matrix</span>(<span class="fu">c</span>(x, a <span class="sc">+</span> b <span class="sc">-</span> x), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb482-7"><a href="variables-antitéticas.html#cb482-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># bastaría con emplear p.e. c(x, a+b-x)</span></span>
-<span id="cb482-8"><a href="variables-antitéticas.html#cb482-8" aria-hidden="true" tabindex="-1"></a>  fx <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x, ftn)<span class="sc">*</span>(b<span class="sc">-</span>a)</span>
-<span id="cb482-9"><a href="variables-antitéticas.html#cb482-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (plot) {</span>
-<span id="cb482-10"><a href="variables-antitéticas.html#cb482-10" aria-hidden="true" tabindex="-1"></a>    cumn <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>n</span>
-<span id="cb482-11"><a href="variables-antitéticas.html#cb482-11" aria-hidden="true" tabindex="-1"></a>    estint <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(fx)<span class="sc">/</span>cumn</span>
-<span id="cb482-12"><a href="variables-antitéticas.html#cb482-12" aria-hidden="true" tabindex="-1"></a>    esterr <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((<span class="fu">cumsum</span>(fx<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>cumn <span class="sc">-</span> estint<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(cumn<span class="dv">-1</span>)) <span class="co"># Errores estándar</span></span>
-<span id="cb482-13"><a href="variables-antitéticas.html#cb482-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot</span>(estint, <span class="at">ylab =</span> <span class="st">&quot;Media y rango de error&quot;</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, </span>
-<span id="cb482-14"><a href="variables-antitéticas.html#cb482-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylim =</span> <span class="fu">mean</span>(fx) <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">max</span>(esterr[<span class="sc">-</span><span class="dv">1</span>]), <span class="at">xlab =</span> <span class="st">&quot;Iteraciones&quot;</span>)</span>
-<span id="cb482-15"><a href="variables-antitéticas.html#cb482-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(estint <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> esterr, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
-<span id="cb482-16"><a href="variables-antitéticas.html#cb482-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(estint <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> esterr, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
-<span id="cb482-17"><a href="variables-antitéticas.html#cb482-17" aria-hidden="true" tabindex="-1"></a>    valor <span class="ot">&lt;-</span> estint[n]</span>
-<span id="cb482-18"><a href="variables-antitéticas.html#cb482-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">abline</span>(<span class="at">h =</span> valor)</span>
-<span id="cb482-19"><a href="variables-antitéticas.html#cb482-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">valor =</span> estint[n], <span class="at">error =</span> <span class="dv">2</span><span class="sc">*</span>esterr[n]))</span>
-<span id="cb482-20"><a href="variables-antitéticas.html#cb482-20" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">valor =</span> <span class="fu">mean</span>(fx), <span class="at">error =</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">sd</span>(fx)<span class="sc">/</span><span class="fu">sqrt</span>(n)))</span>
-<span id="cb482-21"><a href="variables-antitéticas.html#cb482-21" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb482-22"><a href="variables-antitéticas.html#cb482-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb482-23"><a href="variables-antitéticas.html#cb482-23" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
-<span id="cb482-24"><a href="variables-antitéticas.html#cb482-24" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">mc.integrala</span>(ftn, a, b, <span class="dv">500</span>)</span></code></pre></div>
-<p><img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-4-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="variables-antitéticas.html#cb483-1" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
+<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb501-1"><a href="variables-antitéticas.html#cb501-1" aria-hidden="true" tabindex="-1"></a>mc.integrala <span class="ot">&lt;-</span> <span class="cf">function</span>(ftn, a, b, n, <span class="at">plot =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb501-2"><a href="variables-antitéticas.html#cb501-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># n es el nº de evaluaciones de la función objetivo </span></span>
+<span id="cb501-3"><a href="variables-antitéticas.html#cb501-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># (para facilitar comparaciones, solo se genera la mitad)</span></span>
+<span id="cb501-4"><a href="variables-antitéticas.html#cb501-4" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n<span class="sc">%/%</span><span class="dv">2</span>, a, b)</span>
+<span id="cb501-5"><a href="variables-antitéticas.html#cb501-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># La siguiente línea solo para representar alternando</span></span>
+<span id="cb501-6"><a href="variables-antitéticas.html#cb501-6" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">matrix</span>(<span class="fu">c</span>(x, a <span class="sc">+</span> b <span class="sc">-</span> x), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb501-7"><a href="variables-antitéticas.html#cb501-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># bastaría con emplear p.e. c(x, a+b-x)</span></span>
+<span id="cb501-8"><a href="variables-antitéticas.html#cb501-8" aria-hidden="true" tabindex="-1"></a>  fx <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x, ftn)<span class="sc">*</span>(b<span class="sc">-</span>a)</span>
+<span id="cb501-9"><a href="variables-antitéticas.html#cb501-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (plot) {</span>
+<span id="cb501-10"><a href="variables-antitéticas.html#cb501-10" aria-hidden="true" tabindex="-1"></a>    cumn <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>n</span>
+<span id="cb501-11"><a href="variables-antitéticas.html#cb501-11" aria-hidden="true" tabindex="-1"></a>    estint <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(fx)<span class="sc">/</span>cumn</span>
+<span id="cb501-12"><a href="variables-antitéticas.html#cb501-12" aria-hidden="true" tabindex="-1"></a>    esterr <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((<span class="fu">cumsum</span>(fx<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>cumn <span class="sc">-</span> estint<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(cumn<span class="dv">-1</span>)) <span class="co"># Errores estándar</span></span>
+<span id="cb501-13"><a href="variables-antitéticas.html#cb501-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot</span>(estint, <span class="at">ylab =</span> <span class="st">&quot;Media y rango de error&quot;</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, </span>
+<span id="cb501-14"><a href="variables-antitéticas.html#cb501-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylim =</span> <span class="fu">mean</span>(fx) <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">max</span>(esterr[<span class="sc">-</span><span class="dv">1</span>]), <span class="at">xlab =</span> <span class="st">&quot;Iteraciones&quot;</span>)</span>
+<span id="cb501-15"><a href="variables-antitéticas.html#cb501-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(estint <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> esterr, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb501-16"><a href="variables-antitéticas.html#cb501-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(estint <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> esterr, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb501-17"><a href="variables-antitéticas.html#cb501-17" aria-hidden="true" tabindex="-1"></a>    valor <span class="ot">&lt;-</span> estint[n]</span>
+<span id="cb501-18"><a href="variables-antitéticas.html#cb501-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">abline</span>(<span class="at">h =</span> valor)</span>
+<span id="cb501-19"><a href="variables-antitéticas.html#cb501-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">valor =</span> estint[n], <span class="at">error =</span> <span class="dv">2</span><span class="sc">*</span>esterr[n]))</span>
+<span id="cb501-20"><a href="variables-antitéticas.html#cb501-20" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">valor =</span> <span class="fu">mean</span>(fx), <span class="at">error =</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">sd</span>(fx)<span class="sc">/</span><span class="fu">sqrt</span>(n)))</span>
+<span id="cb501-21"><a href="variables-antitéticas.html#cb501-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb501-22"><a href="variables-antitéticas.html#cb501-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb501-23"><a href="variables-antitéticas.html#cb501-23" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
+<span id="cb501-24"><a href="variables-antitéticas.html#cb501-24" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">mc.integrala</span>(ftn, a, b, <span class="dv">500</span>)</span></code></pre></div>
+<p><img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-4-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="variables-antitéticas.html#cb502-1" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
 <pre><code>## $valor
 ## [1] 3.2224
 ## 
@@ -566,37 +566,43 @@ representando gráficamente la aproximación en función de <span class="math in
 ## [1] 0.16509</code></pre>
 <p>Pero aunque aparentemente converge antes, parece no haber una mejora en la precisión de la aproximación.
 Si calculamos el porcentaje (estimado) de reducción del error:</p>
-<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="variables-antitéticas.html#cb485-1" aria-hidden="true" tabindex="-1"></a><span class="dv">100</span><span class="sc">*</span>(<span class="fl">0.1619886-0.1641059</span>)<span class="sc">/</span><span class="fl">0.1619886</span></span></code></pre></div>
+<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="variables-antitéticas.html#cb504-1" aria-hidden="true" tabindex="-1"></a><span class="dv">100</span><span class="sc">*</span>(<span class="fl">0.1619886-0.1641059</span>)<span class="sc">/</span><span class="fl">0.1619886</span></span></code></pre></div>
 <pre><code>## [1] -1.3071</code></pre>
 <p>El problema es que en este caso se está estimando mal la varianza (asumiendo independencia).
 Hay que tener cuidado con las técnicas de reducción de la varianza si uno de los objetivos de la simulación es precisamente estimar la variabilidad.
 En este caso, una versión de la función anterior para integración Monte Carlo con variables antitéticas, con aproximación del error bajo dependencia podría ser:</p>
-<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="variables-antitéticas.html#cb487-1" aria-hidden="true" tabindex="-1"></a>mc.integrala2 <span class="ot">&lt;-</span> <span class="cf">function</span>(ftn, a, b, n, <span class="at">plot =</span> <span class="cn">TRUE</span>,...) {</span>
-<span id="cb487-2"><a href="variables-antitéticas.html#cb487-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># n es el nº de evaluaciones de la función objetivo </span></span>
-<span id="cb487-3"><a href="variables-antitéticas.html#cb487-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># (para facilitar comparaciones, solo se genera la mitad)</span></span>
-<span id="cb487-4"><a href="variables-antitéticas.html#cb487-4" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n<span class="sc">%/%</span><span class="dv">2</span>, a, b)</span>
-<span id="cb487-5"><a href="variables-antitéticas.html#cb487-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># La siguiente línea solo para representar alternando</span></span>
-<span id="cb487-6"><a href="variables-antitéticas.html#cb487-6" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(x, a <span class="sc">+</span> b <span class="sc">-</span> x), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb487-7"><a href="variables-antitéticas.html#cb487-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># bastaría con emplear p.e. c(x,a+b-x)</span></span>
-<span id="cb487-8"><a href="variables-antitéticas.html#cb487-8" aria-hidden="true" tabindex="-1"></a>  fx <span class="ot">&lt;-</span> <span class="fu">apply</span>(x, <span class="dv">1</span>,  ftn)<span class="sc">*</span>(b<span class="sc">-</span>a)</span>
-<span id="cb487-9"><a href="variables-antitéticas.html#cb487-9" aria-hidden="true" tabindex="-1"></a>  corr <span class="ot">&lt;-</span> <span class="fu">cor</span>(fx[, <span class="dv">1</span>], fx[, <span class="dv">2</span>])</span>
-<span id="cb487-10"><a href="variables-antitéticas.html#cb487-10" aria-hidden="true" tabindex="-1"></a>  fx <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(fx)</span>
-<span id="cb487-11"><a href="variables-antitéticas.html#cb487-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">valor =</span> <span class="fu">mean</span>(fx), <span class="at">error =</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">sd</span>(fx)<span class="sc">/</span><span class="fu">sqrt</span>(n) <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">+</span> corr)))</span>
-<span id="cb487-12"><a href="variables-antitéticas.html#cb487-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb487-13"><a href="variables-antitéticas.html#cb487-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb487-14"><a href="variables-antitéticas.html#cb487-14" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
-<span id="cb487-15"><a href="variables-antitéticas.html#cb487-15" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">mc.integrala2</span>(ftn, a, b, <span class="dv">500</span>)</span>
-<span id="cb487-16"><a href="variables-antitéticas.html#cb487-16" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="variables-antitéticas.html#cb506-1" aria-hidden="true" tabindex="-1"></a>mc.integrala2 <span class="ot">&lt;-</span> <span class="cf">function</span>(ftn, a, b, n, <span class="at">plot =</span> <span class="cn">TRUE</span>,...) {</span>
+<span id="cb506-2"><a href="variables-antitéticas.html#cb506-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># n es el nº de evaluaciones de la función objetivo </span></span>
+<span id="cb506-3"><a href="variables-antitéticas.html#cb506-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># (para facilitar comparaciones, solo se genera la mitad)</span></span>
+<span id="cb506-4"><a href="variables-antitéticas.html#cb506-4" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n<span class="sc">%/%</span><span class="dv">2</span>, a, b)</span>
+<span id="cb506-5"><a href="variables-antitéticas.html#cb506-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># La siguiente línea solo para representar alternando</span></span>
+<span id="cb506-6"><a href="variables-antitéticas.html#cb506-6" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(x, a <span class="sc">+</span> b <span class="sc">-</span> x), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb506-7"><a href="variables-antitéticas.html#cb506-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># bastaría con emplear p.e. c(x,a+b-x)</span></span>
+<span id="cb506-8"><a href="variables-antitéticas.html#cb506-8" aria-hidden="true" tabindex="-1"></a>  fx <span class="ot">&lt;-</span> <span class="fu">apply</span>(x, <span class="dv">1</span>,  ftn)<span class="sc">*</span>(b<span class="sc">-</span>a)</span>
+<span id="cb506-9"><a href="variables-antitéticas.html#cb506-9" aria-hidden="true" tabindex="-1"></a>  corr <span class="ot">&lt;-</span> <span class="fu">cor</span>(fx[, <span class="dv">1</span>], fx[, <span class="dv">2</span>])</span>
+<span id="cb506-10"><a href="variables-antitéticas.html#cb506-10" aria-hidden="true" tabindex="-1"></a>  fx <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(fx)</span>
+<span id="cb506-11"><a href="variables-antitéticas.html#cb506-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">valor =</span> <span class="fu">mean</span>(fx), <span class="at">error =</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">sd</span>(fx)<span class="sc">/</span><span class="fu">sqrt</span>(n) <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">+</span> corr)))</span>
+<span id="cb506-12"><a href="variables-antitéticas.html#cb506-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb506-13"><a href="variables-antitéticas.html#cb506-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb506-14"><a href="variables-antitéticas.html#cb506-14" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
+<span id="cb506-15"><a href="variables-antitéticas.html#cb506-15" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">mc.integrala2</span>(ftn, a, b, <span class="dv">500</span>)</span>
+<span id="cb506-16"><a href="variables-antitéticas.html#cb506-16" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
 <pre><code>## $valor
 ## [1] 3.2224
 ## 
 ## $error
 ## [1] 0.057001</code></pre>
 <p>Porcentaje estimado de reducción del error:</p>
-<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="variables-antitéticas.html#cb489-1" aria-hidden="true" tabindex="-1"></a><span class="dv">100</span><span class="sc">*</span>(<span class="fl">0.1619886-0.05700069</span>)<span class="sc">/</span><span class="fl">0.1619886</span></span></code></pre></div>
+<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="variables-antitéticas.html#cb508-1" aria-hidden="true" tabindex="-1"></a><span class="dv">100</span><span class="sc">*</span>(<span class="fl">0.1619886-0.05700069</span>)<span class="sc">/</span><span class="fl">0.1619886</span></span></code></pre></div>
 <pre><code>## [1] 64.812</code></pre>
 <p>En este caso puede verse que la reducción teórica de la varianza es del 96.7%</p>
 </div>
+</div>
+</div>
+<h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-ross1999" class="csl-entry">
+Ross, S. M. (1999). <em>Simulation</em>. Prentice Hall.
 </div>
 </div>
             </section>
@@ -619,42 +625,42 @@ En este caso, una versión de la función anterior para integración Monte Carlo
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": true,
-"facebook": false,
-"twitter": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/rubenfcasal/simbook/edit/master/08-Reduccion_varianza.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["Simulacion.pdf"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rubenfcasal/simbook/edit/master/08-Reduccion_varianza.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["Simulacion.pdf"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>

@@ -215,11 +215,11 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="4.1" data-path="inversion.html"><a href="inversion.html"><i class="fa fa-check"></i><b>4.1</b> Método de inversión</a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="inversion.html"><a href="inversion.html#algunas-distribuciones-que-pueden-simularse-por-el-método-de-inversión"><i class="fa fa-check"></i><b>4.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
+<li class="chapter" data-level="4.1.1" data-path="inversion.html"><a href="inversion.html#ejemplos-inv"><i class="fa fa-check"></i><b>4.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
 <li class="chapter" data-level="4.1.2" data-path="inversion.html"><a href="inversion.html#ventajas-e-inconvenientes"><i class="fa fa-check"></i><b>4.1.2</b> Ventajas e inconvenientes</a></li>
 <li class="chapter" data-level="4.1.3" data-path="inversion.html"><a href="inversion.html#inversión-aproximada"><i class="fa fa-check"></i><b>4.1.3</b> Inversión aproximada</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>4.2</b> Método de aceptación rechazo</a>
+<li class="chapter" data-level="4.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>4.2</b> Método de aceptación-rechazo</a>
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="AR.html"><a href="AR.html#algoritmo"><i class="fa fa-check"></i><b>4.2.1</b> Algoritmo</a></li>
 <li class="chapter" data-level="4.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>4.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
@@ -255,7 +255,7 @@ div.csl-indent {
 <li class="chapter" data-level="6" data-path="multivariante.html"><a href="multivariante.html"><i class="fa fa-check"></i><b>6</b> Simulación de distribuciones multivariantes</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="simulación-de-componentes-independientes.html"><a href="simulación-de-componentes-independientes.html"><i class="fa fa-check"></i><b>6.1</b> Simulación de componentes independientes</a></li>
-<li class="chapter" data-level="6.2" data-path="el-método-de-aceptaciónrechazo.html"><a href="el-método-de-aceptaciónrechazo.html"><i class="fa fa-check"></i><b>6.2</b> El método de aceptación/rechazo</a></li>
+<li class="chapter" data-level="6.2" data-path="el-método-de-aceptación-rechazo.html"><a href="el-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>6.2</b> El método de aceptación-rechazo</a></li>
 <li class="chapter" data-level="6.3" data-path="fact-cov.html"><a href="fact-cov.html"><i class="fa fa-check"></i><b>6.3</b> Factorización de la matriz de covarianzas</a></li>
 <li class="chapter" data-level="6.4" data-path="distrcond.html"><a href="distrcond.html"><i class="fa fa-check"></i><b>6.4</b> Método de las distribuciones condicionadas</a></li>
 <li class="chapter" data-level="6.5" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html"><i class="fa fa-check"></i><b>6.5</b> Simulación condicional e incondicional</a>
@@ -465,91 +465,91 @@ Sin embargo, la estimación de la precisión se complica:
 y que la probabilidad de que un día llueva solo depende de lo que ocurrió el día anterior,
 siendo 0.94 si el día anterior llovió y 0.03 si no.</p>
 <p>Podemos generar valores de la variable indicadora de día lluvioso con el siguiente código:</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="el-problema-de-la-dependencia.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Variable dicotómica 0/1 (FALSE/TRUE)  </span></span>
-<span id="cb105-2"><a href="el-problema-de-la-dependencia.html#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb105-3"><a href="el-problema-de-la-dependencia.html#cb105-3" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
-<span id="cb105-4"><a href="el-problema-de-la-dependencia.html#cb105-4" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.03</span> <span class="co"># prob de cambio si seco</span></span>
-<span id="cb105-5"><a href="el-problema-de-la-dependencia.html#cb105-5" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fl">0.06</span>  <span class="co"># prob de cambio si lluvia</span></span>
-<span id="cb105-6"><a href="el-problema-de-la-dependencia.html#cb105-6" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> <span class="fu">logical</span>(nsim) <span class="co"># x == &quot;llueve&quot;</span></span>
-<span id="cb105-7"><a href="el-problema-de-la-dependencia.html#cb105-7" aria-hidden="true" tabindex="-1"></a>rx[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="cn">FALSE</span> <span class="co"># El primer día no llueve</span></span>
-<span id="cb105-8"><a href="el-problema-de-la-dependencia.html#cb105-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>nsim)</span>
-<span id="cb105-9"><a href="el-problema-de-la-dependencia.html#cb105-9" aria-hidden="true" tabindex="-1"></a>  rx[i] <span class="ot">&lt;-</span> <span class="cf">if</span> (rx[i<span class="dv">-1</span>]) <span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&gt;</span> beta <span class="cf">else</span> <span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&lt;</span> alpha</span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="el-problema-de-la-dependencia.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Variable dicotómica 0/1 (FALSE/TRUE)  </span></span>
+<span id="cb103-2"><a href="el-problema-de-la-dependencia.html#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb103-3"><a href="el-problema-de-la-dependencia.html#cb103-3" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb103-4"><a href="el-problema-de-la-dependencia.html#cb103-4" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.03</span> <span class="co"># prob de cambio si seco</span></span>
+<span id="cb103-5"><a href="el-problema-de-la-dependencia.html#cb103-5" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fl">0.06</span>  <span class="co"># prob de cambio si lluvia</span></span>
+<span id="cb103-6"><a href="el-problema-de-la-dependencia.html#cb103-6" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> <span class="fu">logical</span>(nsim) <span class="co"># x == &quot;llueve&quot;</span></span>
+<span id="cb103-7"><a href="el-problema-de-la-dependencia.html#cb103-7" aria-hidden="true" tabindex="-1"></a>rx[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="cn">FALSE</span> <span class="co"># El primer día no llueve</span></span>
+<span id="cb103-8"><a href="el-problema-de-la-dependencia.html#cb103-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>nsim)</span>
+<span id="cb103-9"><a href="el-problema-de-la-dependencia.html#cb103-9" aria-hidden="true" tabindex="-1"></a>  rx[i] <span class="ot">&lt;-</span> <span class="cf">if</span> (rx[i<span class="dv">-1</span>]) <span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&gt;</span> beta <span class="cf">else</span> <span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&lt;</span> alpha</span></code></pre></div>
 <p>Si generamos el gráfico de convergencia asumiendo independencia:</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="el-problema-de-la-dependencia.html#cb106-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>nsim</span>
-<span id="cb106-2"><a href="el-problema-de-la-dependencia.html#cb106-2" aria-hidden="true" tabindex="-1"></a>est <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(rx)<span class="sc">/</span>n</span>
-<span id="cb106-3"><a href="el-problema-de-la-dependencia.html#cb106-3" aria-hidden="true" tabindex="-1"></a>esterr <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(est<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>est)<span class="sc">/</span>(n<span class="dv">-1</span>)) <span class="co"># OJO! Supone independencia</span></span>
-<span id="cb106-4"><a href="el-problema-de-la-dependencia.html#cb106-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(est, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">ylab=</span><span class="st">&quot;Probabilidad&quot;</span>, </span>
-<span id="cb106-5"><a href="el-problema-de-la-dependencia.html#cb106-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Número de simulaciones&quot;</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.6</span>))</span>
-<span id="cb106-6"><a href="el-problema-de-la-dependencia.html#cb106-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> est[nsim], <span class="at">lty=</span><span class="dv">2</span>)</span>
-<span id="cb106-7"><a href="el-problema-de-la-dependencia.html#cb106-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(est <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>esterr, <span class="at">lty=</span><span class="dv">2</span>) </span>
-<span id="cb106-8"><a href="el-problema-de-la-dependencia.html#cb106-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(est <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span>esterr, <span class="at">lty=</span><span class="dv">2</span>)</span>
-<span id="cb106-9"><a href="el-problema-de-la-dependencia.html#cb106-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="at">col=</span><span class="st">&quot;darkgray&quot;</span>) <span class="co"># Probabilidad teórica</span></span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="el-problema-de-la-dependencia.html#cb104-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>nsim</span>
+<span id="cb104-2"><a href="el-problema-de-la-dependencia.html#cb104-2" aria-hidden="true" tabindex="-1"></a>est <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(rx)<span class="sc">/</span>n</span>
+<span id="cb104-3"><a href="el-problema-de-la-dependencia.html#cb104-3" aria-hidden="true" tabindex="-1"></a>esterr <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(est<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>est)<span class="sc">/</span>(n<span class="dv">-1</span>)) <span class="co"># OJO! Supone independencia</span></span>
+<span id="cb104-4"><a href="el-problema-de-la-dependencia.html#cb104-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(est, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">ylab =</span> <span class="st">&quot;Probabilidad&quot;</span>, </span>
+<span id="cb104-5"><a href="el-problema-de-la-dependencia.html#cb104-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Número de simulaciones&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.6</span>))</span>
+<span id="cb104-6"><a href="el-problema-de-la-dependencia.html#cb104-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> est[nsim], <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb104-7"><a href="el-problema-de-la-dependencia.html#cb104-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(est <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>esterr, <span class="at">lty =</span> <span class="dv">2</span>) </span>
+<span id="cb104-8"><a href="el-problema-de-la-dependencia.html#cb104-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(est <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span>esterr, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb104-9"><a href="el-problema-de-la-dependencia.html#cb104-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>) <span class="co"># Probabilidad teórica</span></span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:conv-dep"></span>
-<img src="03-Analisis_resultados_files/figure-html/conv-dep-1.png" alt="Gráfico de convergencia incluyendo el error de la aproximación (calculado asumiendo independencia)." width="70%" />
+<img src="03-Analisis_resultados_files/figure-html/conv-dep-1.png" alt="Gráfico de convergencia incluyendo el error de la aproximación (calculado asumiendo independencia)." width="75%" />
 <p class="caption">
 Figura 3.5: Gráfico de convergencia incluyendo el error de la aproximación (calculado asumiendo independencia).
 </p>
 </div>
 <p>La probabilidad teórica, obtenida empleando resultados de cadenas de Markov, es <span class="math inline">\(p = 1/3\)</span> y la aproximación de la proporción sería correcta (es consistente):</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="el-problema-de-la-dependencia.html#cb107-1" aria-hidden="true" tabindex="-1"></a>est[nsim]</span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="el-problema-de-la-dependencia.html#cb105-1" aria-hidden="true" tabindex="-1"></a>est[nsim]</span></code></pre></div>
 <pre><code>## [1] 0.3038</code></pre>
 <p>Sin embargo, al ser datos dependientes, la aproximación anterior del error estándar no es adecuada:</p>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="el-problema-de-la-dependencia.html#cb109-1" aria-hidden="true" tabindex="-1"></a>esterr[nsim]</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="el-problema-de-la-dependencia.html#cb107-1" aria-hidden="true" tabindex="-1"></a>esterr[nsim]</span></code></pre></div>
 <pre><code>## [1] 0.0045992</code></pre>
 <p>En este caso al haber dependencia positiva se produce una subestimación del verdadero error estándar.
 Podemos generar el gráfico de autocorrelaciones:</p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="el-problema-de-la-dependencia.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">as.numeric</span>(rx))</span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="el-problema-de-la-dependencia.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">as.numeric</span>(rx))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:acf-depsec"></span>
-<img src="03-Analisis_resultados_files/figure-html/acf-depsec-1.png" alt="Correlograma de la secuencia indicadora de días de lluvia." width="70%" />
+<img src="03-Analisis_resultados_files/figure-html/acf-depsec-1.png" alt="Correlograma de la secuencia indicadora de días de lluvia." width="75%" />
 <p class="caption">
 Figura 3.6: Correlograma de la secuencia indicadora de días de lluvia.
 </p>
 </div>
 <p>El gráfico anterior sugiere que si solo tomamos 1 de cada 25 valores podría ser razonable asumir independencia.</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="el-problema-de-la-dependencia.html#cb112-1" aria-hidden="true" tabindex="-1"></a>lag <span class="ot">&lt;-</span> <span class="dv">24</span></span>
-<span id="cb112-2"><a href="el-problema-de-la-dependencia.html#cb112-2" aria-hidden="true" tabindex="-1"></a>xlag <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="cn">FALSE</span>, lag), <span class="cn">TRUE</span>)</span>
-<span id="cb112-3"><a href="el-problema-de-la-dependencia.html#cb112-3" aria-hidden="true" tabindex="-1"></a>rxi <span class="ot">&lt;-</span> rx[xlag]</span>
-<span id="cb112-4"><a href="el-problema-de-la-dependencia.html#cb112-4" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">as.numeric</span>(rxi))</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="el-problema-de-la-dependencia.html#cb110-1" aria-hidden="true" tabindex="-1"></a>lag <span class="ot">&lt;-</span> <span class="dv">24</span></span>
+<span id="cb110-2"><a href="el-problema-de-la-dependencia.html#cb110-2" aria-hidden="true" tabindex="-1"></a>xlag <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="cn">FALSE</span>, lag), <span class="cn">TRUE</span>)</span>
+<span id="cb110-3"><a href="el-problema-de-la-dependencia.html#cb110-3" aria-hidden="true" tabindex="-1"></a>rxi <span class="ot">&lt;-</span> rx[xlag]</span>
+<span id="cb110-4"><a href="el-problema-de-la-dependencia.html#cb110-4" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">as.numeric</span>(rxi))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:acf-depsec2"></span>
-<img src="03-Analisis_resultados_files/figure-html/acf-depsec2-1.png" alt="Correlograma de la subsecuencia de días de lluvia obtenida seleccionando uno de cada 25 valores." width="70%" />
+<img src="03-Analisis_resultados_files/figure-html/acf-depsec2-1.png" alt="Correlograma de la subsecuencia de días de lluvia obtenida seleccionando uno de cada 25 valores." width="75%" />
 <p class="caption">
 Figura 3.7: Correlograma de la subsecuencia de días de lluvia obtenida seleccionando uno de cada 25 valores.
 </p>
 </div>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="el-problema-de-la-dependencia.html#cb113-1" aria-hidden="true" tabindex="-1"></a>nrxi <span class="ot">&lt;-</span> <span class="fu">length</span>(rxi)</span>
-<span id="cb113-2"><a href="el-problema-de-la-dependencia.html#cb113-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>nrxi</span>
-<span id="cb113-3"><a href="el-problema-de-la-dependencia.html#cb113-3" aria-hidden="true" tabindex="-1"></a>est <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(rxi)<span class="sc">/</span>n</span>
-<span id="cb113-4"><a href="el-problema-de-la-dependencia.html#cb113-4" aria-hidden="true" tabindex="-1"></a>esterr <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(est<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>est)<span class="sc">/</span>(n<span class="dv">-1</span>))</span>
-<span id="cb113-5"><a href="el-problema-de-la-dependencia.html#cb113-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(est, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">ylab=</span><span class="st">&quot;Probabilidad&quot;</span>, </span>
-<span id="cb113-6"><a href="el-problema-de-la-dependencia.html#cb113-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="fu">paste</span>(<span class="st">&quot;Número de simulaciones /&quot;</span>, lag <span class="sc">+</span> <span class="dv">1</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.6</span>))</span>
-<span id="cb113-7"><a href="el-problema-de-la-dependencia.html#cb113-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> est[<span class="fu">length</span>(rxi)], <span class="at">lty=</span><span class="dv">2</span>)</span>
-<span id="cb113-8"><a href="el-problema-de-la-dependencia.html#cb113-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(est <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>esterr, <span class="at">lty=</span><span class="dv">2</span>) <span class="co"># Supone independencia</span></span>
-<span id="cb113-9"><a href="el-problema-de-la-dependencia.html#cb113-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(est <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span>esterr, <span class="at">lty=</span><span class="dv">2</span>)</span>
-<span id="cb113-10"><a href="el-problema-de-la-dependencia.html#cb113-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="at">col=</span><span class="st">&quot;darkgray&quot;</span>)     <span class="co"># Prob. teor. cadenas Markov</span></span></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="el-problema-de-la-dependencia.html#cb111-1" aria-hidden="true" tabindex="-1"></a>nrxi <span class="ot">&lt;-</span> <span class="fu">length</span>(rxi)</span>
+<span id="cb111-2"><a href="el-problema-de-la-dependencia.html#cb111-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>nrxi</span>
+<span id="cb111-3"><a href="el-problema-de-la-dependencia.html#cb111-3" aria-hidden="true" tabindex="-1"></a>est <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(rxi)<span class="sc">/</span>n</span>
+<span id="cb111-4"><a href="el-problema-de-la-dependencia.html#cb111-4" aria-hidden="true" tabindex="-1"></a>esterr <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(est<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>est)<span class="sc">/</span>(n<span class="dv">-1</span>))</span>
+<span id="cb111-5"><a href="el-problema-de-la-dependencia.html#cb111-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(est, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">ylab =</span> <span class="st">&quot;Probabilidad&quot;</span>,  </span>
+<span id="cb111-6"><a href="el-problema-de-la-dependencia.html#cb111-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">paste</span>(<span class="st">&quot;Número de simulaciones /&quot;</span>, lag <span class="sc">+</span> <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.6</span>))</span>
+<span id="cb111-7"><a href="el-problema-de-la-dependencia.html#cb111-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> est[<span class="fu">length</span>(rxi)], <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb111-8"><a href="el-problema-de-la-dependencia.html#cb111-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(est <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>esterr, <span class="at">lty =</span> <span class="dv">2</span>) <span class="co"># Supone independencia</span></span>
+<span id="cb111-9"><a href="el-problema-de-la-dependencia.html#cb111-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(est <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span>esterr, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb111-10"><a href="el-problema-de-la-dependencia.html#cb111-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>)     <span class="co"># Prob. teor. cadenas Markov</span></span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:conv-dep2"></span>
-<img src="03-Analisis_resultados_files/figure-html/conv-dep2-1.png" alt="Gráfico de convergencia de la aproximación de la probabilidad a partir de la subsecuencia de días de lluvia (calculando el error de aproximación asumiendo independencia)." width="70%" />
+<img src="03-Analisis_resultados_files/figure-html/conv-dep2-1.png" alt="Gráfico de convergencia de la aproximación de la probabilidad a partir de la subsecuencia de días de lluvia (calculando el error de aproximación asumiendo independencia)." width="75%" />
 <p class="caption">
 Figura 3.8: Gráfico de convergencia de la aproximación de la probabilidad a partir de la subsecuencia de días de lluvia (calculando el error de aproximación asumiendo independencia).
 </p>
 </div>
 <p>Esta forma de proceder podría ser adecuada para tratar de aproximar la precisión:</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="el-problema-de-la-dependencia.html#cb114-1" aria-hidden="true" tabindex="-1"></a>esterr[nrxi]</span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="el-problema-de-la-dependencia.html#cb112-1" aria-hidden="true" tabindex="-1"></a>esterr[nrxi]</span></code></pre></div>
 <pre><code>## [1] 0.022774</code></pre>
 <p>pero no sería la más eficiente para aproximar la media. Siempre es preferible emplear todas las observaciones.</p>
 <p>Por ejemplo, se podría pensar en considerar las medias de grupos de 25 valores consecutivos y suponer que hay independencia entre ellas:</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="el-problema-de-la-dependencia.html#cb116-1" aria-hidden="true" tabindex="-1"></a>rxm <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(<span class="fu">matrix</span>(rx, <span class="at">ncol =</span> lag <span class="sc">+</span> <span class="dv">1</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb116-2"><a href="el-problema-de-la-dependencia.html#cb116-2" aria-hidden="true" tabindex="-1"></a>nrxm <span class="ot">&lt;-</span> <span class="fu">length</span>(rxm)</span>
-<span id="cb116-3"><a href="el-problema-de-la-dependencia.html#cb116-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>nrxm</span>
-<span id="cb116-4"><a href="el-problema-de-la-dependencia.html#cb116-4" aria-hidden="true" tabindex="-1"></a>est <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(rxm)<span class="sc">/</span>n</span>
-<span id="cb116-5"><a href="el-problema-de-la-dependencia.html#cb116-5" aria-hidden="true" tabindex="-1"></a>esterr <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((<span class="fu">cumsum</span>(rxm<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>n <span class="sc">-</span> est<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(n<span class="dv">-1</span>)) <span class="co"># Errores estándar</span></span>
-<span id="cb116-6"><a href="el-problema-de-la-dependencia.html#cb116-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(est, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">ylab=</span><span class="st">&quot;Probabilidad&quot;</span>, </span>
-<span id="cb116-7"><a href="el-problema-de-la-dependencia.html#cb116-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="fu">paste</span>(<span class="st">&quot;Número de simulaciones /&quot;</span>, lag <span class="sc">+</span> <span class="dv">1</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.6</span>))</span>
-<span id="cb116-8"><a href="el-problema-de-la-dependencia.html#cb116-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> est[<span class="fu">length</span>(rxm)], <span class="at">lty=</span><span class="dv">2</span>)</span>
-<span id="cb116-9"><a href="el-problema-de-la-dependencia.html#cb116-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(est <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>esterr, <span class="at">lty=</span><span class="dv">2</span>) <span class="co"># OJO! Supone independencia</span></span>
-<span id="cb116-10"><a href="el-problema-de-la-dependencia.html#cb116-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(est <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span>esterr, <span class="at">lty=</span><span class="dv">2</span>)</span>
-<span id="cb116-11"><a href="el-problema-de-la-dependencia.html#cb116-11" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="at">col=</span><span class="st">&quot;darkgray&quot;</span>)     <span class="co"># Prob. teor. cadenas Markov</span></span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="el-problema-de-la-dependencia.html#cb114-1" aria-hidden="true" tabindex="-1"></a>rxm <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(<span class="fu">matrix</span>(rx, <span class="at">ncol =</span> lag <span class="sc">+</span> <span class="dv">1</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb114-2"><a href="el-problema-de-la-dependencia.html#cb114-2" aria-hidden="true" tabindex="-1"></a>nrxm <span class="ot">&lt;-</span> <span class="fu">length</span>(rxm)</span>
+<span id="cb114-3"><a href="el-problema-de-la-dependencia.html#cb114-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>nrxm</span>
+<span id="cb114-4"><a href="el-problema-de-la-dependencia.html#cb114-4" aria-hidden="true" tabindex="-1"></a>est <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(rxm)<span class="sc">/</span>n</span>
+<span id="cb114-5"><a href="el-problema-de-la-dependencia.html#cb114-5" aria-hidden="true" tabindex="-1"></a>esterr <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((<span class="fu">cumsum</span>(rxm<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>n <span class="sc">-</span> est<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(n<span class="dv">-1</span>)) <span class="co"># Errores estándar</span></span>
+<span id="cb114-6"><a href="el-problema-de-la-dependencia.html#cb114-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(est, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">ylab =</span> <span class="st">&quot;Probabilidad&quot;</span>,  </span>
+<span id="cb114-7"><a href="el-problema-de-la-dependencia.html#cb114-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">paste</span>(<span class="st">&quot;Número de simulaciones /&quot;</span>, lag <span class="sc">+</span> <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.6</span>))</span>
+<span id="cb114-8"><a href="el-problema-de-la-dependencia.html#cb114-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> est[<span class="fu">length</span>(rxm)], <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb114-9"><a href="el-problema-de-la-dependencia.html#cb114-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(est <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>esterr, <span class="at">lty =</span> <span class="dv">2</span>) <span class="co"># OJO! Supone independencia</span></span>
+<span id="cb114-10"><a href="el-problema-de-la-dependencia.html#cb114-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(est <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span>esterr, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb114-11"><a href="el-problema-de-la-dependencia.html#cb114-11" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>)     <span class="co"># Prob. teor. cadenas Markov</span></span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:conv-dep-lotes"></span>
-<img src="03-Analisis_resultados_files/figure-html/conv-dep-lotes-1.png" alt="Gráfico de convergencia de las medias por lotes." width="70%" />
+<img src="03-Analisis_resultados_files/figure-html/conv-dep-lotes-1.png" alt="Gráfico de convergencia de las medias por lotes." width="75%" />
 <p class="caption">
 Figura 3.9: Gráfico de convergencia de las medias por lotes.
 </p>
@@ -566,47 +566,47 @@ Var \left(\bar X \right) &amp;= Var \left(\frac{1}{n} \sum_{i=1}^n X_i\right)
 donde <span class="math inline">\(\bar{X}_k\)</span> es la media de una subsecuencia de longitud <span class="math inline">\(k\)</span>.</p>
 <!-- Ecuaciones p.237 Gentle, Random numbers & MC methods -->
 <p>Alternativamente se podría recurrir a la generación de múltiples secuencias independientes entre sí:</p>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="el-problema-de-la-dependencia.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Variable dicotómica 0/1 (FALSE/TRUE)  </span></span>
-<span id="cb117-2"><a href="el-problema-de-la-dependencia.html#cb117-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb117-3"><a href="el-problema-de-la-dependencia.html#cb117-3" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb117-4"><a href="el-problema-de-la-dependencia.html#cb117-4" aria-hidden="true" tabindex="-1"></a>nsec <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb117-5"><a href="el-problema-de-la-dependencia.html#cb117-5" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.03</span> <span class="co"># prob de cambio si seco</span></span>
-<span id="cb117-6"><a href="el-problema-de-la-dependencia.html#cb117-6" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fl">0.06</span>  <span class="co"># prob de cambio si lluvia</span></span>
-<span id="cb117-7"><a href="el-problema-de-la-dependencia.html#cb117-7" aria-hidden="true" tabindex="-1"></a>rxm <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">FALSE</span>, <span class="at">nrow =</span> nsec, <span class="at">ncol=</span> nsim)</span>
-<span id="cb117-8"><a href="el-problema-de-la-dependencia.html#cb117-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsec) {</span>
-<span id="cb117-9"><a href="el-problema-de-la-dependencia.html#cb117-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># rxm[i, 1] &lt;- FALSE # El primer día no llueve</span></span>
-<span id="cb117-10"><a href="el-problema-de-la-dependencia.html#cb117-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># rxm[i, 1] &lt;- runif(1) &lt; 1/2 # El primer día llueve con probabilidad 1/2</span></span>
-<span id="cb117-11"><a href="el-problema-de-la-dependencia.html#cb117-11" aria-hidden="true" tabindex="-1"></a>  rxm[i, <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&lt;</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span> <span class="co"># El primer día llueve con probabilidad 1/3 (ideal)</span></span>
-<span id="cb117-12"><a href="el-problema-de-la-dependencia.html#cb117-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>nsim)</span>
-<span id="cb117-13"><a href="el-problema-de-la-dependencia.html#cb117-13" aria-hidden="true" tabindex="-1"></a>    rxm[i, j] <span class="ot">&lt;-</span> <span class="cf">if</span> (rxm[i, j<span class="dv">-1</span>]) <span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&gt;</span> beta <span class="cf">else</span> <span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&lt;</span> alpha</span>
-<span id="cb117-14"><a href="el-problema-de-la-dependencia.html#cb117-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="el-problema-de-la-dependencia.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Variable dicotómica 0/1 (FALSE/TRUE)  </span></span>
+<span id="cb115-2"><a href="el-problema-de-la-dependencia.html#cb115-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb115-3"><a href="el-problema-de-la-dependencia.html#cb115-3" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb115-4"><a href="el-problema-de-la-dependencia.html#cb115-4" aria-hidden="true" tabindex="-1"></a>nsec <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb115-5"><a href="el-problema-de-la-dependencia.html#cb115-5" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.03</span> <span class="co"># prob de cambio si seco</span></span>
+<span id="cb115-6"><a href="el-problema-de-la-dependencia.html#cb115-6" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fl">0.06</span>  <span class="co"># prob de cambio si lluvia</span></span>
+<span id="cb115-7"><a href="el-problema-de-la-dependencia.html#cb115-7" aria-hidden="true" tabindex="-1"></a>rxm <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">FALSE</span>, <span class="at">nrow =</span> nsec, <span class="at">ncol=</span> nsim)</span>
+<span id="cb115-8"><a href="el-problema-de-la-dependencia.html#cb115-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsec) {</span>
+<span id="cb115-9"><a href="el-problema-de-la-dependencia.html#cb115-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># rxm[i, 1] &lt;- FALSE # El primer día no llueve</span></span>
+<span id="cb115-10"><a href="el-problema-de-la-dependencia.html#cb115-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># rxm[i, 1] &lt;- runif(1) &lt; 1/2 # El primer día llueve con probabilidad 1/2</span></span>
+<span id="cb115-11"><a href="el-problema-de-la-dependencia.html#cb115-11" aria-hidden="true" tabindex="-1"></a>  rxm[i, <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&lt;</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span> <span class="co"># El primer día llueve con probabilidad 1/3 (ideal)</span></span>
+<span id="cb115-12"><a href="el-problema-de-la-dependencia.html#cb115-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>nsim)</span>
+<span id="cb115-13"><a href="el-problema-de-la-dependencia.html#cb115-13" aria-hidden="true" tabindex="-1"></a>    rxm[i, j] <span class="ot">&lt;-</span> <span class="cf">if</span> (rxm[i, j<span class="dv">-1</span>]) <span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&gt;</span> beta <span class="cf">else</span> <span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&lt;</span> alpha</span>
+<span id="cb115-14"><a href="el-problema-de-la-dependencia.html#cb115-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>La idea sería considerar las medias de las series como una muestra independiente de una nueva variable y estimar su varianza de la forma habitual:</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="el-problema-de-la-dependencia.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Media de cada secuencia</span></span>
-<span id="cb118-2"><a href="el-problema-de-la-dependencia.html#cb118-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>nsim</span>
-<span id="cb118-3"><a href="el-problema-de-la-dependencia.html#cb118-3" aria-hidden="true" tabindex="-1"></a>est <span class="ot">&lt;-</span> <span class="fu">apply</span>(rxm, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="fu">cumsum</span>(x)<span class="sc">/</span>n)</span>
-<span id="cb118-4"><a href="el-problema-de-la-dependencia.html#cb118-4" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(n, est, <span class="at">type =</span> <span class="st">&#39;l&#39;</span>, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">&quot;lightgray&quot;</span>,</span>
-<span id="cb118-5"><a href="el-problema-de-la-dependencia.html#cb118-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Probabilidad&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Número de simulaciones&quot;</span>)</span>
-<span id="cb118-6"><a href="el-problema-de-la-dependencia.html#cb118-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Aproximación</span></span>
-<span id="cb118-7"><a href="el-problema-de-la-dependencia.html#cb118-7" aria-hidden="true" tabindex="-1"></a>mest <span class="ot">&lt;-</span> <span class="fu">apply</span>(est, <span class="dv">1</span>, mean)</span>
-<span id="cb118-8"><a href="el-problema-de-la-dependencia.html#cb118-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(mest, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb118-9"><a href="el-problema-de-la-dependencia.html#cb118-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> mest[nsim], <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb118-10"><a href="el-problema-de-la-dependencia.html#cb118-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Precisión</span></span>
-<span id="cb118-11"><a href="el-problema-de-la-dependencia.html#cb118-11" aria-hidden="true" tabindex="-1"></a>mesterr <span class="ot">&lt;-</span> <span class="fu">apply</span>(est, <span class="dv">1</span>, sd)<span class="sc">/</span><span class="fu">sqrt</span>(nsec)</span>
-<span id="cb118-12"><a href="el-problema-de-la-dependencia.html#cb118-12" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(mest <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>mesterr, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb118-13"><a href="el-problema-de-la-dependencia.html#cb118-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(mest <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span>mesterr, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb118-14"><a href="el-problema-de-la-dependencia.html#cb118-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Prob. teor. cadenas Markov</span></span>
-<span id="cb118-15"><a href="el-problema-de-la-dependencia.html#cb118-15" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="at">col=</span><span class="st">&quot;darkgray&quot;</span>)     </span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="el-problema-de-la-dependencia.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Media de cada secuencia</span></span>
+<span id="cb116-2"><a href="el-problema-de-la-dependencia.html#cb116-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>nsim</span>
+<span id="cb116-3"><a href="el-problema-de-la-dependencia.html#cb116-3" aria-hidden="true" tabindex="-1"></a>est <span class="ot">&lt;-</span> <span class="fu">apply</span>(rxm, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="fu">cumsum</span>(x)<span class="sc">/</span>n)</span>
+<span id="cb116-4"><a href="el-problema-de-la-dependencia.html#cb116-4" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(n, est, <span class="at">type =</span> <span class="st">&#39;l&#39;</span>, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>,</span>
+<span id="cb116-5"><a href="el-problema-de-la-dependencia.html#cb116-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">&quot;Probabilidad&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Número de simulaciones&quot;</span>)</span>
+<span id="cb116-6"><a href="el-problema-de-la-dependencia.html#cb116-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Aproximación</span></span>
+<span id="cb116-7"><a href="el-problema-de-la-dependencia.html#cb116-7" aria-hidden="true" tabindex="-1"></a>mest <span class="ot">&lt;-</span> <span class="fu">apply</span>(est, <span class="dv">1</span>, mean)</span>
+<span id="cb116-8"><a href="el-problema-de-la-dependencia.html#cb116-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(mest, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb116-9"><a href="el-problema-de-la-dependencia.html#cb116-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> mest[nsim], <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb116-10"><a href="el-problema-de-la-dependencia.html#cb116-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Precisión</span></span>
+<span id="cb116-11"><a href="el-problema-de-la-dependencia.html#cb116-11" aria-hidden="true" tabindex="-1"></a>mesterr <span class="ot">&lt;-</span> <span class="fu">apply</span>(est, <span class="dv">1</span>, sd)<span class="sc">/</span><span class="fu">sqrt</span>(nsec)</span>
+<span id="cb116-12"><a href="el-problema-de-la-dependencia.html#cb116-12" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(mest <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>mesterr, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb116-13"><a href="el-problema-de-la-dependencia.html#cb116-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(mest <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span>mesterr, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb116-14"><a href="el-problema-de-la-dependencia.html#cb116-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Prob. teor. cadenas Markov</span></span>
+<span id="cb116-15"><a href="el-problema-de-la-dependencia.html#cb116-15" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>)     </span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:conv-dep-nsec"></span>
-<img src="03-Analisis_resultados_files/figure-html/conv-dep-nsec-1.png" alt="Gráfico de convergencia de la media de 10 secuencias generadas de forma independiente." width="70%" />
+<img src="03-Analisis_resultados_files/figure-html/conv-dep-nsec-1.png" alt="Gráfico de convergencia de la media de 10 secuencias generadas de forma independiente." width="75%" />
 <p class="caption">
 Figura 3.10: Gráfico de convergencia de la media de 10 secuencias generadas de forma independiente.
 </p>
 </div>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="el-problema-de-la-dependencia.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aproximación final</span></span>
-<span id="cb119-2"><a href="el-problema-de-la-dependencia.html#cb119-2" aria-hidden="true" tabindex="-1"></a>mest[nsim] <span class="co"># mean(rxm)</span></span></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="el-problema-de-la-dependencia.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aproximación final</span></span>
+<span id="cb117-2"><a href="el-problema-de-la-dependencia.html#cb117-2" aria-hidden="true" tabindex="-1"></a>mest[nsim] <span class="co"># mean(rxm)</span></span></code></pre></div>
 <pre><code>## [1] 0.3089</code></pre>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="el-problema-de-la-dependencia.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Error estándar</span></span>
-<span id="cb121-2"><a href="el-problema-de-la-dependencia.html#cb121-2" aria-hidden="true" tabindex="-1"></a>mesterr[nsim]</span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="el-problema-de-la-dependencia.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Error estándar</span></span>
+<span id="cb119-2"><a href="el-problema-de-la-dependencia.html#cb119-2" aria-hidden="true" tabindex="-1"></a>mesterr[nsim]</span></code></pre></div>
 <pre><code>## [1] 0.024035</code></pre>
 </div>
 <p>Trataremos este tipo de problemas en la diagnosis de algoritmos Monte Carlo de Cadenas de Markov (MCMC, Capítulo 10).
@@ -622,73 +622,73 @@ durante un cierto período inicial de tiempo (denominado período de calentamien
 o estabilización), cuyo único objeto es conseguir que se estabilice la distribución de
 probabilidad.</p>
 <p>Como ejemplo comparamos la simulación del Ejemplo <a href="el-problema-de-la-dependencia.html#exm:mmc">3.3</a> con la obtenida considerando como punto de partida un día lluvioso (con una semilla distinta para evitar dependencia).</p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="el-problema-de-la-dependencia.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2</span>)</span>
-<span id="cb123-2"><a href="el-problema-de-la-dependencia.html#cb123-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
-<span id="cb123-3"><a href="el-problema-de-la-dependencia.html#cb123-3" aria-hidden="true" tabindex="-1"></a>rx2 <span class="ot">&lt;-</span> <span class="fu">logical</span>(nsim)</span>
-<span id="cb123-4"><a href="el-problema-de-la-dependencia.html#cb123-4" aria-hidden="true" tabindex="-1"></a>rx2[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="cn">TRUE</span> <span class="co"># El primer día llueve</span></span>
-<span id="cb123-5"><a href="el-problema-de-la-dependencia.html#cb123-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>nsim)</span>
-<span id="cb123-6"><a href="el-problema-de-la-dependencia.html#cb123-6" aria-hidden="true" tabindex="-1"></a>  rx2[i] <span class="ot">&lt;-</span> <span class="cf">if</span> (rx2[i<span class="dv">-1</span>]) <span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&gt;</span> beta <span class="cf">else</span> <span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&lt;</span> alpha</span>
-<span id="cb123-7"><a href="el-problema-de-la-dependencia.html#cb123-7" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>nsim</span>
-<span id="cb123-8"><a href="el-problema-de-la-dependencia.html#cb123-8" aria-hidden="true" tabindex="-1"></a>est <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(rx)<span class="sc">/</span>n</span>
-<span id="cb123-9"><a href="el-problema-de-la-dependencia.html#cb123-9" aria-hidden="true" tabindex="-1"></a>est2 <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(rx2)<span class="sc">/</span>n</span>
-<span id="cb123-10"><a href="el-problema-de-la-dependencia.html#cb123-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(est, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Probabilidad&quot;</span>, </span>
-<span id="cb123-11"><a href="el-problema-de-la-dependencia.html#cb123-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Número de simulaciones&quot;</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.6</span>))</span>
-<span id="cb123-12"><a href="el-problema-de-la-dependencia.html#cb123-12" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(est2, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb123-13"><a href="el-problema-de-la-dependencia.html#cb123-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejemplo periodo calentamiento nburn = 2000</span></span>
-<span id="cb123-14"><a href="el-problema-de-la-dependencia.html#cb123-14" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">2000</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
-<span id="cb123-15"><a href="el-problema-de-la-dependencia.html#cb123-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Prob. teor. cadenas Markov</span></span>
-<span id="cb123-16"><a href="el-problema-de-la-dependencia.html#cb123-16" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="at">col=</span><span class="st">&quot;darkgray&quot;</span>)     </span></code></pre></div>
-<p><img src="03-Analisis_resultados_files/figure-html/unnamed-chunk-11-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="el-problema-de-la-dependencia.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2</span>)</span>
+<span id="cb121-2"><a href="el-problema-de-la-dependencia.html#cb121-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb121-3"><a href="el-problema-de-la-dependencia.html#cb121-3" aria-hidden="true" tabindex="-1"></a>rx2 <span class="ot">&lt;-</span> <span class="fu">logical</span>(nsim)</span>
+<span id="cb121-4"><a href="el-problema-de-la-dependencia.html#cb121-4" aria-hidden="true" tabindex="-1"></a>rx2[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="cn">TRUE</span> <span class="co"># El primer día llueve</span></span>
+<span id="cb121-5"><a href="el-problema-de-la-dependencia.html#cb121-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>nsim)</span>
+<span id="cb121-6"><a href="el-problema-de-la-dependencia.html#cb121-6" aria-hidden="true" tabindex="-1"></a>  rx2[i] <span class="ot">&lt;-</span> <span class="cf">if</span> (rx2[i<span class="dv">-1</span>]) <span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&gt;</span> beta <span class="cf">else</span> <span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&lt;</span> alpha</span>
+<span id="cb121-7"><a href="el-problema-de-la-dependencia.html#cb121-7" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>nsim</span>
+<span id="cb121-8"><a href="el-problema-de-la-dependencia.html#cb121-8" aria-hidden="true" tabindex="-1"></a>est <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(rx)<span class="sc">/</span>n</span>
+<span id="cb121-9"><a href="el-problema-de-la-dependencia.html#cb121-9" aria-hidden="true" tabindex="-1"></a>est2 <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(rx2)<span class="sc">/</span>n</span>
+<span id="cb121-10"><a href="el-problema-de-la-dependencia.html#cb121-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(est, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Probabilidad&quot;</span>, </span>
+<span id="cb121-11"><a href="el-problema-de-la-dependencia.html#cb121-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Número de simulaciones&quot;</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.6</span>))</span>
+<span id="cb121-12"><a href="el-problema-de-la-dependencia.html#cb121-12" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(est2, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb121-13"><a href="el-problema-de-la-dependencia.html#cb121-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejemplo periodo calentamiento nburn = 2000</span></span>
+<span id="cb121-14"><a href="el-problema-de-la-dependencia.html#cb121-14" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">2000</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb121-15"><a href="el-problema-de-la-dependencia.html#cb121-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Prob. teor. cadenas Markov</span></span>
+<span id="cb121-16"><a href="el-problema-de-la-dependencia.html#cb121-16" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="at">col=</span><span class="st">&quot;darkgray&quot;</span>)     </span></code></pre></div>
+<p><img src="03-Analisis_resultados_files/figure-html/unnamed-chunk-11-1.png" width="75%" style="display: block; margin: auto;" /></p>
 <p>En estos casos puede ser recomendable ignorar los primeros valores generados (por ejemplo los primeros 2000) y recalcular los
 estadísticos deseados.</p>
 <p>También trataremos este tipo de problemas en la diagnosis de algoritmos MCMC.</p>
 <div class="example">
-<p><span id="exm:unlabeled-div-5" class="example"><strong>Ejemplo 3.4  (simulación de un proceso autorregresivo serie de tiempo) </strong></span><br></p>
+<p><span id="exm:unlabeled-div-4" class="example"><strong>Ejemplo 3.4  (simulación de un proceso autorregresivo serie de tiempo) </strong></span><br></p>
 <p><span class="math display">\[X_t = \mu + \rho * (X_{t-1} - \mu) + \varepsilon_t\]</span>
 Podemos tener en cuenta que en este caso la varianza es:
 <span class="math display">\[\textrm{var}(X_t)=\operatorname{E}(X_t^2)-\mu^2=\frac{\sigma_\varepsilon^2}{1-\rho^2}.\]</span></p>
 <p>Establecemos los parámetros:</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="el-problema-de-la-dependencia.html#cb124-1" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">200</span>   <span class="co"># Numero de simulaciones</span></span>
-<span id="cb124-2"><a href="el-problema-de-la-dependencia.html#cb124-2" aria-hidden="true" tabindex="-1"></a>xmed <span class="ot">&lt;-</span> <span class="dv">0</span>     <span class="co"># Media</span></span>
-<span id="cb124-3"><a href="el-problema-de-la-dependencia.html#cb124-3" aria-hidden="true" tabindex="-1"></a>rho <span class="ot">&lt;-</span> <span class="fl">0.5</span>    <span class="co"># Coeficiente AR</span></span>
-<span id="cb124-4"><a href="el-problema-de-la-dependencia.html#cb124-4" aria-hidden="true" tabindex="-1"></a>nburn <span class="ot">&lt;-</span> <span class="dv">10</span>   <span class="co"># Periodo de calentamiento (burn-in)</span></span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="el-problema-de-la-dependencia.html#cb122-1" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">200</span>   <span class="co"># Numero de simulaciones</span></span>
+<span id="cb122-2"><a href="el-problema-de-la-dependencia.html#cb122-2" aria-hidden="true" tabindex="-1"></a>xmed <span class="ot">&lt;-</span> <span class="dv">0</span>     <span class="co"># Media</span></span>
+<span id="cb122-3"><a href="el-problema-de-la-dependencia.html#cb122-3" aria-hidden="true" tabindex="-1"></a>rho <span class="ot">&lt;-</span> <span class="fl">0.5</span>    <span class="co"># Coeficiente AR</span></span>
+<span id="cb122-4"><a href="el-problema-de-la-dependencia.html#cb122-4" aria-hidden="true" tabindex="-1"></a>nburn <span class="ot">&lt;-</span> <span class="dv">10</span>   <span class="co"># Periodo de calentamiento (burn-in)</span></span></code></pre></div>
 <p>Se podría fijar la varianza del error:</p>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="el-problema-de-la-dependencia.html#cb125-1" aria-hidden="true" tabindex="-1"></a>evar <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb125-2"><a href="el-problema-de-la-dependencia.html#cb125-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Varianza de la respuesta</span></span>
-<span id="cb125-3"><a href="el-problema-de-la-dependencia.html#cb125-3" aria-hidden="true" tabindex="-1"></a>xvar <span class="ot">&lt;-</span> evar <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> rho<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="el-problema-de-la-dependencia.html#cb123-1" aria-hidden="true" tabindex="-1"></a>evar <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb123-2"><a href="el-problema-de-la-dependencia.html#cb123-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Varianza de la respuesta</span></span>
+<span id="cb123-3"><a href="el-problema-de-la-dependencia.html#cb123-3" aria-hidden="true" tabindex="-1"></a>xvar <span class="ot">&lt;-</span> evar <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> rho<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div>
 <p>pero la recomendación sería fijar la varianza de la respuesta:</p>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="el-problema-de-la-dependencia.html#cb126-1" aria-hidden="true" tabindex="-1"></a>xvar <span class="ot">&lt;-</span> <span class="dv">1</span>     </span>
-<span id="cb126-2"><a href="el-problema-de-la-dependencia.html#cb126-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Varianza del error</span></span>
-<span id="cb126-3"><a href="el-problema-de-la-dependencia.html#cb126-3" aria-hidden="true" tabindex="-1"></a>evar <span class="ot">&lt;-</span> xvar<span class="sc">*</span>(<span class="dv">1</span> <span class="sc">-</span> rho<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="el-problema-de-la-dependencia.html#cb124-1" aria-hidden="true" tabindex="-1"></a>xvar <span class="ot">&lt;-</span> <span class="dv">1</span>     </span>
+<span id="cb124-2"><a href="el-problema-de-la-dependencia.html#cb124-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Varianza del error</span></span>
+<span id="cb124-3"><a href="el-problema-de-la-dependencia.html#cb124-3" aria-hidden="true" tabindex="-1"></a>evar <span class="ot">&lt;-</span> xvar<span class="sc">*</span>(<span class="dv">1</span> <span class="sc">-</span> rho<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div>
 <p>Para simular la serie, al ser un <span class="math inline">\(AR(1)\)</span>, normalmente simularíamos el primer valor</p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="el-problema-de-la-dependencia.html#cb127-1" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="at">mean =</span> xmed, <span class="at">sd =</span> <span class="fu">sqrt</span>(xvar))</span></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="el-problema-de-la-dependencia.html#cb125-1" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="at">mean =</span> xmed, <span class="at">sd =</span> <span class="fu">sqrt</span>(xvar))</span></code></pre></div>
 <p>o lo fijamos a la media.
 Después generamos los siguientes valores de forma recursiva.</p>
 <p>Como ejemplo nos alejamos un poco de la distribución estacionaria, para que el “periodo de calentamiento” sea mayor:</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="el-problema-de-la-dependencia.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb128-2"><a href="el-problema-de-la-dependencia.html#cb128-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nsim <span class="sc">+</span> nburn)</span>
-<span id="cb128-3"><a href="el-problema-de-la-dependencia.html#cb128-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Establecer el primer valor </span></span>
-<span id="cb128-4"><a href="el-problema-de-la-dependencia.html#cb128-4" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">10</span></span>
-<span id="cb128-5"><a href="el-problema-de-la-dependencia.html#cb128-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Simular el resto de la secuencia</span></span>
-<span id="cb128-6"><a href="el-problema-de-la-dependencia.html#cb128-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(x))</span>
-<span id="cb128-7"><a href="el-problema-de-la-dependencia.html#cb128-7" aria-hidden="true" tabindex="-1"></a>  x[i] <span class="ot">&lt;-</span> xmed <span class="sc">+</span> rho<span class="sc">*</span>(x[i<span class="dv">-1</span>] <span class="sc">-</span> xmed) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="at">sd=</span><span class="fu">sqrt</span>(evar))</span>
-<span id="cb128-8"><a href="el-problema-de-la-dependencia.html#cb128-8" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">as.ts</span>(x)</span>
-<span id="cb128-9"><a href="el-problema-de-la-dependencia.html#cb128-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x)</span>
-<span id="cb128-10"><a href="el-problema-de-la-dependencia.html#cb128-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> nburn, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="el-problema-de-la-dependencia.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb126-2"><a href="el-problema-de-la-dependencia.html#cb126-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nsim <span class="sc">+</span> nburn)</span>
+<span id="cb126-3"><a href="el-problema-de-la-dependencia.html#cb126-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Establecer el primer valor </span></span>
+<span id="cb126-4"><a href="el-problema-de-la-dependencia.html#cb126-4" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">10</span></span>
+<span id="cb126-5"><a href="el-problema-de-la-dependencia.html#cb126-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Simular el resto de la secuencia</span></span>
+<span id="cb126-6"><a href="el-problema-de-la-dependencia.html#cb126-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(x))</span>
+<span id="cb126-7"><a href="el-problema-de-la-dependencia.html#cb126-7" aria-hidden="true" tabindex="-1"></a>  x[i] <span class="ot">&lt;-</span> xmed <span class="sc">+</span> rho<span class="sc">*</span>(x[i<span class="dv">-1</span>] <span class="sc">-</span> xmed) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="at">sd=</span><span class="fu">sqrt</span>(evar))</span>
+<span id="cb126-8"><a href="el-problema-de-la-dependencia.html#cb126-8" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">as.ts</span>(x)</span>
+<span id="cb126-9"><a href="el-problema-de-la-dependencia.html#cb126-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x)</span>
+<span id="cb126-10"><a href="el-problema-de-la-dependencia.html#cb126-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> nburn, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:sim-ar1"></span>
-<img src="03-Analisis_resultados_files/figure-html/sim-ar1-1.png" alt="Ejemplo de una simulación de una serie de tiempo autorregresiva." width="70%" />
+<img src="03-Analisis_resultados_files/figure-html/sim-ar1-1.png" alt="Ejemplo de una simulación de una serie de tiempo autorregresiva." width="75%" />
 <p class="caption">
 Figura 3.11: Ejemplo de una simulación de una serie de tiempo autorregresiva.
 </p>
 </div>
 <p>y eliminamos el periodo de calentamiento:</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="el-problema-de-la-dependencia.html#cb129-1" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> x[<span class="sc">-</span><span class="fu">seq_len</span>(nburn)]</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="el-problema-de-la-dependencia.html#cb127-1" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> x[<span class="sc">-</span><span class="fu">seq_len</span>(nburn)]</span></code></pre></div>
 </div>
 <p>Para simular una serie de tiempo en R se puede emplear la función <code>arima.sim</code> del paquete base <code>stats</code>.
 En este caso el periodo de calentamiento se establece mediante el parámetro <code>n.start</code> (que se fija automáticamente a un valor adecuado).</p>
 <p>Por ejemplo, podemos generar este serie autoregresiva con:</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="el-problema-de-la-dependencia.html#cb130-1" aria-hidden="true" tabindex="-1"></a>rx2 <span class="ot">&lt;-</span> <span class="fu">arima.sim</span>(<span class="fu">list</span>(<span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">ar =</span> rho), <span class="at">n =</span> nsim, </span>
-<span id="cb130-2"><a href="el-problema-de-la-dependencia.html#cb130-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">n.start =</span> nburn, <span class="at">sd =</span> <span class="fu">sqrt</span>(evar))</span></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="el-problema-de-la-dependencia.html#cb128-1" aria-hidden="true" tabindex="-1"></a>rx2 <span class="ot">&lt;-</span> <span class="fu">arima.sim</span>(<span class="fu">list</span>(<span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">ar =</span> rho), <span class="at">n =</span> nsim, </span>
+<span id="cb128-2"><a href="el-problema-de-la-dependencia.html#cb128-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">n.start =</span> nburn, <span class="at">sd =</span> <span class="fu">sqrt</span>(evar))</span></code></pre></div>
 <p>La recomendación es fijar la varianza de las series simuladas si se quieren comparar
 resultados considerando distintos parámetros de dependencia.</p>
 </div>
@@ -713,42 +713,42 @@ resultados considerando distintos parámetros de dependencia.</p>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": true,
-"facebook": false,
-"twitter": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/rubenfcasal/simbook/edit/master/03-Analisis_resultados.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["Simulacion.pdf"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rubenfcasal/simbook/edit/master/03-Analisis_resultados.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["Simulacion.pdf"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>

@@ -94,11 +94,11 @@ pares de variables con correlación negativa:
 -   $1-U$ para simular la variable antitética $Y$.
 
 En el caso general, si $X=h\left(  U_{1},\ldots,U_{d}\right)$ y
-$h$ es monótona puede verse (e.g. Ross, 1997) que
+$h$ es monótona puede verse [e.g. @ross1999] que
 $Y=h\left(  1-U_{1},\ldots,1-U_{d}\right)$ está negativamente
 correlada con $X$.
 
-Si $X\sim \mathcal{N}(\mu,\sigma)$ puede tomarse como variable
+Si $X\sim \mathcal{N}(\mu,\sigma^2)$ puede tomarse como variable
 antitética $$Y=2\mu-X$$ 
 En general esto es válido para cualquier variable
 simétrica repecto a un parámetro $\mu$.
@@ -117,7 +117,7 @@ representando gráficamente la aproximación en función de $n$.
 Representamos la función objetivo:
 
 
-```r
+``` r
 a <- 0; b <- 2
 ftn <- function(x) return(exp(x)/(b-a))
 curve(ftn, a, b, ylim = c(0, 4))
@@ -125,50 +125,51 @@ abline(h = 0, lty = 2)
 abline(v = c(a, b), lty = 2)
 ```
 
-<img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-1-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{08-Reduccion_varianza_files/figure-latex/unnamed-chunk-1-1} \end{center}
 
 Se trata de calcular la media de $e^{\mathcal{U}(0,2)}$:
 
 
-```r
+``` r
 teor <- (exp(b)-exp(a))/(b-a)
 teor
 ```
 
 ```
-## [1] 3.1945
+ ## [1] 3.1945
 ```
 
 Como se mostró en el Capítulo \@ref(monte-carlo), para calcular la aproximación por integración Monte Carlo podemos emplear la función [`mc.integral()`](https://rubenfcasal.github.io/simres/reference/mc.integral.html) del paquete [`simres`](https://rubenfcasal.github.io/simres) (fichero [*mc.plot.R*](R/mc.plot.R)):
 
 
 
-```r
+``` r
 library(simres)
 set.seed(54321)
 res <- mc.integral(ftn, a, b, 500)
 abline(h = teor, lty = 2, col = "blue")
-```
-
-<img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" />
-
-```r
 res
 ```
 
 ```
-## $approx
-## [1] 3.1846
-## 
-## $max.error
-## [1] 0.15973
+ ## $approx
+ ## [1] 3.1846
+ ## 
+ ## $max.error
+ ## [1] 0.15973
 ```
+
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{08-Reduccion_varianza_files/figure-latex/unnamed-chunk-3-1} \end{center}
 
 
 Para la integración Monte Carlo con variables antitéticas podríamos considerar:
 
 
-```r
+``` r
 mc.integrala <- function(ftn, a, b, n, plot = TRUE) {
   # n es el nº de evaluaciones de la función objetivo 
   # (para facilitar comparaciones, solo se genera la mitad)
@@ -193,32 +194,31 @@ mc.integrala <- function(ftn, a, b, n, plot = TRUE) {
 
 set.seed(54321)
 res <- mc.integrala(ftn, a, b, 500)
-```
-
-<img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-4-1.png" width="70%" style="display: block; margin: auto;" />
-
-```r
 res
 ```
 
 ```
-## $valor
-## [1] 3.2224
-## 
-## $error
-## [1] 0.16509
+ ## $valor
+ ## [1] 3.2224
+ ## 
+ ## $error
+ ## [1] 0.16509
 ```
+
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{08-Reduccion_varianza_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 Pero aunque aparentemente converge antes, parece no haber una mejora en la precisión de la aproximación. 
 Si calculamos el porcentaje (estimado) de reducción del error:
 
 
-```r
+``` r
 100*(0.1619886-0.1641059)/0.1619886
 ```
 
 ```
-## [1] -1.3071
+ ## [1] -1.3071
 ```
 
 El problema es que en este caso se está estimando mal la varianza (asumiendo independencia).
@@ -226,7 +226,7 @@ Hay que tener cuidado con las técnicas de reducción de la varianza si uno de l
 En este caso, una versión de la función anterior para integración Monte Carlo con variables antitéticas, con aproximación del error bajo dependencia podría ser:
 
 
-```r
+``` r
 mc.integrala2 <- function(ftn, a, b, n, plot = TRUE,...) {
   # n es el nº de evaluaciones de la función objetivo 
   # (para facilitar comparaciones, solo se genera la mitad)
@@ -246,22 +246,22 @@ res
 ```
 
 ```
-## $valor
-## [1] 3.2224
-## 
-## $error
-## [1] 0.057001
+ ## $valor
+ ## [1] 3.2224
+ ## 
+ ## $error
+ ## [1] 0.057001
 ```
 
 Porcentaje estimado de reducción del error:
 
 
-```r
+``` r
 100*(0.1619886-0.05700069)/0.1619886
 ```
 
 ```
-## [1] 64.812
+ ## [1] 64.812
 ```
 
 En este caso puede verse que la reducción teórica de la varianza es del 96.7%
@@ -291,12 +291,12 @@ significativa de la varianza.
 
 Supóngase el siguiente problema (absolutamente artificial pero ilustrativo para comprender esta técnica). 
 Dada una muestra de tamaño 10 de una población con distribución: 
-$$X \sim Exp\left( 1 \right),$$
+$$X \sim \mathcal{Exp}\left( 1 \right),$$
 se desea aproximar la media poblacional (es sobradamente conocido que es 1) a partir de 10 simulaciones. 
 Supongamos que para evitar que, por puro azar, exista alguna zona en la que la exponencial toma valores, no representada en la muestra simulada de 10 datos, se consideran tres estratos. 
 Por ejemplo, el del 40% de valores menores, el siguiente 50% de valores (intermedios) y el 10% de valores más grandes para esta distribución.
 
-El algoritmo de inversión (optimizado) para simular una $Exp\left(1\right)$ es:
+El algoritmo de inversión (simplificado) para simular una $\mathcal{Exp}\left(1\right)$ es:
 
 1. Generar $U\sim \mathcal{U}\left(  0,1\right)$.
 
@@ -350,7 +350,7 @@ que es bastante menor que 1 (la varianza en el caso de muestreo aleatorio simple
 Continuando con el Ejemplo \@ref(exm:integrala), aproximaremos la integral empleando la técnica de estratificación, considerando $k$ subintervalos regularmente espaciados en el intervalo $\left[ 0, 2 \right]$. 
 
 
-```r
+``` r
 mc.integrale <- function(ftn, a, b, n, k) {
   # Integración Monte Carlo con estratificación
   l <- n%/%k
@@ -364,48 +364,47 @@ mc.integrale <- function(ftn, a, b, n, k) {
 set.seed(54321)
 res <- mc.integral(ftn, a, b, 500)
 abline(h = teor, lty = 2, col = "blue")
-```
-
-<img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-8-1.png" width="70%" style="display: block; margin: auto;" />
-
-```r
 res
 ```
 
 ```
-## $approx
-## [1] 3.1846
-## 
-## $max.error
-## [1] 0.15973
+ ## $approx
+ ## [1] 3.1846
+ ## 
+ ## $max.error
+ ## [1] 0.15973
 ```
 
-```r
+``` r
 set.seed(54321)
 mc.integrale(ftn, a, b, 500, 50)
 ```
 
 ```
-## $valor
-## [1] 3.1933
-## 
-## $error
-## [1] 0.1598
+ ## $valor
+ ## [1] 3.1933
+ ## 
+ ## $error
+ ## [1] 0.1598
 ```
+
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{08-Reduccion_varianza_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
 Podríamos estudiar como varía la reducción en la varianza dependiendo del valor de $k$:
 
-```r
+``` r
 set.seed(54321)
 mc.integrale(ftn, a, b, 500, 100)
 ```
 
 ```
-## $valor
-## [1] 3.1939
-## 
-## $error
-## [1] 0.15991
+ ## $valor
+ ## [1] 3.1939
+ ## 
+ ## $error
+ ## [1] 0.15991
 ```
 
 De esta forma no se tiene en cuenta la variabilidad en el estrato.
@@ -419,7 +418,7 @@ El tamaño de las submuestras debería incrementarse hacia el extremo superior.
 Repetir el ejemplo anterior considerando intervalos regularmente espaciados en escala exponencial.
 
 
-```r
+``` r
 # Ejemplo con k = 5
 curve(ftn, a, b, ylim = c(0, 4))
 abline(h = 0, lty = 2)
@@ -429,7 +428,9 @@ int <- log(seq(exp(a), exp(b), len = k + 1))
 abline(v = int, lty = 3)
 ```
 
-<img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{08-Reduccion_varianza_files/figure-latex/unnamed-chunk-10-1} \end{center}
 
 :::
 
@@ -479,20 +480,20 @@ Continuando con los ejemplos \@ref(exm:integrala) y \@ref(exm:integrale), aproxi
 Se trata de calcular la media de $exp(\mathcal{U}(a,b))$:
 
 
-```r
+``` r
 a <- 0; b <- 2
 teor <- (exp(b)-exp(a))/(b-a)
 teor
 ```
 
 ```
-## [1] 3.1945
+ ## [1] 3.1945
 ```
 
 Aproximación clásica por simulación:
 
 
-```r
+``` r
 set.seed(54321)
 nsim <- 1000
 u <- runif(nsim, a, b)
@@ -501,51 +502,50 @@ mean(expu)
 ```
 
 ```
-## [1] 3.1821
+ ## [1] 3.1821
 ```
 
 Con variable control:
 
 
-```r
+``` r
 plot(u, expu)
 reg <- lm(expu ~ u)$coef
 abline(reg, col='blue')
-```
-
-<img src="08-Reduccion_varianza_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" />
-
-```r
 # summary(lm(expu ~ u)) # R-squared: 0.9392
 reg[1]+reg[2] # Coincidirá con la solución mean(expuc)
 ```
 
 ```
-## (Intercept) 
-##      3.2049
+ ## (Intercept) 
+ ##      3.2049
 ```
+
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{08-Reduccion_varianza_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 Lo siguiente ya no sería necesario:
 
 
-```r
+``` r
 expuc <- expu - reg[2]*(u-1)
 mean(expuc)  
 ```
 
 ```
-## [1] 3.2049
+ ## [1] 3.2049
 ```
 
 Estimación del porcentaje de reducción en la varianza:
 
 
-```r
+``` r
 100*(var(expu)-var(expuc))/var(expu)
 ```
 
 ```
-## [1] 93.916
+ ## [1] 93.916
 ```
 
 :::
@@ -603,7 +603,7 @@ NOTA: Puede ser recomendable emplear el método de inversión para generar las m
 MC clásico:
 
 
-```r
+``` r
 nsim <- 1000
 lambda <- 0.5
 set.seed(1)
@@ -613,22 +613,22 @@ mean(x) # valor teor 1/lambda = 2
 ```
 
 ```
-## [1] 1.9744
+ ## [1] 1.9744
 ```
 
-```r
+``` r
 # Aprox da precisión 
 var(x)  
 ```
 
 ```
-## [1] 3.6695
+ ## [1] 3.6695
 ```
 
 MC con  variables antitéticas:
 
 
-```r
+``` r
 # xa <-
 # mean(xa) # Aprox por MC da media (valor teor 1/lambda = 2)
 # var(xa)  # Aprox da precisión supoñendo independencia
@@ -639,7 +639,7 @@ MC con  variables antitéticas:
 Estimación del porcentaje de reducción en la varianza
 
 
-```r
+``` r
 # 100*(var(x) - var(xa))/var(x)
 ```
 

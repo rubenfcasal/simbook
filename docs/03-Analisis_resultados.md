@@ -54,7 +54,7 @@ $$\lim\limits_{n\rightarrow \infty }P\left( \left\vert \overline{X}_{n}-\mu
 Simulamos una variable aleatoria $X$ con distribución de Bernoulli de parámetro $p=0.5$:
   
 
-```r
+``` r
 p <- 0.5
 set.seed(1)
 nsim <- 10000 # nsim <- 100
@@ -62,29 +62,37 @@ rx <- runif(nsim) < p # rbinom(nsim, size = 1, prob = p)
 ```
 La aproximación por simulación de $E(X) = p$ será:
 
-```r
+``` r
 mean(rx) 
 ```
 
 ```
-## [1] 0.5047
+ ## [1] 0.5047
 ```
 Podemos generar un gráfico con la evolución de la aproximación:
 
-```r
+``` r
 plot(cumsum(rx)/1:nsim, type = "l", lwd = 2, xlab = "Número de generaciones", 
      ylab = "Proporción muestral", ylim = c(0, 1))
 abline(h = mean(rx), lty = 2)
-# valor teórico
-abline(h = p, col = "blue") 
+# valor teórico (en la práctica sería desconocido)
+abline(h = p, lty = 2, col = "blue") 
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03-Analisis_resultados_files/figure-html/proporcion-1.png" alt="Aproximación de la proporción en función del número de generaciones." width="70%" />
-<p class="caption">(\#fig:proporcion)Aproximación de la proporción en función del número de generaciones.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/proporcion-1} 
+
+}
+
+\caption{Aproximación de la proporción en función del número de generaciones.}(\#fig:proporcion)
+\end{figure}
 
 :::
+
+<!-- 
+Pendiente: Añadir comentarios adicionales sobre convergencia
+-->
 
 
 ### Detección de problemas de convergencia
@@ -93,7 +101,7 @@ En la ley débil se requiere como condición suficiente que $E\left( \left\vert 
 Un ejemplo conocido es la distribución de Cauchy:
 
 
-```r
+``` r
 set.seed(1)
 nsim <- 10000
 rx <- rcauchy(nsim) # rx <- rt(nsim, df = 2)
@@ -101,24 +109,32 @@ plot(cumsum(rx)/1:nsim, type = "l", lwd = 2,
      xlab = "Número de generaciones", ylab = "Media muestral")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03-Analisis_resultados_files/figure-html/cauchy-1.png" alt="Evolución de la media muestral de una distribución de Cauchy en función del número de generaciones." width="70%" />
-<p class="caption">(\#fig:cauchy)Evolución de la media muestral de una distribución de Cauchy en función del número de generaciones.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/cauchy-1} 
+
+}
+
+\caption{Evolución de la media muestral de una distribución de Cauchy en función del número de generaciones.}(\#fig:cauchy)
+\end{figure}
 
 Como conclusión, para detectar problemas de convergencia es especialmente recomendable representar la evolución de la aproximación de la característica de interés (sobre el número de generaciones), 
 además de realizar otros análisis descriptivos de las simulaciones. 
 Por ejemplo, en este caso podemos observar los valores que producen estos saltos mediante un gráfico de cajas: 
 
 
-```r
+``` r
 boxplot(rx)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03-Analisis_resultados_files/figure-html/cauchy-box-1.png" alt="Gráfico de cajas de 10000 generaciones de una distribución de Cauchy." width="70%" />
-<p class="caption">(\#fig:cauchy-box)Gráfico de cajas de 10000 generaciones de una distribución de Cauchy.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/cauchy-box-1} 
+
+}
+
+\caption{Gráfico de cajas de 10000 generaciones de una distribución de Cauchy.}(\#fig:cauchy-box)
+\end{figure}
 
 
 ### Precisión
@@ -162,7 +178,7 @@ Pero una ventaja es que este error no depende del número de dimensiones (en el 
 
 Como ejemplo simulamos valores de una normal estándar:
 
-```r
+``` r
 xsd <- 1
 xmed <- 0
 set.seed(1)
@@ -171,28 +187,28 @@ rx <- rnorm(nsim, xmed, xsd)
 ```
 La aproximación por simulación de la media será:
 
-```r
+``` r
 mean(rx)
 ```
 
 ```
-## [1] -0.011648
+ ## [1] -0.011648
 ```
 Como medida de la precisión de la aproximación podemos utilizar el error máximo:
 
-```r
+``` r
 2*sd(rx)/sqrt(nsim)
 ```
 
 ```
-## [1] 0.065454
+ ## [1] 0.065454
 ```
 (es habitual emplear 2 en lugar de 1.96, 
 lo que se correspondería con $1 - \alpha = 0.9545$ en el caso de normalidad).
 Podemos añadir también los correspondientes intervalos de confianza al gráfico de convergencia:
 
 
-```r
+``` r
 n <- 1:nsim
 est <- cumsum(rx)/n
 # (cumsum(rx^2) - n*est^2)/(n-1) # Cuasi-varianzas muestrales
@@ -205,10 +221,14 @@ lines(est - 2*esterr, lty=3)
 abline(h = xmed)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03-Analisis_resultados_files/figure-html/conv-esterr-1.png" alt="Gráfico de convergencia incluyendo el error de la aproximación." width="70%" />
-<p class="caption">(\#fig:conv-esterr)Gráfico de convergencia incluyendo el error de la aproximación.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/conv-esterr-1} 
+
+}
+
+\caption{Gráfico de convergencia incluyendo el error de la aproximación.}(\#fig:conv-esterr)
+\end{figure}
 
 Podemos generar este gráfico empleando la función [`conv.plot()`](https://rubenfcasal.github.io/simres/reference/mc.plot.html) (o [`mc.plot()`](https://rubenfcasal.github.io/simres/reference/mc.plot.html)) del paquete [`simres`](https://rubenfcasal.github.io/simres) (fichero [*mc.plot.R*](R/mc.plot.R)).
 
@@ -274,7 +294,7 @@ siendo 0.94 si el día anterior llovió y 0.03 si no.
 
 Podemos generar valores de la variable indicadora de día lluvioso con el siguiente código:
 
-```r
+``` r
 # Variable dicotómica 0/1 (FALSE/TRUE)  
 set.seed(1)
 nsim <- 10000
@@ -288,123 +308,143 @@ for (i in 2:nsim)
 
 Si generamos el gráfico de convergencia asumiendo independencia:
 
-```r
+``` r
 n <- 1:nsim
 est <- cumsum(rx)/n
 esterr <- sqrt(est*(1-est)/(n-1)) # OJO! Supone independencia
-plot(est, type="l", lwd=2, ylab="Probabilidad", 
-     xlab="Número de simulaciones", ylim=c(0,0.6))
-abline(h = est[nsim], lty=2)
-lines(est + 2*esterr, lty=2) 
-lines(est - 2*esterr, lty=2)
-abline(h = 1/3, col="darkgray") # Probabilidad teórica
+plot(est, type = "l", lwd = 2, ylab = "Probabilidad", 
+     xlab = "Número de simulaciones", ylim = c(0, 0.6))
+abline(h = est[nsim], lty = 2)
+lines(est + 2*esterr, lty = 2) 
+lines(est - 2*esterr, lty = 2)
+abline(h = 1/3, col = "darkgray") # Probabilidad teórica
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03-Analisis_resultados_files/figure-html/conv-dep-1.png" alt="Gráfico de convergencia incluyendo el error de la aproximación (calculado asumiendo independencia)." width="70%" />
-<p class="caption">(\#fig:conv-dep)Gráfico de convergencia incluyendo el error de la aproximación (calculado asumiendo independencia).</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/conv-dep-1} 
+
+}
+
+\caption{Gráfico de convergencia incluyendo el error de la aproximación (calculado asumiendo independencia).}(\#fig:conv-dep)
+\end{figure}
 
 La probabilidad teórica, obtenida empleando resultados de cadenas de Markov, es $p = 1/3$ y la aproximación de la proporción sería correcta (es consistente):
 
-```r
+``` r
 est[nsim]
 ```
 
 ```
-## [1] 0.3038
+ ## [1] 0.3038
 ```
 
 Sin embargo, al ser datos dependientes, la aproximación anterior del error estándar no es adecuada:
 
-```r
+``` r
 esterr[nsim]
 ```
 
 ```
-## [1] 0.0045992
+ ## [1] 0.0045992
 ```
 
 En este caso al haber dependencia positiva se produce una subestimación del verdadero error estándar.
 Podemos generar el gráfico de autocorrelaciones:
 
 
-```r
+``` r
 acf(as.numeric(rx))
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03-Analisis_resultados_files/figure-html/acf-depsec-1.png" alt="Correlograma de la secuencia indicadora de días de lluvia." width="70%" />
-<p class="caption">(\#fig:acf-depsec)Correlograma de la secuencia indicadora de días de lluvia.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/acf-depsec-1} 
+
+}
+
+\caption{Correlograma de la secuencia indicadora de días de lluvia.}(\#fig:acf-depsec)
+\end{figure}
 
 El gráfico anterior sugiere que si solo tomamos 1 de cada 25 valores podría ser razonable asumir independencia.
 
 
-```r
+``` r
 lag <- 24
 xlag <- c(rep(FALSE, lag), TRUE)
 rxi <- rx[xlag]
 acf(as.numeric(rxi))
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03-Analisis_resultados_files/figure-html/acf-depsec2-1.png" alt="Correlograma de la subsecuencia de días de lluvia obtenida seleccionando uno de cada 25 valores." width="70%" />
-<p class="caption">(\#fig:acf-depsec2)Correlograma de la subsecuencia de días de lluvia obtenida seleccionando uno de cada 25 valores.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/acf-depsec2-1} 
+
+}
+
+\caption{Correlograma de la subsecuencia de días de lluvia obtenida seleccionando uno de cada 25 valores.}(\#fig:acf-depsec2)
+\end{figure}
 
 
-```r
+``` r
 nrxi <- length(rxi)
 n <- 1:nrxi
 est <- cumsum(rxi)/n
 esterr <- sqrt(est*(1-est)/(n-1))
-plot(est, type="l", lwd=2, ylab="Probabilidad", 
-     xlab=paste("Número de simulaciones /", lag + 1), ylim=c(0,0.6))
-abline(h = est[length(rxi)], lty=2)
-lines(est + 2*esterr, lty=2) # Supone independencia
-lines(est - 2*esterr, lty=2)
-abline(h = 1/3, col="darkgray")     # Prob. teor. cadenas Markov
+plot(est, type = "l", lwd = 2, ylab = "Probabilidad",  
+     xlab = paste("Número de simulaciones /", lag + 1), ylim = c(0, 0.6))
+abline(h = est[length(rxi)], lty = 2)
+lines(est + 2*esterr, lty = 2) # Supone independencia
+lines(est - 2*esterr, lty = 2)
+abline(h = 1/3, col = "darkgray")     # Prob. teor. cadenas Markov
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03-Analisis_resultados_files/figure-html/conv-dep2-1.png" alt="Gráfico de convergencia de la aproximación de la probabilidad a partir de la subsecuencia de días de lluvia (calculando el error de aproximación asumiendo independencia)." width="70%" />
-<p class="caption">(\#fig:conv-dep2)Gráfico de convergencia de la aproximación de la probabilidad a partir de la subsecuencia de días de lluvia (calculando el error de aproximación asumiendo independencia).</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/conv-dep2-1} 
+
+}
+
+\caption{Gráfico de convergencia de la aproximación de la probabilidad a partir de la subsecuencia de días de lluvia (calculando el error de aproximación asumiendo independencia).}(\#fig:conv-dep2)
+\end{figure}
 
 
 Esta forma de proceder podría ser adecuada para tratar de aproximar la precisión:
 
-```r
+``` r
 esterr[nrxi]
 ```
 
 ```
-## [1] 0.022774
+ ## [1] 0.022774
 ```
 pero no sería la más eficiente para aproximar la media. Siempre es preferible emplear todas las observaciones. 
 
 Por ejemplo, se podría pensar en considerar las medias de grupos de 25 valores consecutivos y suponer que hay independencia entre ellas:
 
 
-```r
+``` r
 rxm <- rowMeans(matrix(rx, ncol = lag + 1, byrow = TRUE))
 nrxm <- length(rxm)
 n <- 1:nrxm
 est <- cumsum(rxm)/n
 esterr <- sqrt((cumsum(rxm^2)/n - est^2)/(n-1)) # Errores estándar
-plot(est, type="l", lwd=2, ylab="Probabilidad", 
-     xlab=paste("Número de simulaciones /", lag + 1), ylim=c(0,0.6))
-abline(h = est[length(rxm)], lty=2)
-lines(est + 2*esterr, lty=2) # OJO! Supone independencia
-lines(est - 2*esterr, lty=2)
-abline(h = 1/3, col="darkgray")     # Prob. teor. cadenas Markov
+plot(est, type = "l", lwd = 2, ylab = "Probabilidad",  
+     xlab = paste("Número de simulaciones /", lag + 1), ylim = c(0, 0.6))
+abline(h = est[length(rxm)], lty = 2)
+lines(est + 2*esterr, lty = 2) # OJO! Supone independencia
+lines(est - 2*esterr, lty = 2)
+abline(h = 1/3, col = "darkgray")     # Prob. teor. cadenas Markov
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03-Analisis_resultados_files/figure-html/conv-dep-lotes-1.png" alt="Gráfico de convergencia de las medias por lotes." width="70%" />
-<p class="caption">(\#fig:conv-dep-lotes)Gráfico de convergencia de las medias por lotes.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/conv-dep-lotes-1} 
+
+}
+
+\caption{Gráfico de convergencia de las medias por lotes.}(\#fig:conv-dep-lotes)
+\end{figure}
 
 Esta es la idea del método de medias por lotes (*batch means*; *macro-micro replicaciones*) para la estimación de la precisión.
 Supongamos que la correlación entre $X_i$ y $X_{i+k}$ es aproximadamente nula, y consideramos las subsecuencias (lotes) $(X_{t+1},X_{t+2},\ldots,X_{t+k})$ con $t=(j-1)k$, $j=1,\ldots,m$ y $n = mk$. 
@@ -422,7 +462,7 @@ donde $\bar{X}_k$ es la media de una subsecuencia de longitud $k$.
 
 Alternativamente se podría recurrir a la generación de múltiples secuencias independientes entre sí: 
 
-```r
+``` r
 # Variable dicotómica 0/1 (FALSE/TRUE)  
 set.seed(1)
 nsim <- 1000
@@ -441,12 +481,12 @@ for (i in 1:nsec) {
 
 La idea sería considerar las medias de las series como una muestra independiente de una nueva variable y estimar su varianza de la forma habitual:
 
-```r
+``` r
 # Media de cada secuencia
 n <- 1:nsim
 est <- apply(rxm, 1, function(x) cumsum(x)/n)
-matplot(n, est, type = 'l', lty = 3, col = "lightgray",
-     ylab="Probabilidad", xlab="Número de simulaciones")
+matplot(n, est, type = 'l', lty = 3, col = "darkgray",
+        ylab = "Probabilidad", xlab = "Número de simulaciones")
 # Aproximación
 mest <- apply(est, 1, mean)
 lines(mest, lwd = 2)
@@ -456,31 +496,33 @@ mesterr <- apply(est, 1, sd)/sqrt(nsec)
 lines(mest + 2*mesterr, lty = 2)
 lines(mest - 2*mesterr, lty = 2)
 # Prob. teor. cadenas Markov
-abline(h = 1/3, col="darkgray")     
-```
+abline(h = 1/3, col = "darkgray")     
 
-<div class="figure" style="text-align: center">
-<img src="03-Analisis_resultados_files/figure-html/conv-dep-nsec-1.png" alt="Gráfico de convergencia de la media de 10 secuencias generadas de forma independiente." width="70%" />
-<p class="caption">(\#fig:conv-dep-nsec)Gráfico de convergencia de la media de 10 secuencias generadas de forma independiente.</p>
-</div>
-
-```r
 # Aproximación final
 mest[nsim] # mean(rxm)
 ```
 
 ```
-## [1] 0.3089
+ ## [1] 0.3089
 ```
 
-```r
+``` r
 # Error estándar
 mesterr[nsim]
 ```
 
 ```
-## [1] 0.024035
+ ## [1] 0.024035
 ```
+
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/conv-dep-nsec-1} 
+
+}
+
+\caption{Gráfico de convergencia de la media de 10 secuencias generadas de forma independiente.}(\#fig:conv-dep-nsec)
+\end{figure}
 
 :::
 
@@ -502,7 +544,7 @@ probabilidad.
 Como ejemplo comparamos la simulación del Ejemplo \@ref(exm:mmc) con la obtenida considerando como punto de partida un día lluvioso (con una semilla distinta para evitar dependencia).
 
 
-```r
+``` r
 set.seed(2)
 nsim <- 10000
 rx2 <- logical(nsim)
@@ -521,7 +563,9 @@ abline(v = 2000, lty = 3)
 abline(h = 1/3, col="darkgray")     
 ```
 
-<img src="03-Analisis_resultados_files/figure-html/unnamed-chunk-11-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 
 En estos casos puede ser recomendable ignorar los primeros valores generados (por ejemplo los primeros 2000) y recalcular los 
@@ -538,7 +582,7 @@ $$\textrm{var}(X_t)=\operatorname{E}(X_t^2)-\mu^2=\frac{\sigma_\varepsilon^2}{1-
 
 Establecemos los parámetros:
 
-```r
+``` r
 nsim <- 200   # Numero de simulaciones
 xmed <- 0     # Media
 rho <- 0.5    # Coeficiente AR
@@ -546,14 +590,14 @@ nburn <- 10   # Periodo de calentamiento (burn-in)
 ```
 Se podría fijar la varianza del error:
 
-```r
+``` r
 evar <- 1
 # Varianza de la respuesta
 xvar <- evar / (1 - rho^2)
 ```
 pero la recomendación sería fijar la varianza de la respuesta:
 
-```r
+``` r
 xvar <- 1     
 # Varianza del error
 evar <- xvar*(1 - rho^2)
@@ -561,7 +605,7 @@ evar <- xvar*(1 - rho^2)
 
 Para simular la serie, al ser un $AR(1)$, normalmente simularíamos el primer valor
 
-```r
+``` r
 x[1] <- rnorm(1, mean = xmed, sd = sqrt(xvar))
 ```
 o lo fijamos a la media. 
@@ -569,7 +613,7 @@ Después generamos los siguientes valores de forma recursiva.
 
 Como ejemplo nos alejamos un poco de la distribución estacionaria, para que el "periodo de calentamiento" sea mayor:
 
-```r
+``` r
 set.seed(1)
 x <- numeric(nsim + nburn)
 # Establecer el primer valor 
@@ -582,13 +626,17 @@ plot(x)
 abline(v = nburn, lty = 2)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="03-Analisis_resultados_files/figure-html/sim-ar1-1.png" alt="Ejemplo de una simulación de una serie de tiempo autorregresiva." width="70%" />
-<p class="caption">(\#fig:sim-ar1)Ejemplo de una simulación de una serie de tiempo autorregresiva.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/sim-ar1-1} 
+
+}
+
+\caption{Ejemplo de una simulación de una serie de tiempo autorregresiva.}(\#fig:sim-ar1)
+\end{figure}
 y eliminamos el periodo de calentamiento:
 
-```r
+``` r
 rx <- x[-seq_len(nburn)]
 ```
 
@@ -600,7 +648,7 @@ En este caso el periodo de calentamiento se establece mediante el parámetro `n.
 
 Por ejemplo, podemos generar este serie autoregresiva con:
 
-```r
+``` r
 rx2 <- arima.sim(list(order = c(1,0,0), ar = rho), n = nsim, 
                  n.start = nburn, sd = sqrt(evar))
 ```

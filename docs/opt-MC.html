@@ -215,11 +215,11 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="4.1" data-path="inversion.html"><a href="inversion.html"><i class="fa fa-check"></i><b>4.1</b> Método de inversión</a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="inversion.html"><a href="inversion.html#algunas-distribuciones-que-pueden-simularse-por-el-método-de-inversión"><i class="fa fa-check"></i><b>4.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
+<li class="chapter" data-level="4.1.1" data-path="inversion.html"><a href="inversion.html#ejemplos-inv"><i class="fa fa-check"></i><b>4.1.1</b> Algunas distribuciones que pueden simularse por el método de inversión</a></li>
 <li class="chapter" data-level="4.1.2" data-path="inversion.html"><a href="inversion.html#ventajas-e-inconvenientes"><i class="fa fa-check"></i><b>4.1.2</b> Ventajas e inconvenientes</a></li>
 <li class="chapter" data-level="4.1.3" data-path="inversion.html"><a href="inversion.html#inversión-aproximada"><i class="fa fa-check"></i><b>4.1.3</b> Inversión aproximada</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>4.2</b> Método de aceptación rechazo</a>
+<li class="chapter" data-level="4.2" data-path="AR.html"><a href="AR.html"><i class="fa fa-check"></i><b>4.2</b> Método de aceptación-rechazo</a>
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="AR.html"><a href="AR.html#algoritmo"><i class="fa fa-check"></i><b>4.2.1</b> Algoritmo</a></li>
 <li class="chapter" data-level="4.2.2" data-path="AR.html"><a href="AR.html#densidades-acotadas-en-un-intervalo-cerrado"><i class="fa fa-check"></i><b>4.2.2</b> Densidades acotadas en un intervalo cerrado</a></li>
@@ -255,7 +255,7 @@ div.csl-indent {
 <li class="chapter" data-level="6" data-path="multivariante.html"><a href="multivariante.html"><i class="fa fa-check"></i><b>6</b> Simulación de distribuciones multivariantes</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="simulación-de-componentes-independientes.html"><a href="simulación-de-componentes-independientes.html"><i class="fa fa-check"></i><b>6.1</b> Simulación de componentes independientes</a></li>
-<li class="chapter" data-level="6.2" data-path="el-método-de-aceptaciónrechazo.html"><a href="el-método-de-aceptaciónrechazo.html"><i class="fa fa-check"></i><b>6.2</b> El método de aceptación/rechazo</a></li>
+<li class="chapter" data-level="6.2" data-path="el-método-de-aceptación-rechazo.html"><a href="el-método-de-aceptación-rechazo.html"><i class="fa fa-check"></i><b>6.2</b> El método de aceptación-rechazo</a></li>
 <li class="chapter" data-level="6.3" data-path="fact-cov.html"><a href="fact-cov.html"><i class="fa fa-check"></i><b>6.3</b> Factorización de la matriz de covarianzas</a></li>
 <li class="chapter" data-level="6.4" data-path="distrcond.html"><a href="distrcond.html"><i class="fa fa-check"></i><b>6.4</b> Método de las distribuciones condicionadas</a></li>
 <li class="chapter" data-level="6.5" data-path="simulación-condicional-e-incondicional.html"><a href="simulación-condicional-e-incondicional.html"><i class="fa fa-check"></i><b>6.5</b> Simulación condicional e incondicional</a>
@@ -461,7 +461,7 @@ div.csl-indent {
 <span class="math display">\[\mathbf{x}_{i+1} = \mathbf{x}_i-[Hf(\mathbf{x}_i)]^{-1}\nabla f(\mathbf{x}_i),\]</span>
 donde <span class="math inline">\(Hf(\mathbf{x}_i)\)</span> es el hessiano de la función (matriz de segundas derivadas) y <span class="math inline">\(\nabla f(\mathbf{x}_i)\)</span> el gradiente (vector de primeras derivadas).
 Estos métodos normalmente funcionan muy bien cuando la función objetivo no tiene mínimos locales (ideal <span class="math inline">\(f\)</span> cuadrática).
-Los resultados obtenidos pueden ser muy malos en caso contrario (especialmente en el caso multidimensional) y dependen en gran medida del punto inicial<a href="#fn30" class="footnote-ref" id="fnref30"><sup>30</sup></a>
+Los resultados obtenidos pueden ser muy malos en caso contrario (especialmente en el caso multidimensional) y dependen en gran medida del punto inicial<a href="#fn33" class="footnote-ref" id="fnref33"><sup>33</sup></a>
 Un ejemplo donde es habitual que aparezcan este tipo de problemas es en la estimación por máxima verosimilitud (la función objetivo puede ser multimodal).</p>
 <div class="example">
 <p><span id="exm:mv-nlm" class="example"><strong>Ejemplo 7.6  (Estimación por máxima verosimilitud mediante un algoritmo de Newton) </strong></span><br></p>
@@ -470,84 +470,84 @@ Un ejemplo donde es habitual que aparezcan este tipo de problemas es en la estim
 tiene una función de verosimilitud asociada bimodal.
 Generaremos una muestra de 200 valores de esta distribución con <span class="math inline">\(\mu_1=0\)</span> y <span class="math inline">\(\mu_2=2.5\)</span>, construiremos la correspondiente función de verosimilitud y la representaremos gráficamente.</p>
 <p>Obtención de la muestra (simulación mixtura dos normales):</p>
-<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="opt-MC.html#cb372-1" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">200</span></span>
-<span id="cb372-2"><a href="opt-MC.html#cb372-2" aria-hidden="true" tabindex="-1"></a>mu1 <span class="ot">&lt;-</span> <span class="dv">0</span> </span>
-<span id="cb372-3"><a href="opt-MC.html#cb372-3" aria-hidden="true" tabindex="-1"></a>mu2 <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
-<span id="cb372-4"><a href="opt-MC.html#cb372-4" aria-hidden="true" tabindex="-1"></a>sd1 <span class="ot">&lt;-</span> sd2 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb372-5"><a href="opt-MC.html#cb372-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb372-6"><a href="opt-MC.html#cb372-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
-<span id="cb372-7"><a href="opt-MC.html#cb372-7" aria-hidden="true" tabindex="-1"></a>p.sim <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="dv">1</span>, <span class="fl">0.25</span>)</span>
-<span id="cb372-8"><a href="opt-MC.html#cb372-8" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(nsim, mu1<span class="sc">*</span>p.sim <span class="sc">+</span> mu2<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p.sim), sd1<span class="sc">*</span>p.sim <span class="sc">+</span> sd2<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p.sim))</span>
-<span id="cb372-9"><a href="opt-MC.html#cb372-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb372-10"><a href="opt-MC.html#cb372-10" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(data, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>))</span>
-<span id="cb372-11"><a href="opt-MC.html#cb372-11" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fl">0.25</span> <span class="sc">*</span> <span class="fu">dnorm</span>(x, mu1, sd1) <span class="sc">+</span> <span class="fl">0.75</span> <span class="sc">*</span> <span class="fu">dnorm</span>(x, mu2, sd2), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="opt-MC.html#cb389-1" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">200</span></span>
+<span id="cb389-2"><a href="opt-MC.html#cb389-2" aria-hidden="true" tabindex="-1"></a>mu1 <span class="ot">&lt;-</span> <span class="dv">0</span> </span>
+<span id="cb389-3"><a href="opt-MC.html#cb389-3" aria-hidden="true" tabindex="-1"></a>mu2 <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
+<span id="cb389-4"><a href="opt-MC.html#cb389-4" aria-hidden="true" tabindex="-1"></a>sd1 <span class="ot">&lt;-</span> sd2 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb389-5"><a href="opt-MC.html#cb389-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb389-6"><a href="opt-MC.html#cb389-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb389-7"><a href="opt-MC.html#cb389-7" aria-hidden="true" tabindex="-1"></a>p.sim <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="dv">1</span>, <span class="fl">0.25</span>)</span>
+<span id="cb389-8"><a href="opt-MC.html#cb389-8" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(nsim, mu1<span class="sc">*</span>p.sim <span class="sc">+</span> mu2<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p.sim), sd1<span class="sc">*</span>p.sim <span class="sc">+</span> sd2<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p.sim))</span>
+<span id="cb389-9"><a href="opt-MC.html#cb389-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb389-10"><a href="opt-MC.html#cb389-10" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(data, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>))</span>
+<span id="cb389-11"><a href="opt-MC.html#cb389-11" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fl">0.25</span> <span class="sc">*</span> <span class="fu">dnorm</span>(x, mu1, sd1) <span class="sc">+</span> <span class="fl">0.75</span> <span class="sc">*</span> <span class="fu">dnorm</span>(x, mu2, sd2), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-13-1.png" width="75%" style="display: block; margin: auto;" /></p>
 <p>Podemos obtener la estimación por máxima verosimilitud de los parámetros empleando la rutina <code>nlm</code> para minimizar el logaritmo (negativo) de la función de verosimilitud:</p>
-<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="opt-MC.html#cb373-1" aria-hidden="true" tabindex="-1"></a>like <span class="ot">&lt;-</span> <span class="cf">function</span>(mu)</span>
-<span id="cb373-2"><a href="opt-MC.html#cb373-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fu">sum</span>(<span class="fu">log</span>((<span class="fl">0.25</span> <span class="sc">*</span> <span class="fu">dnorm</span>(data, mu[<span class="dv">1</span>], sd1) <span class="sc">+</span> <span class="fl">0.75</span> <span class="sc">*</span> <span class="fu">dnorm</span>(data, mu[<span class="dv">2</span>], sd2))))</span>
-<span id="cb373-3"><a href="opt-MC.html#cb373-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># NOTA: Pueden aparecer NA/Inf por log(0)</span></span></code></pre></div>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="opt-MC.html#cb390-1" aria-hidden="true" tabindex="-1"></a>like <span class="ot">&lt;-</span> <span class="cf">function</span>(mu)</span>
+<span id="cb390-2"><a href="opt-MC.html#cb390-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fu">sum</span>(<span class="fu">log</span>((<span class="fl">0.25</span> <span class="sc">*</span> <span class="fu">dnorm</span>(data, mu[<span class="dv">1</span>], sd1) <span class="sc">+</span> <span class="fl">0.75</span> <span class="sc">*</span> <span class="fu">dnorm</span>(data, mu[<span class="dv">2</span>], sd2))))</span>
+<span id="cb390-3"><a href="opt-MC.html#cb390-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># NOTA: Pueden aparecer NA/Inf por log(0)</span></span></code></pre></div>
 <p>Si queremos capturar los valores en los que se evalúa esta función, podemos proceder de forma similar a como se describe en el capítulo
 <a href="http://adv-r.had.co.nz/Function-operators.html#behavioural-fos">Function operators</a>
 de la primera edición del libro “Advanced R” de Hadley Wickham:
 “Behavioural FOs leave the inputs and outputs of a function unchanged,
 but add some extra behaviour”.</p>
-<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="opt-MC.html#cb374-1" aria-hidden="true" tabindex="-1"></a>tee <span class="ot">&lt;-</span> <span class="cf">function</span>(f) {</span>
-<span id="cb374-2"><a href="opt-MC.html#cb374-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(...) {</span>
-<span id="cb374-3"><a href="opt-MC.html#cb374-3" aria-hidden="true" tabindex="-1"></a>    input <span class="ot">&lt;-</span> <span class="cf">if</span>(<span class="fu">nargs</span>() <span class="sc">==</span> <span class="dv">1</span>) <span class="fu">c</span>(...) <span class="cf">else</span> <span class="fu">list</span>(...)</span>
-<span id="cb374-4"><a href="opt-MC.html#cb374-4" aria-hidden="true" tabindex="-1"></a>    output <span class="ot">&lt;-</span> <span class="fu">f</span>(...)</span>
-<span id="cb374-5"><a href="opt-MC.html#cb374-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Hacer algo ...</span></span>
-<span id="cb374-6"><a href="opt-MC.html#cb374-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... con output e input</span></span>
-<span id="cb374-7"><a href="opt-MC.html#cb374-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(output)</span>
-<span id="cb374-8"><a href="opt-MC.html#cb374-8" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb374-9"><a href="opt-MC.html#cb374-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="opt-MC.html#cb391-1" aria-hidden="true" tabindex="-1"></a>tee <span class="ot">&lt;-</span> <span class="cf">function</span>(f) {</span>
+<span id="cb391-2"><a href="opt-MC.html#cb391-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(...) {</span>
+<span id="cb391-3"><a href="opt-MC.html#cb391-3" aria-hidden="true" tabindex="-1"></a>    input <span class="ot">&lt;-</span> <span class="cf">if</span>(<span class="fu">nargs</span>() <span class="sc">==</span> <span class="dv">1</span>) <span class="fu">c</span>(...) <span class="cf">else</span> <span class="fu">list</span>(...)</span>
+<span id="cb391-4"><a href="opt-MC.html#cb391-4" aria-hidden="true" tabindex="-1"></a>    output <span class="ot">&lt;-</span> <span class="fu">f</span>(...)</span>
+<span id="cb391-5"><a href="opt-MC.html#cb391-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Hacer algo ...</span></span>
+<span id="cb391-6"><a href="opt-MC.html#cb391-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... con output e input</span></span>
+<span id="cb391-7"><a href="opt-MC.html#cb391-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(output)</span>
+<span id="cb391-8"><a href="opt-MC.html#cb391-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb391-9"><a href="opt-MC.html#cb391-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>En este caso queremos representar los puntos en los que el algoritmo de optimización evalúa la función objetivo (especialmente como evoluciona el valor óptimo)</p>
-<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="opt-MC.html#cb375-1" aria-hidden="true" tabindex="-1"></a>tee.optim2d <span class="ot">&lt;-</span> <span class="cf">function</span>(f) {</span>
-<span id="cb375-2"><a href="opt-MC.html#cb375-2" aria-hidden="true" tabindex="-1"></a>  best.f <span class="ot">&lt;-</span> <span class="cn">Inf</span>   <span class="co"># Suponemos que se va a minimizar (opción por defecto)</span></span>
-<span id="cb375-3"><a href="opt-MC.html#cb375-3" aria-hidden="true" tabindex="-1"></a>  best.par <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>)   </span>
-<span id="cb375-4"><a href="opt-MC.html#cb375-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(...) {</span>
-<span id="cb375-5"><a href="opt-MC.html#cb375-5" aria-hidden="true" tabindex="-1"></a>    input <span class="ot">&lt;-</span> <span class="fu">c</span>(...)</span>
-<span id="cb375-6"><a href="opt-MC.html#cb375-6" aria-hidden="true" tabindex="-1"></a>    output <span class="ot">&lt;-</span> <span class="fu">f</span>(...)</span>
-<span id="cb375-7"><a href="opt-MC.html#cb375-7" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Hacer algo ...</span></span>
-<span id="cb375-8"><a href="opt-MC.html#cb375-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">points</span>(input[<span class="dv">1</span>], input[<span class="dv">2</span>], <span class="at">col =</span> <span class="st">&quot;lightgray&quot;</span>)</span>
-<span id="cb375-9"><a href="opt-MC.html#cb375-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(best.f <span class="sc">&gt;</span> output) {</span>
-<span id="cb375-10"><a href="opt-MC.html#cb375-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">lines</span>(<span class="fu">rbind</span>(best.par, input), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
-<span id="cb375-11"><a href="opt-MC.html#cb375-11" aria-hidden="true" tabindex="-1"></a>      best.f <span class="ot">&lt;&lt;-</span> output</span>
-<span id="cb375-12"><a href="opt-MC.html#cb375-12" aria-hidden="true" tabindex="-1"></a>      best.par <span class="ot">&lt;&lt;-</span> input</span>
-<span id="cb375-13"><a href="opt-MC.html#cb375-13" aria-hidden="true" tabindex="-1"></a>      <span class="co"># points(best.par[1], best.par[2], col = &quot;blue&quot;, pch = 20)</span></span>
-<span id="cb375-14"><a href="opt-MC.html#cb375-14" aria-hidden="true" tabindex="-1"></a>      <span class="co"># cat(&quot;par = &quot;, best.par, &quot;value = &quot;, best.f, &quot;\n&quot;)</span></span>
-<span id="cb375-15"><a href="opt-MC.html#cb375-15" aria-hidden="true" tabindex="-1"></a>    } </span>
-<span id="cb375-16"><a href="opt-MC.html#cb375-16" aria-hidden="true" tabindex="-1"></a>    <span class="do">## ... con output e input</span></span>
-<span id="cb375-17"><a href="opt-MC.html#cb375-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(output)</span>
-<span id="cb375-18"><a href="opt-MC.html#cb375-18" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb375-19"><a href="opt-MC.html#cb375-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="opt-MC.html#cb392-1" aria-hidden="true" tabindex="-1"></a>tee.optim2d <span class="ot">&lt;-</span> <span class="cf">function</span>(f) {</span>
+<span id="cb392-2"><a href="opt-MC.html#cb392-2" aria-hidden="true" tabindex="-1"></a>  best.f <span class="ot">&lt;-</span> <span class="cn">Inf</span>   <span class="co"># Suponemos que se va a minimizar (opción por defecto)</span></span>
+<span id="cb392-3"><a href="opt-MC.html#cb392-3" aria-hidden="true" tabindex="-1"></a>  best.par <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>)   </span>
+<span id="cb392-4"><a href="opt-MC.html#cb392-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(...) {</span>
+<span id="cb392-5"><a href="opt-MC.html#cb392-5" aria-hidden="true" tabindex="-1"></a>    input <span class="ot">&lt;-</span> <span class="fu">c</span>(...)</span>
+<span id="cb392-6"><a href="opt-MC.html#cb392-6" aria-hidden="true" tabindex="-1"></a>    output <span class="ot">&lt;-</span> <span class="fu">f</span>(...)</span>
+<span id="cb392-7"><a href="opt-MC.html#cb392-7" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Hacer algo ...</span></span>
+<span id="cb392-8"><a href="opt-MC.html#cb392-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">points</span>(input[<span class="dv">1</span>], input[<span class="dv">2</span>], <span class="at">col =</span> <span class="st">&quot;lightgray&quot;</span>)</span>
+<span id="cb392-9"><a href="opt-MC.html#cb392-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(best.f <span class="sc">&gt;</span> output) {</span>
+<span id="cb392-10"><a href="opt-MC.html#cb392-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">lines</span>(<span class="fu">rbind</span>(best.par, input), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb392-11"><a href="opt-MC.html#cb392-11" aria-hidden="true" tabindex="-1"></a>      best.f <span class="ot">&lt;&lt;-</span> output</span>
+<span id="cb392-12"><a href="opt-MC.html#cb392-12" aria-hidden="true" tabindex="-1"></a>      best.par <span class="ot">&lt;&lt;-</span> input</span>
+<span id="cb392-13"><a href="opt-MC.html#cb392-13" aria-hidden="true" tabindex="-1"></a>      <span class="co"># points(best.par[1], best.par[2], col = &quot;blue&quot;, pch = 20)</span></span>
+<span id="cb392-14"><a href="opt-MC.html#cb392-14" aria-hidden="true" tabindex="-1"></a>      <span class="co"># cat(&quot;par = &quot;, best.par, &quot;value = &quot;, best.f, &quot;\n&quot;)</span></span>
+<span id="cb392-15"><a href="opt-MC.html#cb392-15" aria-hidden="true" tabindex="-1"></a>    } </span>
+<span id="cb392-16"><a href="opt-MC.html#cb392-16" aria-hidden="true" tabindex="-1"></a>    <span class="do">## ... con output e input</span></span>
+<span id="cb392-17"><a href="opt-MC.html#cb392-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(output)</span>
+<span id="cb392-18"><a href="opt-MC.html#cb392-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb392-19"><a href="opt-MC.html#cb392-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Representar la superficie del logaritmo de la verosimilitud,
 los puntos iniciales y las iteraciones en la optimización numérica con <code>nlm</code>:</p>
-<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="opt-MC.html#cb376-1" aria-hidden="true" tabindex="-1"></a>mmu1 <span class="ot">&lt;-</span> mmu2 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">5</span>, <span class="at">length =</span> <span class="dv">128</span>)</span>
-<span id="cb376-2"><a href="opt-MC.html#cb376-2" aria-hidden="true" tabindex="-1"></a>lli <span class="ot">&lt;-</span> <span class="fu">outer</span>(mmu1, mmu2, <span class="cf">function</span>(x,y) <span class="fu">apply</span>(<span class="fu">cbind</span>(x,y), <span class="dv">1</span>, like))</span>
-<span id="cb376-3"><a href="opt-MC.html#cb376-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb376-4"><a href="opt-MC.html#cb376-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb376-5"><a href="opt-MC.html#cb376-5" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">xlab =</span> <span class="fu">expression</span>(mu[<span class="dv">1</span>]), <span class="at">ylab =</span> <span class="fu">expression</span>(mu[<span class="dv">2</span>]))</span>
-<span id="cb376-6"><a href="opt-MC.html#cb376-6" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">nlevels =</span> <span class="dv">50</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb376-7"><a href="opt-MC.html#cb376-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb376-8"><a href="opt-MC.html#cb376-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Valores iniciales aleatorios</span></span>
-<span id="cb376-9"><a href="opt-MC.html#cb376-9" aria-hidden="true" tabindex="-1"></a>nstarts <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb376-10"><a href="opt-MC.html#cb376-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb376-11"><a href="opt-MC.html#cb376-11" aria-hidden="true" tabindex="-1"></a>starts <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(<span class="dv">2</span><span class="sc">*</span>nstarts, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">5</span>), <span class="at">nrow =</span> nstarts)</span>
-<span id="cb376-12"><a href="opt-MC.html#cb376-12" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(starts, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span>
-<span id="cb376-13"><a href="opt-MC.html#cb376-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb376-14"><a href="opt-MC.html#cb376-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Minimización numérica con nlm</span></span>
-<span id="cb376-15"><a href="opt-MC.html#cb376-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nstarts){</span>
-<span id="cb376-16"><a href="opt-MC.html#cb376-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Normalmente llamaríamos a nlm(like, start)</span></span>
-<span id="cb376-17"><a href="opt-MC.html#cb376-17" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">nlm</span>(<span class="fu">tee.optim2d</span>(like), starts[j, ]) <span class="co"># nlm(like, starts[j, ])</span></span>
-<span id="cb376-18"><a href="opt-MC.html#cb376-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">points</span>(res<span class="sc">$</span>estimate[<span class="dv">1</span>],res<span class="sc">$</span>estimate[<span class="dv">2</span>], <span class="at">pch =</span> <span class="dv">19</span>)</span>
-<span id="cb376-19"><a href="opt-MC.html#cb376-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;par = &quot;</span>, res<span class="sc">$</span>estimate, <span class="st">&quot;, value =&quot;</span>, res<span class="sc">$</span>minimum, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb376-20"><a href="opt-MC.html#cb376-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="opt-MC.html#cb393-1" aria-hidden="true" tabindex="-1"></a>mmu1 <span class="ot">&lt;-</span> mmu2 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">5</span>, <span class="at">length =</span> <span class="dv">128</span>)</span>
+<span id="cb393-2"><a href="opt-MC.html#cb393-2" aria-hidden="true" tabindex="-1"></a>lli <span class="ot">&lt;-</span> <span class="fu">outer</span>(mmu1, mmu2, <span class="cf">function</span>(x,y) <span class="fu">apply</span>(<span class="fu">cbind</span>(x,y), <span class="dv">1</span>, like))</span>
+<span id="cb393-3"><a href="opt-MC.html#cb393-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb393-4"><a href="opt-MC.html#cb393-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb393-5"><a href="opt-MC.html#cb393-5" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">xlab =</span> <span class="fu">expression</span>(mu[<span class="dv">1</span>]), <span class="at">ylab =</span> <span class="fu">expression</span>(mu[<span class="dv">2</span>]))</span>
+<span id="cb393-6"><a href="opt-MC.html#cb393-6" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">nlevels =</span> <span class="dv">50</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb393-7"><a href="opt-MC.html#cb393-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb393-8"><a href="opt-MC.html#cb393-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Valores iniciales aleatorios</span></span>
+<span id="cb393-9"><a href="opt-MC.html#cb393-9" aria-hidden="true" tabindex="-1"></a>nstarts <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb393-10"><a href="opt-MC.html#cb393-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb393-11"><a href="opt-MC.html#cb393-11" aria-hidden="true" tabindex="-1"></a>starts <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(<span class="dv">2</span><span class="sc">*</span>nstarts, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">5</span>), <span class="at">nrow =</span> nstarts)</span>
+<span id="cb393-12"><a href="opt-MC.html#cb393-12" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(starts, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span>
+<span id="cb393-13"><a href="opt-MC.html#cb393-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb393-14"><a href="opt-MC.html#cb393-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Minimización numérica con nlm</span></span>
+<span id="cb393-15"><a href="opt-MC.html#cb393-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nstarts){</span>
+<span id="cb393-16"><a href="opt-MC.html#cb393-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Normalmente llamaríamos a nlm(like, start)</span></span>
+<span id="cb393-17"><a href="opt-MC.html#cb393-17" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">nlm</span>(<span class="fu">tee.optim2d</span>(like), starts[j, ]) <span class="co"># nlm(like, starts[j, ])</span></span>
+<span id="cb393-18"><a href="opt-MC.html#cb393-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">points</span>(res<span class="sc">$</span>estimate[<span class="dv">1</span>],res<span class="sc">$</span>estimate[<span class="dv">2</span>], <span class="at">pch =</span> <span class="dv">19</span>)</span>
+<span id="cb393-19"><a href="opt-MC.html#cb393-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;par = &quot;</span>, res<span class="sc">$</span>estimate, <span class="st">&quot;, value =&quot;</span>, res<span class="sc">$</span>minimum, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb393-20"><a href="opt-MC.html#cb393-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## par =  -0.038925 2.4946 , value = 361.57 
-## par =  -0.038925 2.4946 , value = 361.57 
-## par =  -0.038925 2.4946 , value = 361.57 
-## par =  3.1322 0.96285 , value = 379.37 
-## par =  20.51 1.712 , value = 474.14</code></pre>
+## par =  -0.038925 2.4946 , value = 361.57</code></pre>
+<pre><code>## par =  -0.038925 2.4946 , value = 361.57 
+## par =  3.1322 0.96285 , value = 379.37</code></pre>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-17-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<pre><code>## par =  20.51 1.712 , value = 474.14</code></pre>
 </div>
 <div id="algoritmos-de-optimización-monte-carlo" class="section level3 hasAnchor" number="7.3.1">
 <h3><span class="header-section-number">7.3.1</span> Algoritmos de optimización Monte Carlo<a href="opt-MC.html#algoritmos-de-optimización-monte-carlo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -557,7 +557,11 @@ Por ejemplo, se podría pensar en generar valores de acuerdo a una densidad (tra
 donde <span class="math inline">\(T&gt;0\)</span> es un parámetro (denominado temperatura) seleccionado de forma que se garantice la integrabilidad.</p>
 <p>Entre los métodos de optimización Monte Carlo podríamos destacar:</p>
 <ul>
-<li><p>Métodos con gradiente aleatorio.</p></li>
+<li><p>Métodos con gradiente aleatorio.
+<!-- 
+    Ver paquete https://cran.r-project.org/package=maxLik
+    Henningsen A, Toomet O (2011). maxLik: A package for maximum likelihood estimation in R. Computational Statistics, 26(3), 443-458. https://doi.org/10.1007/s00180-010-0217-1. 
+    --></p></li>
 <li><p>Temple simulado.</p></li>
 <li><p>Algoritmos genéticos.</p></li>
 <li><p>Monte Carlo EM.</p></li>
@@ -576,40 +580,40 @@ siempre “cuesta abajo”.</p></li>
 </ul>
 <p>Al tener una probabilidad no nula de aceptar una modificación “cuesta arriba” se trata de evitar quedar atrapado en un óptimo local (ver Figura <a href="opt-MC.html#fig:templesimulado">7.8</a>).</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:templesimulado"></span>
-<img src="images/templesimulado.png" alt="Fuente: Premchand Akella ([ppt](https://www.presentica.com/doc/11473134/simulated-annealing-pdf-document))." width="70%" />
+<img src="images/templesimulado.png" alt="Fuente: Premchand Akella ([ppt](https://www.presentica.com/doc/11473134/simulated-annealing-pdf-document))." width="75%" />
 <p class="caption">
 Figura 7.8: Fuente: Premchand Akella (<a href="https://www.presentica.com/doc/11473134/simulated-annealing-pdf-document">ppt</a>).
 </p>
 </div>
 <p>Este procedimiento se puede ver como una adaptación del método de Metropolis-Hastings que se tratará en el Capítulo XX (Introducción a los métodos de cadenas de Markov Monte Carlo).</p>
 <p><strong><em>Algoritmo</em></strong></p>
-<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="opt-MC.html#cb378-1" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> temp.ini</span>
-<span id="cb378-2"><a href="opt-MC.html#cb378-2" aria-hidden="true" tabindex="-1"></a>par <span class="ot">&lt;-</span> par.ini</span>
-<span id="cb378-3"><a href="opt-MC.html#cb378-3" aria-hidden="true" tabindex="-1"></a>fun.par <span class="ot">&lt;-</span> <span class="fu">FUN</span>(par)</span>
-<span id="cb378-4"><a href="opt-MC.html#cb378-4" aria-hidden="true" tabindex="-1"></a>iter <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb378-5"><a href="opt-MC.html#cb378-5" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span>(temp <span class="sc">&gt;</span> temp.final <span class="sc">&amp;&amp;</span> iter <span class="sc">&lt;</span> iter.max) {</span>
-<span id="cb378-6"><a href="opt-MC.html#cb378-6" aria-hidden="true" tabindex="-1"></a>  iter.temp <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb378-7"><a href="opt-MC.html#cb378-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span>(iter.temp <span class="sc">&lt;</span> iter.temp.max)<span class="er">)</span> { <span class="co"># iteraciones con temperatura constante</span></span>
-<span id="cb378-8"><a href="opt-MC.html#cb378-8" aria-hidden="true" tabindex="-1"></a>    par.new <span class="ot">&lt;-</span> <span class="fu">PERTURB</span>(par, temp)</span>
-<span id="cb378-9"><a href="opt-MC.html#cb378-9" aria-hidden="true" tabindex="-1"></a>    fun.new <span class="ot">&lt;-</span> <span class="fu">FUN</span>(par.new)</span>
-<span id="cb378-10"><a href="opt-MC.html#cb378-10" aria-hidden="true" tabindex="-1"></a>    fun.inc <span class="ot">&lt;-</span> fun.new <span class="sc">-</span> fun.par</span>
-<span id="cb378-11"><a href="opt-MC.html#cb378-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ((fun.inc <span class="sc">&lt;</span> <span class="dv">0</span>) <span class="sc">||</span> (<span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&gt;</span> <span class="fu">exp</span>(<span class="sc">-</span>(fun.inc<span class="sc">/</span>temp)))) <span class="cf">break</span></span>
-<span id="cb378-12"><a href="opt-MC.html#cb378-12" aria-hidden="true" tabindex="-1"></a>    iter.temp <span class="ot">&lt;-</span> iter.temp <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb378-13"><a href="opt-MC.html#cb378-13" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb378-14"><a href="opt-MC.html#cb378-14" aria-hidden="true" tabindex="-1"></a>  iter <span class="ot">&lt;-</span> iter <span class="sc">+</span> iter.temp</span>
-<span id="cb378-15"><a href="opt-MC.html#cb378-15" aria-hidden="true" tabindex="-1"></a>  par <span class="ot">&lt;-</span> par.new</span>
-<span id="cb378-16"><a href="opt-MC.html#cb378-16" aria-hidden="true" tabindex="-1"></a>  fun.par <span class="ot">&lt;-</span> fun.new</span>
-<span id="cb378-17"><a href="opt-MC.html#cb378-17" aria-hidden="true" tabindex="-1"></a>  temp <span class="ot">&lt;-</span> <span class="fu">SCHEDULE</span>(temp)</span>
-<span id="cb378-18"><a href="opt-MC.html#cb378-18" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb378-19"><a href="opt-MC.html#cb378-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb378-20"><a href="opt-MC.html#cb378-20" aria-hidden="true" tabindex="-1"></a>FUN <span class="ot">&lt;-</span> <span class="cf">function</span>(par, ...) {...}</span>
-<span id="cb378-21"><a href="opt-MC.html#cb378-21" aria-hidden="true" tabindex="-1"></a>SCHEDULE <span class="ot">&lt;-</span> <span class="cf">function</span>(temp, temp.ini, iter) </span>
-<span id="cb378-22"><a href="opt-MC.html#cb378-22" aria-hidden="true" tabindex="-1"></a>  temp.ini <span class="sc">/</span> <span class="fu">log</span>(iter <span class="sc">+</span> <span class="fu">exp</span>(<span class="dv">1</span>) <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb378-23"><a href="opt-MC.html#cb378-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># temp.ini / log(((temp - 1) %/% tmax)*tmax + exp(1))</span></span>
-<span id="cb378-24"><a href="opt-MC.html#cb378-24" aria-hidden="true" tabindex="-1"></a>PERTURB <span class="ot">&lt;-</span> <span class="cf">function</span>(par, temp, <span class="at">scale =</span> <span class="dv">1</span><span class="sc">/</span>temp.ini) </span>
-<span id="cb378-25"><a href="opt-MC.html#cb378-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rnorm</span>(<span class="fu">length</span>(par), par, <span class="dv">1</span><span class="sc">/</span>(scale<span class="sc">*</span>temp))</span></code></pre></div>
-<p>Una versión de este método está implementado<a href="#fn31" class="footnote-ref" id="fnref31"><sup>31</sup></a> en la función <code>optim()</code>:</p>
-<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="opt-MC.html#cb379-1" aria-hidden="true" tabindex="-1"></a><span class="fu">optim</span>(par, fn, <span class="at">gr =</span> <span class="cn">NULL</span>, ..., <span class="at">method =</span> <span class="st">&quot;SANN&quot;</span>, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">maxit =</span> <span class="dv">10000</span>, <span class="at">temp =</span> <span class="dv">10</span>, <span class="at">tmax =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="opt-MC.html#cb397-1" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> temp.ini</span>
+<span id="cb397-2"><a href="opt-MC.html#cb397-2" aria-hidden="true" tabindex="-1"></a>par <span class="ot">&lt;-</span> par.ini</span>
+<span id="cb397-3"><a href="opt-MC.html#cb397-3" aria-hidden="true" tabindex="-1"></a>fun.par <span class="ot">&lt;-</span> <span class="fu">FUN</span>(par)</span>
+<span id="cb397-4"><a href="opt-MC.html#cb397-4" aria-hidden="true" tabindex="-1"></a>iter <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb397-5"><a href="opt-MC.html#cb397-5" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span>(temp <span class="sc">&gt;</span> temp.final <span class="sc">&amp;&amp;</span> iter <span class="sc">&lt;</span> iter.max) {</span>
+<span id="cb397-6"><a href="opt-MC.html#cb397-6" aria-hidden="true" tabindex="-1"></a>  iter.temp <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb397-7"><a href="opt-MC.html#cb397-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span>(iter.temp <span class="sc">&lt;</span> iter.temp.max)<span class="er">)</span> { <span class="co"># iteraciones con temperatura constante</span></span>
+<span id="cb397-8"><a href="opt-MC.html#cb397-8" aria-hidden="true" tabindex="-1"></a>    par.new <span class="ot">&lt;-</span> <span class="fu">PERTURB</span>(par, temp)</span>
+<span id="cb397-9"><a href="opt-MC.html#cb397-9" aria-hidden="true" tabindex="-1"></a>    fun.new <span class="ot">&lt;-</span> <span class="fu">FUN</span>(par.new)</span>
+<span id="cb397-10"><a href="opt-MC.html#cb397-10" aria-hidden="true" tabindex="-1"></a>    fun.inc <span class="ot">&lt;-</span> fun.new <span class="sc">-</span> fun.par</span>
+<span id="cb397-11"><a href="opt-MC.html#cb397-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ((fun.inc <span class="sc">&lt;</span> <span class="dv">0</span>) <span class="sc">||</span> (<span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&gt;</span> <span class="fu">exp</span>(<span class="sc">-</span>(fun.inc<span class="sc">/</span>temp)))) <span class="cf">break</span></span>
+<span id="cb397-12"><a href="opt-MC.html#cb397-12" aria-hidden="true" tabindex="-1"></a>    iter.temp <span class="ot">&lt;-</span> iter.temp <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb397-13"><a href="opt-MC.html#cb397-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb397-14"><a href="opt-MC.html#cb397-14" aria-hidden="true" tabindex="-1"></a>  iter <span class="ot">&lt;-</span> iter <span class="sc">+</span> iter.temp</span>
+<span id="cb397-15"><a href="opt-MC.html#cb397-15" aria-hidden="true" tabindex="-1"></a>  par <span class="ot">&lt;-</span> par.new</span>
+<span id="cb397-16"><a href="opt-MC.html#cb397-16" aria-hidden="true" tabindex="-1"></a>  fun.par <span class="ot">&lt;-</span> fun.new</span>
+<span id="cb397-17"><a href="opt-MC.html#cb397-17" aria-hidden="true" tabindex="-1"></a>  temp <span class="ot">&lt;-</span> <span class="fu">SCHEDULE</span>(temp)</span>
+<span id="cb397-18"><a href="opt-MC.html#cb397-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb397-19"><a href="opt-MC.html#cb397-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb397-20"><a href="opt-MC.html#cb397-20" aria-hidden="true" tabindex="-1"></a>FUN <span class="ot">&lt;-</span> <span class="cf">function</span>(par, ...) {...}</span>
+<span id="cb397-21"><a href="opt-MC.html#cb397-21" aria-hidden="true" tabindex="-1"></a>SCHEDULE <span class="ot">&lt;-</span> <span class="cf">function</span>(temp, temp.ini, iter) </span>
+<span id="cb397-22"><a href="opt-MC.html#cb397-22" aria-hidden="true" tabindex="-1"></a>  temp.ini <span class="sc">/</span> <span class="fu">log</span>(iter <span class="sc">+</span> <span class="fu">exp</span>(<span class="dv">1</span>) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb397-23"><a href="opt-MC.html#cb397-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># temp.ini / log(((temp - 1) %/% tmax)*tmax + exp(1))</span></span>
+<span id="cb397-24"><a href="opt-MC.html#cb397-24" aria-hidden="true" tabindex="-1"></a>PERTURB <span class="ot">&lt;-</span> <span class="cf">function</span>(par, temp, <span class="at">scale =</span> <span class="dv">1</span><span class="sc">/</span>temp.ini) </span>
+<span id="cb397-25"><a href="opt-MC.html#cb397-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rnorm</span>(<span class="fu">length</span>(par), par, <span class="dv">1</span><span class="sc">/</span>(scale<span class="sc">*</span>temp))</span></code></pre></div>
+<p>Una versión de este método está implementado<a href="#fn34" class="footnote-ref" id="fnref34"><sup>34</sup></a> en la función <code>optim()</code>:</p>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="opt-MC.html#cb398-1" aria-hidden="true" tabindex="-1"></a><span class="fu">optim</span>(par, fn, <span class="at">gr =</span> <span class="cn">NULL</span>, ..., <span class="at">method =</span> <span class="st">&quot;SANN&quot;</span>, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">maxit =</span> <span class="dv">10000</span>, <span class="at">temp =</span> <span class="dv">10</span>, <span class="at">tmax =</span> <span class="dv">10</span>)</span></code></pre></div>
 <p>El argumento <code>gr</code> permite especificar la función para generar posiciones candidatas (por defecto núcleo gausiano con escala proporcional a la temperatura actual) y permitiría resolver problemas de optimización combinatoria.
 El argumento <code>control</code> permite establecer algunas opciones adicionales:</p>
 <ul>
@@ -620,70 +624,70 @@ El argumento <code>control</code> permite establecer algunas opciones adicionale
 <div class="example">
 <p><span id="exm:mv-sann" class="example"><strong>Ejemplo 7.7  (Estimación máximo-verosimil empleando temple simulado) </strong></span><br></p>
 <p>Repetimos el Ejemplo <a href="opt-MC.html#exm:mv-nlm">7.6</a> anterior empleando el método “SANN” de la función <code>optim()</code>:</p>
-<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="opt-MC.html#cb380-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Representar la superficie del logaritmo de la verosimilitud</span></span>
-<span id="cb380-2"><a href="opt-MC.html#cb380-2" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">xlab =</span> <span class="fu">expression</span>(mu[<span class="dv">1</span>]), <span class="at">ylab =</span> <span class="fu">expression</span>(mu[<span class="dv">2</span>]))</span>
-<span id="cb380-3"><a href="opt-MC.html#cb380-3" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">nlevels =</span> <span class="dv">50</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb380-4"><a href="opt-MC.html#cb380-4" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(starts, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span>
-<span id="cb380-5"><a href="opt-MC.html#cb380-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb380-6"><a href="opt-MC.html#cb380-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb380-7"><a href="opt-MC.html#cb380-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nstarts){</span>
-<span id="cb380-8"><a href="opt-MC.html#cb380-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Normalmente llamaríamos a optim(start, like, method = &quot;SANN&quot;)</span></span>
-<span id="cb380-9"><a href="opt-MC.html#cb380-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Note that the &quot;SANN&quot; method depends critically on the settings of the control parameters.</span></span>
-<span id="cb380-10"><a href="opt-MC.html#cb380-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># For &quot;SANN&quot; maxit gives the total number of function evaluations: there is no other stopping criterion. </span></span>
-<span id="cb380-11"><a href="opt-MC.html#cb380-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Defaults to 10000.</span></span>
-<span id="cb380-12"><a href="opt-MC.html#cb380-12" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">optim</span>(starts[j, ], <span class="fu">tee.optim2d</span>(like), <span class="at">method =</span> <span class="st">&quot;SANN&quot;</span>, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">temp =</span> <span class="dv">100</span>, <span class="at">maxit =</span> <span class="dv">2000</span>))</span>
-<span id="cb380-13"><a href="opt-MC.html#cb380-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">points</span>(res<span class="sc">$</span>par[<span class="dv">1</span>],res<span class="sc">$</span>par[<span class="dv">2</span>], <span class="at">pch =</span> <span class="dv">19</span>)</span>
-<span id="cb380-14"><a href="opt-MC.html#cb380-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;par = &quot;</span>, res<span class="sc">$</span>par, <span class="st">&quot;, value =&quot;</span>, res<span class="sc">$</span>value, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb380-15"><a href="opt-MC.html#cb380-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="opt-MC.html#cb399-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Representar la superficie del logaritmo de la verosimilitud</span></span>
+<span id="cb399-2"><a href="opt-MC.html#cb399-2" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">xlab =</span> <span class="fu">expression</span>(mu[<span class="dv">1</span>]), <span class="at">ylab =</span> <span class="fu">expression</span>(mu[<span class="dv">2</span>]))</span>
+<span id="cb399-3"><a href="opt-MC.html#cb399-3" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">nlevels =</span> <span class="dv">50</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb399-4"><a href="opt-MC.html#cb399-4" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(starts, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span>
+<span id="cb399-5"><a href="opt-MC.html#cb399-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb399-6"><a href="opt-MC.html#cb399-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb399-7"><a href="opt-MC.html#cb399-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nstarts){</span>
+<span id="cb399-8"><a href="opt-MC.html#cb399-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Normalmente llamaríamos a optim(start, like, method = &quot;SANN&quot;)</span></span>
+<span id="cb399-9"><a href="opt-MC.html#cb399-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Note that the &quot;SANN&quot; method depends critically on the settings of the control parameters.</span></span>
+<span id="cb399-10"><a href="opt-MC.html#cb399-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># For &quot;SANN&quot; maxit gives the total number of function evaluations: there is no other stopping criterion. </span></span>
+<span id="cb399-11"><a href="opt-MC.html#cb399-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Defaults to 10000.</span></span>
+<span id="cb399-12"><a href="opt-MC.html#cb399-12" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">optim</span>(starts[j, ], <span class="fu">tee.optim2d</span>(like), <span class="at">method =</span> <span class="st">&quot;SANN&quot;</span>, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">temp =</span> <span class="dv">100</span>, <span class="at">maxit =</span> <span class="dv">2000</span>))</span>
+<span id="cb399-13"><a href="opt-MC.html#cb399-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">points</span>(res<span class="sc">$</span>par[<span class="dv">1</span>],res<span class="sc">$</span>par[<span class="dv">2</span>], <span class="at">pch =</span> <span class="dv">19</span>)</span>
+<span id="cb399-14"><a href="opt-MC.html#cb399-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;par = &quot;</span>, res<span class="sc">$</span>par, <span class="st">&quot;, value =&quot;</span>, res<span class="sc">$</span>value, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb399-15"><a href="opt-MC.html#cb399-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-20-1.png" width="75%" style="display: block; margin: auto;" /></p>
 <pre><code>## par =  0.00020235 2.4734 , value = 361.64 
 ## par =  -0.18274 2.4559 , value = 362.03 
 ## par =  -0.028134 2.4845 , value = 361.58 
 ## par =  -0.036429 2.4886 , value = 361.57 
 ## par =  0.68142 2.37 , value = 374.84</code></pre>
 <p>Como alternativa podríamos emplear la siguiente función basada en el algoritmo del Ejemplo 5.9 de Robert y Casella (2010):</p>
-<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="opt-MC.html#cb382-1" aria-hidden="true" tabindex="-1"></a>SA <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, pini, <span class="at">lower =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">upper =</span> <span class="cn">Inf</span>, <span class="at">tolerance =</span> <span class="fl">1e-04</span>, <span class="at">factor =</span> <span class="dv">1</span>) {</span>
-<span id="cb382-2"><a href="opt-MC.html#cb382-2" aria-hidden="true" tabindex="-1"></a>  temp <span class="ot">&lt;-</span> scale <span class="ot">&lt;-</span> iter <span class="ot">&lt;-</span> dif <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb382-3"><a href="opt-MC.html#cb382-3" aria-hidden="true" tabindex="-1"></a>  npar <span class="ot">&lt;-</span> <span class="fu">length</span>(pini) </span>
-<span id="cb382-4"><a href="opt-MC.html#cb382-4" aria-hidden="true" tabindex="-1"></a>  par <span class="ot">&lt;-</span> <span class="fu">matrix</span>(pini, <span class="at">ncol =</span> npar)</span>
-<span id="cb382-5"><a href="opt-MC.html#cb382-5" aria-hidden="true" tabindex="-1"></a>  curfun <span class="ot">&lt;-</span> hval <span class="ot">&lt;-</span> <span class="fu">fun</span>(pini)</span>
-<span id="cb382-6"><a href="opt-MC.html#cb382-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (dif <span class="sc">&gt;</span> tolerance) {</span>
-<span id="cb382-7"><a href="opt-MC.html#cb382-7" aria-hidden="true" tabindex="-1"></a>    prop <span class="ot">&lt;-</span> par[iter, ] <span class="sc">+</span> <span class="fu">rnorm</span>(npar) <span class="sc">*</span> scale[iter]</span>
-<span id="cb382-8"><a href="opt-MC.html#cb382-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Se decide si se acepta la propuesta</span></span>
-<span id="cb382-9"><a href="opt-MC.html#cb382-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">any</span>(prop <span class="sc">&lt;</span> lower) <span class="sc">||</span> <span class="fu">any</span>(prop <span class="sc">&gt;</span> upper) <span class="sc">||</span> </span>
-<span id="cb382-10"><a href="opt-MC.html#cb382-10" aria-hidden="true" tabindex="-1"></a>        (temp[iter] <span class="sc">*</span> <span class="fu">log</span>(<span class="fu">runif</span>(<span class="dv">1</span>)) <span class="sc">&gt;</span> curfun <span class="sc">-</span> <span class="fu">fun</span>(prop)))  prop <span class="ot">&lt;-</span> par[iter, ]</span>
-<span id="cb382-11"><a href="opt-MC.html#cb382-11" aria-hidden="true" tabindex="-1"></a>    curfun <span class="ot">&lt;-</span> <span class="fu">fun</span>(prop)</span>
-<span id="cb382-12"><a href="opt-MC.html#cb382-12" aria-hidden="true" tabindex="-1"></a>    hval <span class="ot">&lt;-</span> <span class="fu">c</span>(hval, curfun)</span>
-<span id="cb382-13"><a href="opt-MC.html#cb382-13" aria-hidden="true" tabindex="-1"></a>    par <span class="ot">&lt;-</span> <span class="fu">rbind</span>(par, prop)</span>
-<span id="cb382-14"><a href="opt-MC.html#cb382-14" aria-hidden="true" tabindex="-1"></a>    iter <span class="ot">&lt;-</span> iter <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb382-15"><a href="opt-MC.html#cb382-15" aria-hidden="true" tabindex="-1"></a>    temp <span class="ot">&lt;-</span> <span class="fu">c</span>(temp, <span class="dv">1</span><span class="sc">/</span><span class="fu">log</span>(iter <span class="sc">+</span> <span class="dv">1</span>))  <span class="co"># Actualizar la temperatura</span></span>
-<span id="cb382-16"><a href="opt-MC.html#cb382-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Se controla el número de perturbaciones aceptadas</span></span>
-<span id="cb382-17"><a href="opt-MC.html#cb382-17" aria-hidden="true" tabindex="-1"></a>    ace <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">unique</span>(par[(iter<span class="sc">/</span><span class="dv">2</span>)<span class="sc">:</span>iter, <span class="dv">1</span>]))</span>
-<span id="cb382-18"><a href="opt-MC.html#cb382-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (ace <span class="sc">==</span> <span class="dv">1</span>) </span>
-<span id="cb382-19"><a href="opt-MC.html#cb382-19" aria-hidden="true" tabindex="-1"></a>      <span class="co"># si es muy pequeño se disminuye la escala de la perturbación</span></span>
-<span id="cb382-20"><a href="opt-MC.html#cb382-20" aria-hidden="true" tabindex="-1"></a>      factor <span class="ot">&lt;-</span> factor<span class="sc">/</span><span class="dv">10</span></span>
-<span id="cb382-21"><a href="opt-MC.html#cb382-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="dv">2</span> <span class="sc">*</span> ace <span class="sc">&gt;</span> iter) </span>
-<span id="cb382-22"><a href="opt-MC.html#cb382-22" aria-hidden="true" tabindex="-1"></a>      <span class="co"># si es muy grande se aumenta</span></span>
-<span id="cb382-23"><a href="opt-MC.html#cb382-23" aria-hidden="true" tabindex="-1"></a>      factor <span class="ot">&lt;-</span> factor <span class="sc">*</span> <span class="dv">10</span></span>
-<span id="cb382-24"><a href="opt-MC.html#cb382-24" aria-hidden="true" tabindex="-1"></a>    scale <span class="ot">&lt;-</span> <span class="fu">c</span>(scale, <span class="fu">max</span>(<span class="dv">2</span>, factor <span class="sc">*</span> <span class="fu">sqrt</span>(temp[iter])))  <span class="co"># Actualizar la escala de la perturbación</span></span>
-<span id="cb382-25"><a href="opt-MC.html#cb382-25" aria-hidden="true" tabindex="-1"></a>    dif <span class="ot">&lt;-</span> (iter <span class="sc">&lt;</span> <span class="dv">100</span>) <span class="sc">+</span> (ace <span class="sc">&lt;</span> <span class="dv">2</span>) <span class="sc">+</span> (<span class="fu">max</span>(hval) <span class="sc">-</span> <span class="fu">max</span>(hval[<span class="dv">1</span><span class="sc">:</span>(iter<span class="sc">/</span><span class="dv">2</span>)]))</span>
-<span id="cb382-26"><a href="opt-MC.html#cb382-26" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb382-27"><a href="opt-MC.html#cb382-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">par =</span> par, <span class="at">value =</span> hval, <span class="at">iter =</span> iter)</span>
-<span id="cb382-28"><a href="opt-MC.html#cb382-28" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb382-29"><a href="opt-MC.html#cb382-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb382-30"><a href="opt-MC.html#cb382-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Representar la superficie del logaritmo de la verosimilitud</span></span>
-<span id="cb382-31"><a href="opt-MC.html#cb382-31" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">xlab =</span> <span class="fu">expression</span>(mu[<span class="dv">1</span>]), <span class="at">ylab =</span> <span class="fu">expression</span>(mu[<span class="dv">2</span>]))</span>
-<span id="cb382-32"><a href="opt-MC.html#cb382-32" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">nlevels =</span> <span class="dv">50</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb382-33"><a href="opt-MC.html#cb382-33" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(starts, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span>
-<span id="cb382-34"><a href="opt-MC.html#cb382-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb382-35"><a href="opt-MC.html#cb382-35" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb382-36"><a href="opt-MC.html#cb382-36" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nstarts) {</span>
-<span id="cb382-37"><a href="opt-MC.html#cb382-37" aria-hidden="true" tabindex="-1"></a>  sar <span class="ot">&lt;-</span> <span class="fu">SA</span>(like, starts[j, ])</span>
-<span id="cb382-38"><a href="opt-MC.html#cb382-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(sar, <span class="fu">lines</span>(par[, <span class="dv">1</span>], par[, <span class="dv">2</span>], <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>))</span>
-<span id="cb382-39"><a href="opt-MC.html#cb382-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(sar, <span class="fu">points</span>(par[iter, <span class="dv">1</span>], par[iter, <span class="dv">2</span>], <span class="at">pch =</span> <span class="dv">19</span>))</span>
-<span id="cb382-40"><a href="opt-MC.html#cb382-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(sar, <span class="fu">cat</span>(<span class="st">&quot;par = &quot;</span>, par[iter, ], <span class="st">&quot;, value =&quot;</span>, value[iter], <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>))</span>
-<span id="cb382-41"><a href="opt-MC.html#cb382-41" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="opt-MC.html#cb401-1" aria-hidden="true" tabindex="-1"></a>SA <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, pini, <span class="at">lower =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">upper =</span> <span class="cn">Inf</span>, <span class="at">tolerance =</span> <span class="fl">1e-04</span>, <span class="at">factor =</span> <span class="dv">1</span>) {</span>
+<span id="cb401-2"><a href="opt-MC.html#cb401-2" aria-hidden="true" tabindex="-1"></a>  temp <span class="ot">&lt;-</span> scale <span class="ot">&lt;-</span> iter <span class="ot">&lt;-</span> dif <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb401-3"><a href="opt-MC.html#cb401-3" aria-hidden="true" tabindex="-1"></a>  npar <span class="ot">&lt;-</span> <span class="fu">length</span>(pini) </span>
+<span id="cb401-4"><a href="opt-MC.html#cb401-4" aria-hidden="true" tabindex="-1"></a>  par <span class="ot">&lt;-</span> <span class="fu">matrix</span>(pini, <span class="at">ncol =</span> npar)</span>
+<span id="cb401-5"><a href="opt-MC.html#cb401-5" aria-hidden="true" tabindex="-1"></a>  curfun <span class="ot">&lt;-</span> hval <span class="ot">&lt;-</span> <span class="fu">fun</span>(pini)</span>
+<span id="cb401-6"><a href="opt-MC.html#cb401-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (dif <span class="sc">&gt;</span> tolerance) {</span>
+<span id="cb401-7"><a href="opt-MC.html#cb401-7" aria-hidden="true" tabindex="-1"></a>    prop <span class="ot">&lt;-</span> par[iter, ] <span class="sc">+</span> <span class="fu">rnorm</span>(npar) <span class="sc">*</span> scale[iter]</span>
+<span id="cb401-8"><a href="opt-MC.html#cb401-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Se decide si se acepta la propuesta</span></span>
+<span id="cb401-9"><a href="opt-MC.html#cb401-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">any</span>(prop <span class="sc">&lt;</span> lower) <span class="sc">||</span> <span class="fu">any</span>(prop <span class="sc">&gt;</span> upper) <span class="sc">||</span> </span>
+<span id="cb401-10"><a href="opt-MC.html#cb401-10" aria-hidden="true" tabindex="-1"></a>        (temp[iter] <span class="sc">*</span> <span class="fu">log</span>(<span class="fu">runif</span>(<span class="dv">1</span>)) <span class="sc">&gt;</span> curfun <span class="sc">-</span> <span class="fu">fun</span>(prop)))  prop <span class="ot">&lt;-</span> par[iter, ]</span>
+<span id="cb401-11"><a href="opt-MC.html#cb401-11" aria-hidden="true" tabindex="-1"></a>    curfun <span class="ot">&lt;-</span> <span class="fu">fun</span>(prop)</span>
+<span id="cb401-12"><a href="opt-MC.html#cb401-12" aria-hidden="true" tabindex="-1"></a>    hval <span class="ot">&lt;-</span> <span class="fu">c</span>(hval, curfun)</span>
+<span id="cb401-13"><a href="opt-MC.html#cb401-13" aria-hidden="true" tabindex="-1"></a>    par <span class="ot">&lt;-</span> <span class="fu">rbind</span>(par, prop)</span>
+<span id="cb401-14"><a href="opt-MC.html#cb401-14" aria-hidden="true" tabindex="-1"></a>    iter <span class="ot">&lt;-</span> iter <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb401-15"><a href="opt-MC.html#cb401-15" aria-hidden="true" tabindex="-1"></a>    temp <span class="ot">&lt;-</span> <span class="fu">c</span>(temp, <span class="dv">1</span><span class="sc">/</span><span class="fu">log</span>(iter <span class="sc">+</span> <span class="dv">1</span>))  <span class="co"># Actualizar la temperatura</span></span>
+<span id="cb401-16"><a href="opt-MC.html#cb401-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Se controla el número de perturbaciones aceptadas</span></span>
+<span id="cb401-17"><a href="opt-MC.html#cb401-17" aria-hidden="true" tabindex="-1"></a>    ace <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">unique</span>(par[(iter<span class="sc">/</span><span class="dv">2</span>)<span class="sc">:</span>iter, <span class="dv">1</span>]))</span>
+<span id="cb401-18"><a href="opt-MC.html#cb401-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (ace <span class="sc">==</span> <span class="dv">1</span>) </span>
+<span id="cb401-19"><a href="opt-MC.html#cb401-19" aria-hidden="true" tabindex="-1"></a>      <span class="co"># si es muy pequeño se disminuye la escala de la perturbación</span></span>
+<span id="cb401-20"><a href="opt-MC.html#cb401-20" aria-hidden="true" tabindex="-1"></a>      factor <span class="ot">&lt;-</span> factor<span class="sc">/</span><span class="dv">10</span></span>
+<span id="cb401-21"><a href="opt-MC.html#cb401-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="dv">2</span> <span class="sc">*</span> ace <span class="sc">&gt;</span> iter) </span>
+<span id="cb401-22"><a href="opt-MC.html#cb401-22" aria-hidden="true" tabindex="-1"></a>      <span class="co"># si es muy grande se aumenta</span></span>
+<span id="cb401-23"><a href="opt-MC.html#cb401-23" aria-hidden="true" tabindex="-1"></a>      factor <span class="ot">&lt;-</span> factor <span class="sc">*</span> <span class="dv">10</span></span>
+<span id="cb401-24"><a href="opt-MC.html#cb401-24" aria-hidden="true" tabindex="-1"></a>    scale <span class="ot">&lt;-</span> <span class="fu">c</span>(scale, <span class="fu">max</span>(<span class="dv">2</span>, factor <span class="sc">*</span> <span class="fu">sqrt</span>(temp[iter])))  <span class="co"># Actualizar la escala de la perturbación</span></span>
+<span id="cb401-25"><a href="opt-MC.html#cb401-25" aria-hidden="true" tabindex="-1"></a>    dif <span class="ot">&lt;-</span> (iter <span class="sc">&lt;</span> <span class="dv">100</span>) <span class="sc">+</span> (ace <span class="sc">&lt;</span> <span class="dv">2</span>) <span class="sc">+</span> (<span class="fu">max</span>(hval) <span class="sc">-</span> <span class="fu">max</span>(hval[<span class="dv">1</span><span class="sc">:</span>(iter<span class="sc">/</span><span class="dv">2</span>)]))</span>
+<span id="cb401-26"><a href="opt-MC.html#cb401-26" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb401-27"><a href="opt-MC.html#cb401-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">par =</span> par, <span class="at">value =</span> hval, <span class="at">iter =</span> iter)</span>
+<span id="cb401-28"><a href="opt-MC.html#cb401-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb401-29"><a href="opt-MC.html#cb401-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb401-30"><a href="opt-MC.html#cb401-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Representar la superficie del logaritmo de la verosimilitud</span></span>
+<span id="cb401-31"><a href="opt-MC.html#cb401-31" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">xlab =</span> <span class="fu">expression</span>(mu[<span class="dv">1</span>]), <span class="at">ylab =</span> <span class="fu">expression</span>(mu[<span class="dv">2</span>]))</span>
+<span id="cb401-32"><a href="opt-MC.html#cb401-32" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">nlevels =</span> <span class="dv">50</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb401-33"><a href="opt-MC.html#cb401-33" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(starts, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span>
+<span id="cb401-34"><a href="opt-MC.html#cb401-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb401-35"><a href="opt-MC.html#cb401-35" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb401-36"><a href="opt-MC.html#cb401-36" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nstarts) {</span>
+<span id="cb401-37"><a href="opt-MC.html#cb401-37" aria-hidden="true" tabindex="-1"></a>  sar <span class="ot">&lt;-</span> <span class="fu">SA</span>(like, starts[j, ])</span>
+<span id="cb401-38"><a href="opt-MC.html#cb401-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(sar, <span class="fu">lines</span>(par[, <span class="dv">1</span>], par[, <span class="dv">2</span>], <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>))</span>
+<span id="cb401-39"><a href="opt-MC.html#cb401-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(sar, <span class="fu">points</span>(par[iter, <span class="dv">1</span>], par[iter, <span class="dv">2</span>], <span class="at">pch =</span> <span class="dv">19</span>))</span>
+<span id="cb401-40"><a href="opt-MC.html#cb401-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(sar, <span class="fu">cat</span>(<span class="st">&quot;par = &quot;</span>, par[iter, ], <span class="st">&quot;, value =&quot;</span>, value[iter], <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>))</span>
+<span id="cb401-41"><a href="opt-MC.html#cb401-41" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-21-1.png" width="75%" style="display: block; margin: auto;" /></p>
 <pre><code>## par =  -0.20913 2.3415 , value = 363 
 ## par =  -0.29867 2.5733 , value = 363.66 
 ## par =  -0.47085 2.426 , value = 365.33 
@@ -714,18 +718,18 @@ tipos de algoritmos.</p>
 <div class="example">
 <p><span id="exm:mv-DEoptim" class="example"><strong>Ejemplo 7.8  (Estimación máximo-verosimil empleando un algoritmo genético) </strong></span><br></p>
 <p>Repetimos el ejemplo anterior empleando el algoritmo genético implementado en la función <code>DEoptim::DEOptim()</code>:</p>
-<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="opt-MC.html#cb384-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(DEoptim)</span>
-<span id="cb384-2"><a href="opt-MC.html#cb384-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb384-3"><a href="opt-MC.html#cb384-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Representar la superficie del logaritmo de la verosimilitud</span></span>
-<span id="cb384-4"><a href="opt-MC.html#cb384-4" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">xlab =</span> <span class="fu">expression</span>(mu[<span class="dv">1</span>]), <span class="at">ylab =</span> <span class="fu">expression</span>(mu[<span class="dv">2</span>]))</span>
-<span id="cb384-5"><a href="opt-MC.html#cb384-5" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">nlevels =</span> <span class="dv">50</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb384-6"><a href="opt-MC.html#cb384-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Estos algoritmos no requieren valores iniciales (los generan al azar en el rango)</span></span>
-<span id="cb384-7"><a href="opt-MC.html#cb384-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb384-8"><a href="opt-MC.html#cb384-8" aria-hidden="true" tabindex="-1"></a>lower <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>)</span>
-<span id="cb384-9"><a href="opt-MC.html#cb384-9" aria-hidden="true" tabindex="-1"></a>upper <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>)</span>
-<span id="cb384-10"><a href="opt-MC.html#cb384-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb384-11"><a href="opt-MC.html#cb384-11" aria-hidden="true" tabindex="-1"></a><span class="co"># DEoptim(like, lower, upper)</span></span>
-<span id="cb384-12"><a href="opt-MC.html#cb384-12" aria-hidden="true" tabindex="-1"></a>der <span class="ot">&lt;-</span> <span class="fu">DEoptim</span>(<span class="fu">tee.optim2d</span>(like), lower, upper, <span class="fu">DEoptim.control</span>(<span class="at">itermax =</span> <span class="dv">10</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="opt-MC.html#cb403-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(DEoptim)</span>
+<span id="cb403-2"><a href="opt-MC.html#cb403-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb403-3"><a href="opt-MC.html#cb403-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Representar la superficie del logaritmo de la verosimilitud</span></span>
+<span id="cb403-4"><a href="opt-MC.html#cb403-4" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">xlab =</span> <span class="fu">expression</span>(mu[<span class="dv">1</span>]), <span class="at">ylab =</span> <span class="fu">expression</span>(mu[<span class="dv">2</span>]))</span>
+<span id="cb403-5"><a href="opt-MC.html#cb403-5" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(mmu1, mmu2, <span class="sc">-</span>lli, <span class="at">nlevels =</span> <span class="dv">50</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb403-6"><a href="opt-MC.html#cb403-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Estos algoritmos no requieren valores iniciales (los generan al azar en el rango)</span></span>
+<span id="cb403-7"><a href="opt-MC.html#cb403-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb403-8"><a href="opt-MC.html#cb403-8" aria-hidden="true" tabindex="-1"></a>lower <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb403-9"><a href="opt-MC.html#cb403-9" aria-hidden="true" tabindex="-1"></a>upper <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb403-10"><a href="opt-MC.html#cb403-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb403-11"><a href="opt-MC.html#cb403-11" aria-hidden="true" tabindex="-1"></a><span class="co"># DEoptim(like, lower, upper)</span></span>
+<span id="cb403-12"><a href="opt-MC.html#cb403-12" aria-hidden="true" tabindex="-1"></a>der <span class="ot">&lt;-</span> <span class="fu">DEoptim</span>(<span class="fu">tee.optim2d</span>(like), lower, upper, <span class="fu">DEoptim.control</span>(<span class="at">itermax =</span> <span class="dv">10</span>))</span></code></pre></div>
 <pre><code>## Iteration: 1 bestvalit: 373.132461 bestmemit:   -0.764103    2.196961
 ## Iteration: 2 bestvalit: 367.580379 bestmemit:   -0.430095    2.196961
 ## Iteration: 3 bestvalit: 367.580379 bestmemit:   -0.430095    2.196961
@@ -736,18 +740,18 @@ tipos de algoritmos.</p>
 ## Iteration: 8 bestvalit: 361.657986 bestmemit:   -0.064005    2.452184
 ## Iteration: 9 bestvalit: 361.657986 bestmemit:   -0.064005    2.452184
 ## Iteration: 10 bestvalit: 361.657986 bestmemit:   -0.064005    2.452184</code></pre>
-<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="opt-MC.html#cb386-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Por defecto fija el tamaño de la población a NP = 10*npar = 20</span></span>
-<span id="cb386-2"><a href="opt-MC.html#cb386-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Puede ser mejor dejar el valor por defecto itermax = 200</span></span>
-<span id="cb386-3"><a href="opt-MC.html#cb386-3" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(der<span class="sc">$</span>optim<span class="sc">$</span>bestmem[<span class="dv">1</span>], der<span class="sc">$</span>optim<span class="sc">$</span>bestmem[<span class="dv">2</span>], <span class="at">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
-<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="opt-MC.html#cb405-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Por defecto fija el tamaño de la población a NP = 10*npar = 20</span></span>
+<span id="cb405-2"><a href="opt-MC.html#cb405-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Puede ser mejor dejar el valor por defecto itermax = 200</span></span>
+<span id="cb405-3"><a href="opt-MC.html#cb405-3" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(der<span class="sc">$</span>optim<span class="sc">$</span>bestmem[<span class="dv">1</span>], der<span class="sc">$</span>optim<span class="sc">$</span>bestmem[<span class="dv">2</span>], <span class="at">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
+<p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-22-1.png" width="75%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="30">
-<li id="fn30"><p>Este tipo de algoritmos se denominan <em>codiciosos</em> o <em>voraces</em>, porque buscan la mejor opción a “corto plazo”.<a href="opt-MC.html#fnref30" class="footnote-back">↩︎</a></p></li>
-<li id="fn31"><p>En el fichero fuente <a href="https://svn.r-project.org/R/trunk/src/appl/optim.c">optim.c</a>.<a href="opt-MC.html#fnref31" class="footnote-back">↩︎</a></p></li>
+<ol start="33">
+<li id="fn33"><p>Este tipo de algoritmos se denominan <em>codiciosos</em> o <em>voraces</em>, porque buscan la mejor opción a “corto plazo”.<a href="opt-MC.html#fnref33" class="footnote-back">↩︎</a></p></li>
+<li id="fn34"><p>En el fichero fuente <a href="https://svn.r-project.org/R/trunk/src/appl/optim.c">optim.c</a>.<a href="opt-MC.html#fnref34" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -770,42 +774,42 @@ tipos de algoritmos.</p>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": true,
-"facebook": false,
-"twitter": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/rubenfcasal/simbook/edit/master/07-Monte_Carlo.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["Simulacion.pdf"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rubenfcasal/simbook/edit/master/07-Monte_Carlo.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["Simulacion.pdf"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>
