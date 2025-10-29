@@ -37,6 +37,10 @@ Empregar exemplos en lugar de exercicios
 En este capítulo se expondrán métodos generales para simular distribuciones continuas: el método de inversión (siguiente sección), los basados en aceptación-rechazo (secciones \@ref(AR) y \@ref(modAR)) y el método de composición (Sección \@ref(composicion)). 
 En todos los casos como punto de partida es necesario disponer de un método de generación de números pseudoaleatorios uniformes en $(0,1)$.
 
+Emplearemos $X \sim Y$ para indicar que las variables aleatorias $X$ e $Y$ siguen la misma distribución.
+Por ejemplo, $U \sim \mathcal{U}(0,1)$ denotará que $U$ es una variable aleatoria con distribución uniforme en el intervalo $(0,1)$.
+En un abuso de notación, emplearemos también $X \sim f$, siendo $f$ una función de densidad, para indicar que $X$ es una variable aleatoria (absolutamente continua) con función de densidad $f$.
+
 
 ## Método de inversión {#inversion}
 
@@ -134,16 +138,14 @@ Como se observa en la Figura \@ref(fig:exp-inv-plot) se trata de un método exac
 :::
 
 
-### Algunas distribuciones que pueden simularse por el método de inversión
+### Algunas distribuciones que pueden simularse por el método de inversión {#ejemplos-inv}
 
-A continuación se incluyen algunas distribuciones que se pueden simular
-fácilmente mediante el método de inversión. Se adjunta una forma
-simplificada del método que tiene por objeto evitar cálculos
-innecesarios (tal y como se hizo en el ejemplo de la exponencial).
+A continuación se incluyen algunas distribuciones que se pueden simular fácilmente mediante el método de inversión. 
+Se adjunta una forma simplificada del método que tiene por objeto evitar cálculos innecesarios (tal y como se hizo en el ejemplo de la exponencial).
 
-| Nombre  | Densidad  | $F(x)$  | $F^{-1}\left( U\right)$  | Forma simplificada |
+| Distribución  | Densidad  | $F(x)$  | $F^{-1}\left( U\right)$  | Forma simplificada |
 | ------------- | :-----------: | :-----------: | :-----------: | :-----------: |
-| $\exp\left( \lambda\right)$ ($\lambda>0$)  | $\lambda e^{-\lambda x}$, si $x\geq0$ | $1-e^{-\lambda x}$  | $-\dfrac{\ln\left( 1-U\right)  }\lambda$  | $-\dfrac{\ln U}\lambda$ |
+| Exponencial ($\lambda>0$)  | $\lambda e^{-\lambda x}$, si $x\geq0$ | $1-e^{-\lambda x}$  | $-\dfrac{\ln\left( 1-U\right)  }\lambda$  | $-\dfrac{\ln U}\lambda$ |
 | Cauchy  | $\dfrac1{\pi\left( 1+x^{2}\right)}$  | $\dfrac12+\dfrac{\arctan x}\pi$ | $\tan\left( \pi\left( U-\dfrac12\right) \right)$ | $\tan\pi U$ |
 | Triangular en $\left( 0,a\right)$ | $\dfrac2a\left( 1-\dfrac xa\right)$, si $0\leq x\leq a$  | $\dfrac2a\left(x-\dfrac{x^{2}}{2a}\right)$  | $a\left( 1-\sqrt{1-U}\right)$  | $a\left( 1-\sqrt{U}\right)$ |
 | Pareto ($a,b>0$) | $\dfrac{ab^{a}}{x^{a+1}}$, si $x\geq b$ | $1-\left( \dfrac bx\right)^{a}$ | $\dfrac b{\left( 1-U\right)^{1/a}}$ | $\dfrac b{U^{1/a}}$ |
@@ -153,14 +155,10 @@ innecesarios (tal y como se hizo en el ejemplo de la exponencial).
 ::: {.example #ddexp name="distribución doble exponencial"}
 <br>
 
-<!-- 
-Pendente: Incluir contas distribución
--->
+La distribución doble exponencial[^04-inversion-1] (o distribución de Laplace) de parámetro $\lambda$ tiene función de densidad:
+$$f(x) = \frac{\lambda}{2} e^{-\lambda |x|} \text{, } x \in \mathbb{R}$$ 
 
-La distribución doble exponencial^[Esta distribución también se puede generar fácilmente simulando una distribución exponencial y asignando un signo positivo o negativo con equiprobabilidad (ver Ejemplo \@ref(exm:dexp-mix)) y función `r cite_fgithub(rdexp, lnk = "ddexp", full = TRUE)` (fichero [*ddexp.R*](R/ddexp.R)).] (o distribución de Laplace) de
-parámetro $\lambda$ tiene función de densidad:
-$$f(x)  =\frac{\lambda}{2}e^{-\lambda\left\vert x\right\vert
-}\text{, }x\in\mathbb{R}$$ 
+[^04-inversion-1]: Esta distribución también se puede generar fácilmente simulando una distribución exponencial y asignando un signo positivo o negativo con equiprobabilidad (ver Ejemplo \@ref(exm:dexp-mix)) y función `r cite_fgithub(rdexp, lnk = "ddexp", full = TRUE)` (fichero [*ddexp.R*](R/ddexp.R)).
 
 y función de distribución:
 
@@ -253,14 +251,20 @@ Además, aún disponiendo de una expresión explícita para $F^{-1}( u )$, su ev
 
 Como alternativa a estos inconvenientes se podrían emplear métodos numéricos para resolver $F(x) - u = 0$ de forma aproximada, aunque habría que resolver numéricamente esta ecuación para cada valor aleatorio que se desea generar.
 Otra posibilidad, en principio preferible, sería emplear una aproximación a $F^{-1}( u )$, dando lugar al *método de inversión aproximada* (como se indicó en la Sección \@ref(oprrng), R emplea por defecto este método para la generación de la distribución normal).
-  
+
+<!-- 
+Ejercicio alumnos   
+-->
+
 
 ### Inversión aproximada
 
 En muchos casos en los que no se puede emplear la expresión exacta de la función cuantil $F^{-1}( u )$, se dispone de una aproximación suficientemente buena que se puede emplear en el algoritmo anterior (se obtendrían simulaciones con una distribución aproximada a la deseada).
 
-Por ejemplo, para aproximar la función cuantil de la normal estándar, 
-@odeh1974 consideraron la siguiente función auxiliar^[R emplea una aproximación similar, basada en el algoritmo de @wichura1988 más preciso, y que está implementado en el fichero fuente [qnorm.c](https://svn.r-project.org/R/trunk/src/nmath/qnorm.c).]:
+Por ejemplo, para aproximar la función cuantil de la normal estándar, @odeh1974 consideraron la siguiente función auxiliar[^04-inversion-2]:
+
+[^04-inversion-2]: R emplea una aproximación similar, basada en el algoritmo de @wichura1988 más preciso, y que está implementado en el fichero fuente [qnorm.c](https://svn.r-project.org/R/trunk/src/nmath/qnorm.c).
+
 $$ g\left( v\right)  =\sqrt{-2\ln v}\frac{A\left( \sqrt{-2\ln v}\right)
 }{B\left( \sqrt{-2\ln v}\right)  },$$
 siendo $A(x) =\sum_{i=0}^{4}a_{i}x^{i}$
@@ -297,7 +301,7 @@ Para $u \notin [10^{-20},1-10^{-20}]$ (que sólo ocurre con una probabilidad de 
 En manuales de funciones matemáticas, como [Abramowitz y Stegun (1964)](https://www.math.ubc.ca/~cbm/aands/frameindex.htm), se tienen aproximaciones de la función cuantil de las principales distribuciones (por ejemplo en la página [993](https://www.math.ubc.ca/~cbm/aands/page_933.htm) las correspondientes a la normal estándar). 
 
 
-## Método de aceptación rechazo {#AR}
+## Método de aceptación-rechazo {#AR}
 
 Se trata de un método universal alternativo al de inversión para el caso de que no se pueda emplear la función cuantil, pero se dispone de una expresión (preferiblemente sencilla) para la función de densidad objetivo $f\left( x \right)$. 
 
@@ -353,7 +357,9 @@ points(x, y, col = ifelse(y <= dbeta(x, s1, s2), "black", "lightgray"))
 par(old.par)
 ```
 
-El resultado anterior es también válido para una cuasi-densidad^[Una cuasi-densidad es cualquier función no negativa $f^{\ast}(x) \geq 0$ integrable. Por tanto, si $k = \int_{-\infty}^{+\infty}f^{\ast}(x)dx$ es el área bajo esta curva, denominada *constante normalizadora*, entonces $f(x) = \frac{1}{k}f^{\ast}(x)$ es una densidad.
+El resultado anterior es también válido para una cuasi-densidad[^04-AR-1]  $f^{\ast}$ (no depende de la constante normalizadora): 
+
+[^04-AR-1]: Una cuasi-densidad es cualquier función no negativa $f^{\ast}(x) \geq 0$ integrable. Por tanto, si $k = \int_{-\infty}^{+\infty}f^{\ast}(x)dx$ es el área bajo esta curva, denominada *constante normalizadora*, entonces $f(x) = \frac{1}{k}f^{\ast}(x)$ es una densidad.
 En ocasiones no interesa especialmente esta constante $k$ (no es necesario calcularla o simplemente se quieren simplificar las expresiones) y se denota por $f(x) \propto f^{\ast}(x)$ que la función de densidad es proporcional a la cuasi-densidad. 
 Por ejemplo, a partir de la densidad conjunta $f(x, y)$ de una variable aleatoria bidimensional $(X, Y)$, podemos obtener la densidad de la distribución condicionada $X|Y=y_0$: 
 $$f(x | y_0) = \frac{f(x, y_0)}{f_Y(y_0)}$$ 
@@ -362,9 +368,9 @@ De la expresión anterior también se deduce que:
 $$f(x, y) = f(x | y)f_Y(y) = f(y | x)f_X(x)$$
 y podríamos escribir que:
 $$f(y | x) \propto f(x | y)f_Y(y)$$ 
-que sería una expresión del *teorema de Bayes* aplicado a densidades.]  $f^{\ast}$ (no depende de la constante normalizadora): 
+que sería una expresión del *teorema de Bayes* aplicado a densidades.
 
-* Si $\left( X,Y\right) \sim \mathcal{U}\left(A_{f^{\ast}}\right)$ entonces^[Emplearemos también $X\sim f$ para indicar que $X$ es una variable aleatoria con función de densidad $f$.] $X\sim f$.
+* Si $\left( X,Y\right) \sim \mathcal{U}\left(A_{f^{\ast}}\right)$ entonces $X\sim f$.
 
 Para simular una distribución uniforme en el hipografo $A_{f}$ (o en $A_{f^{\ast}}$), lo que se hace es utilizar una variable aleatoria auxiliar $T$ con función de densidad $g$, similar a $f$ y fácil de simular, y una constante $c > 0$ verificando:
 $$f(x) \leq c\cdot g(x) \text{, }\forall x\in \mathbb{R}.$$
@@ -401,7 +407,7 @@ $$f(x) \leq c\cdot g(x)
 
 1.  Generar $U \sim \mathcal{U}(0, 1)$.
 
-2.  Generar $T\sim g$.
+2.  Generar $T \sim g$.
 
 3.  Si $c\cdot U\cdot g(T) \leq f(T)$
     devolver $X=T$,
@@ -457,8 +463,10 @@ con $g(x) = 1$ si $0 \leq x \leq 1$.
 
 :::
 
-Esta distribución está acotada y es unimodal, si $\alpha$ y $\beta$ son mayores^[Si $\alpha$ o $\beta$ son iguales a 1 puede simularse fácilmente por el método de inversión y si alguno es menor que 1 esta densidad no está acotada.] que 1, y su moda es $\frac{\alpha - 1} {\alpha + \beta - 2}$, por lo que: 
+Esta distribución está acotada y es unimodal, si $\alpha$ y $\beta$ son mayores[^04-AR-2] que 1, y su moda es $\frac{\alpha - 1} {\alpha + \beta - 2}$, por lo que: 
 $$c = M = \max_{0 \leq x \leq 1}f(x) = f\left( \frac{\alpha - 1} {\alpha + \beta - 2} \right).$$
+
+[^04-AR-2]: Si $\alpha$ o $\beta$ son iguales a 1 puede simularse fácilmente por el método de inversión y si alguno es menor que 1 esta densidad no está acotada.
 
 Por ejemplo, considerando $\alpha = 2$ y $\beta = 4$, si comparamos la densidad objetivo con la auxiliar reescalada (Figura \@ref(fig:dbeta-dunif-plot)), confirmamos que esta última está por encima (y llegan a tocarse, por lo que se está empleando la cota óptima; ver siguiente sección).
 
@@ -542,8 +550,12 @@ $0 \le x \le 2$, cero en otro caso. Estudiar su eficiencia.
 ### Eficiencia del algoritmo
 
 Como medida de la eficiencia del algoritmo de aceptación-rechazo podríamos considerar el número de iteraciones del algoritmo, es decir, el número de generaciones de la densidad auxiliar y de comparaciones para aceptar un valor de la densidad objetivo.
-Este número $N$ es aleatorio y sigue una distribución geométrica (número de pruebas necesarias hasta obtener el primer éxito) con parámetro $p$ (probabilidad de éxito) la probabilidad de aceptación en el paso 3:
+Este número $N$ es aleatorio y sigue una distribución geométrica (entendida como el número de pruebas necesarias hasta obtener el primer éxito[^04-AR-3]) con parámetro $p$ (probabilidad de éxito) la probabilidad de aceptación en el paso 3:
 $$p = \frac{\text{area}\left(A_{f}\right)}{\text{area}\left( A_{cg}\right)} = \frac{1}{c}.$$
+
+[^04-AR-3] Esta distribución también se puede definir como el número de fracasos hasta el primer éxito al realizar experimentos de Bernoulli independientes, que es como la consideraremos normalmente (ya que coincide con la parametrización de R, como un caso particular de la distribución binomial negativa).
+Sin embargo, en este caso resulta más cómodo considerar el número total de pruebas.
+
 Por tanto:
 $$E\left( N \right) = \frac1p = c$$ 
 es el número medio de iteraciones del algoritmo (el número medio de pares de variables $\left( T,U\right)$ que se necesitan generar, y de comparaciones, para obtener una simulación de la densidad objetivo).
@@ -754,35 +766,43 @@ c.opt2
 El algoritmo de aceptación-rechazo se emplea habitualmente en inferencia bayesiana.
 Denotando por:
 
-* $f(x|\theta)$ la densidad muestral.
+* $f(x | \theta)$ la densidad de una observación condicionada al valor del parámetro $\theta \in \Theta$.
 
-* $\pi(\theta)$ la densidad a priori.
+* $\pi(\theta)$ la densidad a priori (se supone que el parámetro $\theta$ es aleatorio).
 
 * $\mathbf{x}=(x_1,...,x_n)^{\top}$ la muestra observada.
 
+Suponiendo que $\mathbf{x}$ es una muestra aleatoria simple, tendríamos que:
+$$f(\mathbf{x}|\theta) = \prod\limits_{i=1}^{n}f(x_i | \theta)$$
+que, considerada como función de $\theta$, se denomina función de verosimilitud y se denota habitualmente por $\mathcal{L}(\theta | \mathbf{x})$.
+Empleando esta notación, también podríamos expresar la distribución conjunta como:
+$$f(\mathbf{x}, \theta) = \mathcal{L}(\theta | \mathbf{x})\pi(\theta)$$
+
 El objetivo sería simular la distribución a posteriori de $\theta$:
-$$\pi(\theta|\mathbf{x}) = \frac{L(\mathbf{x}|\theta)\pi(\theta)}{\int L(\mathbf{x}|\theta)\pi(\theta)d\theta},$$
-siendo $L(\mathbf{x}|\theta)$ la función de verosimilitud ($L(\mathbf{x}|\theta) = \prod\limits_{i=1}^{n}f(x_i|\theta)$ suponiendo i.i.d.). 
+$$\pi(\theta|\mathbf{x}) = \frac{\mathcal{L}(\theta | \mathbf{x})\pi(\theta)}{\int_\Theta \mathcal{L}(\theta | \mathbf{x})\pi(\theta)d\theta}$$
 Es decir:
-$$\pi(\theta | \mathbf{x}) \propto L(\mathbf{x}| \theta)\pi(\theta).$$
+$$\pi(\theta | \mathbf{x}) \propto \mathcal{L}(\theta | \mathbf{x})\pi(\theta).$$
 
-Como esta distribución cambia al variar la muestra observada, puede resultar difícil encontrar una densidad auxiliar adecuada para simular valores de la densidad a posteriori $\pi(\theta|\mathbf{x})$.
-Por ejemplo, podríamos emplear la densidad a priori $\pi(\theta)$ como densidad auxiliar.
-Teniendo en cuenta que: 
+Como esta distribución cambia al variar la muestra observada, puede resultar difícil encontrar una densidad auxiliar adecuada para simular valores de la densidad a posteriori $\pi(\theta|\mathbf{x})$ mediante el método de aceptación-rechazo.
 
-* $\pi(\theta |\mathbf{x})/\pi(\theta)\propto L(\mathbf{x}|\theta)$
+Una forma de proceder (en principio no recomendada), sería considerar como densidad auxiliar la densidad a priori $\pi(\theta)$.
+Así resultaría bastante fácil obtener la cota optima $\tilde{c}$ y verificar la condición de aceptación[^04-AR-4], ya que: 
 
-* $L(\mathbf{x}|\theta)\leq \tilde{c}=L(\mathbf{x}|\hat{\theta})$ siendo
+* $\pi(\theta |\mathbf{x})/\pi(\theta)\propto \mathcal{L}(\theta | \mathbf{x})$
+
+* $\mathcal{L}(\theta | \mathbf{x}) \leq \tilde{c} = \mathcal{L}(\hat{\theta} | \mathbf{x})$ siendo
   $\hat{\theta}$ el estimador máximo verosímil de $\theta$.
 
-El algoritmo sería el siguiente:
+[^04-AR-4]: La condición $\tilde{c} \cdot U \cdot g(T) \leq f^{\ast}(T)$ del algoritmo general, se puede reescribir como $\tilde{c} \cdot U \leq f^{\ast}(T) / g(T)$.
+
+Teniendo en cuenta esto, el algoritmo de aceptación-rechazo sería:
 
 1. Generar $U \sim \mathcal{U}(0, 1)$.
 
 2. Generar $\tilde{\theta}\sim \pi(\theta)$.
 
-3.  Si $L(\mathbf{x}|\hat{\theta})\cdot U \leq 
-    L(\mathbf{x}|\tilde{\theta})$ devolver $\tilde{\theta}$,
+3.  Si $\mathcal{L}(\hat{\theta} | \mathbf{x}) \cdot U \leq 
+    \mathcal{L}(\tilde{\theta} | \mathbf{x})$ devolver $\tilde{\theta}$,
 
     en caso contrario volver al paso 1.
     
@@ -842,7 +862,7 @@ a)  Generar una muestra i.i.d. $X_{i}\sim N(\theta_{0},1)$ de tamaño
     f.cuasi <- function(mu) lik(mu)*dcauchy(mu)    
     curve(c.cuasi * dcauchy(x), xlim = c(-4, 4), ylim = c(0, c.cuasi/pi), lty = 2,
           xlab = "mu", ylab = "cuasi-densidad")
-    curve(f.cuasi, add = TRUE)
+    curve(f.cuasi, col = "blue", add = TRUE)
     ```
     
     Por ejemplo, podríamos emplear el siguiente código para generar simulaciones de la distribución a posteriori mediante aceptación-rechazo a partir de la distribución de Cauchy:
@@ -1016,7 +1036,7 @@ Se puede ver como una modificación del método de aceptación-rechazo, de espec
 Si $(U,V)$ se distribuye uniformemente sobre:
 $$C_{f^{\ast}} = \left\{ (u, v) \in \mathbb{R}^{2} : 
 0<u\leq \sqrt{f^{\ast}(v/u)} \right\},$$
-siendo $f^{\ast}$ una función no negativa integrable (cuasi-densidad), entonces $X=V/U$ tiene función de densidad proporcional a $f^{\ast}$ [kinderman1977]. 
+siendo $f^{\ast}$ una función no negativa integrable (cuasi-densidad), entonces $X=V/U$ tiene función de densidad proporcional a $f^{\ast}$ [@kinderman1977]. 
 Además $C_{f^{\ast}}$ tiene área finita, por lo que pueden generarse fácilmente los valores $(U,V)$ con distribución $\mathcal{U}\left(C_{f^{\ast}}\right)$ a partir de componentes uniformes unidimensionales (aceptando los puntos dentro de $C_{f^{\ast}}$).
 
 De modo análogo al método de aceptación-rechazo, hay modificaciones para acelerar los cálculos y automatizar el proceso, construyendo regiones mediante polígonos:
@@ -1116,7 +1136,7 @@ Este método está implementado en la función `r cite_fgithub(rdexp, lnk = "dde
 
 
 
-En ciertas ocasiones, por comodidad, para simular una muestra de tamaño $n$, se simulan muestras de tamaño $np_{i}$ con densidad $f_{i}$ y, si el orden es importante, se combinan aleatoriamente
+En ciertas ocasiones, por comodidad, para simular una muestra de tamaño $n$, se simulan muestras de tamaño $np_{i}$ con densidad $f_{i}$ y, si el orden es importante, se combinan aleatoriamente.
 
 Otro ejemplo de una mixtura discreta es el estimador tipo núcleo de la densidad (ver e.g. la ayuda de la función `density()` de R o la Sección \@ref(modunif-boot-suav)).
 Simular a partir de una estimación de este tipo es lo que se conoce como *bootstrap suavizado*. 
@@ -1139,9 +1159,12 @@ ya que el resultado sería válido cambiando las funciones de densidad $f$ y $g$
 ## Métodos específicos para la generación de algunas distribuciones notables {#notables-cont}
 
 En el pasado se ha realizado un esfuerzo considerable para desarrollar métodos eficientes para la simulación de las distribuciones de probabilidad más importantes.
-Estos algoritmos se describen en la mayoría de los libros clásicos de simulación (e.g. Cao, 2002, Capítulo 5)^[Cuidado con la notación y la parametrización empleadas, puede variar entre referencias. Por ejemplo, en Cao (2002) la notación de la distribución Gamma es ligeramente distinta a la empleada en R y en el presente libro.], principalmente porque resultaba necesario implementar estos métodos durante el desarrollo de software estadístico.
+Estos algoritmos se describen en la mayoría de los libros clásicos de simulación [e.g. @cao2002, cap. 5)[^04-notables-cont-1], principalmente porque resultaba necesario implementar estos métodos durante el desarrollo de software estadístico.
 Hoy en día estos algoritmos están disponibles en numerosas bibliotecas y no es necesario su implementación (por ejemplo, se puede recurrir a R o emplear su librería matemática disponible en <https://svn.r-project.org/R/trunk/src/nmath>).
 Sin embargo, además de que muchos de ellos servirían como ilustración de la aplicación de los métodos generales expuestos en secciones anteriores, pueden servir como punto de partida para la generación de otras distribuciones.
+
+[^04-notables-cont-1]: Cuidado con la notación y la parametrización empleadas, puede variar entre referencias. 
+Por ejemplo, en @cao2002 la notación de la distribución Gamma es ligeramente distinta a la empleada en R y en el presente libro.
 
 Entre los distintos métodos disponibles para la generación de las distribuciones continuas más conocidas podríamos destacar:
 
@@ -1169,7 +1192,7 @@ $\mathcal{N}( 0, 1 )$ independientes.
 
 Podemos hacer que la función `rnorm()` de R emplee este algoritmo estableciendo el parámetro `normal.kind` a `"Box-Muller"` en una llamada previa a `set.seed()` o `RNGkind()`.
 
-Este método está relacionado con el denominado *método FFT* (transformada de Fourier; e.g. Davies y Harte, 1987) para la generación de una normal multidimensional con dependencia, que resulta ser equivalente al *Circular embedding* (Dietrich and Newsam, 1997).
+Este método está relacionado con el denominado *método FFT* [transformada rápida de Fourier, e.g. @davies1987] para la generación de una normal multidimensional con dependencia, que resulta ser equivalente al *Circular embedding* [@dietrich1997].
 La idea de estos métodos es que, considerando módulos exponenciales y fases uniformes generamos normales independientes, pero cambiando la varianza de los módulos ($W_1$) podemos inducir dependencia.
 Adicionalmente, cambiando la distribución de las fases ($W_2$) se generan distribuciones distintas de la normal.
 
@@ -1184,7 +1207,7 @@ Como la distribución resultante no depende de $s$  y $\chi^2_{n} \overset{d}{=}
 
 También se podrían emplear resultado conocidos relacionados con esta distribución, como por ejemplo que la distribución del estadístico de orden $k$ de una muestra de tamaño $n$ de una distribución uniforme tiene una distribución beta:
 $$U_{(k)} \sim \mathcal{Beta}(k,n+1-k).$$
-El resultado es el algoritmo de Fox (1963), que podría ser adecuado para simular esta distribución cuando $a, b \in \mathbb{N}$ y son valores pequeños.
+El resultado es el algoritmo de @fox1963, que podría ser adecuado para simular esta distribución cuando $a, b \in \mathbb{N}$ y son valores pequeños.
 
 ::: {.conjecture #fox name="Fox, 1963"}
 <br>
@@ -1201,8 +1224,7 @@ Es obvio que este algoritmo puede resultar muy lento si alguno de los dos parám
 Además, en función de cuál de los dos parámetros, $a$ ó $b$, sea mayor, resultará más eficiente, en el paso 2, comenzar a ordenar por el mayor, luego el segundo mayor, y así sucesivamente, o hacerlo empezando por el menor. 
 En cualquier caso, es obvio que no es necesario ordenar todos los valores $U_{i}$ generados, sino tan sólo encontrar el que ocupa el lugar $a$-ésimo.
 
-Un método válido aunque $a$ ó $b$ no sean enteros es el dado por el
-algoritmo de Jöhnk (1964).
+Un método válido aunque $a$ ó $b$ no sean enteros es el dado por el algoritmo de @johnk1964.
 
 ::: {.conjecture #johnk name="Jöhnk, 1964"}
 <br>
@@ -1220,7 +1242,9 @@ algoritmo de Jöhnk (1964).
 El método resulta extremadamente ineficiente para $a$ ó $b$ mayores que 1. 
 Esto es debido a que la condición $S\leq1$ del paso 3 puede tardar muchísimo en verificarse. 
 Por este motivo, el algoritmo de Jöhnk sólo es recomendable para $a<1$ y $b<1$. 
-Como remedio a esto puede usarse el algoritmo de Cheng (1978) que es algo más complicado de implementar^[R implementa este algoritmo en el fichero fuente [rbeta.c](https://svn.r-project.org/R/trunk/src/nmath/rbeta.c).] pero mucho más eficiente.
+Como remedio a esto puede usarse el algoritmo de @cheng1978 que es algo más complicado de implementar[^04-notables-cont-2] pero mucho más eficiente.
+
+[^04-notables-cont-2]: R implementa este algoritmo en el fichero fuente [rbeta.c](https://svn.r-project.org/R/trunk/src/nmath/rbeta.c).
 
 ::: {.conjecture #cheng name="Cheng, 1978"}
 <br>

@@ -70,11 +70,15 @@ Podemos generar un gráfico con la evolución de la aproximación:
 plot(cumsum(rx)/1:nsim, type = "l", lwd = 2, xlab = "Número de generaciones", 
      ylab = "Proporción muestral", ylim = c(0, 1))
 abline(h = mean(rx), lty = 2)
-# valor teórico
-abline(h = p, col = "blue") 
+# valor teórico (en la práctica sería desconocido)
+abline(h = p, lty = 2, col = "blue") 
 ```
 
 :::
+
+<!-- 
+Pendiente: Añadir comentarios adicionales sobre convergencia
+-->
 
 
 ### Detección de problemas de convergencia
@@ -251,12 +255,12 @@ Si generamos el gráfico de convergencia asumiendo independencia:
 n <- 1:nsim
 est <- cumsum(rx)/n
 esterr <- sqrt(est*(1-est)/(n-1)) # OJO! Supone independencia
-plot(est, type="l", lwd=2, ylab="Probabilidad", 
-     xlab="Número de simulaciones", ylim=c(0,0.6))
-abline(h = est[nsim], lty=2)
-lines(est + 2*esterr, lty=2) 
-lines(est - 2*esterr, lty=2)
-abline(h = 1/3, col="darkgray") # Probabilidad teórica
+plot(est, type = "l", lwd = 2, ylab = "Probabilidad", 
+     xlab = "Número de simulaciones", ylim = c(0, 0.6))
+abline(h = est[nsim], lty = 2)
+lines(est + 2*esterr, lty = 2) 
+lines(est - 2*esterr, lty = 2)
+abline(h = 1/3, col = "darkgray") # Probabilidad teórica
 ```
 
 La probabilidad teórica, obtenida empleando resultados de cadenas de Markov, es $p = 1/3$ y la aproximación de la proporción sería correcta (es consistente):
@@ -290,12 +294,12 @@ nrxi <- length(rxi)
 n <- 1:nrxi
 est <- cumsum(rxi)/n
 esterr <- sqrt(est*(1-est)/(n-1))
-plot(est, type="l", lwd=2, ylab="Probabilidad", 
-     xlab=paste("Número de simulaciones /", lag + 1), ylim=c(0,0.6))
-abline(h = est[length(rxi)], lty=2)
-lines(est + 2*esterr, lty=2) # Supone independencia
-lines(est - 2*esterr, lty=2)
-abline(h = 1/3, col="darkgray")     # Prob. teor. cadenas Markov
+plot(est, type = "l", lwd = 2, ylab = "Probabilidad",  
+     xlab = paste("Número de simulaciones /", lag + 1), ylim = c(0, 0.6))
+abline(h = est[length(rxi)], lty = 2)
+lines(est + 2*esterr, lty = 2) # Supone independencia
+lines(est - 2*esterr, lty = 2)
+abline(h = 1/3, col = "darkgray")     # Prob. teor. cadenas Markov
 ```
 
 
@@ -313,12 +317,12 @@ nrxm <- length(rxm)
 n <- 1:nrxm
 est <- cumsum(rxm)/n
 esterr <- sqrt((cumsum(rxm^2)/n - est^2)/(n-1)) # Errores estándar
-plot(est, type="l", lwd=2, ylab="Probabilidad", 
-     xlab=paste("Número de simulaciones /", lag + 1), ylim=c(0,0.6))
-abline(h = est[length(rxm)], lty=2)
-lines(est + 2*esterr, lty=2) # OJO! Supone independencia
-lines(est - 2*esterr, lty=2)
-abline(h = 1/3, col="darkgray")     # Prob. teor. cadenas Markov
+plot(est, type = "l", lwd = 2, ylab = "Probabilidad",  
+     xlab = paste("Número de simulaciones /", lag + 1), ylim = c(0, 0.6))
+abline(h = est[length(rxm)], lty = 2)
+lines(est + 2*esterr, lty = 2) # OJO! Supone independencia
+lines(est - 2*esterr, lty = 2)
+abline(h = 1/3, col = "darkgray")     # Prob. teor. cadenas Markov
 ```
 
 Esta es la idea del método de medias por lotes (*batch means*; *macro-micro replicaciones*) para la estimación de la precisión.
@@ -358,8 +362,8 @@ La idea sería considerar las medias de las series como una muestra independient
 # Media de cada secuencia
 n <- 1:nsim
 est <- apply(rxm, 1, function(x) cumsum(x)/n)
-matplot(n, est, type = 'l', lty = 3, col = "lightgray",
-     ylab="Probabilidad", xlab="Número de simulaciones")
+matplot(n, est, type = 'l', lty = 3, col = "darkgray",
+        ylab = "Probabilidad", xlab = "Número de simulaciones")
 # Aproximación
 mest <- apply(est, 1, mean)
 lines(mest, lwd = 2)
@@ -369,7 +373,7 @@ mesterr <- apply(est, 1, sd)/sqrt(nsec)
 lines(mest + 2*mesterr, lty = 2)
 lines(mest - 2*mesterr, lty = 2)
 # Prob. teor. cadenas Markov
-abline(h = 1/3, col="darkgray")     
+abline(h = 1/3, col = "darkgray")     
 
 # Aproximación final
 mest[nsim] # mean(rxm)

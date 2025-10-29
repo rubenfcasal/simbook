@@ -23,7 +23,7 @@ inline <- function(x = "") paste0("`` `r ", x, "` ``")
 inline2 <- function(x = "") paste0("`r ", x, "`")
 
 
-owidth <- 70 # 75
+owidth <- 75 # 70
 fowidth <- function(d) sprintf("%i%%", owidth - d)
 rowidth <- function(p) sprintf("%i%%", round(0.01*p*owidth))
 
@@ -38,7 +38,7 @@ options(max.print = 60, width = 73, # 67, # (por defecto 80)
 # Opciones gráficas
 knitr::knit_hooks$set(small.mar = function(before, ...) {
   if (before){
-    par(mar = c(bottom = 4, left = 4, top = 2, right = 1) + 0.1)
+    par(mar = c(bottom = 4, left = 4, top = 1, right = 1) + 0.1)
   } else
     par(mar = c(bottom = 5, left = 4, top = 4, right = 2) + 0.1)
 
@@ -47,13 +47,13 @@ knitr::knit_hooks$set(small.mar = function(before, ...) {
 
 # Establecer opciones chunks
 knitr::opts_chunk$set(
-  fig.dim = c(7, 6), fig.align = "center", fig.pos = "!htb", # fig.pos = "!htbp"
+  fig.dim = c(7, 5), fig.align = "center", fig.pos = "!htbp", # fig.pos = "!htb"
   out.width = fowidth(0), # out.lines = 50,
   cache = FALSE, cache.path = 'cache/',
   echo = TRUE, warning = FALSE, message = FALSE,
   comment = if(is_html()) "##" else " ##",
-  fig.show = if(is_html()) "asis" else "hold"
-  # , small.mar = !is_html() # , crop = TRUE, # Recortar figuras
+  fig.show = if(is_html()) "asis" else "hold",
+  small.mar = !is_html() # , crop = TRUE, # Recortar figuras
 )
 
 
