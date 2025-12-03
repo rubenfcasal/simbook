@@ -74,7 +74,7 @@ rlcg
  ##   # Devolver valores
  ##   return(u)
  ## }
- ## <bytecode: 0x0000024e6dad3c38>
+ ## <bytecode: 0x0000025987cb5c68>
  ## <environment: namespace:simres>
 ```
 
@@ -446,7 +446,7 @@ simres::chisq.cont.test
  ##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
  ##                    method = METHOD, data.name = DNAME), RESULTS), class = "htest")
  ## }
- ## <bytecode: 0x0000024e71db3250>
+ ## <bytecode: 0x000002598bfd4310>
  ## <environment: namespace:simres>
 ```
 
@@ -921,7 +921,7 @@ simres::rvng
  ##   # Devolver valores
  ##   return(u)
  ## }
- ## <bytecode: 0x0000024e70990510>
+ ## <bytecode: 0x000002598b36a810>
  ## <environment: namespace:simres>
 ```
 

@@ -4,7 +4,7 @@ author:
   - "Rubén Fernández Casal (ruben.fcasal@udc.es)"
   - "Ricardo Cao (rcao@udc.es)"
   - "Julián Costa (julian.costa@udc.es)"
-date: "Edición: Enero de 2023. Impresión: 2025-10-29"
+date: "Edición: Enero de 2023. Impresión: 2025-12-03"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
@@ -38,7 +38,7 @@ Se puede acceder a la versión en línea a través del siguiente enlace:
 
 donde puede descargarse en formato [pdf](https://rubenfcasal.github.io/simbook/Simulacion.pdf).
 
-Para poder ejecutar los ejemplos mostrados en el libro es recomendable emplear el paquete [`simres`](https://rubenfcasal.github.io/simres), ***no disponible actualmente en CRAN***, aunque se puede instalar la versión de desarrollo en [GitHub](https://github.com/rubenfcasal/simres)):
+Para poder ejecutar los ejemplos mostrados en el libro es recomendable emplear el paquete [`simres`](https://rubenfcasal.github.io/simres), ***no disponible actualmente en CRAN***, aunque se puede instalar la versión de desarrollo en [GitHub](https://github.com/rubenfcasal/simres):
 
 ``` r
 # install.packages("remotes")

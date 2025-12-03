@@ -363,7 +363,7 @@ simres::chisq.cont.test
  ##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
  ##                    method = METHOD, data.name = DNAME), RESULTS), class = "htest")
  ## }
- ## <bytecode: 0x0000026be3d2b698>
+ ## <bytecode: 0x000001ec89da5838>
  ## <environment: namespace:simres>
 ```
 

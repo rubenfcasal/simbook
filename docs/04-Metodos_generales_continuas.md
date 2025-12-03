@@ -117,7 +117,7 @@ tiempo
 
 ```
  ##    user  system elapsed 
- ##    0.02    0.00    0.01
+ ##       0       0       0
 ```
 
 Representamos la distribución de los valores generados y la comparamos con la densidad teórica:
@@ -238,7 +238,7 @@ system.time(x <- rdexpn(10^4, 2))
 
 ```
  ##    user  system elapsed 
- ##    0.01    0.00    0.02
+ ##    0.03    0.00    0.03
 ```
 
 Podemos representar la distribución de los valores generados, comparándola con la densidad teórica:
@@ -521,7 +521,7 @@ system.time(x <- rbeta2n(nsim, s1, s2))
 
 ```
  ##    user  system elapsed 
- ##    0.02    0.00    0.02
+ ##    0.01    0.00    0.02
 ```
 
 Para analizar la eficiencia podemos emplear el número de generaciones de la distribución auxiliar (siguiente sección):
@@ -714,7 +714,7 @@ system.time(x <- rnormARn(nsim))
 
 ```
  ##    user  system elapsed 
- ##    0.07    0.00    0.08
+ ##    0.01    0.02    0.05
 ```
 
 Evaluamos la eficiencia:
@@ -1234,7 +1234,7 @@ simres::rcauchy.rou
  ##   attr(x, "ngen") <- ngen
  ##   return(x)
  ## }
- ## <bytecode: 0x0000019b27e9b3a8>
+ ## <bytecode: 0x0000023b54a1f448>
  ## <environment: namespace:simres>
 ```
 

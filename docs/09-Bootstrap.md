@@ -657,9 +657,38 @@ boot.strap <- function(datos, B=1000, statistic, ...) {
   i.boot <- matrix(i.boot, ncol=B, nrow=ndat)
   stat.boot <- drop(apply(i.boot, 2, function(i) statistic(datos, i, ...)))
 }
+
+# Caso unidimensional
+fstatistic <- function(data, i){
+  remuestra <- data[i]
+  mean(remuestra)
+}
+
+stat.boot <- boot.strap(muestra, B, fstatistic)
+
+stat.dat <- fstatistic(muestra, 1:length(muestra))
+res.boot <- c(stat.dat, mean(stat.boot)-stat.dat, sd(stat.boot))
+names(res.boot) <- c("Estadístico", "Sesgo", "Error Std.")
+res.boot
+```
+
+```
+ ## Estadístico       Sesgo  Error Std. 
+ ##   0.8053333  -0.0089476   0.1563094
+```
+
+``` r
+# Caso multidimensional
+fstatisticm <- function(data, i){
+  remuestra <- data[i, ]
+  cor(remuestra$income, remuestra$prestige)
+}
+
+stat.boot <- boot.strap(Prestige, B, fstatisticm)
 ```
 
 El paquete `boot`, descrito a continuación, emplea una implementación similar.
+
 
 ### El paquete `boot` {#intro-pkgboot}
 

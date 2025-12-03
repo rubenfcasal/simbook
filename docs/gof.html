@@ -501,20 +501,20 @@ Además de los específicos de normalidad (<span class="math inline">\(H_0:F= \m
 <span class="math display">\[\hat{f}_n(x)=\frac{n_{i}}{n\left(  L_{k}-L_{k-1}\right)}\]</span></p>
 <p>Como ya se ha visto anteriormente, en R podemos generar este gráfico con la función <a href="https://rdrr.io/r/graphics/hist.html"><code>hist()</code></a> del paquete base.
 Algunos de los principales parámetros (con los valores por defecto) son los siguientes:</p>
-<div class="sourceCode" id="cb679"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb679-1"><a href="gof.html#cb679-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">breaks =</span> <span class="st">&quot;Sturges&quot;</span>, <span class="at">freq =</span> <span class="cn">NULL</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>, ...)</span></code></pre></div>
+<div class="sourceCode" id="cb703"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb703-1"><a href="gof.html#cb703-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">breaks =</span> <span class="st">&quot;Sturges&quot;</span>, <span class="at">freq =</span> <span class="cn">NULL</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>, ...)</span></code></pre></div>
 <ul>
 <li><p><code>breaks</code>: puede ser un valor numérico con el número de puntos de discretización, un vector con los puntos de discretización, una cadena de texto que los determine (otras opciones son <code>"Scott"</code> y <code>"FD"</code>; en este caso llamará internamente a la función <code>nclass.xxx()</code> donde <code>xxx</code> se corresponde con la cadena de texto), o incluso una función personalizada que devuelva el número o el vector de puntos de discretización.</p></li>
 <li><p><code>freq</code>: lógico (<code>TRUE</code> por defecto si los puntos de discretización son equidistantes), determina si en el gráfico se representan frecuencias o “densidades”.</p></li>
 <li><p><code>plot</code>: lógico, se puede establecer a <code>FALSE</code> si no queremos generar el gráfico y solo nos interesan el objeto con los resultados (que devuelve de forma “invisible”, por ejemplo para discretizar los valores en intervalos).</p></li>
 </ul>
 <p>Ejemplo:</p>
-<div class="sourceCode" id="cb680"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb680-1"><a href="gof.html#cb680-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">22.56</span>,<span class="fl">22.33</span>,<span class="fl">24.58</span>,<span class="fl">23.14</span>,<span class="fl">19.03</span>,<span class="fl">26.76</span>,<span class="fl">18.33</span>,<span class="fl">23.10</span>,</span>
-<span id="cb680-2"><a href="gof.html#cb680-2" aria-hidden="true" tabindex="-1"></a>  <span class="fl">21.53</span>,<span class="fl">9.06</span>,<span class="fl">16.75</span>,<span class="fl">23.29</span>,<span class="fl">22.14</span>,<span class="fl">16.28</span>,<span class="fl">18.89</span>,<span class="fl">27.48</span>,<span class="fl">10.44</span>,</span>
-<span id="cb680-3"><a href="gof.html#cb680-3" aria-hidden="true" tabindex="-1"></a>  <span class="fl">26.86</span>,<span class="fl">27.27</span>,<span class="fl">18.74</span>,<span class="fl">19.88</span>,<span class="fl">15.76</span>,<span class="fl">30.77</span>,<span class="fl">21.16</span>,<span class="fl">24.26</span>,<span class="fl">22.90</span>,</span>
-<span id="cb680-4"><a href="gof.html#cb680-4" aria-hidden="true" tabindex="-1"></a>  <span class="fl">27.14</span>,<span class="fl">18.02</span>,<span class="fl">21.53</span>,<span class="fl">24.99</span>,<span class="fl">19.81</span>,<span class="fl">11.88</span>,<span class="fl">24.01</span>,<span class="fl">22.11</span>,<span class="fl">21.91</span>,</span>
-<span id="cb680-5"><a href="gof.html#cb680-5" aria-hidden="true" tabindex="-1"></a>  <span class="fl">14.35</span>,<span class="fl">11.14</span>,<span class="fl">9.93</span>,<span class="fl">20.22</span>,<span class="fl">17.73</span>,<span class="fl">19.05</span>)</span>
-<span id="cb680-6"><a href="gof.html#cb680-6" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(datos, <span class="at">freq =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb680-7"><a href="gof.html#cb680-7" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="fu">mean</span>(datos), <span class="fu">sd</span>(datos)), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb704"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb704-1"><a href="gof.html#cb704-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">22.56</span>,<span class="fl">22.33</span>,<span class="fl">24.58</span>,<span class="fl">23.14</span>,<span class="fl">19.03</span>,<span class="fl">26.76</span>,<span class="fl">18.33</span>,<span class="fl">23.10</span>,</span>
+<span id="cb704-2"><a href="gof.html#cb704-2" aria-hidden="true" tabindex="-1"></a>  <span class="fl">21.53</span>,<span class="fl">9.06</span>,<span class="fl">16.75</span>,<span class="fl">23.29</span>,<span class="fl">22.14</span>,<span class="fl">16.28</span>,<span class="fl">18.89</span>,<span class="fl">27.48</span>,<span class="fl">10.44</span>,</span>
+<span id="cb704-3"><a href="gof.html#cb704-3" aria-hidden="true" tabindex="-1"></a>  <span class="fl">26.86</span>,<span class="fl">27.27</span>,<span class="fl">18.74</span>,<span class="fl">19.88</span>,<span class="fl">15.76</span>,<span class="fl">30.77</span>,<span class="fl">21.16</span>,<span class="fl">24.26</span>,<span class="fl">22.90</span>,</span>
+<span id="cb704-4"><a href="gof.html#cb704-4" aria-hidden="true" tabindex="-1"></a>  <span class="fl">27.14</span>,<span class="fl">18.02</span>,<span class="fl">21.53</span>,<span class="fl">24.99</span>,<span class="fl">19.81</span>,<span class="fl">11.88</span>,<span class="fl">24.01</span>,<span class="fl">22.11</span>,<span class="fl">21.91</span>,</span>
+<span id="cb704-5"><a href="gof.html#cb704-5" aria-hidden="true" tabindex="-1"></a>  <span class="fl">14.35</span>,<span class="fl">11.14</span>,<span class="fl">9.93</span>,<span class="fl">20.22</span>,<span class="fl">17.73</span>,<span class="fl">19.05</span>)</span>
+<span id="cb704-6"><a href="gof.html#cb704-6" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(datos, <span class="at">freq =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb704-7"><a href="gof.html#cb704-7" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="fu">mean</span>(datos), <span class="fu">sd</span>(datos)), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p><img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-2-1.png" width="75%" style="display: block; margin: auto;" /></p>
 <p>Si el número de valores es muy grande (por ejemplo en el caso de secuencias aleatorias), nos puede interesar establecer la opción <code>breaks = "FD"</code> para aumentar el número de intervalos de discretización.
 En cualquier caso, como se muestra en la Figura <a href="gof.html#fig:hist-movie">A.1</a>, la convergencia del histograma a la densidad teórica se podría considerar bastante lenta.
@@ -539,10 +539,10 @@ Para obtener las frecuencias relativas acumuladas, se ordena la muestra <span cl
 \right.\]</span></p>
 <p>En R podemos obtener la función de distribución empírica con <a href="https://rdrr.io/r/stats/ecdf.html"><code>ecdf()</code></a> (el objeto que devuelve es una función).</p>
 <p>Ejemplo:</p>
-<div class="sourceCode" id="cb681"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb681-1"><a href="gof.html#cb681-1" aria-hidden="true" tabindex="-1"></a>fn <span class="ot">&lt;-</span> <span class="fu">ecdf</span>(datos)</span>
-<span id="cb681-2"><a href="gof.html#cb681-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">ecdf</span>(datos)(x), <span class="at">xlim =</span> <span class="fu">extendrange</span>(datos), <span class="at">type =</span> <span class="st">&#39;s&#39;</span>, </span>
-<span id="cb681-3"><a href="gof.html#cb681-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">&#39;distribution function&#39;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb681-4"><a href="gof.html#cb681-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">pnorm</span>(x, <span class="fu">mean</span>(datos), <span class="fu">sd</span>(datos)), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb705"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb705-1"><a href="gof.html#cb705-1" aria-hidden="true" tabindex="-1"></a>fn <span class="ot">&lt;-</span> <span class="fu">ecdf</span>(datos)</span>
+<span id="cb705-2"><a href="gof.html#cb705-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">ecdf</span>(datos)(x), <span class="at">xlim =</span> <span class="fu">extendrange</span>(datos), <span class="at">type =</span> <span class="st">&#39;s&#39;</span>, </span>
+<span id="cb705-3"><a href="gof.html#cb705-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">&#39;distribution function&#39;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb705-4"><a href="gof.html#cb705-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">pnorm</span>(x, <span class="fu">mean</span>(datos), <span class="fu">sd</span>(datos)), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ecdfplot"></span>
 <img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/ecdfplot-1.png" alt="Comparación de la distribución empírica de los datos de ejemplo con la función de distribución de la aproximación normal." width="75%" />
 <p class="caption">
@@ -573,11 +573,11 @@ Si <span class="math inline">\(H_0\)</span> es cierta, la nube de puntos estará
 <span class="math display">\[\left\{ \left( q_{i}, x_{(i)}\right) : i=1, \cdots, n \right\}\]</span>
 siendo <span class="math inline">\(x_{(i)}\)</span> los cuantiles observados y <span class="math inline">\(q_{i}=F_0^{-1}(p_{i})\)</span> los esperados<a href="#fn47" class="footnote-ref" id="fnref47"><sup>47</sup></a> bajo <span class="math inline">\(H_0\)</span>.</p>
 <p>Ejemplo:</p>
-<div class="sourceCode" id="cb682"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb682-1"><a href="gof.html#cb682-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(datos)</span>
-<span id="cb682-2"><a href="gof.html#cb682-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(datos)</span></code></pre></div>
+<div class="sourceCode" id="cb706"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb706-1"><a href="gof.html#cb706-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(datos)</span>
+<span id="cb706-2"><a href="gof.html#cb706-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(datos)</span></code></pre></div>
 <p><img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-3-1.png" width="75%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb683"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb683-1"><a href="gof.html#cb683-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(car)</span>
-<span id="cb683-2"><a href="gof.html#cb683-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqPlot</span>(datos, <span class="st">&quot;norm&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb707"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb707-1"><a href="gof.html#cb707-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(car)</span>
+<span id="cb707-2"><a href="gof.html#cb707-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqPlot</span>(datos, <span class="st">&quot;norm&quot;</span>)</span></code></pre></div>
 <p><img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-3-2.png" width="75%" style="display: block; margin: auto;" /></p>
 <pre><code>## [1] 10 38</code></pre>
 </div>
@@ -706,13 +706,13 @@ Por tanto se rechaza <span class="math inline">\(H_0\)</span>, para un nivel de 
 rechazaremos <span class="math inline">\(H_0\)</span> si <span class="math inline">\(p\leq \alpha\)</span> (y cuanto menor sea se rechazará con mayor seguridad) y aceptaremos <span class="math inline">\(H_0\)</span> si <span class="math inline">\(p&gt;\)</span> <span class="math inline">\(\alpha\)</span> (con mayor seguridad cuanto mayor sea).</p>
 <p>Este método está implementado en la función <a href="https://rdrr.io/r/stats/chisq.test.html"><code>chisq.test()</code></a> para el caso discreto (no corrige los grados de libertad).
 Ejemplo:</p>
-<div class="sourceCode" id="cb685"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb685-1"><a href="gof.html#cb685-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">trunc</span>(<span class="dv">5</span> <span class="sc">*</span> <span class="fu">runif</span>(<span class="dv">100</span>))</span>
-<span id="cb685-2"><a href="gof.html#cb685-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(x))            <span class="co"># NOT &#39;chisq.test(x)&#39;!</span></span></code></pre></div>
+<div class="sourceCode" id="cb709"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb709-1"><a href="gof.html#cb709-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">trunc</span>(<span class="dv">5</span> <span class="sc">*</span> <span class="fu">runif</span>(<span class="dv">100</span>))</span>
+<span id="cb709-2"><a href="gof.html#cb709-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(x))            <span class="co"># NOT &#39;chisq.test(x)&#39;!</span></span></code></pre></div>
 <pre><code>## 
 ##  Chi-squared test for given probabilities
 ## 
 ## data:  table(x)
-## X-squared = 5, df = 4, p-value = 0.29</code></pre>
+## X-squared = 6.5, df = 4, p-value = 0.16</code></pre>
 <p>La distribución exacta del estadístico del contraste es discreta (se podría aproximar por simulación, por ejemplo empleando los parámetros <code>simulate.p.value = TRUE</code> y <code>B = 2000</code> de la función <code>chisq.test()</code>; ver también el Ejemplo <a href="mult-discr.html#exm:chicuadind">6.10</a> de la Sección <a href="mult-discr.html#simconting">6.7.2</a> para el caso del contraste chi-cuadrado de independencia).
 Para que la aproximación continua <span class="math inline">\(\chi^2\)</span> sea válida:</p>
 <ul>
@@ -737,7 +737,7 @@ problema con una de las adyacentes.</p></li>
 <p>Si la variable de interés es continua, una forma de garantizar que <span class="math inline">\(e_{i}\geq5\)</span> consiste en tomar un número de intervalos <span class="math inline">\(k\leq \lfloor n/5 \rfloor\)</span> y de forma que sean equiprobables <span class="math inline">\(p_{i}=1/k\)</span>,
 considerando los puntos críticos <span class="math inline">\(x_{i/k}\)</span> de la distribución bajo <span class="math inline">\(H_0\)</span>.</p>
 <p>Por ejemplo, se podría emplear la función <a href="https://rubenfcasal.github.io/simres/reference/chisq.cont.test.html"><code>simres::chisq.cont.test()</code></a> (fichero <a href="R/test.R"><em>test.R</em></a>), que imita a las incluidas en R:</p>
-<div class="sourceCode" id="cb687"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb687-1"><a href="gof.html#cb687-1" aria-hidden="true" tabindex="-1"></a>simres<span class="sc">::</span>chisq.cont.test</span></code></pre></div>
+<div class="sourceCode" id="cb711"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb711-1"><a href="gof.html#cb711-1" aria-hidden="true" tabindex="-1"></a>simres<span class="sc">::</span>chisq.cont.test</span></code></pre></div>
 <pre><code>## function(x, distribution = &quot;norm&quot;, nclass = floor(length(x)/5),
 ##                             output = TRUE, nestpar = 0, ...) {
 ##   # Función distribución
@@ -781,11 +781,11 @@ considerando los puntos críticos <span class="math inline">\(x_{i/k}\)</span> d
 ##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
 ##                    method = METHOD, data.name = DNAME), RESULTS), class = &quot;htest&quot;)
 ## }
-## &lt;bytecode: 0x000002cd969e2240&gt;
+## &lt;bytecode: 0x000001d56cf8c270&gt;
 ## &lt;environment: namespace:simres&gt;</code></pre>
 <p>Continuando con el ejemplo anterior, podríamos contrastar normalidad mediante:</p>
-<div class="sourceCode" id="cb689"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb689-1"><a href="gof.html#cb689-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(simres)</span>
-<span id="cb689-2"><a href="gof.html#cb689-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.cont.test</span>(datos, <span class="at">distribution =</span> <span class="st">&quot;norm&quot;</span>, <span class="at">nestpar =</span> <span class="dv">2</span>, <span class="at">mean=</span><span class="fu">mean</span>(datos), <span class="at">sd=</span><span class="fu">sd</span>(datos))</span></code></pre></div>
+<div class="sourceCode" id="cb713"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb713-1"><a href="gof.html#cb713-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(simres)</span>
+<span id="cb713-2"><a href="gof.html#cb713-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.cont.test</span>(datos, <span class="at">distribution =</span> <span class="st">&quot;norm&quot;</span>, <span class="at">nestpar =</span> <span class="dv">2</span>, <span class="at">mean=</span><span class="fu">mean</span>(datos), <span class="at">sd=</span><span class="fu">sd</span>(datos))</span></code></pre></div>
 <p><img src="22-Bondad_ajuste_Aleatoriedad_files/figure-html/unnamed-chunk-6-1.png" width="75%" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## Pearson&#39;s Chi-squared test table
@@ -823,12 +823,12 @@ Esta distribución está tabulada (para tamaños muestrales grandes se utiliza l
 Se rechaza <span class="math inline">\(H_0\)</span> si el valor observado <span class="math inline">\(d\)</span> del estadístico es significativamente grande:
 <span class="math display">\[p = P \left( D_n \geq d \right) \leq \alpha.\]</span>
 Este método está implementado en la función <a href="https://rdrr.io/r/stats/ks.test.html"><code>ks.test()</code></a> del paquete base de R:</p>
-<div class="sourceCode" id="cb692"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb692-1"><a href="gof.html#cb692-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(x, y, ...)</span></code></pre></div>
+<div class="sourceCode" id="cb716"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb716-1"><a href="gof.html#cb716-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(x, y, ...)</span></code></pre></div>
 <p>donde <code>x</code> es un vector que contiene los datos, <code>y</code> es una función de distribución
 (o una cadena de texto que la especifica; también puede ser otro vector de datos
 para el contraste de dos muestras) y <code>...</code> representa los parámetros de la distribución.</p>
 <p>Continuando con el ejemplo anterior, para contrastar <span class="math inline">\(H_0:F= \mathcal{N}(20,5^2)\)</span> podríamos emplear:</p>
-<div class="sourceCode" id="cb693"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb693-1"><a href="gof.html#cb693-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(datos, pnorm, <span class="at">mean =</span> <span class="dv">20</span>, <span class="at">sd =</span> <span class="dv">5</span>) <span class="co"># One-sample </span></span></code></pre></div>
+<div class="sourceCode" id="cb717"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb717-1"><a href="gof.html#cb717-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(datos, pnorm, <span class="at">mean =</span> <span class="dv">20</span>, <span class="at">sd =</span> <span class="dv">5</span>) <span class="co"># One-sample </span></span></code></pre></div>
 <pre><code>## 
 ##  Asymptotic one-sample Kolmogorov-Smirnov test
 ## 
@@ -846,15 +846,15 @@ de Lilliefors, implementado en la función <a href="https://rdrr.io/pkg/nortest/
 (también hay versiones en este paquete para los métodos de Cramer-von Mises y
 Anderson-Darling).</p>
 <p>Por ejemplo:</p>
-<div class="sourceCode" id="cb695"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb695-1"><a href="gof.html#cb695-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(datos, pnorm, <span class="fu">mean</span>(datos), <span class="fu">sd</span>(datos)) <span class="co"># One-sample Kolmogorov-Smirnov test</span></span></code></pre></div>
+<div class="sourceCode" id="cb719"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb719-1"><a href="gof.html#cb719-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(datos, pnorm, <span class="fu">mean</span>(datos), <span class="fu">sd</span>(datos)) <span class="co"># One-sample Kolmogorov-Smirnov test</span></span></code></pre></div>
 <pre><code>## 
 ##  Asymptotic one-sample Kolmogorov-Smirnov test
 ## 
 ## data:  datos
 ## D = 0.0978, p-value = 0.83
 ## alternative hypothesis: two-sided</code></pre>
-<div class="sourceCode" id="cb697"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb697-1"><a href="gof.html#cb697-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nortest)</span>
-<span id="cb697-2"><a href="gof.html#cb697-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lillie.test</span>(datos)</span></code></pre></div>
+<div class="sourceCode" id="cb721"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb721-1"><a href="gof.html#cb721-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nortest)</span>
+<span id="cb721-2"><a href="gof.html#cb721-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lillie.test</span>(datos)</span></code></pre></div>
 <pre><code>## 
 ##  Lilliefors (Kolmogorov-Smirnov) normality test
 ## 

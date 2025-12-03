@@ -182,8 +182,104 @@ $$\frac{\hat{\theta} - Sesgo^{\ast}\left( \hat{\theta}^{\ast} \right) - \theta}{
 De esta forma se obtiene la estimación por intervalo de confianza:
 $$\hat{I}_{norm}=\left( \hat{\theta} - Sesgo^{\ast}\left( \hat{\theta}^{\ast} \right) - z_{1-\alpha /2}\sqrt{Var^{\ast}\left( \hat{\theta}^{\ast} \right)},\hat{\theta} - Sesgo^{\ast}\left( \hat{\theta}^{\ast} \right) + z_{1 - \alpha /2}\sqrt{Var^{\ast}\left( \hat{\theta}^{\ast} \right)} \right).$$
 
-Podemos obtener este intervalo de confianza estableciendo `type = "norm"` (o `type = "all"`) en la llamada a la función `boot.ci()` (ver Ejemplo \@ref(exm:media-dt-desconocida-boot)).
-        
+Podemos obtener este intervalo de confianza estableciendo `type = "norm"` (o `type = "all"`) en la llamada a la función `boot.ci()`.
+Para ilustrar como se obtiene reproduciremos el código del Ejemplo \@ref(exm:media-dt-desconocida-boot) (inferencia sobre la media de tiempos de vida de microorganismos empleando bootstrap uniforme):
+
+
+``` r
+library(boot)
+muestra <- simres::lifetimes
+
+statistic <- function(data, i){
+  remuestra <- data[i]
+  c(mean(remuestra), var(remuestra)/length(remuestra))
+}
+
+set.seed(1)
+res.boot <- boot(muestra, statistic, R = 1000)
+res.boot
+```
+
+```
+ ## 
+ ## ORDINARY NONPARAMETRIC BOOTSTRAP
+ ## 
+ ## 
+ ## Call:
+ ## boot(data = muestra, statistic = statistic, R = 1000)
+ ## 
+ ## 
+ ## Bootstrap Statistics :
+ ##     original     bias    std. error
+ ## t1* 0.805333  0.0031733   0.1583306
+ ## t2* 0.025934 -0.0021558   0.0075947
+```
+
+``` r
+boot.ci(res.boot, type = "norm") # index = 1
+```
+
+```
+ ## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+ ## Based on 1000 bootstrap replicates
+ ## 
+ ## CALL : 
+ ## boot.ci(boot.out = res.boot, type = "norm")
+ ## 
+ ## Intervals : 
+ ## Level      Normal        
+ ## 95%   ( 0.4918,  1.1125 )  
+ ## Calculations and Intervals on Original Scale
+```
+
+Podemos reproducir fácilmente estos cálculos. 
+En primer lugar obtenemos las aproximaciones bootstrap del sesgo y del error estándar:
+
+
+``` r
+op <- with(res.boot, cbind(
+  t0, apply(t, 2, mean, na.rm = TRUE) -  t0,
+  apply(t, 2, sd, na.rm = TRUE)
+))
+rownames(op) <- paste0("t", 1:ncol(res.boot$t), "*")
+colnames(op) <- c("original", "bias  ", " std. error")
+op
+```
+
+```
+ ##     original     bias    std. error
+ ## t1* 0.805333  0.0031733   0.1583306
+ ## t2* 0.025934 -0.0021558   0.0075947
+```
+
+``` r
+index <- 1
+estim <- op[index, 1]
+sesgo_boot <- op[index, 2]
+sd_boot <- op[index, 3]
+```
+
+y construimos la estimación por intervalo de confianza:
+
+
+``` r
+alfa <- 0.05
+z <- qnorm(1 - alfa/2)
+ic_inf <- estim - sesgo_boot - z*sd_boot
+ic_sup <- estim - sesgo_boot + z*sd_boot
+IC <- c(ic_inf, ic_sup)
+IC
+```
+
+```
+ ## [1] 0.49184 1.11248
+```
+
+<!-- 
+Nota: Sería como emplear el mejor ajuste normal a la distribución bootstrap 
+del estimador. 
+-->
+
 
 ### Método percentil directo {#boot-ic-perc}
 
@@ -206,7 +302,53 @@ $$\hat{I}_{perc}=\left( x_{\alpha /2}, x_{1-\alpha /2}  \right).$$
 Una ventaja de los intervalos construidos con este método es que son invariantes frente a transformaciones del estimador (en el caso de que fuese más adecuado trabajar en otra escala, no sería necesario conocer la transformación).
 Sin embargo, como se comentó en la Sección \@ref(boot-intro), la precisión puede verse seriamente afectada en el caso de estimadores sesgados.
 
-Podemos obtener este intervalo de confianza estableciendo `type = "perc"` (o `type = "all"`) en la llamada a la función `boot.ci()` (ver Ejemplo \@ref(exm:media-dt-desconocida-boot)).
+Podemos obtener este intervalo de confianza estableciendo `type = "perc"` (o `type = "all"`) en la llamada a la función `boot.ci()`.
+Continuando con el Ejemplo \@ref(exm:media-dt-desconocida-boot):
+
+
+``` r
+boot.ci(res.boot, type = "perc") # index = 1
+```
+
+```
+ ## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+ ## Based on 1000 bootstrap replicates
+ ## 
+ ## CALL : 
+ ## boot.ci(boot.out = res.boot, type = "perc")
+ ## 
+ ## Intervals : 
+ ## Level     Percentile     
+ ## 95%   ( 0.5127,  1.1282 )  
+ ## Calculations and Intervals on Original Scale
+```
+
+A título ilustrativo podemos reproducir los cálculos:
+
+
+``` r
+index <- 1
+stat_boot <- res.boot$t[, index]
+# Utilizamos el mismo método que el paquete boot para aproximar los cuantiles:
+IC_boot <-  quantile(stat_boot, c(alfa/2, 1 - alfa/2), type = 6)
+# (normalmente usaríamos el valor por defecto type = 7):
+IC_boot
+```
+
+```
+ ##    2.5%   97.5% 
+ ## 0.51265 1.12820
+```
+
+``` r
+hist(stat_boot, breaks = "FD", freq = FALSE)
+abline(v = IC_boot)
+```
+
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{11-Bootstrap_aplic_files/figure-latex/unnamed-chunk-7-1} \end{center}
+
 
 ### Método percentil básico {#boot-ic-basic}
 
@@ -226,7 +368,62 @@ De donde se obtiene el intervalo de confianza bootstrap calculado
 por el método percentil básico
 $$\hat{I}_{basic}=\left( \hat{\theta} - x_{1-\alpha /2},\hat{\theta} - x_{\alpha /2} \right).$$
 
-Podemos obtener este intervalo de confianza estableciendo `type = "basic"` (o `type = "all"`) en la llamada a la función `boot.ci()` (ver Ejemplo \@ref(exm:media-dt-desconocida-boot)).
+Podemos obtener este intervalo de confianza estableciendo `type = "basic"` (o `type = "all"`) en la llamada a la función `boot.ci()`.
+
+Siguiendo con el Ejemplo \@ref(exm:media-dt-desconocida-boot)):
+
+
+``` r
+boot.ci(res.boot, type = "basic") # index = 1
+```
+
+```
+ ## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+ ## Based on 1000 bootstrap replicates
+ ## 
+ ## CALL : 
+ ## boot.ci(boot.out = res.boot, type = "basic")
+ ## 
+ ## Intervals : 
+ ## Level      Basic         
+ ## 95%   ( 0.4825,  1.0980 )  
+ ## Calculations and Intervals on Original Scale
+```
+
+Reproducimos también los cálculos (únicamente por proporcionar más detalles):
+
+
+``` r
+index <- 1
+estim <- res.boot$t0[index]
+# Réplicas bootstrap del estadístico centrado:
+stat_boot <- res.boot$t[, index] - estim
+# Aproximación bootstrap de los ptos críticos
+pto_crit <- quantile(stat_boot, c(alfa/2, 1 - alfa/2), type = 6)
+# Al igual que en el caso anterior, para obtener exactamente el mismo resultado,
+# utilizamos el mismo método que el paquete boot para aproximar los cuantiles
+# (normalmente usaríamos el valor por defecto type = 7)
+
+# Distribución bootstrap del estadístico centrado:
+hist(stat_boot, breaks = "FD", freq = FALSE)
+abline(v = pto_crit)
+
+# Construcción del IC
+ic_inf_boot <- estim - pto_crit[2]
+ic_sup_boot <- estim - pto_crit[1]
+IC_boot <- c(ic_inf_boot, ic_sup_boot)
+names(IC_boot) <- paste0(100*c(alfa/2, 1-alfa/2), "%")
+IC_boot
+```
+
+```
+ ##    2.5%   97.5% 
+ ## 0.48247 1.09802
+```
+
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{11-Bootstrap_aplic_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 
 ### Método percentil-*t* {#boot-ic-stud}
@@ -235,49 +432,61 @@ Este método bootstrap, construye un intervalo de confianza bootstrap a partir d
 $$R = \frac{\hat \theta - \theta}{\sqrt{\widehat{Var}(\hat \theta)}}.$$
 Procediendo de modo análogo a los casos anteriores, se aproximan los cuantiles $x_{\alpha /2}$ y $x_{1-\alpha /2}$ tales que
 $$1-\alpha = P^{\ast}\left( x_{\alpha /2}<R^{\ast}<x_{1-\alpha /2} \right),$$
-a partir de los cuales se obtiene el intervalo de confianza bootstrap calculado 
+y considerando que aproximan lo que ocurre con la distribución poblacional: 
+$$\begin{aligned}
+1-\alpha &\approx P\left( x_{\alpha /2}<R<x_{1-\alpha /2} \right) \\
+&= P\left( x_{\alpha /2} < \frac{\hat \theta - \theta}{\sqrt{\widehat{Var}(\hat \theta)}} < x_{1-\alpha /2} \right),
+\end{aligned}$$
+se obtiene el intervalo de confianza bootstrap calculado 
 por el método percentil-*t* (o percentil studentizado)
 $$\hat{I}_{stud}=\left( \hat{\theta} - x_{1-\alpha /2}\sqrt{\widehat{Var}(\hat \theta)},\hat{\theta} - x_{\alpha /2}\sqrt{\widehat{Var}(\hat \theta)} \right).$$
 
-Si uno de los componentes del vector de estadísticos (por defecto el segundo) es una estimación de la varianza del estimador (por defecto el primer componente), podemos obtener este intervalo de confianza estableciendo `type = "stud"` (o `type = "all"`) en la llamada a la función `boot.ci()` (ver Ejemplo \@ref(exm:media-dt-desconocida-boot)).
-En caso de que el primer y segundo componente del vector de estadísticos no sean el estimador y su varianza estimada, respectivamente, habrá que emplear el argumento `index`, que debe ser un vector de longitud 2 con las posiciones correspondientes.
+Si el segundo de los componentes del vector de estadísticos es una estimación de la varianza del primer componente (el estimador), obtendríamos este intervalo de confianza con las opciones por defecto (`type = "all"`) de la función `boot.ci()` o estableciendo `type = "stud"` (en cualquier caso siempre calcularía "uno" si hay al menos dos componentes en el vector de estadísticos, o generará un aviso si solo hay uno).
 
-Hay una variante de este método, denominada percentil-*t* simetrizado, en la que se asume que la distribución del estadístico es simétrica (aunque no está implementado en `boot.ci()`).
-Asumiendo que esta suposición es correcta, podemos calcular los cuantiles de forma más eficiente (ya que dispondríamos del doble de información sobre las colas de la distribución).
-En lugar de tomar cuantiles que dejen colas iguales ($\frac{\alpha }{2}$) a la izquierda y a la derecha, respectivamente, se considera el valor $x_{1-\alpha }$ que verifica $P^{\ast}\left( \left\vert R^{\ast}\right\vert \leq x_{1-\alpha } \right) =1-\alpha$. 
-Así se obtiene el intervalo de confianza bootstrap
-$$\hat{I}_{simstud}=\left( \hat{\theta} - x_{1-\alpha}\sqrt{\widehat{Var}(\hat \theta)},\hat{\theta} + x_{1-\alpha}\sqrt{\widehat{Var}(\hat \theta)} \right).$$
+En caso de que el primer y segundo componente del vector de estadísticos no sean el estimador y su varianza estimada, respectivamente, habrá que establecer el argumento `index` igual a las posiciones correspondientes (vector de longitud 2).
 
-::: {.example #media-ic-stu-sim name="IC bootstrap para la media mediante el método percentil-*t* simetrizado"}
-<br> 
-
-Continuando con el Ejemplo \@ref(exm:media-dt-desconocida) de inferencia sobre la media con varianza desconocida, podríamos obtener una estimación por intervalo de confianza del tiempo de vida medio de los microorganismos empleando el método bootstrap percentil-*t* simetrizado con el siguiente código:
+Continuando con el Ejemplo \@ref(exm:media-dt-desconocida-boot)):
 
 
 ``` r
-muestra <- simres::lifetimes
-n <- length(muestra)
-alfa <- 0.05
-x_barra <- mean(muestra)
-cuasi_dt <- sd(muestra)
+boot.ci(res.boot, type = "stud") # index = c(1, 2)
+```
 
-# Remuestreo
-set.seed(1)
-B <- 1000
-estadistico_boot <- numeric(B)
-for (k in 1:B) {
-  remuestra <- sample(muestra, n, replace = TRUE)
-  x_barra_boot <- mean(remuestra)
-  cuasi_dt_boot <- sd(remuestra)
-  estadistico_boot[k] <- sqrt(n) * abs(x_barra_boot - x_barra)/cuasi_dt_boot
-}
+```
+ ## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+ ## Based on 1000 bootstrap replicates
+ ## 
+ ## CALL : 
+ ## boot.ci(boot.out = res.boot, type = "stud")
+ ## 
+ ## Intervals : 
+ ## Level    Studentized     
+ ## 95%   ( 0.4715,  1.2320 )  
+ ## Calculations and Intervals on Original Scale
+```
 
-# Aproximación bootstrap del pto crítico
-pto_crit <- quantile(estadistico_boot, 1 - alfa)
+Reproducimos también los cálculos (únicamente a título ilustrativo):
+
+
+``` r
+index <- c(1, 2)
+estim <- res.boot$t0[index[1]]
+var_estim <- res.boot$t0[index[2]]
+# Réplicas bootstrap del estadístico studentizado:
+stat_boot <- (res.boot$t[, index[1]] - estim)/sqrt(res.boot$t[, index[2]])
+# Aproximación bootstrap de los ptos críticos
+pto_crit <- quantile(stat_boot, c(alfa/2, 1 - alfa/2), type = 6)
+# Al igual que en el caso anterior, para obtener exactamente el mismo resultado,
+# utilizamos el mismo método que el paquete boot para aproximar los cuantiles
+# (normalmente usaríamos el valor por defecto type = 7)
+
+# Distribución bootstrap del estadístico studentizado:
+hist(stat_boot, breaks = "FD", freq = FALSE)
+abline(v = pto_crit)
 
 # Construcción del IC
-ic_inf_boot <- x_barra - pto_crit * cuasi_dt/sqrt(n)
-ic_sup_boot <- x_barra + pto_crit * cuasi_dt/sqrt(n)
+ic_inf_boot <- estim - pto_crit[2] * sqrt(var_estim)
+ic_sup_boot <- estim - pto_crit[1] * sqrt(var_estim)
 IC_boot <- c(ic_inf_boot, ic_sup_boot)
 names(IC_boot) <- paste0(100*c(alfa/2, 1-alfa/2), "%")
 IC_boot
@@ -285,10 +494,12 @@ IC_boot
 
 ```
  ##    2.5%   97.5% 
- ## 0.43347 1.17719
+ ## 0.47154 1.23198
 ```
 
-::: 
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{11-Bootstrap_aplic_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 
 ### Método BCa {#boot-ic-bca}

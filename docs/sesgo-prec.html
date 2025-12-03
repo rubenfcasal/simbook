@@ -487,17 +487,17 @@ Para ello, como se mostró en capítulos anteriores, consideraríamos una aproxi
 <div class="example">
 <p><span id="exm:boot-simul-sesgo-var" class="example"><strong>Ejemplo 11.1  (media y media truncada) </strong></span><br></p>
 <p>Como ejemplo consideramos la aproximación del sesgo y de la varianza de la media y la media truncada al 10% como estimadores de la media teórica del tiempo de vida de microorganismos mediante bootstrap uniforme (ver Ejercicio <a href="intro-paquetes.html#exr:boot-simul-mediana">9.2</a>).</p>
-<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="sesgo-prec.html#cb620-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
-<span id="cb620-2"><a href="sesgo-prec.html#cb620-2" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> simres<span class="sc">::</span>lifetimes</span>
-<span id="cb620-3"><a href="sesgo-prec.html#cb620-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb620-4"><a href="sesgo-prec.html#cb620-4" aria-hidden="true" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
-<span id="cb620-5"><a href="sesgo-prec.html#cb620-5" aria-hidden="true" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i]</span>
-<span id="cb620-6"><a href="sesgo-prec.html#cb620-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">mean</span>(remuestra), <span class="fu">mean</span>(remuestra, <span class="at">trim =</span> <span class="fl">0.1</span>))</span>
-<span id="cb620-7"><a href="sesgo-prec.html#cb620-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb620-8"><a href="sesgo-prec.html#cb620-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb620-9"><a href="sesgo-prec.html#cb620-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb620-10"><a href="sesgo-prec.html#cb620-10" aria-hidden="true" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> <span class="dv">1000</span>)</span>
-<span id="cb620-11"><a href="sesgo-prec.html#cb620-11" aria-hidden="true" tabindex="-1"></a>res.boot</span></code></pre></div>
+<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="sesgo-prec.html#cb622-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb622-2"><a href="sesgo-prec.html#cb622-2" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> simres<span class="sc">::</span>lifetimes</span>
+<span id="cb622-3"><a href="sesgo-prec.html#cb622-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb622-4"><a href="sesgo-prec.html#cb622-4" aria-hidden="true" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
+<span id="cb622-5"><a href="sesgo-prec.html#cb622-5" aria-hidden="true" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i]</span>
+<span id="cb622-6"><a href="sesgo-prec.html#cb622-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">mean</span>(remuestra), <span class="fu">mean</span>(remuestra, <span class="at">trim =</span> <span class="fl">0.1</span>))</span>
+<span id="cb622-7"><a href="sesgo-prec.html#cb622-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb622-8"><a href="sesgo-prec.html#cb622-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb622-9"><a href="sesgo-prec.html#cb622-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb622-10"><a href="sesgo-prec.html#cb622-10" aria-hidden="true" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> <span class="dv">1000</span>)</span>
+<span id="cb622-11"><a href="sesgo-prec.html#cb622-11" aria-hidden="true" tabindex="-1"></a>res.boot</span></code></pre></div>
 <pre><code>## 
 ## ORDINARY NONPARAMETRIC BOOTSTRAP
 ## 
@@ -512,13 +512,13 @@ Para ello, como se mostró en capítulos anteriores, consideraríamos una aproxi
 ## t2*  0.75823 0.0119027     0.17394</code></pre>
 <p>Lamentablemente la función <code>print.boot()</code> calcula las aproximaciones bootstrap del sesgo y de la precisión pero no las almacena.
 En el caso más simple podríamos obtenerlas con el siguiente código:</p>
-<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="sesgo-prec.html#cb622-1" aria-hidden="true" tabindex="-1"></a>op <span class="ot">&lt;-</span> <span class="fu">with</span>(res.boot, <span class="fu">cbind</span>(</span>
-<span id="cb622-2"><a href="sesgo-prec.html#cb622-2" aria-hidden="true" tabindex="-1"></a>  t0, <span class="fu">apply</span>(t, <span class="dv">2</span>, mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span>  t0,</span>
-<span id="cb622-3"><a href="sesgo-prec.html#cb622-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apply</span>(t, <span class="dv">2</span>, sd, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb622-4"><a href="sesgo-prec.html#cb622-4" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb622-5"><a href="sesgo-prec.html#cb622-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(op) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;t&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(res.boot<span class="sc">$</span>t), <span class="st">&quot;*&quot;</span>)</span>
-<span id="cb622-6"><a href="sesgo-prec.html#cb622-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(op) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;original&quot;</span>, <span class="st">&quot;bias  &quot;</span>, <span class="st">&quot; std. error&quot;</span>)</span>
-<span id="cb622-7"><a href="sesgo-prec.html#cb622-7" aria-hidden="true" tabindex="-1"></a>op</span></code></pre></div>
+<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="sesgo-prec.html#cb624-1" aria-hidden="true" tabindex="-1"></a>op <span class="ot">&lt;-</span> <span class="fu">with</span>(res.boot, <span class="fu">cbind</span>(</span>
+<span id="cb624-2"><a href="sesgo-prec.html#cb624-2" aria-hidden="true" tabindex="-1"></a>  t0, <span class="fu">apply</span>(t, <span class="dv">2</span>, mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span>  t0,</span>
+<span id="cb624-3"><a href="sesgo-prec.html#cb624-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apply</span>(t, <span class="dv">2</span>, sd, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb624-4"><a href="sesgo-prec.html#cb624-4" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb624-5"><a href="sesgo-prec.html#cb624-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(op) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;t&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(res.boot<span class="sc">$</span>t), <span class="st">&quot;*&quot;</span>)</span>
+<span id="cb624-6"><a href="sesgo-prec.html#cb624-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(op) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;original&quot;</span>, <span class="st">&quot;bias  &quot;</span>, <span class="st">&quot; std. error&quot;</span>)</span>
+<span id="cb624-7"><a href="sesgo-prec.html#cb624-7" aria-hidden="true" tabindex="-1"></a>op</span></code></pre></div>
 <pre><code>##     original    bias    std. error
 ## t1*  0.80533 0.0031733     0.15833
 ## t2*  0.75823 0.0119027     0.17394</code></pre>
