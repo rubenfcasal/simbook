@@ -494,7 +494,7 @@ Figura 5.3: Ilustración de la simulación de una distribución discreta mediant
 </ol>
 </div>
 <p>Este algoritmo está implementado en la función <a href="https://rubenfcasal.github.io/simres/reference/rpmf.table.html"><code>simres::rpmf.table()</code></a> (fichero <a href="R/rpmf.R"><em>rpmf.R</em></a>) y devuelve también el número de comparaciones en un atributo <code>ncomp</code>:</p>
-<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="método-de-la-tabla-guía.html#cb203-1" aria-hidden="true" tabindex="-1"></a>rpmf.table</span></code></pre></div>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="método-de-la-tabla-guía.html#cb207-1" aria-hidden="true" tabindex="-1"></a>rpmf.table</span></code></pre></div>
 <pre><code>## function(x, prob = 1/length(x), m, n = 1000, as.factor = FALSE) {
 ##   # Inicializar tabla y FD
 ##   Fx &lt;- cumsum(prob)
@@ -518,25 +518,25 @@ Figura 5.3: Ilustración de la simulación de una distribución discreta mediant
 ##   attr(X, &quot;ncomp&quot;) &lt;- ncomp
 ##   return(X)
 ## }
-## &lt;bytecode: 0x00000233c34e0d90&gt;
+## &lt;bytecode: 0x0000023f83452e40&gt;
 ## &lt;environment: namespace:simres&gt;</code></pre>
 <div class="example">
 <p><span id="exm:binom-tabla" class="example"><strong>Ejemplo 5.3  (Simulación de una binomial mediante tabla guía) </strong></span><br></p>
 <p>Repetimos la simulación del Ejemplo <a href="transcuant.html#exm:binom-cuant">5.1</a> anterior empleando esta rutina con <span class="math inline">\(m=n-1\)</span>.</p>
-<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="método-de-la-tabla-guía.html#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb205-2"><a href="método-de-la-tabla-guía.html#cb205-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>( rx <span class="ot">&lt;-</span> <span class="fu">rpmf.table</span>(x, pmf, n<span class="dv">-1</span>, nsim) )</span></code></pre></div>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="método-de-la-tabla-guía.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb209-2"><a href="método-de-la-tabla-guía.html#cb209-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>( rx <span class="ot">&lt;-</span> <span class="fu">rpmf.table</span>(x, pmf, n<span class="dv">-1</span>, nsim) )</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.02    0.00    0.02</code></pre>
+##       0       0       0</code></pre>
 <p>Número medio de comparaciones:</p>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="método-de-la-tabla-guía.html#cb207-1" aria-hidden="true" tabindex="-1"></a>ncomp <span class="ot">&lt;-</span> <span class="fu">attr</span>(rx, <span class="st">&quot;ncomp&quot;</span>)</span>
-<span id="cb207-2"><a href="método-de-la-tabla-guía.html#cb207-2" aria-hidden="true" tabindex="-1"></a>ncomp<span class="sc">/</span>nsim</span></code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="método-de-la-tabla-guía.html#cb211-1" aria-hidden="true" tabindex="-1"></a>ncomp <span class="ot">&lt;-</span> <span class="fu">attr</span>(rx, <span class="st">&quot;ncomp&quot;</span>)</span>
+<span id="cb211-2"><a href="método-de-la-tabla-guía.html#cb211-2" aria-hidden="true" tabindex="-1"></a>ncomp<span class="sc">/</span>nsim</span></code></pre></div>
 <pre><code>## [1] 0.55951</code></pre>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="método-de-la-tabla-guía.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>((<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x))<span class="sc">*</span>pmf) <span class="co"># Numero esperado con búsqueda secuencial</span></span></code></pre></div>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="método-de-la-tabla-guía.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>((<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x))<span class="sc">*</span>pmf) <span class="co"># Numero esperado con búsqueda secuencial</span></span></code></pre></div>
 <pre><code>## [1] 6</code></pre>
 <p>Análisis de los resultados:</p>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="método-de-la-tabla-guía.html#cb211-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">table</span>(rx)<span class="sc">/</span>nsim</span>
-<span id="cb211-2"><a href="método-de-la-tabla-guía.html#cb211-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">ylab =</span> <span class="st">&quot;frecuencia relativa&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;valores&quot;</span>)</span>
-<span id="cb211-3"><a href="método-de-la-tabla-guía.html#cb211-3" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(x, pmf, <span class="at">pch =</span> <span class="dv">4</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)  <span class="co"># Comparación teórica</span></span></code></pre></div>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="método-de-la-tabla-guía.html#cb215-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">table</span>(rx)<span class="sc">/</span>nsim</span>
+<span id="cb215-2"><a href="método-de-la-tabla-guía.html#cb215-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">ylab =</span> <span class="st">&quot;frecuencia relativa&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;valores&quot;</span>)</span>
+<span id="cb215-3"><a href="método-de-la-tabla-guía.html#cb215-3" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(x, pmf, <span class="at">pch =</span> <span class="dv">4</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)  <span class="co"># Comparación teórica</span></span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:comptabla"></span>
 <img src="05-Metodos_generales_discretas_files/figure-html/comptabla-1.png" alt="Comparación de las frecuencias relativas de los valores generados, mediante el método de la tabla guía, con las probabilidades teóricas." width="75%" />
 <p class="caption">

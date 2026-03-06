@@ -479,7 +479,7 @@ donde <span class="math inline">\(H\)</span> es una matriz ortogonal (i.e. <spa
 <span class="math display">\[\mathbf{X} = \boldsymbol{\mu} + L\mathbf{Z}
 \sim \mathcal{N}_d\left( \boldsymbol{\mu},\Sigma \right).\]</span></li>
 </ul>
-<p>Desde el punto de vista de la eficiencia computacional la factorización de Cholesky sería la preferible. Pero en ocasiones, para evitar problemas numéricos (por ejemplo, en el caso de matrices semidefinidas positivas<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a>, i.e. con autovalores nulos) puede ser más adecuado emplear la factorización espectral.
+<p>Desde el punto de vista de la eficiencia computacional la factorización de Cholesky sería la preferible. Pero en ocasiones, para evitar problemas numéricos (por ejemplo, en el caso de matrices semidefinidas positivas<a href="#fn29" class="footnote-ref" id="fnref29"><sup>29</sup></a>, i.e. con autovalores nulos) puede ser más adecuado emplear la factorización espectral.
 En el primer caso el algoritmo sería el siguiente:</p>
 <div class="conjecture">
 <p><span id="cnj:mnorm-fact" class="conjecture"><strong>Algoritmo 6.2  (de simulación de una normal multivariante) </strong></span><br></p>
@@ -501,23 +501,23 @@ hará que emplear <span class="math inline">\(L=U^t.\)</span></p>
 <span class="math display">\[X(t)= \sin\left(  2\pi t\right)  +\varepsilon\left(  t\right)\]</span>
 con <span class="math inline">\(0\leq t \leq1\)</span> y <span class="math inline">\(Cov(\varepsilon\left( t_1 \right) , \varepsilon\left( t_2 \right) ) = e^{-\left\Vert t_1-t_2 \right\Vert }\)</span>,
 considerando 100 puntos de discretización (se puede pensar también que es un proceso temporal).</p>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="fact-cov.html#cb243-1" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">20</span></span>
-<span id="cb243-2"><a href="fact-cov.html#cb243-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb243-3"><a href="fact-cov.html#cb243-3" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length =</span> n)</span>
-<span id="cb243-4"><a href="fact-cov.html#cb243-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Media</span></span>
-<span id="cb243-5"><a href="fact-cov.html#cb243-5" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">sin</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>t)</span>
-<span id="cb243-6"><a href="fact-cov.html#cb243-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Covarianzas</span></span>
-<span id="cb243-7"><a href="fact-cov.html#cb243-7" aria-hidden="true" tabindex="-1"></a>t.dist <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">dist</span>(t))</span>
-<span id="cb243-8"><a href="fact-cov.html#cb243-8" aria-hidden="true" tabindex="-1"></a>x.cov <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span>t.dist)</span></code></pre></div>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="fact-cov.html#cb247-1" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb247-2"><a href="fact-cov.html#cb247-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb247-3"><a href="fact-cov.html#cb247-3" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length =</span> n)</span>
+<span id="cb247-4"><a href="fact-cov.html#cb247-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Media</span></span>
+<span id="cb247-5"><a href="fact-cov.html#cb247-5" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">sin</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>t)</span>
+<span id="cb247-6"><a href="fact-cov.html#cb247-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Covarianzas</span></span>
+<span id="cb247-7"><a href="fact-cov.html#cb247-7" aria-hidden="true" tabindex="-1"></a>t.dist <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">dist</span>(t))</span>
+<span id="cb247-8"><a href="fact-cov.html#cb247-8" aria-hidden="true" tabindex="-1"></a>x.cov <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span>t.dist)</span></code></pre></div>
 <p>Para la factorización de la matriz de covarianzas emplearemos la función <code>chol</code>
 del paquete base de R (si las dimensiones fueran muy grandes podría ser preferible emplear
 otros paquetes, e.g. <code>spam::chol.spam</code>), pero al devolver la matriz triangular superior
 habrá que transponer el resultado:</p>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="fact-cov.html#cb244-1" aria-hidden="true" tabindex="-1"></a>U <span class="ot">&lt;-</span> <span class="fu">chol</span>(x.cov)</span>
-<span id="cb244-2"><a href="fact-cov.html#cb244-2" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">t</span>(U)</span></code></pre></div>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="fact-cov.html#cb248-1" aria-hidden="true" tabindex="-1"></a>U <span class="ot">&lt;-</span> <span class="fu">chol</span>(x.cov)</span>
+<span id="cb248-2"><a href="fact-cov.html#cb248-2" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">t</span>(U)</span></code></pre></div>
 <p>Si queremos simular una realización:</p>
-<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="fact-cov.html#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb245-2"><a href="fact-cov.html#cb245-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mu <span class="sc">+</span> L <span class="sc">%*%</span> <span class="fu">rnorm</span>(n))</span></code></pre></div>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="fact-cov.html#cb249-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb249-2"><a href="fact-cov.html#cb249-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mu <span class="sc">+</span> L <span class="sc">%*%</span> <span class="fu">rnorm</span>(n))</span></code></pre></div>
 <pre><code>##       [,1]
 ## 1 -0.62645
 ## 2 -0.53076
@@ -527,11 +527,11 @@ habrá que transponer el resultado:</p>
 ## 6 -0.22208</code></pre>
 <p>y para simular <code>nsim</code>:</p>
 
-<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="fact-cov.html#cb247-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(nsim <span class="sc">*</span> n), <span class="at">nrow =</span> n)</span>
-<span id="cb247-2"><a href="fact-cov.html#cb247-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> mu <span class="sc">+</span> L <span class="sc">%*%</span> z</span>
-<span id="cb247-3"><a href="fact-cov.html#cb247-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb247-4"><a href="fact-cov.html#cb247-4" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(t, x, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">3.5</span>, <span class="fl">3.5</span>))</span>
-<span id="cb247-5"><a href="fact-cov.html#cb247-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, mu, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="fact-cov.html#cb251-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(nsim <span class="sc">*</span> n), <span class="at">nrow =</span> n)</span>
+<span id="cb251-2"><a href="fact-cov.html#cb251-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> mu <span class="sc">+</span> L <span class="sc">%*%</span> z</span>
+<span id="cb251-3"><a href="fact-cov.html#cb251-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb251-4"><a href="fact-cov.html#cb251-4" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(t, x, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">3.5</span>, <span class="fl">3.5</span>))</span>
+<span id="cb251-5"><a href="fact-cov.html#cb251-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, mu, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:funcional-plot"></span>
 <img src="06-Simulacion_multidimensional_files/figure-html/funcional-plot-1.png" alt="Realizaciones del proceso funcional del Ejemplo 6.4, obtenidas a partir de la factorización de Cholesky." width="75%" />
 <p class="caption">
@@ -541,8 +541,8 @@ Figura 6.2: Realizaciones del proceso funcional del Ejemplo <a href="fact-cov.ht
 <p>Alternativamente se podría emplear, por ejemplo, la funcion <code>mvrnorm</code>
 del paquete <code>MASS</code> que emplea la factorización espectral (<code>eigen</code>) (y que tiene en cuenta una tolerancia relativa para correguir autovalores negativos próximos a cero):</p>
 
-<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="fact-cov.html#cb248-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb248-2"><a href="fact-cov.html#cb248-2" aria-hidden="true" tabindex="-1"></a>mvrnorm</span></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="fact-cov.html#cb252-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb252-2"><a href="fact-cov.html#cb252-2" aria-hidden="true" tabindex="-1"></a>mvrnorm</span></code></pre></div>
 <pre><code>## function (n = 1, mu, Sigma, tol = 1e-06, empirical = FALSE, EISPACK = FALSE) 
 ## {
 ##     p &lt;- length(mu)
@@ -570,12 +570,12 @@ del paquete <code>MASS</code> que emplea la factorización espectral (<code>eige
 ##         drop(X)
 ##     else t(X)
 ## }
-## &lt;bytecode: 0x000001debaaed7f0&gt;
+## &lt;bytecode: 0x0000013615906de8&gt;
 ## &lt;environment: namespace:MASS&gt;</code></pre>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="fact-cov.html#cb250-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(nsim, mu, x.cov)</span>
-<span id="cb250-2"><a href="fact-cov.html#cb250-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb250-3"><a href="fact-cov.html#cb250-3" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(t, <span class="fu">t</span>(x), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span>
-<span id="cb250-4"><a href="fact-cov.html#cb250-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, mu, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="fact-cov.html#cb254-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(nsim, mu, x.cov)</span>
+<span id="cb254-2"><a href="fact-cov.html#cb254-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb254-3"><a href="fact-cov.html#cb254-3" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(t, <span class="fu">t</span>(x), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span>
+<span id="cb254-4"><a href="fact-cov.html#cb254-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, mu, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:funcional-plot2"></span>
 <img src="06-Simulacion_multidimensional_files/figure-html/funcional-plot2-1.png" alt="Realizaciones del proceso funcional del Ejemplo 6.4, obtenidas empleando la función MASS::mvrnorm." width="75%" />
 <p class="caption">
@@ -596,8 +596,8 @@ Dietrich, C. R., y Newsam, G. N. (1997). Fast and exact simulation of stationary
 </div>
 <div class="footnotes">
 <hr />
-<ol start="28">
-<li id="fn28"><p>También se habla de matrices definidas no negativas (<em>non negative definite matrices</em>) o de matrices no estrictamente definidas positivas.<a href="fact-cov.html#fnref28" class="footnote-back">↩︎</a></p></li>
+<ol start="29">
+<li id="fn29"><p>También se habla de matrices definidas no negativas (<em>non negative definite matrices</em>) o de matrices no estrictamente definidas positivas.<a href="fact-cov.html#fnref29" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

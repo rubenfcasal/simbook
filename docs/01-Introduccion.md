@@ -675,10 +675,10 @@ CPUtimeprint()
 ```
  ## Tiempo última operación:
  ##    user  system elapsed 
- ##    0.05    0.00    0.05 
+ ##    0.03    0.00    0.03 
  ## Tiempo total operación:
  ##    user  system elapsed 
- ##    0.05    0.00    0.05
+ ##    0.03    0.00    0.03
 ```
 
 ``` r
@@ -692,7 +692,7 @@ CPUtimeprint()
  ##       0       0       0 
  ## Tiempo total operación:
  ##    user  system elapsed 
- ##    0.05    0.00    0.05
+ ##    0.03    0.00    0.03
 ```
 
 La función [`cpu.time()`](https://rubenfcasal.github.io/simres/reference/cpu.time.html) del paquete [`simres`](https://rubenfcasal.github.io/simres) implementa una aproximación similar:
@@ -759,10 +759,10 @@ str(log.times)
 
 ```
  ## 'data.frame':	10 obs. of  4 variables:
- ##  $ tic         : num  7.93 7.93 7.93 7.93 7.93 7.93 7.93 7.93 7.93 7.93
- ##  $ toc         : num  7.93 7.93 7.93 7.93 7.93 7.93 7.93 7.93 7.93 7.93
+ ##  $ tic         : num  7.21 7.21 7.23 7.23 7.23 7.23 7.23 7.23 7.23 7.23
+ ##  $ toc         : num  7.21 7.23 7.23 7.23 7.23 7.23 7.23 7.23 7.23 7.23
  ##  $ msg         : chr  "1" "2" "3" "4" ...
- ##  $ callback_msg: chr  "1: 0 sec elapsed" "2: 0 sec elapsed" "3: 0 sec "..
+ ##  $ callback_msg: chr  "1: 0 sec elapsed" "2: 0.02 sec elapsed" "3: 0 s"..
 ```
 
 ``` r
@@ -775,7 +775,7 @@ summary(log.times$timings)
 
 ```
  ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- ##       0       0       0       0       0       0
+ ##   0.000   0.000   0.000   0.002   0.000   0.020
 ```
 
 Hay que tener en cuenta que, por construcción, aunque se realicen en la mismas condiciones (en el mismo equipo), los tiempos de CPU en R pueden variar "ligeramente" entre ejecuciones.

@@ -518,7 +518,7 @@ simres::rvng
  ##   # Devolver valores
  ##   return(u)
  ## }
- ## <bytecode: 0x00000171f80f33c8>
+ ## <bytecode: 0x000001b3d69bb3a8>
  ## <environment: namespace:simres>
 ```
 

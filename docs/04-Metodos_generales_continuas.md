@@ -117,7 +117,7 @@ tiempo
 
 ```
  ##    user  system elapsed 
- ##       0       0       0
+ ##    0.01    0.00    0.02
 ```
 
 Representamos la distribución de los valores generados y la comparamos con la densidad teórica:
@@ -238,7 +238,7 @@ system.time(x <- rdexpn(10^4, 2))
 
 ```
  ##    user  system elapsed 
- ##    0.03    0.00    0.03
+ ##    0.00    0.01    0.01
 ```
 
 Podemos representar la distribución de los valores generados, comparándola con la densidad teórica:
@@ -366,7 +366,7 @@ Podemos generar valores en $A_{cg} \supset A_{f}$ empleando el resultado:
 
 * Si $T$ es una variable aleatoria con función de densidad $g$ 
   y $U \sim \mathcal{U}(0, 1)$ entonces
-  $$\left( T,c\cdot U\cdot g(x) \right) \sim \mathcal{U}\left(
+  $$\left( T,c\cdot U\cdot g(T) \right) \sim \mathcal{U}\left(
   A_{cg}\right)$$
   siendo
   $A_{cg}=\left\{ \left( x, y \right) \in \mathbb{R}^{2} : 0 \leq y \leq
@@ -575,7 +575,7 @@ Como medida de la eficiencia del algoritmo de aceptación-rechazo podríamos con
 Este número $N$ es aleatorio y sigue una distribución geométrica (entendida como el número de pruebas necesarias hasta obtener el primer éxito[^04-AR-3]) con parámetro $p$ (probabilidad de éxito) la probabilidad de aceptación en el paso 3:
 $$p = \frac{\text{area}\left(A_{f}\right)}{\text{area}\left( A_{cg}\right)} = \frac{1}{c}.$$
 
-[^04-AR-3] Esta distribución también se puede definir como el número de fracasos hasta el primer éxito al realizar experimentos de Bernoulli independientes, que es como la consideraremos normalmente (ya que coincide con la parametrización de R, como un caso particular de la distribución binomial negativa).
+[^04-AR-3]: Esta distribución también se puede definir como el número de fracasos hasta el primer éxito al realizar experimentos de Bernoulli independientes, que es como la consideraremos normalmente (ya que coincide con la parametrización de R, como un caso particular de la distribución binomial negativa).
 Sin embargo, en este caso resulta más cómodo considerar el número total de pruebas.
 
 Por tanto:
@@ -714,7 +714,7 @@ system.time(x <- rnormARn(nsim))
 
 ```
  ##    user  system elapsed 
- ##    0.01    0.02    0.05
+ ##    0.06    0.00    0.06
 ```
 
 Evaluamos la eficiencia:
@@ -1234,7 +1234,7 @@ simres::rcauchy.rou
  ##   attr(x, "ngen") <- ngen
  ##   return(x)
  ## }
- ## <bytecode: 0x0000023b54a1f448>
+ ## <bytecode: 0x000002178a9cbb28>
  ## <environment: namespace:simres>
 ```
 

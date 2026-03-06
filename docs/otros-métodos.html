@@ -470,7 +470,7 @@ Normalmente se realiza mediante truncamiento de una distribución continua auxil
 siendo <span class="math inline">\(p\)</span> la probabilidad de éxito.</p>
 <p>Esta distribución podría simularse fácilmente a partir de su definición aunque el algoritmo resultante puede ser muy poco eficiente (especialmente si <span class="math inline">\(p\)</span> es pequeña).
 Un algoritmo más eficiente, equivalente a emplear la expresión explícita de su función cuantil <span class="citation">(e.g. <a href="#ref-cao2002" role="doc-biblioref">Cao Abad, 2002, sec. 4.1.2</a>)</span>, consiste en truncar generaciones de una variable aleatoria auxiliar con distribución exponencial.</p>
-<p>Si <span class="math inline">\(T \sim \mathcal{Exp}(\lambda)\)</span>, con función de distribución <span class="math inline">\(G(t) = 1-e^{-\lambda t}\)</span> si <span class="math inline">\(t \geq 0\)</span>, se tiene que<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a>:
+<p>Si <span class="math inline">\(T \sim \mathcal{Exp}(\lambda)\)</span>, con función de distribución <span class="math inline">\(G(t) = 1-e^{-\lambda t}\)</span> si <span class="math inline">\(t \geq 0\)</span>, se tiene que<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a>:
 <span class="math display">\[\begin{aligned}
 P\left( \left\lfloor T \right\rfloor = i \right)
 &amp; = P(i \leq T &lt; i + 1 ) = G(i + 1) - G(i) \\  
@@ -492,15 +492,15 @@ De donde se obtendría el algoritmo:</p>
 </ol>
 </div>
 <p>El siguiente código emplea una versión vectorizada de este algoritmo para generar <code>nsim</code> valores de una distribución geométrica de parámetro <code>p</code>:</p>
-<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="otros-métodos.html#cb217-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.3</span></span>
-<span id="cb217-2"><a href="otros-métodos.html#cb217-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
-<span id="cb217-3"><a href="otros-métodos.html#cb217-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb217-4"><a href="otros-métodos.html#cb217-4" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> <span class="fu">floor</span>(<span class="fu">rexp</span>(nsim, <span class="at">rate =</span> <span class="sc">-</span><span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p)))</span></code></pre></div>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="otros-métodos.html#cb221-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.3</span></span>
+<span id="cb221-2"><a href="otros-métodos.html#cb221-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
+<span id="cb221-3"><a href="otros-métodos.html#cb221-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb221-4"><a href="otros-métodos.html#cb221-4" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> <span class="fu">floor</span>(<span class="fu">rexp</span>(nsim, <span class="at">rate =</span> <span class="sc">-</span><span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p)))</span></code></pre></div>
 <p>Como comprobación de que el algoritmo está bien implementado (es un método exacto de simulación), comparamos las aproximaciones de las probabilidades de los valores generados con los valores teóricos:</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="otros-métodos.html#cb218-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">table</span>(rx)<span class="sc">/</span>nsim</span>
-<span id="cb218-2"><a href="otros-métodos.html#cb218-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">ylab =</span> <span class="st">&quot;frecuencia relativa&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;valores&quot;</span>)</span>
-<span id="cb218-3"><a href="otros-métodos.html#cb218-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span><span class="fu">max</span>(<span class="fu">as.numeric</span>(<span class="fu">names</span>(res)))</span>
-<span id="cb218-4"><a href="otros-métodos.html#cb218-4" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(x, <span class="fu">dnbinom</span>(x, <span class="dv">1</span>, p), <span class="at">pch =</span> <span class="dv">4</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)  <span class="co"># Comparación teórica</span></span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="otros-métodos.html#cb222-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">table</span>(rx)<span class="sc">/</span>nsim</span>
+<span id="cb222-2"><a href="otros-métodos.html#cb222-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">ylab =</span> <span class="st">&quot;frecuencia relativa&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;valores&quot;</span>)</span>
+<span id="cb222-3"><a href="otros-métodos.html#cb222-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span><span class="fu">max</span>(<span class="fu">as.numeric</span>(<span class="fu">names</span>(res)))</span>
+<span id="cb222-4"><a href="otros-métodos.html#cb222-4" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(x, <span class="fu">dnbinom</span>(x, <span class="dv">1</span>, p), <span class="at">pch =</span> <span class="dv">4</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)  <span class="co"># Comparación teórica</span></span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:comptrunc"></span>
 <img src="05-Metodos_generales_discretas_files/figure-html/comptrunc-1.png" alt="Comparación de las frecuencias relativas de los valores generados de la distribución geométrica, mediante truncamiento, con las probabilidades teóricas." width="75%" />
 <p class="caption">
@@ -516,8 +516,8 @@ Cao Abad, R. (2002). <em>Introducci<span>ó</span>n a la Simulaci<span>ó</span>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="25">
-<li id="fn25"><p>Es equivalente a considerar <span class="math inline">\(\left\lceil T \right\rceil -1\)</span> ya que la distribución exponencial es absolutamente continua.<a href="otros-métodos.html#fnref25" class="footnote-back">↩︎</a></p></li>
+<ol start="26">
+<li id="fn26"><p>Es equivalente a considerar <span class="math inline">\(\left\lceil T \right\rceil -1\)</span> ya que la distribución exponencial es absolutamente continua.<a href="otros-métodos.html#fnref26" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

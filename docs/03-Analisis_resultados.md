@@ -218,7 +218,7 @@ plot(est, type = "l", lwd = 2, xlab = "Número de generaciones",
 abline(h = est[nsim], lty=2)
 lines(est + 2*esterr, lty=3)
 lines(est - 2*esterr, lty=3)
-abline(h = xmed)
+abline(h = xmed, col = "blue")
 ```
 
 \begin{figure}[!htbp]
@@ -304,6 +304,7 @@ rx <- logical(nsim) # x == "llueve"
 rx[1] <- FALSE # El primer día no llueve
 for (i in 2:nsim)
   rx[i] <- if (rx[i-1]) runif(1) > beta else runif(1) < alpha
+  # rx[i] <- if (rx[i-1]) runif(1) < 1 - beta else runif(1) < alpha
 ```
 
 Si generamos el gráfico de convergencia asumiendo independencia:
@@ -312,12 +313,13 @@ Si generamos el gráfico de convergencia asumiendo independencia:
 n <- 1:nsim
 est <- cumsum(rx)/n
 esterr <- sqrt(est*(1-est)/(n-1)) # OJO! Supone independencia
-plot(est, type = "l", lwd = 2, ylab = "Probabilidad", 
-     xlab = "Número de simulaciones", ylim = c(0, 0.6))
-abline(h = est[nsim], lty = 2)
-lines(est + 2*esterr, lty = 2) 
-lines(est - 2*esterr, lty = 2)
-abline(h = 1/3, col = "darkgray") # Probabilidad teórica
+plot(est, type="l", lwd=2, ylab="Probabilidad", 
+     xlab="Número de simulaciones", ylim=c(0,0.6))
+abline(h = est[nsim], lty=2)
+lines(est + 2*esterr, lty=2) 
+lines(est - 2*esterr, lty=2)
+# res <- simres::conv.plot(rx, ylim=c(0,0.6)); res
+abline(h = 1/3, col = "blue") # Probabilidad teórica
 ```
 
 \begin{figure}[!htbp]
@@ -391,12 +393,12 @@ nrxi <- length(rxi)
 n <- 1:nrxi
 est <- cumsum(rxi)/n
 esterr <- sqrt(est*(1-est)/(n-1))
-plot(est, type = "l", lwd = 2, ylab = "Probabilidad",  
-     xlab = paste("Número de simulaciones /", lag + 1), ylim = c(0, 0.6))
-abline(h = est[length(rxi)], lty = 2)
-lines(est + 2*esterr, lty = 2) # Supone independencia
-lines(est - 2*esterr, lty = 2)
-abline(h = 1/3, col = "darkgray")     # Prob. teor. cadenas Markov
+plot(est, type="l", lwd=2, ylab="Probabilidad", 
+     xlab=paste("Número de simulaciones /", lag + 1), ylim=c(0,0.6))
+abline(h = est[length(rxi)], lty=2)
+lines(est + 2*esterr, lty=2) # Supone independencia
+lines(est - 2*esterr, lty=2)
+abline(h = 1/3, col = "blue")     # Prob. teor. cadenas Markov
 ```
 
 \begin{figure}[!htbp]
@@ -420,6 +422,14 @@ esterr[nrxi]
 ```
 pero no sería la más eficiente para aproximar la media. Siempre es preferible emplear todas las observaciones. 
 
+``` r
+mean(rx) # Aproximación media teórica
+```
+
+```
+ ## [1] 0.3038
+```
+
 Por ejemplo, se podría pensar en considerar las medias de grupos de 25 valores consecutivos y suponer que hay independencia entre ellas:
 
 
@@ -429,12 +439,17 @@ nrxm <- length(rxm)
 n <- 1:nrxm
 est <- cumsum(rxm)/n
 esterr <- sqrt((cumsum(rxm^2)/n - est^2)/(n-1)) # Errores estándar
-plot(est, type = "l", lwd = 2, ylab = "Probabilidad",  
+plot(est, type = "l", lwd = 2, ylab = "Probabilidad", 
      xlab = paste("Número de simulaciones /", lag + 1), ylim = c(0, 0.6))
 abline(h = est[length(rxm)], lty = 2)
 lines(est + 2*esterr, lty = 2) # OJO! Supone independencia
 lines(est - 2*esterr, lty = 2)
-abline(h = 1/3, col = "darkgray")     # Prob. teor. cadenas Markov
+abline(h = 1/3, col = "blue")  # Prob. teor. cadenas Markov
+esterr[length(rxm)]
+```
+
+```
+ ## [1] 0.016177
 ```
 
 \begin{figure}[!htbp]
@@ -496,7 +511,7 @@ mesterr <- apply(est, 1, sd)/sqrt(nsec)
 lines(mest + 2*mesterr, lty = 2)
 lines(mest - 2*mesterr, lty = 2)
 # Prob. teor. cadenas Markov
-abline(h = 1/3, col = "darkgray")     
+abline(h = 1/3, col = "blue")     
 
 # Aproximación final
 mest[nsim] # mean(rxm)
@@ -560,12 +575,12 @@ lines(est2, lty = 2)
 # Ejemplo periodo calentamiento nburn = 2000
 abline(v = 2000, lty = 3)
 # Prob. teor. cadenas Markov
-abline(h = 1/3, col="darkgray")     
+abline(h = 1/3, col = "blue")     
 ```
 
 
 
-\begin{center}\includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/unnamed-chunk-11-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
 
 En estos casos puede ser recomendable ignorar los primeros valores generados (por ejemplo los primeros 2000) y recalcular los 
@@ -617,7 +632,7 @@ Como ejemplo nos alejamos un poco de la distribución estacionaria, para que el 
 set.seed(1)
 x <- numeric(nsim + nburn)
 # Establecer el primer valor 
-x[1] <- -10
+x[1] <- -10   # Mejor x[1] <- rnorm(1, mean = xmed, sd = sqrt(xvar))
 # Simular el resto de la secuencia
 for (i in 2:length(x))
   x[i] <- xmed + rho*(x[i-1] - xmed) + rnorm(1, sd=sqrt(evar))
@@ -643,14 +658,14 @@ rx <- x[-seq_len(nburn)]
 :::
 
 
-Para simular una serie de tiempo en R se puede emplear la función `arima.sim` del paquete base `stats`.
+Para simular una serie de tiempo (de media cero) en R se puede emplear la función `arima.sim` del paquete base `stats`.
 En este caso el periodo de calentamiento se establece mediante el parámetro `n.start` (que se fija automáticamente a un valor adecuado).
 
 Por ejemplo, podemos generar este serie autoregresiva con:
 
 ``` r
-rx2 <- arima.sim(list(order = c(1,0,0), ar = rho), n = nsim, 
-                 n.start = nburn, sd = sqrt(evar))
+rx2 <- xmed + arima.sim(list(order = c(1,0,0), ar = rho), n = nsim, 
+                        n.start = nburn, sd = sqrt(evar))
 ```
 La recomendación es fijar la varianza de las series simuladas si se quieren comparar
 resultados considerando distintos parámetros de dependencia.

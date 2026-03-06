@@ -554,7 +554,7 @@ C_{f^{\ast}} &amp; = \left\{ (u, v) \in \mathbb{R}^{2} : 0 &lt;u \leq \frac{1}{\
 \end{aligned}\]</span>
 dando como resultando que <span class="math inline">\(C_{f^{\ast}}\)</span> es el semicírculo de radio uno, y podemos generar valores con distribución uniforme en esta región a partir de <span class="math inline">\(\mathcal{U}\left([0,1]\times[-1,1] \right)\)</span>.</p>
 <p>El correspondiente algoritmo está implementado en la función <a href="https://rubenfcasal.github.io/simres/reference/rcauchy.rou.html"><code>rcauchy.rou()</code></a> del paquete <a href="https://rubenfcasal.github.io/simres"><code>simres</code></a> (fichero <a href="R/ar.R"><em>ar.R</em></a>):</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="modAR.html#cb171-1" aria-hidden="true" tabindex="-1"></a>simres<span class="sc">::</span>rcauchy.rou</span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="modAR.html#cb175-1" aria-hidden="true" tabindex="-1"></a>simres<span class="sc">::</span>rcauchy.rou</span></code></pre></div>
 <pre><code>## function(n) {
 ##   # Cauchy mediante cociente de uniformes
 ##   ngen &lt;- n
@@ -573,26 +573,26 @@ dando como resultando que <span class="math inline">\(C_{f^{\ast}}\)</span> es e
 ##   attr(x, &quot;ngen&quot;) &lt;- ngen
 ##   return(x)
 ## }
-## &lt;bytecode: 0x0000025b919d4418&gt;
+## &lt;bytecode: 0x000002024b0d24d8&gt;
 ## &lt;environment: namespace:simres&gt;</code></pre>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="modAR.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb173-2"><a href="modAR.html#cb173-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
-<span id="cb173-3"><a href="modAR.html#cb173-3" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> simres<span class="sc">::</span><span class="fu">rcauchy.rou</span>(nsim)</span>
-<span id="cb173-4"><a href="modAR.html#cb173-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb173-5"><a href="modAR.html#cb173-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(rx, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="dv">6</span>))</span>
-<span id="cb173-6"><a href="modAR.html#cb173-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(rx))</span>
-<span id="cb173-7"><a href="modAR.html#cb173-7" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(dcauchy, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="modAR.html#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb177-2"><a href="modAR.html#cb177-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
+<span id="cb177-3"><a href="modAR.html#cb177-3" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> simres<span class="sc">::</span><span class="fu">rcauchy.rou</span>(nsim)</span>
+<span id="cb177-4"><a href="modAR.html#cb177-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb177-5"><a href="modAR.html#cb177-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(rx, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="dv">6</span>))</span>
+<span id="cb177-6"><a href="modAR.html#cb177-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(rx))</span>
+<span id="cb177-7"><a href="modAR.html#cb177-7" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(dcauchy, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rcauchy-rou"></span>
 <img src="04-Metodos_generales_continuas_files/figure-html/rcauchy-rou-1.png" alt="Distribución de los valores generados mediante el método de cociente de uniformes." width="75%" />
 <p class="caption">
 Figura 4.13: Distribución de los valores generados mediante el método de cociente de uniformes.
 </p>
 </div>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="modAR.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Número generaciones</span></span>
-<span id="cb174-2"><a href="modAR.html#cb174-2" aria-hidden="true" tabindex="-1"></a>ngen <span class="ot">&lt;-</span> <span class="fu">attr</span>(rx, <span class="st">&quot;ngen&quot;</span>)</span>
-<span id="cb174-3"><a href="modAR.html#cb174-3" aria-hidden="true" tabindex="-1"></a>{<span class="fu">cat</span>(<span class="st">&quot;Número de generaciones = &quot;</span>, ngen)</span>
-<span id="cb174-4"><a href="modAR.html#cb174-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Número medio de generaciones = &quot;</span>, ngen<span class="sc">/</span>nsim)</span>
-<span id="cb174-5"><a href="modAR.html#cb174-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Proporción de rechazos = &quot;</span>, <span class="dv">1</span><span class="sc">-</span>nsim<span class="sc">/</span>ngen,<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)}</span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="modAR.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Número generaciones</span></span>
+<span id="cb178-2"><a href="modAR.html#cb178-2" aria-hidden="true" tabindex="-1"></a>ngen <span class="ot">&lt;-</span> <span class="fu">attr</span>(rx, <span class="st">&quot;ngen&quot;</span>)</span>
+<span id="cb178-3"><a href="modAR.html#cb178-3" aria-hidden="true" tabindex="-1"></a>{<span class="fu">cat</span>(<span class="st">&quot;Número de generaciones = &quot;</span>, ngen)</span>
+<span id="cb178-4"><a href="modAR.html#cb178-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Número medio de generaciones = &quot;</span>, ngen<span class="sc">/</span>nsim)</span>
+<span id="cb178-5"><a href="modAR.html#cb178-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Proporción de rechazos = &quot;</span>, <span class="dv">1</span><span class="sc">-</span>nsim<span class="sc">/</span>ngen,<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)}</span></code></pre></div>
 <pre><code>## Número de generaciones =  12751
 ## Número medio de generaciones =  1.2751
 ## Proporción de rechazos =  0.21575</code></pre>

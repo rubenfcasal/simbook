@@ -199,7 +199,7 @@ rpmf
  ##   attr(X, "ncomp") <- ncomp
  ##   return(X)
  ## }
- ## <bytecode: 0x000001f5e8749068>
+ ## <bytecode: 0x000001f41ff14020>
  ## <environment: namespace:simres>
 ```
 
@@ -227,7 +227,7 @@ system.time( rx <- rpmf(x, pmf, nsim) )
 
 ```
  ##    user  system elapsed 
- ##    0.03    0.00    0.03
+ ##    0.01    0.00    0.02
 ```
 
 A partir de ellas podríamos aproximar el valor esperado:
@@ -378,7 +378,7 @@ tiempo
 
 ```
  ##    user  system elapsed 
- ##    0.02    0.00    0.01
+ ##    0.01    0.00    0.02
 ```
 
 ``` r
@@ -503,7 +503,7 @@ rpmf.table
  ##   attr(X, "ncomp") <- ncomp
  ##   return(X)
  ## }
- ## <bytecode: 0x000001f5e9d57938>
+ ## <bytecode: 0x000001f4215919d8>
  ## <environment: namespace:simres>
 ```
 
@@ -659,7 +659,7 @@ rpmf.alias
  ##   if(as.factor) X <- factor(X, levels = x)
  ##   return(X)
  ## }
- ## <bytecode: 0x000001f5ec95a410>
+ ## <bytecode: 0x000001f423f374c0>
  ## <environment: namespace:simres>
 ```
 
@@ -678,7 +678,7 @@ system.time( rx <- rpmf.alias(x, pmf, nsim) )
 
 ```
  ##    user  system elapsed 
- ##       0       0       0
+ ##    0.01    0.00    0.02
 ```
 
 Análisis de los resultados:

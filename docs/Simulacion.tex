@@ -244,7 +244,7 @@
 
 \title{Técnicas de Simulación y Remuestreo}
 \author{Rubén Fernández Casal (\href{mailto:ruben.fcasal@udc.es}{\nolinkurl{ruben.fcasal@udc.es}}) \and Ricardo Cao (\href{mailto:rcao@udc.es}{\nolinkurl{rcao@udc.es}}) \and Julián Costa (\href{mailto:julian.costa@udc.es}{\nolinkurl{julian.costa@udc.es}})}
-\date{Edición: Enero de 2023. Impresión: 2025-12-03}
+\date{Edición: Enero de 2023. Impresión: 2026-03-06}
 
 \begin{document}
 \maketitle
@@ -969,10 +969,10 @@ Ejemplo:
 \begin{verbatim}
  ## Tiempo última operación:
  ##    user  system elapsed 
- ##    0.05    0.00    0.05 
+ ##    0.03    0.00    0.03 
  ## Tiempo total operación:
  ##    user  system elapsed 
- ##    0.05    0.00    0.05
+ ##    0.03    0.00    0.03
 \end{verbatim}
 
 \begin{Shaded}
@@ -988,7 +988,7 @@ Ejemplo:
  ##       0       0       0 
  ## Tiempo total operación:
  ##    user  system elapsed 
- ##    0.05    0.00    0.05
+ ##    0.03    0.00    0.03
 \end{verbatim}
 
 La función \href{https://rubenfcasal.github.io/simres/reference/cpu.time.html}{\texttt{cpu.time()}} del paquete \href{https://rubenfcasal.github.io/simres}{\texttt{simres}} implementa una aproximación similar:
@@ -1066,10 +1066,10 @@ Si se desea ir almacenando automáticamente los tiempos de computación, puede s
 
 \begin{verbatim}
  ## 'data.frame':   10 obs. of  4 variables:
- ##  $ tic         : num  7.93 7.93 7.93 7.93 7.93 7.93 7.93 7.93 7.93 7.93
- ##  $ toc         : num  7.93 7.93 7.93 7.93 7.93 7.93 7.93 7.93 7.93 7.93
+ ##  $ tic         : num  7.21 7.21 7.23 7.23 7.23 7.23 7.23 7.23 7.23 7.23
+ ##  $ toc         : num  7.21 7.23 7.23 7.23 7.23 7.23 7.23 7.23 7.23 7.23
  ##  $ msg         : chr  "1" "2" "3" "4" ...
- ##  $ callback_msg: chr  "1: 0 sec elapsed" "2: 0 sec elapsed" "3: 0 sec "..
+ ##  $ callback_msg: chr  "1: 0 sec elapsed" "2: 0.02 sec elapsed" "3: 0 s"..
 \end{verbatim}
 
 \begin{Shaded}
@@ -1084,7 +1084,7 @@ Si se desea ir almacenando automáticamente los tiempos de computación, puede s
 
 \begin{verbatim}
  ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- ##       0       0       0       0       0       0
+ ##   0.000   0.000   0.000   0.002   0.000   0.020
 \end{verbatim}
 
 Hay que tener en cuenta que, por construcción, aunque se realicen en la mismas condiciones (en el mismo equipo), los tiempos de CPU en R pueden variar ``ligeramente'' entre ejecuciones.
@@ -1255,7 +1255,7 @@ Este método está implementado (no de la forma más eficiente\footnote{Para evi
  ##   # Devolver valores
  ##   return(u)
  ## }
- ## <bytecode: 0x0000025987cb5c68>
+ ## <bytecode: 0x000001b451843c48>
  ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -1634,7 +1634,7 @@ Por ejemplo, se podría emplear la función \href{https://rubenfcasal.github.io/
  ##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
  ##                    method = METHOD, data.name = DNAME), RESULTS), class = "htest")
  ## }
- ## <bytecode: 0x000002598bfd4310>
+ ## <bytecode: 0x000001b455b18330>
  ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -2124,7 +2124,7 @@ Este algoritmo está implementado en la función \href{https://rubenfcasal.githu
  ##   # Devolver valores
  ##   return(u)
  ## }
- ## <bytecode: 0x000002598b36a810>
+ ## <bytecode: 0x000001b4551447c0>
  ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -2341,7 +2341,7 @@ Podemos añadir también los correspondientes intervalos de confianza al gráfic
 \FunctionTok{abline}\NormalTok{(}\AttributeTok{h =}\NormalTok{ est[nsim], }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}
 \FunctionTok{lines}\NormalTok{(est }\SpecialCharTok{+} \DecValTok{2}\SpecialCharTok{*}\NormalTok{esterr, }\AttributeTok{lty=}\DecValTok{3}\NormalTok{)}
 \FunctionTok{lines}\NormalTok{(est }\SpecialCharTok{{-}} \DecValTok{2}\SpecialCharTok{*}\NormalTok{esterr, }\AttributeTok{lty=}\DecValTok{3}\NormalTok{)}
-\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =}\NormalTok{ xmed)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =}\NormalTok{ xmed, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2424,6 +2424,7 @@ Podemos generar valores de la variable indicadora de día lluvioso con el siguie
 \NormalTok{rx[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \ConstantTok{FALSE} \CommentTok{\# El primer día no llueve}
 \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\NormalTok{nsim)}
 \NormalTok{  rx[i] }\OtherTok{\textless{}{-}} \ControlFlowTok{if}\NormalTok{ (rx[i}\DecValTok{{-}1}\NormalTok{]) }\FunctionTok{runif}\NormalTok{(}\DecValTok{1}\NormalTok{) }\SpecialCharTok{\textgreater{}}\NormalTok{ beta }\ControlFlowTok{else} \FunctionTok{runif}\NormalTok{(}\DecValTok{1}\NormalTok{) }\SpecialCharTok{\textless{}}\NormalTok{ alpha}
+  \CommentTok{\# rx[i] \textless{}{-} if (rx[i{-}1]) runif(1) \textless{} 1 {-} beta else runif(1) \textless{} alpha}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2434,12 +2435,13 @@ Si generamos el gráfico de convergencia asumiendo independencia:
 \NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\NormalTok{nsim}
 \NormalTok{est }\OtherTok{\textless{}{-}} \FunctionTok{cumsum}\NormalTok{(rx)}\SpecialCharTok{/}\NormalTok{n}
 \NormalTok{esterr }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(est}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{est)}\SpecialCharTok{/}\NormalTok{(n}\DecValTok{{-}1}\NormalTok{)) }\CommentTok{\# OJO! Supone independencia}
-\FunctionTok{plot}\NormalTok{(est, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Probabilidad"}\NormalTok{, }
-     \AttributeTok{xlab =} \StringTok{"Número de simulaciones"}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.6}\NormalTok{))}
-\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =}\NormalTok{ est[nsim], }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
-\FunctionTok{lines}\NormalTok{(est }\SpecialCharTok{+} \DecValTok{2}\SpecialCharTok{*}\NormalTok{esterr, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{) }
-\FunctionTok{lines}\NormalTok{(est }\SpecialCharTok{{-}} \DecValTok{2}\SpecialCharTok{*}\NormalTok{esterr, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
-\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{3}\NormalTok{, }\AttributeTok{col =} \StringTok{"darkgray"}\NormalTok{) }\CommentTok{\# Probabilidad teórica}
+\FunctionTok{plot}\NormalTok{(est, }\AttributeTok{type=}\StringTok{"l"}\NormalTok{, }\AttributeTok{lwd=}\DecValTok{2}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"Probabilidad"}\NormalTok{, }
+     \AttributeTok{xlab=}\StringTok{"Número de simulaciones"}\NormalTok{, }\AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.6}\NormalTok{))}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =}\NormalTok{ est[nsim], }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(est }\SpecialCharTok{+} \DecValTok{2}\SpecialCharTok{*}\NormalTok{esterr, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{) }
+\FunctionTok{lines}\NormalTok{(est }\SpecialCharTok{{-}} \DecValTok{2}\SpecialCharTok{*}\NormalTok{esterr, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}
+\CommentTok{\# res \textless{}{-} simres::conv.plot(rx, ylim=c(0,0.6)); res}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{3}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{) }\CommentTok{\# Probabilidad teórica}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2520,12 +2522,12 @@ El gráfico anterior sugiere que si solo tomamos 1 de cada 25 valores podría se
 \NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\NormalTok{nrxi}
 \NormalTok{est }\OtherTok{\textless{}{-}} \FunctionTok{cumsum}\NormalTok{(rxi)}\SpecialCharTok{/}\NormalTok{n}
 \NormalTok{esterr }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(est}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{est)}\SpecialCharTok{/}\NormalTok{(n}\DecValTok{{-}1}\NormalTok{))}
-\FunctionTok{plot}\NormalTok{(est, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Probabilidad"}\NormalTok{,  }
-     \AttributeTok{xlab =} \FunctionTok{paste}\NormalTok{(}\StringTok{"Número de simulaciones /"}\NormalTok{, lag }\SpecialCharTok{+} \DecValTok{1}\NormalTok{), }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.6}\NormalTok{))}
-\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =}\NormalTok{ est[}\FunctionTok{length}\NormalTok{(rxi)], }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
-\FunctionTok{lines}\NormalTok{(est }\SpecialCharTok{+} \DecValTok{2}\SpecialCharTok{*}\NormalTok{esterr, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{) }\CommentTok{\# Supone independencia}
-\FunctionTok{lines}\NormalTok{(est }\SpecialCharTok{{-}} \DecValTok{2}\SpecialCharTok{*}\NormalTok{esterr, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
-\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{3}\NormalTok{, }\AttributeTok{col =} \StringTok{"darkgray"}\NormalTok{)     }\CommentTok{\# Prob. teor. cadenas Markov}
+\FunctionTok{plot}\NormalTok{(est, }\AttributeTok{type=}\StringTok{"l"}\NormalTok{, }\AttributeTok{lwd=}\DecValTok{2}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"Probabilidad"}\NormalTok{, }
+     \AttributeTok{xlab=}\FunctionTok{paste}\NormalTok{(}\StringTok{"Número de simulaciones /"}\NormalTok{, lag }\SpecialCharTok{+} \DecValTok{1}\NormalTok{), }\AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.6}\NormalTok{))}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =}\NormalTok{ est[}\FunctionTok{length}\NormalTok{(rxi)], }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(est }\SpecialCharTok{+} \DecValTok{2}\SpecialCharTok{*}\NormalTok{esterr, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{) }\CommentTok{\# Supone independencia}
+\FunctionTok{lines}\NormalTok{(est }\SpecialCharTok{{-}} \DecValTok{2}\SpecialCharTok{*}\NormalTok{esterr, }\AttributeTok{lty=}\DecValTok{2}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{3}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{)     }\CommentTok{\# Prob. teor. cadenas Markov}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2552,6 +2554,16 @@ Esta forma de proceder podría ser adecuada para tratar de aproximar la precisi�
 
 pero no sería la más eficiente para aproximar la media. Siempre es preferible emplear todas las observaciones.
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(rx) }\CommentTok{\# Aproximación media teórica}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ ## [1] 0.3038
+\end{verbatim}
+
 Por ejemplo, se podría pensar en considerar las medias de grupos de 25 valores consecutivos y suponer que hay independencia entre ellas:
 
 \begin{Shaded}
@@ -2561,14 +2573,19 @@ Por ejemplo, se podría pensar en considerar las medias de grupos de 25 valores 
 \NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\NormalTok{nrxm}
 \NormalTok{est }\OtherTok{\textless{}{-}} \FunctionTok{cumsum}\NormalTok{(rxm)}\SpecialCharTok{/}\NormalTok{n}
 \NormalTok{esterr }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{((}\FunctionTok{cumsum}\NormalTok{(rxm}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{n }\SpecialCharTok{{-}}\NormalTok{ est}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{(n}\DecValTok{{-}1}\NormalTok{)) }\CommentTok{\# Errores estándar}
-\FunctionTok{plot}\NormalTok{(est, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Probabilidad"}\NormalTok{,  }
+\FunctionTok{plot}\NormalTok{(est, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Probabilidad"}\NormalTok{, }
      \AttributeTok{xlab =} \FunctionTok{paste}\NormalTok{(}\StringTok{"Número de simulaciones /"}\NormalTok{, lag }\SpecialCharTok{+} \DecValTok{1}\NormalTok{), }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.6}\NormalTok{))}
 \FunctionTok{abline}\NormalTok{(}\AttributeTok{h =}\NormalTok{ est[}\FunctionTok{length}\NormalTok{(rxm)], }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
 \FunctionTok{lines}\NormalTok{(est }\SpecialCharTok{+} \DecValTok{2}\SpecialCharTok{*}\NormalTok{esterr, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{) }\CommentTok{\# OJO! Supone independencia}
 \FunctionTok{lines}\NormalTok{(est }\SpecialCharTok{{-}} \DecValTok{2}\SpecialCharTok{*}\NormalTok{esterr, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
-\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{3}\NormalTok{, }\AttributeTok{col =} \StringTok{"darkgray"}\NormalTok{)     }\CommentTok{\# Prob. teor. cadenas Markov}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{3}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{)  }\CommentTok{\# Prob. teor. cadenas Markov}
+\NormalTok{esterr[}\FunctionTok{length}\NormalTok{(rxm)]}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+ ## [1] 0.016177
+\end{verbatim}
 
 \begin{figure}[!htbp]
 
@@ -2630,7 +2647,7 @@ La idea sería considerar las medias de las series como una muestra independient
 \FunctionTok{lines}\NormalTok{(mest }\SpecialCharTok{+} \DecValTok{2}\SpecialCharTok{*}\NormalTok{mesterr, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
 \FunctionTok{lines}\NormalTok{(mest }\SpecialCharTok{{-}} \DecValTok{2}\SpecialCharTok{*}\NormalTok{mesterr, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
 \CommentTok{\# Prob. teor. cadenas Markov}
-\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{3}\NormalTok{, }\AttributeTok{col =} \StringTok{"darkgray"}\NormalTok{)     }
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{3}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{)     }
 
 \CommentTok{\# Aproximación final}
 \NormalTok{mest[nsim] }\CommentTok{\# mean(rxm)}
@@ -2697,11 +2714,11 @@ Como ejemplo comparamos la simulación del Ejemplo \ref{exm:mmc} con la obtenida
 \CommentTok{\# Ejemplo periodo calentamiento nburn = 2000}
 \FunctionTok{abline}\NormalTok{(}\AttributeTok{v =} \DecValTok{2000}\NormalTok{, }\AttributeTok{lty =} \DecValTok{3}\NormalTok{)}
 \CommentTok{\# Prob. teor. cadenas Markov}
-\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{3}\NormalTok{, }\AttributeTok{col=}\StringTok{"darkgray"}\NormalTok{)     }
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{3}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{)     }
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/unnamed-chunk-11-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{03-Analisis_resultados_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
 En estos casos puede ser recomendable ignorar los primeros valores generados (por ejemplo los primeros 2000) y recalcular los
 estadísticos deseados.
@@ -2763,7 +2780,7 @@ Como ejemplo nos alejamos un poco de la distribución estacionaria, para que el 
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
 \NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{numeric}\NormalTok{(nsim }\SpecialCharTok{+}\NormalTok{ nburn)}
 \CommentTok{\# Establecer el primer valor }
-\NormalTok{x[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\DecValTok{10}
+\NormalTok{x[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\DecValTok{10}   \CommentTok{\# Mejor x[1] \textless{}{-} rnorm(1, mean = xmed, sd = sqrt(xvar))}
 \CommentTok{\# Simular el resto de la secuencia}
 \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(x))}
 \NormalTok{  x[i] }\OtherTok{\textless{}{-}}\NormalTok{ xmed }\SpecialCharTok{+}\NormalTok{ rho}\SpecialCharTok{*}\NormalTok{(x[i}\DecValTok{{-}1}\NormalTok{] }\SpecialCharTok{{-}}\NormalTok{ xmed) }\SpecialCharTok{+} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{1}\NormalTok{, }\AttributeTok{sd=}\FunctionTok{sqrt}\NormalTok{(evar))}
@@ -2792,15 +2809,15 @@ y eliminamos el periodo de calentamiento:
 
 \end{example}
 
-Para simular una serie de tiempo en R se puede emplear la función \texttt{arima.sim} del paquete base \texttt{stats}.
+Para simular una serie de tiempo (de media cero) en R se puede emplear la función \texttt{arima.sim} del paquete base \texttt{stats}.
 En este caso el periodo de calentamiento se establece mediante el parámetro \texttt{n.start} (que se fija automáticamente a un valor adecuado).
 
 Por ejemplo, podemos generar este serie autoregresiva con:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{rx2 }\OtherTok{\textless{}{-}} \FunctionTok{arima.sim}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\AttributeTok{order =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{), }\AttributeTok{ar =}\NormalTok{ rho), }\AttributeTok{n =}\NormalTok{ nsim, }
-                 \AttributeTok{n.start =}\NormalTok{ nburn, }\AttributeTok{sd =} \FunctionTok{sqrt}\NormalTok{(evar))}
+\NormalTok{rx2 }\OtherTok{\textless{}{-}}\NormalTok{ xmed }\SpecialCharTok{+} \FunctionTok{arima.sim}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\AttributeTok{order =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{), }\AttributeTok{ar =}\NormalTok{ rho), }\AttributeTok{n =}\NormalTok{ nsim, }
+                        \AttributeTok{n.start =}\NormalTok{ nburn, }\AttributeTok{sd =} \FunctionTok{sqrt}\NormalTok{(evar))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2917,7 +2934,7 @@ El código para implementar este algoritmo en R podría ser el siguiente:
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##       0       0       0
+ ##    0.01    0.00    0.02
 \end{verbatim}
 
 Representamos la distribución de los valores generados y la comparamos con la densidad teórica:
@@ -3065,7 +3082,7 @@ Para generar \(10^{4}\) valores de la distribución doble exponencial de paráme
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##    0.03    0.00    0.03
+ ##    0.00    0.01    0.01
 \end{verbatim}
 
 Podemos representar la distribución de los valores generados, comparándola con la densidad teórica:
@@ -3193,7 +3210,7 @@ Podemos generar valores en \(A_{cg} \supset A_{f}\) empleando el resultado:
 \item
   Si \(T\) es una variable aleatoria con función de densidad \(g\)
   y \(U \sim \mathcal{U}(0, 1)\) entonces
-  \[\left( T,c\cdot U\cdot g(x) \right) \sim \mathcal{U}\left(
+  \[\left( T,c\cdot U\cdot g(T) \right) \sim \mathcal{U}\left(
   A_{cg}\right)\]
   siendo
   \(A_{cg}=\left\{ \left( x, y \right) \in \mathbb{R}^{2} : 0 \leq y \leq cg\left( x \right) \right\}\).
@@ -3402,11 +3419,9 @@ Dar un algoritmo para simular la función de densidad dada por
 \subsection{Eficiencia del algoritmo}\label{eficiencia-del-algoritmo}}
 
 Como medida de la eficiencia del algoritmo de aceptación-rechazo podríamos considerar el número de iteraciones del algoritmo, es decir, el número de generaciones de la densidad auxiliar y de comparaciones para aceptar un valor de la densidad objetivo.
-Este número \(N\) es aleatorio y sigue una distribución geométrica (entendida como el número de pruebas necesarias hasta obtener el primer éxito{[}\^{}04-AR-3{]}) con parámetro \(p\) (probabilidad de éxito) la probabilidad de aceptación en el paso 3:
+Este número \(N\) es aleatorio y sigue una distribución geométrica (entendida como el número de pruebas necesarias hasta obtener el primer éxito\footnote{Esta distribución también se puede definir como el número de fracasos hasta el primer éxito al realizar experimentos de Bernoulli independientes, que es como la consideraremos normalmente (ya que coincide con la parametrización de R, como un caso particular de la distribución binomial negativa).
+  Sin embargo, en este caso resulta más cómodo considerar el número total de pruebas.}) con parámetro \(p\) (probabilidad de éxito) la probabilidad de aceptación en el paso 3:
 \[p = \frac{\text{area}\left(A_{f}\right)}{\text{area}\left( A_{cg}\right)} = \frac{1}{c}.\]
-
-{[}\^{}04-AR-3{]} Esta distribución también se puede definir como el número de fracasos hasta el primer éxito al realizar experimentos de Bernoulli independientes, que es como la consideraremos normalmente (ya que coincide con la parametrización de R, como un caso particular de la distribución binomial negativa).
-Sin embargo, en este caso resulta más cómodo considerar el número total de pruebas.
 
 Por tanto:
 \[E\left( N \right) = \frac1p = c\]
@@ -3544,7 +3559,7 @@ Generamos una muestra de \(10^4\) observaciones:
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##    0.01    0.02    0.05
+ ##    0.06    0.00    0.06
 \end{verbatim}
 
 Evaluamos la eficiencia:
@@ -4090,7 +4105,7 @@ El correspondiente algoritmo está implementado en la función \href{https://rub
  ##   attr(x, "ngen") <- ngen
  ##   return(x)
  ## }
- ## <bytecode: 0x0000023b54a1f448>
+ ## <bytecode: 0x000002178a9cbb28>
  ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -4533,7 +4548,7 @@ Este algoritmo está implementado en la función \href{https://rubenfcasal.githu
  ##   attr(X, "ncomp") <- ncomp
  ##   return(X)
  ## }
- ## <bytecode: 0x000001f5e8749068>
+ ## <bytecode: 0x000001f41ff14020>
  ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -4562,7 +4577,7 @@ Empleamos la rutina anterior para generar las simulaciones:
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##    0.03    0.00    0.03
+ ##    0.01    0.00    0.02
 \end{verbatim}
 
 A partir de ellas podríamos aproximar el valor esperado:
@@ -4715,7 +4730,7 @@ Podemos repetir la simulación del Ejemplo \ref{exm:binom-cuant} anterior ordena
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##    0.02    0.00    0.01
+ ##    0.01    0.00    0.02
 \end{verbatim}
 
 \begin{Shaded}
@@ -4857,7 +4872,7 @@ Este algoritmo está implementado en la función \href{https://rubenfcasal.githu
  ##   attr(X, "ncomp") <- ncomp
  ##   return(X)
  ## }
- ## <bytecode: 0x000001f5e9d57938>
+ ## <bytecode: 0x000001f4215919d8>
  ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -5029,7 +5044,7 @@ Este método también está implementado en la función \href{https://rubenfcasa
  ##   if(as.factor) X <- factor(X, levels = x)
  ##   return(X)
  ## }
- ## <bytecode: 0x000001f5ec95a410>
+ ## <bytecode: 0x000001f423f374c0>
  ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -5047,7 +5062,7 @@ Repetimos la simulación del Ejemplo \ref{exm:binom-cuant} anterior empleando es
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##       0       0       0
+ ##    0.01    0.00    0.02
 \end{verbatim}
 
 Análisis de los resultados:
@@ -5585,7 +5600,7 @@ distribución objetivo, obteniendo de paso el tiempo de CPU:
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##    0.02    0.00    0.01
+ ##    0.01    0.00    0.02
 \end{verbatim}
 
 \begin{Shaded}
@@ -5950,7 +5965,7 @@ del paquete \texttt{MASS} que emplea la factorización espectral (\texttt{eigen}
  ##         drop(X)
  ##     else t(X)
  ## }
- ## <bytecode: 0x000002277924d568>
+ ## <bytecode: 0x0000021dc0afd478>
  ## <environment: namespace:MASS>
 \end{verbatim}
 
@@ -7426,7 +7441,7 @@ Una alternativa más eficiente para representar gráficamente la convergencia es
  ##   }
  ##   return(result)
  ## }
- ## <bytecode: 0x00000176c35c7bd0>
+ ## <bytecode: 0x000002cb6a6bf7b0>
  ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -14065,7 +14080,7 @@ Por ejemplo, se podría emplear la función \href{https://rubenfcasal.github.io/
  ##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
  ##                    method = METHOD, data.name = DNAME), RESULTS), class = "htest")
  ## }
- ## <bytecode: 0x000001ec89da5838>
+ ## <bytecode: 0x000002035d0cd7c8>
  ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -15214,7 +15229,7 @@ Por defecto empleará todos los núcleos disponibles, pero se puede especificar 
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##    0.05    0.00    0.04
+ ##    0.03    0.01    0.04
 \end{verbatim}
 
 \begin{Shaded}
@@ -15236,7 +15251,7 @@ En Windows habría que crear previamente un cluster, llamar a una de las funcion
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##    0.00    0.00    0.01
+ ##    0.00    0.00    0.02
 \end{verbatim}
 
 \begin{Shaded}
@@ -15315,7 +15330,7 @@ Veamos un ejemplo empleando una muestra simulada:
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##    0.02    0.00    0.01
+ ##    0.00    0.02    0.01
 \end{verbatim}
 
 \hypertarget{estudio-sim-boot}{%
@@ -15376,7 +15391,7 @@ Por ejemplo, a continuación se realiza un estudio de simulación comparando las
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##    0.00    0.00    1.84
+ ##    0.00    0.00    1.91
 \end{verbatim}
 
 \begin{Shaded}
@@ -15984,7 +15999,7 @@ Este algoritmo está implementado en la función \texttt{simres::rvng()} (ver ta
  ##   # Devolver valores
  ##   return(u)
  ## }
- ## <bytecode: 0x00000171f80f33c8>
+ ## <bytecode: 0x000001b3d69bb3a8>
  ## <environment: namespace:simres>
 \end{verbatim}
 

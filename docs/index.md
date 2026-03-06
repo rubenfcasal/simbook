@@ -4,7 +4,7 @@ author:
   - "Rubén Fernández Casal (ruben.fcasal@udc.es)"
   - "Ricardo Cao (rcao@udc.es)"
   - "Julián Costa (julian.costa@udc.es)"
-date: "Edición: Enero de 2023. Impresión: 2025-12-03"
+date: "Edición: Enero de 2023. Impresión: 2026-03-06"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book

@@ -174,7 +174,7 @@ mc.integral
  ##   }
  ##   return(result)
  ## }
- ## <bytecode: 0x00000176c35c7bd0>
+ ## <bytecode: 0x000002cb6a6bf7b0>
  ## <environment: namespace:simres>
 ```
 
