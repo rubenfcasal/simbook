@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9.3 Herramientas disponibles en R sobre bootstrap | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9.3 Herramientas disponibles en R sobre bootstrap | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -57,7 +57,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -67,7 +67,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -129,6 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -480,75 +481,75 @@ diversos autores, que están disponibles en Internet
 <a href="https://rseek.org" class="uri">https://rseek.org</a>).</p>
 <p>El bootstrap uniforme se puede implementar fácilmente. Por ejemplo,
 una rutina general para el caso univariante sería la siguiente:</p>
-<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="intro-paquetes.html#cb570-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param x vector que contiene la muestra.</span></span>
-<span id="cb570-2"><a href="intro-paquetes.html#cb570-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param B número de réplicas bootstrap.</span></span>
-<span id="cb570-3"><a href="intro-paquetes.html#cb570-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param statistic función que calcula el estadístico.</span></span>
-<span id="cb570-4"><a href="intro-paquetes.html#cb570-4" aria-hidden="true" tabindex="-1"></a>boot.strap0 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">B=</span><span class="dv">1000</span>, <span class="at">statistic=</span>mean){</span>
-<span id="cb570-5"><a href="intro-paquetes.html#cb570-5" aria-hidden="true" tabindex="-1"></a>  ndat <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
-<span id="cb570-6"><a href="intro-paquetes.html#cb570-6" aria-hidden="true" tabindex="-1"></a>  x.boot <span class="ot">&lt;-</span> <span class="fu">sample</span>(x, ndat<span class="sc">*</span>B, <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
-<span id="cb570-7"><a href="intro-paquetes.html#cb570-7" aria-hidden="true" tabindex="-1"></a>  x.boot <span class="ot">&lt;-</span> <span class="fu">matrix</span>(x.boot, <span class="at">ncol=</span>B, <span class="at">nrow=</span>ndat)</span>
-<span id="cb570-8"><a href="intro-paquetes.html#cb570-8" aria-hidden="true" tabindex="-1"></a>  stat.boot <span class="ot">&lt;-</span> <span class="fu">apply</span>(x.boot, <span class="dv">2</span>, statistic)</span>
-<span id="cb570-9"><a href="intro-paquetes.html#cb570-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="intro-paquetes.html#cb570-1" tabindex="-1"></a><span class="co">#&#39; @param x vector que contiene la muestra.</span></span>
+<span id="cb570-2"><a href="intro-paquetes.html#cb570-2" tabindex="-1"></a><span class="co">#&#39; @param B número de réplicas bootstrap.</span></span>
+<span id="cb570-3"><a href="intro-paquetes.html#cb570-3" tabindex="-1"></a><span class="co">#&#39; @param statistic función que calcula el estadístico.</span></span>
+<span id="cb570-4"><a href="intro-paquetes.html#cb570-4" tabindex="-1"></a>boot.strap0 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">B=</span><span class="dv">1000</span>, <span class="at">statistic=</span>mean){</span>
+<span id="cb570-5"><a href="intro-paquetes.html#cb570-5" tabindex="-1"></a>  ndat <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb570-6"><a href="intro-paquetes.html#cb570-6" tabindex="-1"></a>  x.boot <span class="ot">&lt;-</span> <span class="fu">sample</span>(x, ndat<span class="sc">*</span>B, <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb570-7"><a href="intro-paquetes.html#cb570-7" tabindex="-1"></a>  x.boot <span class="ot">&lt;-</span> <span class="fu">matrix</span>(x.boot, <span class="at">ncol=</span>B, <span class="at">nrow=</span>ndat)</span>
+<span id="cb570-8"><a href="intro-paquetes.html#cb570-8" tabindex="-1"></a>  stat.boot <span class="ot">&lt;-</span> <span class="fu">apply</span>(x.boot, <span class="dv">2</span>, statistic)</span>
+<span id="cb570-9"><a href="intro-paquetes.html#cb570-9" tabindex="-1"></a>}</span></code></pre></div>
 <p>Podríamos aplicar esta función a la muestra de tiempos de vida de
 microorganismos con el siguiente código:</p>
-<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="intro-paquetes.html#cb571-1" aria-hidden="true" tabindex="-1"></a>fstatistic0 <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb571-2"><a href="intro-paquetes.html#cb571-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(x)</span>
-<span id="cb571-3"><a href="intro-paquetes.html#cb571-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb571-4"><a href="intro-paquetes.html#cb571-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb571-5"><a href="intro-paquetes.html#cb571-5" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb571-6"><a href="intro-paquetes.html#cb571-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb571-7"><a href="intro-paquetes.html#cb571-7" aria-hidden="true" tabindex="-1"></a>stat.dat <span class="ot">&lt;-</span> <span class="fu">fstatistic0</span>(muestra)</span>
-<span id="cb571-8"><a href="intro-paquetes.html#cb571-8" aria-hidden="true" tabindex="-1"></a>stat.boot <span class="ot">&lt;-</span> <span class="fu">boot.strap0</span>(muestra, B, fstatistic0)</span>
-<span id="cb571-9"><a href="intro-paquetes.html#cb571-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb571-10"><a href="intro-paquetes.html#cb571-10" aria-hidden="true" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">c</span>(stat.dat, <span class="fu">mean</span>(stat.boot)<span class="sc">-</span>stat.dat, <span class="fu">sd</span>(stat.boot))</span>
-<span id="cb571-11"><a href="intro-paquetes.html#cb571-11" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(res.boot) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Estadístico&quot;</span>, <span class="st">&quot;Sesgo&quot;</span>, <span class="st">&quot;Error Std.&quot;</span>)</span>
-<span id="cb571-12"><a href="intro-paquetes.html#cb571-12" aria-hidden="true" tabindex="-1"></a>res.boot</span></code></pre></div>
+<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="intro-paquetes.html#cb571-1" tabindex="-1"></a>fstatistic0 <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb571-2"><a href="intro-paquetes.html#cb571-2" tabindex="-1"></a>  <span class="fu">mean</span>(x)</span>
+<span id="cb571-3"><a href="intro-paquetes.html#cb571-3" tabindex="-1"></a>}</span>
+<span id="cb571-4"><a href="intro-paquetes.html#cb571-4" tabindex="-1"></a></span>
+<span id="cb571-5"><a href="intro-paquetes.html#cb571-5" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb571-6"><a href="intro-paquetes.html#cb571-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb571-7"><a href="intro-paquetes.html#cb571-7" tabindex="-1"></a>stat.dat <span class="ot">&lt;-</span> <span class="fu">fstatistic0</span>(muestra)</span>
+<span id="cb571-8"><a href="intro-paquetes.html#cb571-8" tabindex="-1"></a>stat.boot <span class="ot">&lt;-</span> <span class="fu">boot.strap0</span>(muestra, B, fstatistic0)</span>
+<span id="cb571-9"><a href="intro-paquetes.html#cb571-9" tabindex="-1"></a></span>
+<span id="cb571-10"><a href="intro-paquetes.html#cb571-10" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">c</span>(stat.dat, <span class="fu">mean</span>(stat.boot)<span class="sc">-</span>stat.dat, <span class="fu">sd</span>(stat.boot))</span>
+<span id="cb571-11"><a href="intro-paquetes.html#cb571-11" tabindex="-1"></a><span class="fu">names</span>(res.boot) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Estadístico&quot;</span>, <span class="st">&quot;Sesgo&quot;</span>, <span class="st">&quot;Error Std.&quot;</span>)</span>
+<span id="cb571-12"><a href="intro-paquetes.html#cb571-12" tabindex="-1"></a>res.boot</span></code></pre></div>
 <pre><code>## Estadístico       Sesgo  Error Std. 
 ##   0.8053333   0.0031733   0.1540990</code></pre>
 <p>La función <code>boot.strap0()</code> anterior no es adecuada para el caso multivariante
 (por ejemplo cuando estamos interesados en regresión).
 Como se mostró en la Sección <a href="boot-intro.html#boot-intro">9.1</a>
 sería preferible emplear remuestras del vector de índices. Por ejemplo:</p>
-<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="intro-paquetes.html#cb573-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param datos vector, matriz o data.frame que contiene los datos.</span></span>
-<span id="cb573-2"><a href="intro-paquetes.html#cb573-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param B número de réplicas bootstrap.</span></span>
-<span id="cb573-3"><a href="intro-paquetes.html#cb573-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param statistic función con al menos dos parámetros, </span></span>
-<span id="cb573-4"><a href="intro-paquetes.html#cb573-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; los datos y el vector de índices de remuestreo, </span></span>
-<span id="cb573-5"><a href="intro-paquetes.html#cb573-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; y que devuelve el vector de estadísticos.</span></span>
-<span id="cb573-6"><a href="intro-paquetes.html#cb573-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param ... parámetros adicionales de la función statistic.</span></span>
-<span id="cb573-7"><a href="intro-paquetes.html#cb573-7" aria-hidden="true" tabindex="-1"></a>boot.strap <span class="ot">&lt;-</span> <span class="cf">function</span>(datos, <span class="at">B=</span><span class="dv">1000</span>, statistic, ...) {</span>
-<span id="cb573-8"><a href="intro-paquetes.html#cb573-8" aria-hidden="true" tabindex="-1"></a>  ndat <span class="ot">&lt;-</span> <span class="fu">NROW</span>(datos)</span>
-<span id="cb573-9"><a href="intro-paquetes.html#cb573-9" aria-hidden="true" tabindex="-1"></a>  i.boot <span class="ot">&lt;-</span> <span class="fu">sample</span>(ndat, ndat<span class="sc">*</span>B, <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
-<span id="cb573-10"><a href="intro-paquetes.html#cb573-10" aria-hidden="true" tabindex="-1"></a>  i.boot <span class="ot">&lt;-</span> <span class="fu">matrix</span>(i.boot, <span class="at">ncol=</span>B, <span class="at">nrow=</span>ndat)</span>
-<span id="cb573-11"><a href="intro-paquetes.html#cb573-11" aria-hidden="true" tabindex="-1"></a>  stat.boot <span class="ot">&lt;-</span> <span class="fu">drop</span>(<span class="fu">apply</span>(i.boot, <span class="dv">2</span>, <span class="cf">function</span>(i) <span class="fu">statistic</span>(datos, i, ...)))</span>
-<span id="cb573-12"><a href="intro-paquetes.html#cb573-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb573-13"><a href="intro-paquetes.html#cb573-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb573-14"><a href="intro-paquetes.html#cb573-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Caso unidimensional</span></span>
-<span id="cb573-15"><a href="intro-paquetes.html#cb573-15" aria-hidden="true" tabindex="-1"></a>fstatistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
-<span id="cb573-16"><a href="intro-paquetes.html#cb573-16" aria-hidden="true" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i]</span>
-<span id="cb573-17"><a href="intro-paquetes.html#cb573-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(remuestra)</span>
-<span id="cb573-18"><a href="intro-paquetes.html#cb573-18" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb573-19"><a href="intro-paquetes.html#cb573-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb573-20"><a href="intro-paquetes.html#cb573-20" aria-hidden="true" tabindex="-1"></a>stat.boot <span class="ot">&lt;-</span> <span class="fu">boot.strap</span>(muestra, B, fstatistic)</span>
-<span id="cb573-21"><a href="intro-paquetes.html#cb573-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb573-22"><a href="intro-paquetes.html#cb573-22" aria-hidden="true" tabindex="-1"></a>stat.dat <span class="ot">&lt;-</span> <span class="fu">fstatistic</span>(muestra, <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(muestra))</span>
-<span id="cb573-23"><a href="intro-paquetes.html#cb573-23" aria-hidden="true" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">c</span>(stat.dat, <span class="fu">mean</span>(stat.boot)<span class="sc">-</span>stat.dat, <span class="fu">sd</span>(stat.boot))</span>
-<span id="cb573-24"><a href="intro-paquetes.html#cb573-24" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(res.boot) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Estadístico&quot;</span>, <span class="st">&quot;Sesgo&quot;</span>, <span class="st">&quot;Error Std.&quot;</span>)</span>
-<span id="cb573-25"><a href="intro-paquetes.html#cb573-25" aria-hidden="true" tabindex="-1"></a>res.boot</span></code></pre></div>
+<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="intro-paquetes.html#cb573-1" tabindex="-1"></a><span class="co">#&#39; @param datos vector, matriz o data.frame que contiene los datos.</span></span>
+<span id="cb573-2"><a href="intro-paquetes.html#cb573-2" tabindex="-1"></a><span class="co">#&#39; @param B número de réplicas bootstrap.</span></span>
+<span id="cb573-3"><a href="intro-paquetes.html#cb573-3" tabindex="-1"></a><span class="co">#&#39; @param statistic función con al menos dos parámetros, </span></span>
+<span id="cb573-4"><a href="intro-paquetes.html#cb573-4" tabindex="-1"></a><span class="co">#&#39; los datos y el vector de índices de remuestreo, </span></span>
+<span id="cb573-5"><a href="intro-paquetes.html#cb573-5" tabindex="-1"></a><span class="co">#&#39; y que devuelve el vector de estadísticos.</span></span>
+<span id="cb573-6"><a href="intro-paquetes.html#cb573-6" tabindex="-1"></a><span class="co">#&#39; @param ... parámetros adicionales de la función statistic.</span></span>
+<span id="cb573-7"><a href="intro-paquetes.html#cb573-7" tabindex="-1"></a>boot.strap <span class="ot">&lt;-</span> <span class="cf">function</span>(datos, <span class="at">B=</span><span class="dv">1000</span>, statistic, ...) {</span>
+<span id="cb573-8"><a href="intro-paquetes.html#cb573-8" tabindex="-1"></a>  ndat <span class="ot">&lt;-</span> <span class="fu">NROW</span>(datos)</span>
+<span id="cb573-9"><a href="intro-paquetes.html#cb573-9" tabindex="-1"></a>  i.boot <span class="ot">&lt;-</span> <span class="fu">sample</span>(ndat, ndat<span class="sc">*</span>B, <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb573-10"><a href="intro-paquetes.html#cb573-10" tabindex="-1"></a>  i.boot <span class="ot">&lt;-</span> <span class="fu">matrix</span>(i.boot, <span class="at">ncol=</span>B, <span class="at">nrow=</span>ndat)</span>
+<span id="cb573-11"><a href="intro-paquetes.html#cb573-11" tabindex="-1"></a>  stat.boot <span class="ot">&lt;-</span> <span class="fu">drop</span>(<span class="fu">apply</span>(i.boot, <span class="dv">2</span>, <span class="cf">function</span>(i) <span class="fu">statistic</span>(datos, i, ...)))</span>
+<span id="cb573-12"><a href="intro-paquetes.html#cb573-12" tabindex="-1"></a>}</span>
+<span id="cb573-13"><a href="intro-paquetes.html#cb573-13" tabindex="-1"></a></span>
+<span id="cb573-14"><a href="intro-paquetes.html#cb573-14" tabindex="-1"></a><span class="co"># Caso unidimensional</span></span>
+<span id="cb573-15"><a href="intro-paquetes.html#cb573-15" tabindex="-1"></a>fstatistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
+<span id="cb573-16"><a href="intro-paquetes.html#cb573-16" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i]</span>
+<span id="cb573-17"><a href="intro-paquetes.html#cb573-17" tabindex="-1"></a>  <span class="fu">mean</span>(remuestra)</span>
+<span id="cb573-18"><a href="intro-paquetes.html#cb573-18" tabindex="-1"></a>}</span>
+<span id="cb573-19"><a href="intro-paquetes.html#cb573-19" tabindex="-1"></a></span>
+<span id="cb573-20"><a href="intro-paquetes.html#cb573-20" tabindex="-1"></a>stat.boot <span class="ot">&lt;-</span> <span class="fu">boot.strap</span>(muestra, B, fstatistic)</span>
+<span id="cb573-21"><a href="intro-paquetes.html#cb573-21" tabindex="-1"></a></span>
+<span id="cb573-22"><a href="intro-paquetes.html#cb573-22" tabindex="-1"></a>stat.dat <span class="ot">&lt;-</span> <span class="fu">fstatistic</span>(muestra, <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(muestra))</span>
+<span id="cb573-23"><a href="intro-paquetes.html#cb573-23" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">c</span>(stat.dat, <span class="fu">mean</span>(stat.boot)<span class="sc">-</span>stat.dat, <span class="fu">sd</span>(stat.boot))</span>
+<span id="cb573-24"><a href="intro-paquetes.html#cb573-24" tabindex="-1"></a><span class="fu">names</span>(res.boot) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Estadístico&quot;</span>, <span class="st">&quot;Sesgo&quot;</span>, <span class="st">&quot;Error Std.&quot;</span>)</span>
+<span id="cb573-25"><a href="intro-paquetes.html#cb573-25" tabindex="-1"></a>res.boot</span></code></pre></div>
 <pre><code>## Estadístico       Sesgo  Error Std. 
 ##   0.8053333  -0.0089476   0.1563094</code></pre>
-<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="intro-paquetes.html#cb575-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Caso multidimensional</span></span>
-<span id="cb575-2"><a href="intro-paquetes.html#cb575-2" aria-hidden="true" tabindex="-1"></a>fstatisticm <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
-<span id="cb575-3"><a href="intro-paquetes.html#cb575-3" aria-hidden="true" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i, ]</span>
-<span id="cb575-4"><a href="intro-paquetes.html#cb575-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>(remuestra<span class="sc">$</span>income, remuestra<span class="sc">$</span>prestige)</span>
-<span id="cb575-5"><a href="intro-paquetes.html#cb575-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb575-6"><a href="intro-paquetes.html#cb575-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb575-7"><a href="intro-paquetes.html#cb575-7" aria-hidden="true" tabindex="-1"></a>stat.boot <span class="ot">&lt;-</span> <span class="fu">boot.strap</span>(Prestige, B, fstatisticm)</span></code></pre></div>
+<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="intro-paquetes.html#cb575-1" tabindex="-1"></a><span class="co"># Caso multidimensional</span></span>
+<span id="cb575-2"><a href="intro-paquetes.html#cb575-2" tabindex="-1"></a>fstatisticm <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
+<span id="cb575-3"><a href="intro-paquetes.html#cb575-3" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i, ]</span>
+<span id="cb575-4"><a href="intro-paquetes.html#cb575-4" tabindex="-1"></a>  <span class="fu">cor</span>(remuestra<span class="sc">$</span>income, remuestra<span class="sc">$</span>prestige)</span>
+<span id="cb575-5"><a href="intro-paquetes.html#cb575-5" tabindex="-1"></a>}</span>
+<span id="cb575-6"><a href="intro-paquetes.html#cb575-6" tabindex="-1"></a></span>
+<span id="cb575-7"><a href="intro-paquetes.html#cb575-7" tabindex="-1"></a>stat.boot <span class="ot">&lt;-</span> <span class="fu">boot.strap</span>(Prestige, B, fstatisticm)</span></code></pre></div>
 <p>El paquete <code>boot</code>, descrito a continuación, emplea una implementación similar.</p>
 <div id="intro-pkgboot" class="section level3 hasAnchor" number="9.3.1">
 <h3><span class="header-section-number">9.3.1</span> El paquete <code>boot</code><a href="intro-paquetes.html#intro-pkgboot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>La función principal de este paquete es la función <code>boot()</code> que implementa distintos métodos de remuestreo para datos i.i.d..
 En su forma más simple permite realizar bootstrap uniforme (que en la práctica también se denomina habitualmente <em>bootstrap noparamétrico</em>):</p>
-<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="intro-paquetes.html#cb576-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boot</span>(data, statistic, R)</span></code></pre></div>
+<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="intro-paquetes.html#cb576-1" tabindex="-1"></a><span class="fu">boot</span>(data, statistic, R)</span></code></pre></div>
 <p>donde <code>data</code> es un vector, matriz o <code>data.frame</code> que contiene los datos,
 <code>R</code> es el número de réplicas bootstrap, y <code>statistic</code> es una función
 con al menos dos parámetros (con las opciones por defecto),
@@ -556,18 +557,18 @@ los datos y el vector de índices de remuestreo,
 y que devuelve el vector de estadísticos.</p>
 <p>Por ejemplo, para hacer inferencia sobre la mediana del tiempo de vida de microorganismos,
 podríamos emplear el siguiente código:</p>
-<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="intro-paquetes.html#cb577-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
-<span id="cb577-2"><a href="intro-paquetes.html#cb577-2" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> lifetimes</span>
-<span id="cb577-3"><a href="intro-paquetes.html#cb577-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb577-4"><a href="intro-paquetes.html#cb577-4" aria-hidden="true" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
-<span id="cb577-5"><a href="intro-paquetes.html#cb577-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remuestra &lt;- data[i]; mean(remuestra)</span></span>
-<span id="cb577-6"><a href="intro-paquetes.html#cb577-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(data[i])</span>
-<span id="cb577-7"><a href="intro-paquetes.html#cb577-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb577-8"><a href="intro-paquetes.html#cb577-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb577-9"><a href="intro-paquetes.html#cb577-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb577-10"><a href="intro-paquetes.html#cb577-10" aria-hidden="true" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> <span class="dv">1000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="intro-paquetes.html#cb577-1" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb577-2"><a href="intro-paquetes.html#cb577-2" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> lifetimes</span>
+<span id="cb577-3"><a href="intro-paquetes.html#cb577-3" tabindex="-1"></a></span>
+<span id="cb577-4"><a href="intro-paquetes.html#cb577-4" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
+<span id="cb577-5"><a href="intro-paquetes.html#cb577-5" tabindex="-1"></a>  <span class="co"># remuestra &lt;- data[i]; mean(remuestra)</span></span>
+<span id="cb577-6"><a href="intro-paquetes.html#cb577-6" tabindex="-1"></a>  <span class="fu">mean</span>(data[i])</span>
+<span id="cb577-7"><a href="intro-paquetes.html#cb577-7" tabindex="-1"></a>}</span>
+<span id="cb577-8"><a href="intro-paquetes.html#cb577-8" tabindex="-1"></a></span>
+<span id="cb577-9"><a href="intro-paquetes.html#cb577-9" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb577-10"><a href="intro-paquetes.html#cb577-10" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> <span class="dv">1000</span>)</span></code></pre></div>
 <p>El resultado que devuelve esta función es un objeto de clase <code>boot</code>, una lista con los siguientes componentes:</p>
-<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="intro-paquetes.html#cb578-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(res.boot)</span></code></pre></div>
+<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="intro-paquetes.html#cb578-1" tabindex="-1"></a><span class="fu">names</span>(res.boot)</span></code></pre></div>
 <pre><code>##  [1] &quot;t0&quot;        &quot;t&quot;         &quot;R&quot;         &quot;data&quot;      &quot;seed&quot;     
 ##  [6] &quot;statistic&quot; &quot;sim&quot;       &quot;call&quot;      &quot;stype&quot;     &quot;strata&quot;   
 ## [11] &quot;weights&quot;</code></pre>
@@ -584,7 +585,7 @@ empleada para la generación de las réplicas.</p></li>
 el método <code>print()</code> que muestra un resumen de los resultados
 (incluyendo aproximaciones bootstrap del sesgo y del error
 estándar de los estadísticos; ver Sección <a href="sesgo-prec.html#sesgo-prec">11.1</a>):</p>
-<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="intro-paquetes.html#cb580-1" aria-hidden="true" tabindex="-1"></a>res.boot</span></code></pre></div>
+<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="intro-paquetes.html#cb580-1" tabindex="-1"></a>res.boot</span></code></pre></div>
 <pre><code>## 
 ## ORDINARY NONPARAMETRIC BOOTSTRAP
 ## 
@@ -598,7 +599,7 @@ estándar de los estadísticos; ver Sección <a href="sesgo-prec.html#sesgo-prec
 ## t1*  0.80533 0.0031733     0.15833</code></pre>
 <p>y el método <code>plot()</code> que genera gráficas básicas de diagnosis
 de los resultados (correspondientes al estadístico determinado por el parámetro <code>index</code>, por defecto <code>= 1</code>):</p>
-<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="intro-paquetes.html#cb582-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res.boot)</span></code></pre></div>
+<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="intro-paquetes.html#cb582-1" tabindex="-1"></a><span class="fu">plot</span>(res.boot)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:plot-res-boot"></span>
 <img src="09-Bootstrap_files/figure-html/plot-res-boot-1.png" alt="Gráficos de diagnóstico de los resultados bootstrap para la media muestral de los tiempos de vida de microorganismos." width="90%" />
 <p class="caption">
@@ -653,17 +654,17 @@ inferencia sobre la media con varianza desconocida.
 Para obtener la estimación por intervalo de confianza del tiempo de vida medio
 de los microorganismos con el paquete <code>boot</code>, podríamos emplear
 el siguiente código:</p>
-<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="intro-paquetes.html#cb583-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
-<span id="cb583-2"><a href="intro-paquetes.html#cb583-2" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> lifetimes</span>
-<span id="cb583-3"><a href="intro-paquetes.html#cb583-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb583-4"><a href="intro-paquetes.html#cb583-4" aria-hidden="true" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
-<span id="cb583-5"><a href="intro-paquetes.html#cb583-5" aria-hidden="true" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i]</span>
-<span id="cb583-6"><a href="intro-paquetes.html#cb583-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">mean</span>(remuestra), <span class="fu">var</span>(remuestra)<span class="sc">/</span><span class="fu">length</span>(remuestra))</span>
-<span id="cb583-7"><a href="intro-paquetes.html#cb583-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb583-8"><a href="intro-paquetes.html#cb583-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb583-9"><a href="intro-paquetes.html#cb583-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb583-10"><a href="intro-paquetes.html#cb583-10" aria-hidden="true" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> <span class="dv">1000</span>)</span>
-<span id="cb583-11"><a href="intro-paquetes.html#cb583-11" aria-hidden="true" tabindex="-1"></a>res.boot</span></code></pre></div>
+<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="intro-paquetes.html#cb583-1" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb583-2"><a href="intro-paquetes.html#cb583-2" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> lifetimes</span>
+<span id="cb583-3"><a href="intro-paquetes.html#cb583-3" tabindex="-1"></a></span>
+<span id="cb583-4"><a href="intro-paquetes.html#cb583-4" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
+<span id="cb583-5"><a href="intro-paquetes.html#cb583-5" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i]</span>
+<span id="cb583-6"><a href="intro-paquetes.html#cb583-6" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">mean</span>(remuestra), <span class="fu">var</span>(remuestra)<span class="sc">/</span><span class="fu">length</span>(remuestra))</span>
+<span id="cb583-7"><a href="intro-paquetes.html#cb583-7" tabindex="-1"></a>}</span>
+<span id="cb583-8"><a href="intro-paquetes.html#cb583-8" tabindex="-1"></a></span>
+<span id="cb583-9"><a href="intro-paquetes.html#cb583-9" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb583-10"><a href="intro-paquetes.html#cb583-10" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> <span class="dv">1000</span>)</span>
+<span id="cb583-11"><a href="intro-paquetes.html#cb583-11" tabindex="-1"></a>res.boot</span></code></pre></div>
 <pre><code>## 
 ## ORDINARY NONPARAMETRIC BOOTSTRAP
 ## 
@@ -676,7 +677,7 @@ el siguiente código:</p>
 ##     original     bias    std. error
 ## t1* 0.805333  0.0031733   0.1583306
 ## t2* 0.025934 -0.0021558   0.0075947</code></pre>
-<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="intro-paquetes.html#cb585-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot)</span></code></pre></div>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="intro-paquetes.html#cb585-1" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot)</span></code></pre></div>
 <pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 ## Based on 1000 bootstrap replicates
 ## 
@@ -727,17 +728,17 @@ Por ejemplo en la Sección <a href="boot-reg.html#boot-reg">10.4</a> se ilustrar
 <h3><span class="header-section-number">9.3.3</span> Ejemplo: Bootstrap uniforme multidimensional<a href="intro-paquetes.html#boot-unif-multi" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Como ya se mostró en las Secciones <a href="boot-unif.html#boot-unif">9.2</a> y <a href="intro-paquetes.html#intro-paquetes">9.3</a> podemos implementar el bootstrap uniforme en el caso multidimensional (denominado también <em>remuestreo de casos</em> o <em>bootstrap de las observaciones</em>) de modo análogo al unidimensional.</p>
 <p>Como ejemplo realizamos el Ejercicio <a href="boot-unif.html#exr:unif-multi">9.1</a> empleando el paquete <code>boot</code> para estudiar la correlación lineal entre <code>prestige</code> e <code>income</code> del conjunto de datos <code>Prestige</code>:</p>
-<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="intro-paquetes.html#cb587-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
-<span id="cb587-2"><a href="intro-paquetes.html#cb587-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb587-3"><a href="intro-paquetes.html#cb587-3" aria-hidden="true" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
-<span id="cb587-4"><a href="intro-paquetes.html#cb587-4" aria-hidden="true" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i, ]</span>
-<span id="cb587-5"><a href="intro-paquetes.html#cb587-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>(remuestra<span class="sc">$</span>income, remuestra<span class="sc">$</span>prestige)</span>
-<span id="cb587-6"><a href="intro-paquetes.html#cb587-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb587-7"><a href="intro-paquetes.html#cb587-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb587-8"><a href="intro-paquetes.html#cb587-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb587-9"><a href="intro-paquetes.html#cb587-9" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb587-10"><a href="intro-paquetes.html#cb587-10" aria-hidden="true" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(Prestige, statistic, <span class="at">R =</span> B)</span>
-<span id="cb587-11"><a href="intro-paquetes.html#cb587-11" aria-hidden="true" tabindex="-1"></a>res.boot</span></code></pre></div>
+<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="intro-paquetes.html#cb587-1" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb587-2"><a href="intro-paquetes.html#cb587-2" tabindex="-1"></a></span>
+<span id="cb587-3"><a href="intro-paquetes.html#cb587-3" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
+<span id="cb587-4"><a href="intro-paquetes.html#cb587-4" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i, ]</span>
+<span id="cb587-5"><a href="intro-paquetes.html#cb587-5" tabindex="-1"></a>  <span class="fu">cor</span>(remuestra<span class="sc">$</span>income, remuestra<span class="sc">$</span>prestige)</span>
+<span id="cb587-6"><a href="intro-paquetes.html#cb587-6" tabindex="-1"></a>}</span>
+<span id="cb587-7"><a href="intro-paquetes.html#cb587-7" tabindex="-1"></a></span>
+<span id="cb587-8"><a href="intro-paquetes.html#cb587-8" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb587-9"><a href="intro-paquetes.html#cb587-9" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb587-10"><a href="intro-paquetes.html#cb587-10" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(Prestige, statistic, <span class="at">R =</span> B)</span>
+<span id="cb587-11"><a href="intro-paquetes.html#cb587-11" tabindex="-1"></a>res.boot</span></code></pre></div>
 <pre><code>## 
 ## ORDINARY NONPARAMETRIC BOOTSTRAP
 ## 
@@ -749,7 +750,7 @@ Por ejemplo en la Sección <a href="boot-reg.html#boot-reg">10.4</a> se ilustrar
 ## Bootstrap Statistics :
 ##     original    bias    std. error
 ## t1*  0.71491 0.0063069    0.044065</code></pre>
-<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="intro-paquetes.html#cb589-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res.boot)</span></code></pre></div>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="intro-paquetes.html#cb589-1" tabindex="-1"></a><span class="fu">plot</span>(res.boot)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:plot-boot-multi"></span>
 <img src="09-Bootstrap_files/figure-html/plot-boot-multi-1.png" alt="Gráficos de diagnóstico para la distribución bootstrap del coeficiente de correlación." width="90%" />
 <p class="caption">
@@ -760,8 +761,8 @@ Figura 9.9: Gráficos de diagnóstico para la distribución bootstrap del coefic
 <p>Como comentario final, nótese que en principio el paquete boot está diseñado para obtener réplicas bootstrap de un estimador, por lo que si lo que nos interesa es emplear otro estadístico habría que construirlo a partir de ellas (como hacen otras funciones secundarias como <code>boot.ci()</code>).
 Por ejemplo, si queremos emplear el estadístico <span class="math inline">\(R = \hat \theta - \theta\)</span>
 (bootstrap percentil básico o natural), podemos obtener la correspondiente distribución bootstrap (aproximada por Monte Carlo) con el siguiente código:</p>
-<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="intro-paquetes.html#cb590-1" aria-hidden="true" tabindex="-1"></a>estadistico_boot <span class="ot">&lt;-</span> res.boot<span class="sc">$</span>t <span class="sc">-</span> res.boot<span class="sc">$</span>t0 </span>
-<span id="cb590-2"><a href="intro-paquetes.html#cb590-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(estadistico_boot)</span></code></pre></div>
+<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="intro-paquetes.html#cb590-1" tabindex="-1"></a>estadistico_boot <span class="ot">&lt;-</span> res.boot<span class="sc">$</span>t <span class="sc">-</span> res.boot<span class="sc">$</span>t0 </span>
+<span id="cb590-2"><a href="intro-paquetes.html#cb590-2" tabindex="-1"></a><span class="fu">hist</span>(estadistico_boot)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:plot-boot-basico"></span>
 <img src="09-Bootstrap_files/figure-html/plot-boot-basico-1.png" alt="Distribución bootstrap del estadístico percentil básico para el coeficiente de correlación." width="75%" />
 <p class="caption">
@@ -772,11 +773,11 @@ Figura 9.10: Distribución bootstrap del estadístico percentil básico para el 
 Por ejemplo, para aproximar <span class="math inline">\(\psi(u) = P\left( R \leq u \right)\)</span> podríamos emplear la frecuencia relativa:
 <span class="math display">\[\hat{\psi}_{B}(u) =
 \frac{1}{B}\sum_{i=1}^{B}\mathbf{1}\left\{ R^{\ast (i)}\leq u\right\}.\]</span></p>
-<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="intro-paquetes.html#cb591-1" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb591-2"><a href="intro-paquetes.html#cb591-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(estadistico_boot <span class="sc">&lt;=</span> u)<span class="sc">/</span>B</span></code></pre></div>
+<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="intro-paquetes.html#cb591-1" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb591-2"><a href="intro-paquetes.html#cb591-2" tabindex="-1"></a><span class="fu">sum</span>(estadistico_boot <span class="sc">&lt;=</span> u)<span class="sc">/</span>B</span></code></pre></div>
 <pre><code>## [1] 0.427</code></pre>
-<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="intro-paquetes.html#cb593-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Equivalentemente:</span></span>
-<span id="cb593-2"><a href="intro-paquetes.html#cb593-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(estadistico_boot <span class="sc">&lt;=</span> u)</span></code></pre></div>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="intro-paquetes.html#cb593-1" tabindex="-1"></a><span class="co"># Equivalentemente:</span></span>
+<span id="cb593-2"><a href="intro-paquetes.html#cb593-2" tabindex="-1"></a><span class="fu">mean</span>(estadistico_boot <span class="sc">&lt;=</span> u)</span></code></pre></div>
 <pre><code>## [1] 0.427</code></pre>
 
 </div>

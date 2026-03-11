@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>11.1 Estimación del sesgo y la precisión de un estimador | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="11.1 Estimación del sesgo y la precisión de un estimador | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -57,7 +57,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -67,7 +67,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -129,6 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -471,7 +472,9 @@ Para ello, como se mostró en capítulos anteriores, consideraríamos una aproxi
 <ol style="list-style-type: decimal">
 <li><p>Para cada <span class="math inline">\(i=1,\ldots ,n\)</span> generar <span class="math inline">\(X_i^{\ast}\)</span> a partir de
 <span class="math inline">\(\hat{F}\)</span> y obtener <span class="math inline">\(\mathbf{X}^{\ast}=\left( X_1^{\ast}, \ldots ,X_n^{\ast} \right)\)</span>.</p></li>
-<li><p>Calcular <span class="math inline">\(R^{\ast}=R\left( \mathbf{X}^{\ast},\hat{F} \right) = T\left( \mathbf{X}^{\ast} \right) -\theta \left( \hat{F} \right) = \hat{\theta}^{\ast} - \hat{\theta}\)</span>.</p></li>
+<li><p>Calcular <span class="math inline">\(R^{\ast}=R\left( \mathbf{X}^{\ast},\hat{F} \right)
+= T\left( \mathbf{X}^{\ast} \right) -\theta \left( \hat{F} \right) =
+\hat{\theta}^{\ast} - \hat{\theta}\)</span>.</p></li>
 <li><p>Repetir <span class="math inline">\(B\)</span> veces los pasos 1-2 para obtener las réplicas bootstrap
 <span class="math inline">\(R^{\ast (1)}, \ldots, R^{\ast (B)}\)</span>.</p></li>
 <li><p>Utilizar las réplicas bootstrap para aproximar las características de interés de la distribución en el muestreo de <span class="math inline">\(R\)</span>.</p>
@@ -487,17 +490,17 @@ Para ello, como se mostró en capítulos anteriores, consideraríamos una aproxi
 <div class="example">
 <p><span id="exm:boot-simul-sesgo-var" class="example"><strong>Ejemplo 11.1  (media y media truncada) </strong></span><br></p>
 <p>Como ejemplo consideramos la aproximación del sesgo y de la varianza de la media y la media truncada al 10% como estimadores de la media teórica del tiempo de vida de microorganismos mediante bootstrap uniforme (ver Ejercicio <a href="intro-paquetes.html#exr:boot-simul-mediana">9.2</a>).</p>
-<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="sesgo-prec.html#cb626-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
-<span id="cb626-2"><a href="sesgo-prec.html#cb626-2" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> simres<span class="sc">::</span>lifetimes</span>
-<span id="cb626-3"><a href="sesgo-prec.html#cb626-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb626-4"><a href="sesgo-prec.html#cb626-4" aria-hidden="true" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
-<span id="cb626-5"><a href="sesgo-prec.html#cb626-5" aria-hidden="true" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i]</span>
-<span id="cb626-6"><a href="sesgo-prec.html#cb626-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">mean</span>(remuestra), <span class="fu">mean</span>(remuestra, <span class="at">trim =</span> <span class="fl">0.1</span>))</span>
-<span id="cb626-7"><a href="sesgo-prec.html#cb626-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb626-8"><a href="sesgo-prec.html#cb626-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb626-9"><a href="sesgo-prec.html#cb626-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb626-10"><a href="sesgo-prec.html#cb626-10" aria-hidden="true" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> <span class="dv">1000</span>)</span>
-<span id="cb626-11"><a href="sesgo-prec.html#cb626-11" aria-hidden="true" tabindex="-1"></a>res.boot</span></code></pre></div>
+<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="sesgo-prec.html#cb626-1" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb626-2"><a href="sesgo-prec.html#cb626-2" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> simres<span class="sc">::</span>lifetimes</span>
+<span id="cb626-3"><a href="sesgo-prec.html#cb626-3" tabindex="-1"></a></span>
+<span id="cb626-4"><a href="sesgo-prec.html#cb626-4" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
+<span id="cb626-5"><a href="sesgo-prec.html#cb626-5" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i]</span>
+<span id="cb626-6"><a href="sesgo-prec.html#cb626-6" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">mean</span>(remuestra), <span class="fu">mean</span>(remuestra, <span class="at">trim =</span> <span class="fl">0.1</span>))</span>
+<span id="cb626-7"><a href="sesgo-prec.html#cb626-7" tabindex="-1"></a>}</span>
+<span id="cb626-8"><a href="sesgo-prec.html#cb626-8" tabindex="-1"></a></span>
+<span id="cb626-9"><a href="sesgo-prec.html#cb626-9" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb626-10"><a href="sesgo-prec.html#cb626-10" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> <span class="dv">1000</span>)</span>
+<span id="cb626-11"><a href="sesgo-prec.html#cb626-11" tabindex="-1"></a>res.boot</span></code></pre></div>
 <pre><code>## 
 ## ORDINARY NONPARAMETRIC BOOTSTRAP
 ## 
@@ -512,13 +515,13 @@ Para ello, como se mostró en capítulos anteriores, consideraríamos una aproxi
 ## t2*  0.75823 0.0119027     0.17394</code></pre>
 <p>Lamentablemente la función <code>print.boot()</code> calcula las aproximaciones bootstrap del sesgo y de la precisión pero no las almacena.
 En el caso más simple podríamos obtenerlas con el siguiente código:</p>
-<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="sesgo-prec.html#cb628-1" aria-hidden="true" tabindex="-1"></a>op <span class="ot">&lt;-</span> <span class="fu">with</span>(res.boot, <span class="fu">cbind</span>(</span>
-<span id="cb628-2"><a href="sesgo-prec.html#cb628-2" aria-hidden="true" tabindex="-1"></a>  t0, <span class="fu">apply</span>(t, <span class="dv">2</span>, mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span>  t0,</span>
-<span id="cb628-3"><a href="sesgo-prec.html#cb628-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apply</span>(t, <span class="dv">2</span>, sd, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb628-4"><a href="sesgo-prec.html#cb628-4" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb628-5"><a href="sesgo-prec.html#cb628-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(op) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;t&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(res.boot<span class="sc">$</span>t), <span class="st">&quot;*&quot;</span>)</span>
-<span id="cb628-6"><a href="sesgo-prec.html#cb628-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(op) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;original&quot;</span>, <span class="st">&quot;bias  &quot;</span>, <span class="st">&quot; std. error&quot;</span>)</span>
-<span id="cb628-7"><a href="sesgo-prec.html#cb628-7" aria-hidden="true" tabindex="-1"></a>op</span></code></pre></div>
+<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="sesgo-prec.html#cb628-1" tabindex="-1"></a>op <span class="ot">&lt;-</span> <span class="fu">with</span>(res.boot, <span class="fu">cbind</span>(</span>
+<span id="cb628-2"><a href="sesgo-prec.html#cb628-2" tabindex="-1"></a>  t0, <span class="fu">apply</span>(t, <span class="dv">2</span>, mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span>  t0,</span>
+<span id="cb628-3"><a href="sesgo-prec.html#cb628-3" tabindex="-1"></a>  <span class="fu">apply</span>(t, <span class="dv">2</span>, sd, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb628-4"><a href="sesgo-prec.html#cb628-4" tabindex="-1"></a>  ))</span>
+<span id="cb628-5"><a href="sesgo-prec.html#cb628-5" tabindex="-1"></a><span class="fu">rownames</span>(op) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;t&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(res.boot<span class="sc">$</span>t), <span class="st">&quot;*&quot;</span>)</span>
+<span id="cb628-6"><a href="sesgo-prec.html#cb628-6" tabindex="-1"></a><span class="fu">colnames</span>(op) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;original&quot;</span>, <span class="st">&quot;bias  &quot;</span>, <span class="st">&quot; std. error&quot;</span>)</span>
+<span id="cb628-7"><a href="sesgo-prec.html#cb628-7" tabindex="-1"></a>op</span></code></pre></div>
 <pre><code>##     original    bias    std. error
 ## t1*  0.80533 0.0031733     0.15833
 ## t2*  0.75823 0.0119027     0.17394</code></pre>

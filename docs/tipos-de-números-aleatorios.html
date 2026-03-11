@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1.2 Tipos de números aleatorios | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1.2 Tipos de números aleatorios | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -57,7 +57,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -67,7 +67,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -129,6 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -490,7 +491,7 @@ Sus principales aplicaciones hoy en día son en criptografía y juegos de azar, 
 <p>El uso de números aleatorios puros presenta dos grandes inconvenientes.
 El principal para su aplicación en el campo de la Estadística (y en otros casos) es que los valores generados deberían ser independientes e idénticamente distribuidos con distribución conocida, algo que resulta difícil (o imposible) de garantizar.
 Siempre está presente la posible aparición de sesgos, principalmente debidos a fallos del sistema o interferencias.
-Por ejemplo, en el caso de la máquina RAND, fallos mecánicos en el sistema de grabación de los datos causaron problemas de aleatoriedad <span class="citation">(<a href="#ref-hacking1965" role="doc-biblioref">Hacking, 1965, p. 118</a>)</span>.</p>
+Por ejemplo, en el caso de la máquina RAND, fallos mecánicos en el sistema de grabación de los datos causaron problemas de aleatoriedad <span class="citation">(<a href="#ref-hacking1965">Hacking, 1965, p. 118</a>)</span>.</p>
 <p>El otro inconveniente estaría relacionado con su reproducibilidad, por lo que habría que almacenarlos en tablas si se quieren volver a reproducir los resultados.
 A partir de la década de 1960, al disponer de computadoras de mayor velocidad, empezó a resultar más eficiente generar valores mediante software en lugar de leerlos de tablas.</p>
 </div>
@@ -502,20 +503,20 @@ Pendiente
 -->
 <p>Algunos problemas, como la integración numérica (en el Capítulo <a href="monte-carlo.html#monte-carlo">7</a> se tratarán métodos de integración Monte Carlo), no dependen realmente de la aleatoriedad de la secuencia. Para evitar generaciones poco probables, se puede recurrir a secuencias cuasi-aleatorias, también denominadas <em>sucesiones de baja discrepancia</em> (hablaríamos entonces de métodos cuasi-Monte Carlo). La idea sería que la proporción de valores en una región cualquiera sea siempre aproximadamente proporcional a la medida de la región (como sucedería en media con la distribución uniforme, aunque no necesariamente para una realización concreta).</p>
 <p>Por ejemplo, el paquete <a href="https://CRAN.R-project.org/package=randtoolbox"><code>randtoolbox</code></a> de R implementa métodos para la generación de secuencias cuasi-aleatorias (ver Figura <a href="tipos-de-números-aleatorios.html#fig:randtoolbox">1.5</a>).</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="tipos-de-números-aleatorios.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randtoolbox)</span>
-<span id="cb15-2"><a href="tipos-de-números-aleatorios.html#cb15-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
-<span id="cb15-3"><a href="tipos-de-números-aleatorios.html#cb15-3" aria-hidden="true" tabindex="-1"></a>par.old <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb15-4"><a href="tipos-de-números-aleatorios.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">halton</span>(n, <span class="at">dim =</span> <span class="dv">2</span>), <span class="at">xlab =</span> <span class="st">&#39;x1&#39;</span>, <span class="at">ylab =</span> <span class="st">&#39;x2&#39;</span>)</span>
-<span id="cb15-5"><a href="tipos-de-números-aleatorios.html#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">sobol</span>(n, <span class="at">dim =</span> <span class="dv">2</span>), <span class="at">xlab =</span> <span class="st">&#39;x1&#39;</span>, <span class="at">ylab =</span> <span class="st">&#39;x2&#39;</span>)</span>
-<span id="cb15-6"><a href="tipos-de-números-aleatorios.html#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">torus</span>(n, <span class="at">dim =</span> <span class="dv">2</span>), <span class="at">xlab =</span> <span class="st">&#39;x1&#39;</span>, <span class="at">ylab =</span> <span class="st">&#39;x2&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="tipos-de-números-aleatorios.html#cb15-1" tabindex="-1"></a><span class="fu">library</span>(randtoolbox)</span>
+<span id="cb15-2"><a href="tipos-de-números-aleatorios.html#cb15-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
+<span id="cb15-3"><a href="tipos-de-números-aleatorios.html#cb15-3" tabindex="-1"></a>par.old <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb15-4"><a href="tipos-de-números-aleatorios.html#cb15-4" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">halton</span>(n, <span class="at">dim =</span> <span class="dv">2</span>), <span class="at">xlab =</span> <span class="st">&#39;x1&#39;</span>, <span class="at">ylab =</span> <span class="st">&#39;x2&#39;</span>)</span>
+<span id="cb15-5"><a href="tipos-de-números-aleatorios.html#cb15-5" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">sobol</span>(n, <span class="at">dim =</span> <span class="dv">2</span>), <span class="at">xlab =</span> <span class="st">&#39;x1&#39;</span>, <span class="at">ylab =</span> <span class="st">&#39;x2&#39;</span>)</span>
+<span id="cb15-6"><a href="tipos-de-números-aleatorios.html#cb15-6" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">torus</span>(n, <span class="at">dim =</span> <span class="dv">2</span>), <span class="at">xlab =</span> <span class="st">&#39;x1&#39;</span>, <span class="at">ylab =</span> <span class="st">&#39;x2&#39;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:randtoolbox"></span>
 <img src="01-Introduccion_files/figure-html/randtoolbox-1.png" alt="Secuencias cuasi-aleatorias bidimensionales obtenidas con los métodos de Halton (izquierda), Sobol (centro) y Torus (derecha)." width="100%" />
 <p class="caption">
 Figura 1.5: Secuencias cuasi-aleatorias bidimensionales obtenidas con los métodos de Halton (izquierda), Sobol (centro) y Torus (derecha).
 </p>
 </div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="tipos-de-números-aleatorios.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(par.old)</span>
-<span id="cb16-2"><a href="tipos-de-números-aleatorios.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">detach</span>(<span class="st">&quot;package:randtoolbox&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="tipos-de-números-aleatorios.html#cb16-1" tabindex="-1"></a><span class="fu">par</span>(par.old)</span>
+<span id="cb16-2"><a href="tipos-de-números-aleatorios.html#cb16-2" tabindex="-1"></a><span class="fu">detach</span>(<span class="st">&quot;package:randtoolbox&quot;</span>)</span></code></pre></div>
 <p>En este libro sólo consideraremos los números pseudoaleatorios y por comodidad se eliminará el prefijo “pseudo” en muchos casos.</p>
 </div>
 <div id="números-pseudo-aleatorios" class="section level3 hasAnchor" number="1.2.3">
@@ -526,7 +527,7 @@ Figura 1.5: Secuencias cuasi-aleatorias bidimensionales obtenidas con los métod
 <p>donde:</p>
 <ul>
 <li><p><span class="math inline">\(k\)</span> es el orden del generador.</p></li>
-<li><p><span class="math inline">\(\left( x_{0},x_{1},\cdots,x_{k-1}\right)\)</span> es la <em>semilla</em>
+<li><p><span class="math inline">\(\left(  x_{0},x_{1},\cdots,x_{k-1}\right)\)</span> es la <em>semilla</em>
 (estado inicial).</p></li>
 </ul>
 <p>El <em>periodo</em> o <em>longitud del ciclo</em> es la longitud de la secuencia antes de que vuelva a repetirse. Lo denotaremos por <span class="math inline">\(p\)</span>.</p>
@@ -564,7 +565,7 @@ Entre ellas podríamos destacar:</p>
 <li><p>Combinaciones de distintos algoritmos.</p></li>
 </ul>
 <p>La recomendación sería emplear un algoritmo conocido y que haya sido estudiado en profundidad.
-Por ejemplo el generador <em>Mersenne-Twister</em> propuesto por <span class="citation">Matsumoto y Nishimura (<a href="#ref-matsumoto1998" role="doc-biblioref">1998</a>)</span> y empleado por defecto en R (ver Sección <a href="ext-cong.html#ext-cong">2.2</a>).
+Por ejemplo el generador <em>Mersenne-Twister</em> propuesto por <span class="citation">Matsumoto y Nishimura (<a href="#ref-matsumoto1998">1998</a>)</span> y empleado por defecto en R (ver Sección <a href="ext-cong.html#ext-cong">2.2</a>).
 Además, sería recomendable utilizar alguna de las implementaciones disponibles en múltiples librerías, por ejemplo:</p>
 <ul>
 <li><p>GNU Scientific Library (GSL):
@@ -585,7 +586,7 @@ Estos métodos son muy simples, aunque con las opciones adecuadas podrían ser u
 </div>
 </div>
 <h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
 <div id="ref-hacking1965" class="csl-entry">
 Hacking, I. (1965). <em>Logic of Statistical Inference</em>. Cambridge University Press.
 </div>

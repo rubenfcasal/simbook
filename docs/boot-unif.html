@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9.2 El Bootstrap uniforme | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9.2 El Bootstrap uniforme | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -57,7 +57,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -67,7 +67,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -129,6 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -488,7 +489,8 @@ En el caso del bootstrap uniforme, el algoritmo es:</p>
 <ol style="list-style-type: decimal">
 <li><p>Para cada <span class="math inline">\(i=1,\ldots ,n\)</span> generar <span class="math inline">\(X_i^{\ast}\)</span> a partir de <span class="math inline">\(F_n\)</span>, es decir
 <span class="math inline">\(P^{\ast}\left( X_i^{\ast}=X_j \right) =\frac{1}{n}\)</span>, <span class="math inline">\(j=1,\ldots,n\)</span></p></li>
-<li><p>Obtener <span class="math inline">\(\mathbf{X}^{\ast}=\left( X_1^{\ast},\ldots ,X_n^{\ast} \right)\)</span></p></li>
+<li><p>Obtener <span class="math inline">\(\mathbf{X}^{\ast}=\left( X_1^{\ast},\ldots
+,X_n^{\ast} \right)\)</span></p></li>
 <li><p>Calcular <span class="math inline">\(R^{\ast}=R\left( \mathbf{X}^{\ast},F_n \right)\)</span></p></li>
 <li><p>Repetir <span class="math inline">\(B\)</span> veces los pasos 1-3 para obtener las réplicas bootstrap
 <span class="math inline">\(R^{\ast (1)}, \ldots, R^{\ast (B)}\)</span></p></li>
@@ -502,17 +504,17 @@ muestreo de <span class="math inline">\(R\)</span>.</p></li>
 hacer <span class="math inline">\(X_i^{\ast}=X_{\left\lfloor nU_i\right\rfloor +1}\)</span></li>
 </ol>
 <p>Aunque en <code>R</code> es recomendable<a href="#fn37" class="footnote-ref" id="fnref37"><sup>37</sup></a> emplear la función <code>sample</code> para generar muestras aleatorias con reemplazamiento del conjunto de datos original:</p>
-<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="boot-unif.html#cb552-1" aria-hidden="true" tabindex="-1"></a>muestra_boot <span class="ot">&lt;-</span> <span class="fu">sample</span>(muestra, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="boot-unif.html#cb552-1" tabindex="-1"></a>muestra_boot <span class="ot">&lt;-</span> <span class="fu">sample</span>(muestra, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="example">
 <p><span id="exm:media-dt-desconocida" class="example"><strong>Ejemplo 9.2  (Inferencia sobre la media con varianza desconocida) </strong></span><br></p>
 <p>Como ejemplo consideramos la muestra de tiempos de vida de microorganismos <code>lifetimes</code> del paquete <code>simres</code>:</p>
-<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="boot-unif.html#cb553-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(simres)</span>
-<span id="cb553-2"><a href="boot-unif.html#cb553-2" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> lifetimes</span>
-<span id="cb553-3"><a href="boot-unif.html#cb553-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(muestra)</span></code></pre></div>
+<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="boot-unif.html#cb553-1" tabindex="-1"></a><span class="fu">library</span>(simres)</span>
+<span id="cb553-2"><a href="boot-unif.html#cb553-2" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> lifetimes</span>
+<span id="cb553-3"><a href="boot-unif.html#cb553-3" tabindex="-1"></a><span class="fu">summary</span>(muestra)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##   0.143   0.265   0.611   0.805   1.120   2.080</code></pre>
-<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="boot-unif.html#cb555-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(muestra)</span>
-<span id="cb555-2"><a href="boot-unif.html#cb555-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rug</span>(muestra)</span></code></pre></div>
+<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="boot-unif.html#cb555-1" tabindex="-1"></a><span class="fu">hist</span>(muestra)</span>
+<span id="cb555-2"><a href="boot-unif.html#cb555-2" tabindex="-1"></a><span class="fu">rug</span>(muestra)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:microorganismos"></span>
 <img src="09-Bootstrap_files/figure-html/microorganismos-1.png" alt="Distribución del tiempo de vida de una muestra de microorganismos." width="75%" />
 <p class="caption">
@@ -536,56 +538,57 @@ S_{n-1}^{\ast 2} &amp;= \frac{1}{n-1}\sum_{i=1}^{n}\left( X_i^{\ast}-
 hacer <span class="math inline">\(X_i^{\ast}=X_{\left\lfloor nU_i\right\rfloor +1}\)</span></p></li>
 <li><p>Obtener <span class="math inline">\(\bar{X}^{\ast}\)</span> y <span class="math inline">\(S_{n-1}^{\ast 2}\)</span></p></li>
 <li><p>Calcular
-<span class="math inline">\(R^{\ast}=\sqrt{n}\frac{\bar{X}^{\ast}-\bar{X}}{ S_{n-1}^{\ast}}\)</span></p></li>
+<span class="math inline">\(R^{\ast}=\sqrt{n}\frac{\bar{X}^{\ast}-\bar{X}}{
+S_{n-1}^{\ast}}\)</span></p></li>
 <li><p>Repetir <span class="math inline">\(B\)</span> veces los pasos 1-3 para obtener las réplicas bootstrap
 <span class="math inline">\(R^{\ast (1)}, \ldots, R^{\ast (B)}\)</span></p></li>
 <li><p>Aproximar la distribución en el muestreo de <span class="math inline">\(R\)</span> mediante la
 distribución empírica de <span class="math inline">\(R^{\ast (1)}, \ldots, R^{\ast (B)}\)</span></p></li>
 </ol>
 <p>Por ejemplo, podríamos emplear el siguiente código:</p>
-<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="boot-unif.html#cb556-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(muestra)</span>
-<span id="cb556-2"><a href="boot-unif.html#cb556-2" aria-hidden="true" tabindex="-1"></a>alfa <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
-<span id="cb556-3"><a href="boot-unif.html#cb556-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimaciones muestrales</span></span>
-<span id="cb556-4"><a href="boot-unif.html#cb556-4" aria-hidden="true" tabindex="-1"></a>x_barra <span class="ot">&lt;-</span> <span class="fu">mean</span>(muestra)</span>
-<span id="cb556-5"><a href="boot-unif.html#cb556-5" aria-hidden="true" tabindex="-1"></a>cuasi_dt <span class="ot">&lt;-</span> <span class="fu">sd</span>(muestra)</span>
-<span id="cb556-6"><a href="boot-unif.html#cb556-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Remuestreo</span></span>
-<span id="cb556-7"><a href="boot-unif.html#cb556-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb556-8"><a href="boot-unif.html#cb556-8" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb556-9"><a href="boot-unif.html#cb556-9" aria-hidden="true" tabindex="-1"></a>estadistico_boot <span class="ot">&lt;-</span> <span class="fu">numeric</span>(B)</span>
-<span id="cb556-10"><a href="boot-unif.html#cb556-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>B) {</span>
-<span id="cb556-11"><a href="boot-unif.html#cb556-11" aria-hidden="true" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> <span class="fu">sample</span>(muestra, n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb556-12"><a href="boot-unif.html#cb556-12" aria-hidden="true" tabindex="-1"></a>  x_barra_boot <span class="ot">&lt;-</span> <span class="fu">mean</span>(remuestra)</span>
-<span id="cb556-13"><a href="boot-unif.html#cb556-13" aria-hidden="true" tabindex="-1"></a>  cuasi_dt_boot <span class="ot">&lt;-</span> <span class="fu">sd</span>(remuestra)</span>
-<span id="cb556-14"><a href="boot-unif.html#cb556-14" aria-hidden="true" tabindex="-1"></a>  estadistico_boot[k] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(n) <span class="sc">*</span> (x_barra_boot <span class="sc">-</span> x_barra)<span class="sc">/</span>cuasi_dt_boot</span>
-<span id="cb556-15"><a href="boot-unif.html#cb556-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="boot-unif.html#cb556-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(muestra)</span>
+<span id="cb556-2"><a href="boot-unif.html#cb556-2" tabindex="-1"></a>alfa <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb556-3"><a href="boot-unif.html#cb556-3" tabindex="-1"></a><span class="co"># Estimaciones muestrales</span></span>
+<span id="cb556-4"><a href="boot-unif.html#cb556-4" tabindex="-1"></a>x_barra <span class="ot">&lt;-</span> <span class="fu">mean</span>(muestra)</span>
+<span id="cb556-5"><a href="boot-unif.html#cb556-5" tabindex="-1"></a>cuasi_dt <span class="ot">&lt;-</span> <span class="fu">sd</span>(muestra)</span>
+<span id="cb556-6"><a href="boot-unif.html#cb556-6" tabindex="-1"></a><span class="co"># Remuestreo</span></span>
+<span id="cb556-7"><a href="boot-unif.html#cb556-7" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb556-8"><a href="boot-unif.html#cb556-8" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb556-9"><a href="boot-unif.html#cb556-9" tabindex="-1"></a>estadistico_boot <span class="ot">&lt;-</span> <span class="fu">numeric</span>(B)</span>
+<span id="cb556-10"><a href="boot-unif.html#cb556-10" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>B) {</span>
+<span id="cb556-11"><a href="boot-unif.html#cb556-11" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> <span class="fu">sample</span>(muestra, n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb556-12"><a href="boot-unif.html#cb556-12" tabindex="-1"></a>  x_barra_boot <span class="ot">&lt;-</span> <span class="fu">mean</span>(remuestra)</span>
+<span id="cb556-13"><a href="boot-unif.html#cb556-13" tabindex="-1"></a>  cuasi_dt_boot <span class="ot">&lt;-</span> <span class="fu">sd</span>(remuestra)</span>
+<span id="cb556-14"><a href="boot-unif.html#cb556-14" tabindex="-1"></a>  estadistico_boot[k] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(n) <span class="sc">*</span> (x_barra_boot <span class="sc">-</span> x_barra)<span class="sc">/</span>cuasi_dt_boot</span>
+<span id="cb556-15"><a href="boot-unif.html#cb556-15" tabindex="-1"></a>}</span></code></pre></div>
 <p>Las características de interés de la distribución en el muestreo de <span class="math inline">\(R\)</span>
 se aproximan por las correspondientes de la distribución bootstrap de <span class="math inline">\(R^{\ast}\)</span>.
 En este caso nos interesa aproximar los puntos críticos <span class="math inline">\(x_{\alpha /2}\)</span> y
 <span class="math inline">\(x_{1-\alpha /2}\)</span>, tales que:
 <span class="math display">\[P\left( x_{\alpha /2} &lt; R &lt; x_{1-\alpha /2} \right) = 1-\alpha.\]</span>
 Para lo que podemos emplear los cuantiles muestrales<a href="#fn38" class="footnote-ref" id="fnref38"><sup>38</sup></a>:</p>
-<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="boot-unif.html#cb557-1" aria-hidden="true" tabindex="-1"></a>pto_crit <span class="ot">&lt;-</span> <span class="fu">quantile</span>(estadistico_boot, <span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span> <span class="sc">-</span> alfa<span class="sc">/</span><span class="dv">2</span>))</span>
-<span id="cb557-2"><a href="boot-unif.html#cb557-2" aria-hidden="true" tabindex="-1"></a>pto_crit</span></code></pre></div>
+<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="boot-unif.html#cb557-1" tabindex="-1"></a>pto_crit <span class="ot">&lt;-</span> <span class="fu">quantile</span>(estadistico_boot, <span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span> <span class="sc">-</span> alfa<span class="sc">/</span><span class="dv">2</span>))</span>
+<span id="cb557-2"><a href="boot-unif.html#cb557-2" tabindex="-1"></a>pto_crit</span></code></pre></div>
 <pre><code>##    2.5%   97.5% 
 ## -3.0022  1.8773</code></pre>
 <p>A partir de los cuales obtenemos la correspondiente estimación por IC boostrap:
 <span class="math display">\[\hat{IC}^{boot}_{1-\alpha}\left(  \mu\right)  =
 \left(  \overline{X}-x_{1-\alpha/2}\dfrac{S_{n-1}}{\sqrt{n}},\ \overline{X}
 - x_{\alpha/2}\dfrac{S_{n-1}}{\sqrt{n}} \right).\]</span></p>
-<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="boot-unif.html#cb559-1" aria-hidden="true" tabindex="-1"></a>ic_inf_boot <span class="ot">&lt;-</span> x_barra <span class="sc">-</span> pto_crit[<span class="dv">2</span>] <span class="sc">*</span> cuasi_dt<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
-<span id="cb559-2"><a href="boot-unif.html#cb559-2" aria-hidden="true" tabindex="-1"></a>ic_sup_boot <span class="ot">&lt;-</span> x_barra <span class="sc">-</span> pto_crit[<span class="dv">1</span>] <span class="sc">*</span> cuasi_dt<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
-<span id="cb559-3"><a href="boot-unif.html#cb559-3" aria-hidden="true" tabindex="-1"></a>IC_boot <span class="ot">&lt;-</span> <span class="fu">c</span>(ic_inf_boot, ic_sup_boot)</span>
-<span id="cb559-4"><a href="boot-unif.html#cb559-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(IC_boot) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">-</span>alfa<span class="sc">/</span><span class="dv">2</span>), <span class="st">&quot;%&quot;</span>)</span>
-<span id="cb559-5"><a href="boot-unif.html#cb559-5" aria-hidden="true" tabindex="-1"></a>IC_boot</span></code></pre></div>
+<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="boot-unif.html#cb559-1" tabindex="-1"></a>ic_inf_boot <span class="ot">&lt;-</span> x_barra <span class="sc">-</span> pto_crit[<span class="dv">2</span>] <span class="sc">*</span> cuasi_dt<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
+<span id="cb559-2"><a href="boot-unif.html#cb559-2" tabindex="-1"></a>ic_sup_boot <span class="ot">&lt;-</span> x_barra <span class="sc">-</span> pto_crit[<span class="dv">1</span>] <span class="sc">*</span> cuasi_dt<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
+<span id="cb559-3"><a href="boot-unif.html#cb559-3" tabindex="-1"></a>IC_boot <span class="ot">&lt;-</span> <span class="fu">c</span>(ic_inf_boot, ic_sup_boot)</span>
+<span id="cb559-4"><a href="boot-unif.html#cb559-4" tabindex="-1"></a><span class="fu">names</span>(IC_boot) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">-</span>alfa<span class="sc">/</span><span class="dv">2</span>), <span class="st">&quot;%&quot;</span>)</span>
+<span id="cb559-5"><a href="boot-unif.html#cb559-5" tabindex="-1"></a>IC_boot</span></code></pre></div>
 <pre><code>##    2.5%   97.5% 
 ## 0.50301 1.28881</code></pre>
 <p>Este procedimiento para la construcción de intervalos de confianza se denomina <em>método percentil-t</em> y se tratará en la Sección <a href="boot-ic.html#boot-ic-stud">11.2.4</a>.</p>
 <p>Como ejemplo adicional podemos comparar la aproximación de la distribución bootstrap del estadístico con la aproximación <span class="math inline">\(t_{n-1}\)</span> basada en normalidad.</p>
-<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="boot-unif.html#cb561-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(estadistico_boot, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.4</span>))</span>
-<span id="cb561-2"><a href="boot-unif.html#cb561-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> pto_crit, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb561-3"><a href="boot-unif.html#cb561-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dt</span>(x, n <span class="sc">-</span> <span class="dv">1</span>), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
-<span id="cb561-4"><a href="boot-unif.html#cb561-4" aria-hidden="true" tabindex="-1"></a>pto_crit_t <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="dv">1</span> <span class="sc">-</span> alfa<span class="sc">/</span><span class="dv">2</span>, n <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb561-5"><a href="boot-unif.html#cb561-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">c</span>(<span class="sc">-</span>pto_crit_t, pto_crit_t), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="boot-unif.html#cb561-1" tabindex="-1"></a><span class="fu">hist</span>(estadistico_boot, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.4</span>))</span>
+<span id="cb561-2"><a href="boot-unif.html#cb561-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> pto_crit, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb561-3"><a href="boot-unif.html#cb561-3" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dt</span>(x, n <span class="sc">-</span> <span class="dv">1</span>), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb561-4"><a href="boot-unif.html#cb561-4" tabindex="-1"></a>pto_crit_t <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="dv">1</span> <span class="sc">-</span> alfa<span class="sc">/</span><span class="dv">2</span>, n <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb561-5"><a href="boot-unif.html#cb561-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">c</span>(<span class="sc">-</span>pto_crit_t, pto_crit_t), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:mean-boot-stud"></span>
 <img src="09-Bootstrap_files/figure-html/mean-boot-stud-1.png" alt="Aproximación de la distribución de la media muestral studentizada mediante bootstrap uniforme." width="75%" />
 <p class="caption">
@@ -595,7 +598,7 @@ Figura 9.7: Aproximación de la distribución de la media muestral studentizada 
 <p>En este caso la distribución bootstrap del estadístico es más asimétrica, por lo que el intervalo de confianza no está centrado en la media,
 al contrario que el obtenido con la aproximación tradicional.
 Por ejemplo, podemos obtener la estimación basada en normalidad mediante la función <code>t.test()</code>:</p>
-<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="boot-unif.html#cb562-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(muestra)<span class="sc">$</span>conf.int</span></code></pre></div>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="boot-unif.html#cb562-1" tabindex="-1"></a><span class="fu">t.test</span>(muestra)<span class="sc">$</span>conf.int</span></code></pre></div>
 <pre><code>## [1] 0.45994 1.15073
 ## attr(,&quot;conf.level&quot;)
 ## [1] 0.95</code></pre>
@@ -603,20 +606,20 @@ Por ejemplo, podemos obtener la estimación basada en normalidad mediante la fun
 <hr />
 <p>En el caso multidimensional, cuando trabajamos con un conjunto de datos con múltiples variables, podríamos emplear un procedimiento análogo, a partir de remuestras del vector de índices.
 Por ejemplo:</p>
-<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="boot-unif.html#cb564-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
-<span id="cb564-2"><a href="boot-unif.html#cb564-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(iris)</span></code></pre></div>
+<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="boot-unif.html#cb564-1" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
+<span id="cb564-2"><a href="boot-unif.html#cb564-2" tabindex="-1"></a><span class="fu">str</span>(iris)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    150 obs. of  5 variables:
 ##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
 ##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
 ##  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
 ##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
 ##  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1..</code></pre>
-<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="boot-unif.html#cb566-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(iris)</span>
-<span id="cb566-2"><a href="boot-unif.html#cb566-2" aria-hidden="true" tabindex="-1"></a><span class="co"># i_boot &lt;- floor(n*runif(n)) + 1</span></span>
-<span id="cb566-3"><a href="boot-unif.html#cb566-3" aria-hidden="true" tabindex="-1"></a><span class="co"># i_boot &lt;- sample.int(n, replace = TRUE)</span></span>
-<span id="cb566-4"><a href="boot-unif.html#cb566-4" aria-hidden="true" tabindex="-1"></a>i_boot <span class="ot">&lt;-</span> <span class="fu">sample</span>(n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb566-5"><a href="boot-unif.html#cb566-5" aria-hidden="true" tabindex="-1"></a>data_boot <span class="ot">&lt;-</span> iris[i_boot, ]</span>
-<span id="cb566-6"><a href="boot-unif.html#cb566-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data_boot)</span></code></pre></div>
+<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="boot-unif.html#cb566-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(iris)</span>
+<span id="cb566-2"><a href="boot-unif.html#cb566-2" tabindex="-1"></a><span class="co"># i_boot &lt;- floor(n*runif(n)) + 1</span></span>
+<span id="cb566-3"><a href="boot-unif.html#cb566-3" tabindex="-1"></a><span class="co"># i_boot &lt;- sample.int(n, replace = TRUE)</span></span>
+<span id="cb566-4"><a href="boot-unif.html#cb566-4" tabindex="-1"></a>i_boot <span class="ot">&lt;-</span> <span class="fu">sample</span>(n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb566-5"><a href="boot-unif.html#cb566-5" tabindex="-1"></a>data_boot <span class="ot">&lt;-</span> iris[i_boot, ]</span>
+<span id="cb566-6"><a href="boot-unif.html#cb566-6" tabindex="-1"></a><span class="fu">str</span>(data_boot)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    150 obs. of  5 variables:
 ##  $ Sepal.Length: num  5.1 5.6 6.2 4.8 5.5 6.2 5.5 5.6 5 6.5 ...
 ##  $ Sepal.Width : num  3.8 2.5 2.9 3.1 2.3 2.9 2.6 2.8 3.6 3 ...
@@ -635,9 +638,9 @@ Su estimador es el coeficiente de correlación muestral:
 {\sqrt{ \sum_{i=1}^{n}(x_i-\overline{x})^{2}}
 \sqrt{\sum_{i=1}^{n}(y_i-\overline{y})^{2}}},\]</span>
 que podemos calcular en <code>R</code> empleando la función <code>cor()</code>:</p>
-<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="boot-unif.html#cb568-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Prestige, <span class="at">package =</span> <span class="st">&quot;carData&quot;</span>)</span>
-<span id="cb568-2"><a href="boot-unif.html#cb568-2" aria-hidden="true" tabindex="-1"></a><span class="co"># with(Prestige, cor(income, prestige))</span></span>
-<span id="cb568-3"><a href="boot-unif.html#cb568-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(Prestige<span class="sc">$</span>income, Prestige<span class="sc">$</span>prestige)</span></code></pre></div>
+<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="boot-unif.html#cb568-1" tabindex="-1"></a><span class="fu">data</span>(Prestige, <span class="at">package =</span> <span class="st">&quot;carData&quot;</span>)</span>
+<span id="cb568-2"><a href="boot-unif.html#cb568-2" tabindex="-1"></a><span class="co"># with(Prestige, cor(income, prestige))</span></span>
+<span id="cb568-3"><a href="boot-unif.html#cb568-3" tabindex="-1"></a><span class="fu">cor</span>(Prestige<span class="sc">$</span>income, Prestige<span class="sc">$</span>prestige)</span></code></pre></div>
 <pre><code>## [1] 0.71491</code></pre>
 <p>Para realizar inferencias sobre el coeficiente de correlación, como aproximación más simple, se puede considerar que la distribución muestral de <span class="math inline">\(r\)</span> es aproximadamente normal de media <span class="math inline">\(\rho\)</span> y varianza
 <span class="math display">\[Var(r) \approx \frac{1 - \rho^2}{n - 2}.\]</span>

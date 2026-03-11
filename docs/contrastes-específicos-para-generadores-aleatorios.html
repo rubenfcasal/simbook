@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>A.3 Contrastes específicos para generadores aleatorios | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="A.3 Contrastes específicos para generadores aleatorios | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -57,7 +57,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -67,7 +67,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -129,6 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -465,25 +466,25 @@ De esta forma se consigue una sucesión de enteros aleatorios supuestamente inde
 <p>Empleando la discretización anterior se simplifica notablemente el contraste chi-cuadrado de bondad de ajuste a una uniforme, descrito en la Sección <a href="gof.html#chi2test">A.1.4</a> e implementado en la función <code>chisq.cont.test()</code>.
 En este caso bastaría con contrastar la equiprobabilidad de la secuencia de enteros (empleando directamente la función <code>chisq.test()</code>) y este método de denomina <em>contraste de frecuencias</em> (frequency test).
 Por ejemplo:</p>
-<div class="sourceCode" id="cb754"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb754-1"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb754-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generar</span></span>
-<span id="cb754-2"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb754-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb754-3"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb754-3" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1000</span>)</span>
-<span id="cb754-4"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb754-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Discretizar</span></span>
-<span id="cb754-5"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb754-5" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb754-6"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb754-6" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">floor</span>(k<span class="sc">*</span>u) <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb754-7"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb754-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Test chi-cuadrado</span></span>
-<span id="cb754-8"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb754-8" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">factor</span>(x, <span class="at">levels =</span> <span class="fu">seq_len</span>(k)))</span>
-<span id="cb754-9"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb754-9" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(f)</span></code></pre></div>
+<div class="sourceCode" id="cb754"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb754-1"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb754-1" tabindex="-1"></a><span class="co"># Generar</span></span>
+<span id="cb754-2"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb754-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb754-3"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb754-3" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1000</span>)</span>
+<span id="cb754-4"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb754-4" tabindex="-1"></a><span class="co"># Discretizar</span></span>
+<span id="cb754-5"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb754-5" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb754-6"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb754-6" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">floor</span>(k<span class="sc">*</span>u) <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb754-7"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb754-7" tabindex="-1"></a><span class="co"># Test chi-cuadrado</span></span>
+<span id="cb754-8"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb754-8" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">factor</span>(x, <span class="at">levels =</span> <span class="fu">seq_len</span>(k)))</span>
+<span id="cb754-9"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb754-9" tabindex="-1"></a><span class="fu">chisq.test</span>(f)</span></code></pre></div>
 <pre><code>## 
 ##  Chi-squared test for given probabilities
 ## 
 ## data:  f
 ## X-squared = 10.3, df = 9, p-value = 0.33</code></pre>
 <p>Este código está implementado en la función <code>simres::freq.test()</code> (fichero <a href="R/test.R"><em>test.R</em></a>) y podríamos emplear:</p>
-<div class="sourceCode" id="cb756"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb756-1"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb756-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(simres)</span>
-<span id="cb756-2"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb756-2" aria-hidden="true" tabindex="-1"></a><span class="fu">freq.test</span>(u, <span class="at">nclass =</span> k)</span>
-<span id="cb756-3"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb756-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternativamente</span></span>
-<span id="cb756-4"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb756-4" aria-hidden="true" tabindex="-1"></a><span class="co"># chisq.cont.test(u, &quot;unif&quot;, nclass = k, output = FALSE, min = 0, max = 1)</span></span></code></pre></div>
+<div class="sourceCode" id="cb756"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb756-1"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb756-1" tabindex="-1"></a><span class="fu">library</span>(simres)</span>
+<span id="cb756-2"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb756-2" tabindex="-1"></a><span class="fu">freq.test</span>(u, <span class="at">nclass =</span> k)</span>
+<span id="cb756-3"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb756-3" tabindex="-1"></a><span class="co"># Alternativamente</span></span>
+<span id="cb756-4"><a href="contrastes-específicos-para-generadores-aleatorios.html#cb756-4" tabindex="-1"></a><span class="co"># chisq.cont.test(u, &quot;unif&quot;, nclass = k, output = FALSE, min = 0, max = 1)</span></span></code></pre></div>
 </div>
 <div id="contraste-de-series" class="section level3 hasAnchor" number="12.3.2">
 <h3><span class="header-section-number">A.3.2</span> Contraste de series<a href="contrastes-específicos-para-generadores-aleatorios.html#contraste-de-series" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -533,7 +534,7 @@ P(\text{4 enteros diferentes}) = 0.5040,\\
 P(\text{5 enteros diferentes}) &amp; = 0.3024,
 \end{aligned}\]</span>
 procediendo también a agrupar las dos primeras modalidades.</p>
-<p>En el caso general de considerar <span class="math inline">\(d\)</span>-uplas (manos de <span class="math inline">\(d\)</span> cartas con <span class="math inline">\(K\)</span> posibilidades cada una), la probabilidad de obtener <span class="math inline">\(c\)</span> valores (cartas) diferentes es <span class="citation">(e.g. <a href="#ref-knuth2002" role="doc-biblioref">Knuth, 2002, sec. 3.3.2</a>, p. 64)</span>:
+<p>En el caso general de considerar <span class="math inline">\(d\)</span>-uplas (manos de <span class="math inline">\(d\)</span> cartas con <span class="math inline">\(K\)</span> posibilidades cada una), la probabilidad de obtener <span class="math inline">\(c\)</span> valores (cartas) diferentes es <span class="citation">(e.g. <a href="#ref-knuth2002">Knuth, 2002, sec. 3.3.2</a>, p. 64)</span>:
 <span class="math display">\[P(C=c) = \frac{K!}{(K-c)!K^d}S(d,c),\]</span>
 donde <span class="math inline">\(S(d,c)\)</span> es el número de Stirling de segunda clase, definido como el número de formas que existen de hacer una partición de un conjunto de <span class="math inline">\(d\)</span> elementos en <span class="math inline">\(c\)</span> subconjuntos:
 <span class="math display">\[S(d,c) = \frac{1}{c!}\sum_{i=0}^{c} (-1)^{i} \binom{c}{i} (c-i)^d.\]</span>
@@ -552,7 +553,7 @@ tanto, resulta posible calcular la distribución de probabilidad de <span class=
 De esta forma podemos utilizar los valores calculados de las probabilidades
 <span class="math display">\[P( Q = K ), P( Q = K+1 ),\ldots, P( Q = M -1 ), P( Q \geq M ),\]</span>
 para obtener las frecuencias esperadas de cada clase y confrontarlas con las
-observadas vía el estadístico chi-cuadrado <span class="citation">(e.g. <a href="#ref-knuth2002" role="doc-biblioref">Knuth, 2002, sec. 3.3.2</a>, p. 65)</span>.</p>
+observadas vía el estadístico chi-cuadrado <span class="citation">(e.g. <a href="#ref-knuth2002">Knuth, 2002, sec. 3.3.2</a>, p. 65)</span>.</p>
 <p>Existen varias elecciones comunes de <span class="math inline">\(K\)</span> y <span class="math inline">\(M\)</span>.
 Tomando <span class="math inline">\(K=5\)</span> con clases <span class="math inline">\(Q=5\)</span>, <span class="math inline">\(Q=6\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(Q=19\)</span>, <span class="math inline">\(Q\geq20\)</span>, las probabilidades vendrían dadas por:
 <span class="math display">\[\begin{array}{rr}
@@ -590,7 +591,7 @@ Esto equivale a considerar $100\cdot U_{i}-\left\lfloor 100\cdot U_{i}\right\rfl
 </div>
 <!-- </div> -->
 <h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
 <div id="ref-knuth2002" class="csl-entry">
 Knuth, D. E. (2002). <em>The Art of Computer Programming</em> (tercera, Vol. 2). Addison-Wesley.
 </div>

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6.2 El método de aceptación-rechazo | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6.2 El método de aceptación-rechazo | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -57,7 +57,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -67,7 +67,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -129,6 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -490,7 +491,7 @@ devolver <span class="math inline">\(\mathbf{X}= \mathbf{T}\)</span>.</p>
 tendríamos que <span class="math inline">\(f(x,y) \leq cg(x,y) = M\)</span> y el algoritmo sería:</p>
 <ol style="list-style-type: decimal">
 <li><p>Generar <span class="math inline">\(U \sim \mathcal{U}\left( 0, 1\right)\)</span>.</p></li>
-<li><p>Generar <span class="math inline">\(T_1, T_2 \sim \mathcal{U}\left( -1, 1 \right)\)</span>.</p></li>
+<li><p>Generar <span class="math inline">\(T_1, T_2  \sim \mathcal{U}\left( -1, 1 \right)\)</span>.</p></li>
 <li><p>Si <span class="math inline">\(M \cdot U\leq f(T_1, T_2)\)</span>
 devolver <span class="math inline">\(\mathbf{X} = (T_1, T_2)\)</span>.</p></li>
 <li><p>En caso contrario volver al paso 1.</p></li>
@@ -499,78 +500,78 @@ devolver <span class="math inline">\(\mathbf{X} = (T_1, T_2)\)</span>.</p></li>
 <span class="math inline">\(U \leq 1 - \left( T_1^2 + T_2^2 \right) / 2\)</span>.</p>
 <p>Si queremos implementar este algoritmo en R, podemos comenzar por
 definir y representar la densidad objetivo con el siguiente código:</p>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="el-método-de-aceptación-rechazo.html#cb232-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) <span class="dv">3</span> <span class="sc">*</span> (<span class="dv">2</span> <span class="sc">-</span> x<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> y<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> <span class="dv">16</span></span>
-<span id="cb232-2"><a href="el-método-de-aceptación-rechazo.html#cb232-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb232-3"><a href="el-método-de-aceptación-rechazo.html#cb232-3" aria-hidden="true" tabindex="-1"></a>persp.f2D <span class="ot">&lt;-</span> <span class="cf">function</span>(f2d, <span class="at">ax=</span><span class="sc">-</span><span class="dv">1</span>, <span class="at">bx=</span><span class="dv">1</span>, <span class="at">ay=</span><span class="sc">-</span><span class="dv">1</span>, <span class="at">by=</span><span class="dv">1</span>, <span class="at">nx=</span><span class="dv">21</span>, <span class="at">ny=</span><span class="dv">21</span>, ...) { </span>
-<span id="cb232-4"><a href="el-método-de-aceptación-rechazo.html#cb232-4" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">seq</span>(ax, bx, <span class="at">length =</span> nx)</span>
-<span id="cb232-5"><a href="el-método-de-aceptación-rechazo.html#cb232-5" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">seq</span>(ay, by, <span class="at">length =</span> ny)</span>
-<span id="cb232-6"><a href="el-método-de-aceptación-rechazo.html#cb232-6" aria-hidden="true" tabindex="-1"></a>  z <span class="ot">&lt;-</span> <span class="fu">outer</span>(x, y, f2d)</span>
-<span id="cb232-7"><a href="el-método-de-aceptación-rechazo.html#cb232-7" aria-hidden="true" tabindex="-1"></a>  plot3D<span class="sc">::</span><span class="fu">persp3D</span>(x, y, z, ...)</span>
-<span id="cb232-8"><a href="el-método-de-aceptación-rechazo.html#cb232-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb232-9"><a href="el-método-de-aceptación-rechazo.html#cb232-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb232-10"><a href="el-método-de-aceptación-rechazo.html#cb232-10" aria-hidden="true" tabindex="-1"></a><span class="fu">persp.f2D</span>(f, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">50</span>, <span class="dv">50</span>, <span class="at">ticktype =</span> <span class="st">&quot;detailed&quot;</span>)</span></code></pre></div>
-<p><img src="06-Simulacion_multidimensional_files/figure-html/unnamed-chunk-3-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="el-método-de-aceptación-rechazo.html#cb232-1" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) <span class="dv">3</span> <span class="sc">*</span> (<span class="dv">2</span> <span class="sc">-</span> x<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> y<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> <span class="dv">16</span></span>
+<span id="cb232-2"><a href="el-método-de-aceptación-rechazo.html#cb232-2" tabindex="-1"></a></span>
+<span id="cb232-3"><a href="el-método-de-aceptación-rechazo.html#cb232-3" tabindex="-1"></a>persp.f2D <span class="ot">&lt;-</span> <span class="cf">function</span>(f2d, <span class="at">ax=</span><span class="sc">-</span><span class="dv">1</span>, <span class="at">bx=</span><span class="dv">1</span>, <span class="at">ay=</span><span class="sc">-</span><span class="dv">1</span>, <span class="at">by=</span><span class="dv">1</span>, <span class="at">nx=</span><span class="dv">21</span>, <span class="at">ny=</span><span class="dv">21</span>, ...) { </span>
+<span id="cb232-4"><a href="el-método-de-aceptación-rechazo.html#cb232-4" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">seq</span>(ax, bx, <span class="at">length =</span> nx)</span>
+<span id="cb232-5"><a href="el-método-de-aceptación-rechazo.html#cb232-5" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">seq</span>(ay, by, <span class="at">length =</span> ny)</span>
+<span id="cb232-6"><a href="el-método-de-aceptación-rechazo.html#cb232-6" tabindex="-1"></a>  z <span class="ot">&lt;-</span> <span class="fu">outer</span>(x, y, f2d)</span>
+<span id="cb232-7"><a href="el-método-de-aceptación-rechazo.html#cb232-7" tabindex="-1"></a>  plot3D<span class="sc">::</span><span class="fu">persp3D</span>(x, y, z, ...)</span>
+<span id="cb232-8"><a href="el-método-de-aceptación-rechazo.html#cb232-8" tabindex="-1"></a>}</span>
+<span id="cb232-9"><a href="el-método-de-aceptación-rechazo.html#cb232-9" tabindex="-1"></a></span>
+<span id="cb232-10"><a href="el-método-de-aceptación-rechazo.html#cb232-10" tabindex="-1"></a><span class="fu">persp.f2D</span>(f, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">50</span>, <span class="dv">50</span>, <span class="at">ticktype =</span> <span class="st">&quot;detailed&quot;</span>)</span></code></pre></div>
+<p><img src="06-Simulacion_multidimensional_files/figure-html/unnamed-chunk-3-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
 <p>Las siguientes funciones implementan el método de aceptación-rechazo para simular
 valores de la densidad objetivo (de forma similar al los ejemplos mostrados
 para el caso unidimensional, incluyendo también una variable global <code>ngen</code>
 para contar el número de generaciones de la distribución auxiliar):</p>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="el-método-de-aceptación-rechazo.html#cb233-1" aria-hidden="true" tabindex="-1"></a>ngen <span class="ot">&lt;-</span> <span class="dv">0</span> </span>
-<span id="cb233-2"><a href="el-método-de-aceptación-rechazo.html#cb233-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb233-3"><a href="el-método-de-aceptación-rechazo.html#cb233-3" aria-hidden="true" tabindex="-1"></a>rf <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb233-4"><a href="el-método-de-aceptación-rechazo.html#cb233-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulación por aceptación-rechazo a partir de uniforme</span></span>
-<span id="cb233-5"><a href="el-método-de-aceptación-rechazo.html#cb233-5" aria-hidden="true" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">8</span></span>
-<span id="cb233-6"><a href="el-método-de-aceptación-rechazo.html#cb233-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (<span class="cn">TRUE</span>) {</span>
-<span id="cb233-7"><a href="el-método-de-aceptación-rechazo.html#cb233-7" aria-hidden="true" tabindex="-1"></a>    u <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>)</span>
-<span id="cb233-8"><a href="el-método-de-aceptación-rechazo.html#cb233-8" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb233-9"><a href="el-método-de-aceptación-rechazo.html#cb233-9" aria-hidden="true" tabindex="-1"></a>    ngen <span class="ot">&lt;&lt;-</span> ngen <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb233-10"><a href="el-método-de-aceptación-rechazo.html#cb233-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (m<span class="sc">*</span>u <span class="sc">&lt;=</span> <span class="fu">f</span>(x[<span class="dv">1</span>], x[<span class="dv">2</span>])) <span class="fu">return</span>(x)</span>
-<span id="cb233-11"><a href="el-método-de-aceptación-rechazo.html#cb233-11" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb233-12"><a href="el-método-de-aceptación-rechazo.html#cb233-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb233-13"><a href="el-método-de-aceptación-rechazo.html#cb233-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb233-14"><a href="el-método-de-aceptación-rechazo.html#cb233-14" aria-hidden="true" tabindex="-1"></a>rfn <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">1000</span>) {</span>
-<span id="cb233-15"><a href="el-método-de-aceptación-rechazo.html#cb233-15" aria-hidden="true" tabindex="-1"></a>  ngen <span class="ot">&lt;&lt;-</span> <span class="dv">0</span></span>
-<span id="cb233-16"><a href="el-método-de-aceptación-rechazo.html#cb233-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulación n valores</span></span>
-<span id="cb233-17"><a href="el-método-de-aceptación-rechazo.html#cb233-17" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> n, <span class="at">ncol =</span> <span class="dv">2</span>)</span>
-<span id="cb233-18"><a href="el-método-de-aceptación-rechazo.html#cb233-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) x[i , ] <span class="ot">&lt;-</span> <span class="fu">rf</span>()</span>
-<span id="cb233-19"><a href="el-método-de-aceptación-rechazo.html#cb233-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(x)</span>
-<span id="cb233-20"><a href="el-método-de-aceptación-rechazo.html#cb233-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="el-método-de-aceptación-rechazo.html#cb233-1" tabindex="-1"></a>ngen <span class="ot">&lt;-</span> <span class="dv">0</span> </span>
+<span id="cb233-2"><a href="el-método-de-aceptación-rechazo.html#cb233-2" tabindex="-1"></a></span>
+<span id="cb233-3"><a href="el-método-de-aceptación-rechazo.html#cb233-3" tabindex="-1"></a>rf <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb233-4"><a href="el-método-de-aceptación-rechazo.html#cb233-4" tabindex="-1"></a>  <span class="co"># Simulación por aceptación-rechazo a partir de uniforme</span></span>
+<span id="cb233-5"><a href="el-método-de-aceptación-rechazo.html#cb233-5" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">8</span></span>
+<span id="cb233-6"><a href="el-método-de-aceptación-rechazo.html#cb233-6" tabindex="-1"></a>  <span class="cf">while</span> (<span class="cn">TRUE</span>) {</span>
+<span id="cb233-7"><a href="el-método-de-aceptación-rechazo.html#cb233-7" tabindex="-1"></a>    u <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>)</span>
+<span id="cb233-8"><a href="el-método-de-aceptación-rechazo.html#cb233-8" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb233-9"><a href="el-método-de-aceptación-rechazo.html#cb233-9" tabindex="-1"></a>    ngen <span class="ot">&lt;&lt;-</span> ngen <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb233-10"><a href="el-método-de-aceptación-rechazo.html#cb233-10" tabindex="-1"></a>    <span class="cf">if</span> (m<span class="sc">*</span>u <span class="sc">&lt;=</span> <span class="fu">f</span>(x[<span class="dv">1</span>], x[<span class="dv">2</span>])) <span class="fu">return</span>(x)</span>
+<span id="cb233-11"><a href="el-método-de-aceptación-rechazo.html#cb233-11" tabindex="-1"></a>  }</span>
+<span id="cb233-12"><a href="el-método-de-aceptación-rechazo.html#cb233-12" tabindex="-1"></a>}</span>
+<span id="cb233-13"><a href="el-método-de-aceptación-rechazo.html#cb233-13" tabindex="-1"></a></span>
+<span id="cb233-14"><a href="el-método-de-aceptación-rechazo.html#cb233-14" tabindex="-1"></a>rfn <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">1000</span>) {</span>
+<span id="cb233-15"><a href="el-método-de-aceptación-rechazo.html#cb233-15" tabindex="-1"></a>  ngen <span class="ot">&lt;&lt;-</span> <span class="dv">0</span></span>
+<span id="cb233-16"><a href="el-método-de-aceptación-rechazo.html#cb233-16" tabindex="-1"></a>  <span class="co"># Simulación n valores</span></span>
+<span id="cb233-17"><a href="el-método-de-aceptación-rechazo.html#cb233-17" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> n, <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb233-18"><a href="el-método-de-aceptación-rechazo.html#cb233-18" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) x[i , ] <span class="ot">&lt;-</span> <span class="fu">rf</span>()</span>
+<span id="cb233-19"><a href="el-método-de-aceptación-rechazo.html#cb233-19" tabindex="-1"></a>  <span class="fu">return</span>(x)</span>
+<span id="cb233-20"><a href="el-método-de-aceptación-rechazo.html#cb233-20" tabindex="-1"></a>}</span></code></pre></div>
 <p>Empleando esta última función podemos generar 1000 observaciones de la
 distribución objetivo, obteniendo de paso el tiempo de CPU:</p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="el-método-de-aceptación-rechazo.html#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb234-2"><a href="el-método-de-aceptación-rechazo.html#cb234-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb234-3"><a href="el-método-de-aceptación-rechazo.html#cb234-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ngen &lt;- 0</span></span>
-<span id="cb234-4"><a href="el-método-de-aceptación-rechazo.html#cb234-4" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(x <span class="ot">&lt;-</span> <span class="fu">rfn</span>(nsim))</span></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="el-método-de-aceptación-rechazo.html#cb234-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb234-2"><a href="el-método-de-aceptación-rechazo.html#cb234-2" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb234-3"><a href="el-método-de-aceptación-rechazo.html#cb234-3" tabindex="-1"></a><span class="co"># ngen &lt;- 0</span></span>
+<span id="cb234-4"><a href="el-método-de-aceptación-rechazo.html#cb234-4" tabindex="-1"></a><span class="fu">system.time</span>(x <span class="ot">&lt;-</span> <span class="fu">rfn</span>(nsim))</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##       0       0       0</code></pre>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="el-método-de-aceptación-rechazo.html#cb236-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(x)</span></span></code></pre></div>
+##    0.02    0.00    0.02</code></pre>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="el-método-de-aceptación-rechazo.html#cb236-1" tabindex="-1"></a><span class="co"># plot(x)</span></span></code></pre></div>
 <p>Podemos obtener el número medio de generaciones de la distribución auxiliar
 (la aproximación por simulación) y utilizarlo para evaluar la eficiencia
 (la comparación con el valor teórico serviría para evaluar si el algoritmo
 está bien implementado):</p>
-<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="el-método-de-aceptación-rechazo.html#cb237-1" aria-hidden="true" tabindex="-1"></a>{<span class="fu">cat</span>(<span class="st">&quot;Número de generaciones = &quot;</span>, ngen)</span>
-<span id="cb237-2"><a href="el-método-de-aceptación-rechazo.html#cb237-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Número medio de generaciones = &quot;</span>, ngen<span class="sc">/</span>nsim)</span>
-<span id="cb237-3"><a href="el-método-de-aceptación-rechazo.html#cb237-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Proporción de rechazos = &quot;</span>, <span class="dv">1</span><span class="sc">-</span>nsim<span class="sc">/</span>ngen, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)}</span></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="el-método-de-aceptación-rechazo.html#cb237-1" tabindex="-1"></a>{<span class="fu">cat</span>(<span class="st">&quot;Número de generaciones = &quot;</span>, ngen)</span>
+<span id="cb237-2"><a href="el-método-de-aceptación-rechazo.html#cb237-2" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Número medio de generaciones = &quot;</span>, ngen<span class="sc">/</span>nsim)</span>
+<span id="cb237-3"><a href="el-método-de-aceptación-rechazo.html#cb237-3" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Proporción de rechazos = &quot;</span>, <span class="dv">1</span><span class="sc">-</span>nsim<span class="sc">/</span>ngen, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)}</span></code></pre></div>
 <pre><code>## Número de generaciones =  1522
 ## Número medio de generaciones =  1.522
 ## Proporción de rechazos =  0.34297</code></pre>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="el-método-de-aceptación-rechazo.html#cb239-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Valores teóricos:</span></span>
-<span id="cb239-2"><a href="el-método-de-aceptación-rechazo.html#cb239-2" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">2</span></span>
-<span id="cb239-3"><a href="el-método-de-aceptación-rechazo.html#cb239-3" aria-hidden="true" tabindex="-1"></a>c</span></code></pre></div>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="el-método-de-aceptación-rechazo.html#cb239-1" tabindex="-1"></a><span class="co"># Valores teóricos:</span></span>
+<span id="cb239-2"><a href="el-método-de-aceptación-rechazo.html#cb239-2" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb239-3"><a href="el-método-de-aceptación-rechazo.html#cb239-3" tabindex="-1"></a>c</span></code></pre></div>
 <pre><code>## [1] 1.5</code></pre>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="el-método-de-aceptación-rechazo.html#cb241-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span>c</span></code></pre></div>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="el-método-de-aceptación-rechazo.html#cb241-1" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span>c</span></code></pre></div>
 <pre><code>## [1] 0.33333</code></pre>
 <p>Si queremos representar gráficamente la distribución de los valores generados
 para compararla con la densidad objetivo, como esta presenta discontinuidades
 en los extremos del intervalo <span class="math inline">\([-1, 1] \times [-1, 1]\)</span>, puede resultar de interés
 las funciones <code>ks::histde</code> o <code>ks::kde.boundary()</code> (para obtener una estimación
 no paramétrica de la densidad con soporte acotado):</p>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="el-método-de-aceptación-rechazo.html#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ks)</span>
-<span id="cb243-2"><a href="el-método-de-aceptación-rechazo.html#cb243-2" aria-hidden="true" tabindex="-1"></a><span class="co"># hist2d &lt;- histde(x, xmin = c(-1, -1), xmax = c(1, 1))  </span></span>
-<span id="cb243-3"><a href="el-método-de-aceptación-rechazo.html#cb243-3" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(hist2d)</span></span>
-<span id="cb243-4"><a href="el-método-de-aceptación-rechazo.html#cb243-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Cuidado: puede requerir de bastante tiempo de computación</span></span>
-<span id="cb243-5"><a href="el-método-de-aceptación-rechazo.html#cb243-5" aria-hidden="true" tabindex="-1"></a>fhat <span class="ot">&lt;-</span> <span class="fu">kde.boundary</span>(x, <span class="at">xmin =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="at">xmax =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">boundary.kernel =</span> <span class="st">&quot;linear&quot;</span>)  </span>
-<span id="cb243-6"><a href="el-método-de-aceptación-rechazo.html#cb243-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fhat, <span class="at">display =</span> <span class="st">&quot;persp&quot;</span>)</span></code></pre></div>
-<p><img src="06-Simulacion_multidimensional_files/figure-html/unnamed-chunk-7-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="el-método-de-aceptación-rechazo.html#cb243-1" tabindex="-1"></a><span class="fu">library</span>(ks)</span>
+<span id="cb243-2"><a href="el-método-de-aceptación-rechazo.html#cb243-2" tabindex="-1"></a><span class="co"># hist2d &lt;- histde(x, xmin = c(-1, -1), xmax = c(1, 1))  </span></span>
+<span id="cb243-3"><a href="el-método-de-aceptación-rechazo.html#cb243-3" tabindex="-1"></a><span class="co"># plot(hist2d)</span></span>
+<span id="cb243-4"><a href="el-método-de-aceptación-rechazo.html#cb243-4" tabindex="-1"></a><span class="co"># Cuidado: puede requerir de bastante tiempo de computación</span></span>
+<span id="cb243-5"><a href="el-método-de-aceptación-rechazo.html#cb243-5" tabindex="-1"></a>fhat <span class="ot">&lt;-</span> <span class="fu">kde.boundary</span>(x, <span class="at">xmin =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="at">xmax =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">boundary.kernel =</span> <span class="st">&quot;linear&quot;</span>)  </span>
+<span id="cb243-6"><a href="el-método-de-aceptación-rechazo.html#cb243-6" tabindex="-1"></a><span class="fu">plot</span>(fhat, <span class="at">display =</span> <span class="st">&quot;persp&quot;</span>)</span></code></pre></div>
+<p><img src="06-Simulacion_multidimensional_files/figure-html/unnamed-chunk-7-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
 </div>
 <div class="exercise">
 <p><span id="exr:ar-bidim-r" class="exercise"><strong>Ejercicio 6.1  (distribución bidimensional acotada) </strong></span><br></p>
@@ -606,7 +607,7 @@ verifica <span class="math inline">\(V_d\left( r\right) = r^d V_d (1)\)</span>),
 \end{array} \right.\]</span></p>
 <p>Para simular valores en <span class="math inline">\(\mathbb{R}^d\)</span>, con densidad <span class="math inline">\(f\)</span>,
 podemos utilizar como distribución auxiliar una
-<span class="math inline">\(\mathcal{U}\left( [-1, 1] \times [-1, 1] \times \overset{\text{d}}{\cdots} \times [-1, 1] \right) = \mathcal{U}\left( [-1, 1]^d\right)\)</span>, dada por:
+<span class="math inline">\(\mathcal{U}\left( [-1, 1]  \times [-1, 1] \times \overset{\text{d}}{\cdots} \times [-1, 1] \right) = \mathcal{U}\left( [-1, 1]^d\right)\)</span>, dada por:
 <span class="math display">\[g\left( x_1,x_2,\ldots,x_d\right) = \left\{
 \begin{array}{ll}
 \frac{1}{2^d} &amp; \text{si } x_i \in [-1, 1], \text{ para todo }
@@ -641,18 +642,18 @@ Dado que <span class="math inline">\(U &gt; 0\)</span> (con probabilidad <span c
 \end{array}\right.\]</span>
 puede verse que el número medio de iteraciones del algoritmo, dado por la constante <span class="math inline">\(c = \frac{2^d}{V_d (1)}\)</span>, puede llegar a ser enormemente grande.
 Así, si <span class="math inline">\(d=2\)</span> se tiene <span class="math inline">\(c=1.27\)</span>, si <span class="math inline">\(d=3\)</span> se tiene <span class="math inline">\(c=1.91\)</span>, si <span class="math inline">\(d=4\)</span> entonces <span class="math inline">\(c=3.24\)</span> y para <span class="math inline">\(d=10\)</span> resulta <span class="math inline">\(c=401.5\)</span> que es un valor que hace que el algoritmo sea tremendamente lento en dimensión <span class="math inline">\(10\)</span>.</p>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="el-método-de-aceptación-rechazo.html#cb244-1" aria-hidden="true" tabindex="-1"></a>vball <span class="ot">&lt;-</span> <span class="cf">function</span>(d, r) pi<span class="sc">^</span>(d<span class="sc">/</span><span class="dv">2</span>) <span class="sc">*</span> r<span class="sc">^</span>d <span class="sc">/</span> <span class="fu">gamma</span>(d<span class="sc">/</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span>)</span>
-<span id="cb244-2"><a href="el-método-de-aceptación-rechazo.html#cb244-2" aria-hidden="true" tabindex="-1"></a>c.opt <span class="ot">&lt;-</span> <span class="cf">function</span>(d) <span class="dv">2</span><span class="sc">^</span>d <span class="sc">/</span> <span class="fu">vball</span>(d, <span class="dv">1</span>)</span>
-<span id="cb244-3"><a href="el-método-de-aceptación-rechazo.html#cb244-3" aria-hidden="true" tabindex="-1"></a><span class="fu">c.opt</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="el-método-de-aceptación-rechazo.html#cb244-1" tabindex="-1"></a>vball <span class="ot">&lt;-</span> <span class="cf">function</span>(d, r) pi<span class="sc">^</span>(d<span class="sc">/</span><span class="dv">2</span>) <span class="sc">*</span> r<span class="sc">^</span>d <span class="sc">/</span> <span class="fu">gamma</span>(d<span class="sc">/</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb244-2"><a href="el-método-de-aceptación-rechazo.html#cb244-2" tabindex="-1"></a>c.opt <span class="ot">&lt;-</span> <span class="cf">function</span>(d) <span class="dv">2</span><span class="sc">^</span>d <span class="sc">/</span> <span class="fu">vball</span>(d, <span class="dv">1</span>)</span>
+<span id="cb244-3"><a href="el-método-de-aceptación-rechazo.html#cb244-3" tabindex="-1"></a><span class="fu">c.opt</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## [1]   1.2732   1.9099   3.2423   6.0793  12.3846  27.0913  63.0742
 ## [8] 155.2217 401.5428</code></pre>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="el-método-de-aceptación-rechazo.html#cb246-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(c.opt, <span class="dv">2</span>, <span class="dv">12</span>, <span class="at">xlab =</span> <span class="st">&quot;d&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;c&quot;</span>)</span></code></pre></div>
-<p><img src="06-Simulacion_multidimensional_files/figure-html/unnamed-chunk-8-1.png" width="75%" style="display: block; margin: auto;" /></p>
-<p>Esto está relacionado con la <em>maldición de la dimensionalidad</em> (curse of dimensionality), a medida que aumenta el número de dimensiones el volumen de la “frontera” crece exponencialmente <span class="citation">(ver p.e. <a href="#ref-mpaebook2024" role="doc-biblioref">Fernández-Casal et al., 2024, pp. sec. 1.4</a>)</span>.</p>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="el-método-de-aceptación-rechazo.html#cb246-1" tabindex="-1"></a><span class="fu">curve</span>(c.opt, <span class="dv">2</span>, <span class="dv">12</span>, <span class="at">xlab =</span> <span class="st">&quot;d&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;c&quot;</span>)</span></code></pre></div>
+<p><img src="06-Simulacion_multidimensional_files/figure-html/unnamed-chunk-8-1.png" alt="" width="75%" style="display: block; margin: auto;" /></p>
+<p>Esto está relacionado con la <em>maldición de la dimensionalidad</em> (curse of dimensionality), a medida que aumenta el número de dimensiones el volumen de la “frontera” crece exponencialmente <span class="citation">(ver p.e. <a href="#ref-mpaebook2024">Fernández-Casal et al., 2024, pp. sec. 1.4</a>)</span>.</p>
 </div>
 </div>
 <h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
 <div id="ref-mpaebook2024" class="csl-entry">
 Fernández-Casal, R., Costa, J., y Oviedo, M. (2024). <em>Métodos predictivos de aprendizaje estadístico</em>. Servizo de Publicacións. Universidade da Coruña. <a href="https://doi.org/10.17979/spudc.9788497498937">https://doi.org/10.17979/spudc.9788497498937</a>
 </div>

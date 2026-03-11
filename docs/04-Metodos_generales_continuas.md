@@ -117,7 +117,7 @@ tiempo
 
 ```
  ##    user  system elapsed 
- ##    0.01    0.00    0.02
+ ##       0       0       0
 ```
 
 Representamos la distribución de los valores generados y la comparamos con la densidad teórica:
@@ -238,7 +238,7 @@ system.time(x <- rdexpn(10^4, 2))
 
 ```
  ##    user  system elapsed 
- ##    0.00    0.01    0.01
+ ##    0.02    0.00    0.01
 ```
 
 Podemos representar la distribución de los valores generados, comparándola con la densidad teórica:
@@ -714,7 +714,7 @@ system.time(x <- rnormARn(nsim))
 
 ```
  ##    user  system elapsed 
- ##    0.06    0.00    0.06
+ ##    0.06    0.00    0.07
 ```
 
 Evaluamos la eficiencia:
@@ -1079,8 +1079,9 @@ En el tiempo de computación del algoritmo de aceptación-rechazo influye:
 * El tiempo necesario para hacer la comparación en el paso 3.
 
 En ciertos casos el tiempo de computación necesario para evaluar $f(x)$ puede ser alto.
-Para evitar evaluaciones de la densidad se puede emplear una función "squeeze" que aproxime la densidad por abajo (una envolvente inferior):
-$$s(x)\leq f(x) \text{, }\forall x\in \mathbb{R}.$$
+Para evitar evaluaciones de la densidad objetivo se puede emplear una función "squeeze" que aproxime la densidad por abajo (una envolvente inferior; ver Figura \@ref(fig:squeeze)):
+$$s(x)\leq f(x) \text{, }\forall x\in \mathbb{R},$$
+dando lugar al algoritmo:
 
 ::: {.conjecture #marsaglia name="Marsaglia, 1977"}
 <br>
@@ -1105,7 +1106,7 @@ $$s(x)\leq f(x) \text{, }\forall x\in \mathbb{R}.$$
 
 }
 
-\caption{Ilustración del algoritmo de aceptación-rechazo con envolvente inferior (función "squeeze").}(\#fig:squeeze)
+\caption{Ilustración del algoritmo de aceptación-rechazo con envolvente inferior.}(\#fig:squeeze)
 \end{figure}
 
 Cuanto mayor sea el área bajo $s(x)$ (más próxima a 1)
@@ -1234,7 +1235,7 @@ simres::rcauchy.rou
  ##   attr(x, "ngen") <- ngen
  ##   return(x)
  ## }
- ## <bytecode: 0x000002178a9cbb28>
+ ## <bytecode: 0x0000019eecf52c08>
  ## <environment: namespace:simres>
 ```
 

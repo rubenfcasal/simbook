@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6.6 Simulación basada en cópulas | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6.6 Simulación basada en cópulas | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -57,7 +57,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -67,7 +67,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -129,6 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -454,7 +455,7 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="simulación-basada-en-cópulas" class="section level2 hasAnchor" number="6.6">
 <h2><span class="header-section-number">6.6</span> Simulación basada en cópulas<a href="simulación-basada-en-cópulas.html#simulación-basada-en-cópulas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Una cópula es una función de distribución multidimensional con distribuciones marginales uniformes <span class="citation">(<a href="#ref-hofert2018" role="doc-biblioref">Hofert et al., 2018</a>; e.g. <a href="#ref-nelsen2006" role="doc-biblioref">Nelsen, 2006</a>)</span>.
+<p>Una cópula es una función de distribución multidimensional con distribuciones marginales uniformes <span class="citation">(<a href="#ref-hofert2018">Hofert et al., 2018</a>; e.g. <a href="#ref-nelsen2006">Nelsen, 2006</a>)</span>.
 Se emplean principalmente para la construcción de distribuciones multivariantes a partir de distribuciones marginales (también en análisis de dependencia y medidas de asociación).
 La idea es que la estructura de dependencia no depende de las distribuciones marginales.</p>
 <p>Por simplicidad nos centraremos en el caso bidimensional.
@@ -491,7 +492,7 @@ siendo <span class="math inline">\(\Psi\)</span> su función generadora.</p>
 <p>Las cópulas pueden facilitar notablemente la simulación de la distribución conjunta.
 Si <span class="math inline">\((U,V)\sim C(\cdot,\cdot)\)</span> (marginales uniformes):
 <span class="math display">\[\left( F_1^{-1}(U),F_2^{-1}(V)\right)  \sim F(\cdot,\cdot)\]</span></p>
-<p>En la mayoría de los casos se dispone de expresiones explicitas de <span class="math inline">\(C_{u}(v)\equiv C_2\left( \left. v\right \vert u\right)\)</span> y de su inversa <span class="math inline">\(C_{u}^{-1}(w)\)</span>, por lo que se puede generar <span class="math inline">\((U,V)\)</span> fácilmente mediante el método secuencial de distribuciones condicionadas descrito en la Sección <a href="distrcond.html#distrcond">6.4</a>.</p>
+<p>En la mayoría de los casos se dispone de expresiones explicitas de <span class="math inline">\(C_{u}(v)\equiv C_2\left( \left.  v\right \vert u\right)\)</span> y de su inversa <span class="math inline">\(C_{u}^{-1}(w)\)</span>, por lo que se puede generar <span class="math inline">\((U,V)\)</span> fácilmente mediante el método secuencial de distribuciones condicionadas descrito en la Sección <a href="distrcond.html#distrcond">6.4</a>.</p>
 <div class="conjecture">
 <p><span id="cnj:copula-bidim" class="conjecture"><strong>Algoritmo 6.6  (de simulación bidimensional mediante cópulas) </strong></span><br></p>
 <ol style="list-style-type: decimal">
@@ -507,16 +508,16 @@ Si <span class="math inline">\((U,V)\sim C(\cdot,\cdot)\)</span> (marginales uni
 <span class="math display">\[C_{u}^{-1}(w)\equiv\left(  u^{-\alpha}\left(  
 w^{-\frac{\alpha}{\alpha+1}}-1\right) + 1 \right)^{-\frac{1}{\alpha}},\]</span>
 la siguiente función permitiría generar una muestra de tamaño <span class="math inline">\(n\)</span> de esta distribución:</p>
-<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="simulación-basada-en-cópulas.html#cb278-1" aria-hidden="true" tabindex="-1"></a>rcclayton <span class="ot">&lt;-</span> <span class="cf">function</span>(alpha, n) {</span>
-<span id="cb278-2"><a href="simulación-basada-en-cópulas.html#cb278-2" aria-hidden="true" tabindex="-1"></a>  val <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">runif</span>(n), <span class="fu">runif</span>(n))</span>
-<span id="cb278-3"><a href="simulación-basada-en-cópulas.html#cb278-3" aria-hidden="true" tabindex="-1"></a>  val[, <span class="dv">2</span>] <span class="ot">&lt;-</span> (val[, <span class="dv">1</span>]<span class="sc">^</span>(<span class="sc">-</span>alpha) <span class="sc">*</span> </span>
-<span id="cb278-4"><a href="simulación-basada-en-cópulas.html#cb278-4" aria-hidden="true" tabindex="-1"></a>              (val[, <span class="dv">2</span>]<span class="sc">^</span>(<span class="sc">-</span>alpha<span class="sc">/</span>(alpha <span class="sc">+</span> <span class="dv">1</span>)) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">^</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span>alpha)</span>
-<span id="cb278-5"><a href="simulación-basada-en-cópulas.html#cb278-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(val)</span>
-<span id="cb278-6"><a href="simulación-basada-en-cópulas.html#cb278-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="simulación-basada-en-cópulas.html#cb278-1" tabindex="-1"></a>rcclayton <span class="ot">&lt;-</span> <span class="cf">function</span>(alpha, n) {</span>
+<span id="cb278-2"><a href="simulación-basada-en-cópulas.html#cb278-2" tabindex="-1"></a>  val <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">runif</span>(n), <span class="fu">runif</span>(n))</span>
+<span id="cb278-3"><a href="simulación-basada-en-cópulas.html#cb278-3" tabindex="-1"></a>  val[, <span class="dv">2</span>] <span class="ot">&lt;-</span> (val[, <span class="dv">1</span>]<span class="sc">^</span>(<span class="sc">-</span>alpha) <span class="sc">*</span> </span>
+<span id="cb278-4"><a href="simulación-basada-en-cópulas.html#cb278-4" tabindex="-1"></a>              (val[, <span class="dv">2</span>]<span class="sc">^</span>(<span class="sc">-</span>alpha<span class="sc">/</span>(alpha <span class="sc">+</span> <span class="dv">1</span>)) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">^</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span>alpha)</span>
+<span id="cb278-5"><a href="simulación-basada-en-cópulas.html#cb278-5" tabindex="-1"></a>  <span class="fu">return</span>(val)</span>
+<span id="cb278-6"><a href="simulación-basada-en-cópulas.html#cb278-6" tabindex="-1"></a>}</span></code></pre></div>
 <p>Utilizando esta función generamos una muestra de tamaño 10000 y representamos gráficamente los valores obtenidos:</p>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="simulación-basada-en-cópulas.html#cb279-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
-<span id="cb279-2"><a href="simulación-basada-en-cópulas.html#cb279-2" aria-hidden="true" tabindex="-1"></a>rcunif <span class="ot">&lt;-</span> <span class="fu">rcclayton</span>(<span class="dv">2</span>, <span class="dv">10000</span>)</span>
-<span id="cb279-3"><a href="simulación-basada-en-cópulas.html#cb279-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rcunif, <span class="at">xlab =</span> <span class="st">&quot;u&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;v&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="simulación-basada-en-cópulas.html#cb279-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
+<span id="cb279-2"><a href="simulación-basada-en-cópulas.html#cb279-2" tabindex="-1"></a>rcunif <span class="ot">&lt;-</span> <span class="fu">rcclayton</span>(<span class="dv">2</span>, <span class="dv">10000</span>)</span>
+<span id="cb279-3"><a href="simulación-basada-en-cópulas.html#cb279-3" tabindex="-1"></a><span class="fu">plot</span>(rcunif, <span class="at">xlab =</span> <span class="st">&quot;u&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;v&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:cclayton2-dispersion"></span>
 <img src="06-Simulacion_multidimensional_files/figure-html/cclayton2-dispersion-1.png" alt="Gráfico de dispersión de los valores generados con distribución bidimensional de Clayton." width="75%" />
 <p class="caption">
@@ -524,8 +525,8 @@ Figura 6.9: Gráfico de dispersión de los valores generados con distribución b
 </p>
 </div>
 <p>Podemos representar la densidad conjunta (con <code>sm::sm.density()</code>):</p>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="simulación-basada-en-cópulas.html#cb280-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if(!require(sm)) stop(&#39;Required package `sm` not installed.&#39;)</span></span>
-<span id="cb280-2"><a href="simulación-basada-en-cópulas.html#cb280-2" aria-hidden="true" tabindex="-1"></a>sm<span class="sc">::</span><span class="fu">sm.density</span>(rcunif, <span class="at">xlab =</span> <span class="st">&quot;u&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;v&quot;</span>, <span class="at">zlab =</span> <span class="st">&quot;Density&quot;</span>)    </span></code></pre></div>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="simulación-basada-en-cópulas.html#cb280-1" tabindex="-1"></a><span class="co"># if(!require(sm)) stop(&#39;Required package `sm` not installed.&#39;)</span></span>
+<span id="cb280-2"><a href="simulación-basada-en-cópulas.html#cb280-2" tabindex="-1"></a>sm<span class="sc">::</span><span class="fu">sm.density</span>(rcunif, <span class="at">xlab =</span> <span class="st">&quot;u&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;v&quot;</span>, <span class="at">zlab =</span> <span class="st">&quot;Density&quot;</span>)    </span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:cclayton2-conjunta"></span>
 <img src="06-Simulacion_multidimensional_files/figure-html/cclayton2-conjunta-1.png" alt="Densidad conjunta de los valores generados con distribución bidimensional de Clayton" width="75%" />
 <p class="caption">
@@ -533,23 +534,23 @@ Figura 6.10: Densidad conjunta de los valores generados con distribución bidime
 </p>
 </div>
 <p>y las distribuciones marginales:</p>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="simulación-basada-en-cópulas.html#cb281-1" aria-hidden="true" tabindex="-1"></a>par.old <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb281-2"><a href="simulación-basada-en-cópulas.html#cb281-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(rcunif[,<span class="dv">1</span>], <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">xlab =</span> <span class="st">&quot;u&quot;</span>)</span>
-<span id="cb281-3"><a href="simulación-basada-en-cópulas.html#cb281-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span>)</span>
-<span id="cb281-4"><a href="simulación-basada-en-cópulas.html#cb281-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(rcunif[,<span class="dv">2</span>], <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">xlab =</span> <span class="st">&quot;v&quot;</span>)</span>
-<span id="cb281-5"><a href="simulación-basada-en-cópulas.html#cb281-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="simulación-basada-en-cópulas.html#cb281-1" tabindex="-1"></a>par.old <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb281-2"><a href="simulación-basada-en-cópulas.html#cb281-2" tabindex="-1"></a><span class="fu">hist</span>(rcunif[,<span class="dv">1</span>], <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">xlab =</span> <span class="st">&quot;u&quot;</span>)</span>
+<span id="cb281-3"><a href="simulación-basada-en-cópulas.html#cb281-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span>)</span>
+<span id="cb281-4"><a href="simulación-basada-en-cópulas.html#cb281-4" tabindex="-1"></a><span class="fu">hist</span>(rcunif[,<span class="dv">2</span>], <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">xlab =</span> <span class="st">&quot;v&quot;</span>)</span>
+<span id="cb281-5"><a href="simulación-basada-en-cópulas.html#cb281-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:cclayton2-marginales"></span>
 <img src="06-Simulacion_multidimensional_files/figure-html/cclayton2-marginales-1.png" alt="Distribuciones marginales de los valores generados con distribución bidimensional de Clayton." width="90%" />
 <p class="caption">
 Figura 6.11: Distribuciones marginales de los valores generados con distribución bidimensional de Clayton.
 </p>
 </div>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="simulación-basada-en-cópulas.html#cb282-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(par.old)</span></code></pre></div>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="simulación-basada-en-cópulas.html#cb282-1" tabindex="-1"></a><span class="fu">par</span>(par.old)</span></code></pre></div>
 <p>Empleando el paquete <em>copula</em> :</p>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="simulación-basada-en-cópulas.html#cb283-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(copula)) <span class="fu">stop</span>(<span class="st">&#39;Required pakage `copula` not installed.&#39;</span>)</span>
-<span id="cb283-2"><a href="simulación-basada-en-cópulas.html#cb283-2" aria-hidden="true" tabindex="-1"></a>clayton.cop <span class="ot">&lt;-</span> <span class="fu">claytonCopula</span>(<span class="dv">2</span>, <span class="at">dim =</span> <span class="dv">2</span>) <span class="co"># caso bidimensional</span></span>
-<span id="cb283-3"><a href="simulación-basada-en-cópulas.html#cb283-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rCopula</span>(<span class="dv">10000</span>, clayton.cop)</span>
-<span id="cb283-4"><a href="simulación-basada-en-cópulas.html#cb283-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y, <span class="at">xlab =</span> <span class="st">&quot;u&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;v&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="simulación-basada-en-cópulas.html#cb283-1" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(copula)) <span class="fu">stop</span>(<span class="st">&#39;Required pakage `copula` not installed.&#39;</span>)</span>
+<span id="cb283-2"><a href="simulación-basada-en-cópulas.html#cb283-2" tabindex="-1"></a>clayton.cop <span class="ot">&lt;-</span> <span class="fu">claytonCopula</span>(<span class="dv">2</span>, <span class="at">dim =</span> <span class="dv">2</span>) <span class="co"># caso bidimensional</span></span>
+<span id="cb283-3"><a href="simulación-basada-en-cópulas.html#cb283-3" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rCopula</span>(<span class="dv">10000</span>, clayton.cop)</span>
+<span id="cb283-4"><a href="simulación-basada-en-cópulas.html#cb283-4" tabindex="-1"></a><span class="fu">plot</span>(y, <span class="at">xlab =</span> <span class="st">&quot;u&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;v&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:cclayton2b-dispersion"></span>
 <img src="06-Simulacion_multidimensional_files/figure-html/cclayton2b-dispersion-1.png" alt="Gráfico de dispersión de los valores generados con distribución bidimensional de Clayton empleando el paquete `copula`." width="75%" />
 <p class="caption">
@@ -557,11 +558,11 @@ Figura 6.12: Gráfico de dispersión de los valores generados con distribución 
 </p>
 </div>
 
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="simulación-basada-en-cópulas.html#cb284-1" aria-hidden="true" tabindex="-1"></a>clayton.cop <span class="ot">&lt;-</span> <span class="fu">claytonCopula</span>(<span class="dv">2</span>, <span class="at">dim =</span> <span class="dv">3</span>) <span class="co"># caso tridimensional</span></span>
-<span id="cb284-2"><a href="simulación-basada-en-cópulas.html#cb284-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rCopula</span>(<span class="dv">10000</span>, clayton.cop)</span>
-<span id="cb284-3"><a href="simulación-basada-en-cópulas.html#cb284-3" aria-hidden="true" tabindex="-1"></a><span class="co"># scatterplot3d::scatterplot3d(y)</span></span>
-<span id="cb284-4"><a href="simulación-basada-en-cópulas.html#cb284-4" aria-hidden="true" tabindex="-1"></a>plot3D<span class="sc">:::</span><span class="fu">points3D</span>(y[,<span class="dv">1</span>], y[,<span class="dv">2</span>], y[, <span class="dv">3</span>], <span class="at">colvar =</span> <span class="cn">NULL</span>, </span>
-<span id="cb284-5"><a href="simulación-basada-en-cópulas.html#cb284-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">xlab =</span> <span class="st">&quot;u1&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;u2&quot;</span>, <span class="at">zlab =</span> <span class="st">&quot;u3&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="simulación-basada-en-cópulas.html#cb284-1" tabindex="-1"></a>clayton.cop <span class="ot">&lt;-</span> <span class="fu">claytonCopula</span>(<span class="dv">2</span>, <span class="at">dim =</span> <span class="dv">3</span>) <span class="co"># caso tridimensional</span></span>
+<span id="cb284-2"><a href="simulación-basada-en-cópulas.html#cb284-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rCopula</span>(<span class="dv">10000</span>, clayton.cop)</span>
+<span id="cb284-3"><a href="simulación-basada-en-cópulas.html#cb284-3" tabindex="-1"></a><span class="co"># scatterplot3d::scatterplot3d(y)</span></span>
+<span id="cb284-4"><a href="simulación-basada-en-cópulas.html#cb284-4" tabindex="-1"></a>plot3D<span class="sc">:::</span><span class="fu">points3D</span>(y[,<span class="dv">1</span>], y[,<span class="dv">2</span>], y[, <span class="dv">3</span>], <span class="at">colvar =</span> <span class="cn">NULL</span>, </span>
+<span id="cb284-5"><a href="simulación-basada-en-cópulas.html#cb284-5" tabindex="-1"></a>                  <span class="at">xlab =</span> <span class="st">&quot;u1&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;u2&quot;</span>, <span class="at">zlab =</span> <span class="st">&quot;u3&quot;</span>) </span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:cclayton3-dispersion"></span>
 <img src="06-Simulacion_multidimensional_files/figure-html/cclayton3-dispersion-1.png" alt="Gráfico de dispersión de los valores generados con distribución trididimensional de Clayton empleando el paquete copula." width="75%" />
 <p class="caption">
@@ -569,32 +570,32 @@ Figura 6.13: Gráfico de dispersión de los valores generados con distribución 
 </p>
 </div>
 <p>Por ejemplo, podemos generar una muestra de una variable aleatoria bidimensional con distribuciones marginales exponenciales de parámetros 1 y 2, respectivamente (y distribución bidimensional determinada por la cópula de Clayton), transformando la muestra anterior:</p>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="simulación-basada-en-cópulas.html#cb285-1" aria-hidden="true" tabindex="-1"></a>rcexp <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">qexp</span>(rcunif[,<span class="dv">1</span>], <span class="dv">1</span>), <span class="fu">qexp</span>(rcunif[,<span class="dv">2</span>], <span class="dv">2</span>))</span>
-<span id="cb285-2"><a href="simulación-basada-en-cópulas.html#cb285-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rcexp, <span class="at">xlab =</span> <span class="st">&quot;exp1&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;exp2&quot;</span>)  </span></code></pre></div>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="simulación-basada-en-cópulas.html#cb285-1" tabindex="-1"></a>rcexp <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">qexp</span>(rcunif[,<span class="dv">1</span>], <span class="dv">1</span>), <span class="fu">qexp</span>(rcunif[,<span class="dv">2</span>], <span class="dv">2</span>))</span>
+<span id="cb285-2"><a href="simulación-basada-en-cópulas.html#cb285-2" tabindex="-1"></a><span class="fu">plot</span>(rcexp, <span class="at">xlab =</span> <span class="st">&quot;exp1&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;exp2&quot;</span>)  </span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:cclayton-exp-conjunta"></span>
 <img src="06-Simulacion_multidimensional_files/figure-html/cclayton-exp-conjunta-1.png" alt="Gráfico de dispersión de los valores generados con distribución exponencial y dependencia definida por la cópula de Clayton." width="75%" />
 <p class="caption">
 Figura 6.14: Gráfico de dispersión de los valores generados con distribución exponencial y dependencia definida por la cópula de Clayton.
 </p>
 </div>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="simulación-basada-en-cópulas.html#cb286-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribuciones marginales</span></span>
-<span id="cb286-2"><a href="simulación-basada-en-cópulas.html#cb286-2" aria-hidden="true" tabindex="-1"></a>par.old <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb286-3"><a href="simulación-basada-en-cópulas.html#cb286-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(rcexp[,<span class="dv">1</span>], <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">xlab =</span> <span class="st">&quot;exp1&quot;</span>)</span>
-<span id="cb286-4"><a href="simulación-basada-en-cópulas.html#cb286-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dexp</span>(x, <span class="dv">1</span>), <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb286-5"><a href="simulación-basada-en-cópulas.html#cb286-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(rcexp[,<span class="dv">2</span>], <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">xlab =</span> <span class="st">&quot;exp2&quot;</span>)</span>
-<span id="cb286-6"><a href="simulación-basada-en-cópulas.html#cb286-6" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dexp</span>(x, <span class="dv">2</span>), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="simulación-basada-en-cópulas.html#cb286-1" tabindex="-1"></a><span class="co"># Distribuciones marginales</span></span>
+<span id="cb286-2"><a href="simulación-basada-en-cópulas.html#cb286-2" tabindex="-1"></a>par.old <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb286-3"><a href="simulación-basada-en-cópulas.html#cb286-3" tabindex="-1"></a><span class="fu">hist</span>(rcexp[,<span class="dv">1</span>], <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">xlab =</span> <span class="st">&quot;exp1&quot;</span>)</span>
+<span id="cb286-4"><a href="simulación-basada-en-cópulas.html#cb286-4" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dexp</span>(x, <span class="dv">1</span>), <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb286-5"><a href="simulación-basada-en-cópulas.html#cb286-5" tabindex="-1"></a><span class="fu">hist</span>(rcexp[,<span class="dv">2</span>], <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">xlab =</span> <span class="st">&quot;exp2&quot;</span>)</span>
+<span id="cb286-6"><a href="simulación-basada-en-cópulas.html#cb286-6" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dexp</span>(x, <span class="dv">2</span>), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:cclayton-exp-marginales"></span>
 <img src="06-Simulacion_multidimensional_files/figure-html/cclayton-exp-marginales-1.png" alt="Distribuciones marginales exponenciales de los valores generados con dependencia definida por la cópula de Clayton." width="90%" />
 <p class="caption">
 Figura 6.15: Distribuciones marginales exponenciales de los valores generados con dependencia definida por la cópula de Clayton.
 </p>
 </div>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="simulación-basada-en-cópulas.html#cb287-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(par.old)</span></code></pre></div>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="simulación-basada-en-cópulas.html#cb287-1" tabindex="-1"></a><span class="fu">par</span>(par.old)</span></code></pre></div>
 </div>
 </div>
 </div>
 <h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
 <div id="ref-hofert2018" class="csl-entry">
 Hofert, M., Kojadinovic, I., Mächler, M., y Yan, J. (2018). <em>Elements of Copula Modeling with R</em>. Springer. <a href="https://doi.org/10.1007/978-3-319-89635-9">https://doi.org/10.1007/978-3-319-89635-9</a>
 </div>

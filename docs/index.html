@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -57,7 +57,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -67,7 +67,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -129,6 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -457,7 +458,7 @@ div.csl-indent {
 <p class="author"><em>Rubén Fernández Casal (<a href="mailto:ruben.fcasal@udc.es" class="email">ruben.fcasal@udc.es</a>)</em></p>
 <p class="author"><em>Ricardo Cao (<a href="mailto:rcao@udc.es" class="email">rcao@udc.es</a>)</em></p>
 <p class="author"><em>Julián Costa (<a href="mailto:julian.costa@udc.es" class="email">julian.costa@udc.es</a>)</em></p>
-<p class="date"><em>Edición: Enero de 2023. Impresión: 2026-03-06</em></p>
+<p class="date"><em>Edición: Enero de 2023. Impresión: 2026-03-11</em></p>
 </div>
 <div id="prólogo" class="section level1 unnumbered hasAnchor">
 <h1>Prólogo<a href="index.html#prólogo" class="anchor-section" aria-label="Anchor link to header"></a></h1>
@@ -472,23 +473,23 @@ Este libro es una “segunda edición”, la anterior (Fernández-Casal R. y Cao
 <p><a href="https://rubenfcasal.github.io/simbook/index.html" class="uri">https://rubenfcasal.github.io/simbook/index.html</a>.</p>
 <p>donde puede descargarse en formato <a href="https://rubenfcasal.github.io/simbook/Simulacion.pdf">pdf</a>.</p>
 <p>Para poder ejecutar los ejemplos mostrados en el libro es recomendable emplear el paquete <a href="https://rubenfcasal.github.io/simres"><code>simres</code></a>, <strong><em>no disponible actualmente en CRAN</em></strong>, aunque se puede instalar la versión de desarrollo en <a href="https://github.com/rubenfcasal/simres">GitHub</a>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;remotes&quot;)</span></span>
-<span id="cb1-2"><a href="index.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github(&quot;rubenfcasal/simres&quot;)</span></span>
-<span id="cb1-3"><a href="index.html#cb1-3" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;rubenfcasal/simres&quot;</span>, <span class="at">INSTALL_opts =</span> <span class="st">&quot;--with-keep.source&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" tabindex="-1"></a><span class="co"># install.packages(&quot;remotes&quot;)</span></span>
+<span id="cb1-2"><a href="index.html#cb1-2" tabindex="-1"></a><span class="co"># remotes::install_github(&quot;rubenfcasal/simres&quot;)</span></span>
+<span id="cb1-3"><a href="index.html#cb1-3" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;rubenfcasal/simres&quot;</span>, <span class="at">INSTALL_opts =</span> <span class="st">&quot;--with-keep.source&quot;</span>)</span></code></pre></div>
 <p>Alternativamente se pueden emplear los ficheros de la carpeta <em>codigo</em>.</p>
 <p>Para instalar los paquetes necesarios se puede emplear los siguientes comandos:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1" aria-hidden="true" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;tictoc&#39;</span>, <span class="st">&#39;boot&#39;</span>, <span class="st">&#39;randtoolbox&#39;</span>, <span class="st">&#39;MASS&#39;</span>, <span class="st">&#39;DEoptim&#39;</span>, <span class="st">&#39;nortest&#39;</span>, <span class="st">&#39;geoR&#39;</span>, <span class="st">&#39;copula&#39;</span>,</span>
-<span id="cb2-2"><a href="index.html#cb2-2" aria-hidden="true" tabindex="-1"></a>          <span class="st">&#39;sm&#39;</span>, <span class="st">&#39;car&#39;</span>, <span class="st">&#39;tseries&#39;</span>, <span class="st">&#39;forecast&#39;</span>, <span class="st">&#39;plot3D&#39;</span>, <span class="st">&#39;rgl&#39;</span>, <span class="st">&#39;rngWELL&#39;</span>, <span class="st">&#39;randtoolbox&#39;</span>)</span>
-<span id="cb2-3"><a href="index.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">setdiff</span>(pkgs, <span class="fu">installed.packages</span>()[,<span class="st">&quot;Package&quot;</span>]), </span>
-<span id="cb2-4"><a href="index.html#cb2-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-5"><a href="index.html#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="index.html#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Si aparecen errores debidos a incompatibilidades entre las versiones de los paquetes, </span></span>
-<span id="cb2-7"><a href="index.html#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># probar a ejecutar en lugar de lo anterior:</span></span>
-<span id="cb2-8"><a href="index.html#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(pkgs, dependencies = TRUE) # Instala todos...</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;tictoc&#39;</span>, <span class="st">&#39;boot&#39;</span>, <span class="st">&#39;randtoolbox&#39;</span>, <span class="st">&#39;MASS&#39;</span>, <span class="st">&#39;DEoptim&#39;</span>, <span class="st">&#39;nortest&#39;</span>, <span class="st">&#39;geoR&#39;</span>, <span class="st">&#39;copula&#39;</span>,</span>
+<span id="cb2-2"><a href="index.html#cb2-2" tabindex="-1"></a>          <span class="st">&#39;sm&#39;</span>, <span class="st">&#39;car&#39;</span>, <span class="st">&#39;tseries&#39;</span>, <span class="st">&#39;forecast&#39;</span>, <span class="st">&#39;plot3D&#39;</span>, <span class="st">&#39;rgl&#39;</span>, <span class="st">&#39;rngWELL&#39;</span>, <span class="st">&#39;randtoolbox&#39;</span>)</span>
+<span id="cb2-3"><a href="index.html#cb2-3" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">setdiff</span>(pkgs, <span class="fu">installed.packages</span>()[,<span class="st">&quot;Package&quot;</span>]), </span>
+<span id="cb2-4"><a href="index.html#cb2-4" tabindex="-1"></a>                 <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-5"><a href="index.html#cb2-5" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="index.html#cb2-6" tabindex="-1"></a><span class="co"># Si aparecen errores debidos a incompatibilidades entre las versiones de los paquetes, </span></span>
+<span id="cb2-7"><a href="index.html#cb2-7" tabindex="-1"></a><span class="co"># probar a ejecutar en lugar de lo anterior:</span></span>
+<span id="cb2-8"><a href="index.html#cb2-8" tabindex="-1"></a><span class="co"># install.packages(pkgs, dependencies = TRUE) # Instala todos...</span></span></code></pre></div>
 <p>Para generar el libro (compilar) serán necesarios paquetes adicionales,
 para lo que se recomendaría consultar el libro de <a href="https://rubenfcasal.github.io/bookdown_intro">“Escritura de libros con bookdown”</a> en castellano.</p>
 <p>En la Sección <a href="links.html#links">Enlaces</a> de las Referencias se incluyen recursos adicionales, incluyendo algunos que pueden ser útiles para el aprendizaje de R.</p>
-<p><img src="images/by-nc-nd-88x31.png" width="10%" style="display: block; margin: auto auto auto 0;" /></p>
+<p><img src="images/by-nc-nd-88x31.png" alt="" width="10%" style="display: block; margin: auto auto auto 0;" /></p>
 <p>Este obra está bajo una licencia de <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es_ES">Creative Commons Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional</a>
 (esperamos poder liberarlo bajo una licencia menos restrictiva más adelante…).</p>
 

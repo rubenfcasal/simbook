@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6.4 Método de las distribuciones condicionadas | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6.4 Método de las distribuciones condicionadas | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -57,7 +57,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -67,7 +67,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -129,6 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -474,7 +475,8 @@ x_1,x_2,\ldots,x_{i-1}\right)},\]</span></p>
 </div>
 <p><br>
 <strong>Nota</strong>: En las simulaciones unidimensionales se puede tener en cuenta que
-<span class="math inline">\(f_i\left( x_i|x_1,x_2,\ldots,x_{i-1}\right) \propto f_{1,\ldots,i}\left( x_1,x_2,\ldots,x_i\right)\)</span>.</p>
+<span class="math inline">\(f_i\left( x_i|x_1,x_2,\ldots,x_{i-1}\right)
+\propto f_{1,\ldots,i}\left( x_1,x_2,\ldots,x_i\right)\)</span>.</p>
 <div class="example">
 <p><span id="exm:unlabeled-div-15" class="example"><strong>Ejemplo 6.5  (distribución uniforme en el círculo unitario) </strong></span><br></p>
 <p>Se trata de la distribución bidimensional continua con densidad
@@ -505,9 +507,12 @@ Se tiene entonces que:
 siempre que <span class="math inline">\(X_1\in[-1, 1]\)</span>.</p>
 <p>Finalmente, el algoritmo resulta:</p>
 <ol style="list-style-type: decimal">
-<li><p>Simular <span class="math inline">\(X_1\)</span> con densidad <span class="math inline">\(f_1\left( x_1\right) = \frac{2}{\pi}\sqrt{1-x_1^2}1_{\{|x_1|\leq1\}}\)</span>.</p></li>
-<li><p>Simular <span class="math inline">\(X_2\)</span> con densidad <span class="math inline">\(\mathcal{U}\left( -\sqrt{1-X_1^2},\sqrt{1-X_1^2}\right)\)</span>.</p></li>
-<li><p>Devolver <span class="math inline">\(\mathbf{X}= \left( X_1,X_2\right) ^t\)</span>.</p></li>
+<li><p>Simular <span class="math inline">\(X_1\)</span> con densidad <span class="math inline">\(f_1\left(
+x_1\right) = \frac{2}{\pi}\sqrt{1-x_1^2}1_{\{|x_1|\leq1\}}\)</span>.</p></li>
+<li><p>Simular <span class="math inline">\(X_2\)</span> con densidad <span class="math inline">\(\mathcal{U}\left(
+-\sqrt{1-X_1^2},\sqrt{1-X_1^2}\right)\)</span>.</p></li>
+<li><p>Devolver <span class="math inline">\(\mathbf{X}= \left( X_1,X_2\right)
+^t\)</span>.</p></li>
 </ol>
 <p>Para el paso 1 puede utilizarse, por ejemplo, el método de
 aceptación-rechazo, pues se trata de una densidad acotada definida en un
@@ -534,7 +539,7 @@ f(x_1,x_2) &amp;= \frac{1}{2 \pi \sigma_1 \sigma_2 \sqrt{1-\rho^2}} \\
 &amp;\exp \left( -\frac{1}{2 (1-\rho^2)} \left( \frac{(x_1 - \mu_1)^2}{\sigma_1^2} + \frac{(x_2 - \mu_2)^2}{\sigma_2^2} - \frac{2 \rho (x_1 - \mu_1) (x_2 - \mu_2)}{ \sigma_1 \sigma_2} \right)
 \right)
 \end{aligned}\]</span></p>
-<p>de donde se deduce <span class="citation">(ver e.g. <a href="#ref-cao2002" role="doc-biblioref">Cao Abad, 2002, p. 88</a>)</span> que:</p>
+<p>de donde se deduce <span class="citation">(ver e.g. <a href="#ref-cao2002">Cao Abad, 2002, p. 88</a>)</span> que:</p>
 <p><span class="math display">\[f_1( x_1 ) = \frac{1}{\sigma_1\sqrt{2\pi}}
 \exp\left( -\frac{(x_1 - \mu_1)^{2}}{2\sigma_1^{2}}\right)\]</span></p>
 <p><span class="math display">\[\begin{aligned}
@@ -553,7 +558,8 @@ X_2 | X_1 &amp;\sim \mathcal{N} \left( \mu_2 + \frac{\sigma_2}{\sigma_1}\rho( X_
 <ol style="list-style-type: decimal">
 <li><p>Simular <span class="math inline">\(Z_1, Z_2 \sim \mathcal{N}\left( 0, 1 \right)\)</span> independientes.</p></li>
 <li><p>Hacer <span class="math inline">\(X_1 = \mu_1 + \sigma_1 Z_1\)</span>.</p></li>
-<li><p>Hacer <span class="math inline">\(X_2 = \mu_2 + \sigma_2 \rho Z_1 + \sigma_2 \sqrt{1-\rho^2} Z_2\)</span>.</p></li>
+<li><p>Hacer <span class="math inline">\(X_2 = \mu_2 + \sigma_2 \rho Z_1
++ \sigma_2  \sqrt{1-\rho^2} Z_2\)</span>.</p></li>
 </ol>
 </div>
 <p>Este algoritmo es el mismo que obtendríamos con la factorización de la matriz de covarianzas ya que <span class="math inline">\(\Sigma = L L^t\)</span> con:
@@ -575,7 +581,7 @@ Describir brevemente un algoritmo para la simulación del vector aleatorio basad
 </div>
 </div>
 <h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
 <div id="ref-cao2002" class="csl-entry">
 Cao Abad, R. (2002). <em>Introducci<span>ó</span>n a la Simulaci<span>ó</span>n y a la Teor<span>í</span>a de Colas</em>. Netbiblo. <a href="https://books.google.es/books?id=lET6IPBm2vMC">https://books.google.es/books?id=lET6IPBm2vMC</a>
 </div>

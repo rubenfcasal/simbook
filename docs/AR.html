@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4.2 Método de aceptación-rechazo | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4.2 Método de aceptación-rechazo | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -57,7 +57,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -67,7 +67,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -129,6 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -481,12 +482,14 @@ y <span class="math inline">\(U \sim \mathcal{U}(0, 1)\)</span> entonces
 <span class="math display">\[\left( T,c\cdot U\cdot g(T) \right) \sim \mathcal{U}\left(
 A_{cg}\right)\]</span>
 siendo
-<span class="math inline">\(A_{cg}=\left\{ \left( x, y \right) \in \mathbb{R}^{2} : 0 \leq y \leq cg\left( x \right) \right\}\)</span>.</li>
+<span class="math inline">\(A_{cg}=\left\{ \left( x, y \right) \in \mathbb{R}^{2} : 0 \leq y \leq
+cg\left( x \right) \right\}\)</span>.</li>
 </ul>
 <p>Teniendo en cuenta además que:</p>
 <ul>
 <li>Si <span class="math inline">\(\left( T,Y\right) \sim \mathcal{U}\left( A\right)\)</span> y
-<span class="math inline">\(B \subset A\Rightarrow \left. \left( T,Y\right) \right\vert _{B} \sim \mathcal{U}\left(B\right)\)</span>.</li>
+<span class="math inline">\(B \subset A\Rightarrow \left. \left( T,Y\right) \right\vert _{B}
+\sim \mathcal{U}\left(B\right)\)</span>.</li>
 </ul>
 <p>Entonces, si <span class="math inline">\(\left( T, Y \right)\)</span> sigue una distribución uniforme en <span class="math inline">\(A_{cg}\)</span>, aceptando los valores de <span class="math inline">\(\left( T, Y \right)\)</span> que pertenezcan a <span class="math inline">\(A_{f}\)</span> (o a <span class="math inline">\(A_{f^{\ast}}\)</span>) se obtendrán generaciones con distribución uniforme sobre <span class="math inline">\(A_{f}\)</span> (o <span class="math inline">\(A_{f^{\ast}}\)</span>) y la densidad de la primera componente será <span class="math inline">\(f\)</span>.</p>
 <div id="algoritmo" class="section level3 hasAnchor" number="4.2.1">
@@ -546,17 +549,17 @@ con <span class="math inline">\(g(x) = 1\)</span> si <span class="math inline">\
 <p>Esta distribución está acotada y es unimodal, si <span class="math inline">\(\alpha\)</span> y <span class="math inline">\(\beta\)</span> son mayores<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a> que 1, y su moda es <span class="math inline">\(\frac{\alpha - 1} {\alpha + \beta - 2}\)</span>, por lo que:
 <span class="math display">\[c = M = \max_{0 \leq x \leq 1}f(x) = f\left( \frac{\alpha - 1} {\alpha + \beta - 2} \right).\]</span></p>
 <p>Por ejemplo, considerando <span class="math inline">\(\alpha = 2\)</span> y <span class="math inline">\(\beta = 4\)</span>, si comparamos la densidad objetivo con la auxiliar reescalada (Figura <a href="AR.html#fig:dbeta-dunif-plot">4.5</a>), confirmamos que esta última está por encima (y llegan a tocarse, por lo que se está empleando la cota óptima; ver siguiente sección).</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="AR.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="co"># densidad objetivo: dbeta</span></span>
-<span id="cb140-2"><a href="AR.html#cb140-2" aria-hidden="true" tabindex="-1"></a><span class="co"># densidad auxiliar: dunif</span></span>
-<span id="cb140-3"><a href="AR.html#cb140-3" aria-hidden="true" tabindex="-1"></a>s1 <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb140-4"><a href="AR.html#cb140-4" aria-hidden="true" tabindex="-1"></a>s2 <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb140-5"><a href="AR.html#cb140-5" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dbeta</span>(x, s1, s2), <span class="sc">-</span><span class="fl">0.1</span>, <span class="fl">1.1</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb140-6"><a href="AR.html#cb140-6" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">dbeta</span>((s1 <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">/</span>(s1 <span class="sc">+</span> s2 <span class="sc">-</span> <span class="dv">2</span>), s1, s2)</span>
-<span id="cb140-7"><a href="AR.html#cb140-7" aria-hidden="true" tabindex="-1"></a><span class="co"># abline(h = m, lty = 2)</span></span>
-<span id="cb140-8"><a href="AR.html#cb140-8" aria-hidden="true" tabindex="-1"></a><span class="fu">segments</span>(<span class="dv">0</span>, m, <span class="dv">1</span>, m, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb140-9"><a href="AR.html#cb140-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
-<span id="cb140-10"><a href="AR.html#cb140-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
-<span id="cb140-11"><a href="AR.html#cb140-11" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="AR.html#cb140-1" tabindex="-1"></a><span class="co"># densidad objetivo: dbeta</span></span>
+<span id="cb140-2"><a href="AR.html#cb140-2" tabindex="-1"></a><span class="co"># densidad auxiliar: dunif</span></span>
+<span id="cb140-3"><a href="AR.html#cb140-3" tabindex="-1"></a>s1 <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb140-4"><a href="AR.html#cb140-4" tabindex="-1"></a>s2 <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb140-5"><a href="AR.html#cb140-5" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dbeta</span>(x, s1, s2), <span class="sc">-</span><span class="fl">0.1</span>, <span class="fl">1.1</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb140-6"><a href="AR.html#cb140-6" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">dbeta</span>((s1 <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">/</span>(s1 <span class="sc">+</span> s2 <span class="sc">-</span> <span class="dv">2</span>), s1, s2)</span>
+<span id="cb140-7"><a href="AR.html#cb140-7" tabindex="-1"></a><span class="co"># abline(h = m, lty = 2)</span></span>
+<span id="cb140-8"><a href="AR.html#cb140-8" tabindex="-1"></a><span class="fu">segments</span>(<span class="dv">0</span>, m, <span class="dv">1</span>, m, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb140-9"><a href="AR.html#cb140-9" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb140-10"><a href="AR.html#cb140-10" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb140-11"><a href="AR.html#cb140-11" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:dbeta-dunif-plot"></span>
 <img src="04-Metodos_generales_continuas_files/figure-html/dbeta-dunif-plot-1.png" alt="Densidad objetivo beta (línea continua) y densidad auxiliar unifome reescalada (línea discontinua)." width="75%" />
 <p class="caption">
@@ -564,45 +567,45 @@ Figura 4.5: Densidad objetivo beta (línea continua) y densidad auxiliar unifome
 </p>
 </div>
 <p>El siguiente código implementa el método de aceptación-rechazo para simular valores de la densidad objetivo (se incluye una variable “global” <code>ngen</code> para contar el número de generaciones de la distribución auxiliar):</p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="AR.html#cb141-1" aria-hidden="true" tabindex="-1"></a>ngen <span class="ot">&lt;-</span> <span class="dv">0</span> </span>
-<span id="cb141-2"><a href="AR.html#cb141-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb141-3"><a href="AR.html#cb141-3" aria-hidden="true" tabindex="-1"></a>rbeta2 <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">s1 =</span> <span class="dv">2</span>, <span class="at">s2 =</span> <span class="dv">2</span>) {</span>
-<span id="cb141-4"><a href="AR.html#cb141-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulación por aceptación-rechazo</span></span>
-<span id="cb141-5"><a href="AR.html#cb141-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Beta a partir de uniforme</span></span>
-<span id="cb141-6"><a href="AR.html#cb141-6" aria-hidden="true" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">dbeta</span>((s1 <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">/</span>(s1 <span class="sc">+</span> s2 <span class="sc">-</span> <span class="dv">2</span>), s1, s2)</span>
-<span id="cb141-7"><a href="AR.html#cb141-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (<span class="cn">TRUE</span>) {</span>
-<span id="cb141-8"><a href="AR.html#cb141-8" aria-hidden="true" tabindex="-1"></a>    u <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>)</span>
-<span id="cb141-9"><a href="AR.html#cb141-9" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>)</span>
-<span id="cb141-10"><a href="AR.html#cb141-10" aria-hidden="true" tabindex="-1"></a>    ngen <span class="ot">&lt;&lt;-</span> ngen<span class="sc">+</span><span class="dv">1</span></span>
-<span id="cb141-11"><a href="AR.html#cb141-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (m<span class="sc">*</span>u <span class="sc">&lt;=</span> <span class="fu">dbeta</span>(x, s1, s2)) <span class="fu">return</span>(x)</span>
-<span id="cb141-12"><a href="AR.html#cb141-12" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb141-13"><a href="AR.html#cb141-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb141-14"><a href="AR.html#cb141-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb141-15"><a href="AR.html#cb141-15" aria-hidden="true" tabindex="-1"></a>rbeta2n <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">1000</span>, <span class="at">s1 =</span> <span class="dv">2</span>, <span class="at">s2 =</span> <span class="dv">2</span>) {</span>
-<span id="cb141-16"><a href="AR.html#cb141-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulación n valores Beta(s1, s2)</span></span>
-<span id="cb141-17"><a href="AR.html#cb141-17" aria-hidden="true" tabindex="-1"></a>  ngen <span class="ot">&lt;&lt;-</span> <span class="dv">0</span></span>
-<span id="cb141-18"><a href="AR.html#cb141-18" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n)</span>
-<span id="cb141-19"><a href="AR.html#cb141-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) x[i]<span class="ot">&lt;-</span><span class="fu">rbeta2</span>(s1, s2)</span>
-<span id="cb141-20"><a href="AR.html#cb141-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(x)</span>
-<span id="cb141-21"><a href="AR.html#cb141-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="AR.html#cb141-1" tabindex="-1"></a>ngen <span class="ot">&lt;-</span> <span class="dv">0</span> </span>
+<span id="cb141-2"><a href="AR.html#cb141-2" tabindex="-1"></a></span>
+<span id="cb141-3"><a href="AR.html#cb141-3" tabindex="-1"></a>rbeta2 <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">s1 =</span> <span class="dv">2</span>, <span class="at">s2 =</span> <span class="dv">2</span>) {</span>
+<span id="cb141-4"><a href="AR.html#cb141-4" tabindex="-1"></a>  <span class="co"># Simulación por aceptación-rechazo</span></span>
+<span id="cb141-5"><a href="AR.html#cb141-5" tabindex="-1"></a>  <span class="co"># Beta a partir de uniforme</span></span>
+<span id="cb141-6"><a href="AR.html#cb141-6" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">dbeta</span>((s1 <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">/</span>(s1 <span class="sc">+</span> s2 <span class="sc">-</span> <span class="dv">2</span>), s1, s2)</span>
+<span id="cb141-7"><a href="AR.html#cb141-7" tabindex="-1"></a>  <span class="cf">while</span> (<span class="cn">TRUE</span>) {</span>
+<span id="cb141-8"><a href="AR.html#cb141-8" tabindex="-1"></a>    u <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>)</span>
+<span id="cb141-9"><a href="AR.html#cb141-9" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>)</span>
+<span id="cb141-10"><a href="AR.html#cb141-10" tabindex="-1"></a>    ngen <span class="ot">&lt;&lt;-</span> ngen<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb141-11"><a href="AR.html#cb141-11" tabindex="-1"></a>    <span class="cf">if</span> (m<span class="sc">*</span>u <span class="sc">&lt;=</span> <span class="fu">dbeta</span>(x, s1, s2)) <span class="fu">return</span>(x)</span>
+<span id="cb141-12"><a href="AR.html#cb141-12" tabindex="-1"></a>  }</span>
+<span id="cb141-13"><a href="AR.html#cb141-13" tabindex="-1"></a>}</span>
+<span id="cb141-14"><a href="AR.html#cb141-14" tabindex="-1"></a></span>
+<span id="cb141-15"><a href="AR.html#cb141-15" tabindex="-1"></a>rbeta2n <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">1000</span>, <span class="at">s1 =</span> <span class="dv">2</span>, <span class="at">s2 =</span> <span class="dv">2</span>) {</span>
+<span id="cb141-16"><a href="AR.html#cb141-16" tabindex="-1"></a>  <span class="co"># Simulación n valores Beta(s1, s2)</span></span>
+<span id="cb141-17"><a href="AR.html#cb141-17" tabindex="-1"></a>  ngen <span class="ot">&lt;&lt;-</span> <span class="dv">0</span></span>
+<span id="cb141-18"><a href="AR.html#cb141-18" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n)</span>
+<span id="cb141-19"><a href="AR.html#cb141-19" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) x[i]<span class="ot">&lt;-</span><span class="fu">rbeta2</span>(s1, s2)</span>
+<span id="cb141-20"><a href="AR.html#cb141-20" tabindex="-1"></a>  <span class="fu">return</span>(x)</span>
+<span id="cb141-21"><a href="AR.html#cb141-21" tabindex="-1"></a>}</span></code></pre></div>
 <p>Empleando estas funciones podemos generar una muestra de <span class="math inline">\(10^3\)</span> observaciones de una <span class="math inline">\(\mathcal{Beta}(2, 4)\)</span> (calculando de paso el tiempo de CPU):</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="AR.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb142-2"><a href="AR.html#cb142-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb142-3"><a href="AR.html#cb142-3" aria-hidden="true" tabindex="-1"></a>ngen <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb142-4"><a href="AR.html#cb142-4" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(x <span class="ot">&lt;-</span> <span class="fu">rbeta2n</span>(nsim, s1, s2))</span></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="AR.html#cb142-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb142-2"><a href="AR.html#cb142-2" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb142-3"><a href="AR.html#cb142-3" tabindex="-1"></a>ngen <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb142-4"><a href="AR.html#cb142-4" tabindex="-1"></a><span class="fu">system.time</span>(x <span class="ot">&lt;-</span> <span class="fu">rbeta2n</span>(nsim, s1, s2))</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##       0       0       0</code></pre>
+##    0.03    0.00    0.00</code></pre>
 <p>Para analizar la eficiencia podemos emplear el número de generaciones de la distribución auxiliar (siguiente sección):</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="AR.html#cb144-1" aria-hidden="true" tabindex="-1"></a>{<span class="fu">cat</span>(<span class="st">&quot;Número de generaciones = &quot;</span>, ngen)</span>
-<span id="cb144-2"><a href="AR.html#cb144-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Número medio de generaciones = &quot;</span>, ngen<span class="sc">/</span>nsim)</span>
-<span id="cb144-3"><a href="AR.html#cb144-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Proporción de rechazos = &quot;</span>, <span class="dv">1</span><span class="sc">-</span>nsim<span class="sc">/</span>ngen, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)}</span></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="AR.html#cb144-1" tabindex="-1"></a>{<span class="fu">cat</span>(<span class="st">&quot;Número de generaciones = &quot;</span>, ngen)</span>
+<span id="cb144-2"><a href="AR.html#cb144-2" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Número medio de generaciones = &quot;</span>, ngen<span class="sc">/</span>nsim)</span>
+<span id="cb144-3"><a href="AR.html#cb144-3" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Proporción de rechazos = &quot;</span>, <span class="dv">1</span><span class="sc">-</span>nsim<span class="sc">/</span>ngen, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)}</span></code></pre></div>
 <pre><code>## Número de generaciones =  2121
 ## Número medio de generaciones =  2.121
 ## Proporción de rechazos =  0.52852</code></pre>
 <p>Finalmente podemos representar la distribución de los valores generados y compararla con la densidad teórica:</p>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="AR.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb146-2"><a href="AR.html#cb146-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(x))</span>
-<span id="cb146-3"><a href="AR.html#cb146-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dbeta</span>(x, s1, s2), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="AR.html#cb146-1" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb146-2"><a href="AR.html#cb146-2" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(x))</span>
+<span id="cb146-3"><a href="AR.html#cb146-3" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dbeta</span>(x, s1, s2), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:dbeta-ar"></span>
 <img src="04-Metodos_generales_continuas_files/figure-html/dbeta-ar-1.png" alt="Distribución de los valores generados mediante el método de aceptación-rechazo." width="75%" />
 <p class="caption">
@@ -661,12 +664,12 @@ Como consecuencia:
 <span class="math display">\[c_{\text{opt}} = \sqrt{\frac{2}{\pi}}e^{\varphi(1)}
 =\sqrt{\frac{2}{\pi}}e^{1/2} =\sqrt{\frac{2e}{\pi}} \approx 1.3155.\]</span></p>
 <p>Si comparamos la densidad objetivo con la auxiliar reescalada con los parámetros óptimos (Figura <a href="AR.html#fig:dnorm-ddexp-plot">4.7</a>), vemos que esta última está por encima, como debería ocurrir, pero llegan a tocarse (lo que validaría el cálculo para la obtención de la cota óptima).</p>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="AR.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="co"># densidad objetivo: dnorm</span></span>
-<span id="cb147-2"><a href="AR.html#cb147-2" aria-hidden="true" tabindex="-1"></a><span class="co"># densidad auxiliar: ddexp</span></span>
-<span id="cb147-3"><a href="AR.html#cb147-3" aria-hidden="true" tabindex="-1"></a>c.opt <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span><span class="fu">exp</span>(<span class="dv">1</span>)<span class="sc">/</span>pi)</span>
-<span id="cb147-4"><a href="AR.html#cb147-4" aria-hidden="true" tabindex="-1"></a>lambda.opt <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb147-5"><a href="AR.html#cb147-5" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(c.opt <span class="sc">*</span> <span class="fu">ddexp</span>(x), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>), <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb147-6"><a href="AR.html#cb147-6" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(dnorm, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="AR.html#cb147-1" tabindex="-1"></a><span class="co"># densidad objetivo: dnorm</span></span>
+<span id="cb147-2"><a href="AR.html#cb147-2" tabindex="-1"></a><span class="co"># densidad auxiliar: ddexp</span></span>
+<span id="cb147-3"><a href="AR.html#cb147-3" tabindex="-1"></a>c.opt <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span><span class="fu">exp</span>(<span class="dv">1</span>)<span class="sc">/</span>pi)</span>
+<span id="cb147-4"><a href="AR.html#cb147-4" tabindex="-1"></a>lambda.opt <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb147-5"><a href="AR.html#cb147-5" tabindex="-1"></a><span class="fu">curve</span>(c.opt <span class="sc">*</span> <span class="fu">ddexp</span>(x), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>), <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb147-6"><a href="AR.html#cb147-6" tabindex="-1"></a><span class="fu">curve</span>(dnorm, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:dnorm-ddexp-plot"></span>
 <img src="04-Metodos_generales_continuas_files/figure-html/dnorm-ddexp-plot-1.png" alt="Densidad objetivo (normal estándar, línea continua) y densidad auxiliar (doble exponencial, línea discontinua) reescalada." width="75%" />
 <p class="caption">
@@ -674,9 +677,9 @@ Figura 4.7: Densidad objetivo (normal estándar, línea continua) y densidad aux
 </p>
 </div>
 <p>Alternativamente, en lugar de obtener la cota óptima de modo analítico, podríamos aproximarla numéricamente:</p>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="AR.html#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="co"># NOTA: Cuidado con los límites</span></span>
-<span id="cb148-2"><a href="AR.html#cb148-2" aria-hidden="true" tabindex="-1"></a><span class="co"># optimize(f = function(x) dnorm(x)/ddexp(x), maximum = TRUE, interval = c(-0.5,0.5))</span></span>
-<span id="cb148-3"><a href="AR.html#cb148-3" aria-hidden="true" tabindex="-1"></a><span class="fu">optimize</span>(<span class="at">f =</span> <span class="cf">function</span>(x) <span class="fu">dnorm</span>(x)<span class="sc">/</span><span class="fu">ddexp</span>(x), <span class="at">maximum =</span> <span class="cn">TRUE</span>, <span class="at">interval =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="AR.html#cb148-1" tabindex="-1"></a><span class="co"># NOTA: Cuidado con los límites</span></span>
+<span id="cb148-2"><a href="AR.html#cb148-2" tabindex="-1"></a><span class="co"># optimize(f = function(x) dnorm(x)/ddexp(x), maximum = TRUE, interval = c(-0.5,0.5))</span></span>
+<span id="cb148-3"><a href="AR.html#cb148-3" tabindex="-1"></a><span class="fu">optimize</span>(<span class="at">f =</span> <span class="cf">function</span>(x) <span class="fu">dnorm</span>(x)<span class="sc">/</span><span class="fu">ddexp</span>(x), <span class="at">maximum =</span> <span class="cn">TRUE</span>, <span class="at">interval =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>))</span></code></pre></div>
 <pre><code>## $maximum
 ## [1] 1
 ## 
@@ -691,49 +694,49 @@ Aunque, en este caso concreto, sería equivalente a:
 T\right\vert \right)  =U\cdot\exp\left( \frac{T^{2}}{2}-\left\vert
 T\right\vert +\frac{1}{2}\right) \leq 1.\]</span></p>
 <p>Teniendo en cuenta los resultados anteriores, podríamos emplear el siguiente código para generar los valores de la densidad objetivo:</p>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="AR.html#cb150-1" aria-hidden="true" tabindex="-1"></a>ngen <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb150-2"><a href="AR.html#cb150-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb150-3"><a href="AR.html#cb150-3" aria-hidden="true" tabindex="-1"></a>rnormAR <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb150-4"><a href="AR.html#cb150-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulación por aceptación-rechazo</span></span>
-<span id="cb150-5"><a href="AR.html#cb150-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Normal estandar a partir de doble exponencial</span></span>
-<span id="cb150-6"><a href="AR.html#cb150-6" aria-hidden="true" tabindex="-1"></a>  c.opt <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span><span class="fu">exp</span>(<span class="dv">1</span>)<span class="sc">/</span>pi)</span>
-<span id="cb150-7"><a href="AR.html#cb150-7" aria-hidden="true" tabindex="-1"></a>  lambda.opt <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb150-8"><a href="AR.html#cb150-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (<span class="cn">TRUE</span>) {</span>
-<span id="cb150-9"><a href="AR.html#cb150-9" aria-hidden="true" tabindex="-1"></a>    u <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>)</span>
-<span id="cb150-10"><a href="AR.html#cb150-10" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">rdexp</span>(lambda.opt) <span class="co"># rdexpn(1, lambda.opt)</span></span>
-<span id="cb150-11"><a href="AR.html#cb150-11" aria-hidden="true" tabindex="-1"></a>    ngen <span class="ot">&lt;&lt;-</span> ngen <span class="sc">+</span> <span class="dv">1</span> <span class="co"># Comentar esta línea para uso normal</span></span>
-<span id="cb150-12"><a href="AR.html#cb150-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if (u*exp((x^2+1)*0.5-abs(x)) &lt;= 1) return(x)</span></span>
-<span id="cb150-13"><a href="AR.html#cb150-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (c.opt <span class="sc">*</span> u <span class="sc">*</span> <span class="fu">ddexp</span>(x, lambda.opt) <span class="sc">&lt;=</span> <span class="fu">dnorm</span>(x)) <span class="fu">return</span>(x)</span>
-<span id="cb150-14"><a href="AR.html#cb150-14" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb150-15"><a href="AR.html#cb150-15" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb150-16"><a href="AR.html#cb150-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb150-17"><a href="AR.html#cb150-17" aria-hidden="true" tabindex="-1"></a>rnormARn <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">1000</span>) {</span>
-<span id="cb150-18"><a href="AR.html#cb150-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulación n valores N(0,1)</span></span>
-<span id="cb150-19"><a href="AR.html#cb150-19" aria-hidden="true" tabindex="-1"></a>  ngen <span class="ot">&lt;&lt;-</span> <span class="dv">0</span></span>
-<span id="cb150-20"><a href="AR.html#cb150-20" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n)</span>
-<span id="cb150-21"><a href="AR.html#cb150-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) x[i] <span class="ot">&lt;-</span> <span class="fu">rnormAR</span>()</span>
-<span id="cb150-22"><a href="AR.html#cb150-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(x)</span>
-<span id="cb150-23"><a href="AR.html#cb150-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="AR.html#cb150-1" tabindex="-1"></a>ngen <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb150-2"><a href="AR.html#cb150-2" tabindex="-1"></a></span>
+<span id="cb150-3"><a href="AR.html#cb150-3" tabindex="-1"></a>rnormAR <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb150-4"><a href="AR.html#cb150-4" tabindex="-1"></a><span class="co"># Simulación por aceptación-rechazo</span></span>
+<span id="cb150-5"><a href="AR.html#cb150-5" tabindex="-1"></a><span class="co"># Normal estandar a partir de doble exponencial</span></span>
+<span id="cb150-6"><a href="AR.html#cb150-6" tabindex="-1"></a>  c.opt <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span><span class="fu">exp</span>(<span class="dv">1</span>)<span class="sc">/</span>pi)</span>
+<span id="cb150-7"><a href="AR.html#cb150-7" tabindex="-1"></a>  lambda.opt <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb150-8"><a href="AR.html#cb150-8" tabindex="-1"></a>  <span class="cf">while</span> (<span class="cn">TRUE</span>) {</span>
+<span id="cb150-9"><a href="AR.html#cb150-9" tabindex="-1"></a>    u <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>)</span>
+<span id="cb150-10"><a href="AR.html#cb150-10" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">rdexp</span>(lambda.opt) <span class="co"># rdexpn(1, lambda.opt)</span></span>
+<span id="cb150-11"><a href="AR.html#cb150-11" tabindex="-1"></a>    ngen <span class="ot">&lt;&lt;-</span> ngen <span class="sc">+</span> <span class="dv">1</span> <span class="co"># Comentar esta línea para uso normal</span></span>
+<span id="cb150-12"><a href="AR.html#cb150-12" tabindex="-1"></a>    <span class="co"># if (u*exp((x^2+1)*0.5-abs(x)) &lt;= 1) return(x)</span></span>
+<span id="cb150-13"><a href="AR.html#cb150-13" tabindex="-1"></a>    <span class="cf">if</span> (c.opt <span class="sc">*</span> u <span class="sc">*</span> <span class="fu">ddexp</span>(x, lambda.opt) <span class="sc">&lt;=</span> <span class="fu">dnorm</span>(x)) <span class="fu">return</span>(x)</span>
+<span id="cb150-14"><a href="AR.html#cb150-14" tabindex="-1"></a>  }</span>
+<span id="cb150-15"><a href="AR.html#cb150-15" tabindex="-1"></a>}</span>
+<span id="cb150-16"><a href="AR.html#cb150-16" tabindex="-1"></a></span>
+<span id="cb150-17"><a href="AR.html#cb150-17" tabindex="-1"></a>rnormARn <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">1000</span>) {</span>
+<span id="cb150-18"><a href="AR.html#cb150-18" tabindex="-1"></a><span class="co"># Simulación n valores N(0,1)</span></span>
+<span id="cb150-19"><a href="AR.html#cb150-19" tabindex="-1"></a>  ngen <span class="ot">&lt;&lt;-</span> <span class="dv">0</span></span>
+<span id="cb150-20"><a href="AR.html#cb150-20" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n)</span>
+<span id="cb150-21"><a href="AR.html#cb150-21" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) x[i] <span class="ot">&lt;-</span> <span class="fu">rnormAR</span>()</span>
+<span id="cb150-22"><a href="AR.html#cb150-22" tabindex="-1"></a>  <span class="fu">return</span>(x)</span>
+<span id="cb150-23"><a href="AR.html#cb150-23" tabindex="-1"></a>}</span></code></pre></div>
 <p>Generamos una muestra de <span class="math inline">\(10^4\)</span> observaciones:</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="AR.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb151-2"><a href="AR.html#cb151-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
-<span id="cb151-3"><a href="AR.html#cb151-3" aria-hidden="true" tabindex="-1"></a>ngen <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb151-4"><a href="AR.html#cb151-4" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(x <span class="ot">&lt;-</span> <span class="fu">rnormARn</span>(nsim))</span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="AR.html#cb151-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb151-2"><a href="AR.html#cb151-2" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
+<span id="cb151-3"><a href="AR.html#cb151-3" tabindex="-1"></a>ngen <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb151-4"><a href="AR.html#cb151-4" tabindex="-1"></a><span class="fu">system.time</span>(x <span class="ot">&lt;-</span> <span class="fu">rnormARn</span>(nsim))</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.01    0.04    0.07</code></pre>
+##    0.06    0.00    0.07</code></pre>
 <p>Evaluamos la eficiencia:</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="AR.html#cb153-1" aria-hidden="true" tabindex="-1"></a>{<span class="fu">cat</span>(<span class="st">&quot;Número de generaciones = &quot;</span>, ngen)</span>
-<span id="cb153-2"><a href="AR.html#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Número medio de generaciones = &quot;</span>, ngen<span class="sc">/</span>nsim)</span>
-<span id="cb153-3"><a href="AR.html#cb153-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Proporción de rechazos = &quot;</span>, <span class="dv">1</span><span class="sc">-</span>nsim<span class="sc">/</span>ngen, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)}</span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="AR.html#cb153-1" tabindex="-1"></a>{<span class="fu">cat</span>(<span class="st">&quot;Número de generaciones = &quot;</span>, ngen)</span>
+<span id="cb153-2"><a href="AR.html#cb153-2" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Número medio de generaciones = &quot;</span>, ngen<span class="sc">/</span>nsim)</span>
+<span id="cb153-3"><a href="AR.html#cb153-3" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Proporción de rechazos = &quot;</span>, <span class="dv">1</span><span class="sc">-</span>nsim<span class="sc">/</span>ngen, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)}</span></code></pre></div>
 <pre><code>## Número de generaciones =  13178
 ## Número medio de generaciones =  1.3178
 ## Proporción de rechazos =  0.24116</code></pre>
 <p>Estos valores serían aproximaciones por simulación de los correspondientes valores teóricos (valor medio <span class="math inline">\(c \approx 1.3155\)</span> y probabilidad de rechazo <span class="math inline">\(1 - p = 1 - 1/c \approx 0.23983\)</span>).
 A partir de ellos podríamos decir que el algoritmo es bastante eficiente.</p>
 <p>Finalmente comparamos la distribución de los valores generados con la densidad teórica:</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="AR.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb155-2"><a href="AR.html#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(x))</span>
-<span id="cb155-3"><a href="AR.html#cb155-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(dnorm, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="AR.html#cb155-1" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb155-2"><a href="AR.html#cb155-2" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(x))</span>
+<span id="cb155-3"><a href="AR.html#cb155-3" tabindex="-1"></a><span class="fu">curve</span>(dnorm, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:dnorm-ar"></span>
 <img src="04-Metodos_generales_continuas_files/figure-html/dnorm-ar-1.png" alt="Distribución de los valores generados mediante el método de aceptación-rechazo." width="75%" />
 <p class="caption">
@@ -761,7 +764,7 @@ y, finalmente, elegir el mejor valor <span class="math inline">\(\theta_{0}\)</s
 De forma totalmente análoga a la vista para el caso <span class="math inline">\(\lambda=1\)</span>, se tiene que:
 <span class="math display">\[c_{\lambda}=\max_{x\in\mathbb{R}}\frac{\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}}}{\frac{\lambda}{2}e^{-\lambda \left| x \right|  }}=\frac{1}{\lambda}\sqrt{\frac{2}{\pi}}\max_{x\in\mathbb{R}}e^{\varphi
 _{\lambda(x)}}=\frac{1}{\lambda}\sqrt{\frac{2}{\pi}}e^{\max_{x\in\mathbb{R}}\varphi_{\lambda(x)} },\]</span>
-donde <span class="math inline">\(\varphi_{\lambda}(x) =-\frac{x^{2}}{2}+\lambda\left| x \right|\)</span>.
+donde <span class="math inline">\(\varphi_{\lambda}(x)  =-\frac{x^{2}}{2}+\lambda\left| x \right|\)</span>.
 De forma totalmente similar también puede probarse que <span class="math inline">\(\varphi_{\lambda}\)</span> alcanza su máximo absoluto en los puntos <span class="math inline">\(x=\pm\lambda\)</span>, siendo dicho valor máximo
 <span class="math inline">\(\varphi_{\lambda}\left( \pm\lambda \right) = \frac{\lambda^{2}}{2}\)</span>.
 Como consecuencia:
@@ -775,9 +778,9 @@ Además:
 {2}{\pi}}\frac{e^{\frac{\lambda^{2}}{2}}\left(  \lambda^{5}-\lambda
 ^{3}+2\lambda\right)  }{\lambda^{4}}\right|_{\lambda=1}=2\sqrt{\frac{2e}{\pi}}&gt;0,\]</span>
 luego en <span class="math inline">\(\lambda=1\)</span> se alcanza el mínimo.</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="AR.html#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">exp</span>(x<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>x<span class="sc">*</span><span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">/</span>pi), <span class="fl">0.1</span>, <span class="fl">2.5</span>,</span>
-<span id="cb156-2"><a href="AR.html#cb156-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="fu">expression</span>(lambda), <span class="at">ylab =</span> <span class="fu">expression</span>(c[lambda]))</span>
-<span id="cb156-3"><a href="AR.html#cb156-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="AR.html#cb156-1" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">exp</span>(x<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>x<span class="sc">*</span><span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">/</span>pi), <span class="fl">0.1</span>, <span class="fl">2.5</span>,</span>
+<span id="cb156-2"><a href="AR.html#cb156-2" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="fu">expression</span>(lambda), <span class="at">ylab =</span> <span class="fu">expression</span>(c[lambda]))</span>
+<span id="cb156-3"><a href="AR.html#cb156-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:cop-lambda"></span>
 <img src="04-Metodos_generales_continuas_files/figure-html/cop-lambda-1.png" alt="Representación de la cota óptima dependiedo del valor del parámetro y mínimo global (línea vertical)." width="75%" />
 <p class="caption">
@@ -787,20 +790,20 @@ Figura 4.9: Representación de la cota óptima dependiedo del valor del parámet
 <p>De esto se deduce que la mejor densidad auxiliar doble exponencial es la correspondiente a <span class="math inline">\(\lambda=1\)</span>.
 Por tanto el algoritmo más eficiente, con esta familia de densidades auxiliares, es el expuesto en el Ejemplo <a href="AR.html#exm:dnorm-ddexp-ar">4.4</a>.</p>
 <p>Alternativamente también podríamos aproximar simultáneamente el parámetro óptimo y la cota óptima de la densidad auxiliar numéricamente:</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="AR.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtención de valores c y lambda óptimos aproximados</span></span>
-<span id="cb157-2"><a href="AR.html#cb157-2" aria-hidden="true" tabindex="-1"></a>fopt <span class="ot">&lt;-</span> <span class="cf">function</span>(lambda) {</span>
-<span id="cb157-3"><a href="AR.html#cb157-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Obtiene c fijado lambda</span></span>
-<span id="cb157-4"><a href="AR.html#cb157-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">optimize</span>(<span class="at">f =</span> <span class="cf">function</span>(x) <span class="fu">dnorm</span>(x)<span class="sc">/</span><span class="fu">ddexp</span>(x,lambda),</span>
-<span id="cb157-5"><a href="AR.html#cb157-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">maximum =</span> <span class="cn">TRUE</span>, <span class="at">interval =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>))<span class="sc">$</span>objective</span>
-<span id="cb157-6"><a href="AR.html#cb157-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb157-7"><a href="AR.html#cb157-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb157-8"><a href="AR.html#cb157-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Encontrar lambda que minimiza</span></span>
-<span id="cb157-9"><a href="AR.html#cb157-9" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">optimize</span>(fopt, <span class="at">interval =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">2</span>))</span>
-<span id="cb157-10"><a href="AR.html#cb157-10" aria-hidden="true" tabindex="-1"></a>lambda.opt2 <span class="ot">&lt;-</span> res<span class="sc">$</span>minimum</span>
-<span id="cb157-11"><a href="AR.html#cb157-11" aria-hidden="true" tabindex="-1"></a>c.opt2 <span class="ot">&lt;-</span> res<span class="sc">$</span>objective</span>
-<span id="cb157-12"><a href="AR.html#cb157-12" aria-hidden="true" tabindex="-1"></a>lambda.opt2 </span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="AR.html#cb157-1" tabindex="-1"></a><span class="co"># Obtención de valores c y lambda óptimos aproximados</span></span>
+<span id="cb157-2"><a href="AR.html#cb157-2" tabindex="-1"></a>fopt <span class="ot">&lt;-</span> <span class="cf">function</span>(lambda) {</span>
+<span id="cb157-3"><a href="AR.html#cb157-3" tabindex="-1"></a>  <span class="co"># Obtiene c fijado lambda</span></span>
+<span id="cb157-4"><a href="AR.html#cb157-4" tabindex="-1"></a>  <span class="fu">optimize</span>(<span class="at">f =</span> <span class="cf">function</span>(x) <span class="fu">dnorm</span>(x)<span class="sc">/</span><span class="fu">ddexp</span>(x,lambda),</span>
+<span id="cb157-5"><a href="AR.html#cb157-5" tabindex="-1"></a>           <span class="at">maximum =</span> <span class="cn">TRUE</span>, <span class="at">interval =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>))<span class="sc">$</span>objective</span>
+<span id="cb157-6"><a href="AR.html#cb157-6" tabindex="-1"></a>}</span>
+<span id="cb157-7"><a href="AR.html#cb157-7" tabindex="-1"></a></span>
+<span id="cb157-8"><a href="AR.html#cb157-8" tabindex="-1"></a><span class="co"># Encontrar lambda que minimiza</span></span>
+<span id="cb157-9"><a href="AR.html#cb157-9" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">optimize</span>(fopt, <span class="at">interval =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">2</span>))</span>
+<span id="cb157-10"><a href="AR.html#cb157-10" tabindex="-1"></a>lambda.opt2 <span class="ot">&lt;-</span> res<span class="sc">$</span>minimum</span>
+<span id="cb157-11"><a href="AR.html#cb157-11" tabindex="-1"></a>c.opt2 <span class="ot">&lt;-</span> res<span class="sc">$</span>objective</span>
+<span id="cb157-12"><a href="AR.html#cb157-12" tabindex="-1"></a>lambda.opt2 </span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="AR.html#cb159-1" aria-hidden="true" tabindex="-1"></a>c.opt2</span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="AR.html#cb159-1" tabindex="-1"></a>c.opt2</span></code></pre></div>
 <pre><code>## [1] 1.3155</code></pre>
 </div>
 </div>
@@ -834,7 +837,8 @@ Así resultaría bastante fácil obtener la cota optima <span class="math inline
 <ol style="list-style-type: decimal">
 <li><p>Generar <span class="math inline">\(U \sim \mathcal{U}(0, 1)\)</span>.</p></li>
 <li><p>Generar <span class="math inline">\(\tilde{\theta}\sim \pi(\theta)\)</span>.</p></li>
-<li><p>Si <span class="math inline">\(\mathcal{L}(\hat{\theta} | \mathbf{x}) \cdot U \leq \mathcal{L}(\tilde{\theta} | \mathbf{x})\)</span> devolver <span class="math inline">\(\tilde{\theta}\)</span>,</p>
+<li><p>Si <span class="math inline">\(\mathcal{L}(\hat{\theta} | \mathbf{x}) \cdot U \leq
+\mathcal{L}(\tilde{\theta} | \mathbf{x})\)</span> devolver <span class="math inline">\(\tilde{\theta}\)</span>,</p>
 <p>en caso contrario volver al paso 1.</p></li>
 </ol>
 <p>Aunque, como se muestra en el siguiente ejercicio, esta elección de densidad auxiliar puede ser muy poco adecuada, siendo preferible en la práctica emplear un método adaptativo que construya la densidad auxiliar de forma automática (Sección <a href="modAR.html#ars">4.3.1</a>).</p>
@@ -855,36 +859,36 @@ En este caso, en la estimación bayesiana de la media de una distribución norma
 Simular por aceptación-rechazo una muestra de la densidad a
 posteriori (emplear <code>dnorm()</code> para construir la verosimilitud).
 Obtener el intervalo de probabilidad/credibilidad al 95%.</p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="AR.html#cb161-1" aria-hidden="true" tabindex="-1"></a>mu0 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb161-2"><a href="AR.html#cb161-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb161-3"><a href="AR.html#cb161-3" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
-<span id="cb161-4"><a href="AR.html#cb161-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
-<span id="cb161-5"><a href="AR.html#cb161-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> mu0)</span>
-<span id="cb161-6"><a href="AR.html#cb161-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Función de verosimilitud</span></span>
-<span id="cb161-7"><a href="AR.html#cb161-7" aria-hidden="true" tabindex="-1"></a><span class="co"># lik1 &lt;- function(mu) prod(dnorm(x, mean = mu)) # escalar</span></span>
-<span id="cb161-8"><a href="AR.html#cb161-8" aria-hidden="true" tabindex="-1"></a>lik <span class="ot">&lt;-</span> <span class="fu">Vectorize</span>(<span class="cf">function</span>(mu) <span class="fu">prod</span>(<span class="fu">dnorm</span>(x, <span class="at">mean =</span> mu))) <span class="co"># vectorial</span></span>
-<span id="cb161-9"><a href="AR.html#cb161-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Cota óptima</span></span>
-<span id="cb161-10"><a href="AR.html#cb161-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimación por máxima verosimilitud</span></span>
-<span id="cb161-11"><a href="AR.html#cb161-11" aria-hidden="true" tabindex="-1"></a>emv <span class="ot">&lt;-</span> <span class="fu">optimize</span>(<span class="at">f =</span> lik, <span class="at">int =</span> <span class="fu">range</span>(x), <span class="at">maximum =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb161-12"><a href="AR.html#cb161-12" aria-hidden="true" tabindex="-1"></a>emv</span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="AR.html#cb161-1" tabindex="-1"></a>mu0 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb161-2"><a href="AR.html#cb161-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb161-3"><a href="AR.html#cb161-3" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
+<span id="cb161-4"><a href="AR.html#cb161-4" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
+<span id="cb161-5"><a href="AR.html#cb161-5" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> mu0)</span>
+<span id="cb161-6"><a href="AR.html#cb161-6" tabindex="-1"></a><span class="co"># Función de verosimilitud</span></span>
+<span id="cb161-7"><a href="AR.html#cb161-7" tabindex="-1"></a><span class="co"># lik1 &lt;- function(mu) prod(dnorm(x, mean = mu)) # escalar</span></span>
+<span id="cb161-8"><a href="AR.html#cb161-8" tabindex="-1"></a>lik <span class="ot">&lt;-</span> <span class="fu">Vectorize</span>(<span class="cf">function</span>(mu) <span class="fu">prod</span>(<span class="fu">dnorm</span>(x, <span class="at">mean =</span> mu))) <span class="co"># vectorial</span></span>
+<span id="cb161-9"><a href="AR.html#cb161-9" tabindex="-1"></a><span class="co"># Cota óptima</span></span>
+<span id="cb161-10"><a href="AR.html#cb161-10" tabindex="-1"></a><span class="co"># Estimación por máxima verosimilitud</span></span>
+<span id="cb161-11"><a href="AR.html#cb161-11" tabindex="-1"></a>emv <span class="ot">&lt;-</span> <span class="fu">optimize</span>(<span class="at">f =</span> lik, <span class="at">int =</span> <span class="fu">range</span>(x), <span class="at">maximum =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb161-12"><a href="AR.html#cb161-12" tabindex="-1"></a>emv</span></code></pre></div>
 <pre><code>## $maximum
 ## [1] 0.73538
 ## 
 ## $objective
 ## [1] 3.3036e-08</code></pre>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="AR.html#cb163-1" aria-hidden="true" tabindex="-1"></a>c.cuasi <span class="ot">&lt;-</span> emv<span class="sc">$</span>objective</span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="AR.html#cb163-1" tabindex="-1"></a>c.cuasi <span class="ot">&lt;-</span> emv<span class="sc">$</span>objective</span></code></pre></div>
 <p>En este caso concreto, ya sabríamos que el estimador máximo verosímil es la media muestral:</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="AR.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="AR.html#cb164-1" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div>
 <pre><code>## [1] 0.7354</code></pre>
 <p>y por tanto:</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="AR.html#cb166-1" aria-hidden="true" tabindex="-1"></a>c.cuasi <span class="ot">&lt;-</span> <span class="fu">lik</span>(<span class="fu">mean</span>(x))</span>
-<span id="cb166-2"><a href="AR.html#cb166-2" aria-hidden="true" tabindex="-1"></a>c.cuasi   </span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="AR.html#cb166-1" tabindex="-1"></a>c.cuasi <span class="ot">&lt;-</span> <span class="fu">lik</span>(<span class="fu">mean</span>(x))</span>
+<span id="cb166-2"><a href="AR.html#cb166-2" tabindex="-1"></a>c.cuasi   </span></code></pre></div>
 <pre><code>## [1] 3.3036e-08</code></pre>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="AR.html#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="co"># f.cuasi &lt;- function(mu) sapply(mu, lik1)*dcauchy(mu)</span></span>
-<span id="cb168-2"><a href="AR.html#cb168-2" aria-hidden="true" tabindex="-1"></a>f.cuasi <span class="ot">&lt;-</span> <span class="cf">function</span>(mu) <span class="fu">lik</span>(mu)<span class="sc">*</span><span class="fu">dcauchy</span>(mu)    </span>
-<span id="cb168-3"><a href="AR.html#cb168-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(c.cuasi <span class="sc">*</span> <span class="fu">dcauchy</span>(x), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, c.cuasi<span class="sc">/</span>pi), <span class="at">lty =</span> <span class="dv">2</span>,</span>
-<span id="cb168-4"><a href="AR.html#cb168-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;cuasi-densidad&quot;</span>)</span>
-<span id="cb168-5"><a href="AR.html#cb168-5" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(f.cuasi, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="AR.html#cb168-1" tabindex="-1"></a><span class="co"># f.cuasi &lt;- function(mu) sapply(mu, lik1)*dcauchy(mu)</span></span>
+<span id="cb168-2"><a href="AR.html#cb168-2" tabindex="-1"></a>f.cuasi <span class="ot">&lt;-</span> <span class="cf">function</span>(mu) <span class="fu">lik</span>(mu)<span class="sc">*</span><span class="fu">dcauchy</span>(mu)    </span>
+<span id="cb168-3"><a href="AR.html#cb168-3" tabindex="-1"></a><span class="fu">curve</span>(c.cuasi <span class="sc">*</span> <span class="fu">dcauchy</span>(x), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, c.cuasi<span class="sc">/</span>pi), <span class="at">lty =</span> <span class="dv">2</span>,</span>
+<span id="cb168-4"><a href="AR.html#cb168-4" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&quot;mu&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;cuasi-densidad&quot;</span>)</span>
+<span id="cb168-5"><a href="AR.html#cb168-5" tabindex="-1"></a><span class="fu">curve</span>(f.cuasi, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:post-pri-plot"></span>
 <img src="04-Metodos_generales_continuas_files/figure-html/post-pri-plot-1.png" alt="Comparación de la cuasi-densidad a posteriori (línea contínua) con la densidad a priori reescalada (línea discontinua)." width="75%" />
 <p class="caption">
@@ -892,22 +896,22 @@ Figura 4.10: Comparación de la cuasi-densidad a posteriori (línea contínua) c
 </p>
 </div>
 <p>Por ejemplo, podríamos emplear el siguiente código para generar simulaciones de la distribución a posteriori mediante aceptación-rechazo a partir de la distribución de Cauchy:</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="AR.html#cb169-1" aria-hidden="true" tabindex="-1"></a>ngen <span class="ot">&lt;-</span> nsim</span>
-<span id="cb169-2"><a href="AR.html#cb169-2" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">rcauchy</span>(nsim)</span>
-<span id="cb169-3"><a href="AR.html#cb169-3" aria-hidden="true" tabindex="-1"></a>ind <span class="ot">&lt;-</span> c.cuasi<span class="sc">*</span><span class="fu">runif</span>(nsim) <span class="sc">&gt;</span> <span class="fu">lik</span>(mu) <span class="co"># TRUE si no verifica condición</span></span>
-<span id="cb169-4"><a href="AR.html#cb169-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Volver a generar si no verifica condición</span></span>
-<span id="cb169-5"><a href="AR.html#cb169-5" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (<span class="fu">sum</span>(ind)<span class="sc">&gt;</span><span class="dv">0</span>){</span>
-<span id="cb169-6"><a href="AR.html#cb169-6" aria-hidden="true" tabindex="-1"></a>  le <span class="ot">&lt;-</span> <span class="fu">sum</span>(ind)</span>
-<span id="cb169-7"><a href="AR.html#cb169-7" aria-hidden="true" tabindex="-1"></a>  ngen <span class="ot">&lt;-</span> ngen <span class="sc">+</span> le</span>
-<span id="cb169-8"><a href="AR.html#cb169-8" aria-hidden="true" tabindex="-1"></a>  mu[ind] <span class="ot">&lt;-</span> <span class="fu">rcauchy</span>(le)</span>
-<span id="cb169-9"><a href="AR.html#cb169-9" aria-hidden="true" tabindex="-1"></a>  ind[ind] <span class="ot">&lt;-</span> c.cuasi<span class="sc">*</span><span class="fu">runif</span>(le) <span class="sc">&gt;</span> <span class="fu">lik</span>(mu[ind]) <span class="co"># TRUE si no verifica condición</span></span>
-<span id="cb169-10"><a href="AR.html#cb169-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb169-11"><a href="AR.html#cb169-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb169-12"><a href="AR.html#cb169-12" aria-hidden="true" tabindex="-1"></a>{ <span class="co"># Número generaciones</span></span>
-<span id="cb169-13"><a href="AR.html#cb169-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;Número de generaciones = &quot;</span>, ngen)</span>
-<span id="cb169-14"><a href="AR.html#cb169-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Número medio de generaciones = &quot;</span>, ngen<span class="sc">/</span>nsim)</span>
-<span id="cb169-15"><a href="AR.html#cb169-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Proporción de rechazos = &quot;</span>, <span class="dv">1</span><span class="sc">-</span>nsim<span class="sc">/</span>ngen,<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb169-16"><a href="AR.html#cb169-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="AR.html#cb169-1" tabindex="-1"></a>ngen <span class="ot">&lt;-</span> nsim</span>
+<span id="cb169-2"><a href="AR.html#cb169-2" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">rcauchy</span>(nsim)</span>
+<span id="cb169-3"><a href="AR.html#cb169-3" tabindex="-1"></a>ind <span class="ot">&lt;-</span> c.cuasi<span class="sc">*</span><span class="fu">runif</span>(nsim) <span class="sc">&gt;</span> <span class="fu">lik</span>(mu) <span class="co"># TRUE si no verifica condición</span></span>
+<span id="cb169-4"><a href="AR.html#cb169-4" tabindex="-1"></a><span class="co"># Volver a generar si no verifica condición</span></span>
+<span id="cb169-5"><a href="AR.html#cb169-5" tabindex="-1"></a><span class="cf">while</span> (<span class="fu">sum</span>(ind)<span class="sc">&gt;</span><span class="dv">0</span>){</span>
+<span id="cb169-6"><a href="AR.html#cb169-6" tabindex="-1"></a>  le <span class="ot">&lt;-</span> <span class="fu">sum</span>(ind)</span>
+<span id="cb169-7"><a href="AR.html#cb169-7" tabindex="-1"></a>  ngen <span class="ot">&lt;-</span> ngen <span class="sc">+</span> le</span>
+<span id="cb169-8"><a href="AR.html#cb169-8" tabindex="-1"></a>  mu[ind] <span class="ot">&lt;-</span> <span class="fu">rcauchy</span>(le)</span>
+<span id="cb169-9"><a href="AR.html#cb169-9" tabindex="-1"></a>  ind[ind] <span class="ot">&lt;-</span> c.cuasi<span class="sc">*</span><span class="fu">runif</span>(le) <span class="sc">&gt;</span> <span class="fu">lik</span>(mu[ind]) <span class="co"># TRUE si no verifica condición</span></span>
+<span id="cb169-10"><a href="AR.html#cb169-10" tabindex="-1"></a>}</span>
+<span id="cb169-11"><a href="AR.html#cb169-11" tabindex="-1"></a></span>
+<span id="cb169-12"><a href="AR.html#cb169-12" tabindex="-1"></a>{ <span class="co"># Número generaciones</span></span>
+<span id="cb169-13"><a href="AR.html#cb169-13" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;Número de generaciones = &quot;</span>, ngen)</span>
+<span id="cb169-14"><a href="AR.html#cb169-14" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Número medio de generaciones = &quot;</span>, ngen<span class="sc">/</span>nsim)</span>
+<span id="cb169-15"><a href="AR.html#cb169-15" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Proporción de rechazos = &quot;</span>, <span class="dv">1</span><span class="sc">-</span>nsim<span class="sc">/</span>ngen,<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb169-16"><a href="AR.html#cb169-16" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## Número de generaciones =  59422
 ## Número medio de generaciones =  5.9422
 ## Proporción de rechazos =  0.83171</code></pre>
@@ -917,21 +921,21 @@ hist(mu, freq=FALSE, breaks = "FD", main = "")
 curve(f.cuasi, col = "blue", add = TRUE)
 -->
 <p>A partir de la aproximación del número medio de generaciones podemos aproximar la constante normalizadora:</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="AR.html#cb171-1" aria-hidden="true" tabindex="-1"></a>c.sim <span class="ot">&lt;-</span> ngen<span class="sc">/</span>nsim</span>
-<span id="cb171-2"><a href="AR.html#cb171-2" aria-hidden="true" tabindex="-1"></a>cte.sim <span class="ot">&lt;-</span> c.cuasi<span class="sc">/</span>c.sim</span>
-<span id="cb171-3"><a href="AR.html#cb171-3" aria-hidden="true" tabindex="-1"></a><span class="co"># integrate(f.cuasi, -Inf, Inf)</span></span>
-<span id="cb171-4"><a href="AR.html#cb171-4" aria-hidden="true" tabindex="-1"></a>f.aprox <span class="ot">&lt;-</span> <span class="cf">function</span>(mu) <span class="fu">f.cuasi</span>(mu)<span class="sc">/</span>cte.sim</span></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="AR.html#cb171-1" tabindex="-1"></a>c.sim <span class="ot">&lt;-</span> ngen<span class="sc">/</span>nsim</span>
+<span id="cb171-2"><a href="AR.html#cb171-2" tabindex="-1"></a>cte.sim <span class="ot">&lt;-</span> c.cuasi<span class="sc">/</span>c.sim</span>
+<span id="cb171-3"><a href="AR.html#cb171-3" tabindex="-1"></a><span class="co"># integrate(f.cuasi, -Inf, Inf)</span></span>
+<span id="cb171-4"><a href="AR.html#cb171-4" tabindex="-1"></a>f.aprox <span class="ot">&lt;-</span> <span class="cf">function</span>(mu) <span class="fu">f.cuasi</span>(mu)<span class="sc">/</span>cte.sim</span></code></pre></div>
 <p>Finalmente, a partir de los valores generados podemos aproximar el intervalo de probabilidad al 95% (intervalo de credibilidad bayesiano):</p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="AR.html#cb172-1" aria-hidden="true" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="fu">quantile</span>(mu, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span>
-<span id="cb172-2"><a href="AR.html#cb172-2" aria-hidden="true" tabindex="-1"></a>q</span></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="AR.html#cb172-1" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="fu">quantile</span>(mu, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span>
+<span id="cb172-2"><a href="AR.html#cb172-2" tabindex="-1"></a>q</span></code></pre></div>
 <pre><code>##     2.5%    97.5% 
 ## 0.050011 1.260262</code></pre>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="AR.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Representar estimador e IC Bayes</span></span>
-<span id="cb174-2"><a href="AR.html#cb174-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(mu, <span class="at">freq=</span><span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb174-3"><a href="AR.html#cb174-3" aria-hidden="true" tabindex="-1"></a><span class="co"># abline(v = mean(x), lty = 3) # Estimación frecuentista</span></span>
-<span id="cb174-4"><a href="AR.html#cb174-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">mean</span>(mu), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>)  <span class="co"># Estimación Bayesiana</span></span>
-<span id="cb174-5"><a href="AR.html#cb174-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> q, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb174-6"><a href="AR.html#cb174-6" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(f.aprox, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="AR.html#cb174-1" tabindex="-1"></a><span class="co"># Representar estimador e IC Bayes</span></span>
+<span id="cb174-2"><a href="AR.html#cb174-2" tabindex="-1"></a><span class="fu">hist</span>(mu, <span class="at">freq=</span><span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb174-3"><a href="AR.html#cb174-3" tabindex="-1"></a><span class="co"># abline(v = mean(x), lty = 3) # Estimación frecuentista</span></span>
+<span id="cb174-4"><a href="AR.html#cb174-4" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">mean</span>(mu), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>)  <span class="co"># Estimación Bayesiana</span></span>
+<span id="cb174-5"><a href="AR.html#cb174-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> q, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb174-6"><a href="AR.html#cb174-6" tabindex="-1"></a><span class="fu">curve</span>(f.aprox, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ic-bayes"></span>
 <img src="04-Metodos_generales_continuas_files/figure-html/ic-bayes-1.png" alt="Distribución de los valores generados y aproximación del intervalo de credibilidad." width="75%" />
 <p class="caption">

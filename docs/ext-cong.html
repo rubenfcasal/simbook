@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2.2 Extensiones | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2.2 Extensiones | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -57,7 +57,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -67,7 +67,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -129,6 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -460,40 +461,42 @@ div.csl-indent {
 <span class="math inline">\(x_{i}= a_0 + a_1 x_{i-1} + a_2 x_{i-2} + \cdots + a_{k} x_{i-k} \bmod m\)</span>,
 con periodo <span class="math inline">\(p\leq m^{k}-1\)</span>.</p></li>
 <li><p>No lineal:
-<span class="math inline">\(x_{i} = f\left( x_{i-1}, x_{i-2}, \cdots, x_{i-k} \right) \bmod m\)</span>.
+<span class="math inline">\(x_{i} = f\left(  x_{i-1}, x_{i-2}, \cdots, x_{i-k} \right) \bmod m\)</span>.
 Por ejemplo <span class="math inline">\(x_{i} = a_0 + a_1 x_{i-1} + a_2 x_{i-1}^2 \bmod m\)</span>.</p></li>
 <li><p>Matricial:
-<span class="math inline">\(\mathbf{x}_{i} = A_0 + A_1 \mathbf{x}_{i-1} + A_2 \mathbf{x}_{i-2} + \cdots + A_{k} \mathbf{x}_{i-k} \bmod m\)</span>.</p></li>
+<span class="math inline">\(\mathbf{x}_{i} = A_0 + A_1 \mathbf{x}_{i-1}
++ A_2 \mathbf{x}_{i-2} + \cdots
++ A_{k} \mathbf{x}_{i-k} \bmod m\)</span>.</p></li>
 </ul>
-<p>Un ejemplo de generador congruencia lineal múltiple es el denominado <em>generador de Fibonacci retardado</em> <span class="citation">(<a href="#ref-knuth1969" role="doc-biblioref">Knuth, 1969</a>)</span>:
+<p>Un ejemplo de generador congruencia lineal múltiple es el denominado <em>generador de Fibonacci retardado</em> <span class="citation">(<a href="#ref-knuth1969">Knuth, 1969</a>)</span>:
 <span class="math display">\[x_n = (x_{n-37} + x_{n-100}) \bmod 2^{30},\]</span>
 con un período aproximado de <span class="math inline">\(2^{129}\)</span> y que puede ser empleado en R estableciendo <code>kind</code> a <code>"Knuth-TAOCP"</code> en la llamada a <a href="https://rdrr.io/r/base/Random.html"><code>set.seed()</code></a> o <a href="https://rdrr.io/r/base/Random.html"><code>RNGkind()</code></a> (aunque sería preferible emplear <code>kind = "Knuth-TAOCP-2002"</code>; ver <a href="https://www-cs-faculty.stanford.edu/~knuth/news02.html#rng">Knuth Recent News 2002</a>).</p>
-<p>El generador <em>Mersenne-Twister</em> <span class="citation">(<a href="#ref-matsumoto1998" role="doc-biblioref">Matsumoto y Nishimura, 1998</a>)</span>, empleado por defecto en R, de periodo <span class="math inline">\(2^{19937}-1\)</span> y equidistribution en 623 dimensiones, se puede expresar como un generador congruencial matricial lineal.
+<p>El generador <em>Mersenne-Twister</em> <span class="citation">(<a href="#ref-matsumoto1998">Matsumoto y Nishimura, 1998</a>)</span>, empleado por defecto en R, de periodo <span class="math inline">\(2^{19937}-1\)</span> y equidistribution en 623 dimensiones, se puede expresar como un generador congruencial matricial lineal.
 En cada iteración (<em>twist</em>) genera 624 valores (los últimos componentes de la semilla son 624 enteros de 32 bits) y utiliza un índice para almacenar la posición correspondiente al último valor devuelto (el segundo componente de la semilla).
 Cada 624 generaciones cambia el conjunto de enteros y el índice se inicializa.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="ext-cong.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb53-2"><a href="ext-cong.html#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Generamos una simulación y almacenamos la semilla:</span></span>
-<span id="cb53-3"><a href="ext-cong.html#cb53-3" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>)</span>
-<span id="cb53-4"><a href="ext-cong.html#cb53-4" aria-hidden="true" tabindex="-1"></a>seed <span class="ot">&lt;-</span> .Random.seed</span>
-<span id="cb53-5"><a href="ext-cong.html#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Generamos 623 valores más:</span></span>
-<span id="cb53-6"><a href="ext-cong.html#cb53-6" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">623</span>)</span>
-<span id="cb53-7"><a href="ext-cong.html#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Durante las 624 generaciones solo cambió el índice: </span></span>
-<span id="cb53-8"><a href="ext-cong.html#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Número de componentes distintos:&quot;</span>, <span class="fu">sum</span>(seed <span class="sc">!=</span> .Random.seed), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="ext-cong.html#cb53-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb53-2"><a href="ext-cong.html#cb53-2" tabindex="-1"></a><span class="co"># Generamos una simulación y almacenamos la semilla:</span></span>
+<span id="cb53-3"><a href="ext-cong.html#cb53-3" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>)</span>
+<span id="cb53-4"><a href="ext-cong.html#cb53-4" tabindex="-1"></a>seed <span class="ot">&lt;-</span> .Random.seed</span>
+<span id="cb53-5"><a href="ext-cong.html#cb53-5" tabindex="-1"></a><span class="co"># Generamos 623 valores más:</span></span>
+<span id="cb53-6"><a href="ext-cong.html#cb53-6" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">623</span>)</span>
+<span id="cb53-7"><a href="ext-cong.html#cb53-7" tabindex="-1"></a><span class="co"># Durante las 624 generaciones solo cambió el índice: </span></span>
+<span id="cb53-8"><a href="ext-cong.html#cb53-8" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Número de componentes distintos:&quot;</span>, <span class="fu">sum</span>(seed <span class="sc">!=</span> .Random.seed), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## Número de componentes distintos: 1</code></pre>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="ext-cong.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Índice inicial:&quot;</span>, seed[<span class="dv">2</span>], <span class="st">&quot;, actual:&quot;</span>, .Random.seed[<span class="dv">2</span>], <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="ext-cong.html#cb55-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Índice inicial:&quot;</span>, seed[<span class="dv">2</span>], <span class="st">&quot;, actual:&quot;</span>, .Random.seed[<span class="dv">2</span>], <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## Índice inicial: 1 , actual: 624</code></pre>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="ext-cong.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Si generamos una más:</span></span>
-<span id="cb57-2"><a href="ext-cong.html#cb57-2" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>)</span>
-<span id="cb57-3"><a href="ext-cong.html#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Se actualiza el conjunto de enteros y el índice se vuelve a establecer a 1:</span></span>
-<span id="cb57-4"><a href="ext-cong.html#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Número de componentes distintos:&quot;</span>, <span class="fu">sum</span>(seed <span class="sc">!=</span> .Random.seed), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="ext-cong.html#cb57-1" tabindex="-1"></a><span class="co"># Si generamos una más:</span></span>
+<span id="cb57-2"><a href="ext-cong.html#cb57-2" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>)</span>
+<span id="cb57-3"><a href="ext-cong.html#cb57-3" tabindex="-1"></a><span class="co"># Se actualiza el conjunto de enteros y el índice se vuelve a establecer a 1:</span></span>
+<span id="cb57-4"><a href="ext-cong.html#cb57-4" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Número de componentes distintos:&quot;</span>, <span class="fu">sum</span>(seed <span class="sc">!=</span> .Random.seed), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## Número de componentes distintos: 624</code></pre>
 <!-- 
 # y el índice se inicializa:
 cat("Índice inicial:", seed[2], ", actual:", .Random.seed[2], "\n")
 -->
 <p>Un caso particular del generador lineal múltiple son los denominados <em>generadores de registros desfasados</em> (más relacionados con la criptografía).
-Se generan bits de forma secuencial considerando <span class="math inline">\(m=2\)</span> y <span class="math inline">\(a_{i} \in \left \{ 0,1\right \}\)</span> y se van combinando <span class="math inline">\(l\)</span> bits para obtener valores en el intervalo <span class="math inline">\((0, 1)\)</span>, por ejemplo <span class="math inline">\(u_i = 0 . x_{it+1} x_{it+2} \ldots x_{it+l}\)</span>, siendo <span class="math inline">\(t\)</span> un parámetro denominado <em>aniquilación</em> <span class="citation">(<a href="#ref-tausworthe1965" role="doc-biblioref">Tausworthe, 1965</a>)</span>.
-Los cálculos se pueden realizar rápidamente mediante operaciones lógicas (los sumandos de la combinación lineal se traducen en un “o” exclusivo XOR), empleando directamente los registros del procesador <span class="citation">(ver por ejemplo <a href="#ref-ripley1987stochastic" role="doc-biblioref">Ripley, 1987</a>, Algoritmo 2.1)</span>.</p>
+Se generan bits de forma secuencial considerando <span class="math inline">\(m=2\)</span> y <span class="math inline">\(a_{i} \in \left \{ 0,1\right \}\)</span> y se van combinando <span class="math inline">\(l\)</span> bits para obtener valores en el intervalo <span class="math inline">\((0, 1)\)</span>, por ejemplo <span class="math inline">\(u_i = 0 . x_{it+1} x_{it+2} \ldots x_{it+l}\)</span>, siendo <span class="math inline">\(t\)</span> un parámetro denominado <em>aniquilación</em> <span class="citation">(<a href="#ref-tausworthe1965">Tausworthe, 1965</a>)</span>.
+Los cálculos se pueden realizar rápidamente mediante operaciones lógicas (los sumandos de la combinación lineal se traducen en un “o” exclusivo XOR), empleando directamente los registros del procesador <span class="citation">(ver por ejemplo <a href="#ref-ripley1987stochastic">Ripley, 1987</a>, Algoritmo 2.1)</span>.</p>
 <p>Otras alternativas consisten en la combinanción de varios generadores, las más empleadas son:</p>
 <ul>
 <li><p>Combinar las salidas: por ejemplo <span class="math inline">\(u_{i}=\sum_{l=1}^L u_{i}^{(l)} \bmod 1\)</span>, donde <span class="math inline">\(u_{i}^{(l)}\)</span> es el <span class="math inline">\(i\)</span>-ésimo valor obtenido con el generador <span class="math inline">\(l\)</span>.</p></li>
@@ -503,7 +506,7 @@ Los cálculos se pueden realizar rápidamente mediante operaciones lógicas (los
 PENDIENTE:  
 Ejemplo combinar salidas  generador Wichmann-Hill (1982)  https://en.wikipedia.org/wiki/Wichmann%E2%80%93Hill 
 -->
-<p>El generador <em>L’Ecuyer-CMRG</em> <span class="citation">(<a href="#ref-lecuyer99" role="doc-biblioref">L’Ecuyer, 1999</a>)</span>, empleado como base para la generación de múltiples secuencias en el paquete <code>parallel</code>, combina dos generadores concruenciales lineales múltiples de orden <span class="math inline">\(k=3\)</span> (el periodo aproximado es <span class="math inline">\(2^{191} \approx 3.1 \times 10^{57}\)</span>):</p>
+<p>El generador <em>L’Ecuyer-CMRG</em> <span class="citation">(<a href="#ref-lecuyer99">L’Ecuyer, 1999</a>)</span>, empleado como base para la generación de múltiples secuencias en el paquete <code>parallel</code>, combina dos generadores concruenciales lineales múltiples de orden <span class="math inline">\(k=3\)</span> (el periodo aproximado es <span class="math inline">\(2^{191} \approx 3.1 \times 10^{57}\)</span>):</p>
 <p><span class="math display">\[x_{1,n} = (1403580 x_{1,n−2} − 810728 x_{1,n−3}) \bmod  2^{32} − 209\]</span>
 <span class="math display">\[x_{2,n} = (527612 x_{2,n−1} − 1370589 x_{2,n−3}) \bmod  2^{32} − 22853\]</span>
 <span class="math display">\[z_n = (x_{1,n} − x_{2,n}) \bmod  4294967087\]</span>
@@ -518,7 +521,7 @@ z_n/4294967088 &amp; \text{ si } z_n &gt; 0\\
 \]</span></p>
 </div>
 <h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
 <div id="ref-knuth1969" class="csl-entry">
 Knuth, D. E. (1969). <em>The Art of Computer Programming: Semi-numerical algorithms</em> (Vol. 2). Addison-Wesley. <a href="https://www-cs-faculty.stanford.edu/~knuth/taocp.html">https://www-cs-faculty.stanford.edu/~knuth/taocp.html</a>
 </div>

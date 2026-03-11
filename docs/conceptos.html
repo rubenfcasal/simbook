@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1.1 Conceptos básicos | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1.1 Conceptos básicos | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -57,7 +57,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -67,7 +67,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -129,6 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -468,7 +469,7 @@ Habría dos tipos de modelos:</p>
 <li><p>Modelos estocásticos (con componente aleatoria): tienen en cuenta la incertidumbre asociada al modelo. Tradicionalmente se supone que esta incertidumbre es debida a que no se dispone de toda la información sobre las variables que influyen en el fenómeno en estudio (puede ser debida simplemente a que haya errores de medida), lo que se conoce como <em>aleatoriedad aparente</em>:</p>
 <blockquote>
 <p>“Nothing in Nature is random… a thing appears random only through the incompleteness of our knowledge.”</p>
-<p>— <span class="citation">Spinoza (<a href="#ref-spinoza1667ethics" role="doc-biblioref">1677</a>)</span></p>
+<p>— <span class="citation">Spinoza (<a href="#ref-spinoza1667ethics">1677</a>)</span></p>
 </blockquote>
 <p>aunque hoy en día gana peso la idea de la física cuántica de que en el fondo hay una <em>aleatoriedad intrínseca</em><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p></li>
 </ul>
@@ -491,33 +492,33 @@ Aproximación por simulación
 <h3><span class="header-section-number">1.1.1</span> Ejemplo<a href="conceptos.html#ealbum" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Supongamos que nos regalan un álbum con <span class="math inline">\(n = 75\)</span> cromos, que se venden sobres con <span class="math inline">\(m = 6\)</span> cromos por 0.8€, y que estamos interesados en el número de sobres que hay que comprar para completar la colección, por ejemplo en su valor medio.</p>
 <p>Podemos aproximar la distribución del número de sobres para completar la colección a partir de <span class="math inline">\(nsim=1000\)</span> simulaciones de coleccionistas de cromos:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="conceptos.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parámetros</span></span>
-<span id="cb3-2"><a href="conceptos.html#cb3-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">75</span> <span class="co"># Número total de cromos</span></span>
-<span id="cb3-3"><a href="conceptos.html#cb3-3" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">6</span>  <span class="co"># Número de cromos en cada sobre</span></span>
-<span id="cb3-4"><a href="conceptos.html#cb3-4" aria-hidden="true" tabindex="-1"></a>repe <span class="ot">&lt;-</span> <span class="cn">TRUE</span> <span class="co"># Repetición de cromos en cada sobre</span></span>
-<span id="cb3-5"><a href="conceptos.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Número de simulaciones</span></span>
-<span id="cb3-6"><a href="conceptos.html#cb3-6" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb3-7"><a href="conceptos.html#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultados simulación</span></span>
-<span id="cb3-8"><a href="conceptos.html#cb3-8" aria-hidden="true" tabindex="-1"></a>nsobres <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nsim)</span>
-<span id="cb3-9"><a href="conceptos.html#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># evol &lt;- vector(&quot;list&quot;, nsim)</span></span>
-<span id="cb3-10"><a href="conceptos.html#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Fijar semilla</span></span>
-<span id="cb3-11"><a href="conceptos.html#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb3-12"><a href="conceptos.html#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Bucle simulación</span></span>
-<span id="cb3-13"><a href="conceptos.html#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (isim <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
-<span id="cb3-14"><a href="conceptos.html#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># seed &lt;- .Random.seed    # .Random.seed &lt;- seed</span></span>
-<span id="cb3-15"><a href="conceptos.html#cb3-15" aria-hidden="true" tabindex="-1"></a>  album <span class="ot">&lt;-</span> <span class="fu">logical</span>(n)</span>
-<span id="cb3-16"><a href="conceptos.html#cb3-16" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># Número de sobres</span></span>
-<span id="cb3-17"><a href="conceptos.html#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span>(<span class="fu">sum</span>(album) <span class="sc">&lt;</span> n) {</span>
-<span id="cb3-18"><a href="conceptos.html#cb3-18" aria-hidden="true" tabindex="-1"></a>    i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb3-19"><a href="conceptos.html#cb3-19" aria-hidden="true" tabindex="-1"></a>    album[<span class="fu">sample</span>(n,m, <span class="at">replace =</span> repe)] <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
-<span id="cb3-20"><a href="conceptos.html#cb3-20" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb3-21"><a href="conceptos.html#cb3-21" aria-hidden="true" tabindex="-1"></a>  nsobres[isim] <span class="ot">&lt;-</span> i</span>
-<span id="cb3-22"><a href="conceptos.html#cb3-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="conceptos.html#cb3-1" tabindex="-1"></a><span class="co"># Parámetros</span></span>
+<span id="cb3-2"><a href="conceptos.html#cb3-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">75</span> <span class="co"># Número total de cromos</span></span>
+<span id="cb3-3"><a href="conceptos.html#cb3-3" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">6</span>  <span class="co"># Número de cromos en cada sobre</span></span>
+<span id="cb3-4"><a href="conceptos.html#cb3-4" tabindex="-1"></a>repe <span class="ot">&lt;-</span> <span class="cn">TRUE</span> <span class="co"># Repetición de cromos en cada sobre</span></span>
+<span id="cb3-5"><a href="conceptos.html#cb3-5" tabindex="-1"></a><span class="co"># Número de simulaciones</span></span>
+<span id="cb3-6"><a href="conceptos.html#cb3-6" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb3-7"><a href="conceptos.html#cb3-7" tabindex="-1"></a><span class="co"># Resultados simulación</span></span>
+<span id="cb3-8"><a href="conceptos.html#cb3-8" tabindex="-1"></a>nsobres <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nsim)</span>
+<span id="cb3-9"><a href="conceptos.html#cb3-9" tabindex="-1"></a><span class="co"># evol &lt;- vector(&quot;list&quot;, nsim)</span></span>
+<span id="cb3-10"><a href="conceptos.html#cb3-10" tabindex="-1"></a><span class="co"># Fijar semilla</span></span>
+<span id="cb3-11"><a href="conceptos.html#cb3-11" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb3-12"><a href="conceptos.html#cb3-12" tabindex="-1"></a><span class="co"># Bucle simulación</span></span>
+<span id="cb3-13"><a href="conceptos.html#cb3-13" tabindex="-1"></a><span class="cf">for</span> (isim <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
+<span id="cb3-14"><a href="conceptos.html#cb3-14" tabindex="-1"></a>  <span class="co"># seed &lt;- .Random.seed    # .Random.seed &lt;- seed</span></span>
+<span id="cb3-15"><a href="conceptos.html#cb3-15" tabindex="-1"></a>  album <span class="ot">&lt;-</span> <span class="fu">logical</span>(n)</span>
+<span id="cb3-16"><a href="conceptos.html#cb3-16" tabindex="-1"></a>  i <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># Número de sobres</span></span>
+<span id="cb3-17"><a href="conceptos.html#cb3-17" tabindex="-1"></a>  <span class="cf">while</span>(<span class="fu">sum</span>(album) <span class="sc">&lt;</span> n) {</span>
+<span id="cb3-18"><a href="conceptos.html#cb3-18" tabindex="-1"></a>    i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb3-19"><a href="conceptos.html#cb3-19" tabindex="-1"></a>    album[<span class="fu">sample</span>(n,m, <span class="at">replace =</span> repe)] <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb3-20"><a href="conceptos.html#cb3-20" tabindex="-1"></a>  }</span>
+<span id="cb3-21"><a href="conceptos.html#cb3-21" tabindex="-1"></a>  nsobres[isim] <span class="ot">&lt;-</span> i</span>
+<span id="cb3-22"><a href="conceptos.html#cb3-22" tabindex="-1"></a>}</span></code></pre></div>
 <p>Distribución del número de sobres para completar la colección
 (aproximada por simulación):</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="conceptos.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nsobres, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb4-2"><a href="conceptos.html#cb4-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Número de sobres&quot;</span>)</span>
-<span id="cb4-3"><a href="conceptos.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(nsobres))</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="conceptos.html#cb4-1" tabindex="-1"></a><span class="fu">hist</span>(nsobres, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb4-2"><a href="conceptos.html#cb4-2" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Número de sobres&quot;</span>)</span>
+<span id="cb4-3"><a href="conceptos.html#cb4-3" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(nsobres))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:distr-ealbum"></span>
 <img src="01-Introduccion_files/figure-html/distr-ealbum-1.png" alt="Aproximación por simulación de la distribución del número de sobres para completar la colección." width="75%" />
 <p class="caption">
@@ -525,8 +526,8 @@ Figura 1.1: Aproximación por simulación de la distribución del número de sob
 </p>
 </div>
 <p>Aproximación por simulación del número medio de sobres para completar la colección:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="conceptos.html#cb5-1" aria-hidden="true" tabindex="-1"></a>sol <span class="ot">&lt;-</span> <span class="fu">mean</span>(nsobres)</span>
-<span id="cb5-2"><a href="conceptos.html#cb5-2" aria-hidden="true" tabindex="-1"></a>sol</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="conceptos.html#cb5-1" tabindex="-1"></a>sol <span class="ot">&lt;-</span> <span class="fu">mean</span>(nsobres)</span>
+<span id="cb5-2"><a href="conceptos.html#cb5-2" tabindex="-1"></a>sol</span></code></pre></div>
 <pre><code>## [1] 61.775</code></pre>
 <!-- 
 Análisis de la convergencia:
@@ -538,22 +539,22 @@ plot(1:nsim, cumsum(nsobres)/1:nsim, type = "l",
 abline(h = sol)
 ```
 
-<img src="01-Introduccion_files/figure-html/unnamed-chunk-3-1.png" width="75%" style="display: block; margin: auto;" />
+<img src="01-Introduccion_files/figure-html/unnamed-chunk-3-1.png" alt="" width="75%" style="display: block; margin: auto;" />
 -->
 <p>Número mínimo de sobres para asegurar de que se completa la colección con una probabilidad del 95%:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="conceptos.html#cb7-1" aria-hidden="true" tabindex="-1"></a>nmin <span class="ot">&lt;-</span> <span class="fu">quantile</span>(nsobres, <span class="at">probs =</span> <span class="fl">0.95</span>)</span>
-<span id="cb7-2"><a href="conceptos.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ceiling</span>(nmin)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="conceptos.html#cb7-1" tabindex="-1"></a>nmin <span class="ot">&lt;-</span> <span class="fu">quantile</span>(nsobres, <span class="at">probs =</span> <span class="fl">0.95</span>)</span>
+<span id="cb7-2"><a href="conceptos.html#cb7-2" tabindex="-1"></a><span class="fu">ceiling</span>(nmin)</span></code></pre></div>
 <pre><code>## 95% 
 ##  92</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="conceptos.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reserva de dinero para poder completar la colección el 95% de las veces:</span></span>
-<span id="cb9-2"><a href="conceptos.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ceiling</span>(nmin)<span class="sc">*</span><span class="fl">0.8</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="conceptos.html#cb9-1" tabindex="-1"></a><span class="co"># Reserva de dinero para poder completar la colección el 95% de las veces:</span></span>
+<span id="cb9-2"><a href="conceptos.html#cb9-2" tabindex="-1"></a><span class="fu">ceiling</span>(nmin)<span class="sc">*</span><span class="fl">0.8</span></span></code></pre></div>
 <pre><code>##  95% 
 ## 73.6</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="conceptos.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nsobres, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb11-2"><a href="conceptos.html#cb11-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Número de sobres&quot;</span>)</span>
-<span id="cb11-3"><a href="conceptos.html#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(nsobres))</span>
-<span id="cb11-4"><a href="conceptos.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> sol)</span>
-<span id="cb11-5"><a href="conceptos.html#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> nmin, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="conceptos.html#cb11-1" tabindex="-1"></a><span class="fu">hist</span>(nsobres, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb11-2"><a href="conceptos.html#cb11-2" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Número de sobres&quot;</span>)</span>
+<span id="cb11-3"><a href="conceptos.html#cb11-3" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(nsobres))</span>
+<span id="cb11-4"><a href="conceptos.html#cb11-4" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> sol)</span>
+<span id="cb11-5"><a href="conceptos.html#cb11-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> nmin, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:distr-ealbum2"></span>
 <img src="01-Introduccion_files/figure-html/distr-ealbum2-1.png" alt="Aproximaciones por simulación de la distribución del número de sobres para completar la colección, de su valor esperado (línea vertical continua) y del cuantil 0.95 (línea vertical discontinua)." width="75%" />
 <p class="caption">
@@ -562,7 +563,7 @@ Figura 1.2: Aproximaciones por simulación de la distribución del número de so
 </div>
 <p>Por supuesto, la distribución del gasto necesario para completar la colección es esta misma reescalada.</p>
 
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="conceptos.html#cb12-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> simres<span class="sc">::</span><span class="fu">mc.plot</span>(nsobres<span class="sc">*</span><span class="fl">0.8</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="conceptos.html#cb12-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> simres<span class="sc">::</span><span class="fu">mc.plot</span>(nsobres<span class="sc">*</span><span class="fl">0.8</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:mc-plot-ealbum"></span>
 <img src="01-Introduccion_files/figure-html/mc-plot-ealbum-1.png" alt="Gráficos exploratorios de las simulaciones del gasto para completar la colección obtenidos con la función simres::mc.plot()." width="100%" />
 <p class="caption">
@@ -570,13 +571,13 @@ Figura 1.3: Gráficos exploratorios de las simulaciones del gasto para completar
 </p>
 </div>
 <p>Aproximación del gasto medio:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="conceptos.html#cb13-1" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>approx  <span class="co"># sol*0.8</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="conceptos.html#cb13-1" tabindex="-1"></a>res<span class="sc">$</span>approx  <span class="co"># sol*0.8</span></span></code></pre></div>
 <pre><code>## [1] 49.42</code></pre>
 <p>En el Ejercicio <a href="ejercicios.html#exr:album">1.5</a> se propone modificar este código para obtener información adicional sobre la evolución del número de cromos distintos dependiendo de los sobres comprados por un coleccionista.</p>
 </div>
 <div id="ventajas-e-inconvenientes-de-la-simulación" class="section level3 hasAnchor" number="1.1.2">
 <h3><span class="header-section-number">1.1.2</span> Ventajas e inconvenientes de la simulación<a href="conceptos.html#ventajas-e-inconvenientes-de-la-simulación" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>A modo de resumen, la simulación presenta ventajas respecto a la experimentación real o a la resolución analítica en las siguientes situaciones <span class="citation">(que coinciden en gran medida con las ya descritas por <a href="#ref-shannon1975systems" role="doc-biblioref">Shannon, 1975</a>)</span>:</p>
+<p>A modo de resumen, la simulación presenta ventajas respecto a la experimentación real o a la resolución analítica en las siguientes situaciones <span class="citation">(que coinciden en gran medida con las ya descritas por <a href="#ref-shannon1975systems">Shannon, 1975</a>)</span>:</p>
 <ul>
 <li><p>Cuando la resolución analítica no puede llevarse a cabo (todavía no se han desarrollado métodos analíticos para resolver el modelo matemático, como es el caso de algunos modelos de colas).</p></li>
 <li><p>Cuando existen medios para resolver analíticamente el problema, pero dicha resolución es demasiado complicada o ardua (comparada con la simplicidad de la solución mediante simulación), o asumen simplificaciones (hipótesis estructurales) que no son muy realistas (y en el mejor de los casos proporcionarían una solución aproximada).</p></li>
@@ -626,7 +627,7 @@ También pud
 </div>
 </div>
 <h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
 <div id="ref-metropolis1949" class="csl-entry">
 Metropolis, N., y Ulam, S. (1949). The monte carlo method. <em>Journal of the American Statistical Association</em>, <em>44</em>(247), 335-341.
 </div>
@@ -642,7 +643,7 @@ Spinoza, B. (1677). <em>Ethics</em>.
 <ol start="1">
 <li id="fn1"><p>Como ejemplo, en física cuántica, la <a href="https://es.wikipedia.org/wiki/Ecuaci%C3%B3n_de_Schr%C3%B6dinger">Ecuación de Schrödinger</a> es un modelo determinista que describe la evolución en el tiempo de la función de onda de un sistema. Sin embargo, como las funciones de onda pueden cambiar de forma aleatoria al realizar una medición, se emplea la <a href="https://es.wikipedia.org/wiki/Regla_de_Born">regla de Born</a> para modelar las probabilidades de las distintas posibilidades (algo que inicialmente generó rechazo, dió lugar a la famosa frase de Einstein “Dios no juega a los dados”, pero experimentos posteriores parecen confirmar). Por tanto en la práctica se emplea un modelo estocástico.<a href="conceptos.html#fnref1" class="footnote-back">↩︎</a></p></li>
 <li id="fn2"><p>Estos métodos surgieron a finales de la década de 1940 como resultado del trabajo realizado por Stanislaw Ulam y John von Neumann en el proyecto Manhattan para el desarrollo de la bomba atómica. Al parecer, como se trataba de una investigación secreta, Nicholas Metropolis sugirió emplear el nombre clave de “Monte-Carlo” en referencia al casino de Monte Carlo de Mónaco.
-Esta denominación se empleó por primera vez en una publicación en <span class="citation">Metropolis y Ulam (<a href="#ref-metropolis1949" role="doc-biblioref">1949</a>)</span>.<a href="conceptos.html#fnref2" class="footnote-back">↩︎</a></p></li>
+Esta denominación se empleó por primera vez en una publicación en <span class="citation">Metropolis y Ulam (<a href="#ref-metropolis1949">1949</a>)</span>.<a href="conceptos.html#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

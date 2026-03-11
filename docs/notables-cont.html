@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4.5 Métodos específicos para la generación de algunas distribuciones notables | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4.5 Métodos específicos para la generación de algunas distribuciones notables | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -57,7 +57,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -67,7 +67,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -129,6 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -455,7 +456,7 @@ div.csl-indent {
 <div id="notables-cont" class="section level2 hasAnchor" number="4.5">
 <h2><span class="header-section-number">4.5</span> Métodos específicos para la generación de algunas distribuciones notables<a href="notables-cont.html#notables-cont" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>En el pasado se ha realizado un esfuerzo considerable para desarrollar métodos eficientes para la simulación de las distribuciones de probabilidad más importantes.
-Estos algoritmos se describen en la mayoría de los libros clásicos de simulación [e.g. <span class="citation">Cao Abad (<a href="#ref-cao2002" role="doc-biblioref">2002</a>)</span>, cap. 5)<a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a>, principalmente porque resultaba necesario implementar estos métodos durante el desarrollo de software estadístico.
+Estos algoritmos se describen en la mayoría de los libros clásicos de simulación [e.g. <span class="citation">Cao Abad (<a href="#ref-cao2002">2002</a>)</span>, cap. 5)<a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a>, principalmente porque resultaba necesario implementar estos métodos durante el desarrollo de software estadístico.
 Hoy en día estos algoritmos están disponibles en numerosas bibliotecas y no es necesario su implementación (por ejemplo, se puede recurrir a R o emplear su librería matemática disponible en <a href="https://svn.r-project.org/R/trunk/src/nmath" class="uri">https://svn.r-project.org/R/trunk/src/nmath</a>).
 Sin embargo, además de que muchos de ellos servirían como ilustración de la aplicación de los métodos generales expuestos en secciones anteriores, pueden servir como punto de partida para la generación de otras distribuciones.</p>
 <p>Entre los distintos métodos disponibles para la generación de las distribuciones continuas más conocidas podríamos destacar:</p>
@@ -465,7 +466,7 @@ Sin embargo, además de que muchos de ellos servirían como ilustración de la a
 </ul>
 <div id="método-de-box-müller" class="section level3 hasAnchor" number="4.5.1">
 <h3><span class="header-section-number">4.5.1</span> Método de Box-Müller<a href="notables-cont.html#método-de-box-müller" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Se basa en la siguiente propiedad. Dadas dos variables aleatorias independientes <span class="math inline">\(E \sim \exp\left( 1\right)\)</span> y
+<p>Se basa en la siguiente propiedad. Dadas dos variables aleatorias independientes <span class="math inline">\(E \sim \exp\left(  1\right)\)</span> y
 <span class="math inline">\(U \sim \mathcal{U}( 0, 1 )\)</span>, las variables
 <span class="math inline">\(\sqrt{2E} \cos 2\pi U\)</span> y <span class="math inline">\(\sqrt{2E}\operatorname{sen} 2\pi U\)</span> son
 <span class="math inline">\(\mathcal{N}( 0, 1 )\)</span> independientes.</p>
@@ -478,7 +479,7 @@ Sin embargo, además de que muchos de ellos servirían como ilustración de la a
 </ol>
 </div>
 <p>Podemos hacer que la función <code>rnorm()</code> de R emplee este algoritmo estableciendo el parámetro <code>normal.kind</code> a <code>"Box-Muller"</code> en una llamada previa a <code>set.seed()</code> o <code>RNGkind()</code>.</p>
-<p>Este método está relacionado con el denominado <em>método FFT</em> <span class="citation">(transformada rápida de Fourier, e.g. <a href="#ref-davies1987" role="doc-biblioref">Davies y Harte, 1987</a>)</span> para la generación de una normal multidimensional con dependencia, que resulta ser equivalente al <em>Circular embedding</em> <span class="citation">(<a href="#ref-dietrich1997" role="doc-biblioref">Dietrich y Newsam, 1997</a>)</span>.
+<p>Este método está relacionado con el denominado <em>método FFT</em> <span class="citation">(transformada rápida de Fourier, e.g. <a href="#ref-davies1987">Davies y Harte, 1987</a>)</span> para la generación de una normal multidimensional con dependencia, que resulta ser equivalente al <em>Circular embedding</em> <span class="citation">(<a href="#ref-dietrich1997">Dietrich y Newsam, 1997</a>)</span>.
 La idea de estos métodos es que, considerando módulos exponenciales y fases uniformes generamos normales independientes, pero cambiando la varianza de los módulos (<span class="math inline">\(W_1\)</span>) podemos inducir dependencia.
 Adicionalmente, cambiando la distribución de las fases (<span class="math inline">\(W_2\)</span>) se generan distribuciones distintas de la normal.</p>
 </div>
@@ -486,11 +487,11 @@ Adicionalmente, cambiando la distribución de las fases (<span class="math inlin
 <h3><span class="header-section-number">4.5.2</span> Simulación de la distribución beta<a href="notables-cont.html#simulación-de-la-distribución-beta" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Existen multitud de algoritmos para simular la distribución <span class="math inline">\(\mathcal{Beta}(a, b)\)</span>.
 Probablemente, el más sencillo de todos es el que se obtiene a partir de la distribución gamma o de la chi-cuadrado, si se dispone de un algoritmo para generar estas distribuciones, empleando la definición habitual de la distribución beta:</p>
-<p>Si <span class="math inline">\(Y \sim \mathcal{Gamma}(a, s)\)</span> y <span class="math inline">\(Z \sim \mathcal{Gamma}(b, s)\)</span> son independientes, entonces <span class="math display">\[X=\frac{Y}{Y+Z} \sim \mathcal{Beta}(a, b).\]</span></p>
+<p>Si <span class="math inline">\(Y \sim \mathcal{Gamma}(a, s)\)</span> y <span class="math inline">\(Z \sim  \mathcal{Gamma}(b, s)\)</span> son independientes, entonces <span class="math display">\[X=\frac{Y}{Y+Z} \sim \mathcal{Beta}(a, b).\]</span></p>
 <p>Como la distribución resultante no depende de <span class="math inline">\(s\)</span> y <span class="math inline">\(\chi^2_{n} \overset{d}{=} \mathcal{Gamma}\left(\tfrac{n}{2}, \tfrac{1}{2}\right)\)</span>, se podría considerar <span class="math inline">\(Y \sim \chi^2_{2a}\)</span> y <span class="math inline">\(Z \sim \chi^2_{2b}\)</span> independientes.</p>
 <p>También se podrían emplear resultado conocidos relacionados con esta distribución, como por ejemplo que la distribución del estadístico de orden <span class="math inline">\(k\)</span> de una muestra de tamaño <span class="math inline">\(n\)</span> de una distribución uniforme tiene una distribución beta:
 <span class="math display">\[U_{(k)} \sim \mathcal{Beta}(k,n+1-k).\]</span>
-El resultado es el algoritmo de <span class="citation">Fox (<a href="#ref-fox1963" role="doc-biblioref">1963</a>)</span>, que podría ser adecuado para simular esta distribución cuando <span class="math inline">\(a, b \in \mathbb{N}\)</span> y son valores pequeños.</p>
+El resultado es el algoritmo de <span class="citation">Fox (<a href="#ref-fox1963">1963</a>)</span>, que podría ser adecuado para simular esta distribución cuando <span class="math inline">\(a, b \in \mathbb{N}\)</span> y son valores pequeños.</p>
 <div class="conjecture">
 <p><span id="cnj:fox" class="conjecture"><strong>Algoritmo 4.9  (Fox, 1963) </strong></span><br></p>
 <ol style="list-style-type: decimal">
@@ -502,7 +503,7 @@ El resultado es el algoritmo de <span class="citation">Fox (<a href="#ref-fox196
 <p>Es obvio que este algoritmo puede resultar muy lento si alguno de los dos parámetros es elevado (pues habrá que simular muchas uniformes para conseguir un valor simulado de la beta).
 Además, en función de cuál de los dos parámetros, <span class="math inline">\(a\)</span> ó <span class="math inline">\(b\)</span>, sea mayor, resultará más eficiente, en el paso 2, comenzar a ordenar por el mayor, luego el segundo mayor, y así sucesivamente, o hacerlo empezando por el menor.
 En cualquier caso, es obvio que no es necesario ordenar todos los valores <span class="math inline">\(U_{i}\)</span> generados, sino tan sólo encontrar el que ocupa el lugar <span class="math inline">\(a\)</span>-ésimo.</p>
-<p>Un método válido aunque <span class="math inline">\(a\)</span> ó <span class="math inline">\(b\)</span> no sean enteros es el dado por el algoritmo de <span class="citation">Jöhnk (<a href="#ref-johnk1964" role="doc-biblioref">1964</a>)</span>.</p>
+<p>Un método válido aunque <span class="math inline">\(a\)</span> ó <span class="math inline">\(b\)</span> no sean enteros es el dado por el algoritmo de <span class="citation">Jöhnk (<a href="#ref-johnk1964">1964</a>)</span>.</p>
 <div class="conjecture">
 <p><span id="cnj:johnk" class="conjecture"><strong>Algoritmo 4.10  (Jöhnk, 1964) </strong></span><br></p>
 <ol style="list-style-type: decimal">
@@ -515,20 +516,20 @@ En cualquier caso, es obvio que no es necesario ordenar todos los valores <span 
 <p>El método resulta extremadamente ineficiente para <span class="math inline">\(a\)</span> ó <span class="math inline">\(b\)</span> mayores que 1.
 Esto es debido a que la condición <span class="math inline">\(S\leq1\)</span> del paso 3 puede tardar muchísimo en verificarse.
 Por este motivo, el algoritmo de Jöhnk sólo es recomendable para <span class="math inline">\(a&lt;1\)</span> y <span class="math inline">\(b&lt;1\)</span>.
-Como remedio a esto puede usarse el algoritmo de <span class="citation">Cheng (<a href="#ref-cheng1978" role="doc-biblioref">1978</a>)</span> que es algo más complicado de implementar<a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a> pero mucho más eficiente.</p>
+Como remedio a esto puede usarse el algoritmo de <span class="citation">Cheng (<a href="#ref-cheng1978">1978</a>)</span> que es algo más complicado de implementar<a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a> pero mucho más eficiente.</p>
 <div class="conjecture">
 <p><span id="cnj:cheng" class="conjecture"><strong>Algoritmo 4.11  (Cheng, 1978) </strong></span><br></p>
 <p>Inicialización:</p>
 <ol style="list-style-type: decimal">
 <li><p>Hacer <span class="math inline">\(\alpha = a + b\)</span>.</p></li>
-<li><p>Si <span class="math inline">\(\min(a,b) \leq1\)</span> entonces hacer <span class="math inline">\(\beta=\frac1{\min( a,b)}\)</span>, en otro caso hacer <span class="math inline">\(\beta=\sqrt{\frac{\alpha-2}{2pq-\alpha}}\)</span>.</p></li>
+<li><p>Si <span class="math inline">\(\min(a,b) \leq1\)</span> entonces hacer <span class="math inline">\(\beta=\frac1{\min(  a,b)}\)</span>, en otro caso hacer <span class="math inline">\(\beta=\sqrt{\frac{\alpha-2}{2pq-\alpha}}\)</span>.</p></li>
 <li><p>Hacer <span class="math inline">\(\gamma=a+\frac1\beta\)</span>.</p></li>
 </ol>
 <p>Simulación:</p>
 <ol style="list-style-type: decimal">
 <li><p>Generar <span class="math inline">\(U_1, U_2\sim \mathcal{U}(0, 1)\)</span>.</p></li>
-<li><p>Hacer <span class="math inline">\(V=\beta\cdot\ln\left( \frac{U_1}{1-U_1}\right)\)</span> y <span class="math inline">\(W=a\cdot e^{V}\)</span>.</p></li>
-<li><p>Si <span class="math inline">\(\alpha\cdot\ln\left( \frac\alpha{b+W}\right) +\gamma V-\ln4 \ge \ln\left( U_1^{2}U_2\right)\)</span> devolver <span class="math inline">\(X=\frac W{b+W}\)</span>,</p>
+<li><p>Hacer <span class="math inline">\(V=\beta\cdot\ln\left(  \frac{U_1}{1-U_1}\right)\)</span> y <span class="math inline">\(W=a\cdot e^{V}\)</span>.</p></li>
+<li><p>Si <span class="math inline">\(\alpha\cdot\ln\left( \frac\alpha{b+W}\right) +\gamma V-\ln4 \ge \ln\left(  U_1^{2}U_2\right)\)</span> devolver <span class="math inline">\(X=\frac W{b+W}\)</span>,</p>
 <p>en caso contrario volver al paso 1.</p></li>
 </ol>
 </div>
@@ -537,7 +538,7 @@ Como remedio a esto puede usarse el algoritmo de <span class="citation">Cheng (<
 </div>
 <!-- </div> -->
 <h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
 <div id="ref-cao2002" class="csl-entry">
 Cao Abad, R. (2002). <em>Introducci<span>ó</span>n a la Simulaci<span>ó</span>n y a la Teor<span>í</span>a de Colas</em>. Netbiblo. <a href="https://books.google.es/books?id=lET6IPBm2vMC">https://books.google.es/books?id=lET6IPBm2vMC</a>
 </div>
@@ -561,7 +562,7 @@ Jöhnk, M. (1964). Generation of beta distribution and gamma distribution random
 <hr />
 <ol start="21">
 <li id="fn21"><p>Cuidado con la notación y la parametrización empleadas, puede variar entre referencias.
-Por ejemplo, en <span class="citation">Cao Abad (<a href="#ref-cao2002" role="doc-biblioref">2002</a>)</span> la notación de la distribución Gamma es ligeramente distinta a la empleada en R y en el presente libro.<a href="notables-cont.html#fnref21" class="footnote-back">↩︎</a></p></li>
+Por ejemplo, en <span class="citation">Cao Abad (<a href="#ref-cao2002">2002</a>)</span> la notación de la distribución Gamma es ligeramente distinta a la empleada en R y en el presente libro.<a href="notables-cont.html#fnref21" class="footnote-back">↩︎</a></p></li>
 <li id="fn22"><p>R implementa este algoritmo en el fichero fuente <a href="https://svn.r-project.org/R/trunk/src/nmath/rbeta.c">rbeta.c</a>.<a href="notables-cont.html#fnref22" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>

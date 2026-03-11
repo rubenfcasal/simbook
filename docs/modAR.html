@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4.3 Modificaciones del método de aceptación-rechazo | Técnicas de Simulación y Remuestreo</title>
   <meta name="description" content="Apuntes de Simulación Estadística y Remuestreo." />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4.3 Modificaciones del método de aceptación-rechazo | Técnicas de Simulación y Remuestreo" />
   <meta property="og:type" content="book" />
@@ -57,7 +57,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -67,7 +67,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -129,6 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -461,8 +462,9 @@ div.csl-indent {
 <li><p>El tiempo necesario para hacer la comparación en el paso 3.</p></li>
 </ul>
 <p>En ciertos casos el tiempo de computación necesario para evaluar <span class="math inline">\(f(x)\)</span> puede ser alto.
-Para evitar evaluaciones de la densidad se puede emplear una función “squeeze” que aproxime la densidad por abajo (una envolvente inferior):
-<span class="math display">\[s(x)\leq f(x) \text{, }\forall x\in \mathbb{R}.\]</span></p>
+Para evitar evaluaciones de la densidad objetivo se puede emplear una función “squeeze” que aproxime la densidad por abajo (una envolvente inferior; ver Figura <a href="modAR.html#fig:squeeze">4.12</a>):
+<span class="math display">\[s(x)\leq f(x) \text{, }\forall x\in \mathbb{R},\]</span>
+dando lugar al algoritmo:</p>
 <div class="conjecture">
 <p><span id="cnj:marsaglia" class="conjecture"><strong>Algoritmo 4.4  (Marsaglia, 1977) </strong></span><br></p>
 <ol style="list-style-type: decimal">
@@ -475,9 +477,9 @@ devolver <span class="math inline">\(X=T\)</span>,</p>
 </ol>
 </div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:squeeze"></span>
-&lt;img src=“images/squeeze.png” alt=“Ilustración del algoritmo de aceptación-rechazo con envolvente inferior (función”squeeze”).” width=“75%” /&gt;
+<img src="images/squeeze.png" alt="Ilustración del algoritmo de aceptación-rechazo con envolvente inferior." width="75%" />
 <p class="caption">
-Figura 4.12: Ilustración del algoritmo de aceptación-rechazo con envolvente inferior (función “squeeze”).
+Figura 4.12: Ilustración del algoritmo de aceptación-rechazo con envolvente inferior.
 </p>
 </div>
 <p>Cuanto mayor sea el área bajo <span class="math inline">\(s(x)\)</span> (más próxima a 1)
@@ -490,16 +492,19 @@ la densidad objetivo es cóncava o convexa.</p>
 <div id="ars" class="section level3 hasAnchor" number="4.3.1">
 <h3><span class="header-section-number">4.3.1</span> Muestreo por rechazo adaptativo (ARS)<a href="modAR.html#ars" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Supongamos que <span class="math inline">\(f\)</span> es una cuasi-densidad log-cóncava
-(i.e. <span class="math inline">\(\frac{\partial ^{2}}{\partial x^{2}}\log f(x) &lt;0, ~\forall x\)</span>).</p>
+(i.e. <span class="math inline">\(\frac{\partial ^{2}}{\partial x^{2}}\log f(x) &lt;0,
+~\forall x\)</span>).</p>
 <p>Sea <span class="math inline">\(S_n=\left\{ x_{i}:i=0,\cdots ,n+1\right\}\)</span> con
 <span class="math inline">\(f(x_{i})\)</span> conocidos.</p>
-<p>Denotamos por <span class="math inline">\(L_{i,i+1}(x)\)</span> la recta pasando por <span class="math inline">\(\left( x_{i},\log f(x_{i})\right)\)</span> y <span class="math inline">\(\left( x_{i+1},\log f(x_{i+1})\right)\)</span></p>
+<p>Denotamos por <span class="math inline">\(L_{i,i+1}(x)\)</span> la recta pasando por <span class="math inline">\(\left( x_{i},\log
+f(x_{i})\right)\)</span> y <span class="math inline">\(\left( x_{i+1},\log f(x_{i+1})\right)\)</span></p>
 <ul>
 <li><p><span class="math inline">\(L_{i,i+1}(x)\leq \log f(x)\)</span> en el intervalo
 <span class="math inline">\(I_{i}=(x_{i},x_{i+1}]\)</span></p></li>
 <li><p><span class="math inline">\(L_{i,i+1}(x)\geq \log f(x)\)</span> fuera de <span class="math inline">\(I_{i}\)</span></p></li>
 </ul>
-<p>En el intervalo <span class="math inline">\(I_{i}\)</span> se definen las envolventes de <span class="math inline">\(\log f\left( x\right)\)</span>:</p>
+<p>En el intervalo <span class="math inline">\(I_{i}\)</span> se definen las envolventes de <span class="math inline">\(\log f\left(
+x\right)\)</span>:</p>
 <ul>
 <li><p><span class="math inline">\(\underline{\phi}_n(x)=L_{i,i+1}(x)\)</span></p></li>
 <li><p><span class="math inline">\(\overline{\phi}_n(x)=\min \left\{L_{i-1,i}(x),L_{i+1,i+2}(x)\right\}\)</span></p></li>
@@ -524,9 +529,9 @@ donde <span class="math inline">\(g_n(x)\)</span> es una mixtura discreta de dis
 <li><p>Volver al paso 2.</p></li>
 </ol>
 </div>
-<p><span class="citation">Gilks y Wild (<a href="#ref-gilks1992" role="doc-biblioref">1992</a>)</span> propusieron una ligera modificación empleando tangentes para construir la cota superior, de esta forma se obtiene un método más eficiente pero requiere especificar la derivada de la densidad objetivo (ver Figura <a href="modAR.html#fig:squeeze">4.12</a>).</p>
+<p><span class="citation">Gilks y Wild (<a href="#ref-gilks1992">1992</a>)</span> propusieron una ligera modificación empleando tangentes para construir la cota superior, de esta forma se obtiene un método más eficiente pero requiere especificar la derivada de la densidad objetivo (ver Figura <a href="modAR.html#fig:squeeze">4.12</a>).</p>
 <p>La mayoría de las densidades de la familia exponencial de distribuciones son log-cóncavas.
-<span class="citation">Hörmann (<a href="#ref-hormann1995" role="doc-biblioref">1995</a>)</span> extendió esta aproximación al caso de densidades <span class="math inline">\(T_{c}\)</span>-cóncavas:
+<span class="citation">Hörmann (<a href="#ref-hormann1995">1995</a>)</span> extendió esta aproximación al caso de densidades <span class="math inline">\(T_{c}\)</span>-cóncavas:
 <span class="math display">\[T_{c}(x) = signo(c)x^{c} \\ T_{0}(x) = \log (x).\]</span>
 Aparte de la transformación logarítmica, la transformación <span class="math inline">\(T_{-1/2}(x)=-1/\sqrt{x}\)</span> es habitualmente la más empleada.</p>
 </div>
@@ -536,7 +541,7 @@ Aparte de la transformación logarítmica, la transformación <span class="math 
 <p>Si <span class="math inline">\((U,V)\)</span> se distribuye uniformemente sobre:
 <span class="math display">\[C_{f^{\ast}} = \left\{ (u, v) \in \mathbb{R}^{2} :
 0&lt;u\leq \sqrt{f^{\ast}(v/u)} \right\},\]</span>
-siendo <span class="math inline">\(f^{\ast}\)</span> una función no negativa integrable (cuasi-densidad), entonces <span class="math inline">\(X=V/U\)</span> tiene función de densidad proporcional a <span class="math inline">\(f^{\ast}\)</span> <span class="citation">(<a href="#ref-kinderman1977" role="doc-biblioref">Kinderman y Monahan, 1977</a>)</span>.
+siendo <span class="math inline">\(f^{\ast}\)</span> una función no negativa integrable (cuasi-densidad), entonces <span class="math inline">\(X=V/U\)</span> tiene función de densidad proporcional a <span class="math inline">\(f^{\ast}\)</span> <span class="citation">(<a href="#ref-kinderman1977">Kinderman y Monahan, 1977</a>)</span>.
 Además <span class="math inline">\(C_{f^{\ast}}\)</span> tiene área finita, por lo que pueden generarse fácilmente los valores <span class="math inline">\((U,V)\)</span> con distribución <span class="math inline">\(\mathcal{U}\left(C_{f^{\ast}}\right)\)</span> a partir de componentes uniformes unidimensionales (aceptando los puntos dentro de <span class="math inline">\(C_{f^{\ast}}\)</span>).</p>
 <p>De modo análogo al método de aceptación-rechazo, hay modificaciones para acelerar los cálculos y automatizar el proceso, construyendo regiones mediante polígonos:
 <span class="math display">\[C_{i}\subset C_{f^{\ast}}\subset C_{s}.\]</span>
@@ -554,7 +559,7 @@ C_{f^{\ast}} &amp; = \left\{ (u, v) \in \mathbb{R}^{2} : 0 &lt;u \leq \frac{1}{\
 \end{aligned}\]</span>
 dando como resultando que <span class="math inline">\(C_{f^{\ast}}\)</span> es el semicírculo de radio uno, y podemos generar valores con distribución uniforme en esta región a partir de <span class="math inline">\(\mathcal{U}\left([0,1]\times[-1,1] \right)\)</span>.</p>
 <p>El correspondiente algoritmo está implementado en la función <a href="https://rubenfcasal.github.io/simres/reference/rcauchy.rou.html"><code>rcauchy.rou()</code></a> del paquete <a href="https://rubenfcasal.github.io/simres"><code>simres</code></a> (fichero <a href="R/ar.R"><em>ar.R</em></a>):</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="modAR.html#cb175-1" aria-hidden="true" tabindex="-1"></a>simres<span class="sc">::</span>rcauchy.rou</span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="modAR.html#cb175-1" tabindex="-1"></a>simres<span class="sc">::</span>rcauchy.rou</span></code></pre></div>
 <pre><code>## function(n) {
 ##   # Cauchy mediante cociente de uniformes
 ##   ngen &lt;- n
@@ -573,26 +578,26 @@ dando como resultando que <span class="math inline">\(C_{f^{\ast}}\)</span> es e
 ##   attr(x, &quot;ngen&quot;) &lt;- ngen
 ##   return(x)
 ## }
-## &lt;bytecode: 0x000002024b0d24d8&gt;
+## &lt;bytecode: 0x000002962c88b2d8&gt;
 ## &lt;environment: namespace:simres&gt;</code></pre>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="modAR.html#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb177-2"><a href="modAR.html#cb177-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
-<span id="cb177-3"><a href="modAR.html#cb177-3" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> simres<span class="sc">::</span><span class="fu">rcauchy.rou</span>(nsim)</span>
-<span id="cb177-4"><a href="modAR.html#cb177-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb177-5"><a href="modAR.html#cb177-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(rx, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="dv">6</span>))</span>
-<span id="cb177-6"><a href="modAR.html#cb177-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(rx))</span>
-<span id="cb177-7"><a href="modAR.html#cb177-7" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(dcauchy, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="modAR.html#cb177-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb177-2"><a href="modAR.html#cb177-2" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
+<span id="cb177-3"><a href="modAR.html#cb177-3" tabindex="-1"></a>rx <span class="ot">&lt;-</span> simres<span class="sc">::</span><span class="fu">rcauchy.rou</span>(nsim)</span>
+<span id="cb177-4"><a href="modAR.html#cb177-4" tabindex="-1"></a></span>
+<span id="cb177-5"><a href="modAR.html#cb177-5" tabindex="-1"></a><span class="fu">hist</span>(rx, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="dv">6</span>))</span>
+<span id="cb177-6"><a href="modAR.html#cb177-6" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(rx))</span>
+<span id="cb177-7"><a href="modAR.html#cb177-7" tabindex="-1"></a><span class="fu">curve</span>(dcauchy, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rcauchy-rou"></span>
 <img src="04-Metodos_generales_continuas_files/figure-html/rcauchy-rou-1.png" alt="Distribución de los valores generados mediante el método de cociente de uniformes." width="75%" />
 <p class="caption">
 Figura 4.13: Distribución de los valores generados mediante el método de cociente de uniformes.
 </p>
 </div>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="modAR.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Número generaciones</span></span>
-<span id="cb178-2"><a href="modAR.html#cb178-2" aria-hidden="true" tabindex="-1"></a>ngen <span class="ot">&lt;-</span> <span class="fu">attr</span>(rx, <span class="st">&quot;ngen&quot;</span>)</span>
-<span id="cb178-3"><a href="modAR.html#cb178-3" aria-hidden="true" tabindex="-1"></a>{<span class="fu">cat</span>(<span class="st">&quot;Número de generaciones = &quot;</span>, ngen)</span>
-<span id="cb178-4"><a href="modAR.html#cb178-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Número medio de generaciones = &quot;</span>, ngen<span class="sc">/</span>nsim)</span>
-<span id="cb178-5"><a href="modAR.html#cb178-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Proporción de rechazos = &quot;</span>, <span class="dv">1</span><span class="sc">-</span>nsim<span class="sc">/</span>ngen,<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)}</span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="modAR.html#cb178-1" tabindex="-1"></a><span class="co"># Número generaciones</span></span>
+<span id="cb178-2"><a href="modAR.html#cb178-2" tabindex="-1"></a>ngen <span class="ot">&lt;-</span> <span class="fu">attr</span>(rx, <span class="st">&quot;ngen&quot;</span>)</span>
+<span id="cb178-3"><a href="modAR.html#cb178-3" tabindex="-1"></a>{<span class="fu">cat</span>(<span class="st">&quot;Número de generaciones = &quot;</span>, ngen)</span>
+<span id="cb178-4"><a href="modAR.html#cb178-4" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Número medio de generaciones = &quot;</span>, ngen<span class="sc">/</span>nsim)</span>
+<span id="cb178-5"><a href="modAR.html#cb178-5" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Proporción de rechazos = &quot;</span>, <span class="dv">1</span><span class="sc">-</span>nsim<span class="sc">/</span>ngen,<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)}</span></code></pre></div>
 <pre><code>## Número de generaciones =  12751
 ## Número medio de generaciones =  1.2751
 ## Proporción de rechazos =  0.21575</code></pre>
@@ -600,7 +605,7 @@ Figura 4.13: Distribución de los valores generados mediante el método de cocie
 </div>
 </div>
 <h3>Bibliografía<a href="bibliografía.html#bibliografía" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
 <div id="ref-gilks1992" class="csl-entry">
 Gilks, W. R., y Wild, P. (1992). Adaptive Rejection Sampling for Gibbs Sampling. <em>Applied Statistics</em>, <em>41</em>(2), 337-348. <a href="https://doi.org/10.2307/2347565">https://doi.org/10.2307/2347565</a>
 </div>
