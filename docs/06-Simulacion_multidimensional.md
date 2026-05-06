@@ -117,7 +117,7 @@ rx
 ```
 
 
-## El método de aceptación-rechazo
+## El método de aceptación-rechazo {#AR-multi}
 
 El algoritmo de aceptación-rechazo es el mismo que el del caso univariante descrito en la Sección \@ref(AR), la única diferencia es que las densidades son multidimensionales.
 Supongamos que la densidad objetivo $f$ y la densidad
@@ -237,7 +237,7 @@ system.time(x <- rfn(nsim))
 
 ```
  ##    user  system elapsed 
- ##    0.01    0.00    0.02
+ ##    0.02    0.00    0.01
 ```
 
 ``` r
@@ -567,7 +567,7 @@ mvrnorm
  ##         drop(X)
  ##     else t(X)
  ## }
- ## <bytecode: 0x0000023da14c9270>
+ ## <bytecode: 0x00000263e7732770>
  ## <environment: namespace:MASS>
 ```
 

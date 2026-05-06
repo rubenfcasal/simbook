@@ -12,7 +12,7 @@ $$MISE\left( \hat{f} \right) =\int E\left[ \left( \hat{f}(x) - f(x) \right)^2\ri
 Cuando el numero de dimensiones es pequeño, nos puede interesar emplear un método numérico para aproximar este tipo de integrales. 
 
 
-## Integración numérica unidimensional
+## Integración numérica unidimensional {#int-num-uni}
 
 Supongamos que nos interesa aproximar una integral de la forma:
 $$I = \int_a^b h(x)  dx.$$. 
@@ -21,17 +21,21 @@ Consideraremos como ejemplo:
 $$\int_0^1 4x^4 dx = \frac{4}{5}$$.
 
 
-
 ``` r
-fun <- function(x) return(4 * x^4)
+fun <- function(x) 4 * x^4
 curve(fun, 0, 1)
 abline(h = 0, lty = 2)
 abline(v = c(0, 1), lty = 2)
 ```
 
+\begin{figure}[!htbp]
 
+{\centering \includegraphics[width=0.75\linewidth]{23-Integracion_numerica_files/figure-latex/int-num-1d-1} 
 
-\begin{center}\includegraphics[width=0.75\linewidth]{23-Integracion_numerica_files/figure-latex/unnamed-chunk-1-1} \end{center}
+}
+
+\caption{Representación del integrando de ejemplo (con dominio acotado).}(\#fig:int-num-1d)
+\end{figure}
 
 
 ### Método del trapezoide 
@@ -260,7 +264,7 @@ persp3D.f2d(f2d, -1, 1, -1, 1, 50, 50, ticktype = "detailed")
 
 
 
-\begin{center}\includegraphics[width=0.75\linewidth]{23-Integracion_numerica_files/figure-latex/unnamed-chunk-9-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{23-Integracion_numerica_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
 
 ### Método del trapezoide 

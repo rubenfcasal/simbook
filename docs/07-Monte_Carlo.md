@@ -78,8 +78,7 @@ En el caso de que el dominio $D$ sea acotado, la aproximación más simple consi
 Por simplicidad nos centraremos en el caso unidimensional (el orden de convergencia es independiente del número de dimensiones).
 Supongamos que nos interesa aproximar:
 $$I = \int_0^1 s(x) dx$$
-Si $x_1,x_2,\ldots ,x_n$ *i.i.d.* $\mathcal{U}(0, 1)$
-entonces:
+Por tanto, si $x_1,x_2,\ldots ,x_n$ *i.i.d.* $\mathcal{U}(0, 1)$, entonces:
 $$I = E\left( s\left( \mathcal{U}(0, 1) \right) \right)
 \approx \frac{1}{n}\sum\limits_{i=1}^n s\left( x_i\right)$$
 
@@ -101,28 +100,26 @@ podríamos considerar la siguiente función:
 
 
 ``` r
+# ·········································································· 
+# Integración Monte Carlo de `fun()` entre `a` y `b` utilizando una muestra 
+# (pseudo) aleatoria de tamaño `n`. Se asume que `fun()` es una función de 
+# una sola variable (no vectorial), `a < b` y `n` entero positivo.
+# ·········································································· 
 mc.integral0 <- function(fun, a, b, n) {
-  # Integración Monte Carlo de `fun()` entre `a` y `b` utilizando una muestra 
-  # (pseudo) aleatoria de tamaño `n`. Se asume que `fun()` es una función de 
-  # una sola variable (no vectorial), `a < b` y `n` entero positivo.
-  # -----------------------  
   x <- runif(n, a, b)
   fx <- sapply(x, fun) # Si fun fuese vectorial bastaría con: fx <- fun(x)
   return(mean(fx) * (b - a))
 }
 ```
 
-Como ejemplo la empleamos para aproximar: 
-$$\int_0^1 4x^4 dx = \frac{4}{5},$$
+Como ejemplo, empleamos esta función para aproximar: 
+$$\int_0^1 4x^4 dx = \frac{4}{5}$$
+(este es el mismo ejemplo utilizado en la Sección \@ref(int-num) del Apéndice \@ref(int-num),
+en la que se emplean métodos numéricos[^07-monte-carlo-1]; ver Figura \@ref(fig:int-num-1d) o \@ref(fig:int-mc-gen)).
 
 
 ``` r
 fun <- function(x) ifelse((x > 0) & (x < 1), 4 * x^4, 0)
-# return(4 * x^4)
-curve(fun, 0, 1)
-abline(h = 0, lty = 2)
-abline(v = c(0, 1), lty = 2)
-
 set.seed(1)
 mc.integral0(fun, 0, 1, 20)
 ```
@@ -132,31 +129,18 @@ mc.integral0(fun, 0, 1, 20)
 ```
 
 ``` r
-mc.integral0(fun, 0, 1, 100)
+mc.integral0(fun, 0, 1, 500)
 ```
 
 ```
- ## [1] 0.73112
+ ## [1] 0.77558
 ```
 
-``` r
-mc.integral0(fun, 0, 1, 100)
-```
+[^07-monte-carlo-1]: Como se comentó en la introducción, si el número de dimensiones es pequeño pueden ser más eficientes métodos numéricos. Podríamos considerar que la velocidad de convergencia de la aproximación por simulación es lenta pero no depende del número de dimensiones.
 
-```
- ## [1] 0.83043
-```
-
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/int-mc-clas-1} 
-
-}
-
-\caption{Ejemplo de integral en dominio acotado.}(\#fig:int-mc-clas)
-\end{figure}
-
-La función `mc.integral0()` no es adecuada para analizar la convergencia de la aproximación por simulación.
+Con la integración Monte Carlo clásica estamos aproximando integrales a partir de la media muestral de generaciones de una transformación de una uniforme, $(b-a) s\left( \mathcal{U}(a, b) \right)$.
+Por tanto, se aplicarían todos los resultados y observaciones de las Secciones \@ref(convergencia) y \@ref(num-gen).
+Sin embargo, la función `mc.integral0()` no es adecuada para analizar la convergencia de la aproximación por simulación.
 Una alternativa más eficiente para representar gráficamente la convergencia está implementada en la función [`mc.integral()`](https://rubenfcasal.github.io/simres/reference/mc.integral.html) del paquete [`simres`](https://rubenfcasal.github.io/simres) (fichero [*mc.plot.R*](R/mc.plot.R)):
 
 
@@ -174,13 +158,13 @@ mc.integral
  ##   }
  ##   return(result)
  ## }
- ## <bytecode: 0x000001dd3867a5e8>
+ ## <bytecode: 0x000001c5e6177738>
  ## <environment: namespace:simres>
 ```
 
 ``` r
 set.seed(1)
-mc.integral(fun, 0, 1, 5000, ylim = c(0.2, 1.4))
+mc.integral(fun, 0, 1, 5000, ylim = c(0.6, 1))
 ```
 
 ```
@@ -201,26 +185,12 @@ abline(h = 4/5, lty = 2, col = "blue")
 
 }
 
-\caption{Convergencia de la aproximación de la integral mediante simulación.}(\#fig:mc-integral)
+\caption{Gráfico de convergencia de la aproximación mediante integración Monte Carlo clásica (con distribución uniforme).}(\#fig:mc-integral)
 \end{figure}
 
-Si sólo interesa la aproximación:
-
-
-``` r
-set.seed(1)
-mc.integral(fun, 0, 1, 5000, plot = FALSE)
-```
-
-```
- ## $approx
- ## [1] 0.81422
- ## 
- ## $max.error
- ## [1] 0.030282
-```
-
-**Nota**: Es importante tener en cuenta que la función [`mc.integral()`](https://rubenfcasal.github.io/simres/reference/mc.integral.html) solo es válida para dominio finito.
+Esta función devuelve además la aproximación por simulación y el error máximo (por defecto al 95%).
+Si sólo nos interesaran estos valores podemos establecer el argumento `plot = FALSE`.
+Es importante tener en cuenta que la función [`mc.integral()`](https://rubenfcasal.github.io/simres/reference/mc.integral.html) **solo es válida para dominio finito**.
 
 :::
 
@@ -228,28 +198,43 @@ mc.integral(fun, 0, 1, 5000, plot = FALSE)
 
 En lo que resta de esta sección (y en las siguientes) asumiremos que nos interesa aproximar una esperanza:
 $$\theta = E\left( h\left( X\right) \right) = \int h\left( x\right) f(x)dx$$
-siendo $X\sim f$. 
-Entonces, si $x_1,x_2,\ldots ,x_n$ *i.i.d.* $X$:
-$$\theta \approx \frac{1}{n}\sum\limits_{i=1}^nh\left( x_i\right)$$
+siendo $X\sim f$ (con distribución no necesariamente uniforme, ni dominio acotado). 
+Entonces, si $x_1,x_2,\ldots ,x_n$ *i.i.d.* $X$, la aproximación por simulación será:
+$$\hat\theta = \frac{1}{n}\sum\limits_{i=1}^nh\left( x_i\right)$$
 
-Por ejemplo, como en el ejercicio anterior se considera de una función de densidad, 
-se correspondería con el caso general de $h(x) = x$ y $f(x) = 4x^3$ para $0<x<1$.
-La idea es que, en lugar de considerar una distribución uniforme, 
-es preferible generar más valores donde hay mayor "área" (ver Figura \@ref(fig:int-mc-clas)).
-
-Los pasos serían simular `x` con densidad $f$ y aproximar la integral por `mean(h(x))`.
-En este caso podemos generar valores de la densidad objetivo fácilmente mediante el método de inversión, ya que $F(x) = x^4$ si $0<x<1$.
+Por ejemplo, como el integrando del Ejemplo \@ref(exm:mc-integral-clas) anterior se corresponde con el caso general de $h(x) = x$ y $f(x) = 4x^3$ para $0 \le x \le1$, se generarían observaciones de esta distribución en lugar de emplear la uniforme.
+De esta forma se incrementarán las evaluaciones del integrando en la zona de mayor área y aumentará la precisión de la aproximación por simulación (ver Figura \@ref(fig:int-mc-gen)).
 
 
 ``` r
-rfun <- function(nsim) runif(nsim)^(1/4) # Método de inversión
+f <- function(x) ifelse((x >= 0) & (x <= 1), 4 * x^3, 0)
+curve(x*f(x), 0, 1) # curve(fun, 0, 1)
+curve(f, 0, 1, lty = 2, col = "blue", add = TRUE)
+abline(h = 0, lty = 3)
+abline(v = c(0, 1), lty = 3)
+```
+
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/int-mc-gen-1} 
+
+}
+
+\caption{Representación del integrando de ejemplo (con dominio acotado) y de la densidad utilizada en su aproximación.}(\#fig:int-mc-gen)
+\end{figure}
+
+En la práctica, los pasos serían simular `x` con densidad $f$ y aproximar la integral por `mean(h(x))`.
+En este caso podemos generar valores de la densidad objetivo fácilmente mediante el método de inversión, ya que $F(x) = x^4$, si $0 \le x \le 1$, y la función cuantil es $F^{-1}(p) = \sqrt[4]{p}$, para $0 \le p \le 1$. 
+
+
+``` r
+rx <- function(nsim) runif(nsim)^(1/4) # Método de inversión
 nsim <- 5000
 set.seed(1)
-x <- rfun(nsim)
+x <- rx(nsim)
 # h <- function(x) x
-# res <- mean(h(x)) # Aproximación por simulación 
-res <- mean(x)
-res
+# mean(h(x)) # Aproximación por simulación 
+mean(x)
 ```
 
 ```
@@ -257,28 +242,56 @@ res
 ```
 
 ``` r
-# error <- 2*sd(h(x))/sqrt(nsim)
-error <- 2*sd(x)/sqrt(nsim)
-error
+# Error máximo al 95%
+# error <- 1.96*sd(h(x))/sqrt(nsim)
+# Gráfico de convergencia
+# plot(cumsum(h(x)/1:nsim, type = "l", lwd = 2, 
+#      xlab = "Número de generaciones", ylab = "Media muestral")
+```
+
+Además de obtener la aproximación por simulación y el error máximo, por defecto al 95%, podemos generar el gráfico de convergencia con `conv.plot(h(x))` (ver Figura \@ref(fig:int-mc-gen-conv)):
+
+
+``` r
+res <- conv.plot(x, ylim = c(0.6, 1))
+abline(h = 4/5, lty = 2, col = "blue")
+res
 ```
 
 ```
- ## [1] 0.0047282
+ ## $approx
+ ## [1] 0.79678
+ ## 
+ ## $max.error
+ ## [1] 0.0046335
 ```
+
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/int-mc-gen-conv-1} 
+
+}
+
+\caption{Gráfico de convergencia de la aproximación mediante integración Monte Carlo.}(\#fig:int-mc-gen-conv)
+\end{figure}
+
+Como se puede comprobar, al comparar los resultados con los obtenidos mediante integración Monte Carlo clásica (Figura \@ref(fig:mc-integral)), la mejora en la precisión es notable (el error máximo es un 15% del anterior).
 
 Esta forma de proceder permite aproximar integrales impropias en las que el dominio de integración no es acotado.
 
 ::: {.example #mc-intinf name="integración Monte Carlo con dominio no acotado"}
 <br>
 
-Aproximar:
+Supongamos que el objetivo es aproximar:
 $$\phi(t)=\int_{t}^{\infty}\frac1{\sqrt{2\pi}}e^{-\frac{x^2}2}dx,$$
-para $t=4.5$, empleando integración Monte Carlo (aproximación tradicional con dominio infinito).
+para $t=4.5$, mediante integración Monte Carlo (aproximación tradicional con dominio infinito).
+Es decir, como se trata de aproximar $P(X>4.5) = \ensuremath{3.39767\times 10^{-6}}$ (en la práctica sería desconocida) con $X \sim \mathcal{N}( 0, 1 )$, emplearíamos como aproximación la media muestra de generaciones de $h(X)$ siendo $h(x) = 1_{\{x \ge 4.5\}}(x)$:
 
 
 ``` r
 # h <- function(x) x > 4.5
 # f <- function(x) dnorm(x)
+# pnorm(-4.5)  # valor teórico P(X > 4.5) 
 set.seed(1)
 nsim <- 10^3
 x <- rnorm(nsim)
@@ -289,24 +302,19 @@ mean(x > 4.5) # mean(h(x))
  ## [1] 0
 ```
 
-``` r
-pnorm(-4.5)  # valor teórico P(X > 4.5) 
-```
-
-```
- ## [1] 3.3977e-06
-```
-
-De esta forma es difícil que se generen valores (en este caso ninguno) en la región que interesaría para la aproximación de la integral:
+Sin embargo, cuando la integral está relacionada con las colas de las distribución (lo que sería de esperar cuando el número de dimensiones es grande), puede ser difícil que 
+con este procedimiento se generen valores en la región de interés para la aproximación de la integral:
 
 
 ``` r
-any(x > 4.5)
+sum(x > 4.5)
 ```
 
 ```
- ## [1] FALSE
+ ## [1] 0
 ```
+
+En este caso se empleó todo el tiempo de computación en evaluar el integrando en puntos donde es nulo, y ya no tendría sentido analizar la convergencia (sería constante), ni aproximar el error (su estimación sería cero).
 
 Como ya se comentó anteriormente, sería preferible generar más valores donde hay mayor "área", pero en este caso $f$ concentra la densidad en una región que no resulta de utilidad.
 Por ese motivo puede ser preferible recurrir a una densidad auxiliar que solvente este problema.
@@ -318,19 +326,18 @@ Por ese motivo puede ser preferible recurrir a una densidad auxiliar que solvent
 
 Para aproximar la integral:
 $$\theta = E\left( h\left( X\right) \right) = \int h\left( x\right) f(x)dx,$$
-puede ser preferible generar observaciones de una densidad $g$ que tenga una forma similar al producto $hf$.
+puede ser preferible generar observaciones de una densidad $g$ que tenga una forma similar al producto $|h(x)|f(x)$ (Marshall, 1956).
 
-Si $Y\sim g$:
+Si $Y\sim g$, podemos reescribir la integral como el valor esperado de una transformación de esta variable:
 $$\theta  = \int h\left( x\right) f(x)dx 
  = \int \frac{h\left( x\right) f(x)}{g(x)}g(x)dx
  = E\left( q\left( Y\right) \right).$$
 siendo
 $q\left( x\right)  = \frac{h\left( x\right) f(x)}{g(x)}$.
 
-Si $y_1,y_2,\ldots ,y_n$ *i.i.d.* $Y\sim g$:
-$$\theta \approx \frac{1}{n}\sum\limits_{i=1}^nq\left( y_i\right) 
-= \frac{1}{n}\sum\limits_{i=1}^nw(y_i)h\left( y_i\right)  
-= \hat{\theta}_{g}$$
+Entonces, a partir de $y_1,y_2,\ldots ,y_n$ *i.i.d.* $Y\sim g$, obtendríamos como aproximación:
+$$\hat{\theta}_{g} = \frac{1}{n}\sum\limits_{i=1}^nq\left( y_i\right) 
+= \frac{1}{n}\sum\limits_{i=1}^nw(y_i)h\left( y_i\right)$$
 con $w(y) = \frac{f(y)}{g(y)}$.
 
 En este caso $Var(\hat{\theta}_{g}) = Var\left( q\left( Y\right) \right) /n$,  pudiendo reducirse significativamente respecto al método clásico si:
@@ -361,7 +368,7 @@ curve(dnorm(x), 4.5, 6, ylab = "dnorm(x) y dexp(x-4.5)*k")
 abline(v = 4.5)
 abline(h = 0)
 escala <- dnorm(4.5)  # Reescalado para comparación...
-curve(dexp(x - 4.5) * escala, add = TRUE, lty = 2)  
+curve(dexp(x - 4.5) * escala, add = TRUE, lty = 2, col = "blue")  
 ```
 
 \begin{figure}[!htbp]
@@ -385,8 +392,8 @@ w <- dnorm(y)/dexp(y - 4.5)
 La aproximación por simulación sería `mean(w * h(y))`:
 
 ``` r
-# h(x) <- function(x) x > 4.5  # (1 si x > 4.5 => h(y) = 1)
-mean(w) # mean(w*h(y))
+h <- function(x) x > 4.5 
+mean(w*h(y))
 ```
 
 ```
@@ -394,6 +401,9 @@ mean(w) # mean(w*h(y))
 ```
 
 ``` r
+# En este caso no sería necesario definir h
+# h(x) = 1 si x > 4.5 => h(y) = 1
+# mean(w)
 pnorm(-4.5)  # valor teórico
 ```
 
@@ -401,11 +411,23 @@ pnorm(-4.5)  # valor teórico
  ## [1] 3.3977e-06
 ```
 
-Representamos gráficamente la aproximación en función del número de simulaciones:
+Podemos representamos gráficamente la aproximación en función del número de simulaciones (`cumsum(w*h(y))/1:nsim`) y obtener medidas de la precisión, como el error estándar de la aproximación (`sqrt(var(w * h(y))/nsim)`), pero puede resultar más cómodo emplear `conv.plot(w*h(y))` (ver Figura \@ref(fig:mc-imp-conv)):
+
 
 ``` r
-plot(cumsum(w)/1:nsim, type = "l", ylab = "Aproximación", xlab = "Iteraciones")
+# plot(cumsum(w)/1:nsim, type = "l", ylab = "Aproximación", xlab = "Iteraciones")
+# sqrt(var(w)/nsim) # sd(w*h(y))/sqrt(nsim) # Error estándar
+res <- conv.plot(w)
 abline(h = pnorm(-4.5), lty = 2, col = "blue")
+res
+```
+
+```
+ ## $approx
+ ## [1] 3.1448e-06
+ ## 
+ ## $max.error
+ ## [1] 2.6874e-07
 ```
 
 \begin{figure}[!htbp]
@@ -417,16 +439,8 @@ abline(h = pnorm(-4.5), lty = 2, col = "blue")
 \caption{Convergencia de la aproximación de la integral mediante muestreo por importancia.}(\#fig:mc-imp-conv)
 \end{figure}
 
-El error estándar de la aproximación sería `sqrt(var(w * h(y))/nsim)`:
-
-``` r
-sqrt(var(w)/nsim) # sd(w*h(y))/sqrt(nsim)   
-```
-
-```
- ## [1] 1.3712e-07
-```
-Mientras que empleando la aproximación tradicional:
+<!--
+Mientras que la estimación del error empleando la aproximación tradicional sería nulo. 
 
 ``` r
 est <- mean(rnorm(nsim) > 4.5)
@@ -444,13 +458,15 @@ sqrt(est * (1 - est)/nsim)
 ```
  ## [1] 0
 ```
+-->
+
 :::
 
 
 ::: {.example #mc-imp2 name="muestreo por importancia con mala densidad auxiliar"}
 <br>
 
-Supongamos que se pretende aproximar $P\left(2<X<6\right)$ siendo $X\sim Cauchy(0,1)$ empleando muestreo por importancia y considerando como densidad auxiliar la normal estándar $Y\sim N(0,1)$. Representaremos gráficamente la aproximación y estudiaremos los pesos $w(y_i)$.
+Supongamos que se pretende aproximar $P\left(2<X<6\right)$ siendo $X\sim Cauchy(0,1)$ empleando muestreo por importancia y considerando como densidad auxiliar la normal estándar $Y\sim \mathcal{N}(0,1)$. Representaremos gráficamente la aproximación y estudiaremos los pesos $w(y_i)$.
     
 **Nota**: En este caso van a aparecer problemas 
 (la densidad auxiliar debería tener colas más pesadas que la densidad objetivo;
@@ -458,17 +474,17 @@ sería adecuado si intercambiáramos las distribuciones objetivo y auxiliar,
 como en el Ejemplo \@ref(exm:mc-imp-sample) siguiente).
 
 Se trata de aproximar `pcauchy(6) - pcauchy(2)`,
-i.e. `f(y) = dcauchy(y)` y `h(y) = (y > 2) * (y < 6)`,
+i.e. `f(x) = dcauchy(x)` y `h(x) = (x > 2) * (x < 6)`,
 empleando muestreo por importancia con `g(y) = dnorm(y)`.
 
 ``` r
 nsim <- 10^5
 set.seed(4321)
 y <- rnorm(nsim)
-w <- dcauchy(y)/dnorm(y) # w <- w/sum(w) si alguna es una cuasidensidad
+w <- dcauchy(y)/dnorm(y) # w <- w/mean(w) si alguna es una cuasidensidad
 ```
 
-La aproximación por simulación es `mean(w(y) * h(y))`:
+La aproximación por simulación es `mean(w * h(y))`:
 
 ``` r
 mean(w * (y > 2) * (y < 6)) 
@@ -479,17 +495,19 @@ mean(w * (y > 2) * (y < 6))
 ```
 
 ``` r
-pcauchy(6) - pcauchy(2)  # Valor teórico
+pcauchy(6) - pcauchy(2)  # Valor teórico (normalmente desconocido)
 ```
 
 ```
  ## [1] 0.095015
 ```
 
-Si se estudia la convergencia:
+Podríamos pensar que se trata de una buena aproximación, pero si se estudia la convergencia:
 
 ``` r
-plot(cumsum(w * (y > 2) * (y < 6))/1:nsim, type = "l", ylab = "Aproximación", xlab = "Iteraciones")
+# plot(cumsum(w * (y > 2) * (y < 6))/1:nsim, type = "l", 
+#      ylab = "Aproximación", xlab = "Iteraciones")
+conv.plot(w * (y > 2) * (y < 6), ylim = c(0, 0.25))
 abline(h = pcauchy(6) - pcauchy(2), lty = 2, col = "blue")
 ```
 
@@ -501,13 +519,16 @@ abline(h = pcauchy(6) - pcauchy(2), lty = 2, col = "blue")
 
 \caption{Gráfico de convergencia de la aproximación mediante muestreo por importancia con mala densidad auxiliar.}(\#fig:mc-imp2-conv)
 \end{figure}
-Lo que indica es una mala elección de la densidad auxiliar.
+observaríamos que hay problemas de varianza finita. 
+Esto indicaría una mala elección de la densidad auxiliar, que debería tener colas más pesadas que la densidad objetivo, al contrario de lo que ocurre en este caso.
 
-La distribución de los pesos debería ser homogénea.
-Por ejemplo, si los reescalamos para que su suma sea el número de valores generados, deberían tomar valores en torno a uno:
+La recomendación sería realizar también un análisis descriptivo de los pesos que, como ya se comentó, deberían tener una distribución homogénea.
+Por ejemplo, si los reescalamos de forma que su suma sea igual al número de valores generados, deberían tomar valores en torno a uno (su media sería uno):
+
 
 ``` r
-boxplot(nsim * w/sum(w))  
+boxplot(w/mean(w), horizontal = TRUE, log = "x")  # boxplot(nsim * w/sum(w))
+abline(v = 1, lty = 3)
 ```
 
 \begin{figure}[!htbp]
@@ -519,48 +540,129 @@ boxplot(nsim * w/sum(w))
 \caption{Gráfico de cajas de los pesos del muestreo por importancia reescalados (de forma que su media es 1).}(\#fig:mc-imp2-boxplot)
 \end{figure}
 
+En este caso podemos observar que algunos valores tienen un peso extremadamente grande en la aproximación por simulación (algunos incluso más de 1000 veces del que deberían), causando las inestabilidades que se observaron en el gráfico de convergencia (si se cambia la semilla o se reduce el número de simulaciones podríamos obtener una aproximación muy mala de la integral).
+
 :::
 
 
-### Remuestreo (del muestreo) por importancia
+### Otros métodos de muestreo por importancia {#mc-imp-otros}
 
-Cuando $f$ y/o $g$ son cuasi-densidades, para evitar calcular constantes normalizadoras, se emplea como aproximación:
-$$\theta \approx \frac{\sum\limits_{i=1}^n w(y_i) h\left( y_i\right) }{ \sum\limits_{i=1}^n w(y_i)}.$$
-De hecho este estimador es empleado muchas veces en lugar del anterior ya que, aunque en general no es insesgado, puede ser más eficiente si $w(Y)$ y $w(Y)h(Y)$ están altamente correlacionadas [e.g. @liu2004, p.35].
+En el procedimiento anterior de muestreo por importancia se tiene que $E \left( w(Y) \right) = 1$ sin embargo los pesos $w(y_i)$ no tienen necesariamente media uno (el estimador no es equivariante frente a la adición de una constante).
+Por este motivo se han propuesto distintas alternativas para normalizar los pesos (Hesterberg, 1995).
 
-Adicionalmente, puede verse que con un muestreo de $\left\{y_1, y_2, \ldots, y_n \right\}$ ponderado por $w(y_i)$ (prob. $=w(y_i)\left/ \sum\nolimits_{i=1}^n w(y_i) \right.$ ) se obtiene una simulación aproximada de $f$ [*Sample importance resampling*, @rubin1987].
+Una de las aproximaciones más utilizadas es:
+$$\tilde{\theta}_{g} = \frac{\sum\limits_{i=1}^n w(y_i) h\left( y_i\right) }{ \sum\limits_{i=1}^n w(y_i)} = \frac{\hat{\theta}_{g}}{\overline w},$$
+que equivale a reescalar los pesos en el estimador original, empleando $\tilde w(y_i) = w(y_i)\left/ \frac{1}{n}\sum\nolimits_{i=1}^n w(y_i) \right.$ en su lugar.
+Aunque en general no es insesgado, puede ser más eficiente si $w(Y)$ y $w(Y)h(Y)$ están altamente correlacionadas [e.g. @liu2004, p.35].
 
+Una ventaja del estimador $\tilde{\theta}_{g}$ es que no depende de la constante normalizadora y puede ser empleado en el caso de una cuasi-densidad $f^{\ast}$
+(un pequeño inconveniente es que resulta algo más complicado aproximar su error estándar, al ser un cociente de variables aleatorias).
+
+::: {.example #mc-imp3}
+<br>
+
+Supongamos que se pretende aproximar la media de una normal estándar, $E(X)$ con $X\sim \mathcal{N}(0,1)$, empleando ambos métodos de muestreo por importancia y considerando como densidad auxiliar una distribución de Cauchy, $Y\sim Cauchy(0,1)$.
+
+**Nota**: En este caso `f(y) = dnorm(y)` y `g(y) = dcauchy(y)`, al revés que en el Ejemplo \@ref(exm:mc-imp2) anterior.
+
+Generamos las simulaciones de la densidad auxiliar y calculamos los pesos:
+
+``` r
+nsim <- 10^5
+set.seed(1)
+y <- rnorm(nsim)
+w <- dnorm(y)/dcauchy(y) 
+# w <- w/mean(w) si alguna es una cuasidensidad y coincidirían ambas aproximaciones
+```
+
+Calculamos la aproximación con el método original:
+
+``` r
+# h(x) <- function(x) x
+res <- conv.plot(w*y, ylim = c(-0.05, 0.05))
+abline(h = 0, lty = 2, col = "blue")
+res
+```
+
+```
+ ## $approx
+ ## [1] -0.0022056
+ ## 
+ ## $max.error
+ ## [1] 0.0073662
+```
+
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-11-1} \end{center}
+
+Con los pesos normalizados la aproximación por simulación sería `sum(w * h(y))/sum(w)`:
+
+
+``` r
+res <- sum(w*y)/sum(w)
+res
+```
+
+```
+ ## [1] -0.0016606
+```
+
+Para el análisis de la convergencia se emplearía `cumsum(w * h(y))/cumsum(w)`:
+
+
+``` r
+plot(cumsum(w*y)/cumsum(w), type="l", ylab="Aproximación", 
+     xlab="Iteraciones", ylim = c(-0.05, 0.05))
+abline(h = res)
+# conv.plot(w*y/mean(w), ylim = c(-0.05, 0.05)) 
+# Cuidado con la aproximación del error estándar
+abline(h = 0, lty = 2, col = "blue")
+```
+
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-13-1} \end{center}
+
+<!-- 
+# El error estándar de la media ponderada es algo más complicado
+sd(y)*sqrt(sum(w^2))/sum(w)
+# aunque realmente habría que emplear el error estándar de un cociente de medias
+# (método delta? exacto en este caso?)
+-->
+
+**Nota**: Si $f$ o $g$ fuesen cuasidensidades y se pidiese aproximar la integral, solo podríamos emplear esta última aproximación. 
+
+:::
+
+
+### Remuestreo (del muestreo) por importancia {#mc-imp-resamp} 
+
+El muestreo por importancia tiene cierta similitud con el método de simulación por aceptación/rechazo, aunque en este caso no se rechaza ninguna generación de la densidad auxiliar y se pueden evitar con mayor facilidad los problemas de eficiencia que aparecen habitualmente con el método de aceptación/rechazo cuando el número de dimensiones es grande (ver Ejemplo \@ref(exm:ar-esfera) en Sección \@ref(AR-multi)).
+
+Adicionalmente, al mismo tiempo que se aproxima la integral, empleando $\hat{\theta}_{g}$ o una alternativa $\tilde{\theta}_{g}$, podemos generar observaciones con distribución aproximadamente igual a la de la densidad objetivo.
+Puede verse que con un muestreo de $\left\{y_1, y_2, \ldots, y_n \right\}$ ponderado por $w(y_i)$ (con probabilidades $p_i=w(y_i)\left/ \sum\nolimits_{i=1}^n w(y_i) \right.$ ) se obtiene una simulación aproximada de $f$ [*Sample importance resampling*, @rubin1987].
+No obstante, la recomendación sería generar un número de valores $m$ mucho menor que el número de simulaciones $n$ de la densidad auxiliar.
+
+El resultado anterior es también válido para una cuasi-densidad $f^{\ast}$ ($f(x) = f^{\ast}(x)/c \propto f^{\ast}(x)$), ya que no depende de la constante normalizadora $c$.
+Además, podríamos estimar esta constante a partir de los pesos del muestreo por importancia:
+$$\hat c = \frac{1}{n}\sum_{i=1}^n w^{\ast}(y_i),$$
+siendo $w^{\ast}(y_i) = f^{\ast}(y_i) \left/ g(y_i) \right.$.
 
 ::: {.example #mc-imp-sample name="simulación de normal estándar a partir de Cauchy; Sampling Importance Resampling"}
 <br>
 
-Generamos 1000 simulaciones de una distribución (aprox.) $N(0,1)$ (densidad objetivo) mediante remuestreo del muestreo por importancia de $10^{5}$ valores de una $Cauchy(0,1)$ (densidad auxiliar).
-    
-**Nota**: En este caso `f(y) = dnorm(y)` y `g(y) = dcauchy(y)`, al revés del Ejemplo \@ref(exm:mc-imp2) anterior.
+
+Generamos 1000 simulaciones con distribución aproximadamente $\mathcal{N}(0,1)$ (densidad objetivo) mediante remuestreo del muestreo por importancia de los $10^{5}$ valores de la distribución $Cauchy(0,1)$ (densidad auxiliar) obtenidos en el Ejemplo \@ref(exm:mc-imp3) anterior:
 
 
 ``` r
-# Densidad objetivo
-# f <- dnorm # f <- function(x) ....
-
-nsim <- 10^3
-# El nº de simulaciones de la densidad auxiliar debe ser mucho mayor:
-nsim2 <- 10^5
-set.seed(4321)
-y <- rcauchy(nsim2)
-w <- dnorm(y)/dcauchy(y) # w <- w/sum(w) si alguna es una cuasidensidad
-
-# Si se pidiera aproximar una integral
-# h(y) = y si es la media # h <- function(y) y
-# mean(w * h(y))
-```
-
-Sampling Importance Resampling: 
-
-
-``` r
-rx <- sample(y, nsim, replace = TRUE, prob = w/sum(w))
-hist(rx, freq = FALSE, breaks = "FD", ylim = c(0, 0.5))
+nsim2 <- 1000
+set.seed(1)
+# Sampling importance resampling
+rx <- sample(y, nsim2, replace = TRUE, prob = w/sum(w))
+# Comparación distribuciones
+hist(rx, freq = FALSE, breaks = "FD", main = "", ylim = c(0, 0.5))
 lines(density(rx))
 curve(dnorm, col = "blue", add = TRUE)
 ```
@@ -576,7 +678,6 @@ curve(dnorm, col = "blue", add = TRUE)
 
 :::
 
-**Nota**: Si f o g fuesen cuasidensidades y se pidiese aproximar la integral, habría que reescalar los pesos  `w <- f(y)/g(y)` en la aproximación por simulación, resultando `sum(w * h(y))/sum(w)` (media ponderada) y en el análisis de convergencia se emplearía `cumsum(w * h(y))/cumsum(w)`.
 
 ::: {.exercise #mc-imp-sample2 name="propuesto"}
 <br>
@@ -594,20 +695,20 @@ a.  Aproximar mediante integración Monte Carlo la media de esta
 b.  Generar 500 simulaciones (aprox.) de la distribución de interés
     mediante remuestreo del muestreo por importancia.
     
-**NOTA**: En el último apartado, para comprobar que los valores generados proceden de la distribución objetivo, si representamos la cuasidensidad $f^{\ast}(x) = e^{-x}\cos^{2}(x)$ junto con el histograma (en escala de densidades, `freq = FALSE`), hay que tener en cuenta que faltaría dividir la cuasidensidad por una constante normalizadora para poder compararlos directamente. 
-Si no se reescala la cuasidensidad, podríamos compobar si la forma es similar (si la distribución de los valores generados es proporcional a la cuasidensidad, con mayor concentración donde la cuasidensidad se aleja de 0). 
-En este caso (como $g$ es una densidad) podríamos estimar la constante normalizadora ($f(x) = \frac{1}{c}f^{\ast}(x)$) a partir de los pesos del muestreo por importancia (`c.approx <- mean(w)`; en este caso concreto $c=\frac{3}{5}$).
+**NOTA**: Como se trata de una cuasi-densidad, $f^{\ast}(x) = e^{-x}\cos^{2}(x)$, habrá que utilizar $\tilde{\theta}_{g}$ mostrado \@ref(mc-imp-otros).
+En el último apartado, para comprobar que los valores generados proceden de la distribución objetivo, si representamos la cuasidensidad junto con el histograma (en escala de densidades, `freq = FALSE`), hay que tener en cuenta que faltaría dividir la cuasidensidad por una constante normalizadora para poder compararlos directamente. 
+Si no se reescala la cuasidensidad, podríamos comprobar si la forma es similar (si la distribución de los valores generados es proporcional a la cuasidensidad, con mayor concentración donde la cuasidensidad se aleja de 0). 
+En este caso, como $g$ es una densidad, podríamos estimar la constante normalizadora (en este caso $c = 3/5$) a partir de la media de los pesos del muestreo por importancia (`c.approx <- mean(w)`; ver Sección \@ref(mc-imp-resamp)).
 
 :::
 
 
-<!-- 
 ---  
 
-***LA MATERIA EVALUABLE EN EL CURSO 2022/2023 TERMINA AQUÍ***
+***LA MATERIA EVALUABLE EN EL CURSO 2025/2026 TERMINA AQUÍ***
 
 --- 
--->
+
 
 ## Optimización Monte Carlo {#opt-MC}
 
@@ -651,7 +752,7 @@ curve(0.25 * dnorm(x, mu1, sd1) + 0.75 * dnorm(x, mu2, sd2), add = TRUE)
 
 
 
-\begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-13-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 Podemos obtener la estimación por máxima verosimilitud de los parámetros empleando la rutina `nlm` para minimizar el logaritmo (negativo) de la función de verosimilitud:
 
@@ -747,7 +848,7 @@ for (j in 1:nstarts){
 
 
 
-\begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-17-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
 :::
 
@@ -880,7 +981,7 @@ for (j in 1:nstarts){
 
 
 
-\begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-20-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 
 Como alternativa podríamos emplear la siguiente función basada en el algoritmo del Ejemplo 5.9 de Robert y Casella (2010):
@@ -940,7 +1041,7 @@ for (j in 1:nstarts) {
 
 
 
-\begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-21-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
 :::
 
@@ -1014,7 +1115,7 @@ points(der$optim$bestmem[1], der$optim$bestmem[2], pch = 19)
 
 
 
-\begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-22-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-23-1} \end{center}
 
 :::
 
@@ -1472,7 +1573,7 @@ abline(v=ic.sim, lty=2, col='red')
 
 
 
-\begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-34-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-35-1} \end{center}
 
 
 ::: {.remark}
@@ -1562,7 +1663,7 @@ a)  Teniendo en cuenta que la variable aleatoria $X=n\hat{p}\sim\mathcal{B}(n,p)
     
     
     
-    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-39-1} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-40-1} \end{center}
     
     Fuente [Suess y Trumbo (2010)](http://www.springer.com/gp/book/9780387402734).
 
@@ -1603,7 +1704,7 @@ b)  Repetir el apartado anterior considerando intervalos de
     
     
     
-    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-40-1} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-41-1} \end{center}
 
 c)  Repetir el apartado anterior empleando simulación para aproximar
     la cobertura.
@@ -1650,7 +1751,7 @@ c)  Repetir el apartado anterior empleando simulación para aproximar
     
     
     
-    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-43-1} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-44-1} \end{center}
 
 :::
 
@@ -1734,7 +1835,7 @@ a)  Analizar el comportamiento del contraste de Kolmogorov-Smirnov
     
     
     
-    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-46-1} \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-46-2} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-47-1} \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-47-2} \end{center}
 
 b)  Repetir el apartado anterior considerando el test de Lilliefors
     (rutina `lillie.test` del paquete `nortest`).
@@ -1804,7 +1905,7 @@ b)  Repetir el apartado anterior considerando el test de Lilliefors
     
     
     
-    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-51-1} \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-51-2} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-52-1} \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-52-2} \end{center}
 
 c)  Repetir el apartado a) contrastando una distribución exponencial
     y considerando 500 pruebas con muestras de tamaño 30 de una $Exp(1)$.
@@ -1867,7 +1968,7 @@ c)  Repetir el apartado a) contrastando una distribución exponencial
     
     
     
-    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-55-1} \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-55-2} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-56-1} \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-56-2} \end{center}
 
 d)  Diseñar una rutina que permita realizar el contraste KS de
     bondad de ajuste de una variable exponencial aproximando el
@@ -1964,7 +2065,7 @@ d)  Diseñar una rutina que permita realizar el contraste KS de
     
     
     
-    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-59-1} \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-59-2} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-60-1} \includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-60-2} \end{center}
 
 e)  Estudiar la potencia de los contrastes de los apartados c) y d),
     considerando como alternativa una distribución Weibull.
@@ -2091,7 +2192,7 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
     
     
     
-    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-61-1} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-62-1} \end{center}
     
     Calculamos los estimadores:
     
@@ -2147,7 +2248,7 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
     
     
     
-    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-64-1} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-65-1} \end{center}
     
     Error cuadrático:
     
@@ -2159,7 +2260,7 @@ a)  Aproximar mediante simulación (500 generaciones) el sesgo y
     
     
     
-    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-65-1} \end{center}
+    \begin{center}\includegraphics[width=0.75\linewidth]{07-Monte_Carlo_files/figure-latex/unnamed-chunk-66-1} \end{center}
     
     Estadísticos error cuadrático:
     
