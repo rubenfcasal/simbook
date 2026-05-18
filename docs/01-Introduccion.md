@@ -675,10 +675,10 @@ CPUtimeprint()
 ```
  ## Tiempo última operación:
  ##    user  system elapsed 
- ##    0.03    0.00    0.03 
+ ##    0.04    0.00    0.04 
  ## Tiempo total operación:
  ##    user  system elapsed 
- ##    0.03    0.00    0.03
+ ##    0.04    0.00    0.04
 ```
 
 ``` r
@@ -692,7 +692,7 @@ CPUtimeprint()
  ##       0       0       0 
  ## Tiempo total operación:
  ##    user  system elapsed 
- ##    0.03    0.00    0.03
+ ##    0.04    0.00    0.04
 ```
 
 La función [`cpu.time()`](https://rubenfcasal.github.io/simres/reference/cpu.time.html) del paquete [`simres`](https://rubenfcasal.github.io/simres) implementa una aproximación similar:
@@ -739,7 +739,7 @@ toc() # outer
 ```
 
 ```
- ## outer: 0.07 sec elapsed
+ ## outer: 0.06 sec elapsed
 ```
 
 ``` r
@@ -759,8 +759,8 @@ str(log.times)
 
 ```
  ## 'data.frame':	10 obs. of  4 variables:
- ##  $ tic         : num  6.89 6.89 6.89 6.89 6.89 6.89 6.89 6.89 6.89 6.89
- ##  $ toc         : num  6.89 6.89 6.89 6.89 6.89 6.89 6.89 6.89 6.89 6.89
+ ##  $ tic         : num  7.17 7.17 7.17 7.17 7.17 7.17 7.17 7.17 7.17 7.17
+ ##  $ toc         : num  7.17 7.17 7.17 7.17 7.17 7.17 7.17 7.17 7.17 7.17
  ##  $ msg         : chr  "1" "2" "3" "4" ...
  ##  $ callback_msg: chr  "1: 0 sec elapsed" "2: 0 sec elapsed" "3: 0 sec "..
 ```

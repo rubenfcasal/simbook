@@ -82,7 +82,7 @@ system.time(res.boot <- mclapply(1:100, func)) # En Windows llama a lapply() (mc
 
 ```
  ##    user  system elapsed 
- ##    0.04    0.00    0.04
+ ##    0.05    0.02    0.07
 ```
 
 ``` r
@@ -101,7 +101,7 @@ system.time(res.boot <- parSapply(cl, 1:100, func))
 
 ```
  ##    user  system elapsed 
- ##    0.00    0.01    0.04
+ ##    0.00    0.00    0.03
 ```
 
 ``` r
@@ -162,7 +162,7 @@ system.time(res.boot <- boot(muestra, statistic, R = B))
 
 ```
  ##    user  system elapsed 
- ##    0.03    0.00    0.03
+ ##    0.01    0.00    0.02
 ```
 
 ``` r
@@ -172,7 +172,7 @@ system.time(res.boot <- boot(muestra, statistic, R = B, parallel = "snow", cl = 
 
 ```
  ##    user  system elapsed 
- ##    0.03    0.00    0.03
+ ##    0.01    0.00    0.01
 ```
 
 ### Estudio de simulación {#estudio-sim-boot}
@@ -231,7 +231,7 @@ print(t.fin)
 
 ```
  ##    user  system elapsed 
- ##    0.00    0.00    1.97
+ ##    0.00    0.00    1.92
 ```
 
 ``` r

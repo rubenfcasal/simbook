@@ -114,7 +114,7 @@ mc.integral0 <- function(fun, a, b, n) {
 
 Como ejemplo, empleamos esta función para aproximar: 
 $$\int_0^1 4x^4 dx = \frac{4}{5}$$
-(este es el mismo ejemplo utilizado en la Sección \@ref(int-num) del Apéndice \@ref(int-num),
+(este es el mismo ejemplo utilizado en la Sección \@ref(int-num-uni) del Apéndice \@ref(int-num),
 en la que se emplean métodos numéricos[^07-monte-carlo-1]; ver Figura \@ref(fig:int-num-1d) o \@ref(fig:int-mc-gen)).
 
 
@@ -158,7 +158,7 @@ mc.integral
  ##   }
  ##   return(result)
  ## }
- ## <bytecode: 0x000001c5e6177738>
+ ## <bytecode: 0x000001ed40120018>
  ## <environment: namespace:simres>
 ```
 
@@ -570,7 +570,7 @@ Generamos las simulaciones de la densidad auxiliar y calculamos los pesos:
 ``` r
 nsim <- 10^5
 set.seed(1)
-y <- rnorm(nsim)
+y <- rcauchy(nsim)
 w <- dnorm(y)/dcauchy(y) 
 # w <- w/mean(w) si alguna es una cuasidensidad y coincidirían ambas aproximaciones
 ```
@@ -586,10 +586,10 @@ res
 
 ```
  ## $approx
- ## [1] -0.0022056
+ ## [1] -0.0014121
  ## 
  ## $max.error
- ## [1] 0.0073662
+ ## [1] 0.0065108
 ```
 
 
@@ -605,7 +605,7 @@ res
 ```
 
 ```
- ## [1] -0.0016606
+ ## [1] -0.00141
 ```
 
 Para el análisis de la convergencia se emplearía `cumsum(w * h(y))/cumsum(w)`:
@@ -642,7 +642,7 @@ El muestreo por importancia tiene cierta similitud con el método de simulación
 
 Adicionalmente, al mismo tiempo que se aproxima la integral, empleando $\hat{\theta}_{g}$ o una alternativa $\tilde{\theta}_{g}$, podemos generar observaciones con distribución aproximadamente igual a la de la densidad objetivo.
 Puede verse que con un muestreo de $\left\{y_1, y_2, \ldots, y_n \right\}$ ponderado por $w(y_i)$ (con probabilidades $p_i=w(y_i)\left/ \sum\nolimits_{i=1}^n w(y_i) \right.$ ) se obtiene una simulación aproximada de $f$ [*Sample importance resampling*, @rubin1987].
-No obstante, la recomendación sería generar un número de valores $m$ mucho menor que el número de simulaciones $n$ de la densidad auxiliar.
+No obstante, la recomendación sería generar un número de valores $m$ mucho menor que el número de simulaciones $n$ de la densidad auxiliar, especialmente si la distribución de los pesos no es homogénea (en caso contrario aumentaría la probabilidad de que observaciones con pesos altos aparezcan repetidas).
 
 El resultado anterior es también válido para una cuasi-densidad $f^{\ast}$ ($f(x) = f^{\ast}(x)/c \propto f^{\ast}(x)$), ya que no depende de la constante normalizadora $c$.
 Además, podríamos estimar esta constante a partir de los pesos del muestreo por importancia:

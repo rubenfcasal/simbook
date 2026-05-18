@@ -237,7 +237,7 @@ system.time(x <- rfn(nsim))
 
 ```
  ##    user  system elapsed 
- ##    0.02    0.00    0.01
+ ##    0.01    0.00    0.01
 ```
 
 ``` r
@@ -567,7 +567,7 @@ mvrnorm
  ##         drop(X)
  ##     else t(X)
  ## }
- ## <bytecode: 0x00000263e7732770>
+ ## <bytecode: 0x000001ef9cbfcbe0>
  ## <environment: namespace:MASS>
 ```
 

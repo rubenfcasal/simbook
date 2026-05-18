@@ -471,7 +471,7 @@ Por defecto empleará todos los núcleos disponibles, pero se puede especificar 
 <span id="cb776-8"><a href="ejemplos.html#cb776-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb776-9"><a href="ejemplos.html#cb776-9" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(res.boot <span class="ot">&lt;-</span> <span class="fu">mclapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, func)) <span class="co"># En Windows llama a lapply() (mc.cores = 1)</span></span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.04    0.01    0.05</code></pre>
+##    0.05    0.00    0.04</code></pre>
 <div class="sourceCode" id="cb778"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb778-1"><a href="ejemplos.html#cb778-1" aria-hidden="true" tabindex="-1"></a><span class="co"># res.boot &lt;- mclapply(1:100, func, mc.cores = ncores - 1) # En Windows genera un error si mc.cores &gt; 1</span></span></code></pre></div>
 <p>En Windows habría que crear previamente un cluster, llamar a una de las funciones <code>par*apply()</code> y finalizar el cluster:</p>
 <div class="sourceCode" id="cb779"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb779-1"><a href="ejemplos.html#cb779-1" aria-hidden="true" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(ncores <span class="sc">-</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">&quot;PSOCK&quot;</span>)</span>
@@ -479,7 +479,7 @@ Por defecto empleará todos los núcleos disponibles, pero se puede especificar 
 <span id="cb779-3"><a href="ejemplos.html#cb779-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb779-4"><a href="ejemplos.html#cb779-4" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(res.boot <span class="ot">&lt;-</span> <span class="fu">parSapply</span>(cl, <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, func))</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.00    0.00    0.02</code></pre>
+##    0.02    0.00    0.03</code></pre>
 <div class="sourceCode" id="cb781"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb781-1"><a href="ejemplos.html#cb781-1" aria-hidden="true" tabindex="-1"></a><span class="co"># stopCluster(cl)</span></span>
 <span id="cb781-2"><a href="ejemplos.html#cb781-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb781-3"><a href="ejemplos.html#cb781-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(res.boot)</span></code></pre></div>
@@ -518,7 +518,7 @@ Si <code>parallel = "snow"</code> se crea un clúster en la máquina local duran
 <span id="cb784-15"><a href="ejemplos.html#cb784-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb784-16"><a href="ejemplos.html#cb784-16" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> B))</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.03    0.00    0.03</code></pre>
+##    0.05    0.00    0.04</code></pre>
 <div class="sourceCode" id="cb786"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb786-1"><a href="ejemplos.html#cb786-1" aria-hidden="true" tabindex="-1"></a><span class="co"># system.time(res.boot &lt;- boot(muestra, statistic, R = B, parallel = &quot;snow&quot;))</span></span>
 <span id="cb786-2"><a href="ejemplos.html#cb786-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> B, <span class="at">parallel =</span> <span class="st">&quot;snow&quot;</span>, <span class="at">cl =</span> cl))</span></code></pre></div>
 <pre><code>##    user  system elapsed 
@@ -573,7 +573,7 @@ Si <code>parallel = "snow"</code> se crea un clúster en la máquina local duran
 <span id="cb788-43"><a href="ejemplos.html#cb788-43" aria-hidden="true" tabindex="-1"></a>t.fin <span class="ot">&lt;-</span> <span class="fu">proc.time</span>() <span class="sc">-</span> t.ini</span>
 <span id="cb788-44"><a href="ejemplos.html#cb788-44" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(t.fin)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.00    0.00    1.98</code></pre>
+##     0.0     0.0     1.9</code></pre>
 <div class="sourceCode" id="cb790"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb790-1"><a href="ejemplos.html#cb790-1" aria-hidden="true" tabindex="-1"></a>resnames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Cobertura&quot;</span>, <span class="st">&quot;Longitud&quot;</span>)</span>
 <span id="cb790-2"><a href="ejemplos.html#cb790-2" aria-hidden="true" tabindex="-1"></a>intervals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Normal&quot;</span>, <span class="st">&quot;Basic&quot;</span>, <span class="st">&quot;Studentized&quot;</span>, <span class="st">&quot;Percentil&quot;</span>, <span class="st">&quot;BCa&quot;</span>)</span>
 <span id="cb790-3"><a href="ejemplos.html#cb790-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(intervals) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;normal&quot;</span>,<span class="st">&quot;basic&quot;</span>, <span class="st">&quot;student&quot;</span>, <span class="st">&quot;percent&quot;</span>, <span class="st">&quot;bca&quot;</span>)</span>

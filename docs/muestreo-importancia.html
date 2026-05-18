@@ -608,7 +608,7 @@ Aunque en general no es insesgado, puede ser más eficiente si <span class="math
 <p>Generamos las simulaciones de la densidad auxiliar y calculamos los pesos:</p>
 <div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="muestreo-importancia.html#cb383-1" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">5</span></span>
 <span id="cb383-2"><a href="muestreo-importancia.html#cb383-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb383-3"><a href="muestreo-importancia.html#cb383-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(nsim)</span>
+<span id="cb383-3"><a href="muestreo-importancia.html#cb383-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rcauchy</span>(nsim)</span>
 <span id="cb383-4"><a href="muestreo-importancia.html#cb383-4" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(y)<span class="sc">/</span><span class="fu">dcauchy</span>(y) </span>
 <span id="cb383-5"><a href="muestreo-importancia.html#cb383-5" aria-hidden="true" tabindex="-1"></a><span class="co"># w &lt;- w/mean(w) si alguna es una cuasidensidad y coincidirían ambas aproximaciones</span></span></code></pre></div>
 <p>Calculamos la aproximación con el método original:</p>
@@ -618,14 +618,14 @@ Aunque en general no es insesgado, puede ser más eficiente si <span class="math
 <p><img src="07-Monte_Carlo_files/figure-html/unnamed-chunk-11-1.png" width="75%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="muestreo-importancia.html#cb385-1" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
 <pre><code>## $approx
-## [1] -0.0022056
+## [1] -0.0014121
 ## 
 ## $max.error
-## [1] 0.0073662</code></pre>
+## [1] 0.0065108</code></pre>
 <p>Con los pesos normalizados la aproximación por simulación sería <code>sum(w * h(y))/sum(w)</code>:</p>
 <div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="muestreo-importancia.html#cb387-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">sum</span>(w<span class="sc">*</span>y)<span class="sc">/</span><span class="fu">sum</span>(w)</span>
 <span id="cb387-2"><a href="muestreo-importancia.html#cb387-2" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
-<pre><code>## [1] -0.0016606</code></pre>
+<pre><code>## [1] -0.00141</code></pre>
 <p>Para el análisis de la convergencia se emplearía <code>cumsum(w * h(y))/cumsum(w)</code>:</p>
 <div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="muestreo-importancia.html#cb389-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">cumsum</span>(w<span class="sc">*</span>y)<span class="sc">/</span><span class="fu">cumsum</span>(w), <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Aproximación&quot;</span>, </span>
 <span id="cb389-2"><a href="muestreo-importancia.html#cb389-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Iteraciones&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>, <span class="fl">0.05</span>))</span>
@@ -648,7 +648,7 @@ sd(y)*sqrt(sum(w^2))/sum(w)
 <p>El muestreo por importancia tiene cierta similitud con el método de simulación por aceptación/rechazo, aunque en este caso no se rechaza ninguna generación de la densidad auxiliar y se pueden evitar con mayor facilidad los problemas de eficiencia que aparecen habitualmente con el método de aceptación/rechazo cuando el número de dimensiones es grande (ver Ejemplo <a href="AR-multi.html#exm:ar-esfera">6.3</a> en Sección <a href="AR-multi.html#AR-multi">6.2</a>).</p>
 <p>Adicionalmente, al mismo tiempo que se aproxima la integral, empleando <span class="math inline">\(\hat{\theta}_{g}\)</span> o una alternativa <span class="math inline">\(\tilde{\theta}_{g}\)</span>, podemos generar observaciones con distribución aproximadamente igual a la de la densidad objetivo.
 Puede verse que con un muestreo de <span class="math inline">\(\left\{y_1, y_2, \ldots, y_n \right\}\)</span> ponderado por <span class="math inline">\(w(y_i)\)</span> (con probabilidades <span class="math inline">\(p_i=w(y_i)\left/ \sum\nolimits_{i=1}^n w(y_i) \right.\)</span> ) se obtiene una simulación aproximada de <span class="math inline">\(f\)</span> <span class="citation">(<em>Sample importance resampling</em>, <a href="#ref-rubin1987" role="doc-biblioref">Rubin, 1987</a>)</span>.
-No obstante, la recomendación sería generar un número de valores <span class="math inline">\(m\)</span> mucho menor que el número de simulaciones <span class="math inline">\(n\)</span> de la densidad auxiliar.</p>
+No obstante, la recomendación sería generar un número de valores <span class="math inline">\(m\)</span> mucho menor que el número de simulaciones <span class="math inline">\(n\)</span> de la densidad auxiliar, especialmente si la distribución de los pesos no es homogénea (en caso contrario aumentaría la probabilidad de que observaciones con pesos altos aparezcan repetidas).</p>
 <p>El resultado anterior es también válido para una cuasi-densidad <span class="math inline">\(f^{\ast}\)</span> (<span class="math inline">\(f(x) = f^{\ast}(x)/c \propto f^{\ast}(x)\)</span>), ya que no depende de la constante normalizadora <span class="math inline">\(c\)</span>.
 Además, podríamos estimar esta constante a partir de los pesos del muestreo por importancia:
 <span class="math display">\[\hat c = \frac{1}{n}\sum_{i=1}^n w^{\ast}(y_i),\]</span>
