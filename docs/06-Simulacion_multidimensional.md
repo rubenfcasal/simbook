@@ -40,11 +40,11 @@ Las dificultades aparecerán cuando se quiera simular componentes con una determ
 ::: {.example #normind name="simulación de normales independientes"}
 <br>
 
-Si $\boldsymbol{\mu} = \left( \mu_1, \mu_2, \ldots, \mu_d \right)^t$ es un vector (de medias) y $\Sigma$ es una matriz $d \times d$ definida positiva (de varianzas-covarianzas), el vector aleatorio $\mathbf{X}$ sigue una distribución normal multivariante con esos parámetros, 
+Si $\boldsymbol{\mu} = \left( \mu_1, \mu_2, \ldots, \mu_d \right)^{\top}$ es un vector (de medias) y $\Sigma$ es una matriz $d \times d$ definida positiva (de varianzas-covarianzas), el vector aleatorio $\mathbf{X}$ sigue una distribución normal multivariante con esos parámetros, 
 $\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol{\mu},\Sigma \right)$, 
 si su función de densidad es de la forma:
 $$f(\mathbf x) = \frac{1}{(2\pi)^{n/2}|\Sigma|^{1/2}}
-\exp \left( -\frac{1}{2} ( \mathbf x - \boldsymbol \mu)^t \Sigma^{-1} (\mathbf x - \boldsymbol \mu)
+\exp \left( -\frac{1}{2} ( \mathbf x - \boldsymbol \mu)^{\top} \Sigma^{-1} (\mathbf x - \boldsymbol \mu)
 \right),$$
 donde $| \Sigma |$ es el determinante de $\Sigma$.
 
@@ -78,14 +78,10 @@ curve(f1, -3, 3, ylim = c(0, f2(-1)), ylab = "fdp")
 curve(f2, add = TRUE, lty = 2)
 ```
 
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/normind-plot-1} 
-
-}
-
-\caption{(ref:normind-plot)}(\#fig:normind-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-Simulacion_multidimensional_files/figure-html/normind-plot-1.png" alt="(ref:normind-plot)" width="80%" />
+<p class="caption">(\#fig:normind-plot)(ref:normind-plot)</p>
+</div>
 
 Para simular una generación bastaría con:
 
@@ -95,7 +91,7 @@ rnorm(2, c(0, -1), c(1, 0.5))
 ```
 
 ```
- ## [1] -0.62645 -0.90818
+## [1] -0.62645 -0.90818
 ```
 y para simular `nsim`:
 
@@ -108,12 +104,12 @@ rx
 ```
 
 ```
- ##            X1       X2
- ## [1,] -0.62645 -0.90818
- ## [2,] -0.83563 -0.20236
- ## [3,]  0.32951 -1.41023
- ## [4,]  0.48743 -0.63084
- ## [5,]  0.57578 -1.15269
+##            X1       X2
+## [1,] -0.62645 -0.90818
+## [2,] -0.83563 -0.20236
+## [3,]  0.32951 -1.41023
+## [4,]  0.48743 -0.63084
+## [5,]  0.57578 -1.15269
 ```
 
 
@@ -191,9 +187,7 @@ persp.f2D <- function(f2d, ax=-1, bx=1, ay=-1, by=1, nx=21, ny=21, ...) {
 persp.f2D(f, -1, 1, -1, 1, 50, 50, ticktype = "detailed")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-3-1} \end{center}
+<img src="06-Simulacion_multidimensional_files/figure-html/unnamed-chunk-3-1.png" alt="" width="80%" style="display: block; margin: auto;" />
 
 Las siguientes funciones implementan el método de aceptación-rechazo para simular 
 valores de la densidad objetivo (de forma similar al los ejemplos mostrados 
@@ -236,8 +230,8 @@ system.time(x <- rfn(nsim))
 ```
 
 ```
- ##    user  system elapsed 
- ##    0.01    0.00    0.01
+##    user  system elapsed 
+##       0       0       0
 ```
 
 ``` r
@@ -257,9 +251,9 @@ cat("\nProporción de rechazos = ", 1-nsim/ngen, "\n")}
 ```
 
 ```
- ## Número de generaciones =  1522
- ## Número medio de generaciones =  1.522
- ## Proporción de rechazos =  0.34297
+## Número de generaciones =  1522
+## Número medio de generaciones =  1.522
+## Proporción de rechazos =  0.34297
 ```
 
 ``` r
@@ -269,7 +263,7 @@ c
 ```
 
 ```
- ## [1] 1.5
+## [1] 1.5
 ```
 
 ``` r
@@ -277,7 +271,7 @@ c
 ```
 
 ```
- ## [1] 0.33333
+## [1] 0.33333
 ```
 
 Si queremos representar gráficamente la distribución de los valores generados
@@ -296,9 +290,7 @@ fhat <- kde.boundary(x, xmin = c(-1, -1), xmax = c(1, 1), boundary.kernel = "lin
 plot(fhat, display = "persp")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-7-1} \end{center}
+<img src="06-Simulacion_multidimensional_files/figure-html/unnamed-chunk-7-1.png" alt="" width="80%" style="display: block; margin: auto;" />
 
 :::
 
@@ -372,7 +364,7 @@ Como el valor de $U$ es superfluo en este caso, el algoritmo queda:
 
 3. Si $T_1^2 + T_2^2 + \cdots + T_d^2 > 1$ entonces volver al paso 1.
 
-4. Devolver $\mathbf{X} = \left( T_1, T_2, \ldots, T_d \right)^t$.
+4. Devolver $\mathbf{X} = \left( T_1, T_2, \ldots, T_d \right)^{\top}$.
 
 Ver el Ejercicio \@ref(exr:simpi) para el caso de $d=2$.
 
@@ -393,17 +385,15 @@ c.opt(2:10)
 ```
 
 ```
- ## [1]   1.2732   1.9099   3.2423   6.0793  12.3846  27.0913  63.0742
- ## [8] 155.2217 401.5428
+## [1]   1.2732   1.9099   3.2423   6.0793  12.3846  27.0913  63.0742
+## [8] 155.2217 401.5428
 ```
 
 ``` r
 curve(c.opt, 2, 12, xlab = "d", ylab = "c")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-8-1} \end{center}
+<img src="06-Simulacion_multidimensional_files/figure-html/unnamed-chunk-8-1.png" alt="" width="80%" style="display: block; margin: auto;" />
 
 Esto está relacionado con la *maldición de la dimensionalidad* (curse of dimensionality), a medida que aumenta el número de dimensiones el volumen de la "frontera" crece exponencialmente [ver p.e. @mpaebook2024, [sec. 1.4](https://rubenfcasal.github.io/aprendizaje_estadistico/dimen-curse.html)].
 
@@ -412,8 +402,8 @@ Esto está relacionado con la *maldición de la dimensionalidad* (curse of dimen
 ## Factorización de la matriz de covarianzas {#fact-cov}
 
 Teniendo en cuenta que si $Cov(\mathbf{X})= I$, entonces:
-$$Cov(A\mathbf{X}) = AA^t.$$ 
-La idea de este tipo de métodos es simular datos independientes y transformarlos linealmente de modo que el resultado tenga la covarianza deseada $\Sigma = AA^t$.
+$$Cov(A\mathbf{X}) = AA^{\top}.$$ 
+La idea de este tipo de métodos es simular datos independientes y transformarlos linealmente de modo que el resultado tenga la covarianza deseada $\Sigma = AA^{\top}$.
 
 Este método se emplea principalmente para la simulación de una
 normal multivariante, aunque también es válido para muchas otras
@@ -425,18 +415,18 @@ En el caso de normalidad, el resultado general es el siguiente.
 <br>
 Si $\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol{\mu},\Sigma \right)$ y $A$ es una matriz $p\times d$, de
 rango máximo, con $p\leq d$, entonces:
-$$A\mathbf{X} \sim \mathcal{N}_{p}\left(A\boldsymbol{\mu},A\Sigma A^t\right).$$
+$$A\mathbf{X} \sim \mathcal{N}_{p}\left(A\boldsymbol{\mu},A\Sigma A^{\top}\right).$$
 :::
 
 Partiendo de $\mathbf{Z} \sim \mathcal{N}_d\left( \mathbf{0},I_d\right)$, se podrían considerar distintas factorizaciones de la matriz de covarianzas:
 
 * Factorización espectral: 
-  $\Sigma=H\Lambda H^t =H\Lambda^{1/2}(H\Lambda^{1/2})^t$,
+  $\Sigma=H\Lambda H^{\top} =H\Lambda^{1/2}(H\Lambda^{1/2})^{\top}$,
   donde $H$ es una matriz ortogonal (i.e. $H^{-1}=H^{t}$), cuyas columnas son los autovectores de la matriz $\Sigma$, y $\Lambda$ es una matriz diagonal, cuya diagonal esta formada por los correspondientes autovalores (positivos). De donde se deduce que:
 
 $$\mathbf{X} = \boldsymbol{\mu} + H\Lambda^{1/2}\mathbf{Z} \sim \mathcal{N}_d\left( \boldsymbol{\mu},\Sigma \right).$$
 
-* Factorización de Cholesky: $\Sigma=LL^t$, donde $L$ es una matriz triangular inferior (fácilmente invertible), por lo que: 
+* Factorización de Cholesky: $\Sigma=LL^{\top}$, donde $L$ es una matriz triangular inferior (fácilmente invertible), por lo que: 
   $$\mathbf{X} = \boldsymbol{\mu} + L\mathbf{Z} 
   \sim \mathcal{N}_d\left( \boldsymbol{\mu},\Sigma \right).$$
 
@@ -446,7 +436,7 @@ En el primer caso el algoritmo sería el siguiente:
 ::: {.conjecture #mnorm-fact name="de simulación de una normal multivariante" }
 <br> 
 
-1.  Obtener la factorización de Cholesky $\Sigma=LL^t$.
+1.  Obtener la factorización de Cholesky $\Sigma=LL^{\top}$.
 
 2.  Simular $\mathbf{Z} = \left( Z_1,Z_2,\ldots,Z_d\right)$
     i.i.d. $\mathcal{N}\left( 0,1\right)$.
@@ -458,8 +448,8 @@ En el primer caso el algoritmo sería el siguiente:
 :::
 <br>
 **Nota**: Hay que tener en cuenta el resultado del algoritmo empleado
-para la factorización de Cholesky. Por ejemplo si se obtiene $\Sigma=U^tU$,
-hará que emplear $L=U^t.$
+para la factorización de Cholesky. Por ejemplo si se obtiene $\Sigma=U^{\top}U$,
+hará que emplear $L=U^{\top}.$
 
 ::: {.example #funcional name="simulación de datos funcionales o temporales"}
 <br>
@@ -498,13 +488,13 @@ head(mu + L %*% rnorm(n))
 ```
 
 ```
- ##       [,1]
- ## 1 -0.62645
- ## 2 -0.53076
- ## 3 -0.57980
- ## 4 -0.28444
- ## 5 -0.17118
- ## 6 -0.22208
+##       [,1]
+## 1 -0.62645
+## 2 -0.53076
+## 3 -0.57980
+## 4 -0.28444
+## 5 -0.17118
+## 6 -0.22208
 ```
 y para simular `nsim`:
 
@@ -519,14 +509,10 @@ matplot(t, x, type = "l", ylim = c(-3.5, 3.5))
 lines(t, mu, lwd = 2)
 ```
 
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/funcional-plot-1} 
-
-}
-
-\caption{(ref:funcional)}(\#fig:funcional-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-Simulacion_multidimensional_files/figure-html/funcional-plot-1.png" alt="(ref:funcional)" width="80%" />
+<p class="caption">(\#fig:funcional-plot)(ref:funcional)</p>
+</div>
 
 Alternativamente se podría emplear, por ejemplo, la funcion `mvrnorm`
 del paquete `MASS` que emplea la factorización espectral (`eigen`) (y que tiene en cuenta una tolerancia relativa para correguir autovalores negativos próximos a cero):
@@ -540,35 +526,35 @@ mvrnorm
 ```
 
 ```
- ## function (n = 1, mu, Sigma, tol = 1e-06, empirical = FALSE, EISPACK = FALSE) 
- ## {
- ##     p <- length(mu)
- ##     if (!all(dim(Sigma) == c(p, p))) 
- ##         stop("incompatible arguments")
- ##     if (EISPACK) 
- ##         stop("'EISPACK' is no longer supported by R", domain = NA)
- ##     eS <- eigen(Sigma, symmetric = TRUE)
- ##     ev <- eS$values
- ##     if (!all(ev >= -tol * abs(ev[1L]))) 
- ##         stop("'Sigma' is not positive definite")
- ##     X <- matrix(rnorm(p * n), n)
- ##     if (empirical) {
- ##         X <- scale(X, TRUE, FALSE)
- ##         X <- X %*% svd(X, nu = 0)$v
- ##         X <- scale(X, FALSE, TRUE)
- ##     }
- ##     X <- drop(mu) + eS$vectors %*% diag(sqrt(pmax(ev, 0)), p) %*% 
- ##         t(X)
- ##     nm <- names(mu)
- ##     if (is.null(nm) && !is.null(dn <- dimnames(Sigma))) 
- ##         nm <- dn[[1L]]
- ##     dimnames(X) <- list(nm, NULL)
- ##     if (n == 1) 
- ##         drop(X)
- ##     else t(X)
- ## }
- ## <bytecode: 0x000001ef9cbfcbe0>
- ## <environment: namespace:MASS>
+## function (n = 1, mu, Sigma, tol = 1e-06, empirical = FALSE, EISPACK = FALSE) 
+## {
+##     p <- length(mu)
+##     if (!all(dim(Sigma) == c(p, p))) 
+##         stop("incompatible arguments")
+##     if (EISPACK) 
+##         stop("'EISPACK' is no longer supported by R", domain = NA)
+##     eS <- eigen(Sigma, symmetric = TRUE)
+##     ev <- eS$values
+##     if (!all(ev >= -tol * abs(ev[1L]))) 
+##         stop("'Sigma' is not positive definite")
+##     X <- matrix(rnorm(p * n), n)
+##     if (empirical) {
+##         X <- scale(X, TRUE, FALSE)
+##         X <- X %*% svd(X, nu = 0)$v
+##         X <- scale(X, FALSE, TRUE)
+##     }
+##     X <- drop(mu) + eS$vectors %*% diag(sqrt(pmax(ev, 0)), p) %*% 
+##         t(X)
+##     nm <- names(mu)
+##     if (is.null(nm) && !is.null(dn <- dimnames(Sigma))) 
+##         nm <- dn[[1L]]
+##     dimnames(X) <- list(nm, NULL)
+##     if (n == 1) 
+##         drop(X)
+##     else t(X)
+## }
+## <bytecode: 0x000002049a70ee30>
+## <environment: namespace:MASS>
 ```
 
 ``` r
@@ -578,14 +564,10 @@ matplot(t, t(x), type = "l")
 lines(t, mu, lwd = 2)
 ```
 
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/funcional-plot2-1} 
-
-}
-
-\caption{(ref:funcional2)}(\#fig:funcional-plot2)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-Simulacion_multidimensional_files/figure-html/funcional-plot2-1.png" alt="(ref:funcional2)" width="80%" />
+<p class="caption">(\#fig:funcional-plot2)(ref:funcional2)</p>
+</div>
 
 :::
 
@@ -662,8 +644,7 @@ x_1\right) = \frac{2}{\pi}\sqrt{1-x_1^2}1_{\{|x_1|\leq1\}}$.
 2. Simular $X_2$ con densidad $\mathcal{U}\left(
 -\sqrt{1-X_1^2},\sqrt{1-X_1^2}\right)$.
 
-3. Devolver $\mathbf{X}= \left( X_1,X_2\right)
-^t$.
+3. Devolver $\mathbf{X}= \left( X_1,X_2\right)^{\top}$.
 
 Para el paso 1 puede utilizarse, por ejemplo, el método de
 aceptación-rechazo, pues se trata de una densidad acotada definida en un
@@ -730,7 +711,7 @@ y el algoritmo sería el siguiente:
 
 :::
 
-Este algoritmo es el mismo que obtendríamos con la factorización de la matriz de covarianzas ya que $\Sigma = L L^t$ con:
+Este algoritmo es el mismo que obtendríamos con la factorización de la matriz de covarianzas ya que $\Sigma = L L^{\top}$ con:
 $$L = \begin{pmatrix}
  \sigma^2_1 &  0 \\
  \sigma_2 \rho &  \sigma_2  \sqrt{1-\rho^2}
@@ -868,14 +849,10 @@ lines(t[!idata], kpred, lwd = 2, lty = 2)
 matplot(t[!idata], ycond, type = "l", lty = 3, add = TRUE) 
 ```
 
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/funcional-cond-1} 
-
-}
-
-\caption{(ref:funcional-cond)}(\#fig:funcional-cond)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-Simulacion_multidimensional_files/figure-html/funcional-cond-1.png" alt="(ref:funcional-cond)" width="80%" />
+<p class="caption">(\#fig:funcional-cond)(ref:funcional-cond)</p>
+</div>
 
 :::
 
@@ -906,12 +883,12 @@ z <- grf(n, grid = "reg", cov.pars = c(1, 1))
 ```
 
 ```
- ## grf: generating grid  2  *  2  with  4  points
- ## grf: process with  1  covariance structure(s)
- ## grf: nugget effect is: tausq= 0 
- ## grf: covariance model 1 is: exponential(sigmasq=1, phi=1)
- ## grf: decomposition algorithm used is:  cholesky 
- ## grf: End of simulation procedure. Number of realizations: 1
+## grf: generating grid  2  *  2  with  4  points
+## grf: process with  1  covariance structure(s)
+## grf: nugget effect is: tausq= 0 
+## grf: covariance model 1 is: exponential(sigmasq=1, phi=1)
+## grf: decomposition algorithm used is:  cholesky 
+## grf: End of simulation procedure. Number of realizations: 1
 ```
 
 ``` r
@@ -920,11 +897,11 @@ z$coords
 ```
 
 ```
- ##      x y
- ## [1,] 0 0
- ## [2,] 1 0
- ## [3,] 0 1
- ## [4,] 1 1
+##      x y
+## [1,] 0 0
+## [2,] 1 0
+## [3,] 0 1
+## [4,] 1 1
 ```
 
 ``` r
@@ -932,7 +909,7 @@ z$data
 ```
 
 ```
- ## [1] -0.626454 -0.059694 -0.980142  1.092151
+## [1] -0.626454 -0.059694 -0.980142  1.092151
 ```
 
 La `grf` función emplea por defecto el método de la factorización de la matriz de covarianzas,
@@ -952,11 +929,11 @@ cov.matrix
 ```
 
 ```
- ##         [,1]    [,2]    [,3]    [,4]
- ## [1,] 1.00000 0.36788 0.36788 0.24312
- ## [2,] 0.36788 1.00000 0.24312 0.36788
- ## [3,] 0.36788 0.24312 1.00000 0.36788
- ## [4,] 0.24312 0.36788 0.36788 1.00000
+##         [,1]    [,2]    [,3]    [,4]
+## [1,] 1.00000 0.36788 0.36788 0.24312
+## [2,] 0.36788 1.00000 0.24312 0.36788
+## [3,] 0.36788 0.24312 1.00000 0.36788
+## [4,] 0.24312 0.36788 0.36788 1.00000
 ```
 
 ``` r
@@ -974,11 +951,11 @@ y
 ```
 
 ```
- ##           [,1]
- ## [1,] -0.626454
- ## [2,] -0.059694
- ## [3,] -0.980142
- ## [4,]  1.092151
+##           [,1]
+## [1,] -0.626454
+## [2,] -0.059694
+## [3,] -0.980142
+## [4,]  1.092151
 ```
 
 Para generar simulaciones condicionales podemos emplear la función `krige.conv`.
@@ -993,7 +970,14 @@ new.y <- seq(0, 1, len = new.nx[2])
 new.s <- expand.grid(x = new.x, y = new.y)
 plot(data.s, type = "p", pch = 20, asp = 1)
 points(new.s)
+```
 
+<div class="figure" style="text-align: center">
+<img src="06-Simulacion_multidimensional_files/figure-html/pos-sp-simcond-1.png" alt="Posiciones espaciales de las simulaciones condicionales (y las de los datos)." width="70%" />
+<p class="caption">(\#fig:pos-sp-simcond)Posiciones espaciales de las simulaciones condicionales (y las de los datos).</p>
+</div>
+
+``` r
 # Simulación condicional
 set.seed(1)
 nsim.cond <- 4
@@ -1003,20 +987,11 @@ kc <- krige.conv(z, loc = new.s, output = s.out,
 ```
 
 ```
- ## krige.conv: results will be returned only for prediction locations inside the borders
- ## krige.conv: model with constant mean
- ## krige.conv: sampling from the predictive distribution (conditional simulations)
- ## krige.conv: Kriging performed using global neighbourhood
+## krige.conv: results will be returned only for prediction locations inside the borders
+## krige.conv: model with constant mean
+## krige.conv: sampling from the predictive distribution (conditional simulations)
+## krige.conv: Kriging performed using global neighbourhood
 ```
-
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.7\linewidth]{06-Simulacion_multidimensional_files/figure-latex/pos-sp-simcond-1} 
-
-}
-
-\caption{Posiciones espaciales de las simulaciones condicionales (y las de los datos).}(\#fig:pos-sp-simcond)
-\end{figure}
 
 Si las representamos podemos confirmar que los valores en las posiciones $\left\{(0,0),(0,1),(1,0),(1,1)\right\}$ coinciden con los generados anteriormente.
 
@@ -1039,17 +1014,16 @@ image(new.x, new.y, kc$simul[,,3], main="simul. cond. 3",
       xlab = "x", ylab = "y", zlim = zlim)
 image(new.x, new.y, kc$simul[,,4], main="simul. cond. 4",
       xlab = "x", ylab = "y", zlim = zlim)
-par(par.old)
 ```
 
-\begin{figure}[!htbp]
+<div class="figure" style="text-align: center">
+<img src="06-Simulacion_multidimensional_files/figure-html/krige-simcond-1.png" alt="Simulaciones condicionales" width="90%" />
+<p class="caption">(\#fig:krige-simcond)Simulaciones condicionales</p>
+</div>
 
-{\centering \includegraphics[width=0.9\linewidth]{06-Simulacion_multidimensional_files/figure-latex/krige-simcond-1} 
-
-}
-
-\caption{Simulaciones condicionales}(\#fig:krige-simcond)
-\end{figure}
+``` r
+par(par.old)
+```
 
 :::
 
@@ -1072,19 +1046,18 @@ library(forecast)
 data <- window(co2, 1990) # datos de co2 desde 1990
 plot(data, ylab = expression("Concentración atmosférica de CO"[2]),
      xlab = "Fecha", xlim = c(1990, 2000), ylim = c(350, 375))
+```
+
+<div class="figure" style="text-align: center">
+<img src="06-Simulacion_multidimensional_files/figure-html/co2-forecast-1.png" alt="(ref:co2-forecast)" width="80%" />
+<p class="caption">(\#fig:co2-forecast)(ref:co2-forecast)</p>
+</div>
+
+``` r
 # Se podrían ajustar distintos tipos de modelos
 fit <- ets(data)
 # fit <- auto.arima(data)
 ```
-
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/co2-forecast-1} 
-
-}
-
-\caption{(ref:co2-forecast)}(\#fig:co2-forecast)
-\end{figure}
 
 Podemos obtener predicciones (media de la distribución condicional) e intervalos de predicción:
 
@@ -1095,28 +1068,28 @@ pred
 ```
 
 ```
- ##          Point Forecast  Lo 95  Hi 95
- ## Jan 1998         365.11 364.53 365.69
- ## Feb 1998         366.12 365.46 366.78
- ## Mar 1998         367.02 366.28 367.75
- ## Apr 1998         368.27 367.47 369.08
- ## May 1998         368.93 368.06 369.80
- ## Jun 1998         368.22 367.30 369.15
- ## Jul 1998         366.58 365.60 367.56
- ## Aug 1998         364.49 363.45 365.52
- ## Sep 1998         362.66 361.57 363.74
- ## Oct 1998         362.78 361.65 363.91
- ## Nov 1998         364.20 363.03 365.38
- ## Dec 1998         365.53 364.30 366.75
- ## Jan 1999         366.60 365.33 367.87
- ## Feb 1999         367.61 366.30 368.91
- ## Mar 1999         368.50 367.16 369.85
- ## Apr 1999         369.76 368.38 371.15
- ## May 1999         370.42 368.99 371.84
- ## Jun 1999         369.71 368.25 371.17
- ## Jul 1999         368.07 366.57 369.57
- ## Aug 1999         365.98 364.45 367.51
- ##  [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
+##          Point Forecast  Lo 95  Hi 95
+## Jan 1998         365.11 364.53 365.69
+## Feb 1998         366.12 365.46 366.78
+## Mar 1998         367.02 366.28 367.75
+## Apr 1998         368.27 367.47 369.08
+## May 1998         368.93 368.06 369.80
+## Jun 1998         368.22 367.30 369.15
+## Jul 1998         366.58 365.60 367.56
+## Aug 1998         364.49 363.45 365.52
+## Sep 1998         362.66 361.57 363.74
+## Oct 1998         362.78 361.65 363.91
+## Nov 1998         364.20 363.03 365.38
+## Dec 1998         365.53 364.30 366.75
+## Jan 1999         366.60 365.33 367.87
+## Feb 1999         367.61 366.30 368.91
+## Mar 1999         368.50 367.16 369.85
+## Apr 1999         369.76 368.38 371.15
+## May 1999         370.42 368.99 371.84
+## Jun 1999         369.71 368.25 371.17
+## Jul 1999         368.07 366.57 369.57
+## Aug 1999         365.98 364.45 367.51
+##  [ reached 'max' / getOption("max.print") -- omitted 4 rows ]
 ```
 
 Para análisis adicionales nos puede interesar generar simulaciones (por defecto de la distribución condicional, `future = TRUE`):
@@ -1131,14 +1104,10 @@ plot(pred, main = "", xlab = "Fecha",
 lines(sim.cond, lwd = 2, col = "red")
 ```
 
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/simulate-forecast-1} 
-
-}
-
-\caption{Ejemplo de una serie de tiempo (datos observados de co2 en el observatorio Mauna Loa), predicciones futuras (en azul; media distribución condicional) y simulación condicional (en rojo) obtenidas a partir de un modelo ajustado.}(\#fig:simulate-forecast)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-Simulacion_multidimensional_files/figure-html/simulate-forecast-1.png" alt="Ejemplo de una serie de tiempo (datos observados de co2 en el observatorio Mauna Loa), predicciones futuras (en azul; media distribución condicional) y simulación condicional (en rojo) obtenidas a partir de un modelo ajustado." width="80%" />
+<p class="caption">(\#fig:simulate-forecast)Ejemplo de una serie de tiempo (datos observados de co2 en el observatorio Mauna Loa), predicciones futuras (en azul; media distribución condicional) y simulación condicional (en rojo) obtenidas a partir de un modelo ajustado.</p>
+</div>
 
 Para más detalles ver las secciones [4.3](https://otexts.com/fpp2/prediction-intervals.html) y [11.4](https://otexts.com/fpp2/bootstrap.html)) de @hyndman2018.
 
@@ -1223,7 +1192,7 @@ rcclayton <- function(alpha, n) {
 }
 ```
 
-Utilizando esta función generamos una muestra de tamaño 10000 y representamos gráficamente los valores obtenidos [Figura \@ref(fig:cclayton2-dispersion)]:
+Utilizando esta función generamos una muestra de tamaño 10000 y representamos gráficamente los valores obtenidos:
 
 
 ``` r
@@ -1232,16 +1201,12 @@ rcunif <- rcclayton(2, 10000)
 plot(rcunif, xlab = "u", ylab = "v")
 ```
 
-\begin{figure}[!htbp]
+<div class="figure" style="text-align: center">
+<img src="06-Simulacion_multidimensional_files/figure-html/cclayton2-dispersion-1.png" alt="Gráfico de dispersión de los valores generados con distribución bidimensional de Clayton." width="80%" />
+<p class="caption">(\#fig:cclayton2-dispersion)Gráfico de dispersión de los valores generados con distribución bidimensional de Clayton.</p>
+</div>
 
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton2-dispersion-1} 
-
-}
-
-\caption{Gráfico de dispersión de los valores generados con distribución bidimensional de Clayton.}(\#fig:cclayton2-dispersion)
-\end{figure}
-
-Podemos representar la densidad conjunta (con `sm::sm.density()`) [Figura \@ref(fig:cclayton2-conjunta)]:
+Podemos representar la densidad conjunta (con `sm::sm.density()`):
 
 
 ``` r
@@ -1249,16 +1214,12 @@ Podemos representar la densidad conjunta (con `sm::sm.density()`) [Figura \@ref(
 sm::sm.density(rcunif, xlab = "u", ylab = "v", zlab = "Density")    
 ```
 
-\begin{figure}[!htbp]
+<div class="figure" style="text-align: center">
+<img src="06-Simulacion_multidimensional_files/figure-html/cclayton2-conjunta-1.png" alt="Densidad conjunta de los valores generados con distribución bidimensional de Clayton" width="80%" />
+<p class="caption">(\#fig:cclayton2-conjunta)Densidad conjunta de los valores generados con distribución bidimensional de Clayton</p>
+</div>
 
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton2-conjunta-1} 
-
-}
-
-\caption{Densidad conjunta de los valores generados con distribución bidimensional de Clayton}(\#fig:cclayton2-conjunta)
-\end{figure}
-
-y las distribuciones marginales [Figura \@ref(fig:cclayton2-marginales)]:
+y las distribuciones marginales:
 
 
 ``` r
@@ -1267,19 +1228,18 @@ hist(rcunif[,1], freq = FALSE, xlab = "u")
 abline(h = 1)
 hist(rcunif[,2], freq = FALSE, xlab = "v")
 abline(h = 1)
+```
+
+<div class="figure" style="text-align: center">
+<img src="06-Simulacion_multidimensional_files/figure-html/cclayton2-marginales-1.png" alt="Distribuciones marginales de los valores generados con distribución bidimensional de Clayton." width="90%" />
+<p class="caption">(\#fig:cclayton2-marginales)Distribuciones marginales de los valores generados con distribución bidimensional de Clayton.</p>
+</div>
+
+``` r
 par(par.old)
 ```
 
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.9\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton2-marginales-1} 
-
-}
-
-\caption{Distribuciones marginales de los valores generados con distribución bidimensional de Clayton.}(\#fig:cclayton2-marginales)
-\end{figure}
-
-Empleando el paquete *copula*  [Figuras: \@ref(fig:cclayton2b-dispersion), \@ref(fig:cclayton3-dispersion)]:
+Empleando el paquete *copula*:
 
 
 ``` r
@@ -1289,14 +1249,10 @@ y <- rCopula(10000, clayton.cop)
 plot(y, xlab = "u", ylab = "v")
 ```
 
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton2b-dispersion-1} 
-
-}
-
-\caption{Gráfico de dispersión de los valores generados con distribución bidimensional de Clayton empleando el paquete `copula`.}(\#fig:cclayton2b-dispersion)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-Simulacion_multidimensional_files/figure-html/cclayton2b-dispersion-1.png" alt="Gráfico de dispersión de los valores generados con distribución bidimensional de Clayton empleando el paquete `copula`." width="80%" />
+<p class="caption">(\#fig:cclayton2b-dispersion)Gráfico de dispersión de los valores generados con distribución bidimensional de Clayton empleando el paquete `copula`.</p>
+</div>
 
 (ref:cclayton3-dispersion) Gráfico de dispersión de los valores generados con distribución trididimensional de Clayton empleando el paquete `copula`.
 
@@ -1309,16 +1265,12 @@ plot3D:::points3D(y[,1], y[,2], y[, 3], colvar = NULL,
                   xlab = "u1", ylab = "u2", zlab = "u3") 
 ```
 
-\begin{figure}[!htbp]
+<div class="figure" style="text-align: center">
+<img src="06-Simulacion_multidimensional_files/figure-html/cclayton3-dispersion-1.png" alt="(ref:cclayton3-dispersion)" width="80%" />
+<p class="caption">(\#fig:cclayton3-dispersion)(ref:cclayton3-dispersion)</p>
+</div>
 
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton3-dispersion-1} 
-
-}
-
-\caption{(ref:cclayton3-dispersion)}(\#fig:cclayton3-dispersion)
-\end{figure}
-
-Por ejemplo, podemos generar una muestra de una variable aleatoria bidimensional con distribuciones marginales exponenciales de parámetros 1 y 2, respectivamente (y distribución bidimensional determinada por la cópula de Clayton), transformando la muestra anterior [Figuras: \@ref(fig:cclayton-exp-conjunta), \@ref(fig:cclayton-exp-marginales)]:
+Por ejemplo, podemos generar una muestra de una variable aleatoria bidimensional con distribuciones marginales exponenciales de parámetros 1 y 2, respectivamente (y distribución bidimensional determinada por la cópula de Clayton), transformando la muestra anterior:
 
 
 ``` r
@@ -1326,14 +1278,10 @@ rcexp <- cbind(qexp(rcunif[,1], 1), qexp(rcunif[,2], 2))
 plot(rcexp, xlab = "exp1", ylab = "exp2")  
 ```
 
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton-exp-conjunta-1} 
-
-}
-
-\caption{Gráfico de dispersión de los valores generados con distribución exponencial y dependencia definida por la cópula de Clayton.}(\#fig:cclayton-exp-conjunta)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-Simulacion_multidimensional_files/figure-html/cclayton-exp-conjunta-1.png" alt="Gráfico de dispersión de los valores generados con distribución exponencial y dependencia definida por la cópula de Clayton." width="80%" />
+<p class="caption">(\#fig:cclayton-exp-conjunta)Gráfico de dispersión de los valores generados con distribución exponencial y dependencia definida por la cópula de Clayton.</p>
+</div>
 
 
 ``` r
@@ -1343,17 +1291,16 @@ hist(rcexp[,1], freq = FALSE, xlab = "exp1")
 curve(dexp(x, 1), add = TRUE)
 hist(rcexp[,2], freq = FALSE, xlab = "exp2")
 curve(dexp(x, 2), add = TRUE)
-par(par.old)
 ```
 
-\begin{figure}[!htbp]
+<div class="figure" style="text-align: center">
+<img src="06-Simulacion_multidimensional_files/figure-html/cclayton-exp-marginales-1.png" alt="Distribuciones marginales exponenciales de los valores generados con dependencia definida por la cópula de Clayton." width="90%" />
+<p class="caption">(\#fig:cclayton-exp-marginales)Distribuciones marginales exponenciales de los valores generados con dependencia definida por la cópula de Clayton.</p>
+</div>
 
-{\centering \includegraphics[width=0.9\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton-exp-marginales-1} 
-
-}
-
-\caption{Distribuciones marginales exponenciales de los valores generados con dependencia definida por la cópula de Clayton.}(\#fig:cclayton-exp-marginales)
-\end{figure}
+``` r
+par(par.old)
+```
 :::
 
 
@@ -1374,11 +1321,11 @@ xy
 ```
 
 ```
- ##      [,1] [,2]
- ## [1,]   11   12
- ## [2,]   21   22
- ## [3,]   31   32
- ## [4,]   41   42
+##      [,1] [,2]
+## [1,]   11   12
+## [2,]   21   22
+## [3,]   31   32
+## [4,]   41   42
 ```
 
 ``` r
@@ -1387,7 +1334,7 @@ z
 ```
 
 ```
- ## [1] 11 21 31 41 12 22 32 42
+## [1] 11 21 31 41 12 22 32 42
 ```
 
 ``` r
@@ -1396,11 +1343,11 @@ xy
 ```
 
 ```
- ##      [,1] [,2]
- ## [1,]   11   12
- ## [2,]   21   22
- ## [3,]   31   32
- ## [4,]   41   42
+##      [,1] [,2]
+## [1,]   11   12
+## [2,]   21   22
+## [3,]   31   32
+## [4,]   41   42
 ```
 
 Suponiendo que la primera componente toma $I$ valores distintos, la función de etiquetado para calcular el índice unidimensional a partir de uno bidimensional sería:
@@ -1414,7 +1361,7 @@ z[l(2, 1)]
 ```
 
 ```
- ## [1] 21
+## [1] 21
 ```
 
 ``` r
@@ -1422,7 +1369,7 @@ z[l(3, 2)]
 ```
 
 ```
- ## [1] 32
+## [1] 32
 ```
 
 Para recuperar el índice bidimensional se emplearía la inversa de la función de etiquetado:
@@ -1436,7 +1383,7 @@ xy[linv(2)]
 ```
 
 ```
- ## [1] 21
+## [1] 21
 ```
 
 ``` r
@@ -1444,7 +1391,7 @@ xy[linv(7)]
 ```
 
 ```
- ## [1] 32
+## [1] 32
 ```
 
 Realmente lo que ocurre internamente en R es que un objeto `matrix` o `array` está almacenado como un vector y admite un indexado multidimensional si está presente un atributo `dim`:
@@ -1456,11 +1403,11 @@ z
 ```
 
 ```
- ##      [,1] [,2]
- ## [1,]   11   12
- ## [2,]   21   22
- ## [3,]   31   32
- ## [4,]   41   42
+##      [,1] [,2]
+## [1,]   11   12
+## [2,]   21   22
+## [3,]   31   32
+## [4,]   41   42
 ```
 
 ``` r
@@ -1469,17 +1416,17 @@ z
 ```
 
 ```
- ## , , 1
- ## 
- ##      [,1] [,2]
- ## [1,]   11   31
- ## [2,]   21   41
- ## 
- ## , , 2
- ## 
- ##      [,1] [,2]
- ## [1,]   12   32
- ## [2,]   22   42
+## , , 1
+## 
+##      [,1] [,2]
+## [1,]   11   31
+## [2,]   21   41
+## 
+## , , 2
+## 
+##      [,1] [,2]
+## [1,]   12   32
+## [2,]   22   42
 ```
 
 ``` r
@@ -1488,7 +1435,7 @@ z
 ```
 
 ```
- ## [1] 11 21 31 41 12 22 32 42
+## [1] 11 21 31 41 12 22 32 42
 ```
 
 Si la variable discreta multidimensional no tiene soporte finito, se podrían emplear métodos de codificación más avanzados (ver Cao, 2002, Sección 6.3), aunque no se podría guardar la función de masa de probabilidad en una tabla.
@@ -1510,11 +1457,11 @@ df
 ```
 
 ```
- ##     n particulas calidad
- ## 1 320         no   buena
- ## 2  14         si   buena
- ## 3  80         no    mala
- ## 4  36         si    mala
+##     n particulas calidad
+## 1 320         no   buena
+## 2  14         si   buena
+## 3  80         no    mala
+## 4  36         si    mala
 ```
 
 En lugar de estar en el formato de un conjunto de datos (`data.frame`) puede que los datos estén en formato de tabla (`table`, `matrix`):
@@ -1526,10 +1473,10 @@ tabla
 ```
 
 ```
- ##        particulas
- ## calidad  no  si
- ##   buena 320  14
- ##   mala   80  36
+##        particulas
+## calidad  no  si
+##   buena 320  14
+##   mala   80  36
 ```
 
 Lo podemos convertir directamente a `data.frame`:
@@ -1540,11 +1487,11 @@ as.data.frame(tabla)
 ```
 
 ```
- ##   calidad particulas Freq
- ## 1   buena         no  320
- ## 2    mala         no   80
- ## 3   buena         si   14
- ## 4    mala         si   36
+##   calidad particulas Freq
+## 1   buena         no  320
+## 2    mala         no   80
+## 3   buena         si   14
+## 4    mala         si   36
 ```
 
 En este caso estimamos^[Como ya se comentó, la simulación empleando un modelo estimado también se denomina bootstrap paramétrico.] las probabilidades a partir de las frecuencias:
@@ -1556,11 +1503,11 @@ df
 ```
 
 ```
- ##     n particulas calidad        p
- ## 1 320         no   buena 0.711111
- ## 2  14         si   buena 0.031111
- ## 3  80         no    mala 0.177778
- ## 4  36         si    mala 0.080000
+##     n particulas calidad        p
+## 1 320         no   buena 0.711111
+## 2  14         si   buena 0.031111
+## 3  80         no    mala 0.177778
+## 4  36         si    mala 0.080000
 ```
 
 En formato tabla:
@@ -1572,10 +1519,10 @@ pij
 ```
 
 ```
- ##        particulas
- ## calidad       no       si
- ##   buena 0.711111 0.031111
- ##   mala  0.177778 0.080000
+##        particulas
+## calidad       no       si
+##   buena 0.711111 0.031111
+##   mala  0.177778 0.080000
 ```
 
 Para simular la variable bidimensional consideramos una variable unidimensional de índices:
@@ -1587,7 +1534,7 @@ z
 ```
 
 ```
- ## [1] 1 2 3 4
+## [1] 1 2 3 4
 ```
 
 Con probabilidades:
@@ -1599,7 +1546,7 @@ pz
 ```
 
 ```
- ## [1] 0.711111 0.031111 0.177778 0.080000
+## [1] 0.711111 0.031111 0.177778 0.080000
 ```
 
 Si las probabilidades estuviesen en una matriz, las convertiríamos a un vector con:
@@ -1610,7 +1557,7 @@ as.vector(pij)
 ```
 
 ```
- ## [1] 0.711111 0.177778 0.031111 0.080000
+## [1] 0.711111 0.177778 0.031111 0.080000
 ```
 
 
@@ -1633,13 +1580,13 @@ head(rxy)
 ```
 
 ```
- ##      particulas calidad
- ## [1,] "no"       "buena"
- ## [2,] "no"       "buena"
- ## [3,] "no"       "buena"
- ## [4,] "si"       "mala" 
- ## [5,] "no"       "buena"
- ## [6,] "si"       "mala"
+##      particulas calidad
+## [1,] "no"       "buena"
+## [2,] "no"       "buena"
+## [3,] "no"       "buena"
+## [4,] "si"       "mala" 
+## [5,] "no"       "buena"
+## [6,] "si"       "mala"
 ```
 
 Alternativamente, si queremos trabajar con data.frames:
@@ -1652,13 +1599,13 @@ head(rxy)
 ```
 
 ```
- ##     particulas calidad
- ## 1           no   buena
- ## 1.1         no   buena
- ## 1.2         no   buena
- ## 4           si    mala
- ## 1.3         no   buena
- ## 4.1         si    mala
+##     particulas calidad
+## 1           no   buena
+## 1.1         no   buena
+## 1.2         no   buena
+## 4           si    mala
+## 1.3         no   buena
+## 4.1         si    mala
 ```
 
 ``` r
@@ -1668,13 +1615,13 @@ head(rxy)
 ```
 
 ```
- ##   particulas calidad
- ## 1         no   buena
- ## 2         no   buena
- ## 3         no   buena
- ## 4         si    mala
- ## 5         no   buena
- ## 6         si    mala
+##   particulas calidad
+## 1         no   buena
+## 2         no   buena
+## 3         no   buena
+## 4         si    mala
+## 5         no   buena
+## 6         si    mala
 ```
 
 
@@ -1693,10 +1640,10 @@ matrix(rtable, ncol = 2, dimnames = dimnames(tabla)) # Tabla de frecuencias bidi
 ```
 
 ```
- ##        particulas
- ## calidad  no si
- ##   buena 321 78
- ##   mala   15 36
+##        particulas
+## calidad  no si
+##   buena 321 78
+##   mala   15 36
 ```
 
 Aunque puede ser preferible emplear directamente `rmultinom()` si se van a generar muchas:
@@ -1709,11 +1656,11 @@ rtablas[ , 1:5] # Las cinco primeras simulaciones
 ```
 
 ```
- ##      [,1] [,2] [,3] [,4] [,5]
- ## [1,]  298  329  323  323  307
- ## [2,]   15   21    5   15   15
- ## [3,]   92   68   91   77   92
- ## [4,]   45   32   31   35   36
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]  298  329  323  323  307
+## [2,]   15   21    5   15   15
+## [3,]   92   68   91   77   92
+## [4,]   45   32   31   35   36
 ```
 
 ::: {.example #chicuadind name="Distribución del estadístico chi-cuadrado de independencia"}
@@ -1728,11 +1675,11 @@ res
 ```
 
 ```
- ## 
- ## 	Pearson's Chi-squared test with Yates' continuity correction
- ## 
- ## data:  tabla
- ## X-squared = 60.1, df = 1, p-value = 8.9e-15
+## 
+## 	Pearson's Chi-squared test with Yates' continuity correction
+## 
+## data:  tabla
+## X-squared = 60.1, df = 1, p-value = 8.9e-15
 ```
 
 Sin embargo la distribución exacta del estadístico del contraste es discreta y como alternativa la podríamos aproximar mediante simulación.
@@ -1746,10 +1693,10 @@ matrix(pind, nrow = nrow(tabla), dimnames = dimnames(tabla))
 ```
 
 ```
- ##        particulas
- ## calidad      no       si
- ##   buena 0.65975 0.082469
- ##   mala  0.22914 0.028642
+##        particulas
+## calidad      no       si
+##   buena 0.65975 0.082469
+##   mala  0.22914 0.028642
 ```
 
 Empleando el código anterior podemos generar las simulaciones de las tablas de contingencia (bajo independencia):
@@ -1762,11 +1709,11 @@ rtablas[ , 1:5] # Las cinco primeras simulaciones
 ```
 
 ```
- ##      [,1] [,2] [,3] [,4] [,5]
- ## [1,]  292  285  309  303  290
- ## [2,]   96  105   97   84  113
- ## [3,]   48   48   36   49   39
- ## [4,]   14   12    8   14    8
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]  292  285  309  303  290
+## [2,]   96  105   97   84  113
+## [3,]   48   48   36   49   39
+## [4,]   14   12    8   14    8
 ```
 
 A partir de las cuales podemos aproximar por simulación la distribución exacta del estadístico del contraste chi-cuadrado de independencia:
@@ -1781,14 +1728,10 @@ hist(sim.stat, freq = FALSE, breaks = 'FD')
 curve(dchisq(x, res$parameter), col = 'blue', add = TRUE) 
 ```
 
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/chi2-plot-1} 
-
-}
-
-\caption{Aproximación Monte Carlo de la distribución del estadístico chi-cuadrado bajo independencia.}(\#fig:chi2-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-Simulacion_multidimensional_files/figure-html/chi2-plot-1.png" alt="Aproximación Monte Carlo de la distribución del estadístico chi-cuadrado bajo independencia." width="80%" />
+<p class="caption">(\#fig:chi2-plot)Aproximación Monte Carlo de la distribución del estadístico chi-cuadrado bajo independencia.</p>
+</div>
 
 Como se mostrará en la Sección \@ref(contrastes), podríamos aproximar el $p$-valor del contraste de independencia a partir de esta aproximación:
 
@@ -1800,7 +1743,7 @@ pvalue.mc
 ```
 
 ```
- ## [1] 0
+## [1] 0
 ```
 
 Esto es similar a lo que realiza la función `chisq.test()` con la opción `simulate.p.value = TRUE` [empleando el algoritmo de @patefield1981]:
@@ -1811,12 +1754,12 @@ chisq.test(tabla, simulate.p.value = TRUE, B = 2000)
 ```
 
 ```
- ## 
- ## 	Pearson's Chi-squared test with simulated p-value (based on 2000
- ## 	replicates)
- ## 
- ## data:  tabla
- ## X-squared = 62.8, df = NA, p-value = 5e-04
+## 
+## 	Pearson's Chi-squared test with simulated p-value (based on 2000
+## 	replicates)
+## 
+## data:  tabla
+## X-squared = 62.8, df = NA, p-value = 5e-04
 ```
 
 :::

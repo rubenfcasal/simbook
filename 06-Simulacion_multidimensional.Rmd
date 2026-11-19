@@ -42,11 +42,11 @@ Las dificultades aparecerán cuando se quiera simular componentes con una determ
 ::: {.example #normind name="simulación de normales independientes"}
 <br>
 
-Si $\boldsymbol{\mu} = \left( \mu_1, \mu_2, \ldots, \mu_d \right)^t$ es un vector (de medias) y $\Sigma$ es una matriz $d \times d$ definida positiva (de varianzas-covarianzas), el vector aleatorio $\mathbf{X}$ sigue una distribución normal multivariante con esos parámetros, 
+Si $\boldsymbol{\mu} = \left( \mu_1, \mu_2, \ldots, \mu_d \right)^{\top}$ es un vector (de medias) y $\Sigma$ es una matriz $d \times d$ definida positiva (de varianzas-covarianzas), el vector aleatorio $\mathbf{X}$ sigue una distribución normal multivariante con esos parámetros, 
 $\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol{\mu},\Sigma \right)$, 
 si su función de densidad es de la forma:
 $$f(\mathbf x) = \frac{1}{(2\pi)^{n/2}|\Sigma|^{1/2}}
-\exp \left( -\frac{1}{2} ( \mathbf x - \boldsymbol \mu)^t \Sigma^{-1} (\mathbf x - \boldsymbol \mu)
+\exp \left( -\frac{1}{2} ( \mathbf x - \boldsymbol \mu)^{\top} \Sigma^{-1} (\mathbf x - \boldsymbol \mu)
 \right),$$
 donde $| \Sigma |$ es el determinante de $\Sigma$.
 
@@ -309,7 +309,7 @@ Como el valor de $U$ es superfluo en este caso, el algoritmo queda:
 
 3. Si $T_1^2 + T_2^2 + \cdots + T_d^2 > 1$ entonces volver al paso 1.
 
-4. Devolver $\mathbf{X} = \left( T_1, T_2, \ldots, T_d \right)^t$.
+4. Devolver $\mathbf{X} = \left( T_1, T_2, \ldots, T_d \right)^{\top}$.
 
 Ver el Ejercicio \@ref(exr:simpi) para el caso de $d=2$.
 
@@ -336,8 +336,8 @@ Esto está relacionado con la *maldición de la dimensionalidad* (curse of dimen
 ## Factorización de la matriz de covarianzas {#fact-cov}
 
 Teniendo en cuenta que si $Cov(\mathbf{X})= I$, entonces:
-$$Cov(A\mathbf{X}) = AA^t.$$ 
-La idea de este tipo de métodos es simular datos independientes y transformarlos linealmente de modo que el resultado tenga la covarianza deseada $\Sigma = AA^t$.
+$$Cov(A\mathbf{X}) = AA^{\top}.$$ 
+La idea de este tipo de métodos es simular datos independientes y transformarlos linealmente de modo que el resultado tenga la covarianza deseada $\Sigma = AA^{\top}$.
 
 Este método se emplea principalmente para la simulación de una
 normal multivariante, aunque también es válido para muchas otras
@@ -349,18 +349,18 @@ En el caso de normalidad, el resultado general es el siguiente.
 <br>
 Si $\mathbf{X} \sim \mathcal{N}_d\left( \boldsymbol{\mu},\Sigma \right)$ y $A$ es una matriz $p\times d$, de
 rango máximo, con $p\leq d$, entonces:
-$$A\mathbf{X} \sim \mathcal{N}_{p}\left(A\boldsymbol{\mu},A\Sigma A^t\right).$$
+$$A\mathbf{X} \sim \mathcal{N}_{p}\left(A\boldsymbol{\mu},A\Sigma A^{\top}\right).$$
 :::
 
 Partiendo de $\mathbf{Z} \sim \mathcal{N}_d\left( \mathbf{0},I_d\right)$, se podrían considerar distintas factorizaciones de la matriz de covarianzas:
 
 * Factorización espectral: 
-  $\Sigma=H\Lambda H^t =H\Lambda^{1/2}(H\Lambda^{1/2})^t$,
+  $\Sigma=H\Lambda H^{\top} =H\Lambda^{1/2}(H\Lambda^{1/2})^{\top}$,
   donde $H$ es una matriz ortogonal (i.e. $H^{-1}=H^{t}$), cuyas columnas son los autovectores de la matriz $\Sigma$, y $\Lambda$ es una matriz diagonal, cuya diagonal esta formada por los correspondientes autovalores (positivos). De donde se deduce que:
 
 $$\mathbf{X} = \boldsymbol{\mu} + H\Lambda^{1/2}\mathbf{Z} \sim \mathcal{N}_d\left( \boldsymbol{\mu},\Sigma \right).$$
 
-* Factorización de Cholesky: $\Sigma=LL^t$, donde $L$ es una matriz triangular inferior (fácilmente invertible), por lo que: 
+* Factorización de Cholesky: $\Sigma=LL^{\top}$, donde $L$ es una matriz triangular inferior (fácilmente invertible), por lo que: 
   $$\mathbf{X} = \boldsymbol{\mu} + L\mathbf{Z} 
   \sim \mathcal{N}_d\left( \boldsymbol{\mu},\Sigma \right).$$
 
@@ -370,7 +370,7 @@ En el primer caso el algoritmo sería el siguiente:
 ::: {.conjecture #mnorm-fact name="de simulación de una normal multivariante" }
 <br> 
 
-1.  Obtener la factorización de Cholesky $\Sigma=LL^t$.
+1.  Obtener la factorización de Cholesky $\Sigma=LL^{\top}$.
 
 2.  Simular $\mathbf{Z} = \left( Z_1,Z_2,\ldots,Z_d\right)$
     i.i.d. $\mathcal{N}\left( 0,1\right)$.
@@ -382,8 +382,8 @@ En el primer caso el algoritmo sería el siguiente:
 :::
 <br>
 **Nota**: Hay que tener en cuenta el resultado del algoritmo empleado
-para la factorización de Cholesky. Por ejemplo si se obtiene $\Sigma=U^tU$,
-hará que emplear $L=U^t.$
+para la factorización de Cholesky. Por ejemplo si se obtiene $\Sigma=U^{\top}U$,
+hará que emplear $L=U^{\top}.$
 
 ::: {.example #funcional name="simulación de datos funcionales o temporales"}
 <br>
@@ -518,8 +518,7 @@ x_1\right) = \frac{2}{\pi}\sqrt{1-x_1^2}1_{\{|x_1|\leq1\}}$.
 2. Simular $X_2$ con densidad $\mathcal{U}\left(
 -\sqrt{1-X_1^2},\sqrt{1-X_1^2}\right)$.
 
-3. Devolver $\mathbf{X}= \left( X_1,X_2\right)
-^t$.
+3. Devolver $\mathbf{X}= \left( X_1,X_2\right)^{\top}$.
 
 Para el paso 1 puede utilizarse, por ejemplo, el método de
 aceptación-rechazo, pues se trata de una densidad acotada definida en un
@@ -586,7 +585,7 @@ y el algoritmo sería el siguiente:
 
 :::
 
-Este algoritmo es el mismo que obtendríamos con la factorización de la matriz de covarianzas ya que $\Sigma = L L^t$ con:
+Este algoritmo es el mismo que obtendríamos con la factorización de la matriz de covarianzas ya que $\Sigma = L L^{\top}$ con:
 $$L = \begin{pmatrix}
  \sigma^2_1 &  0 \\
  \sigma_2 \rho &  \sigma_2  \sqrt{1-\rho^2}
@@ -973,7 +972,7 @@ abline(h = 1)
 par(par.old)
 ```
 
-Empleando el paquete *copula* `r latexfig2(cclayton2b-dispersion, cclayton3-dispersion)`:
+Empleando el paquete *copula*`r latexfig2(cclayton2b-dispersion, cclayton3-dispersion)`:
 
 ```{r cclayton2b-dispersion, fig.cap="Gráfico de dispersión de los valores generados con distribución bidimensional de Clayton empleando el paquete `copula`."}
 if(!require(copula)) stop('Required pakage `copula` not installed.')

@@ -112,7 +112,7 @@ op
 ::: {.exercise #unif-multi-sesgo-var}
 <br>
 
-Como continuación del ejemplo mostrado en la Sección \@ref(boot-unif-multi), emplear el paquete `boot` para aproximar el sesgo y la precisión del coeficiente de correlación lineal $r$ entre `prestige` e `income` del conjunto de datos `Prestige` mediante bootstrap uniforme multidimensional.
+Como continuación del ejemplo mostrado en la Sección \@ref(boot-unif-multi), emplear el paquete `boot` para aproximar el sesgo y la precisión del coeficiente de correlación lineal $r$ entre `prestige` e `income` del conjunto de datos `Prestige` mediante bootstrap uniforme multivariante.
 Comparar los resultados con los obtenidos mediante la aproximación asintótica normal, que como se indicó en el Ejercicio \@ref(exr:unif-multi), consideraría que el sesgo es nulo y como estimación de su varianza:
 $$\widehat{Var}(r) = \frac{1 - r^2}{n - 2}.$$
 
@@ -233,8 +233,8 @@ De donde se obtiene el intervalo de confianza bootstrap calculado
 por el método percentil directo
 $$\hat{I}_{perc}=\left( x_{\alpha /2}, x_{1-\alpha /2}  \right).$$
 
-Una ventaja de los intervalos construidos con este método es que son invariantes frente a transformaciones del estimador (en el caso de que fuese más adecuado trabajar en otra escala, no sería necesario conocer la transformación).
-Sin embargo, como se comentó en la Sección \@ref(boot-intro), la precisión puede verse seriamente afectada en el caso de estimadores sesgados.
+Una ventaja de los intervalos construidos con este método es que son invariantes frente a transformaciones monótonas del estimador (en el caso de que fuese más adecuado trabajar en otra escala, no sería necesario conocer la transformación).
+Sin embargo, como se comentó en la Sección \@ref(boot-intro), la precisión puede verse seriamente afectada en el caso de estimadores sesgados^[Debería existir una transformación monótona en la que la distribución sea simétrica, y además el estimador transformado sea aproximadamente insesgado y con varianza independiente del parámetro.].
 
 Podemos obtener este intervalo de confianza estableciendo `type = "perc"` (o `type = "all"`) en la llamada a la función `boot.ci()`.
 Continuando con el Ejemplo \@ref(exm:media-dt-desconocida-boot):
@@ -283,6 +283,8 @@ Siguiendo con el Ejemplo \@ref(exm:media-dt-desconocida-boot)):
 ```{r}
 boot.ci(res.boot, type = "basic") # index = 1
 ```
+
+Si el estimador es sesgado o su distribución es muy asimétrica, puede haber grandes diferencias respecto a las estimaciones obtenidas con el método percentil directo, y en principio sería más razonable emplear el método percentil básico.
 
 Reproducimos también los cálculos (únicamente por proporcionar más detalles):
 
@@ -362,6 +364,27 @@ IC_boot
 ```
 
 
+::: {.exercise #boot-coef-stud}
+<br>
+
+Continuando con el Ejercicio \@ref(exr:boot-coef), obtener estimaciones por intervalo de confianza de los coeficientes del modelo lineal que explica `prestige` a partir de `income` y `education`, utilizando el método percentil-*t*, mediante bootstrap uniforme multivariante con el paquete `boot`.
+
+```{r}
+data(Prestige, package = "carData")
+fit <- lm(prestige ~ income + education, data = Prestige)
+# Bajo las hipótesis estructurales del modelo:
+# summary(fit)
+confint(fit)
+
+coef <- summary(fit)$coefficients
+coef[, 1:2]
+cbind(Estimate = coef[, 1], Variance = coef[, 2]^2)
+# Equivale a un vector en el que los primeros `nrow(coef)` componentes son
+# las estimaciones y los siguientes sus varianzas.
+```
+
+:::
+
 ### Método BCa {#boot-ic-bca}
 
 El método $BCa$ (bias-corrected and accelerated) propuesto por Efron (1987) considera una transformación de forma que la distribución se aproxime a la normalidad, construye el intervalo en esa escala asumiendo normalidad y transforma el resultado a la escala original empleando la distribución bootstrap.
@@ -388,11 +411,11 @@ https://rdrr.io/cran/rcompanion/man/blom.html
 ::: {.exercise #boot-unif-multi-ic}
 <br>
 
-Como continuación del ejemplo mostrado en la Sección \@ref(boot-unif-multi), y de los Ejercicios \@ref(exr:unif-multi) y \@ref(exr:unif-multi-sesgo-var), emplear el paquete `boot` para obtener estimaciones por intervalo de confianza del coeficiente de correlación lineal $r$ entre `prestige` e `income` del conjunto de datos `Prestige` (mediante bootstrap uniforme multidimensional).
+Como continuación del ejemplo mostrado en la Sección \@ref(boot-unif-multi), y de los Ejercicios \@ref(exr:unif-multi) y \@ref(exr:unif-multi-sesgo-var), emplear el paquete `boot` para obtener estimaciones por intervalo de confianza del coeficiente de correlación lineal $r$ entre `prestige` e `income` del conjunto de datos `Prestige` (mediante bootstrap uniforme multivariante).
 En el caso del método percentil-*t*, como se indicó en el Ejercicio \@ref(exr:unif-multi), considerar el estimador de la varianza:
 $$\widehat{Var}(r) = \frac{1 - r^2}{n - 2}.$$
 
-Comparar los resultados con la aproximación paramétrica implementada en la función `cor.test` y descrita en la siguiente sección.
+Comparar los resultados con la aproximación paramétrica implementada en la función `cor.test`, descrita en la siguiente sección.
 
 ::: 
 
@@ -417,7 +440,7 @@ Para realizar inferencias sobre el coeficiente de correlación, como aproximaci�
 <!-- \mathcal{t}_{n-2} error en LaTeX-->
 
 Pero esta aproximación solo sería válida en el caso de muestras grandes (o si la distribución bivariante de $(X, Y)$ es aproximadamente normal) cuando la correlación entre las variables es débil o moderada. 
-En caso contrario la distribución muestral de $r$ puede ser muy asimétrica y los resultados obtenidos con el estadístico anterior no ser muy adecuados (esto concuerda con lo observado en la Sección \@ref(boot-unif-multi), al emplear bootstrap uniforme multidimensional para hacer inferencia sobre $R = r -\rho$).
+En caso contrario la distribución muestral de $r$ puede ser muy asimétrica y los resultados obtenidos con el estadístico anterior no ser muy adecuados (esto concuerda con lo observado en la Sección \@ref(boot-unif-multi), al emplear bootstrap uniforme multivariante para hacer inferencia sobre $R = r -\rho$).
 Para evitar este problema se suelen obtener intervalos de confianza para $\rho$ empleando la transformación $Z$ de Fisher (1915):
 $$Z = \frac{1}{2}\ln \left( \frac{1+r}{1-r} \right) = \operatorname{arctanh}(r),$$
 que es una transformación (aprox.) normalizadora y estabilizadora de la varianza.
@@ -514,14 +537,14 @@ estadístico $\hat{d}=D\left( x_1,\ldots ,x_n;H_0\right)$ pertenece
 a la región de rechazo.
 
 Para medir el nivel de evidencia en contra de $H_0$ se emplea el
-$p$-valor del contraste (también denominado valor crítico o 
+$p$-valor del contraste (también denominado nivel crítico o 
 tamaño del contraste), el menor valor del nivel 
 de significación para el que se rechaza $H_0$ 
 (que se puede interpretar también como la 
 probabilidad de obtener una discrepancia mayor o igual que
 $\hat{d}$ cuando $H_0$ es cierta).
 
-El cálculo del $p$-valor dependerá por tanto de la hipótesis altervativa.
+El cálculo del $p$-valor dependerá por tanto de la hipótesis alternativa.
 Por ejemplo, si el estadístico del contraste tiende a tomar valores
 grandes cuando $H_0$ es falsa (contraste unilateral derecho):
 $$p = P\left( D \geq \hat{d} \middle| H_0\right).$$
@@ -541,7 +564,7 @@ en cuyo caso se dice que el contraste es estadísticamente significativo
 Por tanto, la correspondiente variable aleatoria $\mathcal{P}$ debería verificar:
 $$P\left( \mathcal{P} \leq \alpha \middle| H_0\right)= \alpha.$$
 Es decir, la distribución del $p$-valor bajo $H_0$ debería ser $\mathcal{U}(0,1)$
-(si la distribución del estadístico del constrate es continua).
+(si la distribución del estadístico del contraste es continua).
 
 
 En los métodos tradicionales de contrastes de hipótesis se conoce o se 
@@ -973,11 +996,11 @@ de permutaciones.] descrito en la Sección \@ref(boot-residual):
 ```{r semipar-test-plot, fig.cap="Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico."}
 library(boot)
 
-pres.dat <- Prestige
-# pres.dat$fit0 <- mean(Prestige$prestige)
-# pres.dat$fit0 <- predict(modelo0)
-pres.dat$res0 <- with(Prestige, prestige - mean(prestige))
-# pres.dat$res0 <- residuals(modelo0)
+boot.dat <- Prestige
+# boot.dat$fit0 <- mean(Prestige$prestige)
+# boot.dat$fit0 <- predict(modelo0)
+boot.dat$res0 <- with(Prestige, prestige - mean(prestige))
+# boot.dat$res0 <- residuals(modelo0)
 
 mod.stat <- function(data, i) {
     data$prestige <- mean(data$prestige) + data$res0[i]
@@ -986,7 +1009,7 @@ mod.stat <- function(data, i) {
 }
 
 set.seed(1)
-boot.mod <- boot(pres.dat, mod.stat, R = 1000)
+boot.mod <- boot(boot.dat, mod.stat, R = 1000)
 boot.mod
 
 hist(boot.mod$t, freq = FALSE, breaks = "FD", main = "")
@@ -1019,12 +1042,12 @@ la modificación propuesta en Davison y Hinkley (1997, Alg. 6.3, p. 271)
 y remuestrear los residuos reescalados y centrados.
 
 ```{r}
-pres.dat <- Prestige
-# pres.dat$fit0 <- mean(Prestige$prestige)
-# pres.dat$fit0 <- predict(modelo0)
-# pres.dat$res <- residuals(modelo)
-pres.dat$sres <- residuals(modelo)/sqrt(1 - hatvalues(modelo))
-pres.dat$sres <- pres.dat$sres - mean(pres.dat$sres)
+boot.dat <- Prestige
+# boot.dat$fit0 <- mean(Prestige$prestige)
+# boot.dat$fit0 <- predict(modelo0)
+# boot.dat$res <- residuals(modelo)
+boot.dat$sres <- residuals(modelo)/sqrt(1 - hatvalues(modelo))
+boot.dat$sres <- boot.dat$sres - mean(boot.dat$sres)
 
 mod.stat <- function(data, i) {
     # data$prestige <- mean(data$prestige) + data$res[i]
@@ -1034,7 +1057,7 @@ mod.stat <- function(data, i) {
 }
 
 set.seed(1)
-boot.mod <- boot(pres.dat, mod.stat, R = 1000)
+boot.mod <- boot(boot.dat, mod.stat, R = 1000)
 boot.mod
 ```
 
@@ -1042,7 +1065,7 @@ En la aproximación del $p$-valor hay que tener en cuenta que al modificar los r
 `boot.mod$t0` no va a coincidir con el valor observado del estadístico, 
 almacenado en `stat` (por tanto habría que ignorar `original` y `bias`
 en `Bootstrap Statistics`; 
-la función `Boot()` del paquete `car` corrige este problema).
+la función `Boot()` del paquete `car` corregiría este problema).
 
 ```{r boot-semipar-test-plot, fig.cap="Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico."}
 hist(boot.mod$t, freq = FALSE, breaks = "FD", main = "")
@@ -1098,7 +1121,7 @@ anova(modelo0, modelo)
 ```
 
 Contrastar si el efecto de `income` es lineal mediante bootstrap residual, 
-empleando como estadístico el incremento en la variabilidad residual con el 
+empleando como estadístico la proporción de incremento en la variabilidad residual con el 
 modelo reducido y remuestreando los residuos del modelo completo (sin reescalar).
 Aproximar el nivel crítico del contraste y el valor que tendría que superar el
 estadístico para rechazar $H_0$ con un nivel de significación $\alpha = 0.05$.

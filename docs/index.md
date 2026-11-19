@@ -4,7 +4,7 @@ author:
   - "Rubén Fernández Casal (ruben.fcasal@udc.es)"
   - "Ricardo Cao (rcao@udc.es)"
   - "Julián Costa (julian.costa@udc.es)"
-date: "Edición: Enero de 2023. Impresión: 2026-05-18"
+date: "Edición: Enero de 2023. Impresión: 2026-11-19"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
@@ -65,8 +65,7 @@ para lo que se recomendaría consultar el libro de ["Escritura de libros con boo
 
 En la Sección [Enlaces](#links) de las Referencias se incluyen recursos adicionales, incluyendo algunos que pueden ser útiles para el aprendizaje de R.
 
-
-\begin{flushleft}\includegraphics[width=0.1\linewidth]{images/by-nc-nd-88x31} \end{flushleft}
+<img src="images/by-nc-nd-88x31.png" alt="" width="10%" style="display: block; margin: auto auto auto 0;" />
 
 Este obra está bajo una licencia de [Creative Commons Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es_ES) 
 (esperamos poder liberarlo bajo una licencia menos restrictiva más adelante...).

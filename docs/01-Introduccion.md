@@ -127,14 +127,10 @@ hist(nsobres, breaks = "FD", freq = FALSE,
 lines(density(nsobres))
 ```
 
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.75\linewidth]{01-Introduccion_files/figure-latex/distr-ealbum-1} 
-
-}
-
-\caption{Aproximación por simulación de la distribución del número de sobres para completar la colección.}(\#fig:distr-ealbum)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="01-Introduccion_files/figure-html/distr-ealbum-1.png" alt="Aproximación por simulación de la distribución del número de sobres para completar la colección." width="80%" />
+<p class="caption">(\#fig:distr-ealbum)Aproximación por simulación de la distribución del número de sobres para completar la colección.</p>
+</div>
 
 Aproximación por simulación del número medio de sobres para completar la colección:
 
@@ -145,7 +141,7 @@ sol
 ```
 
 ```
- ## [1] 61.775
+## [1] 61.775
 ```
 
 <!-- 
@@ -158,9 +154,7 @@ plot(1:nsim, cumsum(nsobres)/1:nsim, type = "l",
 abline(h = sol)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.75\linewidth]{01-Introduccion_files/figure-latex/unnamed-chunk-3-1} \end{center}
+<img src="01-Introduccion_files/figure-html/unnamed-chunk-3-1.png" alt="" width="80%" style="display: block; margin: auto;" />
 -->
 
 Número mínimo de sobres para asegurar de que se completa la colección con una probabilidad del 95\%:
@@ -172,8 +166,8 @@ ceiling(nmin)
 ```
 
 ```
- ## 95% 
- ##  92
+## 95% 
+##  92
 ```
 
 ``` r
@@ -182,8 +176,8 @@ ceiling(nmin)*0.8
 ```
 
 ```
- ##  95% 
- ## 73.6
+##  95% 
+## 73.6
 ```
 
 ``` r
@@ -194,14 +188,10 @@ abline(v = sol)
 abline(v = nmin, lty = 2)
 ```
 
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.75\linewidth]{01-Introduccion_files/figure-latex/distr-ealbum2-1} 
-
-}
-
-\caption{Aproximaciones por simulación de la distribución del número de sobres para completar la colección, de su valor esperado (línea vertical continua) y del cuantil 0.95 (línea vertical discontinua).}(\#fig:distr-ealbum2)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="01-Introduccion_files/figure-html/distr-ealbum2-1.png" alt="Aproximaciones por simulación de la distribución del número de sobres para completar la colección, de su valor esperado (línea vertical continua) y del cuantil 0.95 (línea vertical discontinua)." width="80%" />
+<p class="caption">(\#fig:distr-ealbum2)Aproximaciones por simulación de la distribución del número de sobres para completar la colección, de su valor esperado (línea vertical continua) y del cuantil 0.95 (línea vertical discontinua).</p>
+</div>
 
 Por supuesto, la distribución del gasto necesario para completar la colección es esta misma reescalada.
 
@@ -212,14 +202,10 @@ Por supuesto, la distribución del gasto necesario para completar la colección 
 res <- simres::mc.plot(nsobres*0.8)
 ```
 
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=1\linewidth]{01-Introduccion_files/figure-latex/mc-plot-ealbum-1} 
-
-}
-
-\caption{(ref:mc-plot-ealbum)}(\#fig:mc-plot-ealbum)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="01-Introduccion_files/figure-html/mc-plot-ealbum-1.png" alt="(ref:mc-plot-ealbum)" width="100%" />
+<p class="caption">(\#fig:mc-plot-ealbum)(ref:mc-plot-ealbum)</p>
+</div>
 
 Aproximación del gasto medio:
 
@@ -229,7 +215,7 @@ res$approx  # sol*0.8
 ```
 
 ```
- ## [1] 49.42
+## [1] 49.42
 ```
  
 En el Ejercicio \@ref(exr:album) se propone modificar este código para obtener información adicional sobre la evolución del número de cromos distintos dependiendo de los sobres comprados por un coleccionista.
@@ -324,14 +310,10 @@ Por ejemplo, en 1955 la Corporación RAND publicó el libro [*A Million Random D
 
 (ref:randbook) Líneas 10580-10594, columnas 21-40, del libro *A Million Random Digits with 100,000 Normal Deviates* (Fuente: [Wikimedia Commons](https://es.wikipedia.org/wiki/Un_mill%C3%B3n_de_d%C3%ADgitos_aleatorios_con_100.000_desviaciones_normales)).
 
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.3\linewidth]{images/RAND} 
-
-}
-
-\caption{(ref:randbook)}(\#fig:randbook)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="images/RAND.png" alt="(ref:randbook)" width="30%" />
+<p class="caption">(\#fig:randbook)(ref:randbook)</p>
+</div>
 
 El procedimiento que se utilizaba para seleccionar de una tabla, de forma manual, números aleatorios en un rango de $1$ a $m$ era el siguiente:
 
@@ -383,18 +365,17 @@ par.old <- par(mfrow = c(1, 3))
 plot(halton(n, dim = 2), xlab = 'x1', ylab = 'x2')
 plot(sobol(n, dim = 2), xlab = 'x1', ylab = 'x2')
 plot(torus(n, dim = 2), xlab = 'x1', ylab = 'x2')
+```
+
+<div class="figure" style="text-align: center">
+<img src="01-Introduccion_files/figure-html/randtoolbox-1.png" alt="Secuencias cuasi-aleatorias bidimensionales obtenidas con los métodos de Halton (izquierda), Sobol (centro) y Torus (derecha)." width="100%" />
+<p class="caption">(\#fig:randtoolbox)Secuencias cuasi-aleatorias bidimensionales obtenidas con los métodos de Halton (izquierda), Sobol (centro) y Torus (derecha).</p>
+</div>
+
+``` r
 par(par.old)
 detach("package:randtoolbox")
 ```
-
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=1\linewidth]{01-Introduccion_files/figure-latex/randtoolbox-1} 
-
-}
-
-\caption{Secuencias cuasi-aleatorias bidimensionales obtenidas con los métodos de Halton (izquierda), Sobol (centro) y Torus (derecha).}(\#fig:randtoolbox)
-\end{figure}
 
 En este libro sólo consideraremos los números pseudoaleatorios y por comodidad se eliminará el prefijo "pseudo" en muchos casos.
 
@@ -588,7 +569,7 @@ set.seed(1)
 ```
 
 ```
- ## [1] 10403
+## [1] 10403
 ```
 Los dos últimos dígitos se corresponden con el generador, las centenas con el método de generación de normales y las decenas de millar con el método uniforme discreto. 
 
@@ -673,12 +654,12 @@ CPUtimeprint()
 ```
 
 ```
- ## Tiempo última operación:
- ##    user  system elapsed 
- ##    0.04    0.00    0.04 
- ## Tiempo total operación:
- ##    user  system elapsed 
- ##    0.04    0.00    0.04
+## Tiempo última operación:
+##    user  system elapsed 
+##    0.05    0.00    0.05 
+## Tiempo total operación:
+##    user  system elapsed 
+##    0.05    0.00    0.05
 ```
 
 ``` r
@@ -687,12 +668,12 @@ CPUtimeprint()
 ```
 
 ```
- ## Tiempo última operación:
- ##    user  system elapsed 
- ##       0       0       0 
- ## Tiempo total operación:
- ##    user  system elapsed 
- ##    0.04    0.00    0.04
+## Tiempo última operación:
+##    user  system elapsed 
+##       0       0       0 
+## Tiempo total operación:
+##    user  system elapsed 
+##    0.05    0.00    0.05
 ```
 
 La función [`cpu.time()`](https://rubenfcasal.github.io/simres/reference/cpu.time.html) del paquete [`simres`](https://rubenfcasal.github.io/simres) implementa una aproximación similar:
@@ -723,7 +704,7 @@ tic("outer")
 ```
 
 ```
- ## inner: 0.02 sec elapsed
+## inner: 0 sec elapsed
 ```
 
 ``` r
@@ -731,7 +712,7 @@ tic("outer")
 ```
 
 ```
- ## middle: 0.02 sec elapsed
+## middle: 0.02 sec elapsed
 ```
 
 ``` r
@@ -739,7 +720,7 @@ toc() # outer
 ```
 
 ```
- ## outer: 0.06 sec elapsed
+## outer: 0.06 sec elapsed
 ```
 
 ``` r
@@ -758,11 +739,11 @@ str(log.times)
 ```
 
 ```
- ## 'data.frame':	10 obs. of  4 variables:
- ##  $ tic         : num  7.17 7.17 7.17 7.17 7.17 7.17 7.17 7.17 7.17 7.17
- ##  $ toc         : num  7.17 7.17 7.17 7.17 7.17 7.17 7.17 7.17 7.17 7.17
- ##  $ msg         : chr  "1" "2" "3" "4" ...
- ##  $ callback_msg: chr  "1: 0 sec elapsed" "2: 0 sec elapsed" "3: 0 sec "..
+## 'data.frame':	10 obs. of  4 variables:
+##  $ tic         : num  2.37 2.37 2.37 2.37 2.37 2.37 2.37 2.37 2.37 2.37
+##  $ toc         : num  2.37 2.37 2.37 2.37 2.37 2.37 2.37 2.37 2.37 2.37
+##  $ msg         : chr  "1" "2" "3" "4" ...
+##  $ callback_msg: chr  "1: 0 sec elapsed" "2: 0 sec elapsed" "3: 0 sec "..
 ```
 
 ``` r
@@ -774,8 +755,8 @@ summary(log.times$timings)
 ```
 
 ```
- ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- ##       0       0       0       0       0       0
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       0       0       0       0       0       0
 ```
 
 Hay que tener en cuenta que, por construcción, aunque se realicen en la mismas condiciones (en el mismo equipo), los tiempos de CPU en R pueden variar "ligeramente" entre ejecuciones.
@@ -851,14 +832,10 @@ de una moneda con probabilidad de obtener cara igual a 0.4.
   
 Simular el paso de corriente a través del circuito mostrado en la Figura \@ref(fig:circuito2), donde se muestran las probabilidades de que pase corriente por cada uno de los interruptores, que se suponen variables aleatorias de Bernoulli independientes.
 
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.5\linewidth]{images/circuito2} 
-
-}
-
-\caption{Esquema de un circuito eléctrico con interruptores aleatorios.}(\#fig:circuito2)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="images/circuito2.png" alt="Esquema de un circuito eléctrico con interruptores aleatorios." width="50%" />
+<p class="caption">(\#fig:circuito2)Esquema de un circuito eléctrico con interruptores aleatorios.</p>
+</div>
 :::
 
 

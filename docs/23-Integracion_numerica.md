@@ -28,14 +28,10 @@ abline(h = 0, lty = 2)
 abline(v = c(0, 1), lty = 2)
 ```
 
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.75\linewidth]{23-Integracion_numerica_files/figure-latex/int-num-1d-1} 
-
-}
-
-\caption{Representación del integrando de ejemplo (con dominio acotado).}(\#fig:int-num-1d)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="23-Integracion_numerica_files/figure-html/int-num-1d-1.png" alt="Representación del integrando de ejemplo (con dominio acotado)." width="80%" />
+<p class="caption">(\#fig:int-num-1d)Representación del integrando de ejemplo (con dominio acotado).</p>
+</div>
 
 
 ### Método del trapezoide 
@@ -72,7 +68,7 @@ trapezoid(fun, 0, 1, 20)
 ```
 
 ```
- ## [1] 0.80333
+## [1] 0.80333
 ```
 
 
@@ -115,7 +111,7 @@ simpson(fun, 0, 1, 20)
 ```
 
 ```
- ## [1] 0.8
+## [1] 0.8
 ```
 
 El máximo error (en el caso unidimensional) viene dado por la expresión:
@@ -171,7 +167,7 @@ quadrature(fun, 0, 1)
 ```
 
 ```
- ## [1] 0.8
+## [1] 0.8
 ```
 
 Fuente: [r-blogger Guangchuang Yu](https://www.r-bloggers.com/one-dimensional-integrals)
@@ -187,7 +183,7 @@ integrate(fun, 0, 1)  # Cuidado: fun debe ser vectorial...
 ```
 
 ```
- ## 0.8 with absolute error < 8.9e-15
+## 0.8 with absolute error < 8.9e-15
 ```
 
 Alternativamente, para dominios acotados, se puede emplear la función `MASS::area()` (suele dar muy buenos resultados, aunque los autores la desarrollaron inicialmente para fines ilustrativos):
@@ -199,7 +195,7 @@ area(fun, 0, 1)
 ```
 
 ```
- ## [1] 0.8
+## [1] 0.8
 ```
 
 
@@ -262,9 +258,7 @@ persp3D.f2d <- function(f2d, ax=-1, bx=1, ay=-1, by=1, nx=21, ny=21, ...) {
 persp3D.f2d(f2d, -1, 1, -1, 1, 50, 50, ticktype = "detailed") 
 ```
 
-
-
-\begin{center}\includegraphics[width=0.75\linewidth]{23-Integracion_numerica_files/figure-latex/unnamed-chunk-8-1} \end{center}
+<img src="23-Integracion_numerica_files/figure-html/unnamed-chunk-8-1.png" alt="" width="80%" style="display: block; margin: auto;" />
 
 
 ### Método del trapezoide 
@@ -296,7 +290,7 @@ trapezoid.f2d(f2d, -1, 1, -1, 1, 101, 101)
 ```
 
 ```
- ## [1] -8.8818e-18
+## [1] -8.8818e-18
 ```
 
 
@@ -314,7 +308,7 @@ integrate( function(y) {
 ```
 
 ```
- ## -2.7756e-17 with absolute error < 1.1e-14
+## -2.7756e-17 with absolute error < 1.1e-14
 ```
 
 

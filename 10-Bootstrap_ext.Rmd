@@ -108,7 +108,7 @@ De esta forma vemos que el bootstrap uniforme (no paramétrico) es inconsistente
 <br>
 
 El siguiente código implementa el método bootstrap uniforme (también llamado naïve) para aproximar la distribución del estadístico $R=\hat{\theta}-\theta$, para una muestra de tamaño $n=50$, proveniente de una población con distribución
-$\mathcal{U}\left( 0,1\right)$ `r latexfig2(boot-uniforme-maximo)`:
+$\mathcal{U}\left( 0,1\right)$`r latexfig2(boot-uniforme-maximo)`:
 
 ```{r boot-uniforme-maximo, fig.cap="Distribución de las réplicas bootstrap (uniforme) del estadístico y distribución poblacional."}
 theta <- 1
@@ -278,7 +278,7 @@ distribución en muestreo de
 $R=R\left( \mathbf{X},F \right) =\hat{\theta}-\theta$.
 
 Para implementarlo en la práctica podríamos emplear un código muy similar al 
-del ejemplo original `r latexfig2(boot-parametrico-maximo)`:
+del ejemplo original`r latexfig2(boot-parametrico-maximo)`:
 
 ```{r boot-parametrico-maximo, fig.cap="Distribución bootstrap paramétrica y distribución poblacional."}
 # Remuestreo
@@ -554,7 +554,7 @@ res$adj.r.squared
 
 ### Remuestreo de las observaciones {#boot-unif-reg}
 
-Como ya se comentó, en regresión podríamos emplear bootstrap uniforme multidimensional para el caso de diseño aleatorio, aunque hay que tener en cuenta que con este método la distribución en el remuestreo de $\left. Y^{\ast}\right\vert _{X^{\ast}=X_i}$ es degenerada.
+Como ya se comentó, en regresión podríamos emplear bootstrap uniforme multivariante para el caso de diseño aleatorio, aunque hay que tener en cuenta que con este método la distribución en el remuestreo de $\left. Y^{\ast}\right\vert _{X^{\ast}=X_i}$ es degenerada.
 
 En este caso, podríamos realizar inferencias sobre el coeficiente de determinación ajustado empleando el siguiente código:
 
@@ -603,10 +603,9 @@ boot.ci(boot.mod, type = c("basic", "perc", "bca"))
 Sin embargo, la variabilidad de los residuos no reproduce la de los verdaderos errores, por lo que podría ser preferible (especialmente si el tamaño muestral es pequeño) emplear la modificación descrita en Davison y Hinkley (1997, Alg. 6.3, p. 271).
 Teniendo en cuenta que:
 $$\mathbf{r} = \left( I - H \right)\mathbf{Y},$$
-siendo $H = X\left( X^{\top}X\right)^{-1}X^{\top}$ la matriz de proyección.
+siendo $H = X\left( X^{\top}X\right)^{-1}X^{\top}$ la matriz de proyección, se deduce que $Var(r_i) = (1 - h_{ii})\sigma^2$, donde $h_{ii}$ es el valor de influencia o leverage, el elemento $i$-ésimo de la diagonal de $H$.
 La idea es remuestrear los residuos reescalados (de forma que su varianza sea constante) y centrados $e_i - \bar{e}$, siendo:
-$$e_i = \frac{r_i}{\sqrt{1 - h_{ii}}},$$
-donde $h_{ii}$ es el valor de influencia o leverage, el elemento $i$-ésimo de la diagonal de $H$.
+$$e_i = \frac{r_i}{\sqrt{1 - h_{ii}}}.$$
 
 En `R` podríamos obtener estos residuos mediante los comandos^[Para reescalar los 
 residuos de un modelo `gam` del paquete `mgcv`, como no implementa un método `hatvalues()`, 
@@ -617,8 +616,8 @@ pres.dat$sres <- residuals(modelo)/sqrt(1 - hatvalues(modelo))
 pres.dat$sres <- pres.dat$sres - mean(pres.dat$sres)
 ```
 
-Sin embargo puede ser más cómodo emplear la función `Boot()` del paquete `car` (que internamente llama a la función `boot()`), 
-como se describe en el apéndice "Bootstrapping Regression Models in R" del libro "An R Companion to Applied Regression" de Fox y Weisberg (2018), disponible [aquí](https://socialsciences.mcmaster.ca/jfox/Books/Companion/appendices/Appendix-Bootstrapping.pdf).
+Sin embargo puede ser más cómodo (ver Ejercicio \@ref(exr:boot-coef)) emplear la función `Boot()` del paquete `car` (que internamente llama a la función `boot()`), 
+como se describe en el apéndice "Bootstrapping Regression Models in R" del libro "An R Companion to Applied Regression" de Fox y Weisberg (2018), disponible [aquí](https://www.john-fox.ca/Companion/appendices.html).
 
 Esta función es de la forma:
 ```{r eval=FALSE}
@@ -634,6 +633,60 @@ donde:
 - `method`: especifica el tipo de remuestreo: remuestreo de observaciones (`"case"`)
   o de residuos (`"residual"`), empleando la modificación descrita anteriormente.
 
+El resultado de esta función es un objeto de la clase `boot`, con el que se podrían utilizar las herramientas del paquete original.
+Adicionalmente, el paquete `car` implementa también métodos `summary.boot()`, `hist.boot()` y `Confint.boot()`.
+Al contrario que `print.boot()`, `summary.boot()` devuelve una matriz de estadísticos de resumen (con descriptivos adicionales).
+Los otros dos métodos también generan simultáneamente resultados para todos los los componentes del vector de estadísticos, por lo que resultarían más cómodos para estadísticos multidimensionales que las equivalentes funciones `plot.boot()` y `boot.ci()` (que requerirían de múltiples llamadas variando el argumento `index`).
+Como inconveniente, `Confint.boot()` solo calcula un tipo de intervalo bootstrap y no admite el tipo percentil-*t* (`type = "stud"`; ver Ejercicio \@ref(exr:boot-coef-stud)).
+
+::: {.example #boot-car-coef}
+<br>
+
+Como ejemplo utilizamos las opciones por defecto de la función `Boot()` del paquete `car` (empleando bootstrap uniforme multivariante) para realizar inferencias sobre los coeficientes del modelo de regresión lineal que explica `prestige` a partir de `income` y `education`.
+
+```{r boot-car-plot, out.width="90%", fig.cap="Histogramas de las réplicas bootstrap de las estimaciones de los coeficientes (obtenidas mediante bootstrap uniforme multivariante)."}
+library(car)
+res.boot <- Boot(modelo) # uniforme multivariante coeficientes
+summary(res.boot) # Devuelve una matriz de estadísticos
+hist(res.boot)
+# Por defecto calcula intervalos BCa
+Confint(res.boot) # ?Confint.boot
+# Se puede seleccionar otro de los métodos de boot.ci(), salvo "stud"
+Confint(res.boot, type = "basic")
+# # Con el paquete boot:
+# res.boot
+# plot(res.boot)
+# plot(res.boot, index = 2)
+# plot(res.boot, index = 3)
+# # Cuidado con el studentizado en boot.ci(), habría que utilizar index
+# boot.ci(res.boot, type = "basic") # , index = 1) 
+# boot.ci(res.boot, type = "basic", index = 2) 
+# boot.ci(res.boot, type = "basic", index = 3) 
+```
+:::
+
+---
+
+En el ejemplo anterior, para emplear bootstrap residual con reescalado de los residuos solo habría que establecer el argumento `method = "residual"` en la llamada a `Boot()`.
+Con la función `boot()` tendríamos que utilizar una función de la forma:
+
+```{r}
+mod.stat2 <- function(data, i) {
+    data$prestige <- data$fit + data$sres[i]
+    fit <- lm(prestige ~ income + education, data = data)
+    coef(fit)
+}
+```
+
+y el problema es que la componente `t0` del resultado de `boot()` no contendría el valor observado del estadístico (ya que se calcularía como `mod.stat2(data, 1:nrow(data))`), por lo que habría que corregirlo antes de llamar a las funciones `print.boot()` o `boot.ci()`.
+
+::: {.exercise #boot-coef}
+<br>
+
+Continuando con el ejemplo anterior, utilizar la función `boot::boot()` para realizar inferencias sobre los coeficientes del modelo de regresión lineal empleando bootstrap residual con reescalado de los residuos.
+
+:::
+
 
 ::: {.exercise #boot-car}
 <br>
@@ -641,7 +694,7 @@ donde:
 Emplear la función `Boot()` del paquete `car` para hacer inferencia sobre 
 el coeficiente de determinación ajustado del modelo de regresión lineal 
 que explica `prestige` a partir de `income` y `education` 
-(obtener una estimación del sesgo y de la predicción,
+(obtener una estimación del sesgo y de la precisión,
 y una estimación por intervalo de confianza de este estadístico).
 
 :::

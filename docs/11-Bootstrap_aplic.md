@@ -94,18 +94,18 @@ res.boot
 ```
 
 ```
- ## 
- ## ORDINARY NONPARAMETRIC BOOTSTRAP
- ## 
- ## 
- ## Call:
- ## boot(data = muestra, statistic = statistic, R = 1000)
- ## 
- ## 
- ## Bootstrap Statistics :
- ##     original    bias    std. error
- ## t1*  0.80533 0.0031733     0.15833
- ## t2*  0.75823 0.0119027     0.17394
+## 
+## ORDINARY NONPARAMETRIC BOOTSTRAP
+## 
+## 
+## Call:
+## boot(data = muestra, statistic = statistic, R = 1000)
+## 
+## 
+## Bootstrap Statistics :
+##     original    bias    std. error
+## t1*  0.80533 0.0031733     0.15833
+## t2*  0.75823 0.0119027     0.17394
 ```
 
 Lamentablemente la función `print.boot()` calcula las aproximaciones bootstrap del sesgo y de la precisión pero no las almacena. 
@@ -123,9 +123,9 @@ op
 ```
 
 ```
- ##     original    bias    std. error
- ## t1*  0.80533 0.0031733     0.15833
- ## t2*  0.75823 0.0119027     0.17394
+##     original    bias    std. error
+## t1*  0.80533 0.0031733     0.15833
+## t2*  0.75823 0.0119027     0.17394
 ```
 
 :::
@@ -133,7 +133,7 @@ op
 ::: {.exercise #unif-multi-sesgo-var}
 <br>
 
-Como continuación del ejemplo mostrado en la Sección \@ref(boot-unif-multi), emplear el paquete `boot` para aproximar el sesgo y la precisión del coeficiente de correlación lineal $r$ entre `prestige` e `income` del conjunto de datos `Prestige` mediante bootstrap uniforme multidimensional.
+Como continuación del ejemplo mostrado en la Sección \@ref(boot-unif-multi), emplear el paquete `boot` para aproximar el sesgo y la precisión del coeficiente de correlación lineal $r$ entre `prestige` e `income` del conjunto de datos `Prestige` mediante bootstrap uniforme multivariante.
 Comparar los resultados con los obtenidos mediante la aproximación asintótica normal, que como se indicó en el Ejercicio \@ref(exr:unif-multi), consideraría que el sesgo es nulo y como estimación de su varianza:
 $$\widehat{Var}(r) = \frac{1 - r^2}{n - 2}.$$
 
@@ -201,18 +201,18 @@ res.boot
 ```
 
 ```
- ## 
- ## ORDINARY NONPARAMETRIC BOOTSTRAP
- ## 
- ## 
- ## Call:
- ## boot(data = muestra, statistic = statistic, R = 1000)
- ## 
- ## 
- ## Bootstrap Statistics :
- ##     original     bias    std. error
- ## t1* 0.805333  0.0031733   0.1583306
- ## t2* 0.025934 -0.0021558   0.0075947
+## 
+## ORDINARY NONPARAMETRIC BOOTSTRAP
+## 
+## 
+## Call:
+## boot(data = muestra, statistic = statistic, R = 1000)
+## 
+## 
+## Bootstrap Statistics :
+##     original     bias    std. error
+## t1* 0.805333  0.0031733   0.1583306
+## t2* 0.025934 -0.0021558   0.0075947
 ```
 
 ``` r
@@ -220,16 +220,16 @@ boot.ci(res.boot, type = "norm") # index = 1
 ```
 
 ```
- ## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
- ## Based on 1000 bootstrap replicates
- ## 
- ## CALL : 
- ## boot.ci(boot.out = res.boot, type = "norm")
- ## 
- ## Intervals : 
- ## Level      Normal        
- ## 95%   ( 0.4918,  1.1125 )  
- ## Calculations and Intervals on Original Scale
+## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+## Based on 1000 bootstrap replicates
+## 
+## CALL : 
+## boot.ci(boot.out = res.boot, type = "norm")
+## 
+## Intervals : 
+## Level      Normal        
+## 95%   ( 0.4918,  1.1125 )  
+## Calculations and Intervals on Original Scale
 ```
 
 Podemos reproducir fácilmente estos cálculos. 
@@ -247,9 +247,9 @@ op
 ```
 
 ```
- ##     original     bias    std. error
- ## t1* 0.805333  0.0031733   0.1583306
- ## t2* 0.025934 -0.0021558   0.0075947
+##     original     bias    std. error
+## t1* 0.805333  0.0031733   0.1583306
+## t2* 0.025934 -0.0021558   0.0075947
 ```
 
 ``` r
@@ -272,7 +272,7 @@ IC
 ```
 
 ```
- ## [1] 0.49184 1.11248
+## [1] 0.49184 1.11248
 ```
 
 <!-- 
@@ -299,8 +299,8 @@ De donde se obtiene el intervalo de confianza bootstrap calculado
 por el método percentil directo
 $$\hat{I}_{perc}=\left( x_{\alpha /2}, x_{1-\alpha /2}  \right).$$
 
-Una ventaja de los intervalos construidos con este método es que son invariantes frente a transformaciones del estimador (en el caso de que fuese más adecuado trabajar en otra escala, no sería necesario conocer la transformación).
-Sin embargo, como se comentó en la Sección \@ref(boot-intro), la precisión puede verse seriamente afectada en el caso de estimadores sesgados.
+Una ventaja de los intervalos construidos con este método es que son invariantes frente a transformaciones monótonas del estimador (en el caso de que fuese más adecuado trabajar en otra escala, no sería necesario conocer la transformación).
+Sin embargo, como se comentó en la Sección \@ref(boot-intro), la precisión puede verse seriamente afectada en el caso de estimadores sesgados^[Debería existir una transformación monótona en la que la distribución sea simétrica, y además el estimador transformado sea aproximadamente insesgado y con varianza independiente del parámetro.].
 
 Podemos obtener este intervalo de confianza estableciendo `type = "perc"` (o `type = "all"`) en la llamada a la función `boot.ci()`.
 Continuando con el Ejemplo \@ref(exm:media-dt-desconocida-boot):
@@ -311,16 +311,16 @@ boot.ci(res.boot, type = "perc") # index = 1
 ```
 
 ```
- ## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
- ## Based on 1000 bootstrap replicates
- ## 
- ## CALL : 
- ## boot.ci(boot.out = res.boot, type = "perc")
- ## 
- ## Intervals : 
- ## Level     Percentile     
- ## 95%   ( 0.5127,  1.1282 )  
- ## Calculations and Intervals on Original Scale
+## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+## Based on 1000 bootstrap replicates
+## 
+## CALL : 
+## boot.ci(boot.out = res.boot, type = "perc")
+## 
+## Intervals : 
+## Level     Percentile     
+## 95%   ( 0.5127,  1.1282 )  
+## Calculations and Intervals on Original Scale
 ```
 
 A título ilustrativo podemos reproducir los cálculos:
@@ -336,8 +336,8 @@ IC_boot
 ```
 
 ```
- ##    2.5%   97.5% 
- ## 0.51265 1.12820
+##    2.5%   97.5% 
+## 0.51265 1.12820
 ```
 
 ``` r
@@ -345,9 +345,7 @@ hist(stat_boot, breaks = "FD", freq = FALSE)
 abline(v = IC_boot)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.75\linewidth]{11-Bootstrap_aplic_files/figure-latex/unnamed-chunk-7-1} \end{center}
+<img src="11-Bootstrap_aplic_files/figure-html/unnamed-chunk-7-1.png" alt="" width="80%" style="display: block; margin: auto;" />
 
 
 ### Método percentil básico {#boot-ic-basic}
@@ -378,17 +376,19 @@ boot.ci(res.boot, type = "basic") # index = 1
 ```
 
 ```
- ## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
- ## Based on 1000 bootstrap replicates
- ## 
- ## CALL : 
- ## boot.ci(boot.out = res.boot, type = "basic")
- ## 
- ## Intervals : 
- ## Level      Basic         
- ## 95%   ( 0.4825,  1.0980 )  
- ## Calculations and Intervals on Original Scale
+## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+## Based on 1000 bootstrap replicates
+## 
+## CALL : 
+## boot.ci(boot.out = res.boot, type = "basic")
+## 
+## Intervals : 
+## Level      Basic         
+## 95%   ( 0.4825,  1.0980 )  
+## Calculations and Intervals on Original Scale
 ```
+
+Si el estimador es sesgado o su distribución es muy asimétrica, puede haber grandes diferencias respecto a las estimaciones obtenidas con el método percentil directo, y en principio sería más razonable emplear el método percentil básico.
 
 Reproducimos también los cálculos (únicamente por proporcionar más detalles):
 
@@ -407,7 +407,11 @@ pto_crit <- quantile(stat_boot, c(alfa/2, 1 - alfa/2), type = 6)
 # Distribución bootstrap del estadístico centrado:
 hist(stat_boot, breaks = "FD", freq = FALSE)
 abline(v = pto_crit)
+```
 
+<img src="11-Bootstrap_aplic_files/figure-html/unnamed-chunk-9-1.png" alt="" width="80%" style="display: block; margin: auto;" />
+
+``` r
 # Construcción del IC
 ic_inf_boot <- estim - pto_crit[2]
 ic_sup_boot <- estim - pto_crit[1]
@@ -417,13 +421,9 @@ IC_boot
 ```
 
 ```
- ##    2.5%   97.5% 
- ## 0.48247 1.09802
+##    2.5%   97.5% 
+## 0.48247 1.09802
 ```
-
-
-
-\begin{center}\includegraphics[width=0.75\linewidth]{11-Bootstrap_aplic_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 
 ### Método percentil-*t* {#boot-ic-stud}
@@ -453,16 +453,16 @@ boot.ci(res.boot, type = "stud") # index = c(1, 2)
 ```
 
 ```
- ## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
- ## Based on 1000 bootstrap replicates
- ## 
- ## CALL : 
- ## boot.ci(boot.out = res.boot, type = "stud")
- ## 
- ## Intervals : 
- ## Level    Studentized     
- ## 95%   ( 0.4715,  1.2320 )  
- ## Calculations and Intervals on Original Scale
+## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+## Based on 1000 bootstrap replicates
+## 
+## CALL : 
+## boot.ci(boot.out = res.boot, type = "stud")
+## 
+## Intervals : 
+## Level    Studentized     
+## 95%   ( 0.4715,  1.2320 )  
+## Calculations and Intervals on Original Scale
 ```
 
 Reproducimos también los cálculos (únicamente a título ilustrativo):
@@ -483,7 +483,11 @@ pto_crit <- quantile(stat_boot, c(alfa/2, 1 - alfa/2), type = 6)
 # Distribución bootstrap del estadístico studentizado:
 hist(stat_boot, breaks = "FD", freq = FALSE)
 abline(v = pto_crit)
+```
 
+<img src="11-Bootstrap_aplic_files/figure-html/unnamed-chunk-11-1.png" alt="" width="80%" style="display: block; margin: auto;" />
+
+``` r
 # Construcción del IC
 ic_inf_boot <- estim - pto_crit[2] * sqrt(var_estim)
 ic_sup_boot <- estim - pto_crit[1] * sqrt(var_estim)
@@ -493,14 +497,61 @@ IC_boot
 ```
 
 ```
- ##    2.5%   97.5% 
- ## 0.47154 1.23198
+##    2.5%   97.5% 
+## 0.47154 1.23198
 ```
 
 
+::: {.exercise #boot-coef-stud}
+<br>
 
-\begin{center}\includegraphics[width=0.75\linewidth]{11-Bootstrap_aplic_files/figure-latex/unnamed-chunk-11-1} \end{center}
+Continuando con el Ejercicio \@ref(exr:boot-coef), obtener estimaciones por intervalo de confianza de los coeficientes del modelo lineal que explica `prestige` a partir de `income` y `education`, utilizando el método percentil-*t*, mediante bootstrap uniforme multivariante con el paquete `boot`.
 
+
+``` r
+data(Prestige, package = "carData")
+fit <- lm(prestige ~ income + education, data = Prestige)
+# Bajo las hipótesis estructurales del modelo:
+# summary(fit)
+confint(fit)
+```
+
+```
+##                   2.5 %     97.5 %
+## (Intercept) -1.3235e+01 -0.4606298
+## income       9.1628e-04  0.0018061
+## education    3.4451e+00  4.8297615
+```
+
+``` r
+coef <- summary(fit)$coefficients
+coef[, 1:2]
+```
+
+```
+##               Estimate Std. Error
+## (Intercept) -6.8477787 3.21897710
+## income       0.0013612 0.00022421
+## education    4.1374444 0.34891202
+```
+
+``` r
+cbind(Estimate = coef[, 1], Variance = coef[, 2]^2)
+```
+
+```
+##               Estimate   Variance
+## (Intercept) -6.8477787 1.0362e+01
+## income       0.0013612 5.0271e-08
+## education    4.1374444 1.2174e-01
+```
+
+``` r
+# Equivale a un vector en el que los primeros `nrow(coef)` componentes son
+# las estimaciones y los siguientes sus varianzas.
+```
+
+:::
 
 ### Método BCa {#boot-ic-bca}
 
@@ -528,11 +579,11 @@ https://rdrr.io/cran/rcompanion/man/blom.html
 ::: {.exercise #boot-unif-multi-ic}
 <br>
 
-Como continuación del ejemplo mostrado en la Sección \@ref(boot-unif-multi), y de los Ejercicios \@ref(exr:unif-multi) y \@ref(exr:unif-multi-sesgo-var), emplear el paquete `boot` para obtener estimaciones por intervalo de confianza del coeficiente de correlación lineal $r$ entre `prestige` e `income` del conjunto de datos `Prestige` (mediante bootstrap uniforme multidimensional).
+Como continuación del ejemplo mostrado en la Sección \@ref(boot-unif-multi), y de los Ejercicios \@ref(exr:unif-multi) y \@ref(exr:unif-multi-sesgo-var), emplear el paquete `boot` para obtener estimaciones por intervalo de confianza del coeficiente de correlación lineal $r$ entre `prestige` e `income` del conjunto de datos `Prestige` (mediante bootstrap uniforme multivariante).
 En el caso del método percentil-*t*, como se indicó en el Ejercicio \@ref(exr:unif-multi), considerar el estimador de la varianza:
 $$\widehat{Var}(r) = \frac{1 - r^2}{n - 2}.$$
 
-Comparar los resultados con la aproximación paramétrica implementada en la función `cor.test` y descrita en la siguiente sección.
+Comparar los resultados con la aproximación paramétrica implementada en la función `cor.test`, descrita en la siguiente sección.
 
 ::: 
 
@@ -557,7 +608,7 @@ Para realizar inferencias sobre el coeficiente de correlación, como aproximaci�
 <!-- \mathcal{t}_{n-2} error en LaTeX-->
 
 Pero esta aproximación solo sería válida en el caso de muestras grandes (o si la distribución bivariante de $(X, Y)$ es aproximadamente normal) cuando la correlación entre las variables es débil o moderada. 
-En caso contrario la distribución muestral de $r$ puede ser muy asimétrica y los resultados obtenidos con el estadístico anterior no ser muy adecuados (esto concuerda con lo observado en la Sección \@ref(boot-unif-multi), al emplear bootstrap uniforme multidimensional para hacer inferencia sobre $R = r -\rho$).
+En caso contrario la distribución muestral de $r$ puede ser muy asimétrica y los resultados obtenidos con el estadístico anterior no ser muy adecuados (esto concuerda con lo observado en la Sección \@ref(boot-unif-multi), al emplear bootstrap uniforme multivariante para hacer inferencia sobre $R = r -\rho$).
 Para evitar este problema se suelen obtener intervalos de confianza para $\rho$ empleando la transformación $Z$ de Fisher (1915):
 $$Z = \frac{1}{2}\ln \left( \frac{1+r}{1-r} \right) = \operatorname{arctanh}(r),$$
 que es una transformación (aprox.) normalizadora y estabilizadora de la varianza.
@@ -578,17 +629,17 @@ cor.test(Prestige$income, Prestige$prestige)
 ```
 
 ```
- ## 
- ## 	Pearson's product-moment correlation
- ## 
- ## data:  Prestige$income and Prestige$prestige
- ## t = 10.2, df = 100, p-value <2e-16
- ## alternative hypothesis: true correlation is not equal to 0
- ## 95 percent confidence interval:
- ##  0.60447 0.79838
- ## sample estimates:
- ##     cor 
- ## 0.71491
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  Prestige$income and Prestige$prestige
+## t = 10.2, df = 100, p-value <2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.60447 0.79838
+## sample estimates:
+##     cor 
+## 0.71491
 ```
 
 También es de esperar que mejore la precisión de los intervalos de confianza bootstrap si se emplea una transformación que estabilice la varianza del estimador, especialmente en el caso del método basado en la aproximación normal y del bootstrap percentil básico. 
@@ -625,17 +676,17 @@ boot.ci(res.boot, type = "norm", h = h, hdot = hdot, hinv = hinv)
 ```
 
 ```
- ## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
- ## Based on 1000 bootstrap replicates
- ## 
- ## CALL : 
- ## boot.ci(boot.out = res.boot, type = "norm", h = h, hdot = hdot, 
- ##     hinv = hinv)
- ## 
- ## Intervals : 
- ## Level      Normal        
- ## 95%   ( 0.6016,  0.7858 )  
- ## Calculations on Transformed Scale;  Intervals on Original Scale
+## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+## Based on 1000 bootstrap replicates
+## 
+## CALL : 
+## boot.ci(boot.out = res.boot, type = "norm", h = h, hdot = hdot, 
+##     hinv = hinv)
+## 
+## Intervals : 
+## Level      Normal        
+## 95%   ( 0.6016,  0.7858 )  
+## Calculations on Transformed Scale;  Intervals on Original Scale
 ```
 
 Esto sería en principio preferible a trabajar en la escala original, ya que la distribución bootstrap en la escala transformada se aproximaría más a la normalidad:
@@ -647,14 +698,10 @@ hist(ht, freq = FALSE, breaks = "FD", main = "")
 curve(dnorm(x, mean=mean(ht), sd=sd(ht)), lty = 2, add = TRUE)
 ```
 
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.75\linewidth]{11-Bootstrap_aplic_files/figure-latex/icboot-trans-plot-1} 
-
-}
-
-\caption{Distribución bootstrap en la escala transformada.}(\#fig:icboot-trans-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="11-Bootstrap_aplic_files/figure-html/icboot-trans-plot-1.png" alt="Distribución bootstrap en la escala transformada." width="80%" />
+<p class="caption">(\#fig:icboot-trans-plot)Distribución bootstrap en la escala transformada.</p>
+</div>
 
 
 ## Contrastes de hipótesis bootstrap {#boot-test}
@@ -694,14 +741,14 @@ estadístico $\hat{d}=D\left( x_1,\ldots ,x_n;H_0\right)$ pertenece
 a la región de rechazo.
 
 Para medir el nivel de evidencia en contra de $H_0$ se emplea el
-$p$-valor del contraste (también denominado valor crítico o 
+$p$-valor del contraste (también denominado nivel crítico o 
 tamaño del contraste), el menor valor del nivel 
 de significación para el que se rechaza $H_0$ 
 (que se puede interpretar también como la 
 probabilidad de obtener una discrepancia mayor o igual que
 $\hat{d}$ cuando $H_0$ es cierta).
 
-El cálculo del $p$-valor dependerá por tanto de la hipótesis altervativa.
+El cálculo del $p$-valor dependerá por tanto de la hipótesis alternativa.
 Por ejemplo, si el estadístico del contraste tiende a tomar valores
 grandes cuando $H_0$ es falsa (contraste unilateral derecho):
 $$p = P\left( D \geq \hat{d} \middle| H_0\right).$$
@@ -721,7 +768,7 @@ en cuyo caso se dice que el contraste es estadísticamente significativo
 Por tanto, la correspondiente variable aleatoria $\mathcal{P}$ debería verificar:
 $$P\left( \mathcal{P} \leq \alpha \middle| H_0\right)= \alpha.$$
 Es decir, la distribución del $p$-valor bajo $H_0$ debería ser $\mathcal{U}(0,1)$
-(si la distribución del estadístico del constrate es continua).
+(si la distribución del estadístico del contraste es continua).
 
 
 En los métodos tradicionales de contrastes de hipótesis se conoce o se 
@@ -876,17 +923,16 @@ abline(h=1, lty=2)   # curve(dunif(x,0,1), add=TRUE)
 curve(ecdf(pvalor.lil)(x), type = "s", lwd = 2, main = '', 
       ylab = 'Proporción de rechazos',  xlab = 'Nivel de significación')
 abline(a=0, b=1, lty=2)   # curve(punif(x, 0, 1), add = TRUE)
-par(old.par)
 ```
 
-\begin{figure}[!htbp]
+<div class="figure" style="text-align: center">
+<img src="11-Bootstrap_aplic_files/figure-html/ks-lil-plot-1.png" alt="Distribución del p-valor (izquierda) y tamaño (proporción de rechazos bajo la hipótesis nula; derecha), aproximados por Monte Carlo, para el contraste de Kolmogorov-Smirnov (arriba) y el de Lilliefors (abajo)." width="90%" />
+<p class="caption">(\#fig:ks-lil-plot)Distribución del p-valor (izquierda) y tamaño (proporción de rechazos bajo la hipótesis nula; derecha), aproximados por Monte Carlo, para el contraste de Kolmogorov-Smirnov (arriba) y el de Lilliefors (abajo).</p>
+</div>
 
-{\centering \includegraphics[width=0.9\linewidth]{11-Bootstrap_aplic_files/figure-latex/ks-lil-plot-1} 
-
-}
-
-\caption{Distribución del p-valor (izquierda) y tamaño (proporción de rechazos bajo la hipótesis nula; derecha), aproximados por Monte Carlo, para el contraste de Kolmogorov-Smirnov (arriba) y el de Lilliefors (abajo).}(\#fig:ks-lil-plot)
-\end{figure}
+``` r
+par(old.par)
+```
 
 En el caso del contraste de Kolmogorov-Smirnov (KS) se observa que el $p$-valor 
 tiende a tomar valores grandes y por tanto se rechaza la hipótesis nula 
@@ -969,17 +1015,16 @@ abline(h=1, lty=2)   # curve(dunif(x,0,1), add=TRUE)
 curve(ecdf(pvalor.ks.boot)(x), type = "s", lwd = 2, main = '', 
       ylab = 'Proporción de rechazos',  xlab = 'Nivel de significación')
 abline(a=0, b=1, lty=2)   # curve(punif(x, 0, 1), add = TRUE)
-par(old.par)
 ```
 
-\begin{figure}[!htbp]
+<div class="figure" style="text-align: center">
+<img src="11-Bootstrap_aplic_files/figure-html/ks-boot-plot-1.png" alt="Distribución del p-valor (izquierda) y tamaño (proporción de rechazos bajo la hipótesis nula; derecha), aproximados por  Monte Carlo, para el contraste de Kolmogorov-Smirnov (arriba) y el correspondiente contraste boostrap paramétrico (abajo)." width="90%" />
+<p class="caption">(\#fig:ks-boot-plot)Distribución del p-valor (izquierda) y tamaño (proporción de rechazos bajo la hipótesis nula; derecha), aproximados por  Monte Carlo, para el contraste de Kolmogorov-Smirnov (arriba) y el correspondiente contraste boostrap paramétrico (abajo).</p>
+</div>
 
-{\centering \includegraphics[width=0.9\linewidth]{11-Bootstrap_aplic_files/figure-latex/ks-boot-plot-1} 
-
-}
-
-\caption{Distribución del p-valor (izquierda) y tamaño (proporción de rechazos bajo la hipótesis nula; derecha), aproximados por  Monte Carlo, para el contraste de Kolmogorov-Smirnov (arriba) y el correspondiente contraste boostrap paramétrico (abajo).}(\#fig:ks-boot-plot)
-\end{figure}
+``` r
+par(old.par)
+```
 
 El estadístico de Kolmogorov-Smirnov `Dn = max(c(DMinus, DPlus))` tiene ventajas desde el
 punto de vista teórico, pero puede no ser muy potente para detectar diferencias entre la
@@ -1039,7 +1084,7 @@ cor(dogs$mvo, dogs$lvp)
 ```
 
 ```
- ## [1] 0.85369
+## [1] 0.85369
 ```
 
 ``` r
@@ -1053,17 +1098,17 @@ cor.test(dogs$mvo, dogs$lvp)
 ```
 
 ```
- ## 
- ## 	Pearson's product-moment correlation
- ## 
- ## data:  dogs$mvo and dogs$lvp
- ## t = 3.67, df = 5, p-value = 0.015
- ## alternative hypothesis: true correlation is not equal to 0
- ## 95 percent confidence interval:
- ##  0.28180 0.97801
- ## sample estimates:
- ##     cor 
- ## 0.85369
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  dogs$mvo and dogs$lvp
+## t = 3.67, df = 5, p-value = 0.015
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.28180 0.97801
+## sample estimates:
+##     cor 
+## 0.85369
 ```
 
 ``` r
@@ -1082,17 +1127,17 @@ cor.test(dogs$mvo, dogs$lvp, alternative = "greater")
 ```
 
 ```
- ## 
- ## 	Pearson's product-moment correlation
- ## 
- ## data:  dogs$mvo and dogs$lvp
- ## t = 3.67, df = 5, p-value = 0.0073
- ## alternative hypothesis: true correlation is greater than 0
- ## 95 percent confidence interval:
- ##  0.41959 1.00000
- ## sample estimates:
- ##     cor 
- ## 0.85369
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  dogs$mvo and dogs$lvp
+## t = 3.67, df = 5, p-value = 0.0073
+## alternative hypothesis: true correlation is greater than 0
+## 95 percent confidence interval:
+##  0.41959 1.00000
+## sample estimates:
+##     cor 
+## 0.85369
 ```
 
 Para realizar el contraste con la función `boot` podríamos
@@ -1117,14 +1162,10 @@ hist(res.boot$t, freq = FALSE, main ="")
 abline(v = res.boot$t0, lty = 2)
 ```
 
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.75\linewidth]{11-Bootstrap_aplic_files/figure-latex/perm-test-cor-1} 
-
-}
-
-\caption{Distribución del estadístico del contraste bajo la hipótesis nula aproximada mediante permutación de las observaciones.}(\#fig:perm-test-cor)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="11-Bootstrap_aplic_files/figure-html/perm-test-cor-1.png" alt="Distribución del estadístico del contraste bajo la hipótesis nula aproximada mediante permutación de las observaciones." width="80%" />
+<p class="caption">(\#fig:perm-test-cor)Distribución del estadístico del contraste bajo la hipótesis nula aproximada mediante permutación de las observaciones.</p>
+</div>
 
 Por ejemplo, para el contraste unilateral $H_0: \rho \leq 0$ 
 (`alternative = "greater"`), obtendríamos:
@@ -1135,7 +1176,7 @@ pval.greater
 ```
 
 ```
- ## [1] 0.009
+## [1] 0.009
 ```
 
 Mientras que para realizar el contraste bilateral $H_0: \rho = 0$
@@ -1149,7 +1190,7 @@ pval
 ```
 
 ```
- ## [1] 0.018
+## [1] 0.018
 ```
 
 :::
@@ -1196,25 +1237,25 @@ summary(modelo)
 ```
 
 ```
- ## 
- ## Call:
- ## lm(formula = prestige ~ income + education, data = Prestige)
- ## 
- ## Residuals:
- ##     Min      1Q  Median      3Q     Max 
- ## -19.404  -5.331   0.015   4.980  17.689 
- ## 
- ## Coefficients:
- ##              Estimate Std. Error t value Pr(>|t|)    
- ## (Intercept) -6.847779   3.218977   -2.13    0.036 *  
- ## income       0.001361   0.000224    6.07  2.4e-08 ***
- ## education    4.137444   0.348912   11.86  < 2e-16 ***
- ## ---
- ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
- ## 
- ## Residual standard error: 7.81 on 99 degrees of freedom
- ## Multiple R-squared:  0.798,	Adjusted R-squared:  0.794 
- ## F-statistic:  196 on 2 and 99 DF,  p-value: <2e-16
+## 
+## Call:
+## lm(formula = prestige ~ income + education, data = Prestige)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -19.404  -5.331   0.015   4.980  17.689 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -6.847779   3.218977   -2.13    0.036 *  
+## income       0.001361   0.000224    6.07  2.4e-08 ***
+## education    4.137444   0.348912   11.86  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 7.81 on 99 degrees of freedom
+## Multiple R-squared:  0.798,	Adjusted R-squared:  0.794 
+## F-statistic:  196 on 2 and 99 DF,  p-value: <2e-16
 ```
 
 También podemos obtener el valor observado del estadístico $F$ 
@@ -1231,8 +1272,8 @@ res$fstatistic
 ```
 
 ```
- ##  value  numdf  dendf 
- ## 195.55   2.00  99.00
+##  value  numdf  dendf 
+## 195.55   2.00  99.00
 ```
 
 o haciendo los cálculos a mano:
@@ -1250,7 +1291,7 @@ inc.mse/msr
 ```
 
 ```
- ## [1] 195.55
+## [1] 195.55
 ```
 
 Desde el punto de vista de comparación de modelos, el modelo
@@ -1269,15 +1310,15 @@ anova(modelo0, modelo)
 ```
 
 ```
- ## Analysis of Variance Table
- ## 
- ## Model 1: prestige ~ 1
- ## Model 2: prestige ~ income + education
- ##   Res.Df   RSS Df Sum of Sq   F Pr(>F)    
- ## 1    101 29895                            
- ## 2     99  6039  2     23857 196 <2e-16 ***
- ## ---
- ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## Analysis of Variance Table
+## 
+## Model 1: prestige ~ 1
+## Model 2: prestige ~ income + education
+##   Res.Df   RSS Df Sum of Sq   F Pr(>F)    
+## 1    101 29895                            
+## 2     99  6039  2     23857 196 <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
 Para aproximar la distribución de este estadístico bajo $H_0$ podríamos adaptar 
@@ -1288,11 +1329,11 @@ de permutaciones.] descrito en la Sección \@ref(boot-residual):
 ``` r
 library(boot)
 
-pres.dat <- Prestige
-# pres.dat$fit0 <- mean(Prestige$prestige)
-# pres.dat$fit0 <- predict(modelo0)
-pres.dat$res0 <- with(Prestige, prestige - mean(prestige))
-# pres.dat$res0 <- residuals(modelo0)
+boot.dat <- Prestige
+# boot.dat$fit0 <- mean(Prestige$prestige)
+# boot.dat$fit0 <- predict(modelo0)
+boot.dat$res0 <- with(Prestige, prestige - mean(prestige))
+# boot.dat$res0 <- residuals(modelo0)
 
 mod.stat <- function(data, i) {
     data$prestige <- mean(data$prestige) + data$res0[i]
@@ -1301,45 +1342,43 @@ mod.stat <- function(data, i) {
 }
 
 set.seed(1)
-boot.mod <- boot(pres.dat, mod.stat, R = 1000)
+boot.mod <- boot(boot.dat, mod.stat, R = 1000)
 boot.mod
 ```
 
 ```
- ## 
- ## ORDINARY NONPARAMETRIC BOOTSTRAP
- ## 
- ## 
- ## Call:
- ## boot(data = pres.dat, statistic = mod.stat, R = 1000)
- ## 
- ## 
- ## Bootstrap Statistics :
- ##     original  bias    std. error
- ## t1*   195.55 -194.49      1.0963
+## 
+## ORDINARY NONPARAMETRIC BOOTSTRAP
+## 
+## 
+## Call:
+## boot(data = boot.dat, statistic = mod.stat, R = 1000)
+## 
+## 
+## Bootstrap Statistics :
+##     original  bias    std. error
+## t1*   195.55 -194.49      1.0963
 ```
 
 ``` r
 hist(boot.mod$t, freq = FALSE, breaks = "FD", main = "")
 curve(pf(x, df, dfr, lower.tail = FALSE), lty = 2, add = TRUE)
+```
 
+<div class="figure" style="text-align: center">
+<img src="11-Bootstrap_aplic_files/figure-html/semipar-test-plot-1.png" alt="Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico." width="80%" />
+<p class="caption">(\#fig:semipar-test-plot)Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico.</p>
+</div>
+
+``` r
 # pval <- mean(boot.mod$t >= boot.mod$t0)
 pval <- mean(boot.mod$t >= stat)
 pval
 ```
 
 ```
- ## [1] 0
+## [1] 0
 ```
-
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.75\linewidth]{11-Bootstrap_aplic_files/figure-latex/semipar-test-plot-1} 
-
-}
-
-\caption{Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico.}(\#fig:semipar-test-plot)
-\end{figure}
 
 Procediendo de esta forma sin embargo estaríamos sobreestimando la variabilidad
 del error cuando la hipótesis nula es falsa (la variabilidad no explicada por la 
@@ -1356,17 +1395,16 @@ old.par <- par(mfrow=c(1,2))
 hist(residuals(modelo0), xlim = c(-50, 50), main = "")
 # Variabilidad residual con el modelo completo
 hist(residuals(modelo), xlim = c(-50, 50), main = "")
-par(old.par)
 ```
 
-\begin{figure}[!htbp]
+<div class="figure" style="text-align: center">
+<img src="11-Bootstrap_aplic_files/figure-html/semipar-var-plot-1.png" alt="Variabilidad residual con el modelo reducido (izquierda) y con el modelo completo (derecha)." width="90%" />
+<p class="caption">(\#fig:semipar-var-plot)Variabilidad residual con el modelo reducido (izquierda) y con el modelo completo (derecha).</p>
+</div>
 
-{\centering \includegraphics[width=0.9\linewidth]{11-Bootstrap_aplic_files/figure-latex/semipar-var-plot-1} 
-
-}
-
-\caption{Variabilidad residual con el modelo reducido (izquierda) y con el modelo completo (derecha).}(\#fig:semipar-var-plot)
-\end{figure}
+``` r
+par(old.par)
+```
 
 Adicionalmente, como se mostró en la Sección \@ref(boot-residual), se puede emplear
 la modificación propuesta en Davison y Hinkley (1997, Alg. 6.3, p. 271)
@@ -1374,12 +1412,12 @@ y remuestrear los residuos reescalados y centrados.
 
 
 ``` r
-pres.dat <- Prestige
-# pres.dat$fit0 <- mean(Prestige$prestige)
-# pres.dat$fit0 <- predict(modelo0)
-# pres.dat$res <- residuals(modelo)
-pres.dat$sres <- residuals(modelo)/sqrt(1 - hatvalues(modelo))
-pres.dat$sres <- pres.dat$sres - mean(pres.dat$sres)
+boot.dat <- Prestige
+# boot.dat$fit0 <- mean(Prestige$prestige)
+# boot.dat$fit0 <- predict(modelo0)
+# boot.dat$res <- residuals(modelo)
+boot.dat$sres <- residuals(modelo)/sqrt(1 - hatvalues(modelo))
+boot.dat$sres <- boot.dat$sres - mean(boot.dat$sres)
 
 mod.stat <- function(data, i) {
     # data$prestige <- mean(data$prestige) + data$res[i]
@@ -1389,51 +1427,49 @@ mod.stat <- function(data, i) {
 }
 
 set.seed(1)
-boot.mod <- boot(pres.dat, mod.stat, R = 1000)
+boot.mod <- boot(boot.dat, mod.stat, R = 1000)
 boot.mod
 ```
 
 ```
- ## 
- ## ORDINARY NONPARAMETRIC BOOTSTRAP
- ## 
- ## 
- ## Call:
- ## boot(data = pres.dat, statistic = mod.stat, R = 1000)
- ## 
- ## 
- ## Bootstrap Statistics :
- ##     original  bias    std. error
- ## t1* 0.011644  1.0297      1.0297
+## 
+## ORDINARY NONPARAMETRIC BOOTSTRAP
+## 
+## 
+## Call:
+## boot(data = boot.dat, statistic = mod.stat, R = 1000)
+## 
+## 
+## Bootstrap Statistics :
+##     original  bias    std. error
+## t1* 0.011644  1.0297      1.0297
 ```
 
 En la aproximación del $p$-valor hay que tener en cuenta que al modificar los residuos
 `boot.mod$t0` no va a coincidir con el valor observado del estadístico, 
 almacenado en `stat` (por tanto habría que ignorar `original` y `bias`
 en `Bootstrap Statistics`; 
-la función `Boot()` del paquete `car` corrige este problema).
+la función `Boot()` del paquete `car` corregiría este problema).
 
 
 ``` r
 hist(boot.mod$t, freq = FALSE, breaks = "FD", main = "")
 curve(pf(x, df, dfr, lower.tail = FALSE), lty = 2, add = TRUE)
+```
 
+<div class="figure" style="text-align: center">
+<img src="11-Bootstrap_aplic_files/figure-html/boot-semipar-test-plot-1.png" alt="Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico." width="80%" />
+<p class="caption">(\#fig:boot-semipar-test-plot)Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico.</p>
+</div>
+
+``` r
 pval <- mean(boot.mod$t >= stat)
 pval
 ```
 
 ```
- ## [1] 0
+## [1] 0
 ```
-
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.75\linewidth]{11-Bootstrap_aplic_files/figure-latex/boot-semipar-test-plot-1} 
-
-}
-
-\caption{Distribución del estadístico del contraste (bajo la hipótesis nula) aproximada mediante bootstrap semiparamétrico.}(\#fig:boot-semipar-test-plot)
-\end{figure}
 
 En el caso de modelos no lineales (o otros tipos de modelos lineales) puede ser 
 complicado aproximar los grados de libertad para el cálculo del estadístico $F$, 
@@ -1458,14 +1494,10 @@ parciales de residuos obtendríamos:
 car::crPlots(modelo)
 ```
 
-\begin{figure}[!htbp]
-
-{\centering \includegraphics[width=0.9\linewidth]{11-Bootstrap_aplic_files/figure-latex/semipar-crplot-1} 
-
-}
-
-\caption{Efecto de las variables explicativas en el modelo (gráficos de residuos).}(\#fig:semipar-crplot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="11-Bootstrap_aplic_files/figure-html/semipar-crplot-1.png" alt="Efecto de las variables explicativas en el modelo (gráficos de residuos)." width="90%" />
+<p class="caption">(\#fig:semipar-crplot)Efecto de las variables explicativas en el modelo (gráficos de residuos).</p>
+</div>
 
 En este caso podría ser razonable considerar un efecto cuadrático
 de la variable `income`^[Para ajustar un modelo polinómico
@@ -1484,26 +1516,26 @@ summary(modelo)
 ```
 
 ```
- ## 
- ## Call:
- ## lm(formula = prestige ~ income + I(income^2) + education, data = Prestige)
- ## 
- ## Residuals:
- ##     Min      1Q  Median      3Q     Max 
- ## -15.731  -4.900  -0.057   4.598  18.459 
- ## 
- ## Coefficients:
- ##              Estimate Std. Error t value Pr(>|t|)    
- ## (Intercept) -1.14e+01   3.27e+00   -3.47  0.00078 ***
- ## income       3.29e-03   5.67e-04    5.81  7.8e-08 ***
- ## I(income^2) -7.97e-08   2.17e-08   -3.67  0.00039 ***
- ## education    3.81e+00   3.41e-01   11.18  < 2e-16 ***
- ## ---
- ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
- ## 
- ## Residual standard error: 7.36 on 98 degrees of freedom
- ## Multiple R-squared:  0.822,	Adjusted R-squared:  0.817 
- ## F-statistic:  151 on 3 and 98 DF,  p-value: <2e-16
+## 
+## Call:
+## lm(formula = prestige ~ income + I(income^2) + education, data = Prestige)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -15.731  -4.900  -0.057   4.598  18.459 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -1.14e+01   3.27e+00   -3.47  0.00078 ***
+## income       3.29e-03   5.67e-04    5.81  7.8e-08 ***
+## I(income^2) -7.97e-08   2.17e-08   -3.67  0.00039 ***
+## education    3.81e+00   3.41e-01   11.18  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 7.36 on 98 degrees of freedom
+## Multiple R-squared:  0.822,	Adjusted R-squared:  0.817 
+## F-statistic:  151 on 3 and 98 DF,  p-value: <2e-16
 ```
 
 Para comparar el ajuste de este modelo respecto al del anterior, podemos
@@ -1516,19 +1548,19 @@ anova(modelo0, modelo)
 ```
 
 ```
- ## Analysis of Variance Table
- ## 
- ## Model 1: prestige ~ income + education
- ## Model 2: prestige ~ income + I(income^2) + education
- ##   Res.Df  RSS Df Sum of Sq    F  Pr(>F)    
- ## 1     99 6039                              
- ## 2     98 5308  1       731 13.5 0.00039 ***
- ## ---
- ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## Analysis of Variance Table
+## 
+## Model 1: prestige ~ income + education
+## Model 2: prestige ~ income + I(income^2) + education
+##   Res.Df  RSS Df Sum of Sq    F  Pr(>F)    
+## 1     99 6039                              
+## 2     98 5308  1       731 13.5 0.00039 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
 Contrastar si el efecto de `income` es lineal mediante bootstrap residual, 
-empleando como estadístico el incremento en la variabilidad residual con el 
+empleando como estadístico la proporción de incremento en la variabilidad residual con el 
 modelo reducido y remuestreando los residuos del modelo completo (sin reescalar).
 Aproximar el nivel crítico del contraste y el valor que tendría que superar el
 estadístico para rechazar $H_0$ con un nivel de significación $\alpha = 0.05$.
