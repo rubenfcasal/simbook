@@ -523,25 +523,24 @@ De esta forma vemos que el bootstrap uniforme (no paramétrico) es inconsistente
 <div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="deficien-unif.html#cb597-1" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="dv">1</span></span>
 <span id="cb597-2"><a href="deficien-unif.html#cb597-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
 <span id="cb597-3"><a href="deficien-unif.html#cb597-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb597-4"><a href="deficien-unif.html#cb597-4" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">50</span>) <span class="sc">*</span> theta</span>
+<span id="cb597-4"><a href="deficien-unif.html#cb597-4" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">50</span>, <span class="dv">0</span>, theta) <span class="co"># runif(50) * theta</span></span>
 <span id="cb597-5"><a href="deficien-unif.html#cb597-5" tabindex="-1"></a>theta_est <span class="ot">&lt;-</span> <span class="fu">max</span>(muestra)</span>
 <span id="cb597-6"><a href="deficien-unif.html#cb597-6" tabindex="-1"></a><span class="co"># Remuestreo</span></span>
 <span id="cb597-7"><a href="deficien-unif.html#cb597-7" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
-<span id="cb597-8"><a href="deficien-unif.html#cb597-8" tabindex="-1"></a>maximo <span class="ot">&lt;-</span> <span class="fu">numeric</span>(B)</span>
-<span id="cb597-9"><a href="deficien-unif.html#cb597-9" tabindex="-1"></a>estadistico <span class="ot">&lt;-</span> <span class="fu">numeric</span>(B)</span>
-<span id="cb597-10"><a href="deficien-unif.html#cb597-10" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>B) {</span>
-<span id="cb597-11"><a href="deficien-unif.html#cb597-11" tabindex="-1"></a>    remuestra <span class="ot">&lt;-</span> <span class="fu">sample</span>(muestra, n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb597-12"><a href="deficien-unif.html#cb597-12" tabindex="-1"></a>    maximo[k] <span class="ot">&lt;-</span> <span class="fu">max</span>(remuestra)</span>
-<span id="cb597-13"><a href="deficien-unif.html#cb597-13" tabindex="-1"></a>    estadistico[k] <span class="ot">&lt;-</span> maximo[k] <span class="sc">-</span> theta_est</span>
-<span id="cb597-14"><a href="deficien-unif.html#cb597-14" tabindex="-1"></a>}</span>
-<span id="cb597-15"><a href="deficien-unif.html#cb597-15" tabindex="-1"></a><span class="co"># Distribución estadístico</span></span>
-<span id="cb597-16"><a href="deficien-unif.html#cb597-16" tabindex="-1"></a>xlim <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span>theta<span class="sc">/</span><span class="dv">2</span>, <span class="dv">0</span>) <span class="co"># c(-theta, 0)</span></span>
-<span id="cb597-17"><a href="deficien-unif.html#cb597-17" tabindex="-1"></a><span class="fu">hist</span>(estadistico, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>,  </span>
-<span id="cb597-18"><a href="deficien-unif.html#cb597-18" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="at">xlim =</span> xlim)</span>
-<span id="cb597-19"><a href="deficien-unif.html#cb597-19" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(estadistico))</span>
-<span id="cb597-20"><a href="deficien-unif.html#cb597-20" tabindex="-1"></a><span class="fu">rug</span>(estadistico, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>)</span>
-<span id="cb597-21"><a href="deficien-unif.html#cb597-21" tabindex="-1"></a><span class="fu">curve</span>(n<span class="sc">/</span>theta <span class="sc">*</span> ((x <span class="sc">+</span> theta)<span class="sc">/</span>theta)<span class="sc">^</span>(n <span class="sc">-</span> <span class="dv">1</span>), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>, </span>
-<span id="cb597-22"><a href="deficien-unif.html#cb597-22" tabindex="-1"></a>      <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<span id="cb597-8"><a href="deficien-unif.html#cb597-8" tabindex="-1"></a>estadistico <span class="ot">&lt;-</span> <span class="fu">numeric</span>(B)</span>
+<span id="cb597-9"><a href="deficien-unif.html#cb597-9" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>B) {</span>
+<span id="cb597-10"><a href="deficien-unif.html#cb597-10" tabindex="-1"></a>    remuestra <span class="ot">&lt;-</span> <span class="fu">sample</span>(muestra, n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb597-11"><a href="deficien-unif.html#cb597-11" tabindex="-1"></a>    theta_boot <span class="ot">&lt;-</span> <span class="fu">max</span>(remuestra)</span>
+<span id="cb597-12"><a href="deficien-unif.html#cb597-12" tabindex="-1"></a>    estadistico[k] <span class="ot">&lt;-</span> theta_boot <span class="sc">-</span> theta_est</span>
+<span id="cb597-13"><a href="deficien-unif.html#cb597-13" tabindex="-1"></a>}</span>
+<span id="cb597-14"><a href="deficien-unif.html#cb597-14" tabindex="-1"></a><span class="co"># Distribución estadístico</span></span>
+<span id="cb597-15"><a href="deficien-unif.html#cb597-15" tabindex="-1"></a>xlim <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span>theta<span class="sc">/</span><span class="dv">2</span>, <span class="dv">0</span>) <span class="co"># c(-theta, 0)</span></span>
+<span id="cb597-16"><a href="deficien-unif.html#cb597-16" tabindex="-1"></a><span class="fu">hist</span>(estadistico, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>,  </span>
+<span id="cb597-17"><a href="deficien-unif.html#cb597-17" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="at">xlim =</span> xlim)</span>
+<span id="cb597-18"><a href="deficien-unif.html#cb597-18" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(estadistico))</span>
+<span id="cb597-19"><a href="deficien-unif.html#cb597-19" tabindex="-1"></a><span class="fu">rug</span>(estadistico, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>)</span>
+<span id="cb597-20"><a href="deficien-unif.html#cb597-20" tabindex="-1"></a><span class="fu">curve</span>(n<span class="sc">/</span>theta <span class="sc">*</span> ((x <span class="sc">+</span> theta)<span class="sc">/</span>theta)<span class="sc">^</span>(n <span class="sc">-</span> <span class="dv">1</span>), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>, </span>
+<span id="cb597-21"><a href="deficien-unif.html#cb597-21" tabindex="-1"></a>      <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:boot-uniforme-maximo"></span>
 <img src="10-Bootstrap_ext_files/figure-html/boot-uniforme-maximo-1.png" alt="Distribución de las réplicas bootstrap (uniforme) del estadístico y distribución poblacional." width="80%" />
 <p class="caption">

@@ -461,10 +461,10 @@ div.csl-indent {
 <span class="math display">\[I = \int_a^b h(x)  dx.\]</span>.</p>
 <p>Consideraremos como ejemplo:
 <span class="math display">\[\int_0^1 4x^4 dx = \frac{4}{5}\]</span>.</p>
-<div class="sourceCode" id="cb775"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb775-1"><a href="int-num-uni.html#cb775-1" tabindex="-1"></a>fun <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="dv">4</span> <span class="sc">*</span> x<span class="sc">^</span><span class="dv">4</span></span>
-<span id="cb775-2"><a href="int-num-uni.html#cb775-2" tabindex="-1"></a><span class="fu">curve</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb775-3"><a href="int-num-uni.html#cb775-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb775-4"><a href="int-num-uni.html#cb775-4" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb778"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb778-1"><a href="int-num-uni.html#cb778-1" tabindex="-1"></a>fun <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="dv">4</span> <span class="sc">*</span> x<span class="sc">^</span><span class="dv">4</span></span>
+<span id="cb778-2"><a href="int-num-uni.html#cb778-2" tabindex="-1"></a><span class="fu">curve</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb778-3"><a href="int-num-uni.html#cb778-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb778-4"><a href="int-num-uni.html#cb778-4" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:int-num-1d"></span>
 <img src="23-Integracion_numerica_files/figure-html/int-num-1d-1.png" alt="Representación del integrando de ejemplo (con dominio acotado)." width="80%" />
 <p class="caption">
@@ -478,26 +478,26 @@ Si se consideran <span class="math inline">\(n\)</span> subintervalos en <span c
 (i.e. <span class="math inline">\(n + 1\)</span> puntos regularmente espaciados cubriendo el dominio), y
 se aproxima linealmente la función en cada subintervalo, se obtiene que:
 <span class="math display">\[\int_a^b f(x)\, dx \approx \frac{h}{2} [f(a)+2f(a+h)+2f(a+2h)+...+f(b)]\]</span></p>
-<div class="sourceCode" id="cb776"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb776-1"><a href="int-num-uni.html#cb776-1" tabindex="-1"></a>trapezoid.vec <span class="ot">&lt;-</span> <span class="cf">function</span>(f.vec, <span class="at">h =</span> <span class="fl">0.01</span>) {</span>
-<span id="cb776-2"><a href="int-num-uni.html#cb776-2" tabindex="-1"></a><span class="co"># Integración numérica unidimensional entre a y b</span></span>
-<span id="cb776-3"><a href="int-num-uni.html#cb776-3" tabindex="-1"></a><span class="co"># utilizando el método del trapezoide </span></span>
-<span id="cb776-4"><a href="int-num-uni.html#cb776-4" tabindex="-1"></a><span class="co"># (se aproxima f linealmente en cada intervalo)</span></span>
-<span id="cb776-5"><a href="int-num-uni.html#cb776-5" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(f.vec) </span>
-<span id="cb776-6"><a href="int-num-uni.html#cb776-6" tabindex="-1"></a>  <span class="fu">return</span>(h<span class="sc">*</span>(f.vec[<span class="dv">1</span>]<span class="sc">/</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">sum</span>(f.vec[<span class="dv">2</span><span class="sc">:</span>(n<span class="dv">-1</span>)]) <span class="sc">+</span> f.vec[n]<span class="sc">/</span><span class="dv">2</span>))</span>
-<span id="cb776-7"><a href="int-num-uni.html#cb776-7" tabindex="-1"></a>}</span>
-<span id="cb776-8"><a href="int-num-uni.html#cb776-8" tabindex="-1"></a></span>
-<span id="cb776-9"><a href="int-num-uni.html#cb776-9" tabindex="-1"></a>trapezoid <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, <span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">n =</span> <span class="dv">100</span>) {</span>
-<span id="cb776-10"><a href="int-num-uni.html#cb776-10" tabindex="-1"></a><span class="co"># Integración numérica de fun (función unidimensional) entre a y b</span></span>
-<span id="cb776-11"><a href="int-num-uni.html#cb776-11" tabindex="-1"></a><span class="co"># utilizando el método del trapezoide con n subdivisiones</span></span>
-<span id="cb776-12"><a href="int-num-uni.html#cb776-12" tabindex="-1"></a><span class="co"># (se aproxima f linealmente en cada intervalo)</span></span>
-<span id="cb776-13"><a href="int-num-uni.html#cb776-13" tabindex="-1"></a><span class="co"># Se asume a &lt; b y n entero positivo </span></span>
-<span id="cb776-14"><a href="int-num-uni.html#cb776-14" tabindex="-1"></a>  h <span class="ot">&lt;-</span> (b<span class="sc">-</span>a)<span class="sc">/</span>n</span>
-<span id="cb776-15"><a href="int-num-uni.html#cb776-15" tabindex="-1"></a>  x.vec <span class="ot">&lt;-</span> <span class="fu">seq</span>(a, b, <span class="at">by =</span> h)</span>
-<span id="cb776-16"><a href="int-num-uni.html#cb776-16" tabindex="-1"></a>  f.vec <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x.vec, fun)</span>
-<span id="cb776-17"><a href="int-num-uni.html#cb776-17" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">trapezoid.vec</span>(f.vec, h))</span>
-<span id="cb776-18"><a href="int-num-uni.html#cb776-18" tabindex="-1"></a>}</span>
-<span id="cb776-19"><a href="int-num-uni.html#cb776-19" tabindex="-1"></a></span>
-<span id="cb776-20"><a href="int-num-uni.html#cb776-20" tabindex="-1"></a><span class="fu">trapezoid</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb779"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb779-1"><a href="int-num-uni.html#cb779-1" tabindex="-1"></a>trapezoid.vec <span class="ot">&lt;-</span> <span class="cf">function</span>(f.vec, <span class="at">h =</span> <span class="fl">0.01</span>) {</span>
+<span id="cb779-2"><a href="int-num-uni.html#cb779-2" tabindex="-1"></a><span class="co"># Integración numérica unidimensional entre a y b</span></span>
+<span id="cb779-3"><a href="int-num-uni.html#cb779-3" tabindex="-1"></a><span class="co"># utilizando el método del trapezoide </span></span>
+<span id="cb779-4"><a href="int-num-uni.html#cb779-4" tabindex="-1"></a><span class="co"># (se aproxima f linealmente en cada intervalo)</span></span>
+<span id="cb779-5"><a href="int-num-uni.html#cb779-5" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(f.vec) </span>
+<span id="cb779-6"><a href="int-num-uni.html#cb779-6" tabindex="-1"></a>  <span class="fu">return</span>(h<span class="sc">*</span>(f.vec[<span class="dv">1</span>]<span class="sc">/</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">sum</span>(f.vec[<span class="dv">2</span><span class="sc">:</span>(n<span class="dv">-1</span>)]) <span class="sc">+</span> f.vec[n]<span class="sc">/</span><span class="dv">2</span>))</span>
+<span id="cb779-7"><a href="int-num-uni.html#cb779-7" tabindex="-1"></a>}</span>
+<span id="cb779-8"><a href="int-num-uni.html#cb779-8" tabindex="-1"></a></span>
+<span id="cb779-9"><a href="int-num-uni.html#cb779-9" tabindex="-1"></a>trapezoid <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, <span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">n =</span> <span class="dv">100</span>) {</span>
+<span id="cb779-10"><a href="int-num-uni.html#cb779-10" tabindex="-1"></a><span class="co"># Integración numérica de fun (función unidimensional) entre a y b</span></span>
+<span id="cb779-11"><a href="int-num-uni.html#cb779-11" tabindex="-1"></a><span class="co"># utilizando el método del trapezoide con n subdivisiones</span></span>
+<span id="cb779-12"><a href="int-num-uni.html#cb779-12" tabindex="-1"></a><span class="co"># (se aproxima f linealmente en cada intervalo)</span></span>
+<span id="cb779-13"><a href="int-num-uni.html#cb779-13" tabindex="-1"></a><span class="co"># Se asume a &lt; b y n entero positivo </span></span>
+<span id="cb779-14"><a href="int-num-uni.html#cb779-14" tabindex="-1"></a>  h <span class="ot">&lt;-</span> (b<span class="sc">-</span>a)<span class="sc">/</span>n</span>
+<span id="cb779-15"><a href="int-num-uni.html#cb779-15" tabindex="-1"></a>  x.vec <span class="ot">&lt;-</span> <span class="fu">seq</span>(a, b, <span class="at">by =</span> h)</span>
+<span id="cb779-16"><a href="int-num-uni.html#cb779-16" tabindex="-1"></a>  f.vec <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x.vec, fun)</span>
+<span id="cb779-17"><a href="int-num-uni.html#cb779-17" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">trapezoid.vec</span>(f.vec, h))</span>
+<span id="cb779-18"><a href="int-num-uni.html#cb779-18" tabindex="-1"></a>}</span>
+<span id="cb779-19"><a href="int-num-uni.html#cb779-19" tabindex="-1"></a></span>
+<span id="cb779-20"><a href="int-num-uni.html#cb779-20" tabindex="-1"></a><span class="fu">trapezoid</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">20</span>)</span></code></pre></div>
 <pre><code>## [1] 0.80333</code></pre>
 <p>El error en esta aproximación se corresponde con:
 <span class="math display">\[ \frac{(b-a)^3}{12n^2}\,f&#39;&#39;(\xi), \]</span>
@@ -514,22 +514,22 @@ Aproximando de forma cuadrática la función en cada subintervalo <span class="m
 (considerando 3 puntos), se obtiene que:
 <span class="math display">\[ \int_a^b f(x) \, dx \approx \frac{h}{3} \bigg[
 f(x_0)+2\sum_{j=1}^{(n/2)-1}f(x_{2j})+ 4\sum_{j=1}^{n/2}f(x_{2j-1})+f(x_n) \bigg],\]</span></p>
-<div class="sourceCode" id="cb778"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb778-1"><a href="int-num-uni.html#cb778-1" tabindex="-1"></a>simpson <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, a, b, <span class="at">n =</span> <span class="dv">100</span>) { </span>
-<span id="cb778-2"><a href="int-num-uni.html#cb778-2" tabindex="-1"></a><span class="co"># Integración numérica de fnt entre a y b</span></span>
-<span id="cb778-3"><a href="int-num-uni.html#cb778-3" tabindex="-1"></a><span class="co"># utilizando la regla de Simpson con n subdivisiones</span></span>
-<span id="cb778-4"><a href="int-num-uni.html#cb778-4" tabindex="-1"></a><span class="co"># (se aproxima fun de forma cuadrática en cada par de intervalos)  </span></span>
-<span id="cb778-5"><a href="int-num-uni.html#cb778-5" tabindex="-1"></a><span class="co"># fnt es una función de una sola variable</span></span>
-<span id="cb778-6"><a href="int-num-uni.html#cb778-6" tabindex="-1"></a><span class="co"># Se asume a &lt; b y n entero positivo par </span></span>
-<span id="cb778-7"><a href="int-num-uni.html#cb778-7" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">c</span>(<span class="dv">2</span><span class="sc">*</span>(n <span class="sc">%/%</span> <span class="dv">2</span>), <span class="dv">4</span>))</span>
-<span id="cb778-8"><a href="int-num-uni.html#cb778-8" tabindex="-1"></a>  h <span class="ot">&lt;-</span> (b<span class="sc">-</span>a)<span class="sc">/</span>n</span>
-<span id="cb778-9"><a href="int-num-uni.html#cb778-9" tabindex="-1"></a>  x.vec1 <span class="ot">&lt;-</span> <span class="fu">seq</span>(a<span class="sc">+</span>h, b<span class="sc">-</span>h, <span class="at">by =</span> <span class="dv">2</span><span class="sc">*</span>h)</span>
-<span id="cb778-10"><a href="int-num-uni.html#cb778-10" tabindex="-1"></a>  x.vec2 <span class="ot">&lt;-</span> <span class="fu">seq</span>(a<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>h, b<span class="dv">-2</span><span class="sc">*</span>h, <span class="at">by =</span> <span class="dv">2</span><span class="sc">*</span>h)</span>
-<span id="cb778-11"><a href="int-num-uni.html#cb778-11" tabindex="-1"></a>  f.vec1 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x.vec1, fun)</span>
-<span id="cb778-12"><a href="int-num-uni.html#cb778-12" tabindex="-1"></a>  f.vec2 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x.vec2, fun)</span>
-<span id="cb778-13"><a href="int-num-uni.html#cb778-13" tabindex="-1"></a>  <span class="fu">return</span>(h<span class="sc">/</span><span class="dv">3</span><span class="sc">*</span>(<span class="fu">fun</span>(a) <span class="sc">+</span> <span class="fu">fun</span>(b) <span class="sc">+</span> <span class="dv">4</span><span class="sc">*</span><span class="fu">sum</span>(f.vec1) <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">sum</span>(f.vec2)))</span>
-<span id="cb778-14"><a href="int-num-uni.html#cb778-14" tabindex="-1"></a>}</span>
-<span id="cb778-15"><a href="int-num-uni.html#cb778-15" tabindex="-1"></a></span>
-<span id="cb778-16"><a href="int-num-uni.html#cb778-16" tabindex="-1"></a><span class="fu">simpson</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb781"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb781-1"><a href="int-num-uni.html#cb781-1" tabindex="-1"></a>simpson <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, a, b, <span class="at">n =</span> <span class="dv">100</span>) { </span>
+<span id="cb781-2"><a href="int-num-uni.html#cb781-2" tabindex="-1"></a><span class="co"># Integración numérica de fnt entre a y b</span></span>
+<span id="cb781-3"><a href="int-num-uni.html#cb781-3" tabindex="-1"></a><span class="co"># utilizando la regla de Simpson con n subdivisiones</span></span>
+<span id="cb781-4"><a href="int-num-uni.html#cb781-4" tabindex="-1"></a><span class="co"># (se aproxima fun de forma cuadrática en cada par de intervalos)  </span></span>
+<span id="cb781-5"><a href="int-num-uni.html#cb781-5" tabindex="-1"></a><span class="co"># fnt es una función de una sola variable</span></span>
+<span id="cb781-6"><a href="int-num-uni.html#cb781-6" tabindex="-1"></a><span class="co"># Se asume a &lt; b y n entero positivo par </span></span>
+<span id="cb781-7"><a href="int-num-uni.html#cb781-7" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">c</span>(<span class="dv">2</span><span class="sc">*</span>(n <span class="sc">%/%</span> <span class="dv">2</span>), <span class="dv">4</span>))</span>
+<span id="cb781-8"><a href="int-num-uni.html#cb781-8" tabindex="-1"></a>  h <span class="ot">&lt;-</span> (b<span class="sc">-</span>a)<span class="sc">/</span>n</span>
+<span id="cb781-9"><a href="int-num-uni.html#cb781-9" tabindex="-1"></a>  x.vec1 <span class="ot">&lt;-</span> <span class="fu">seq</span>(a<span class="sc">+</span>h, b<span class="sc">-</span>h, <span class="at">by =</span> <span class="dv">2</span><span class="sc">*</span>h)</span>
+<span id="cb781-10"><a href="int-num-uni.html#cb781-10" tabindex="-1"></a>  x.vec2 <span class="ot">&lt;-</span> <span class="fu">seq</span>(a<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>h, b<span class="dv">-2</span><span class="sc">*</span>h, <span class="at">by =</span> <span class="dv">2</span><span class="sc">*</span>h)</span>
+<span id="cb781-11"><a href="int-num-uni.html#cb781-11" tabindex="-1"></a>  f.vec1 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x.vec1, fun)</span>
+<span id="cb781-12"><a href="int-num-uni.html#cb781-12" tabindex="-1"></a>  f.vec2 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x.vec2, fun)</span>
+<span id="cb781-13"><a href="int-num-uni.html#cb781-13" tabindex="-1"></a>  <span class="fu">return</span>(h<span class="sc">/</span><span class="dv">3</span><span class="sc">*</span>(<span class="fu">fun</span>(a) <span class="sc">+</span> <span class="fu">fun</span>(b) <span class="sc">+</span> <span class="dv">4</span><span class="sc">*</span><span class="fu">sum</span>(f.vec1) <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">sum</span>(f.vec2)))</span>
+<span id="cb781-14"><a href="int-num-uni.html#cb781-14" tabindex="-1"></a>}</span>
+<span id="cb781-15"><a href="int-num-uni.html#cb781-15" tabindex="-1"></a></span>
+<span id="cb781-16"><a href="int-num-uni.html#cb781-16" tabindex="-1"></a><span class="fu">simpson</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">20</span>)</span></code></pre></div>
 <pre><code>## [1] 0.8</code></pre>
 <p>El máximo error (en el caso unidimensional) viene dado por la expresión:
 <span class="math display">\[\frac{(b-a)^5}{180n^4}\,\max_{a\leq \xi \leq b}\left| f^{(4)}(\xi) \right|.\]</span>
@@ -540,53 +540,53 @@ En el caso general multidimensional sería <span class="math inline">\(O(n^{-\fr
 <p>En lugar de evaluar la función en una rejilla regular (muestrear por igual el dominio),
 puede interesar ir añadiendo puntos sólo en los lugares donde se mejore la aproximación
 (en principio donde hay mayor área).</p>
-<div class="sourceCode" id="cb780"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb780-1"><a href="int-num-uni.html#cb780-1" tabindex="-1"></a>quadrature <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, a, b, <span class="at">tol=</span><span class="fl">1e-8</span>) {</span>
-<span id="cb780-2"><a href="int-num-uni.html#cb780-2" tabindex="-1"></a>    <span class="co"># numerical integration using adaptive quadrature</span></span>
-<span id="cb780-3"><a href="int-num-uni.html#cb780-3" tabindex="-1"></a></span>
-<span id="cb780-4"><a href="int-num-uni.html#cb780-4" tabindex="-1"></a>  simpson2 <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, a, b) {</span>
-<span id="cb780-5"><a href="int-num-uni.html#cb780-5" tabindex="-1"></a>    <span class="co"># numerical integral using Simpson&#39;s rule</span></span>
-<span id="cb780-6"><a href="int-num-uni.html#cb780-6" tabindex="-1"></a>    <span class="co"># assume a &lt; b and n = 2</span></span>
-<span id="cb780-7"><a href="int-num-uni.html#cb780-7" tabindex="-1"></a>    <span class="fu">return</span>((b<span class="sc">-</span>a)<span class="sc">/</span><span class="dv">6</span> <span class="sc">*</span> (<span class="fu">fun</span>(a) <span class="sc">+</span> <span class="dv">4</span><span class="sc">*</span><span class="fu">fun</span>((a<span class="sc">+</span>b)<span class="sc">/</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">fun</span>(b)))</span>
-<span id="cb780-8"><a href="int-num-uni.html#cb780-8" tabindex="-1"></a>  }</span>
-<span id="cb780-9"><a href="int-num-uni.html#cb780-9" tabindex="-1"></a> </span>
-<span id="cb780-10"><a href="int-num-uni.html#cb780-10" tabindex="-1"></a>    quadrature_internal <span class="ot">&lt;-</span> <span class="cf">function</span>(S.old, fun, a, m, b, tol, level) {</span>
-<span id="cb780-11"><a href="int-num-uni.html#cb780-11" tabindex="-1"></a>        level.max <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb780-12"><a href="int-num-uni.html#cb780-12" tabindex="-1"></a>        <span class="cf">if</span> (level <span class="sc">&gt;</span> level.max) {</span>
-<span id="cb780-13"><a href="int-num-uni.html#cb780-13" tabindex="-1"></a>            <span class="fu">cat</span> (<span class="st">&quot;recursion limit reached: singularity likely</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb780-14"><a href="int-num-uni.html#cb780-14" tabindex="-1"></a>            <span class="fu">return</span> (<span class="cn">NULL</span>)</span>
-<span id="cb780-15"><a href="int-num-uni.html#cb780-15" tabindex="-1"></a>        }</span>
-<span id="cb780-16"><a href="int-num-uni.html#cb780-16" tabindex="-1"></a>        S.left <span class="ot">&lt;-</span> <span class="fu">simpson2</span>(fun, a, m) </span>
-<span id="cb780-17"><a href="int-num-uni.html#cb780-17" tabindex="-1"></a>        S.right <span class="ot">&lt;-</span> <span class="fu">simpson2</span>(fun, m, b)</span>
-<span id="cb780-18"><a href="int-num-uni.html#cb780-18" tabindex="-1"></a>        S.new <span class="ot">&lt;-</span> S.left <span class="sc">+</span> S.right</span>
-<span id="cb780-19"><a href="int-num-uni.html#cb780-19" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">abs</span>(S.new<span class="sc">-</span>S.old) <span class="sc">&gt;</span> tol) {</span>
-<span id="cb780-20"><a href="int-num-uni.html#cb780-20" tabindex="-1"></a>            S.left <span class="ot">&lt;-</span> <span class="fu">quadrature_internal</span>(S.left, fun, </span>
-<span id="cb780-21"><a href="int-num-uni.html#cb780-21" tabindex="-1"></a>                                          a, (a<span class="sc">+</span>m)<span class="sc">/</span><span class="dv">2</span>, m, tol<span class="sc">/</span><span class="dv">2</span>, level<span class="sc">+</span><span class="dv">1</span>)</span>
-<span id="cb780-22"><a href="int-num-uni.html#cb780-22" tabindex="-1"></a>            S.right <span class="ot">&lt;-</span> <span class="fu">quadrature_internal</span>(S.right, fun, </span>
-<span id="cb780-23"><a href="int-num-uni.html#cb780-23" tabindex="-1"></a>                                           m, (m<span class="sc">+</span>b)<span class="sc">/</span><span class="dv">2</span>, b, tol<span class="sc">/</span><span class="dv">2</span>, level<span class="sc">+</span><span class="dv">1</span>)</span>
-<span id="cb780-24"><a href="int-num-uni.html#cb780-24" tabindex="-1"></a>            S.new <span class="ot">&lt;-</span> S.left <span class="sc">+</span> S.right</span>
-<span id="cb780-25"><a href="int-num-uni.html#cb780-25" tabindex="-1"></a>        }</span>
-<span id="cb780-26"><a href="int-num-uni.html#cb780-26" tabindex="-1"></a>        <span class="fu">return</span>(S.new)</span>
-<span id="cb780-27"><a href="int-num-uni.html#cb780-27" tabindex="-1"></a>    }</span>
-<span id="cb780-28"><a href="int-num-uni.html#cb780-28" tabindex="-1"></a> </span>
-<span id="cb780-29"><a href="int-num-uni.html#cb780-29" tabindex="-1"></a>    level <span class="ot">=</span> <span class="dv">1</span></span>
-<span id="cb780-30"><a href="int-num-uni.html#cb780-30" tabindex="-1"></a>    S.old <span class="ot">&lt;-</span> (b<span class="sc">-</span>a) <span class="sc">*</span> (<span class="fu">fun</span>(a) <span class="sc">+</span> <span class="fu">fun</span>(b))<span class="sc">/</span><span class="dv">2</span></span>
-<span id="cb780-31"><a href="int-num-uni.html#cb780-31" tabindex="-1"></a>    S.new <span class="ot">&lt;-</span> <span class="fu">quadrature_internal</span>(S.old, fun, </span>
-<span id="cb780-32"><a href="int-num-uni.html#cb780-32" tabindex="-1"></a>                                 a, (a<span class="sc">+</span>b)<span class="sc">/</span><span class="dv">2</span>, b, tol, level<span class="sc">+</span><span class="dv">1</span>)</span>
-<span id="cb780-33"><a href="int-num-uni.html#cb780-33" tabindex="-1"></a>    <span class="fu">return</span>(S.new)</span>
-<span id="cb780-34"><a href="int-num-uni.html#cb780-34" tabindex="-1"></a>}</span>
-<span id="cb780-35"><a href="int-num-uni.html#cb780-35" tabindex="-1"></a></span>
-<span id="cb780-36"><a href="int-num-uni.html#cb780-36" tabindex="-1"></a><span class="fu">quadrature</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb783"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb783-1"><a href="int-num-uni.html#cb783-1" tabindex="-1"></a>quadrature <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, a, b, <span class="at">tol=</span><span class="fl">1e-8</span>) {</span>
+<span id="cb783-2"><a href="int-num-uni.html#cb783-2" tabindex="-1"></a>    <span class="co"># numerical integration using adaptive quadrature</span></span>
+<span id="cb783-3"><a href="int-num-uni.html#cb783-3" tabindex="-1"></a></span>
+<span id="cb783-4"><a href="int-num-uni.html#cb783-4" tabindex="-1"></a>  simpson2 <span class="ot">&lt;-</span> <span class="cf">function</span>(fun, a, b) {</span>
+<span id="cb783-5"><a href="int-num-uni.html#cb783-5" tabindex="-1"></a>    <span class="co"># numerical integral using Simpson&#39;s rule</span></span>
+<span id="cb783-6"><a href="int-num-uni.html#cb783-6" tabindex="-1"></a>    <span class="co"># assume a &lt; b and n = 2</span></span>
+<span id="cb783-7"><a href="int-num-uni.html#cb783-7" tabindex="-1"></a>    <span class="fu">return</span>((b<span class="sc">-</span>a)<span class="sc">/</span><span class="dv">6</span> <span class="sc">*</span> (<span class="fu">fun</span>(a) <span class="sc">+</span> <span class="dv">4</span><span class="sc">*</span><span class="fu">fun</span>((a<span class="sc">+</span>b)<span class="sc">/</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">fun</span>(b)))</span>
+<span id="cb783-8"><a href="int-num-uni.html#cb783-8" tabindex="-1"></a>  }</span>
+<span id="cb783-9"><a href="int-num-uni.html#cb783-9" tabindex="-1"></a> </span>
+<span id="cb783-10"><a href="int-num-uni.html#cb783-10" tabindex="-1"></a>    quadrature_internal <span class="ot">&lt;-</span> <span class="cf">function</span>(S.old, fun, a, m, b, tol, level) {</span>
+<span id="cb783-11"><a href="int-num-uni.html#cb783-11" tabindex="-1"></a>        level.max <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb783-12"><a href="int-num-uni.html#cb783-12" tabindex="-1"></a>        <span class="cf">if</span> (level <span class="sc">&gt;</span> level.max) {</span>
+<span id="cb783-13"><a href="int-num-uni.html#cb783-13" tabindex="-1"></a>            <span class="fu">cat</span> (<span class="st">&quot;recursion limit reached: singularity likely</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb783-14"><a href="int-num-uni.html#cb783-14" tabindex="-1"></a>            <span class="fu">return</span> (<span class="cn">NULL</span>)</span>
+<span id="cb783-15"><a href="int-num-uni.html#cb783-15" tabindex="-1"></a>        }</span>
+<span id="cb783-16"><a href="int-num-uni.html#cb783-16" tabindex="-1"></a>        S.left <span class="ot">&lt;-</span> <span class="fu">simpson2</span>(fun, a, m) </span>
+<span id="cb783-17"><a href="int-num-uni.html#cb783-17" tabindex="-1"></a>        S.right <span class="ot">&lt;-</span> <span class="fu">simpson2</span>(fun, m, b)</span>
+<span id="cb783-18"><a href="int-num-uni.html#cb783-18" tabindex="-1"></a>        S.new <span class="ot">&lt;-</span> S.left <span class="sc">+</span> S.right</span>
+<span id="cb783-19"><a href="int-num-uni.html#cb783-19" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">abs</span>(S.new<span class="sc">-</span>S.old) <span class="sc">&gt;</span> tol) {</span>
+<span id="cb783-20"><a href="int-num-uni.html#cb783-20" tabindex="-1"></a>            S.left <span class="ot">&lt;-</span> <span class="fu">quadrature_internal</span>(S.left, fun, </span>
+<span id="cb783-21"><a href="int-num-uni.html#cb783-21" tabindex="-1"></a>                                          a, (a<span class="sc">+</span>m)<span class="sc">/</span><span class="dv">2</span>, m, tol<span class="sc">/</span><span class="dv">2</span>, level<span class="sc">+</span><span class="dv">1</span>)</span>
+<span id="cb783-22"><a href="int-num-uni.html#cb783-22" tabindex="-1"></a>            S.right <span class="ot">&lt;-</span> <span class="fu">quadrature_internal</span>(S.right, fun, </span>
+<span id="cb783-23"><a href="int-num-uni.html#cb783-23" tabindex="-1"></a>                                           m, (m<span class="sc">+</span>b)<span class="sc">/</span><span class="dv">2</span>, b, tol<span class="sc">/</span><span class="dv">2</span>, level<span class="sc">+</span><span class="dv">1</span>)</span>
+<span id="cb783-24"><a href="int-num-uni.html#cb783-24" tabindex="-1"></a>            S.new <span class="ot">&lt;-</span> S.left <span class="sc">+</span> S.right</span>
+<span id="cb783-25"><a href="int-num-uni.html#cb783-25" tabindex="-1"></a>        }</span>
+<span id="cb783-26"><a href="int-num-uni.html#cb783-26" tabindex="-1"></a>        <span class="fu">return</span>(S.new)</span>
+<span id="cb783-27"><a href="int-num-uni.html#cb783-27" tabindex="-1"></a>    }</span>
+<span id="cb783-28"><a href="int-num-uni.html#cb783-28" tabindex="-1"></a> </span>
+<span id="cb783-29"><a href="int-num-uni.html#cb783-29" tabindex="-1"></a>    level <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb783-30"><a href="int-num-uni.html#cb783-30" tabindex="-1"></a>    S.old <span class="ot">&lt;-</span> (b<span class="sc">-</span>a) <span class="sc">*</span> (<span class="fu">fun</span>(a) <span class="sc">+</span> <span class="fu">fun</span>(b))<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb783-31"><a href="int-num-uni.html#cb783-31" tabindex="-1"></a>    S.new <span class="ot">&lt;-</span> <span class="fu">quadrature_internal</span>(S.old, fun, </span>
+<span id="cb783-32"><a href="int-num-uni.html#cb783-32" tabindex="-1"></a>                                 a, (a<span class="sc">+</span>b)<span class="sc">/</span><span class="dv">2</span>, b, tol, level<span class="sc">+</span><span class="dv">1</span>)</span>
+<span id="cb783-33"><a href="int-num-uni.html#cb783-33" tabindex="-1"></a>    <span class="fu">return</span>(S.new)</span>
+<span id="cb783-34"><a href="int-num-uni.html#cb783-34" tabindex="-1"></a>}</span>
+<span id="cb783-35"><a href="int-num-uni.html#cb783-35" tabindex="-1"></a></span>
+<span id="cb783-36"><a href="int-num-uni.html#cb783-36" tabindex="-1"></a><span class="fu">quadrature</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] 0.8</code></pre>
 <p>Fuente: <a href="https://www.r-bloggers.com/one-dimensional-integrals">r-blogger Guangchuang Yu</a></p>
 </div>
 <div id="comandos-de-r" class="section level3 hasAnchor" number="13.1.4">
 <h3><span class="header-section-number">B.1.4</span> Comandos de R<a href="int-num-uni.html#comandos-de-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>La función <code>integrate()</code> implementa un método de cuadratura adaptativa que admite límites infinitos</p>
-<div class="sourceCode" id="cb782"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb782-1"><a href="int-num-uni.html#cb782-1" tabindex="-1"></a><span class="fu">integrate</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)  <span class="co"># Cuidado: fun debe ser vectorial...</span></span></code></pre></div>
+<div class="sourceCode" id="cb785"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb785-1"><a href="int-num-uni.html#cb785-1" tabindex="-1"></a><span class="fu">integrate</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)  <span class="co"># Cuidado: fun debe ser vectorial...</span></span></code></pre></div>
 <pre><code>## 0.8 with absolute error &lt; 8.9e-15</code></pre>
 <p>Alternativamente, para dominios acotados, se puede emplear la función <code>MASS::area()</code> (suele dar muy buenos resultados, aunque los autores la desarrollaron inicialmente para fines ilustrativos):</p>
-<div class="sourceCode" id="cb784"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb784-1"><a href="int-num-uni.html#cb784-1" tabindex="-1"></a><span class="fu">require</span>(MASS)</span>
-<span id="cb784-2"><a href="int-num-uni.html#cb784-2" tabindex="-1"></a><span class="fu">area</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb787"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb787-1"><a href="int-num-uni.html#cb787-1" tabindex="-1"></a><span class="fu">require</span>(MASS)</span>
+<span id="cb787-2"><a href="int-num-uni.html#cb787-2" tabindex="-1"></a><span class="fu">area</span>(fun, <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] 0.8</code></pre>
 </div>
 </div>

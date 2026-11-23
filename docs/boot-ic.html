@@ -472,17 +472,17 @@ De esta forma se obtiene la estimación por intervalo de confianza:
 <span class="math display">\[\hat{I}_{norm}=\left( \hat{\theta} - Sesgo^{\ast}\left( \hat{\theta}^{\ast} \right) - z_{1-\alpha /2}\sqrt{Var^{\ast}\left( \hat{\theta}^{\ast} \right)},\hat{\theta} - Sesgo^{\ast}\left( \hat{\theta}^{\ast} \right) + z_{1 - \alpha /2}\sqrt{Var^{\ast}\left( \hat{\theta}^{\ast} \right)} \right).\]</span></p>
 <p>Podemos obtener este intervalo de confianza estableciendo <code>type = "norm"</code> (o <code>type = "all"</code>) en la llamada a la función <code>boot.ci()</code>.
 Para ilustrar como se obtiene reproduciremos el código del Ejemplo <a href="intro-paquetes.html#exm:media-dt-desconocida-boot">9.3</a> (inferencia sobre la media de tiempos de vida de microorganismos empleando bootstrap uniforme):</p>
-<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="boot-ic.html#cb641-1" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
-<span id="cb641-2"><a href="boot-ic.html#cb641-2" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> simres<span class="sc">::</span>lifetimes</span>
-<span id="cb641-3"><a href="boot-ic.html#cb641-3" tabindex="-1"></a></span>
-<span id="cb641-4"><a href="boot-ic.html#cb641-4" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
-<span id="cb641-5"><a href="boot-ic.html#cb641-5" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i]</span>
-<span id="cb641-6"><a href="boot-ic.html#cb641-6" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">mean</span>(remuestra), <span class="fu">var</span>(remuestra)<span class="sc">/</span><span class="fu">length</span>(remuestra))</span>
-<span id="cb641-7"><a href="boot-ic.html#cb641-7" tabindex="-1"></a>}</span>
-<span id="cb641-8"><a href="boot-ic.html#cb641-8" tabindex="-1"></a></span>
-<span id="cb641-9"><a href="boot-ic.html#cb641-9" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb641-10"><a href="boot-ic.html#cb641-10" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> <span class="dv">1000</span>)</span>
-<span id="cb641-11"><a href="boot-ic.html#cb641-11" tabindex="-1"></a>res.boot</span></code></pre></div>
+<div class="sourceCode" id="cb644"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb644-1"><a href="boot-ic.html#cb644-1" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb644-2"><a href="boot-ic.html#cb644-2" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> simres<span class="sc">::</span>lifetimes</span>
+<span id="cb644-3"><a href="boot-ic.html#cb644-3" tabindex="-1"></a></span>
+<span id="cb644-4"><a href="boot-ic.html#cb644-4" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
+<span id="cb644-5"><a href="boot-ic.html#cb644-5" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i]</span>
+<span id="cb644-6"><a href="boot-ic.html#cb644-6" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">mean</span>(remuestra), <span class="fu">var</span>(remuestra)<span class="sc">/</span><span class="fu">length</span>(remuestra))</span>
+<span id="cb644-7"><a href="boot-ic.html#cb644-7" tabindex="-1"></a>}</span>
+<span id="cb644-8"><a href="boot-ic.html#cb644-8" tabindex="-1"></a></span>
+<span id="cb644-9"><a href="boot-ic.html#cb644-9" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb644-10"><a href="boot-ic.html#cb644-10" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(muestra, statistic, <span class="at">R =</span> <span class="dv">1000</span>)</span>
+<span id="cb644-11"><a href="boot-ic.html#cb644-11" tabindex="-1"></a>res.boot</span></code></pre></div>
 <pre><code>## 
 ## ORDINARY NONPARAMETRIC BOOTSTRAP
 ## 
@@ -495,7 +495,7 @@ Para ilustrar como se obtiene reproduciremos el código del Ejemplo <a href="int
 ##     original     bias    std. error
 ## t1* 0.805333  0.0031733   0.1583306
 ## t2* 0.025934 -0.0021558   0.0075947</code></pre>
-<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="boot-ic.html#cb643-1" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot, <span class="at">type =</span> <span class="st">&quot;norm&quot;</span>) <span class="co"># index = 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="boot-ic.html#cb646-1" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot, <span class="at">type =</span> <span class="st">&quot;norm&quot;</span>) <span class="co"># index = 1</span></span></code></pre></div>
 <pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 ## Based on 1000 bootstrap replicates
 ## 
@@ -508,27 +508,27 @@ Para ilustrar como se obtiene reproduciremos el código del Ejemplo <a href="int
 ## Calculations and Intervals on Original Scale</code></pre>
 <p>Podemos reproducir fácilmente estos cálculos.
 En primer lugar obtenemos las aproximaciones bootstrap del sesgo y del error estándar:</p>
-<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="boot-ic.html#cb645-1" tabindex="-1"></a>op <span class="ot">&lt;-</span> <span class="fu">with</span>(res.boot, <span class="fu">cbind</span>(</span>
-<span id="cb645-2"><a href="boot-ic.html#cb645-2" tabindex="-1"></a>  t0, <span class="fu">apply</span>(t, <span class="dv">2</span>, mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span>  t0,</span>
-<span id="cb645-3"><a href="boot-ic.html#cb645-3" tabindex="-1"></a>  <span class="fu">apply</span>(t, <span class="dv">2</span>, sd, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb645-4"><a href="boot-ic.html#cb645-4" tabindex="-1"></a>))</span>
-<span id="cb645-5"><a href="boot-ic.html#cb645-5" tabindex="-1"></a><span class="fu">rownames</span>(op) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;t&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(res.boot<span class="sc">$</span>t), <span class="st">&quot;*&quot;</span>)</span>
-<span id="cb645-6"><a href="boot-ic.html#cb645-6" tabindex="-1"></a><span class="fu">colnames</span>(op) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;original&quot;</span>, <span class="st">&quot;bias  &quot;</span>, <span class="st">&quot; std. error&quot;</span>)</span>
-<span id="cb645-7"><a href="boot-ic.html#cb645-7" tabindex="-1"></a>op</span></code></pre></div>
+<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb648-1"><a href="boot-ic.html#cb648-1" tabindex="-1"></a>op <span class="ot">&lt;-</span> <span class="fu">with</span>(res.boot, <span class="fu">cbind</span>(</span>
+<span id="cb648-2"><a href="boot-ic.html#cb648-2" tabindex="-1"></a>  t0, <span class="fu">apply</span>(t, <span class="dv">2</span>, mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span>  t0,</span>
+<span id="cb648-3"><a href="boot-ic.html#cb648-3" tabindex="-1"></a>  <span class="fu">apply</span>(t, <span class="dv">2</span>, sd, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb648-4"><a href="boot-ic.html#cb648-4" tabindex="-1"></a>))</span>
+<span id="cb648-5"><a href="boot-ic.html#cb648-5" tabindex="-1"></a><span class="fu">rownames</span>(op) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;t&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(res.boot<span class="sc">$</span>t), <span class="st">&quot;*&quot;</span>)</span>
+<span id="cb648-6"><a href="boot-ic.html#cb648-6" tabindex="-1"></a><span class="fu">colnames</span>(op) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;original&quot;</span>, <span class="st">&quot;bias  &quot;</span>, <span class="st">&quot; std. error&quot;</span>)</span>
+<span id="cb648-7"><a href="boot-ic.html#cb648-7" tabindex="-1"></a>op</span></code></pre></div>
 <pre><code>##     original     bias    std. error
 ## t1* 0.805333  0.0031733   0.1583306
 ## t2* 0.025934 -0.0021558   0.0075947</code></pre>
-<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="boot-ic.html#cb647-1" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb647-2"><a href="boot-ic.html#cb647-2" tabindex="-1"></a>estim <span class="ot">&lt;-</span> op[index, <span class="dv">1</span>]</span>
-<span id="cb647-3"><a href="boot-ic.html#cb647-3" tabindex="-1"></a>sesgo_boot <span class="ot">&lt;-</span> op[index, <span class="dv">2</span>]</span>
-<span id="cb647-4"><a href="boot-ic.html#cb647-4" tabindex="-1"></a>sd_boot <span class="ot">&lt;-</span> op[index, <span class="dv">3</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb650-1"><a href="boot-ic.html#cb650-1" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb650-2"><a href="boot-ic.html#cb650-2" tabindex="-1"></a>estim <span class="ot">&lt;-</span> op[index, <span class="dv">1</span>]</span>
+<span id="cb650-3"><a href="boot-ic.html#cb650-3" tabindex="-1"></a>sesgo_boot <span class="ot">&lt;-</span> op[index, <span class="dv">2</span>]</span>
+<span id="cb650-4"><a href="boot-ic.html#cb650-4" tabindex="-1"></a>sd_boot <span class="ot">&lt;-</span> op[index, <span class="dv">3</span>]</span></code></pre></div>
 <p>y construimos la estimación por intervalo de confianza:</p>
-<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb648-1"><a href="boot-ic.html#cb648-1" tabindex="-1"></a>alfa <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
-<span id="cb648-2"><a href="boot-ic.html#cb648-2" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> alfa<span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb648-3"><a href="boot-ic.html#cb648-3" tabindex="-1"></a>ic_inf <span class="ot">&lt;-</span> estim <span class="sc">-</span> sesgo_boot <span class="sc">-</span> z<span class="sc">*</span>sd_boot</span>
-<span id="cb648-4"><a href="boot-ic.html#cb648-4" tabindex="-1"></a>ic_sup <span class="ot">&lt;-</span> estim <span class="sc">-</span> sesgo_boot <span class="sc">+</span> z<span class="sc">*</span>sd_boot</span>
-<span id="cb648-5"><a href="boot-ic.html#cb648-5" tabindex="-1"></a>IC <span class="ot">&lt;-</span> <span class="fu">c</span>(ic_inf, ic_sup)</span>
-<span id="cb648-6"><a href="boot-ic.html#cb648-6" tabindex="-1"></a>IC</span></code></pre></div>
+<div class="sourceCode" id="cb651"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb651-1"><a href="boot-ic.html#cb651-1" tabindex="-1"></a>alfa <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb651-2"><a href="boot-ic.html#cb651-2" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> alfa<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb651-3"><a href="boot-ic.html#cb651-3" tabindex="-1"></a>ic_inf <span class="ot">&lt;-</span> estim <span class="sc">-</span> sesgo_boot <span class="sc">-</span> z<span class="sc">*</span>sd_boot</span>
+<span id="cb651-4"><a href="boot-ic.html#cb651-4" tabindex="-1"></a>ic_sup <span class="ot">&lt;-</span> estim <span class="sc">-</span> sesgo_boot <span class="sc">+</span> z<span class="sc">*</span>sd_boot</span>
+<span id="cb651-5"><a href="boot-ic.html#cb651-5" tabindex="-1"></a>IC <span class="ot">&lt;-</span> <span class="fu">c</span>(ic_inf, ic_sup)</span>
+<span id="cb651-6"><a href="boot-ic.html#cb651-6" tabindex="-1"></a>IC</span></code></pre></div>
 <pre><code>## [1] 0.49184 1.11248</code></pre>
 <!-- 
 Nota: Sería como emplear el mejor ajuste normal a la distribución bootstrap 
@@ -555,7 +555,7 @@ por el método percentil directo
 Sin embargo, como se comentó en la Sección <a href="boot-intro.html#boot-intro">9.1</a>, la precisión puede verse seriamente afectada en el caso de estimadores sesgados<a href="#fn43" class="footnote-ref" id="fnref43"><sup>43</sup></a>.</p>
 <p>Podemos obtener este intervalo de confianza estableciendo <code>type = "perc"</code> (o <code>type = "all"</code>) en la llamada a la función <code>boot.ci()</code>.
 Continuando con el Ejemplo <a href="intro-paquetes.html#exm:media-dt-desconocida-boot">9.3</a>:</p>
-<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb650-1"><a href="boot-ic.html#cb650-1" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot, <span class="at">type =</span> <span class="st">&quot;perc&quot;</span>) <span class="co"># index = 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb653"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb653-1"><a href="boot-ic.html#cb653-1" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot, <span class="at">type =</span> <span class="st">&quot;perc&quot;</span>) <span class="co"># index = 1</span></span></code></pre></div>
 <pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 ## Based on 1000 bootstrap replicates
 ## 
@@ -567,16 +567,16 @@ Continuando con el Ejemplo <a href="intro-paquetes.html#exm:media-dt-desconocida
 ## 95%   ( 0.5127,  1.1282 )  
 ## Calculations and Intervals on Original Scale</code></pre>
 <p>A título ilustrativo podemos reproducir los cálculos:</p>
-<div class="sourceCode" id="cb652"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb652-1"><a href="boot-ic.html#cb652-1" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb652-2"><a href="boot-ic.html#cb652-2" tabindex="-1"></a>stat_boot <span class="ot">&lt;-</span> res.boot<span class="sc">$</span>t[, index]</span>
-<span id="cb652-3"><a href="boot-ic.html#cb652-3" tabindex="-1"></a><span class="co"># Utilizamos el mismo método que el paquete boot para aproximar los cuantiles:</span></span>
-<span id="cb652-4"><a href="boot-ic.html#cb652-4" tabindex="-1"></a>IC_boot <span class="ot">&lt;-</span>  <span class="fu">quantile</span>(stat_boot, <span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span> <span class="sc">-</span> alfa<span class="sc">/</span><span class="dv">2</span>), <span class="at">type =</span> <span class="dv">6</span>)</span>
-<span id="cb652-5"><a href="boot-ic.html#cb652-5" tabindex="-1"></a><span class="co"># (normalmente usaríamos el valor por defecto type = 7):</span></span>
-<span id="cb652-6"><a href="boot-ic.html#cb652-6" tabindex="-1"></a>IC_boot</span></code></pre></div>
+<div class="sourceCode" id="cb655"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb655-1"><a href="boot-ic.html#cb655-1" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb655-2"><a href="boot-ic.html#cb655-2" tabindex="-1"></a>stat_boot <span class="ot">&lt;-</span> res.boot<span class="sc">$</span>t[, index]</span>
+<span id="cb655-3"><a href="boot-ic.html#cb655-3" tabindex="-1"></a><span class="co"># Utilizamos el mismo método que el paquete boot para aproximar los cuantiles:</span></span>
+<span id="cb655-4"><a href="boot-ic.html#cb655-4" tabindex="-1"></a>IC_boot <span class="ot">&lt;-</span>  <span class="fu">quantile</span>(stat_boot, <span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span> <span class="sc">-</span> alfa<span class="sc">/</span><span class="dv">2</span>), <span class="at">type =</span> <span class="dv">6</span>)</span>
+<span id="cb655-5"><a href="boot-ic.html#cb655-5" tabindex="-1"></a><span class="co"># (normalmente usaríamos el valor por defecto type = 7):</span></span>
+<span id="cb655-6"><a href="boot-ic.html#cb655-6" tabindex="-1"></a>IC_boot</span></code></pre></div>
 <pre><code>##    2.5%   97.5% 
 ## 0.51265 1.12820</code></pre>
-<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb654-1"><a href="boot-ic.html#cb654-1" tabindex="-1"></a><span class="fu">hist</span>(stat_boot, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb654-2"><a href="boot-ic.html#cb654-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> IC_boot)</span></code></pre></div>
+<div class="sourceCode" id="cb657"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb657-1"><a href="boot-ic.html#cb657-1" tabindex="-1"></a><span class="fu">hist</span>(stat_boot, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb657-2"><a href="boot-ic.html#cb657-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> IC_boot)</span></code></pre></div>
 <p><img src="11-Bootstrap_aplic_files/figure-html/unnamed-chunk-7-1.png" alt="" width="80%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="boot-ic-basic" class="section level3 hasAnchor" number="11.2.3">
@@ -598,7 +598,7 @@ por el método percentil básico
 <span class="math display">\[\hat{I}_{basic}=\left( \hat{\theta} - x_{1-\alpha /2},\hat{\theta} - x_{\alpha /2} \right).\]</span></p>
 <p>Podemos obtener este intervalo de confianza estableciendo <code>type = "basic"</code> (o <code>type = "all"</code>) en la llamada a la función <code>boot.ci()</code>.</p>
 <p>Siguiendo con el Ejemplo <a href="intro-paquetes.html#exm:media-dt-desconocida-boot">9.3</a>):</p>
-<div class="sourceCode" id="cb655"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb655-1"><a href="boot-ic.html#cb655-1" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot, <span class="at">type =</span> <span class="st">&quot;basic&quot;</span>) <span class="co"># index = 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb658-1"><a href="boot-ic.html#cb658-1" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot, <span class="at">type =</span> <span class="st">&quot;basic&quot;</span>) <span class="co"># index = 1</span></span></code></pre></div>
 <pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 ## Based on 1000 bootstrap replicates
 ## 
@@ -611,26 +611,26 @@ por el método percentil básico
 ## Calculations and Intervals on Original Scale</code></pre>
 <p>Si el estimador es sesgado o su distribución es muy asimétrica, puede haber grandes diferencias respecto a las estimaciones obtenidas con el método percentil directo, y en principio sería más razonable emplear el método percentil básico.</p>
 <p>Reproducimos también los cálculos (únicamente por proporcionar más detalles):</p>
-<div class="sourceCode" id="cb657"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb657-1"><a href="boot-ic.html#cb657-1" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb657-2"><a href="boot-ic.html#cb657-2" tabindex="-1"></a>estim <span class="ot">&lt;-</span> res.boot<span class="sc">$</span>t0[index]</span>
-<span id="cb657-3"><a href="boot-ic.html#cb657-3" tabindex="-1"></a><span class="co"># Réplicas bootstrap del estadístico centrado:</span></span>
-<span id="cb657-4"><a href="boot-ic.html#cb657-4" tabindex="-1"></a>stat_boot <span class="ot">&lt;-</span> res.boot<span class="sc">$</span>t[, index] <span class="sc">-</span> estim</span>
-<span id="cb657-5"><a href="boot-ic.html#cb657-5" tabindex="-1"></a><span class="co"># Aproximación bootstrap de los ptos críticos</span></span>
-<span id="cb657-6"><a href="boot-ic.html#cb657-6" tabindex="-1"></a>pto_crit <span class="ot">&lt;-</span> <span class="fu">quantile</span>(stat_boot, <span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span> <span class="sc">-</span> alfa<span class="sc">/</span><span class="dv">2</span>), <span class="at">type =</span> <span class="dv">6</span>)</span>
-<span id="cb657-7"><a href="boot-ic.html#cb657-7" tabindex="-1"></a><span class="co"># Al igual que en el caso anterior, para obtener exactamente el mismo resultado,</span></span>
-<span id="cb657-8"><a href="boot-ic.html#cb657-8" tabindex="-1"></a><span class="co"># utilizamos el mismo método que el paquete boot para aproximar los cuantiles</span></span>
-<span id="cb657-9"><a href="boot-ic.html#cb657-9" tabindex="-1"></a><span class="co"># (normalmente usaríamos el valor por defecto type = 7)</span></span>
-<span id="cb657-10"><a href="boot-ic.html#cb657-10" tabindex="-1"></a></span>
-<span id="cb657-11"><a href="boot-ic.html#cb657-11" tabindex="-1"></a><span class="co"># Distribución bootstrap del estadístico centrado:</span></span>
-<span id="cb657-12"><a href="boot-ic.html#cb657-12" tabindex="-1"></a><span class="fu">hist</span>(stat_boot, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb657-13"><a href="boot-ic.html#cb657-13" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> pto_crit)</span></code></pre></div>
+<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb660-1"><a href="boot-ic.html#cb660-1" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb660-2"><a href="boot-ic.html#cb660-2" tabindex="-1"></a>estim <span class="ot">&lt;-</span> res.boot<span class="sc">$</span>t0[index]</span>
+<span id="cb660-3"><a href="boot-ic.html#cb660-3" tabindex="-1"></a><span class="co"># Réplicas bootstrap del estadístico centrado:</span></span>
+<span id="cb660-4"><a href="boot-ic.html#cb660-4" tabindex="-1"></a>stat_boot <span class="ot">&lt;-</span> res.boot<span class="sc">$</span>t[, index] <span class="sc">-</span> estim</span>
+<span id="cb660-5"><a href="boot-ic.html#cb660-5" tabindex="-1"></a><span class="co"># Aproximación bootstrap de los ptos críticos</span></span>
+<span id="cb660-6"><a href="boot-ic.html#cb660-6" tabindex="-1"></a>pto_crit <span class="ot">&lt;-</span> <span class="fu">quantile</span>(stat_boot, <span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span> <span class="sc">-</span> alfa<span class="sc">/</span><span class="dv">2</span>), <span class="at">type =</span> <span class="dv">6</span>)</span>
+<span id="cb660-7"><a href="boot-ic.html#cb660-7" tabindex="-1"></a><span class="co"># Al igual que en el caso anterior, para obtener exactamente el mismo resultado,</span></span>
+<span id="cb660-8"><a href="boot-ic.html#cb660-8" tabindex="-1"></a><span class="co"># utilizamos el mismo método que el paquete boot para aproximar los cuantiles</span></span>
+<span id="cb660-9"><a href="boot-ic.html#cb660-9" tabindex="-1"></a><span class="co"># (normalmente usaríamos el valor por defecto type = 7)</span></span>
+<span id="cb660-10"><a href="boot-ic.html#cb660-10" tabindex="-1"></a></span>
+<span id="cb660-11"><a href="boot-ic.html#cb660-11" tabindex="-1"></a><span class="co"># Distribución bootstrap del estadístico centrado:</span></span>
+<span id="cb660-12"><a href="boot-ic.html#cb660-12" tabindex="-1"></a><span class="fu">hist</span>(stat_boot, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb660-13"><a href="boot-ic.html#cb660-13" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> pto_crit)</span></code></pre></div>
 <p><img src="11-Bootstrap_aplic_files/figure-html/unnamed-chunk-9-1.png" alt="" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb658-1"><a href="boot-ic.html#cb658-1" tabindex="-1"></a><span class="co"># Construcción del IC</span></span>
-<span id="cb658-2"><a href="boot-ic.html#cb658-2" tabindex="-1"></a>ic_inf_boot <span class="ot">&lt;-</span> estim <span class="sc">-</span> pto_crit[<span class="dv">2</span>]</span>
-<span id="cb658-3"><a href="boot-ic.html#cb658-3" tabindex="-1"></a>ic_sup_boot <span class="ot">&lt;-</span> estim <span class="sc">-</span> pto_crit[<span class="dv">1</span>]</span>
-<span id="cb658-4"><a href="boot-ic.html#cb658-4" tabindex="-1"></a>IC_boot <span class="ot">&lt;-</span> <span class="fu">c</span>(ic_inf_boot, ic_sup_boot)</span>
-<span id="cb658-5"><a href="boot-ic.html#cb658-5" tabindex="-1"></a><span class="fu">names</span>(IC_boot) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">-</span>alfa<span class="sc">/</span><span class="dv">2</span>), <span class="st">&quot;%&quot;</span>)</span>
-<span id="cb658-6"><a href="boot-ic.html#cb658-6" tabindex="-1"></a>IC_boot</span></code></pre></div>
+<div class="sourceCode" id="cb661"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb661-1"><a href="boot-ic.html#cb661-1" tabindex="-1"></a><span class="co"># Construcción del IC</span></span>
+<span id="cb661-2"><a href="boot-ic.html#cb661-2" tabindex="-1"></a>ic_inf_boot <span class="ot">&lt;-</span> estim <span class="sc">-</span> pto_crit[<span class="dv">2</span>]</span>
+<span id="cb661-3"><a href="boot-ic.html#cb661-3" tabindex="-1"></a>ic_sup_boot <span class="ot">&lt;-</span> estim <span class="sc">-</span> pto_crit[<span class="dv">1</span>]</span>
+<span id="cb661-4"><a href="boot-ic.html#cb661-4" tabindex="-1"></a>IC_boot <span class="ot">&lt;-</span> <span class="fu">c</span>(ic_inf_boot, ic_sup_boot)</span>
+<span id="cb661-5"><a href="boot-ic.html#cb661-5" tabindex="-1"></a><span class="fu">names</span>(IC_boot) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">-</span>alfa<span class="sc">/</span><span class="dv">2</span>), <span class="st">&quot;%&quot;</span>)</span>
+<span id="cb661-6"><a href="boot-ic.html#cb661-6" tabindex="-1"></a>IC_boot</span></code></pre></div>
 <pre><code>##    2.5%   97.5% 
 ## 0.48247 1.09802</code></pre>
 </div>
@@ -651,7 +651,7 @@ por el método percentil-<em>t</em> (o percentil studentizado)
 <p>Si el segundo de los componentes del vector de estadísticos es una estimación de la varianza del primer componente (el estimador), obtendríamos este intervalo de confianza con las opciones por defecto (<code>type = "all"</code>) de la función <code>boot.ci()</code> o estableciendo <code>type = "stud"</code> (en cualquier caso siempre calcularía “uno” si hay al menos dos componentes en el vector de estadísticos, o generará un aviso si solo hay uno).</p>
 <p>En caso de que el primer y segundo componente del vector de estadísticos no sean el estimador y su varianza estimada, respectivamente, habrá que establecer el argumento <code>index</code> igual a las posiciones correspondientes (vector de longitud 2).</p>
 <p>Continuando con el Ejemplo <a href="intro-paquetes.html#exm:media-dt-desconocida-boot">9.3</a>):</p>
-<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb660-1"><a href="boot-ic.html#cb660-1" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot, <span class="at">type =</span> <span class="st">&quot;stud&quot;</span>) <span class="co"># index = c(1, 2)</span></span></code></pre></div>
+<div class="sourceCode" id="cb663"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb663-1"><a href="boot-ic.html#cb663-1" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot, <span class="at">type =</span> <span class="st">&quot;stud&quot;</span>) <span class="co"># index = c(1, 2)</span></span></code></pre></div>
 <pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 ## Based on 1000 bootstrap replicates
 ## 
@@ -663,54 +663,54 @@ por el método percentil-<em>t</em> (o percentil studentizado)
 ## 95%   ( 0.4715,  1.2320 )  
 ## Calculations and Intervals on Original Scale</code></pre>
 <p>Reproducimos también los cálculos (únicamente a título ilustrativo):</p>
-<div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb662-1"><a href="boot-ic.html#cb662-1" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)</span>
-<span id="cb662-2"><a href="boot-ic.html#cb662-2" tabindex="-1"></a>estim <span class="ot">&lt;-</span> res.boot<span class="sc">$</span>t0[index[<span class="dv">1</span>]]</span>
-<span id="cb662-3"><a href="boot-ic.html#cb662-3" tabindex="-1"></a>var_estim <span class="ot">&lt;-</span> res.boot<span class="sc">$</span>t0[index[<span class="dv">2</span>]]</span>
-<span id="cb662-4"><a href="boot-ic.html#cb662-4" tabindex="-1"></a><span class="co"># Réplicas bootstrap del estadístico studentizado:</span></span>
-<span id="cb662-5"><a href="boot-ic.html#cb662-5" tabindex="-1"></a>stat_boot <span class="ot">&lt;-</span> (res.boot<span class="sc">$</span>t[, index[<span class="dv">1</span>]] <span class="sc">-</span> estim)<span class="sc">/</span><span class="fu">sqrt</span>(res.boot<span class="sc">$</span>t[, index[<span class="dv">2</span>]])</span>
-<span id="cb662-6"><a href="boot-ic.html#cb662-6" tabindex="-1"></a><span class="co"># Aproximación bootstrap de los ptos críticos</span></span>
-<span id="cb662-7"><a href="boot-ic.html#cb662-7" tabindex="-1"></a>pto_crit <span class="ot">&lt;-</span> <span class="fu">quantile</span>(stat_boot, <span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span> <span class="sc">-</span> alfa<span class="sc">/</span><span class="dv">2</span>), <span class="at">type =</span> <span class="dv">6</span>)</span>
-<span id="cb662-8"><a href="boot-ic.html#cb662-8" tabindex="-1"></a><span class="co"># Al igual que en el caso anterior, para obtener exactamente el mismo resultado,</span></span>
-<span id="cb662-9"><a href="boot-ic.html#cb662-9" tabindex="-1"></a><span class="co"># utilizamos el mismo método que el paquete boot para aproximar los cuantiles</span></span>
-<span id="cb662-10"><a href="boot-ic.html#cb662-10" tabindex="-1"></a><span class="co"># (normalmente usaríamos el valor por defecto type = 7)</span></span>
-<span id="cb662-11"><a href="boot-ic.html#cb662-11" tabindex="-1"></a></span>
-<span id="cb662-12"><a href="boot-ic.html#cb662-12" tabindex="-1"></a><span class="co"># Distribución bootstrap del estadístico studentizado:</span></span>
-<span id="cb662-13"><a href="boot-ic.html#cb662-13" tabindex="-1"></a><span class="fu">hist</span>(stat_boot, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb662-14"><a href="boot-ic.html#cb662-14" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> pto_crit)</span></code></pre></div>
+<div class="sourceCode" id="cb665"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb665-1"><a href="boot-ic.html#cb665-1" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb665-2"><a href="boot-ic.html#cb665-2" tabindex="-1"></a>estim <span class="ot">&lt;-</span> res.boot<span class="sc">$</span>t0[index[<span class="dv">1</span>]]</span>
+<span id="cb665-3"><a href="boot-ic.html#cb665-3" tabindex="-1"></a>var_estim <span class="ot">&lt;-</span> res.boot<span class="sc">$</span>t0[index[<span class="dv">2</span>]]</span>
+<span id="cb665-4"><a href="boot-ic.html#cb665-4" tabindex="-1"></a><span class="co"># Réplicas bootstrap del estadístico studentizado:</span></span>
+<span id="cb665-5"><a href="boot-ic.html#cb665-5" tabindex="-1"></a>stat_boot <span class="ot">&lt;-</span> (res.boot<span class="sc">$</span>t[, index[<span class="dv">1</span>]] <span class="sc">-</span> estim)<span class="sc">/</span><span class="fu">sqrt</span>(res.boot<span class="sc">$</span>t[, index[<span class="dv">2</span>]])</span>
+<span id="cb665-6"><a href="boot-ic.html#cb665-6" tabindex="-1"></a><span class="co"># Aproximación bootstrap de los ptos críticos</span></span>
+<span id="cb665-7"><a href="boot-ic.html#cb665-7" tabindex="-1"></a>pto_crit <span class="ot">&lt;-</span> <span class="fu">quantile</span>(stat_boot, <span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span> <span class="sc">-</span> alfa<span class="sc">/</span><span class="dv">2</span>), <span class="at">type =</span> <span class="dv">6</span>)</span>
+<span id="cb665-8"><a href="boot-ic.html#cb665-8" tabindex="-1"></a><span class="co"># Al igual que en el caso anterior, para obtener exactamente el mismo resultado,</span></span>
+<span id="cb665-9"><a href="boot-ic.html#cb665-9" tabindex="-1"></a><span class="co"># utilizamos el mismo método que el paquete boot para aproximar los cuantiles</span></span>
+<span id="cb665-10"><a href="boot-ic.html#cb665-10" tabindex="-1"></a><span class="co"># (normalmente usaríamos el valor por defecto type = 7)</span></span>
+<span id="cb665-11"><a href="boot-ic.html#cb665-11" tabindex="-1"></a></span>
+<span id="cb665-12"><a href="boot-ic.html#cb665-12" tabindex="-1"></a><span class="co"># Distribución bootstrap del estadístico studentizado:</span></span>
+<span id="cb665-13"><a href="boot-ic.html#cb665-13" tabindex="-1"></a><span class="fu">hist</span>(stat_boot, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb665-14"><a href="boot-ic.html#cb665-14" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> pto_crit)</span></code></pre></div>
 <p><img src="11-Bootstrap_aplic_files/figure-html/unnamed-chunk-11-1.png" alt="" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb663"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb663-1"><a href="boot-ic.html#cb663-1" tabindex="-1"></a><span class="co"># Construcción del IC</span></span>
-<span id="cb663-2"><a href="boot-ic.html#cb663-2" tabindex="-1"></a>ic_inf_boot <span class="ot">&lt;-</span> estim <span class="sc">-</span> pto_crit[<span class="dv">2</span>] <span class="sc">*</span> <span class="fu">sqrt</span>(var_estim)</span>
-<span id="cb663-3"><a href="boot-ic.html#cb663-3" tabindex="-1"></a>ic_sup_boot <span class="ot">&lt;-</span> estim <span class="sc">-</span> pto_crit[<span class="dv">1</span>] <span class="sc">*</span> <span class="fu">sqrt</span>(var_estim)</span>
-<span id="cb663-4"><a href="boot-ic.html#cb663-4" tabindex="-1"></a>IC_boot <span class="ot">&lt;-</span> <span class="fu">c</span>(ic_inf_boot, ic_sup_boot)</span>
-<span id="cb663-5"><a href="boot-ic.html#cb663-5" tabindex="-1"></a><span class="fu">names</span>(IC_boot) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">-</span>alfa<span class="sc">/</span><span class="dv">2</span>), <span class="st">&quot;%&quot;</span>)</span>
-<span id="cb663-6"><a href="boot-ic.html#cb663-6" tabindex="-1"></a>IC_boot</span></code></pre></div>
+<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb666-1"><a href="boot-ic.html#cb666-1" tabindex="-1"></a><span class="co"># Construcción del IC</span></span>
+<span id="cb666-2"><a href="boot-ic.html#cb666-2" tabindex="-1"></a>ic_inf_boot <span class="ot">&lt;-</span> estim <span class="sc">-</span> pto_crit[<span class="dv">2</span>] <span class="sc">*</span> <span class="fu">sqrt</span>(var_estim)</span>
+<span id="cb666-3"><a href="boot-ic.html#cb666-3" tabindex="-1"></a>ic_sup_boot <span class="ot">&lt;-</span> estim <span class="sc">-</span> pto_crit[<span class="dv">1</span>] <span class="sc">*</span> <span class="fu">sqrt</span>(var_estim)</span>
+<span id="cb666-4"><a href="boot-ic.html#cb666-4" tabindex="-1"></a>IC_boot <span class="ot">&lt;-</span> <span class="fu">c</span>(ic_inf_boot, ic_sup_boot)</span>
+<span id="cb666-5"><a href="boot-ic.html#cb666-5" tabindex="-1"></a><span class="fu">names</span>(IC_boot) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">-</span>alfa<span class="sc">/</span><span class="dv">2</span>), <span class="st">&quot;%&quot;</span>)</span>
+<span id="cb666-6"><a href="boot-ic.html#cb666-6" tabindex="-1"></a>IC_boot</span></code></pre></div>
 <pre><code>##    2.5%   97.5% 
 ## 0.47154 1.23198</code></pre>
 <div class="exercise">
 <p><span id="exr:boot-coef-stud" class="exercise"><strong>Ejercicio 11.2  </strong></span><br></p>
-<p>Continuando con el Ejercicio <a href="boot-reg.html#exr:boot-coef">10.1</a>, obtener estimaciones por intervalo de confianza de los coeficientes del modelo lineal que explica <code>prestige</code> a partir de <code>income</code> y <code>education</code>, utilizando el método percentil-<em>t</em>, mediante bootstrap uniforme multivariante con el paquete <code>boot</code>.</p>
-<div class="sourceCode" id="cb665"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb665-1"><a href="boot-ic.html#cb665-1" tabindex="-1"></a><span class="fu">data</span>(Prestige, <span class="at">package =</span> <span class="st">&quot;carData&quot;</span>)</span>
-<span id="cb665-2"><a href="boot-ic.html#cb665-2" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> income <span class="sc">+</span> education, <span class="at">data =</span> Prestige)</span>
-<span id="cb665-3"><a href="boot-ic.html#cb665-3" tabindex="-1"></a><span class="co"># Bajo las hipótesis estructurales del modelo:</span></span>
-<span id="cb665-4"><a href="boot-ic.html#cb665-4" tabindex="-1"></a><span class="co"># summary(fit)</span></span>
-<span id="cb665-5"><a href="boot-ic.html#cb665-5" tabindex="-1"></a><span class="fu">confint</span>(fit)</span></code></pre></div>
+<p>Continuando con el Ejercicio <a href="boot-reg.html#exr:boot-coef">10.2</a>, obtener estimaciones por intervalo de confianza de los coeficientes del modelo lineal que explica <code>prestige</code> a partir de <code>income</code> y <code>education</code>, utilizando el método percentil-<em>t</em>, mediante bootstrap uniforme multivariante con el paquete <code>boot</code>.</p>
+<div class="sourceCode" id="cb668"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb668-1"><a href="boot-ic.html#cb668-1" tabindex="-1"></a><span class="fu">data</span>(Prestige, <span class="at">package =</span> <span class="st">&quot;carData&quot;</span>)</span>
+<span id="cb668-2"><a href="boot-ic.html#cb668-2" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> income <span class="sc">+</span> education, <span class="at">data =</span> Prestige)</span>
+<span id="cb668-3"><a href="boot-ic.html#cb668-3" tabindex="-1"></a><span class="co"># Bajo las hipótesis estructurales del modelo:</span></span>
+<span id="cb668-4"><a href="boot-ic.html#cb668-4" tabindex="-1"></a><span class="co"># summary(fit)</span></span>
+<span id="cb668-5"><a href="boot-ic.html#cb668-5" tabindex="-1"></a><span class="fu">confint</span>(fit)</span></code></pre></div>
 <pre><code>##                   2.5 %     97.5 %
 ## (Intercept) -1.3235e+01 -0.4606298
 ## income       9.1628e-04  0.0018061
 ## education    3.4451e+00  4.8297615</code></pre>
-<div class="sourceCode" id="cb667"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb667-1"><a href="boot-ic.html#cb667-1" tabindex="-1"></a>coef <span class="ot">&lt;-</span> <span class="fu">summary</span>(fit)<span class="sc">$</span>coefficients</span>
-<span id="cb667-2"><a href="boot-ic.html#cb667-2" tabindex="-1"></a>coef[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb670"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb670-1"><a href="boot-ic.html#cb670-1" tabindex="-1"></a>coef <span class="ot">&lt;-</span> <span class="fu">summary</span>(fit)<span class="sc">$</span>coefficients</span>
+<span id="cb670-2"><a href="boot-ic.html#cb670-2" tabindex="-1"></a>coef[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span></code></pre></div>
 <pre><code>##               Estimate Std. Error
 ## (Intercept) -6.8477787 3.21897710
 ## income       0.0013612 0.00022421
 ## education    4.1374444 0.34891202</code></pre>
-<div class="sourceCode" id="cb669"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb669-1"><a href="boot-ic.html#cb669-1" tabindex="-1"></a><span class="fu">cbind</span>(<span class="at">Estimate =</span> coef[, <span class="dv">1</span>], <span class="at">Variance =</span> coef[, <span class="dv">2</span>]<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb672"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb672-1"><a href="boot-ic.html#cb672-1" tabindex="-1"></a><span class="fu">cbind</span>(<span class="at">Estimate =</span> coef[, <span class="dv">1</span>], <span class="at">Variance =</span> coef[, <span class="dv">2</span>]<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>##               Estimate   Variance
 ## (Intercept) -6.8477787 1.0362e+01
 ## income       0.0013612 5.0271e-08
 ## education    4.1374444 1.2174e-01</code></pre>
-<div class="sourceCode" id="cb671"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb671-1"><a href="boot-ic.html#cb671-1" tabindex="-1"></a><span class="co"># Equivale a un vector en el que los primeros `nrow(coef)` componentes son</span></span>
-<span id="cb671-2"><a href="boot-ic.html#cb671-2" tabindex="-1"></a><span class="co"># las estimaciones y los siguientes sus varianzas.</span></span></code></pre></div>
+<div class="sourceCode" id="cb674"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb674-1"><a href="boot-ic.html#cb674-1" tabindex="-1"></a><span class="co"># Equivale a un vector en el que los primeros `nrow(coef)` componentes son</span></span>
+<span id="cb674-2"><a href="boot-ic.html#cb674-2" tabindex="-1"></a><span class="co"># las estimaciones y los siguientes sus varianzas.</span></span></code></pre></div>
 </div>
 </div>
 <div id="boot-ic-bca" class="section level3 hasAnchor" number="11.2.5">
@@ -766,9 +766,9 @@ El intervalo de confianza asintótico se obtiene empleando la aproximación norm
 <span class="math display">\[r = \frac{\exp(2Z)-1}{\exp(2Z)+1} = \operatorname{tanh}(Z).\]</span></p>
 <p>Esta aproximación está implementada en la función <code>cor.test()</code> del paquete base <code>stat</code> de R<a href="#fn44" class="footnote-ref" id="fnref44"><sup>44</sup></a>, además de que también realiza el contraste <span class="math inline">\(H_0: \rho = 0\)</span> empleando el estadístico <a href="boot-ic.html#eq:cor-t">(11.1)</a>.</p>
 <p>Continuando con el ejemplo de la Sección <a href="intro-paquetes.html#boot-unif-multi">9.3.3</a> (y de los Ejercicios <a href="boot-unif.html#exr:unif-multi">9.1</a>, <a href="sesgo-prec.html#exr:unif-multi-sesgo-var">11.1</a> y <a href="boot-ic.html#exr:boot-unif-multi-ic">11.3</a>), para obtener un intervalo de confianza para el coeficiente de correlación lineal entre las variables <code>income</code> y <code>prestige</code> del conjunto de datos <code>Prestige</code>, podríamos emplear el siguiente código:</p>
-<div class="sourceCode" id="cb672"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb672-1"><a href="boot-ic.html#cb672-1" tabindex="-1"></a><span class="fu">data</span>(Prestige, <span class="at">package=</span><span class="st">&quot;carData&quot;</span>)</span>
-<span id="cb672-2"><a href="boot-ic.html#cb672-2" tabindex="-1"></a><span class="co"># with(Prestige, cor.test(income, prestige))</span></span>
-<span id="cb672-3"><a href="boot-ic.html#cb672-3" tabindex="-1"></a><span class="fu">cor.test</span>(Prestige<span class="sc">$</span>income, Prestige<span class="sc">$</span>prestige)</span></code></pre></div>
+<div class="sourceCode" id="cb675"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb675-1"><a href="boot-ic.html#cb675-1" tabindex="-1"></a><span class="fu">data</span>(Prestige, <span class="at">package=</span><span class="st">&quot;carData&quot;</span>)</span>
+<span id="cb675-2"><a href="boot-ic.html#cb675-2" tabindex="-1"></a><span class="co"># with(Prestige, cor.test(income, prestige))</span></span>
+<span id="cb675-3"><a href="boot-ic.html#cb675-3" tabindex="-1"></a><span class="fu">cor.test</span>(Prestige<span class="sc">$</span>income, Prestige<span class="sc">$</span>prestige)</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s product-moment correlation
 ## 
@@ -791,22 +791,22 @@ Los intervalos se calculan en la escala de <span class="math inline">\(h(t)\)</s
 (empleada por algunos métodos para aproximar la varianza en la escala transformada mediante el método delta).</p></li>
 </ul>
 <p>Por ejemplo, para considerar la transformación <span class="math inline">\(Z\)</span> de Fisher en este caso, se podría emplear el siguiente código:</p>
-<div class="sourceCode" id="cb674"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb674-1"><a href="boot-ic.html#cb674-1" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
-<span id="cb674-2"><a href="boot-ic.html#cb674-2" tabindex="-1"></a></span>
-<span id="cb674-3"><a href="boot-ic.html#cb674-3" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
-<span id="cb674-4"><a href="boot-ic.html#cb674-4" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i, ]</span>
-<span id="cb674-5"><a href="boot-ic.html#cb674-5" tabindex="-1"></a>  <span class="fu">cor</span>(remuestra<span class="sc">$</span>income, remuestra<span class="sc">$</span>prestige)</span>
-<span id="cb674-6"><a href="boot-ic.html#cb674-6" tabindex="-1"></a>}</span>
-<span id="cb674-7"><a href="boot-ic.html#cb674-7" tabindex="-1"></a></span>
-<span id="cb674-8"><a href="boot-ic.html#cb674-8" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb674-9"><a href="boot-ic.html#cb674-9" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(Prestige, statistic, <span class="at">R =</span> <span class="dv">1000</span>)</span>
-<span id="cb674-10"><a href="boot-ic.html#cb674-10" tabindex="-1"></a></span>
-<span id="cb674-11"><a href="boot-ic.html#cb674-11" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="cf">function</span>(t) <span class="fu">atanh</span>(t)</span>
-<span id="cb674-12"><a href="boot-ic.html#cb674-12" tabindex="-1"></a>hdot <span class="ot">&lt;-</span> <span class="cf">function</span>(t) <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span> <span class="sc">-</span> t<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb674-13"><a href="boot-ic.html#cb674-13" tabindex="-1"></a>hinv <span class="ot">&lt;-</span> <span class="cf">function</span>(t) <span class="fu">tanh</span>(t)</span>
-<span id="cb674-14"><a href="boot-ic.html#cb674-14" tabindex="-1"></a></span>
-<span id="cb674-15"><a href="boot-ic.html#cb674-15" tabindex="-1"></a><span class="co"># boot.ci(res.boot, type = &quot;norm&quot;, h = h)</span></span>
-<span id="cb674-16"><a href="boot-ic.html#cb674-16" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot, <span class="at">type =</span> <span class="st">&quot;norm&quot;</span>, <span class="at">h =</span> h, <span class="at">hdot =</span> hdot, <span class="at">hinv =</span> hinv)</span></code></pre></div>
+<div class="sourceCode" id="cb677"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb677-1"><a href="boot-ic.html#cb677-1" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb677-2"><a href="boot-ic.html#cb677-2" tabindex="-1"></a></span>
+<span id="cb677-3"><a href="boot-ic.html#cb677-3" tabindex="-1"></a>statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(data, i){</span>
+<span id="cb677-4"><a href="boot-ic.html#cb677-4" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> data[i, ]</span>
+<span id="cb677-5"><a href="boot-ic.html#cb677-5" tabindex="-1"></a>  <span class="fu">cor</span>(remuestra<span class="sc">$</span>income, remuestra<span class="sc">$</span>prestige)</span>
+<span id="cb677-6"><a href="boot-ic.html#cb677-6" tabindex="-1"></a>}</span>
+<span id="cb677-7"><a href="boot-ic.html#cb677-7" tabindex="-1"></a></span>
+<span id="cb677-8"><a href="boot-ic.html#cb677-8" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb677-9"><a href="boot-ic.html#cb677-9" tabindex="-1"></a>res.boot <span class="ot">&lt;-</span> <span class="fu">boot</span>(Prestige, statistic, <span class="at">R =</span> <span class="dv">1000</span>)</span>
+<span id="cb677-10"><a href="boot-ic.html#cb677-10" tabindex="-1"></a></span>
+<span id="cb677-11"><a href="boot-ic.html#cb677-11" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="cf">function</span>(t) <span class="fu">atanh</span>(t)</span>
+<span id="cb677-12"><a href="boot-ic.html#cb677-12" tabindex="-1"></a>hdot <span class="ot">&lt;-</span> <span class="cf">function</span>(t) <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span> <span class="sc">-</span> t<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb677-13"><a href="boot-ic.html#cb677-13" tabindex="-1"></a>hinv <span class="ot">&lt;-</span> <span class="cf">function</span>(t) <span class="fu">tanh</span>(t)</span>
+<span id="cb677-14"><a href="boot-ic.html#cb677-14" tabindex="-1"></a></span>
+<span id="cb677-15"><a href="boot-ic.html#cb677-15" tabindex="-1"></a><span class="co"># boot.ci(res.boot, type = &quot;norm&quot;, h = h)</span></span>
+<span id="cb677-16"><a href="boot-ic.html#cb677-16" tabindex="-1"></a><span class="fu">boot.ci</span>(res.boot, <span class="at">type =</span> <span class="st">&quot;norm&quot;</span>, <span class="at">h =</span> h, <span class="at">hdot =</span> hdot, <span class="at">hinv =</span> hinv)</span></code></pre></div>
 <pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 ## Based on 1000 bootstrap replicates
 ## 
@@ -819,9 +819,9 @@ Los intervalos se calculan en la escala de <span class="math inline">\(h(t)\)</s
 ## 95%   ( 0.6016,  0.7858 )  
 ## Calculations on Transformed Scale;  Intervals on Original Scale</code></pre>
 <p>Esto sería en principio preferible a trabajar en la escala original, ya que la distribución bootstrap en la escala transformada se aproximaría más a la normalidad:</p>
-<div class="sourceCode" id="cb676"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb676-1"><a href="boot-ic.html#cb676-1" tabindex="-1"></a>ht <span class="ot">&lt;-</span> <span class="fu">h</span>(res.boot<span class="sc">$</span>t)</span>
-<span id="cb676-2"><a href="boot-ic.html#cb676-2" tabindex="-1"></a><span class="fu">hist</span>(ht, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb676-3"><a href="boot-ic.html#cb676-3" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="at">mean=</span><span class="fu">mean</span>(ht), <span class="at">sd=</span><span class="fu">sd</span>(ht)), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb679"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb679-1"><a href="boot-ic.html#cb679-1" tabindex="-1"></a>ht <span class="ot">&lt;-</span> <span class="fu">h</span>(res.boot<span class="sc">$</span>t)</span>
+<span id="cb679-2"><a href="boot-ic.html#cb679-2" tabindex="-1"></a><span class="fu">hist</span>(ht, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb679-3"><a href="boot-ic.html#cb679-3" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="at">mean=</span><span class="fu">mean</span>(ht), <span class="at">sd=</span><span class="fu">sd</span>(ht)), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:icboot-trans-plot"></span>
 <img src="11-Bootstrap_aplic_files/figure-html/icboot-trans-plot-1.png" alt="Distribución bootstrap en la escala transformada." width="80%" />
 <p class="caption">

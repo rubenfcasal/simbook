@@ -114,16 +114,15 @@ $\mathcal{U}\left( 0,1\right)$`r latexfig2(boot-uniforme-maximo)`:
 theta <- 1
 n <- 50
 set.seed(1)
-muestra <- runif(50) * theta
+muestra <- runif(50, 0, theta) # runif(50) * theta
 theta_est <- max(muestra)
 # Remuestreo
 B <- 2000
-maximo <- numeric(B)
 estadistico <- numeric(B)
 for (k in 1:B) {
     remuestra <- sample(muestra, n, replace = TRUE)
-    maximo[k] <- max(remuestra)
-    estadistico[k] <- maximo[k] - theta_est
+    theta_boot <- max(remuestra)
+    estadistico[k] <- theta_boot - theta_est
 }
 # Distribución estadístico
 xlim <- c(-theta/2, 0) # c(-theta, 0)
@@ -178,7 +177,7 @@ es el contraste de hipótesis que se tratará en la Sección \@ref(contrastes-pa
 
 Continuando con el Ejemplo \@ref(exm:media-dt-desconocida) del tiempo de vida de microorganismos, podríamos pensar en emplear bootstrap paramétrico para calcular un intervalo de confianza para la media poblacional.
 
-La valided de los resultados dependerá en gran medida de que el modelo paramétrico sea adecuado para describir la variabilidad de los datos. 
+La validez de los resultados dependerá en gran medida de que el modelo paramétrico sea adecuado para describir la variabilidad de los datos. 
 En este caso parece razonable asumir una distribución exponencial (no lo es que el modelo admita tiempos de vida negativos, como ocurriría al asumir normalidad)`r latexfig2(boot-par-aprox)`:
 
 ```{r boot-par-aprox, fig.cap="Distribución empírica de la muestra de tiempos de vida de microorganismos y aproximaciones paramétricas."}
@@ -198,26 +197,26 @@ Podemos modificar fácilmente el código mostrado en el Ejemplo \@ref(exm:media-
 
 ```{r media-par-exp}
 n <- length(muestra)
-alfa <- 0.05
 # Estimaciones muestrales
-x_barra <- mean(muestra)
-cuasi_dt <- sd(muestra)
+estimador <- mean(muestra)
+ee_estimador <- sd(muestra)/sqrt(n)
 # Remuestreo
 set.seed(1)
 B <- 1000
 estadistico_boot <- numeric(B)
 for (k in 1:B) {
   # remuestra <- sample(muestra, n, replace = TRUE)
-  remuestra <- rexp(n, 1/x_barra)
-  x_barra_boot <- mean(remuestra)
-  cuasi_dt_boot <- sd(remuestra)
-  estadistico_boot[k] <- sqrt(n) * (x_barra_boot - x_barra)/cuasi_dt_boot
+  remuestra <- rexp(n, 1/estimador)
+  estimador_boot <- mean(remuestra)
+  ee_estimador_boot <- sd(remuestra)/sqrt(n)
+  estadistico_boot[k] <- (estimador_boot - estimador)/ee_estimador_boot
 }
 # Aproximación Monte Carlo de los ptos críticos:
+alfa <- 0.05
 pto_crit <- quantile(estadistico_boot, c(alfa/2, 1 - alfa/2))
 # Construcción del IC
-ic_inf_boot <- x_barra - pto_crit[2] * cuasi_dt/sqrt(n)
-ic_sup_boot <- x_barra - pto_crit[1] * cuasi_dt/sqrt(n)
+ic_inf_boot <- estimador  - pto_crit[2] * ee_estimador
+ic_sup_boot <- estimador  - pto_crit[1] * ee_estimador
 IC_boot <- c(ic_inf_boot, ic_sup_boot)
 names(IC_boot) <- paste0(100*c(alfa/2, 1-alfa/2), "%")
 IC_boot
@@ -256,8 +255,40 @@ boot.ci(res.boot, type = "stud")
 
 :::
 
+---
+
+El argumento `mle` puede ser cualquier tipo de objeto con lo requerido por `ran.gen()` para generar las remuestras.
+Normalmente será un vector o una lista. 
+Por ejemplo, en el caso multivariante `mle` puede ser una lista que contenga el vector de medias y la matriz de covarianzas (o su factorización de Cholesky; ver Sección \@ref(fact-cov)).
+
+::: {.exercise #boot-lnorm}
+<br>
+
+Continuando con los ejemplos anteriores, también podría ser razonable considerar que la distribución del tiempo de vida de microorganismos es una log-normal.
+
+```{r}
+# Ajuste lognormal
+# MASS::fitdistr(muestra, "lognormal") # MLE
+logx <- log(muestra)
+meanlog <- mean(logx)
+sdlog <- sd(logx) # Insesgado, no es el MLE
+# Representación
+hist(muestra, breaks = "FD", freq = FALSE, ylim = c(0, 1.1))
+curve(dlnorm(x, meanlog, sdlog), col = "blue", add = TRUE)
+# Contraste
+# goftest::ad.test(muestra, null = "plnorm", meanlog = meanlog, sdlog = sdlog, estimated = TRUE)
+# Parámetros estimados
+mle <- c(meanlog = meanlog, sdlog = sdlog)
+mle
+```
+ 
+Aproximar mediante bootstrap paramétrico, asumiendo una distribución lognormal, la distribución de la media muestral del tiempo de vida de los microorganismos. 
+
+
+:::
 
 ::: {.example #boot-maximo-parametrico name="Inferencia sobre el máximo de una distribución uniforme, continuación"}
+<br>
 
 En el Ejemplo \@ref(exm:boot-maximo-uniforme) la distribución poblacional era uniforme.
 Si se dispusiese de esa información, lo natural sería utilizar un bootstrap paramétrico, 
@@ -283,12 +314,11 @@ del ejemplo original`r latexfig2(boot-parametrico-maximo)`:
 ```{r boot-parametrico-maximo, fig.cap="Distribución bootstrap paramétrica y distribución poblacional."}
 # Remuestreo
 B <- 2000
-maximo <- numeric(B)
 estadistico <- numeric(B)
 for (k in 1:B) {
-    remuestra <- runif(n) * theta_est
-    maximo[k] <- max(remuestra)
-    estadistico[k] <- maximo[k] - theta_est
+    remuestra <- runif(n, 0, theta_est) # runif(n) * theta_est
+    theta_boot <- max(remuestra)
+    estadistico[k] <- theta_boot - theta_est
 }
 # Distribución estadístico
 xlim <- c(-theta/2, 0) # c(-theta, 0)
@@ -433,10 +463,9 @@ Continuando con el Ejemplo \@ref(exm:media-dt-desconocida) del tiempo de vida de
 ```{r media-dt-conocida-suavizado}
 muestra <- simres::lifetimes
 n <- length(muestra)
-alfa <- 0.05
 # Estimaciones muestrales
-x_barra <- mean(muestra)
-cuasi_dt <- sd(muestra)
+estimador <- mean(muestra)
+ee_estimador <- sd(muestra)/sqrt(n)
 # Remuestreo
 set.seed(1)
 B <- 1000
@@ -446,17 +475,17 @@ h <- bw.SJ(muestra)/2
 estadistico_boot <- numeric(B)
 for (k in 1:B) {
   # remuestra <- sample(muestra, n, replace = TRUE)
-  # remuestra <- rexp(n, 1/x_barra)
   remuestra <- rnorm(n, sample(muestra, n, replace = TRUE), h)
-  x_barra_boot <- mean(remuestra)
-  cuasi_dt_boot <- sd(remuestra)
-  estadistico_boot[k] <- sqrt(n) * (x_barra_boot - x_barra)/cuasi_dt_boot
+  estimador_boot <- mean(remuestra)
+  ee_estimador_boot <- sd(remuestra)/sqrt(n)
+  estadistico_boot[k] <- (estimador_boot - estimador)/ee_estimador_boot
 }
 # Aproximación Monte Carlo de los ptos críticos:
+alfa <- 0.05
 pto_crit <- quantile(estadistico_boot, c(alfa/2, 1 - alfa/2))
 # Construcción del IC
-ic_inf_boot <- x_barra - pto_crit[2] * cuasi_dt/sqrt(n)
-ic_sup_boot <- x_barra - pto_crit[1] * cuasi_dt/sqrt(n)
+ic_inf_boot <- estimador  - pto_crit[2] * ee_estimador
+ic_sup_boot <- estimador  - pto_crit[1] * ee_estimador
 IC_boot <- c(ic_inf_boot, ic_sup_boot)
 names(IC_boot) <- paste0(100*c(alfa/2, 1-alfa/2), "%")
 IC_boot
@@ -583,9 +612,9 @@ $$\mathbf{Y}^{\ast} = \hat{\mathbf{Y}} + \mathbf{r}^{\ast}.$$
 Por ejemplo, adaptando el código en Canty (2002) para este conjunto de datos, podríamos emplear:
 
 ```{r}
-pres.dat <- Prestige
-pres.dat$fit <- fitted(modelo)
-pres.dat$res <- residuals(modelo)
+boot.dat <- Prestige
+boot.dat$fit <- fitted(modelo)
+boot.dat$res <- residuals(modelo)
 
 mod.stat <- function(data, i) {
     data$prestige <- data$fit + data$res[i]
@@ -594,7 +623,7 @@ mod.stat <- function(data, i) {
 }
 
 set.seed(1)
-boot.mod <- boot(pres.dat, mod.stat, R = 1000)
+boot.mod <- boot(boot.dat, mod.stat, R = 1000)
 boot.mod
 # plot(boot.mod)
 boot.ci(boot.mod, type = c("basic", "perc", "bca"))
@@ -612,8 +641,8 @@ residuos de un modelo `gam` del paquete `mgcv`, como no implementa un método `h
 habrá que emplear `influence.gam()` (o directamente `modelo.gam$hat`).]:
 
 ```{r}
-pres.dat$sres <- residuals(modelo)/sqrt(1 - hatvalues(modelo))
-pres.dat$sres <- pres.dat$sres - mean(pres.dat$sres)
+boot.dat$sres <- residuals(modelo)/sqrt(1 - hatvalues(modelo))
+boot.dat$sres <- boot.dat$sres - mean(boot.dat$sres)
 ```
 
 Sin embargo puede ser más cómodo (ver Ejercicio \@ref(exr:boot-coef)) emplear la función `Boot()` del paquete `car` (que internamente llama a la función `boot()`), 

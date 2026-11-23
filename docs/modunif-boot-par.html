@@ -483,7 +483,7 @@ es el contraste de hipótesis que se tratará en la Sección <a href="boot-test.
 <div class="example">
 <p><span id="exm:media-par" class="example"><strong>Ejemplo 10.2  (Inferencia sobre la media, continuación) </strong></span><br></p>
 <p>Continuando con el Ejemplo <a href="boot-unif.html#exm:media-dt-desconocida">9.2</a> del tiempo de vida de microorganismos, podríamos pensar en emplear bootstrap paramétrico para calcular un intervalo de confianza para la media poblacional.</p>
-<p>La valided de los resultados dependerá en gran medida de que el modelo paramétrico sea adecuado para describir la variabilidad de los datos.
+<p>La validez de los resultados dependerá en gran medida de que el modelo paramétrico sea adecuado para describir la variabilidad de los datos.
 En este caso parece razonable asumir una distribución exponencial (no lo es que el modelo admita tiempos de vida negativos, como ocurriría al asumir normalidad):</p>
 <div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="modunif-boot-par.html#cb598-1" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> simres<span class="sc">::</span>lifetimes</span>
 <span id="cb598-2"><a href="modunif-boot-par.html#cb598-2" tabindex="-1"></a><span class="co"># Distribución bootstrap uniforme</span></span>
@@ -503,26 +503,26 @@ Figura 10.2: Distribución empírica de la muestra de tiempos de vida de microor
 </div>
 <p>Podemos modificar fácilmente el código mostrado en el Ejemplo <a href="boot-unif.html#exm:media-dt-desconocida">9.2</a>, de forma que se emplee bootstrap paramétrico (exponencial):</p>
 <div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="modunif-boot-par.html#cb599-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(muestra)</span>
-<span id="cb599-2"><a href="modunif-boot-par.html#cb599-2" tabindex="-1"></a>alfa <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
-<span id="cb599-3"><a href="modunif-boot-par.html#cb599-3" tabindex="-1"></a><span class="co"># Estimaciones muestrales</span></span>
-<span id="cb599-4"><a href="modunif-boot-par.html#cb599-4" tabindex="-1"></a>x_barra <span class="ot">&lt;-</span> <span class="fu">mean</span>(muestra)</span>
-<span id="cb599-5"><a href="modunif-boot-par.html#cb599-5" tabindex="-1"></a>cuasi_dt <span class="ot">&lt;-</span> <span class="fu">sd</span>(muestra)</span>
-<span id="cb599-6"><a href="modunif-boot-par.html#cb599-6" tabindex="-1"></a><span class="co"># Remuestreo</span></span>
-<span id="cb599-7"><a href="modunif-boot-par.html#cb599-7" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb599-8"><a href="modunif-boot-par.html#cb599-8" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb599-9"><a href="modunif-boot-par.html#cb599-9" tabindex="-1"></a>estadistico_boot <span class="ot">&lt;-</span> <span class="fu">numeric</span>(B)</span>
-<span id="cb599-10"><a href="modunif-boot-par.html#cb599-10" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>B) {</span>
-<span id="cb599-11"><a href="modunif-boot-par.html#cb599-11" tabindex="-1"></a>  <span class="co"># remuestra &lt;- sample(muestra, n, replace = TRUE)</span></span>
-<span id="cb599-12"><a href="modunif-boot-par.html#cb599-12" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="dv">1</span><span class="sc">/</span>x_barra)</span>
-<span id="cb599-13"><a href="modunif-boot-par.html#cb599-13" tabindex="-1"></a>  x_barra_boot <span class="ot">&lt;-</span> <span class="fu">mean</span>(remuestra)</span>
-<span id="cb599-14"><a href="modunif-boot-par.html#cb599-14" tabindex="-1"></a>  cuasi_dt_boot <span class="ot">&lt;-</span> <span class="fu">sd</span>(remuestra)</span>
-<span id="cb599-15"><a href="modunif-boot-par.html#cb599-15" tabindex="-1"></a>  estadistico_boot[k] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(n) <span class="sc">*</span> (x_barra_boot <span class="sc">-</span> x_barra)<span class="sc">/</span>cuasi_dt_boot</span>
-<span id="cb599-16"><a href="modunif-boot-par.html#cb599-16" tabindex="-1"></a>}</span>
-<span id="cb599-17"><a href="modunif-boot-par.html#cb599-17" tabindex="-1"></a><span class="co"># Aproximación Monte Carlo de los ptos críticos:</span></span>
+<span id="cb599-2"><a href="modunif-boot-par.html#cb599-2" tabindex="-1"></a><span class="co"># Estimaciones muestrales</span></span>
+<span id="cb599-3"><a href="modunif-boot-par.html#cb599-3" tabindex="-1"></a>estimador <span class="ot">&lt;-</span> <span class="fu">mean</span>(muestra)</span>
+<span id="cb599-4"><a href="modunif-boot-par.html#cb599-4" tabindex="-1"></a>ee_estimador <span class="ot">&lt;-</span> <span class="fu">sd</span>(muestra)<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
+<span id="cb599-5"><a href="modunif-boot-par.html#cb599-5" tabindex="-1"></a><span class="co"># Remuestreo</span></span>
+<span id="cb599-6"><a href="modunif-boot-par.html#cb599-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb599-7"><a href="modunif-boot-par.html#cb599-7" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb599-8"><a href="modunif-boot-par.html#cb599-8" tabindex="-1"></a>estadistico_boot <span class="ot">&lt;-</span> <span class="fu">numeric</span>(B)</span>
+<span id="cb599-9"><a href="modunif-boot-par.html#cb599-9" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>B) {</span>
+<span id="cb599-10"><a href="modunif-boot-par.html#cb599-10" tabindex="-1"></a>  <span class="co"># remuestra &lt;- sample(muestra, n, replace = TRUE)</span></span>
+<span id="cb599-11"><a href="modunif-boot-par.html#cb599-11" tabindex="-1"></a>  remuestra <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="dv">1</span><span class="sc">/</span>estimador)</span>
+<span id="cb599-12"><a href="modunif-boot-par.html#cb599-12" tabindex="-1"></a>  estimador_boot <span class="ot">&lt;-</span> <span class="fu">mean</span>(remuestra)</span>
+<span id="cb599-13"><a href="modunif-boot-par.html#cb599-13" tabindex="-1"></a>  ee_estimador_boot <span class="ot">&lt;-</span> <span class="fu">sd</span>(remuestra)<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
+<span id="cb599-14"><a href="modunif-boot-par.html#cb599-14" tabindex="-1"></a>  estadistico_boot[k] <span class="ot">&lt;-</span> (estimador_boot <span class="sc">-</span> estimador)<span class="sc">/</span>ee_estimador_boot</span>
+<span id="cb599-15"><a href="modunif-boot-par.html#cb599-15" tabindex="-1"></a>}</span>
+<span id="cb599-16"><a href="modunif-boot-par.html#cb599-16" tabindex="-1"></a><span class="co"># Aproximación Monte Carlo de los ptos críticos:</span></span>
+<span id="cb599-17"><a href="modunif-boot-par.html#cb599-17" tabindex="-1"></a>alfa <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
 <span id="cb599-18"><a href="modunif-boot-par.html#cb599-18" tabindex="-1"></a>pto_crit <span class="ot">&lt;-</span> <span class="fu">quantile</span>(estadistico_boot, <span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span> <span class="sc">-</span> alfa<span class="sc">/</span><span class="dv">2</span>))</span>
 <span id="cb599-19"><a href="modunif-boot-par.html#cb599-19" tabindex="-1"></a><span class="co"># Construcción del IC</span></span>
-<span id="cb599-20"><a href="modunif-boot-par.html#cb599-20" tabindex="-1"></a>ic_inf_boot <span class="ot">&lt;-</span> x_barra <span class="sc">-</span> pto_crit[<span class="dv">2</span>] <span class="sc">*</span> cuasi_dt<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
-<span id="cb599-21"><a href="modunif-boot-par.html#cb599-21" tabindex="-1"></a>ic_sup_boot <span class="ot">&lt;-</span> x_barra <span class="sc">-</span> pto_crit[<span class="dv">1</span>] <span class="sc">*</span> cuasi_dt<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
+<span id="cb599-20"><a href="modunif-boot-par.html#cb599-20" tabindex="-1"></a>ic_inf_boot <span class="ot">&lt;-</span> estimador  <span class="sc">-</span> pto_crit[<span class="dv">2</span>] <span class="sc">*</span> ee_estimador</span>
+<span id="cb599-21"><a href="modunif-boot-par.html#cb599-21" tabindex="-1"></a>ic_sup_boot <span class="ot">&lt;-</span> estimador  <span class="sc">-</span> pto_crit[<span class="dv">1</span>] <span class="sc">*</span> ee_estimador</span>
 <span id="cb599-22"><a href="modunif-boot-par.html#cb599-22" tabindex="-1"></a>IC_boot <span class="ot">&lt;-</span> <span class="fu">c</span>(ic_inf_boot, ic_sup_boot)</span>
 <span id="cb599-23"><a href="modunif-boot-par.html#cb599-23" tabindex="-1"></a><span class="fu">names</span>(IC_boot) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">c</span>(alfa<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">-</span>alfa<span class="sc">/</span><span class="dv">2</span>), <span class="st">&quot;%&quot;</span>)</span>
 <span id="cb599-24"><a href="modunif-boot-par.html#cb599-24" tabindex="-1"></a>IC_boot</span></code></pre></div>
@@ -566,8 +566,34 @@ tiempo de vida de los microorganismos, podríamos utilizar el siguiente código:
 ## 95%   ( 0.5308,  1.4061 )  
 ## Calculations and Intervals on Original Scale</code></pre>
 </div>
+<hr />
+<p>El argumento <code>mle</code> puede ser cualquier tipo de objeto con lo requerido por <code>ran.gen()</code> para generar las remuestras.
+Normalmente será un vector o una lista.
+Por ejemplo, en el caso multivariante <code>mle</code> puede ser una lista que contenga el vector de medias y la matriz de covarianzas (o su factorización de Cholesky; ver Sección <a href="fact-cov.html#fact-cov">6.3</a>).</p>
+<div class="exercise">
+<p><span id="exr:boot-lnorm" class="exercise"><strong>Ejercicio 10.1  </strong></span><br></p>
+<p>Continuando con los ejemplos anteriores, también podría ser razonable considerar que la distribución del tiempo de vida de microorganismos es una log-normal.</p>
+<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="modunif-boot-par.html#cb603-1" tabindex="-1"></a><span class="co"># Ajuste lognormal</span></span>
+<span id="cb603-2"><a href="modunif-boot-par.html#cb603-2" tabindex="-1"></a><span class="co"># MASS::fitdistr(muestra, &quot;lognormal&quot;) # MLE</span></span>
+<span id="cb603-3"><a href="modunif-boot-par.html#cb603-3" tabindex="-1"></a>logx <span class="ot">&lt;-</span> <span class="fu">log</span>(muestra)</span>
+<span id="cb603-4"><a href="modunif-boot-par.html#cb603-4" tabindex="-1"></a>meanlog <span class="ot">&lt;-</span> <span class="fu">mean</span>(logx)</span>
+<span id="cb603-5"><a href="modunif-boot-par.html#cb603-5" tabindex="-1"></a>sdlog <span class="ot">&lt;-</span> <span class="fu">sd</span>(logx) <span class="co"># Insesgado, no es el MLE</span></span>
+<span id="cb603-6"><a href="modunif-boot-par.html#cb603-6" tabindex="-1"></a><span class="co"># Representación</span></span>
+<span id="cb603-7"><a href="modunif-boot-par.html#cb603-7" tabindex="-1"></a><span class="fu">hist</span>(muestra, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.1</span>))</span>
+<span id="cb603-8"><a href="modunif-boot-par.html#cb603-8" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dlnorm</span>(x, meanlog, sdlog), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="10-Bootstrap_ext_files/figure-html/unnamed-chunk-1-1.png" alt="" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="modunif-boot-par.html#cb604-1" tabindex="-1"></a><span class="co"># Contraste</span></span>
+<span id="cb604-2"><a href="modunif-boot-par.html#cb604-2" tabindex="-1"></a><span class="co"># goftest::ad.test(muestra, null = &quot;plnorm&quot;, meanlog = meanlog, sdlog = sdlog, estimated = TRUE)</span></span>
+<span id="cb604-3"><a href="modunif-boot-par.html#cb604-3" tabindex="-1"></a><span class="co"># Parámetros estimados</span></span>
+<span id="cb604-4"><a href="modunif-boot-par.html#cb604-4" tabindex="-1"></a>mle <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">meanlog =</span> meanlog, <span class="at">sdlog =</span> sdlog)</span>
+<span id="cb604-5"><a href="modunif-boot-par.html#cb604-5" tabindex="-1"></a>mle</span></code></pre></div>
+<pre><code>##  meanlog    sdlog 
+## -0.53306  0.86250</code></pre>
+<p>Aproximar mediante bootstrap paramétrico, asumiendo una distribución lognormal, la distribución de la media muestral del tiempo de vida de los microorganismos.</p>
+</div>
 <div class="example">
-<p><span id="exm:boot-maximo-parametrico" class="example"><strong>Ejemplo 10.3  (Inferencia sobre el máximo de una distribución uniforme, continuación) </strong></span>En el Ejemplo <a href="deficien-unif.html#exm:boot-maximo-uniforme">10.1</a> la distribución poblacional era uniforme.
+<p><span id="exm:boot-maximo-parametrico" class="example"><strong>Ejemplo 10.3  (Inferencia sobre el máximo de una distribución uniforme, continuación) </strong></span><br></p>
+<p>En el Ejemplo <a href="deficien-unif.html#exm:boot-maximo-uniforme">10.1</a> la distribución poblacional era uniforme.
 Si se dispusiese de esa información, lo natural sería utilizar un bootstrap paramétrico,
 consistente en obtener las remuestras bootstrap a partir de una distribución uniforme con parámetro estimado:
 <span class="math display">\[\mathbf{X}^{\ast}=\left( X_1^{\ast}\text{, }X_2^{\ast}\text{,
@@ -585,23 +611,22 @@ distribución en muestreo de
 <span class="math inline">\(R=R\left( \mathbf{X},F \right) =\hat{\theta}-\theta\)</span>.</p>
 <p>Para implementarlo en la práctica podríamos emplear un código muy similar al
 del ejemplo original:</p>
-<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="modunif-boot-par.html#cb603-1" tabindex="-1"></a><span class="co"># Remuestreo</span></span>
-<span id="cb603-2"><a href="modunif-boot-par.html#cb603-2" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
-<span id="cb603-3"><a href="modunif-boot-par.html#cb603-3" tabindex="-1"></a>maximo <span class="ot">&lt;-</span> <span class="fu">numeric</span>(B)</span>
-<span id="cb603-4"><a href="modunif-boot-par.html#cb603-4" tabindex="-1"></a>estadistico <span class="ot">&lt;-</span> <span class="fu">numeric</span>(B)</span>
-<span id="cb603-5"><a href="modunif-boot-par.html#cb603-5" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>B) {</span>
-<span id="cb603-6"><a href="modunif-boot-par.html#cb603-6" tabindex="-1"></a>    remuestra <span class="ot">&lt;-</span> <span class="fu">runif</span>(n) <span class="sc">*</span> theta_est</span>
-<span id="cb603-7"><a href="modunif-boot-par.html#cb603-7" tabindex="-1"></a>    maximo[k] <span class="ot">&lt;-</span> <span class="fu">max</span>(remuestra)</span>
-<span id="cb603-8"><a href="modunif-boot-par.html#cb603-8" tabindex="-1"></a>    estadistico[k] <span class="ot">&lt;-</span> maximo[k] <span class="sc">-</span> theta_est</span>
-<span id="cb603-9"><a href="modunif-boot-par.html#cb603-9" tabindex="-1"></a>}</span>
-<span id="cb603-10"><a href="modunif-boot-par.html#cb603-10" tabindex="-1"></a><span class="co"># Distribución estadístico</span></span>
-<span id="cb603-11"><a href="modunif-boot-par.html#cb603-11" tabindex="-1"></a>xlim <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span>theta<span class="sc">/</span><span class="dv">2</span>, <span class="dv">0</span>) <span class="co"># c(-theta, 0)</span></span>
-<span id="cb603-12"><a href="modunif-boot-par.html#cb603-12" tabindex="-1"></a><span class="fu">hist</span>(estadistico, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, </span>
-<span id="cb603-13"><a href="modunif-boot-par.html#cb603-13" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="at">xlim =</span> xlim)</span>
-<span id="cb603-14"><a href="modunif-boot-par.html#cb603-14" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(estadistico))</span>
-<span id="cb603-15"><a href="modunif-boot-par.html#cb603-15" tabindex="-1"></a><span class="fu">rug</span>(estadistico, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>)</span>
-<span id="cb603-16"><a href="modunif-boot-par.html#cb603-16" tabindex="-1"></a><span class="fu">curve</span>(n<span class="sc">/</span>theta <span class="sc">*</span> ((x <span class="sc">+</span> theta)<span class="sc">/</span>theta)<span class="sc">^</span>(n <span class="sc">-</span> <span class="dv">1</span>), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>, </span>
-<span id="cb603-17"><a href="modunif-boot-par.html#cb603-17" tabindex="-1"></a>      <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="modunif-boot-par.html#cb606-1" tabindex="-1"></a><span class="co"># Remuestreo</span></span>
+<span id="cb606-2"><a href="modunif-boot-par.html#cb606-2" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
+<span id="cb606-3"><a href="modunif-boot-par.html#cb606-3" tabindex="-1"></a>estadistico <span class="ot">&lt;-</span> <span class="fu">numeric</span>(B)</span>
+<span id="cb606-4"><a href="modunif-boot-par.html#cb606-4" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>B) {</span>
+<span id="cb606-5"><a href="modunif-boot-par.html#cb606-5" tabindex="-1"></a>    remuestra <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">0</span>, theta_est) <span class="co"># runif(n) * theta_est</span></span>
+<span id="cb606-6"><a href="modunif-boot-par.html#cb606-6" tabindex="-1"></a>    theta_boot <span class="ot">&lt;-</span> <span class="fu">max</span>(remuestra)</span>
+<span id="cb606-7"><a href="modunif-boot-par.html#cb606-7" tabindex="-1"></a>    estadistico[k] <span class="ot">&lt;-</span> theta_boot <span class="sc">-</span> theta_est</span>
+<span id="cb606-8"><a href="modunif-boot-par.html#cb606-8" tabindex="-1"></a>}</span>
+<span id="cb606-9"><a href="modunif-boot-par.html#cb606-9" tabindex="-1"></a><span class="co"># Distribución estadístico</span></span>
+<span id="cb606-10"><a href="modunif-boot-par.html#cb606-10" tabindex="-1"></a>xlim <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span>theta<span class="sc">/</span><span class="dv">2</span>, <span class="dv">0</span>) <span class="co"># c(-theta, 0)</span></span>
+<span id="cb606-11"><a href="modunif-boot-par.html#cb606-11" tabindex="-1"></a><span class="fu">hist</span>(estadistico, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, </span>
+<span id="cb606-12"><a href="modunif-boot-par.html#cb606-12" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="at">xlim =</span> xlim)</span>
+<span id="cb606-13"><a href="modunif-boot-par.html#cb606-13" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(estadistico))</span>
+<span id="cb606-14"><a href="modunif-boot-par.html#cb606-14" tabindex="-1"></a><span class="fu">rug</span>(estadistico, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>)</span>
+<span id="cb606-15"><a href="modunif-boot-par.html#cb606-15" tabindex="-1"></a><span class="fu">curve</span>(n<span class="sc">/</span>theta <span class="sc">*</span> ((x <span class="sc">+</span> theta)<span class="sc">/</span>theta)<span class="sc">^</span>(n <span class="sc">-</span> <span class="dv">1</span>), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>, </span>
+<span id="cb606-16"><a href="modunif-boot-par.html#cb606-16" tabindex="-1"></a>      <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:boot-parametrico-maximo"></span>
 <img src="10-Bootstrap_ext_files/figure-html/boot-parametrico-maximo-1.png" alt="Distribución bootstrap paramétrica y distribución poblacional." width="80%" />
 <p class="caption">

@@ -63,7 +63,7 @@ sum(indice)/nsim
 ```
 
 ```
-## [1] 0.4996
+ ## [1] 0.4996
 ```
 
 Alternativamente (la frecuencia relativa es un caso particular de la media) se puede obtener de forma más simple como:
@@ -74,7 +74,7 @@ mean(indice)
 ```
 
 ```
-## [1] 0.4996
+ ## [1] 0.4996
 ```
 
 ---
@@ -95,7 +95,7 @@ mean(indice)
 ```
 
 ```
-## [1] 0.7806
+ ## [1] 0.7806
 ```
 
 ``` r
@@ -103,7 +103,7 @@ pi/4
 ```
 
 ```
-## [1] 0.7854
+ ## [1] 0.7854
 ```
 
 ``` r
@@ -112,7 +112,7 @@ pi_aprox
 ```
 
 ```
-## [1] 3.1224
+ ## [1] 3.1224
 ```
 
 Generamos el correspondiente gráfico (ver Figura \@ref(fig:simpiplot)) (los puntos con color negro tienen distribución uniforme en el círculo unidad; esto está relacionado con el método de aceptación-rechazo, ver Ejemplo \@ref(exm:ar-esfera), o con el denominado método *hit-or-miss*).
@@ -129,10 +129,14 @@ symbols(0, 0, circles = 1, inches = FALSE, add = TRUE)
 symbols(0, 0, squares = 2, inches = FALSE, add = TRUE)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="25-Soluciones_files/figure-html/simpiplot-1.png" alt="Valores generados con distribución uniforme bidimensional, con colores y símbolos indicando si están dentro del círculo unidad." width="80%" />
-<p class="caption">(\#fig:simpiplot)Valores generados con distribución uniforme bidimensional, con colores y símbolos indicando si están dentro del círculo unidad.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/simpiplot-1} 
+
+}
+
+\caption{Valores generados con distribución uniforme bidimensional, con colores y símbolos indicando si están dentro del círculo unidad.}(\#fig:simpiplot)
+\end{figure}
 
 
 
@@ -160,17 +164,21 @@ mean(x)
 ```
 
 ```
-## [1] 0.4953
+ ## [1] 0.4953
 ```
 
 ``` r
 barplot(100*table(x)/nsim, ylab = "Porcentaje") # Representar porcentajes 
 ```
 
-<div class="figure" style="text-align: center">
-<img src="25-Soluciones_files/figure-html/simberplot-1.png" alt="Frecuencias relativas de los valores generados con distribución Bernoulli (aproximaciones por simulación de las probabilidades teóricas)." width="80%" />
-<p class="caption">(\#fig:simberplot)Frecuencias relativas de los valores generados con distribución Bernoulli (aproximaciones por simulación de las probabilidades teóricas).</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/simberplot-1} 
+
+}
+
+\caption{Frecuencias relativas de los valores generados con distribución Bernoulli (aproximaciones por simulación de las probabilidades teóricas).}(\#fig:simberplot)
+\end{figure}
 
 ---
 
@@ -194,7 +202,7 @@ mean(x)
 ```
 
 ```
-## [1] 0.394
+ ## [1] 0.394
 ```
 
 ``` r
@@ -204,10 +212,14 @@ plot(n, cumsum(x)/n, type="l", ylab="Proporción de caras",
 abline(h=p, lty=2, col="red")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="25-Soluciones_files/figure-html/simberconv-1.png" alt="Gráfico de convergencia de la aproximación por simulación a la probabilidad teórica." width="80%" />
-<p class="caption">(\#fig:simberconv)Gráfico de convergencia de la aproximación por simulación a la probabilidad teórica.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/simberconv-1} 
+
+}
+
+\caption{Gráfico de convergencia de la aproximación por simulación a la probabilidad teórica.}(\#fig:simberconv)
+\end{figure}
 
 
 ### Ejercicio [1.3](ejercicios.html#exr:circuito) {#sol-circuito}
@@ -218,7 +230,8 @@ Simular el paso de corriente a través del siguiente circuito, donde
 figuran las probabilidades de que pase corriente por cada uno de los
 interruptores:
 
-<img src="images/circuito2.png" alt="" width="50%" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics[width=0.5\linewidth]{images/circuito2} \end{center}
 
 Considerar que cada interruptor es una variable aleatoria de Bernoulli independiente
 para simular 1000 valores de cada una de ellas.
@@ -248,7 +261,7 @@ mean(fin)
 ```
 
 ```
-## [1] 0.692
+ ## [1] 0.692
 ```
 
 
@@ -283,7 +296,7 @@ lanz
 ```
 
 ```
-## [1] 3 5 1 6
+ ## [1] 3 5 1 6
 ```
 
 ``` r
@@ -291,7 +304,7 @@ lanz
 ```
 
 ```
-## [1] TRUE
+ ## [1] TRUE
 ```
 
 ---    
@@ -313,7 +326,7 @@ mean(replicate(nsim, deMere(n)))
 ```
 
 ```
-## [1] 0.5148
+ ## [1] 0.5148
 ```
 
 ``` r
@@ -321,7 +334,7 @@ mean(replicate(nsim, deMere(n)))
 ```
 
 ```
-## [1] 0.51775
+ ## [1] 0.51775
 ```
 
 
@@ -398,7 +411,7 @@ str(evol)
 ```
 
 ```
-##  num [1:167, 1:2000] 6 12 16 21 23 25 30 34 37 38 ...
+ ##  num [1:167, 1:2000] 6 12 16 21 23 25 30 34 37 38 ...
 ```
 
 Aproximar cuantiles (intervalos de predicción):
@@ -411,10 +424,10 @@ str(limits)
 ```
 
 ```
-##  num [1:3, 1:167] 5 6 6 10 11 12 14 16 18 18 ...
-##  - attr(*, "dimnames")=List of 2
-##   ..$ : chr [1:3] "5%" "50%" "95%"
-##   ..$ : NULL
+ ##  num [1:3, 1:167] 5 6 6 10 11 12 14 16 18 18 ...
+ ##  - attr(*, "dimnames")=List of 2
+ ##   ..$ : chr [1:3] "5%" "50%" "95%"
+ ##   ..$ : NULL
 ```
 
 Ejemplo, aproximación de los límites (y mediana) para el número de cromos en el álbum después de comprar 20 sobres:
@@ -425,8 +438,8 @@ limits[, 20]
 ```
 
 ```
-##  5% 50% 95% 
-##  55  60  64
+ ##  5% 50% 95% 
+ ##  55  60  64
 ```
 
 ``` r
@@ -435,7 +448,9 @@ hist(evol[20, ], breaks = "FD", freq = FALSE,
 abline(v = limits[, 20], lty = 2)
 ```
 
-<img src="25-Soluciones_files/figure-html/unnamed-chunk-13-1.png" alt="" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 Representar las realizaciones del proceso y los intervalos de predicción puntuales:
 
@@ -446,7 +461,9 @@ matplot(1:max_len, evol, type = "l", col = "lightgray", lty = 1,
 matlines(1:max_len, t(limits), lty = c(2, 1, 2), col = 1)
 ```
 
-<img src="25-Soluciones_files/figure-html/unnamed-chunk-14-1.png" alt="" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 
 ## Capítulo 2 [Generación de números pseudoaleatorios](gen-pseudo.html)
@@ -482,27 +499,27 @@ simres::rvng
 ```
 
 ```
-## function(n, seed = as.numeric(Sys.time()), k = 4) {
-##   seed <- seed %% 10^k
-##   aux <- 10^(2*k-k/2)
-##   aux2 <- 10^(k/2)
-##   u <- numeric(n)
-##   for(i in 1:n) {
-##     z <- seed^2
-##     seed <- trunc((z - trunc(z/aux)*aux)/aux2)
-##     u[i] <- seed/10^k
-##   }
-##   # Almacenar semilla y parámetros
-##   assign(".rng", list(seed = seed, type = "vm", parameters = list(k = k)),
-##       envir = globalenv())
-##   # .rng <<- list(seed = seed, type = "vm", parameters = list(k = k))
-##   # Para continuar con semilla y parámetros:
-##   #   with(.rng, rvng(n, seed, parameters$k))
-##   # Devolver valores
-##   return(u)
-## }
-## <bytecode: 0x000001aaea15f650>
-## <environment: namespace:simres>
+ ## function(n, seed = as.numeric(Sys.time()), k = 4) {
+ ##   seed <- seed %% 10^k
+ ##   aux <- 10^(2*k-k/2)
+ ##   aux2 <- 10^(k/2)
+ ##   u <- numeric(n)
+ ##   for(i in 1:n) {
+ ##     z <- seed^2
+ ##     seed <- trunc((z - trunc(z/aux)*aux)/aux2)
+ ##     u[i] <- seed/10^k
+ ##   }
+ ##   # Almacenar semilla y parámetros
+ ##   assign(".rng", list(seed = seed, type = "vm", parameters = list(k = k)),
+ ##       envir = globalenv())
+ ##   # .rng <<- list(seed = seed, type = "vm", parameters = list(k = k))
+ ##   # Para continuar con semilla y parámetros:
+ ##   #   with(.rng, rvng(n, seed, parameters$k))
+ ##   # Devolver valores
+ ##   return(u)
+ ## }
+ ## <bytecode: 0x0000022a23ea19e0>
+ ## <environment: namespace:simres>
 ```
 
 Estudiar las características del generador de cuadrados medios a partir de una secuencia de 500 valores. 
@@ -544,10 +561,14 @@ curve(fdistr, from = -0.1, to = 1.1, main = '')
 abline(h = c(1/10, 2/10, 3/10), lty = 2) # Discontinuidades
 ```
 
-<div class="figure" style="text-align: center">
-<img src="25-Soluciones_files/figure-html/mixta-cuantil-plot-sol-1.png" alt="Función de distribución mixta (con discontinuidades en 0 y 1/5)." width="80%" />
-<p class="caption">(\#fig:mixta-cuantil-plot-sol)Función de distribución mixta (con discontinuidades en 0 y 1/5).</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/mixta-cuantil-plot-sol-1} 
+
+}
+
+\caption{Función de distribución mixta (con discontinuidades en 0 y 1/5).}(\#fig:mixta-cuantil-plot-sol)
+\end{figure}
 
 **Nota**: Esta variable toma los valores 0 y 1/5 con probabilidad 1/10.
 
@@ -605,15 +626,17 @@ b)  El algoritmo de simulación se puede implementar a partir de la función cua
     ```
     
     ```
-    ##    user  system elapsed 
-    ##       0       0       0
+     ##    user  system elapsed 
+     ##       0       0       0
     ```
     
     ``` r
     hist(simx, breaks = "FD", freq = FALSE)
     ```
     
-    <img src="25-Soluciones_files/figure-html/unnamed-chunk-18-1.png" alt="" width="80%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/unnamed-chunk-18-1} \end{center}
     
     En este caso como no es una variable absolutamente continua mejor emplear 
     la función de distribución para compararla con la teórica:
@@ -624,5 +647,7 @@ b)  El algoritmo de simulación se puede implementar a partir de la función cua
     curve(fdistr(x), type = "s", lty = 2, add = TRUE)
     ```
     
-    <img src="25-Soluciones_files/figure-html/unnamed-chunk-19-1.png" alt="" width="80%" style="display: block; margin: auto;" />
+    
+    
+    \begin{center}\includegraphics[width=0.75\linewidth]{25-Soluciones_files/figure-latex/unnamed-chunk-19-1} \end{center}
 

@@ -469,16 +469,16 @@ regla de Laplace <span class="math inline">\(\frac{\text{área favorable}}{\text
 </ol>
 <hr />
 <p>Generamos <code>nsim = 10000</code> valores del proceso bidimensional:</p>
-<div class="sourceCode" id="cb814"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb814-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb814-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb814-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb814-2" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
-<span id="cb814-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb814-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(nsim, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb814-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb814-4" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">runif</span>(nsim, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb817"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb817-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb817-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb817-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb817-2" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb817-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb817-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(nsim, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb817-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb817-4" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">runif</span>(nsim, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span></code></pre></div>
 <p>La probabilidad teórica es 1/2 y la aproximación por simulación es la frecuencia relativa del suceso en los valores generados (para calcularla podemos aprovechar que R maneja internamente los valores lógicos como 1, <code>TRUE</code>, y 0, <code>FALSE</code>):</p>
-<div class="sourceCode" id="cb815"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb815-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb815-1" tabindex="-1"></a>indice <span class="ot">&lt;-</span> (x <span class="sc">+</span> y <span class="sc">&lt;</span> <span class="dv">0</span>)</span>
-<span id="cb815-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb815-2" tabindex="-1"></a><span class="fu">sum</span>(indice)<span class="sc">/</span>nsim</span></code></pre></div>
+<div class="sourceCode" id="cb818"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb818-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb818-1" tabindex="-1"></a>indice <span class="ot">&lt;-</span> (x <span class="sc">+</span> y <span class="sc">&lt;</span> <span class="dv">0</span>)</span>
+<span id="cb818-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb818-2" tabindex="-1"></a><span class="fu">sum</span>(indice)<span class="sc">/</span>nsim</span></code></pre></div>
 <pre><code>## [1] 0.4996</code></pre>
 <p>Alternativamente (la frecuencia relativa es un caso particular de la media) se puede obtener de forma más simple como:</p>
-<div class="sourceCode" id="cb817"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb817-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb817-1" tabindex="-1"></a><span class="fu">mean</span>(indice)</span></code></pre></div>
+<div class="sourceCode" id="cb820"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb820-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb820-1" tabindex="-1"></a><span class="fu">mean</span>(indice)</span></code></pre></div>
 <pre><code>## [1] 0.4996</code></pre>
 <hr />
 <ol start="2" style="list-style-type: lower-alpha">
@@ -486,27 +486,27 @@ regla de Laplace <span class="math inline">\(\frac{\text{área favorable}}{\text
 <span class="math inline">\(P\left( X^2 +Y^2 \leq 1 \right)\)</span>.</li>
 </ol>
 <hr />
-<div class="sourceCode" id="cb819"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb819-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb819-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb819-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb819-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
-<span id="cb819-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb819-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb819-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb819-4" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb819-5"><a href="capítulo-1-introducción-a-la-simulación.html#cb819-5" tabindex="-1"></a>indice <span class="ot">&lt;-</span> (x<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>y<span class="sc">^</span><span class="dv">2</span> <span class="sc">&lt;</span> <span class="dv">1</span>)</span>
-<span id="cb819-6"><a href="capítulo-1-introducción-a-la-simulación.html#cb819-6" tabindex="-1"></a><span class="fu">mean</span>(indice)</span></code></pre></div>
+<div class="sourceCode" id="cb822"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb822-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb822-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb822-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb822-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb822-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb822-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb822-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb822-4" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb822-5"><a href="capítulo-1-introducción-a-la-simulación.html#cb822-5" tabindex="-1"></a>indice <span class="ot">&lt;-</span> (x<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>y<span class="sc">^</span><span class="dv">2</span> <span class="sc">&lt;</span> <span class="dv">1</span>)</span>
+<span id="cb822-6"><a href="capítulo-1-introducción-a-la-simulación.html#cb822-6" tabindex="-1"></a><span class="fu">mean</span>(indice)</span></code></pre></div>
 <pre><code>## [1] 0.7806</code></pre>
-<div class="sourceCode" id="cb821"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb821-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb821-1" tabindex="-1"></a>pi<span class="sc">/</span><span class="dv">4</span></span></code></pre></div>
+<div class="sourceCode" id="cb824"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb824-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb824-1" tabindex="-1"></a>pi<span class="sc">/</span><span class="dv">4</span></span></code></pre></div>
 <pre><code>## [1] 0.7854</code></pre>
-<div class="sourceCode" id="cb823"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb823-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb823-1" tabindex="-1"></a>pi_aprox <span class="ot">&lt;-</span> <span class="dv">4</span><span class="sc">*</span><span class="fu">mean</span>(indice)</span>
-<span id="cb823-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb823-2" tabindex="-1"></a>pi_aprox</span></code></pre></div>
+<div class="sourceCode" id="cb826"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb826-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb826-1" tabindex="-1"></a>pi_aprox <span class="ot">&lt;-</span> <span class="dv">4</span><span class="sc">*</span><span class="fu">mean</span>(indice)</span>
+<span id="cb826-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb826-2" tabindex="-1"></a>pi_aprox</span></code></pre></div>
 <pre><code>## [1] 3.1224</code></pre>
 <p>Generamos el correspondiente gráfico (ver Figura <a href="capítulo-1-introducción-a-la-simulación.html#fig:simpiplot">D.1</a>) (los puntos con color negro tienen distribución uniforme en el círculo unidad; esto está relacionado con el método de aceptación-rechazo, ver Ejemplo <a href="AR-multi.html#exm:ar-esfera">6.3</a>, o con el denominado método <em>hit-or-miss</em>).</p>
-<div class="sourceCode" id="cb825"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb825-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb825-1" tabindex="-1"></a><span class="co"># Colores y símbolos dependiendo de si el índice correspondiente es verdadero:</span></span>
-<span id="cb825-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb825-2" tabindex="-1"></a>color <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(indice, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>) </span>
-<span id="cb825-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb825-3" tabindex="-1"></a>simbolo <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(indice, <span class="dv">1</span>, <span class="dv">4</span>)</span>
-<span id="cb825-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb825-4" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">pch =</span> simbolo, <span class="at">col =</span> color, </span>
-<span id="cb825-5"><a href="capítulo-1-introducción-a-la-simulación.html#cb825-5" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">xlab=</span><span class="st">&quot;X&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Y&quot;</span>, <span class="at">asp =</span> <span class="dv">1</span>) </span>
-<span id="cb825-6"><a href="capítulo-1-introducción-a-la-simulación.html#cb825-6" tabindex="-1"></a>     <span class="co"># asp = 1 para dibujar circulo</span></span>
-<span id="cb825-7"><a href="capítulo-1-introducción-a-la-simulación.html#cb825-7" tabindex="-1"></a><span class="fu">symbols</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="at">circles =</span> <span class="dv">1</span>, <span class="at">inches =</span> <span class="cn">FALSE</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb825-8"><a href="capítulo-1-introducción-a-la-simulación.html#cb825-8" tabindex="-1"></a><span class="fu">symbols</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="at">squares =</span> <span class="dv">2</span>, <span class="at">inches =</span> <span class="cn">FALSE</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb828"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb828-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb828-1" tabindex="-1"></a><span class="co"># Colores y símbolos dependiendo de si el índice correspondiente es verdadero:</span></span>
+<span id="cb828-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb828-2" tabindex="-1"></a>color <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(indice, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>) </span>
+<span id="cb828-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb828-3" tabindex="-1"></a>simbolo <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(indice, <span class="dv">1</span>, <span class="dv">4</span>)</span>
+<span id="cb828-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb828-4" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">pch =</span> simbolo, <span class="at">col =</span> color, </span>
+<span id="cb828-5"><a href="capítulo-1-introducción-a-la-simulación.html#cb828-5" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">xlab=</span><span class="st">&quot;X&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Y&quot;</span>, <span class="at">asp =</span> <span class="dv">1</span>) </span>
+<span id="cb828-6"><a href="capítulo-1-introducción-a-la-simulación.html#cb828-6" tabindex="-1"></a>     <span class="co"># asp = 1 para dibujar circulo</span></span>
+<span id="cb828-7"><a href="capítulo-1-introducción-a-la-simulación.html#cb828-7" tabindex="-1"></a><span class="fu">symbols</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="at">circles =</span> <span class="dv">1</span>, <span class="at">inches =</span> <span class="cn">FALSE</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb828-8"><a href="capítulo-1-introducción-a-la-simulación.html#cb828-8" tabindex="-1"></a><span class="fu">symbols</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="at">squares =</span> <span class="dv">2</span>, <span class="at">inches =</span> <span class="cn">FALSE</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:simpiplot"></span>
 <img src="25-Soluciones_files/figure-html/simpiplot-1.png" alt="Valores generados con distribución uniforme bidimensional, con colores y símbolos indicando si están dentro del círculo unidad." width="80%" />
 <p class="caption">
@@ -526,12 +526,12 @@ no está trucada. Aproximar la probabilidad de cara a partir de
 las simulaciones.</li>
 </ol>
 <hr />
-<div class="sourceCode" id="cb826"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb826-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb826-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb826-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb826-2" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
-<span id="cb826-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb826-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="at">cara =</span> <span class="dv">1</span>, <span class="at">cruz =</span> <span class="dv">0</span>), nsim, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.5</span>,<span class="fl">0.5</span>))</span>
-<span id="cb826-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb826-4" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb829"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb829-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb829-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb829-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb829-2" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb829-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb829-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="at">cara =</span> <span class="dv">1</span>, <span class="at">cruz =</span> <span class="dv">0</span>), nsim, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.5</span>,<span class="fl">0.5</span>))</span>
+<span id="cb829-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb829-4" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div>
 <pre><code>## [1] 0.4953</code></pre>
-<div class="sourceCode" id="cb828"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb828-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb828-1" tabindex="-1"></a><span class="fu">barplot</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">table</span>(x)<span class="sc">/</span>nsim, <span class="at">ylab =</span> <span class="st">&quot;Porcentaje&quot;</span>) <span class="co"># Representar porcentajes </span></span></code></pre></div>
+<div class="sourceCode" id="cb831"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb831-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb831-1" tabindex="-1"></a><span class="fu">barplot</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">table</span>(x)<span class="sc">/</span>nsim, <span class="at">ylab =</span> <span class="st">&quot;Porcentaje&quot;</span>) <span class="co"># Representar porcentajes </span></span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:simberplot"></span>
 <img src="25-Soluciones_files/figure-html/simberplot-1.png" alt="Frecuencias relativas de los valores generados con distribución Bernoulli (aproximaciones por simulación de las probabilidades teóricas)." width="80%" />
 <p class="caption">
@@ -548,17 +548,17 @@ relativa del suceso cara (puede ser recomendable emplear la
 función <code>cumsum</code>).</li>
 </ol>
 <hr />
-<div class="sourceCode" id="cb829"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb829-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb829-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb829-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb829-2" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb829-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb829-3" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
-<span id="cb829-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb829-4" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> p) <span class="co"># Simulamos una Bernoulli</span></span>
-<span id="cb829-5"><a href="capítulo-1-introducción-a-la-simulación.html#cb829-5" tabindex="-1"></a><span class="co"># Alternativa programación: x &lt;- runif(nsim) &lt; p</span></span>
-<span id="cb829-6"><a href="capítulo-1-introducción-a-la-simulación.html#cb829-6" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb832"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb832-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb832-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb832-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb832-2" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb832-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb832-3" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
+<span id="cb832-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb832-4" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> p) <span class="co"># Simulamos una Bernoulli</span></span>
+<span id="cb832-5"><a href="capítulo-1-introducción-a-la-simulación.html#cb832-5" tabindex="-1"></a><span class="co"># Alternativa programación: x &lt;- runif(nsim) &lt; p</span></span>
+<span id="cb832-6"><a href="capítulo-1-introducción-a-la-simulación.html#cb832-6" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div>
 <pre><code>## [1] 0.394</code></pre>
-<div class="sourceCode" id="cb831"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb831-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb831-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>nsim</span>
-<span id="cb831-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb831-2" tabindex="-1"></a><span class="fu">plot</span>(n, <span class="fu">cumsum</span>(x)<span class="sc">/</span>n, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Proporción de caras&quot;</span>, </span>
-<span id="cb831-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb831-3" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Número de lanzamientos&quot;</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span>
-<span id="cb831-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb831-4" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span>p, <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb834"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb834-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb834-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>nsim</span>
+<span id="cb834-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb834-2" tabindex="-1"></a><span class="fu">plot</span>(n, <span class="fu">cumsum</span>(x)<span class="sc">/</span>n, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Proporción de caras&quot;</span>, </span>
+<span id="cb834-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb834-3" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Número de lanzamientos&quot;</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb834-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb834-4" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span>p, <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:simberconv"></span>
 <img src="25-Soluciones_files/figure-html/simberconv-1.png" alt="Gráfico de convergencia de la aproximación por simulación a la probabilidad teórica." width="80%" />
 <p class="caption">
@@ -581,18 +581,18 @@ Recíprocamente, cualquier número puede ser tratado como lógico (al estilo de 
 El entero 0 es equivalente a <code>FALSE</code> y cualquier entero distinto de 0 a <code>TRUE</code>.</p>
 </div>
 <hr />
-<div class="sourceCode" id="cb832"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb832-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb832-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb832-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb832-2" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
-<span id="cb832-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb832-3" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="at">size=</span><span class="dv">1</span>, <span class="at">prob=</span><span class="fl">0.8</span>)</span>
-<span id="cb832-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb832-4" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="at">size=</span><span class="dv">1</span>, <span class="at">prob=</span><span class="fl">0.9</span>)</span>
-<span id="cb832-5"><a href="capítulo-1-introducción-a-la-simulación.html#cb832-5" tabindex="-1"></a>z1 <span class="ot">&lt;-</span> x1 <span class="sc">|</span> x2   <span class="co"># Operador lógico &quot;O&quot;</span></span>
-<span id="cb832-6"><a href="capítulo-1-introducción-a-la-simulación.html#cb832-6" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="at">size=</span><span class="dv">1</span>, <span class="at">prob=</span><span class="fl">0.6</span>)</span>
-<span id="cb832-7"><a href="capítulo-1-introducción-a-la-simulación.html#cb832-7" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="at">size=</span><span class="dv">1</span>, <span class="at">prob=</span><span class="fl">0.5</span>)</span>
-<span id="cb832-8"><a href="capítulo-1-introducción-a-la-simulación.html#cb832-8" tabindex="-1"></a>z2 <span class="ot">&lt;-</span> x3 <span class="sc">|</span> x4</span>
-<span id="cb832-9"><a href="capítulo-1-introducción-a-la-simulación.html#cb832-9" tabindex="-1"></a>z3 <span class="ot">&lt;-</span> z1 <span class="sc">|</span> z2</span>
-<span id="cb832-10"><a href="capítulo-1-introducción-a-la-simulación.html#cb832-10" tabindex="-1"></a>x5 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="at">size=</span><span class="dv">1</span>, <span class="at">prob=</span><span class="fl">0.7</span>)</span>
-<span id="cb832-11"><a href="capítulo-1-introducción-a-la-simulación.html#cb832-11" tabindex="-1"></a>fin <span class="ot">&lt;-</span> z3 <span class="sc">&amp;</span> x5  <span class="co"># Operador lógico &quot;Y&quot;</span></span>
-<span id="cb832-12"><a href="capítulo-1-introducción-a-la-simulación.html#cb832-12" tabindex="-1"></a><span class="fu">mean</span>(fin)</span></code></pre></div>
+<div class="sourceCode" id="cb835"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb835-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb835-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb835-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb835-2" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb835-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb835-3" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="at">size=</span><span class="dv">1</span>, <span class="at">prob=</span><span class="fl">0.8</span>)</span>
+<span id="cb835-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb835-4" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="at">size=</span><span class="dv">1</span>, <span class="at">prob=</span><span class="fl">0.9</span>)</span>
+<span id="cb835-5"><a href="capítulo-1-introducción-a-la-simulación.html#cb835-5" tabindex="-1"></a>z1 <span class="ot">&lt;-</span> x1 <span class="sc">|</span> x2   <span class="co"># Operador lógico &quot;O&quot;</span></span>
+<span id="cb835-6"><a href="capítulo-1-introducción-a-la-simulación.html#cb835-6" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="at">size=</span><span class="dv">1</span>, <span class="at">prob=</span><span class="fl">0.6</span>)</span>
+<span id="cb835-7"><a href="capítulo-1-introducción-a-la-simulación.html#cb835-7" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="at">size=</span><span class="dv">1</span>, <span class="at">prob=</span><span class="fl">0.5</span>)</span>
+<span id="cb835-8"><a href="capítulo-1-introducción-a-la-simulación.html#cb835-8" tabindex="-1"></a>z2 <span class="ot">&lt;-</span> x3 <span class="sc">|</span> x4</span>
+<span id="cb835-9"><a href="capítulo-1-introducción-a-la-simulación.html#cb835-9" tabindex="-1"></a>z3 <span class="ot">&lt;-</span> z1 <span class="sc">|</span> z2</span>
+<span id="cb835-10"><a href="capítulo-1-introducción-a-la-simulación.html#cb835-10" tabindex="-1"></a>x5 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(nsim, <span class="at">size=</span><span class="dv">1</span>, <span class="at">prob=</span><span class="fl">0.7</span>)</span>
+<span id="cb835-11"><a href="capítulo-1-introducción-a-la-simulación.html#cb835-11" tabindex="-1"></a>fin <span class="ot">&lt;-</span> z3 <span class="sc">&amp;</span> x5  <span class="co"># Operador lógico &quot;Y&quot;</span></span>
+<span id="cb835-12"><a href="capítulo-1-introducción-a-la-simulación.html#cb835-12" tabindex="-1"></a><span class="fu">mean</span>(fin)</span></code></pre></div>
 <pre><code>## [1] 0.692</code></pre>
 </div>
 <div id="sol-mere" class="section level3 hasAnchor" number="15.1.4">
@@ -611,16 +611,16 @@ el valor 4 por defecto, y la salida debe ser <code>TRUE</code> si se
 obtiene al menos un 6 y <code>FALSE</code> en caso contrario.</li>
 </ol>
 <hr />
-<div class="sourceCode" id="cb834"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb834-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb834-1" tabindex="-1"></a>deMere <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">4</span>){</span>
-<span id="cb834-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb834-2" tabindex="-1"></a>  lanz <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">replace=</span><span class="cn">TRUE</span>, <span class="at">size=</span>n)</span>
-<span id="cb834-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb834-3" tabindex="-1"></a>  <span class="fu">return</span>(<span class="dv">6</span> <span class="sc">%in%</span> lanz)</span>
-<span id="cb834-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb834-4" tabindex="-1"></a>}</span>
-<span id="cb834-5"><a href="capítulo-1-introducción-a-la-simulación.html#cb834-5" tabindex="-1"></a></span>
-<span id="cb834-6"><a href="capítulo-1-introducción-a-la-simulación.html#cb834-6" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb834-7"><a href="capítulo-1-introducción-a-la-simulación.html#cb834-7" tabindex="-1"></a>lanz <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">replace=</span><span class="cn">TRUE</span>, <span class="at">size=</span>n)</span>
-<span id="cb834-8"><a href="capítulo-1-introducción-a-la-simulación.html#cb834-8" tabindex="-1"></a>lanz</span></code></pre></div>
+<div class="sourceCode" id="cb837"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb837-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb837-1" tabindex="-1"></a>deMere <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">4</span>){</span>
+<span id="cb837-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb837-2" tabindex="-1"></a>  lanz <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">replace=</span><span class="cn">TRUE</span>, <span class="at">size=</span>n)</span>
+<span id="cb837-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb837-3" tabindex="-1"></a>  <span class="fu">return</span>(<span class="dv">6</span> <span class="sc">%in%</span> lanz)</span>
+<span id="cb837-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb837-4" tabindex="-1"></a>}</span>
+<span id="cb837-5"><a href="capítulo-1-introducción-a-la-simulación.html#cb837-5" tabindex="-1"></a></span>
+<span id="cb837-6"><a href="capítulo-1-introducción-a-la-simulación.html#cb837-6" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb837-7"><a href="capítulo-1-introducción-a-la-simulación.html#cb837-7" tabindex="-1"></a>lanz <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">replace=</span><span class="cn">TRUE</span>, <span class="at">size=</span>n)</span>
+<span id="cb837-8"><a href="capítulo-1-introducción-a-la-simulación.html#cb837-8" tabindex="-1"></a>lanz</span></code></pre></div>
 <pre><code>## [1] 3 5 1 6</code></pre>
-<div class="sourceCode" id="cb836"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb836-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb836-1" tabindex="-1"></a><span class="dv">6</span> <span class="sc">%in%</span> lanz</span></code></pre></div>
+<div class="sourceCode" id="cb839"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb839-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb839-1" tabindex="-1"></a><span class="dv">6</span> <span class="sc">%in%</span> lanz</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <hr />
 <ol start="2" style="list-style-type: lower-alpha">
@@ -631,12 +631,12 @@ apuesta (obtener al menos un 6 en <span class="math inline">\(n\)</span> lanzami
 <span class="math inline">\(1-(5/6)^{n}\)</span>.</li>
 </ol>
 <hr />
-<div class="sourceCode" id="cb838"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb838-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb838-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb838-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb838-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb838-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb838-3" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
-<span id="cb838-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb838-4" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">replicate</span>(nsim, <span class="fu">deMere</span>(n)))</span></code></pre></div>
+<div class="sourceCode" id="cb841"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb841-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb841-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb841-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb841-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb841-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb841-3" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb841-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb841-4" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">replicate</span>(nsim, <span class="fu">deMere</span>(n)))</span></code></pre></div>
 <pre><code>## [1] 0.5148</code></pre>
-<div class="sourceCode" id="cb840"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb840-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb840-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span>(<span class="dv">5</span><span class="sc">/</span><span class="dv">6</span>)<span class="sc">^</span>n</span></code></pre></div>
+<div class="sourceCode" id="cb843"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb843-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb843-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span>(<span class="dv">5</span><span class="sc">/</span><span class="dv">6</span>)<span class="sc">^</span>n</span></code></pre></div>
 <pre><code>## [1] 0.51775</code></pre>
 </div>
 <div id="sol-album" class="section level3 hasAnchor" number="15.1.5">
@@ -646,71 +646,71 @@ apuesta (obtener al menos un 6 en <span class="math inline">\(n\)</span> lanzami
 (álbum con <span class="math inline">\(n = 75\)</span> cromos y sobres con <span class="math inline">\(m = 6\)</span>). A partir de <span class="math inline">\(nsim=2000\)</span> simulaciones de coleccionistas de cromos, aproximar por simulación la evolución del proceso de compra de un coleccionista (número de cromos distintos dependiendo de los sobres comprados).</p>
 <hr />
 <p>Generamos <code>nsim = 2000</code> simulaciones de coleccionistas de cromos:</p>
-<div class="sourceCode" id="cb842"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb842-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-1" tabindex="-1"></a><span class="co"># Parámetros</span></span>
-<span id="cb842-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">75</span> <span class="co"># Número total de cromos</span></span>
-<span id="cb842-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-3" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">6</span>  <span class="co"># Número de cromos en cada sobre</span></span>
-<span id="cb842-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-4" tabindex="-1"></a>repe <span class="ot">&lt;-</span> <span class="cn">TRUE</span> <span class="co"># Repetición de cromos en cada sobre</span></span>
-<span id="cb842-5"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-5" tabindex="-1"></a></span>
-<span id="cb842-6"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-6" tabindex="-1"></a><span class="co"># Número de simulaciones</span></span>
-<span id="cb842-7"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-7" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
-<span id="cb842-8"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-8" tabindex="-1"></a></span>
-<span id="cb842-9"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-9" tabindex="-1"></a><span class="co"># Resultados simulación</span></span>
-<span id="cb842-10"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-10" tabindex="-1"></a>nsobres <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nsim)      <span class="co"># Número de sobres</span></span>
-<span id="cb842-11"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-11" tabindex="-1"></a>evol <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;list&quot;</span>, nsim)  <span class="co"># Evolución del número de cromos</span></span>
-<span id="cb842-12"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-12" tabindex="-1"></a><span class="co"># Por comodidad se podría haber fijado un número máximo de cromos</span></span>
-<span id="cb842-13"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-13" tabindex="-1"></a><span class="co"># evol &lt;- matrix(nrow = max_len, ncol = nsim)</span></span>
-<span id="cb842-14"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-14" tabindex="-1"></a></span>
-<span id="cb842-15"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-15" tabindex="-1"></a><span class="co"># Fijar semilla</span></span>
-<span id="cb842-16"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-16" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb842-17"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-17" tabindex="-1"></a><span class="co"># Bucle simulación</span></span>
-<span id="cb842-18"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-18" tabindex="-1"></a><span class="cf">for</span> (isim <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
-<span id="cb842-19"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-19" tabindex="-1"></a>  <span class="co"># seed &lt;- .Random.seed # .Random.seed &lt;- seed</span></span>
-<span id="cb842-20"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-20" tabindex="-1"></a>  <span class="co"># Simular</span></span>
-<span id="cb842-21"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-21" tabindex="-1"></a>  album <span class="ot">&lt;-</span> <span class="fu">logical</span>(n)</span>
-<span id="cb842-22"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-22" tabindex="-1"></a>  evolucion <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb842-23"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-23" tabindex="-1"></a>  i <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># Número de sobres</span></span>
-<span id="cb842-24"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-24" tabindex="-1"></a>  <span class="cf">repeat</span>{</span>
-<span id="cb842-25"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-25" tabindex="-1"></a>    i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb842-26"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-26" tabindex="-1"></a>    sobre <span class="ot">&lt;-</span> <span class="fu">sample</span>(n, m, <span class="at">replace =</span> repe)</span>
-<span id="cb842-27"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-27" tabindex="-1"></a>    album[sobre] <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
-<span id="cb842-28"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-28" tabindex="-1"></a>    ncromos <span class="ot">&lt;-</span> <span class="fu">sum</span>(album)</span>
-<span id="cb842-29"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-29" tabindex="-1"></a>    evolucion <span class="ot">&lt;-</span> <span class="fu">c</span>(evolucion, ncromos)</span>
-<span id="cb842-30"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-30" tabindex="-1"></a>    <span class="cf">if</span> (ncromos <span class="sc">==</span> n) {</span>
-<span id="cb842-31"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-31" tabindex="-1"></a>      nsobres[isim] <span class="ot">&lt;-</span> i</span>
-<span id="cb842-32"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-32" tabindex="-1"></a>      evol[[isim]] <span class="ot">&lt;-</span> evolucion</span>
-<span id="cb842-33"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-33" tabindex="-1"></a>      <span class="cf">break</span></span>
-<span id="cb842-34"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-34" tabindex="-1"></a>    }</span>
-<span id="cb842-35"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-35" tabindex="-1"></a>  }</span>
-<span id="cb842-36"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-36" tabindex="-1"></a>}</span>
-<span id="cb842-37"><a href="capítulo-1-introducción-a-la-simulación.html#cb842-37" tabindex="-1"></a><span class="co"># simres::plot.sr(nsobres)</span></span></code></pre></div>
+<div class="sourceCode" id="cb845"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb845-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-1" tabindex="-1"></a><span class="co"># Parámetros</span></span>
+<span id="cb845-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">75</span> <span class="co"># Número total de cromos</span></span>
+<span id="cb845-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-3" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">6</span>  <span class="co"># Número de cromos en cada sobre</span></span>
+<span id="cb845-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-4" tabindex="-1"></a>repe <span class="ot">&lt;-</span> <span class="cn">TRUE</span> <span class="co"># Repetición de cromos en cada sobre</span></span>
+<span id="cb845-5"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-5" tabindex="-1"></a></span>
+<span id="cb845-6"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-6" tabindex="-1"></a><span class="co"># Número de simulaciones</span></span>
+<span id="cb845-7"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-7" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
+<span id="cb845-8"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-8" tabindex="-1"></a></span>
+<span id="cb845-9"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-9" tabindex="-1"></a><span class="co"># Resultados simulación</span></span>
+<span id="cb845-10"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-10" tabindex="-1"></a>nsobres <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nsim)      <span class="co"># Número de sobres</span></span>
+<span id="cb845-11"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-11" tabindex="-1"></a>evol <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;list&quot;</span>, nsim)  <span class="co"># Evolución del número de cromos</span></span>
+<span id="cb845-12"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-12" tabindex="-1"></a><span class="co"># Por comodidad se podría haber fijado un número máximo de cromos</span></span>
+<span id="cb845-13"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-13" tabindex="-1"></a><span class="co"># evol &lt;- matrix(nrow = max_len, ncol = nsim)</span></span>
+<span id="cb845-14"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-14" tabindex="-1"></a></span>
+<span id="cb845-15"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-15" tabindex="-1"></a><span class="co"># Fijar semilla</span></span>
+<span id="cb845-16"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-16" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb845-17"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-17" tabindex="-1"></a><span class="co"># Bucle simulación</span></span>
+<span id="cb845-18"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-18" tabindex="-1"></a><span class="cf">for</span> (isim <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
+<span id="cb845-19"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-19" tabindex="-1"></a>  <span class="co"># seed &lt;- .Random.seed # .Random.seed &lt;- seed</span></span>
+<span id="cb845-20"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-20" tabindex="-1"></a>  <span class="co"># Simular</span></span>
+<span id="cb845-21"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-21" tabindex="-1"></a>  album <span class="ot">&lt;-</span> <span class="fu">logical</span>(n)</span>
+<span id="cb845-22"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-22" tabindex="-1"></a>  evolucion <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb845-23"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-23" tabindex="-1"></a>  i <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># Número de sobres</span></span>
+<span id="cb845-24"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-24" tabindex="-1"></a>  <span class="cf">repeat</span>{</span>
+<span id="cb845-25"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-25" tabindex="-1"></a>    i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb845-26"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-26" tabindex="-1"></a>    sobre <span class="ot">&lt;-</span> <span class="fu">sample</span>(n, m, <span class="at">replace =</span> repe)</span>
+<span id="cb845-27"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-27" tabindex="-1"></a>    album[sobre] <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb845-28"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-28" tabindex="-1"></a>    ncromos <span class="ot">&lt;-</span> <span class="fu">sum</span>(album)</span>
+<span id="cb845-29"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-29" tabindex="-1"></a>    evolucion <span class="ot">&lt;-</span> <span class="fu">c</span>(evolucion, ncromos)</span>
+<span id="cb845-30"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-30" tabindex="-1"></a>    <span class="cf">if</span> (ncromos <span class="sc">==</span> n) {</span>
+<span id="cb845-31"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-31" tabindex="-1"></a>      nsobres[isim] <span class="ot">&lt;-</span> i</span>
+<span id="cb845-32"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-32" tabindex="-1"></a>      evol[[isim]] <span class="ot">&lt;-</span> evolucion</span>
+<span id="cb845-33"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-33" tabindex="-1"></a>      <span class="cf">break</span></span>
+<span id="cb845-34"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-34" tabindex="-1"></a>    }</span>
+<span id="cb845-35"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-35" tabindex="-1"></a>  }</span>
+<span id="cb845-36"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-36" tabindex="-1"></a>}</span>
+<span id="cb845-37"><a href="capítulo-1-introducción-a-la-simulación.html#cb845-37" tabindex="-1"></a><span class="co"># simres::plot.sr(nsobres)</span></span></code></pre></div>
 <p><code>evol</code> contiene las realizaciones de la cadena de Markov.</p>
-<div class="sourceCode" id="cb843"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb843-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb843-1" tabindex="-1"></a><span class="co"># plot(evol[[1]], type = &quot;l&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb846"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb846-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb846-1" tabindex="-1"></a><span class="co"># plot(evol[[1]], type = &quot;l&quot;)</span></span></code></pre></div>
 <p>Combinar realizaciones del proceso (evoluciones del número de cromos):</p>
-<div class="sourceCode" id="cb844"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb844-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb844-1" tabindex="-1"></a><span class="co"># Se extienden a la máxima longitud</span></span>
-<span id="cb844-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb844-2" tabindex="-1"></a>max_len <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">lengths</span>(evol)) <span class="co"># max(sapply(evol, length))</span></span>
-<span id="cb844-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb844-3" tabindex="-1"></a>evol <span class="ot">&lt;-</span> <span class="fu">sapply</span>(evol, <span class="cf">function</span>(x) <span class="fu">c</span>(x, <span class="fu">rep</span>(n, max_len <span class="sc">-</span> <span class="fu">length</span>(x))))</span>
-<span id="cb844-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb844-4" tabindex="-1"></a><span class="fu">str</span>(evol)</span></code></pre></div>
+<div class="sourceCode" id="cb847"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb847-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb847-1" tabindex="-1"></a><span class="co"># Se extienden a la máxima longitud</span></span>
+<span id="cb847-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb847-2" tabindex="-1"></a>max_len <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">lengths</span>(evol)) <span class="co"># max(sapply(evol, length))</span></span>
+<span id="cb847-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb847-3" tabindex="-1"></a>evol <span class="ot">&lt;-</span> <span class="fu">sapply</span>(evol, <span class="cf">function</span>(x) <span class="fu">c</span>(x, <span class="fu">rep</span>(n, max_len <span class="sc">-</span> <span class="fu">length</span>(x))))</span>
+<span id="cb847-4"><a href="capítulo-1-introducción-a-la-simulación.html#cb847-4" tabindex="-1"></a><span class="fu">str</span>(evol)</span></code></pre></div>
 <pre><code>##  num [1:167, 1:2000] 6 12 16 21 23 25 30 34 37 38 ...</code></pre>
 <p>Aproximar cuantiles (intervalos de predicción):</p>
-<div class="sourceCode" id="cb846"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb846-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb846-1" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
-<span id="cb846-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb846-2" tabindex="-1"></a>limits <span class="ot">&lt;-</span> <span class="fu">apply</span>(evol, <span class="dv">1</span>, quantile, <span class="at">probs =</span> <span class="fu">c</span>(alpha, <span class="fl">0.5</span>, <span class="dv">1</span><span class="sc">-</span>alpha))</span>
-<span id="cb846-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb846-3" tabindex="-1"></a><span class="fu">str</span>(limits)</span></code></pre></div>
+<div class="sourceCode" id="cb849"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb849-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb849-1" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb849-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb849-2" tabindex="-1"></a>limits <span class="ot">&lt;-</span> <span class="fu">apply</span>(evol, <span class="dv">1</span>, quantile, <span class="at">probs =</span> <span class="fu">c</span>(alpha, <span class="fl">0.5</span>, <span class="dv">1</span><span class="sc">-</span>alpha))</span>
+<span id="cb849-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb849-3" tabindex="-1"></a><span class="fu">str</span>(limits)</span></code></pre></div>
 <pre><code>##  num [1:3, 1:167] 5 6 6 10 11 12 14 16 18 18 ...
 ##  - attr(*, &quot;dimnames&quot;)=List of 2
 ##   ..$ : chr [1:3] &quot;5%&quot; &quot;50%&quot; &quot;95%&quot;
 ##   ..$ : NULL</code></pre>
 <p>Ejemplo, aproximación de los límites (y mediana) para el número de cromos en el álbum después de comprar 20 sobres:</p>
-<div class="sourceCode" id="cb848"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb848-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb848-1" tabindex="-1"></a>limits[, <span class="dv">20</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb851"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb851-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb851-1" tabindex="-1"></a>limits[, <span class="dv">20</span>]</span></code></pre></div>
 <pre><code>##  5% 50% 95% 
 ##  55  60  64</code></pre>
-<div class="sourceCode" id="cb850"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb850-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb850-1" tabindex="-1"></a><span class="fu">hist</span>(evol[<span class="dv">20</span>, ], <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb850-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb850-2" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Número de cromos distintos (en 20 sobres)&quot;</span>)</span>
-<span id="cb850-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb850-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> limits[, <span class="dv">20</span>], <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb853"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb853-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb853-1" tabindex="-1"></a><span class="fu">hist</span>(evol[<span class="dv">20</span>, ], <span class="at">breaks =</span> <span class="st">&quot;FD&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb853-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb853-2" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Número de cromos distintos (en 20 sobres)&quot;</span>)</span>
+<span id="cb853-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb853-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> limits[, <span class="dv">20</span>], <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="25-Soluciones_files/figure-html/unnamed-chunk-13-1.png" alt="" width="80%" style="display: block; margin: auto;" /></p>
 <p>Representar las realizaciones del proceso y los intervalos de predicción puntuales:</p>
-<div class="sourceCode" id="cb851"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb851-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb851-1" tabindex="-1"></a><span class="fu">matplot</span>(<span class="dv">1</span><span class="sc">:</span>max_len, evol, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;lightgray&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>,</span>
-<span id="cb851-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb851-2" tabindex="-1"></a>    <span class="at">xlab=</span><span class="st">&quot;Número de sobres&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Número de cromos distintos&quot;</span>)</span>
-<span id="cb851-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb851-3" tabindex="-1"></a><span class="fu">matlines</span>(<span class="dv">1</span><span class="sc">:</span>max_len, <span class="fu">t</span>(limits), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">col =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb854"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb854-1"><a href="capítulo-1-introducción-a-la-simulación.html#cb854-1" tabindex="-1"></a><span class="fu">matplot</span>(<span class="dv">1</span><span class="sc">:</span>max_len, evol, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;lightgray&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>,</span>
+<span id="cb854-2"><a href="capítulo-1-introducción-a-la-simulación.html#cb854-2" tabindex="-1"></a>    <span class="at">xlab=</span><span class="st">&quot;Número de sobres&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Número de cromos distintos&quot;</span>)</span>
+<span id="cb854-3"><a href="capítulo-1-introducción-a-la-simulación.html#cb854-3" tabindex="-1"></a><span class="fu">matlines</span>(<span class="dv">1</span><span class="sc">:</span>max_len, <span class="fu">t</span>(limits), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">col =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="25-Soluciones_files/figure-html/unnamed-chunk-14-1.png" alt="" width="80%" style="display: block; margin: auto;" /></p>
 </div>
 </div>

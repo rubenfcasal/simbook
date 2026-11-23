@@ -68,6 +68,4 @@ Shao, J. (2003). *Mathematical statistics*. Springer.
 - Wickham, H. (2015). *[R packages: organize, test, document, and share your code](http://r-pkgs.had.co.nz/)* (actualmente 2ª edición en desarrollo con H. Bryan), [O'Reilly, 1ª edición](http://shop.oreilly.com/product/0636920034421.do).
 
 
-# Bibliografía {-}
-
 

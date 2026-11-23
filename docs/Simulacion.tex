@@ -237,7 +237,7 @@
 
 \title{Técnicas de Simulación y Remuestreo}
 \author{Rubén Fernández Casal (\href{mailto:ruben.fcasal@udc.es}{\nolinkurl{ruben.fcasal@udc.es}}) \and Ricardo Cao (\href{mailto:rcao@udc.es}{\nolinkurl{rcao@udc.es}}) \and Julián Costa (\href{mailto:julian.costa@udc.es}{\nolinkurl{julian.costa@udc.es}})}
-\date{Edición: Enero de 2023. Impresión: 2026-11-19}
+\date{Edición: Enero de 2023. Impresión: 2026-11-23}
 
 \begin{document}
 \maketitle
@@ -948,10 +948,10 @@ Ejemplo:
 \begin{verbatim}
  ## Tiempo última operación:
  ##    user  system elapsed 
- ##    0.03    0.00    0.04 
+ ##    0.00    0.03    0.03 
  ## Tiempo total operación:
  ##    user  system elapsed 
- ##    0.03    0.00    0.04
+ ##    0.00    0.03    0.03
 \end{verbatim}
 
 \begin{Shaded}
@@ -967,7 +967,7 @@ Ejemplo:
  ##       0       0       0 
  ## Tiempo total operación:
  ##    user  system elapsed 
- ##    0.03    0.00    0.04
+ ##    0.00    0.03    0.03
 \end{verbatim}
 
 La función \href{https://rubenfcasal.github.io/simres/reference/cpu.time.html}{\texttt{cpu.time()}} del paquete \href{https://rubenfcasal.github.io/simres}{\texttt{simres}} implementa una aproximación similar:
@@ -1045,8 +1045,8 @@ Si se desea ir almacenando automáticamente los tiempos de computación, puede s
 
 \begin{verbatim}
  ## 'data.frame':   10 obs. of  4 variables:
- ##  $ tic         : num  6.17 6.17 6.17 6.17 6.17 6.17 6.17 6.17 6.18 6.18
- ##  $ toc         : num  6.17 6.17 6.17 6.17 6.17 6.17 6.17 6.18 6.18 6.18
+ ##  $ tic         : num  7.2 7.2 7.2 7.2 7.2 7.2 7.2 7.2 7.2 7.2
+ ##  $ toc         : num  7.2 7.2 7.2 7.2 7.2 7.2 7.2 7.2 7.2 7.2
  ##  $ msg         : chr  "1" "2" "3" "4" ...
  ##  $ callback_msg: chr  "1: 0 sec elapsed" "2: 0 sec elapsed" "3: 0 sec "..
 \end{verbatim}
@@ -1063,7 +1063,7 @@ Si se desea ir almacenando automáticamente los tiempos de computación, puede s
 
 \begin{verbatim}
  ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- ##   0.000   0.000   0.000   0.001   0.000   0.010
+ ##       0       0       0       0       0       0
 \end{verbatim}
 
 Hay que tener en cuenta que, por construcción, aunque se realicen en la mismas condiciones (en el mismo equipo), los tiempos de CPU en R pueden variar ``ligeramente'' entre ejecuciones.
@@ -1231,7 +1231,7 @@ Este método está implementado (no de la forma más eficiente\footnote{Para evi
  ##   # Devolver valores
  ##   return(u)
  ## }
- ## <bytecode: 0x000001695fd76a38>
+ ## <bytecode: 0x00000196ec576ae0>
  ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -1611,7 +1611,7 @@ Por ejemplo, se podría emplear la función \href{https://rubenfcasal.github.io/
  ##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
  ##                    method = METHOD, data.name = DNAME), RESULTS), class = "htest")
  ## }
- ## <bytecode: 0x0000016963c19a38>
+ ## <bytecode: 0x00000196e775ca38>
  ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -2098,7 +2098,7 @@ Este algoritmo está implementado en la función \href{https://rubenfcasal.githu
  ##   # Devolver valores
  ##   return(u)
  ## }
- ## <bytecode: 0x00000169641b1840>
+ ## <bytecode: 0x00000196e822eea0>
  ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -3051,7 +3051,7 @@ Para generar \(10^{4}\) valores de la distribución doble exponencial de paráme
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##       0       0       0
+ ##    0.02    0.00    0.02
 \end{verbatim}
 
 Podemos representar la distribución de los valores generados, comparándola con la densidad teórica:
@@ -3333,7 +3333,7 @@ Empleando estas funciones podemos generar una muestra de \(10^3\) observaciones 
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##    0.01    0.00    0.01
+ ##    0.02    0.00    0.02
 \end{verbatim}
 
 Para analizar la eficiencia podemos emplear el número de generaciones de la distribución auxiliar (siguiente sección):
@@ -3524,7 +3524,7 @@ Generamos una muestra de \(10^4\) observaciones:
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##    0.05    0.00    0.04
+ ##    0.05    0.00    0.05
 \end{verbatim}
 
 Evaluamos la eficiencia:
@@ -4070,7 +4070,7 @@ El correspondiente algoritmo está implementado en la función \href{https://rub
  ##   attr(x, "ngen") <- ngen
  ##   return(x)
  ## }
- ## <bytecode: 0x0000022c23e5b1b8>
+ ## <bytecode: 0x000001d4374531b8>
  ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -4507,7 +4507,7 @@ Este algoritmo está implementado en la función \href{https://rubenfcasal.githu
  ##   attr(X, "ncomp") <- ncomp
  ##   return(X)
  ## }
- ## <bytecode: 0x000002601220fd10>
+ ## <bytecode: 0x000002723a00fd10>
  ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -4536,7 +4536,7 @@ Empleamos la rutina anterior para generar las simulaciones:
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##    0.02    0.00    0.01
+ ##    0.01    0.00    0.01
 \end{verbatim}
 
 A partir de ellas podríamos aproximar el valor esperado:
@@ -4688,7 +4688,7 @@ Podemos repetir la simulación del Ejemplo \ref{exm:binom-cuant} anterior ordena
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##    0.02    0.00    0.01
+ ##       0       0       0
 \end{verbatim}
 
 \begin{Shaded}
@@ -4829,7 +4829,7 @@ Este algoritmo está implementado en la función \href{https://rubenfcasal.githu
  ##   attr(X, "ncomp") <- ncomp
  ##   return(X)
  ## }
- ## <bytecode: 0x0000026012209338>
+ ## <bytecode: 0x000002723a003338>
  ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -4847,7 +4847,7 @@ Repetimos la simulación del Ejemplo \ref{exm:binom-cuant} anterior empleando es
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##    0.02    0.00    0.01
+ ##    0.01    0.00    0.01
 \end{verbatim}
 
 Número medio de comparaciones:
@@ -5000,7 +5000,7 @@ Este método también está implementado en la función \href{https://rubenfcasa
  ##   if(as.factor) X <- factor(X, levels = x)
  ##   return(X)
  ## }
- ## <bytecode: 0x0000026015374430>
+ ## <bytecode: 0x000002723d170430>
  ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -5323,7 +5323,7 @@ hipergeométrica (\texttt{dhyper(x,\ m,\ n,\ k)}) de parámetros \(m\) los dos �
 \chapter{Simulación de distribuciones multivariantes}\label{multivariante}
 
 La simulación de vectores aleatorios \(\mathbf{X} = \left( X_1, X_2, \ldots, X_d\right)\) que sigan cierta distribución dada no es tarea siempre sencilla.
-En general, no resulta una extensión inmediata del caso unidimensional, aunque muchos de los algoritmos descritos en los temas anteriores (como el de aceptación-rechazo o el de composición) son válidos para distribuciones multivariantes.
+En general, no resulta una extensión inmediata del caso univariante, aunque muchos de los algoritmos descritos en los temas anteriores (como el de aceptación-rechazo o el de composición) son válidos para distribuciones multivariantes.
 En este caso sin embargo, puede ser mucho más difícil cumplir los requerimientos (e.g.~encontrar una densidad auxiliar adecuada) y los algoritmos obtenidos pueden ser computacionalmente poco eficientes (especialmente si el número de dimensiones es grande).
 
 En las primeras secciones de este capítulo supondremos que se pretende simular una variable aleatoria multidimensional continua \(\mathbf{X}\) con función de densidad conjunta \(f\left( x_1, x_2, \ldots , x_d\right)\) (aunque muchos resultados serán válidos para variables discretas multidimensionales, simplemente cambiando funciones de densidad por las correspondientes de masa de probabilidad).
@@ -5379,7 +5379,7 @@ Por ejemplo en el caso bidimensional con \(X_1 \sim \mathcal{N}\left( 0, 1\right
 
 \begin{figure}[!htbp]
 
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/normind-plot-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multivariante_files/figure-latex/normind-plot-1} 
 
 }
 
@@ -5503,7 +5503,7 @@ definir y representar la densidad objetivo con el siguiente código:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-3-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{06-Simulacion_multivariante_files/figure-latex/unnamed-chunk-3-1} \end{center}
 
 Las siguientes funciones implementan el método de aceptación-rechazo para simular
 valores de la densidad objetivo (de forma similar al los ejemplos mostrados
@@ -5549,7 +5549,7 @@ distribución objetivo, obteniendo de paso el tiempo de CPU:
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##       0       0       0
+ ##    0.01    0.00    0.02
 \end{verbatim}
 
 \begin{Shaded}
@@ -5616,7 +5616,7 @@ no paramétrica de la densidad con soporte acotado):
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-7-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{06-Simulacion_multivariante_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
 \end{example}
 
@@ -5730,7 +5730,7 @@ Así, si \(d=2\) se tiene \(c=1.27\), si \(d=3\) se tiene \(c=1.91\), si \(d=4\)
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/unnamed-chunk-8-1} \end{center}
+\begin{center}\includegraphics[width=0.75\linewidth]{06-Simulacion_multivariante_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
 Esto está relacionado con la \emph{maldición de la dimensionalidad} (curse of dimensionality), a medida que aumenta el número de dimensiones el volumen de la ``frontera'' crece exponencialmente \citep[ver p.e.][\href{https://rubenfcasal.github.io/aprendizaje_estadistico/dimen-curse.html}{sec.~1.4}]{mpaebook2024}.
 \end{example}
@@ -5867,7 +5867,7 @@ y para simular \texttt{nsim}:
 
 \begin{figure}[!htbp]
 
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/funcional-plot-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multivariante_files/figure-latex/funcional-plot-1} 
 
 }
 
@@ -5914,7 +5914,7 @@ del paquete \texttt{MASS} que emplea la factorización espectral (\texttt{eigen}
  ##         drop(X)
  ##     else t(X)
  ## }
- ## <bytecode: 0x00000247b8b738b8>
+ ## <bytecode: 0x0000026c1f7c1a18>
  ## <environment: namespace:MASS>
 \end{verbatim}
 
@@ -5929,7 +5929,7 @@ del paquete \texttt{MASS} que emplea la factorización espectral (\texttt{eigen}
 
 \begin{figure}[!htbp]
 
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/funcional-plot2-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multivariante_files/figure-latex/funcional-plot2-1} 
 
 }
 
@@ -6230,7 +6230,7 @@ Finalmente generamos las simulaciones condicionales empleando el método de fact
 
 \begin{figure}[!htbp]
 
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/funcional-cond-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multivariante_files/figure-latex/funcional-cond-1} 
 
 }
 
@@ -6378,7 +6378,7 @@ Por ejemplo, para generar 4 simulaciones en la rejilla regular \(10\times10\) en
 
 \begin{figure}[!htbp]
 
-{\centering \includegraphics[width=0.7\linewidth]{06-Simulacion_multidimensional_files/figure-latex/pos-sp-simcond-1} 
+{\centering \includegraphics[width=0.7\linewidth]{06-Simulacion_multivariante_files/figure-latex/pos-sp-simcond-1} 
 
 }
 
@@ -6412,7 +6412,7 @@ Si las representamos podemos confirmar que los valores en las posiciones \(\left
 
 \begin{figure}[!htbp]
 
-{\centering \includegraphics[width=0.9\linewidth]{06-Simulacion_multidimensional_files/figure-latex/krige-simcond-1} 
+{\centering \includegraphics[width=0.9\linewidth]{06-Simulacion_multivariante_files/figure-latex/krige-simcond-1} 
 
 }
 
@@ -6447,7 +6447,7 @@ Por ejemplo, en el caso de series de tiempo, el paquete \texttt{forecast} permit
 
 \begin{figure}[!htbp]
 
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/co2-forecast-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multivariante_files/figure-latex/co2-forecast-1} 
 
 }
 
@@ -6503,7 +6503,7 @@ Para análisis adicionales nos puede interesar generar simulaciones (por defecto
 
 \begin{figure}[!htbp]
 
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/simulate-forecast-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multivariante_files/figure-latex/simulate-forecast-1} 
 
 }
 
@@ -6611,7 +6611,7 @@ Utilizando esta función generamos una muestra de tamaño 10000 y representamos 
 
 \begin{figure}[!htbp]
 
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton2-dispersion-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multivariante_files/figure-latex/cclayton2-dispersion-1} 
 
 }
 
@@ -6629,7 +6629,7 @@ Podemos representar la densidad conjunta (con \texttt{sm::sm.density()}) ({[}Fig
 
 \begin{figure}[!htbp]
 
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton2-conjunta-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multivariante_files/figure-latex/cclayton2-conjunta-1} 
 
 }
 
@@ -6651,7 +6651,7 @@ y las distribuciones marginales ({[}Figura \ref{fig:cclayton2-marginales}):
 
 \begin{figure}[!htbp]
 
-{\centering \includegraphics[width=0.9\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton2-marginales-1} 
+{\centering \includegraphics[width=0.9\linewidth]{06-Simulacion_multivariante_files/figure-latex/cclayton2-marginales-1} 
 
 }
 
@@ -6671,7 +6671,7 @@ Empleando el paquete \emph{copula} (Figuras: \ref{fig:cclayton2b-dispersion}, \r
 
 \begin{figure}[!htbp]
 
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton2b-dispersion-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multivariante_files/figure-latex/cclayton2b-dispersion-1} 
 
 }
 
@@ -6692,7 +6692,7 @@ Empleando el paquete \emph{copula} (Figuras: \ref{fig:cclayton2b-dispersion}, \r
 
 \begin{figure}[!htbp]
 
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton3-dispersion-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multivariante_files/figure-latex/cclayton3-dispersion-1} 
 
 }
 
@@ -6710,7 +6710,7 @@ Por ejemplo, podemos generar una muestra de una variable aleatoria bidimensional
 
 \begin{figure}[!htbp]
 
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton-exp-conjunta-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multivariante_files/figure-latex/cclayton-exp-conjunta-1} 
 
 }
 
@@ -6731,7 +6731,7 @@ Por ejemplo, podemos generar una muestra de una variable aleatoria bidimensional
 
 \begin{figure}[!htbp]
 
-{\centering \includegraphics[width=0.9\linewidth]{06-Simulacion_multidimensional_files/figure-latex/cclayton-exp-marginales-1} 
+{\centering \includegraphics[width=0.9\linewidth]{06-Simulacion_multivariante_files/figure-latex/cclayton-exp-marginales-1} 
 
 }
 
@@ -7198,7 +7198,7 @@ A partir de las cuales podemos aproximar por simulación la distribución exacta
 
 \begin{figure}[!htbp]
 
-{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multidimensional_files/figure-latex/chi2-plot-1} 
+{\centering \includegraphics[width=0.75\linewidth]{06-Simulacion_multivariante_files/figure-latex/chi2-plot-1} 
 
 }
 
@@ -7361,7 +7361,7 @@ Una alternativa más eficiente para representar gráficamente la convergencia es
  ##   }
  ##   return(result)
  ## }
- ## <bytecode: 0x0000013a44dc0eb8>
+ ## <bytecode: 0x000001dd025baeb8>
  ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -11386,16 +11386,15 @@ El siguiente código implementa el método bootstrap uniforme (también llamado 
 \NormalTok{theta }\OtherTok{\textless{}{-}} \DecValTok{1}
 \NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{50}
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
-\NormalTok{muestra }\OtherTok{\textless{}{-}} \FunctionTok{runif}\NormalTok{(}\DecValTok{50}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ theta}
+\NormalTok{muestra }\OtherTok{\textless{}{-}} \FunctionTok{runif}\NormalTok{(}\DecValTok{50}\NormalTok{, }\DecValTok{0}\NormalTok{, theta) }\CommentTok{\# runif(50) * theta}
 \NormalTok{theta\_est }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(muestra)}
 \CommentTok{\# Remuestreo}
 \NormalTok{B }\OtherTok{\textless{}{-}} \DecValTok{2000}
-\NormalTok{maximo }\OtherTok{\textless{}{-}} \FunctionTok{numeric}\NormalTok{(B)}
 \NormalTok{estadistico }\OtherTok{\textless{}{-}} \FunctionTok{numeric}\NormalTok{(B)}
 \ControlFlowTok{for}\NormalTok{ (k }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{B) \{}
 \NormalTok{    remuestra }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(muestra, n, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{)}
-\NormalTok{    maximo[k] }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(remuestra)}
-\NormalTok{    estadistico[k] }\OtherTok{\textless{}{-}}\NormalTok{ maximo[k] }\SpecialCharTok{{-}}\NormalTok{ theta\_est}
+\NormalTok{    theta\_boot }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(remuestra)}
+\NormalTok{    estadistico[k] }\OtherTok{\textless{}{-}}\NormalTok{ theta\_boot }\SpecialCharTok{{-}}\NormalTok{ theta\_est}
 \NormalTok{\}}
 \CommentTok{\# Distribución estadístico}
 \NormalTok{xlim }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{theta}\SpecialCharTok{/}\DecValTok{2}\NormalTok{, }\DecValTok{0}\NormalTok{) }\CommentTok{\# c({-}theta, 0)}
@@ -11461,7 +11460,7 @@ es el contraste de hipótesis que se tratará en la Sección \ref{contrastes-par
 
 Continuando con el Ejemplo \ref{exm:media-dt-desconocida} del tiempo de vida de microorganismos, podríamos pensar en emplear bootstrap paramétrico para calcular un intervalo de confianza para la media poblacional.
 
-La valided de los resultados dependerá en gran medida de que el modelo paramétrico sea adecuado para describir la variabilidad de los datos.
+La validez de los resultados dependerá en gran medida de que el modelo paramétrico sea adecuado para describir la variabilidad de los datos.
 En este caso parece razonable asumir una distribución exponencial (no lo es que el modelo admita tiempos de vida negativos, como ocurriría al asumir normalidad) ({[}Figura \ref{fig:boot-par-aprox}):
 
 \begin{Shaded}
@@ -11493,26 +11492,26 @@ Podemos modificar fácilmente el código mostrado en el Ejemplo \ref{exm:media-d
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(muestra)}
-\NormalTok{alfa }\OtherTok{\textless{}{-}} \FloatTok{0.05}
 \CommentTok{\# Estimaciones muestrales}
-\NormalTok{x\_barra }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(muestra)}
-\NormalTok{cuasi\_dt }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(muestra)}
+\NormalTok{estimador }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(muestra)}
+\NormalTok{ee\_estimador }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(muestra)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(n)}
 \CommentTok{\# Remuestreo}
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
 \NormalTok{B }\OtherTok{\textless{}{-}} \DecValTok{1000}
 \NormalTok{estadistico\_boot }\OtherTok{\textless{}{-}} \FunctionTok{numeric}\NormalTok{(B)}
 \ControlFlowTok{for}\NormalTok{ (k }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{B) \{}
   \CommentTok{\# remuestra \textless{}{-} sample(muestra, n, replace = TRUE)}
-\NormalTok{  remuestra }\OtherTok{\textless{}{-}} \FunctionTok{rexp}\NormalTok{(n, }\DecValTok{1}\SpecialCharTok{/}\NormalTok{x\_barra)}
-\NormalTok{  x\_barra\_boot }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(remuestra)}
-\NormalTok{  cuasi\_dt\_boot }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(remuestra)}
-\NormalTok{  estadistico\_boot[k] }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(n) }\SpecialCharTok{*}\NormalTok{ (x\_barra\_boot }\SpecialCharTok{{-}}\NormalTok{ x\_barra)}\SpecialCharTok{/}\NormalTok{cuasi\_dt\_boot}
+\NormalTok{  remuestra }\OtherTok{\textless{}{-}} \FunctionTok{rexp}\NormalTok{(n, }\DecValTok{1}\SpecialCharTok{/}\NormalTok{estimador)}
+\NormalTok{  estimador\_boot }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(remuestra)}
+\NormalTok{  ee\_estimador\_boot }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(remuestra)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(n)}
+\NormalTok{  estadistico\_boot[k] }\OtherTok{\textless{}{-}}\NormalTok{ (estimador\_boot }\SpecialCharTok{{-}}\NormalTok{ estimador)}\SpecialCharTok{/}\NormalTok{ee\_estimador\_boot}
 \NormalTok{\}}
 \CommentTok{\# Aproximación Monte Carlo de los ptos críticos:}
+\NormalTok{alfa }\OtherTok{\textless{}{-}} \FloatTok{0.05}
 \NormalTok{pto\_crit }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(estadistico\_boot, }\FunctionTok{c}\NormalTok{(alfa}\SpecialCharTok{/}\DecValTok{2}\NormalTok{, }\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ alfa}\SpecialCharTok{/}\DecValTok{2}\NormalTok{))}
 \CommentTok{\# Construcción del IC}
-\NormalTok{ic\_inf\_boot }\OtherTok{\textless{}{-}}\NormalTok{ x\_barra }\SpecialCharTok{{-}}\NormalTok{ pto\_crit[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ cuasi\_dt}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(n)}
-\NormalTok{ic\_sup\_boot }\OtherTok{\textless{}{-}}\NormalTok{ x\_barra }\SpecialCharTok{{-}}\NormalTok{ pto\_crit[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ cuasi\_dt}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(n)}
+\NormalTok{ic\_inf\_boot }\OtherTok{\textless{}{-}}\NormalTok{ estimador  }\SpecialCharTok{{-}}\NormalTok{ pto\_crit[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ ee\_estimador}
+\NormalTok{ic\_sup\_boot }\OtherTok{\textless{}{-}}\NormalTok{ estimador  }\SpecialCharTok{{-}}\NormalTok{ pto\_crit[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ ee\_estimador}
 \NormalTok{IC\_boot }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(ic\_inf\_boot, ic\_sup\_boot)}
 \FunctionTok{names}\NormalTok{(IC\_boot) }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\DecValTok{100}\SpecialCharTok{*}\FunctionTok{c}\NormalTok{(alfa}\SpecialCharTok{/}\DecValTok{2}\NormalTok{, }\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alfa}\SpecialCharTok{/}\DecValTok{2}\NormalTok{), }\StringTok{"\%"}\NormalTok{)}
 \NormalTok{IC\_boot}
@@ -11572,6 +11571,45 @@ tiempo de vida de los microorganismos, podríamos utilizar el siguiente código:
 
 \end{example}
 
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+El argumento \texttt{mle} puede ser cualquier tipo de objeto con lo requerido por \texttt{ran.gen()} para generar las remuestras.
+Normalmente será un vector o una lista.
+Por ejemplo, en el caso multivariante \texttt{mle} puede ser una lista que contenga el vector de medias y la matriz de covarianzas (o su factorización de Cholesky; ver Sección \ref{fact-cov}).
+
+\begin{exercise}
+\protect\hypertarget{exr:boot-lnorm}{}\label{exr:boot-lnorm}
+
+Continuando con los ejemplos anteriores, también podría ser razonable considerar que la distribución del tiempo de vida de microorganismos es una log-normal.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Ajuste lognormal}
+\CommentTok{\# MASS::fitdistr(muestra, "lognormal") \# MLE}
+\NormalTok{logx }\OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(muestra)}
+\NormalTok{meanlog }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(logx)}
+\NormalTok{sdlog }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(logx) }\CommentTok{\# Insesgado, no es el MLE}
+\CommentTok{\# Representación}
+\FunctionTok{hist}\NormalTok{(muestra, }\AttributeTok{breaks =} \StringTok{"FD"}\NormalTok{, }\AttributeTok{freq =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{1.1}\NormalTok{))}
+\FunctionTok{curve}\NormalTok{(}\FunctionTok{dlnorm}\NormalTok{(x, meanlog, sdlog), }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{add =} \ConstantTok{TRUE}\NormalTok{)}
+\CommentTok{\# Contraste}
+\CommentTok{\# goftest::ad.test(muestra, null = "plnorm", meanlog = meanlog, sdlog = sdlog, estimated = TRUE)}
+\CommentTok{\# Parámetros estimados}
+\NormalTok{mle }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{meanlog =}\NormalTok{ meanlog, }\AttributeTok{sdlog =}\NormalTok{ sdlog)}
+\NormalTok{mle}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ ##  meanlog    sdlog 
+ ## -0.53306  0.86250
+\end{verbatim}
+
+\begin{center}\includegraphics[width=0.75\linewidth]{10-Bootstrap_ext_files/figure-latex/unnamed-chunk-1-1} \end{center}
+
+Aproximar mediante bootstrap paramétrico, asumiendo una distribución lognormal, la distribución de la media muestral del tiempo de vida de los microorganismos.
+\end{exercise}
+
 \begin{example}[Inferencia sobre el máximo de una distribución uniforme, continuación]
 \protect\hypertarget{exm:boot-maximo-parametrico}{}\label{exm:boot-maximo-parametrico}
 
@@ -11600,12 +11638,11 @@ del ejemplo original ({[}Figura \ref{fig:boot-parametrico-maximo}):
 \begin{Highlighting}[]
 \CommentTok{\# Remuestreo}
 \NormalTok{B }\OtherTok{\textless{}{-}} \DecValTok{2000}
-\NormalTok{maximo }\OtherTok{\textless{}{-}} \FunctionTok{numeric}\NormalTok{(B)}
 \NormalTok{estadistico }\OtherTok{\textless{}{-}} \FunctionTok{numeric}\NormalTok{(B)}
 \ControlFlowTok{for}\NormalTok{ (k }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{B) \{}
-\NormalTok{    remuestra }\OtherTok{\textless{}{-}} \FunctionTok{runif}\NormalTok{(n) }\SpecialCharTok{*}\NormalTok{ theta\_est}
-\NormalTok{    maximo[k] }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(remuestra)}
-\NormalTok{    estadistico[k] }\OtherTok{\textless{}{-}}\NormalTok{ maximo[k] }\SpecialCharTok{{-}}\NormalTok{ theta\_est}
+\NormalTok{    remuestra }\OtherTok{\textless{}{-}} \FunctionTok{runif}\NormalTok{(n, }\DecValTok{0}\NormalTok{, theta\_est) }\CommentTok{\# runif(n) * theta\_est}
+\NormalTok{    theta\_boot }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(remuestra)}
+\NormalTok{    estadistico[k] }\OtherTok{\textless{}{-}}\NormalTok{ theta\_boot }\SpecialCharTok{{-}}\NormalTok{ theta\_est}
 \NormalTok{\}}
 \CommentTok{\# Distribución estadístico}
 \NormalTok{xlim }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{theta}\SpecialCharTok{/}\DecValTok{2}\NormalTok{, }\DecValTok{0}\NormalTok{) }\CommentTok{\# c({-}theta, 0)}
@@ -11799,10 +11836,9 @@ Continuando con el Ejemplo \ref{exm:media-dt-desconocida} del tiempo de vida de 
 \begin{Highlighting}[]
 \NormalTok{muestra }\OtherTok{\textless{}{-}}\NormalTok{ simres}\SpecialCharTok{::}\NormalTok{lifetimes}
 \NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(muestra)}
-\NormalTok{alfa }\OtherTok{\textless{}{-}} \FloatTok{0.05}
 \CommentTok{\# Estimaciones muestrales}
-\NormalTok{x\_barra }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(muestra)}
-\NormalTok{cuasi\_dt }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(muestra)}
+\NormalTok{estimador }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(muestra)}
+\NormalTok{ee\_estimador }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(muestra)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(n)}
 \CommentTok{\# Remuestreo}
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
 \NormalTok{B }\OtherTok{\textless{}{-}} \DecValTok{1000}
@@ -11812,17 +11848,17 @@ Continuando con el Ejemplo \ref{exm:media-dt-desconocida} del tiempo de vida de 
 \NormalTok{estadistico\_boot }\OtherTok{\textless{}{-}} \FunctionTok{numeric}\NormalTok{(B)}
 \ControlFlowTok{for}\NormalTok{ (k }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{B) \{}
   \CommentTok{\# remuestra \textless{}{-} sample(muestra, n, replace = TRUE)}
-  \CommentTok{\# remuestra \textless{}{-} rexp(n, 1/x\_barra)}
 \NormalTok{  remuestra }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n, }\FunctionTok{sample}\NormalTok{(muestra, n, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{), h)}
-\NormalTok{  x\_barra\_boot }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(remuestra)}
-\NormalTok{  cuasi\_dt\_boot }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(remuestra)}
-\NormalTok{  estadistico\_boot[k] }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(n) }\SpecialCharTok{*}\NormalTok{ (x\_barra\_boot }\SpecialCharTok{{-}}\NormalTok{ x\_barra)}\SpecialCharTok{/}\NormalTok{cuasi\_dt\_boot}
+\NormalTok{  estimador\_boot }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(remuestra)}
+\NormalTok{  ee\_estimador\_boot }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(remuestra)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(n)}
+\NormalTok{  estadistico\_boot[k] }\OtherTok{\textless{}{-}}\NormalTok{ (estimador\_boot }\SpecialCharTok{{-}}\NormalTok{ estimador)}\SpecialCharTok{/}\NormalTok{ee\_estimador\_boot}
 \NormalTok{\}}
 \CommentTok{\# Aproximación Monte Carlo de los ptos críticos:}
+\NormalTok{alfa }\OtherTok{\textless{}{-}} \FloatTok{0.05}
 \NormalTok{pto\_crit }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(estadistico\_boot, }\FunctionTok{c}\NormalTok{(alfa}\SpecialCharTok{/}\DecValTok{2}\NormalTok{, }\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ alfa}\SpecialCharTok{/}\DecValTok{2}\NormalTok{))}
 \CommentTok{\# Construcción del IC}
-\NormalTok{ic\_inf\_boot }\OtherTok{\textless{}{-}}\NormalTok{ x\_barra }\SpecialCharTok{{-}}\NormalTok{ pto\_crit[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ cuasi\_dt}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(n)}
-\NormalTok{ic\_sup\_boot }\OtherTok{\textless{}{-}}\NormalTok{ x\_barra }\SpecialCharTok{{-}}\NormalTok{ pto\_crit[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ cuasi\_dt}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(n)}
+\NormalTok{ic\_inf\_boot }\OtherTok{\textless{}{-}}\NormalTok{ estimador  }\SpecialCharTok{{-}}\NormalTok{ pto\_crit[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ ee\_estimador}
+\NormalTok{ic\_sup\_boot }\OtherTok{\textless{}{-}}\NormalTok{ estimador  }\SpecialCharTok{{-}}\NormalTok{ pto\_crit[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ ee\_estimador}
 \NormalTok{IC\_boot }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(ic\_inf\_boot, ic\_sup\_boot)}
 \FunctionTok{names}\NormalTok{(IC\_boot) }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\DecValTok{100}\SpecialCharTok{*}\FunctionTok{c}\NormalTok{(alfa}\SpecialCharTok{/}\DecValTok{2}\NormalTok{, }\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alfa}\SpecialCharTok{/}\DecValTok{2}\NormalTok{), }\StringTok{"\%"}\NormalTok{)}
 \NormalTok{IC\_boot}
@@ -12044,9 +12080,9 @@ Por ejemplo, adaptando el código en Canty (2002) para este conjunto de datos, p
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{pres.dat }\OtherTok{\textless{}{-}}\NormalTok{ Prestige}
-\NormalTok{pres.dat}\SpecialCharTok{$}\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{fitted}\NormalTok{(modelo)}
-\NormalTok{pres.dat}\SpecialCharTok{$}\NormalTok{res }\OtherTok{\textless{}{-}} \FunctionTok{residuals}\NormalTok{(modelo)}
+\NormalTok{boot.dat }\OtherTok{\textless{}{-}}\NormalTok{ Prestige}
+\NormalTok{boot.dat}\SpecialCharTok{$}\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{fitted}\NormalTok{(modelo)}
+\NormalTok{boot.dat}\SpecialCharTok{$}\NormalTok{res }\OtherTok{\textless{}{-}} \FunctionTok{residuals}\NormalTok{(modelo)}
 
 \NormalTok{mod.stat }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data, i) \{}
 \NormalTok{    data}\SpecialCharTok{$}\NormalTok{prestige }\OtherTok{\textless{}{-}}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{fit }\SpecialCharTok{+}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{res[i]}
@@ -12055,7 +12091,7 @@ Por ejemplo, adaptando el código en Canty (2002) para este conjunto de datos, p
 \NormalTok{\}}
 
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
-\NormalTok{boot.mod }\OtherTok{\textless{}{-}} \FunctionTok{boot}\NormalTok{(pres.dat, mod.stat, }\AttributeTok{R =} \DecValTok{1000}\NormalTok{)}
+\NormalTok{boot.mod }\OtherTok{\textless{}{-}} \FunctionTok{boot}\NormalTok{(boot.dat, mod.stat, }\AttributeTok{R =} \DecValTok{1000}\NormalTok{)}
 \NormalTok{boot.mod}
 \end{Highlighting}
 \end{Shaded}
@@ -12066,7 +12102,7 @@ Por ejemplo, adaptando el código en Canty (2002) para este conjunto de datos, p
  ## 
  ## 
  ## Call:
- ## boot(data = pres.dat, statistic = mod.stat, R = 1000)
+ ## boot(data = boot.dat, statistic = mod.stat, R = 1000)
  ## 
  ## 
  ## Bootstrap Statistics :
@@ -12108,8 +12144,8 @@ En \texttt{R} podríamos obtener estos residuos mediante los comandos\footnote{P
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{pres.dat}\SpecialCharTok{$}\NormalTok{sres }\OtherTok{\textless{}{-}} \FunctionTok{residuals}\NormalTok{(modelo)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{hatvalues}\NormalTok{(modelo))}
-\NormalTok{pres.dat}\SpecialCharTok{$}\NormalTok{sres }\OtherTok{\textless{}{-}}\NormalTok{ pres.dat}\SpecialCharTok{$}\NormalTok{sres }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(pres.dat}\SpecialCharTok{$}\NormalTok{sres)}
+\NormalTok{boot.dat}\SpecialCharTok{$}\NormalTok{sres }\OtherTok{\textless{}{-}} \FunctionTok{residuals}\NormalTok{(modelo)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{hatvalues}\NormalTok{(modelo))}
+\NormalTok{boot.dat}\SpecialCharTok{$}\NormalTok{sres }\OtherTok{\textless{}{-}}\NormalTok{ boot.dat}\SpecialCharTok{$}\NormalTok{sres }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(boot.dat}\SpecialCharTok{$}\NormalTok{sres)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -14239,7 +14275,7 @@ Por ejemplo, se podría emplear la función \href{https://rubenfcasal.github.io/
  ##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
  ##                    method = METHOD, data.name = DNAME), RESULTS), class = "htest")
  ## }
- ## <bytecode: 0x000001a122973df8>
+ ## <bytecode: 0x000001e373930dc0>
  ## <environment: namespace:simres>
 \end{verbatim}
 
@@ -15368,7 +15404,7 @@ Por defecto empleará todos los núcleos disponibles, pero se puede especificar 
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##    0.01    0.01    0.03
+ ##    0.04    0.00    0.04
 \end{verbatim}
 
 \begin{Shaded}
@@ -15390,7 +15426,7 @@ En Windows habría que crear previamente un cluster, llamar a una de las funcion
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##    0.00    0.00    0.03
+ ##    0.00    0.00    0.02
 \end{verbatim}
 
 \begin{Shaded}
@@ -15468,7 +15504,7 @@ Veamos un ejemplo empleando una muestra simulada:
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##    0.02    0.00    0.02
+ ##    0.01    0.00    0.01
 \end{verbatim}
 
 \subsection{Estudio de simulación}\label{estudio-sim-boot}
@@ -15528,7 +15564,7 @@ Por ejemplo, a continuación se realiza un estudio de simulación comparando las
 
 \begin{verbatim}
  ##    user  system elapsed 
- ##    0.01    0.00    1.75
+ ##    0.00    0.02    1.72
 \end{verbatim}
 
 \begin{Shaded}
@@ -16127,7 +16163,7 @@ Este algoritmo está implementado en la función \texttt{simres::rvng()} (ver ta
  ##   # Devolver valores
  ##   return(u)
  ## }
- ## <bytecode: 0x000001c468c98588>
+ ## <bytecode: 0x0000022a23ea19e0>
  ## <environment: namespace:simres>
 \end{verbatim}
 

@@ -59,23 +59,23 @@ rlcg
 ```
 
 ```
-## function(n, seed = as.numeric(Sys.time()), a = 7^5, c = 0, m = 2^31 - 1) {
-##   u <- numeric(n)
-##   for(i in 1:n) {
-##     seed <- (a * seed + c) %% m
-##     u[i] <- seed/m # (seed + 1)/(m + 1)
-##   }
-##   # Almacenar semilla y parámetros
-##   assign(".rng", list(seed = seed, type = "lcg",
-##           parameters = list(a = a, c = c, m = m)), envir = globalenv())
-##   # .rng <<- list(seed = seed, type = "lcg", parameters = list(a = a, c = c, m = m))
-##   # Para continuar con semilla y parámetros:
-##   #   with(.rng, rlcg(n, seed, parameters$a, parameters$c, parameters$m))
-##   # Devolver valores
-##   return(u)
-## }
-## <bytecode: 0x000002d21bc69730>
-## <environment: namespace:simres>
+ ## function(n, seed = as.numeric(Sys.time()), a = 7^5, c = 0, m = 2^31 - 1) {
+ ##   u <- numeric(n)
+ ##   for(i in 1:n) {
+ ##     seed <- (a * seed + c) %% m
+ ##     u[i] <- seed/m # (seed + 1)/(m + 1)
+ ##   }
+ ##   # Almacenar semilla y parámetros
+ ##   assign(".rng", list(seed = seed, type = "lcg",
+ ##           parameters = list(a = a, c = c, m = m)), envir = globalenv())
+ ##   # .rng <<- list(seed = seed, type = "lcg", parameters = list(a = a, c = c, m = m))
+ ##   # Para continuar con semilla y parámetros:
+ ##   #   with(.rng, rlcg(n, seed, parameters$a, parameters$c, parameters$m))
+ ##   # Devolver valores
+ ##   return(u)
+ ## }
+ ## <bytecode: 0x00000196ec576ae0>
+ ## <environment: namespace:simres>
 ```
 
 Tratando de imitar el funcionamiento del generador uniforme de R, la semilla se almacena en el objeto `.rng` del entorno de trabajo y se genera a partir de la hora del sistema si no se establece.
@@ -88,7 +88,7 @@ u <- rng(1); u
 ```
 
 ```
-## [1] 0.25136
+ ## [1] 0.25136
 ```
 
 ``` r
@@ -96,7 +96,7 @@ u == rlcg(1, seed = 543210)
 ```
 
 ```
-## [1] TRUE
+ ## [1] TRUE
 ```
 
 A pesar de su simplicidad, una adecuada elección de los parámetros permite obtener de manera eficiente secuencias de números "aparentemente" i.i.d. (independientes e idénticamente distribuidos) $\mathcal{U}(0,1)$.
@@ -171,10 +171,14 @@ points3D(xyz[,3], xyz[,2], xyz[,1], colvar = NULL, phi = 60,
          theta = -50, pch = 21, cex = 0.2)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-Generacion_numeros_aleatorios_files/figure-html/randu-1.png" alt="Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos)." width="80%" />
-<p class="caption">(\#fig:randu)Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos).</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/randu-1} 
+
+}
+
+\caption{Grafico de dispersión de tripletas del generador RANDU de IBM (contenidas en 15 planos).}(\#fig:randu)
+\end{figure}
 
 En general todos los generadores de este tipo van a presentar estructuras reticulares.
 @marsaglia1968 demostró que las k-uplas de un generadores multiplicativo están contenidas en a lo sumo $\left(k!m\right)^{1/k}$ hiperplanos paralelos (2344 como máximo con $k=3$ y $m=2^{31}$). 
@@ -212,8 +216,8 @@ system.time(u <- rng(nsim))
 ```
 
 ```
-##    user  system elapsed 
-##       0       0       0
+ ##    user  system elapsed 
+ ##       0       0       0
 ```
 
 Representamos la distribución de los valores generados mediante un histograma, en escala de densidades, de forma que podemos compararla con la densidad teórica:
@@ -224,10 +228,14 @@ hist(u, freq = FALSE)
 abline(h = 1, col = "blue") # Densidad uniforme
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-Generacion_numeros_aleatorios_files/figure-html/ejcona-1.png" alt="Histograma de los valores generados." width="80%" />
-<p class="caption">(\#fig:ejcona)Histograma de los valores generados.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/ejcona-1} 
+
+}
+
+\caption{Histograma de los valores generados.}(\#fig:ejcona)
+\end{figure}
 
 En este caso concreto la distribución de los valores generados es aparentemente más uniforme de lo que cabría esperar, lo que induciría a sospechar de la calidad de este generador (ver Ejemplo \@ref(exm:congru512b) en Sección \@ref(calgen)).
 
@@ -240,10 +248,10 @@ mean(u)
 ```
 
 ```
-## [1] 0.49996
+ ## [1] 0.49996
 ```
     
-Como se puede observar, esta aproximación es muy cercana al valor teórico 0.5 (el error absoluto es $3.90625\times 10^{-5}$).
+Como se puede observar, esta aproximación es muy cercana al valor teórico 0.5 (el error absoluto es $\ensuremath{3.90625\times 10^{-5}}$).
 
 Como ejemplo adicional, la aproximación (mediante simulación) de la probabilidad del intervalo $(0.4, 0.8)$ sería:
 
@@ -253,7 +261,7 @@ sum((0.4 < u) & (u < 0.8))/nsim
 ```
 
 ```
-## [1] 0.402
+ ## [1] 0.402
 ```
 
 ``` r
@@ -261,7 +269,7 @@ mean((0.4 < u) & (u < 0.8))     # Alternativa
 ```
 
 ```
-## [1] 0.402
+ ## [1] 0.402
 ```
 
 Si la comparamos con la probabilidad teórica ($0.8 - 0.4 = 0.4$), también observamos que es muy próxima, lo que podría aumentar las sospechas de que este generador no reproduce adecuadamente la variabilidad de una distribución $\mathcal{U}(0,1)$ (en el Ejemplo \@ref(exm:congru512b) se realizará un análisis más riguroso de la calidad de este generador). 
@@ -306,7 +314,7 @@ cat("Número de componentes distintos:", sum(seed != .Random.seed), "\n")
 ```
 
 ```
-## Número de componentes distintos: 1
+ ## Número de componentes distintos: 1
 ```
 
 ``` r
@@ -314,7 +322,7 @@ cat("Índice inicial:", seed[2], ", actual:", .Random.seed[2], "\n")
 ```
 
 ```
-## Índice inicial: 1 , actual: 624
+ ## Índice inicial: 1 , actual: 624
 ```
 
 ``` r
@@ -325,7 +333,7 @@ cat("Número de componentes distintos:", sum(seed != .Random.seed), "\n")
 ```
 
 ```
-## Número de componentes distintos: 624
+ ## Número de componentes distintos: 624
 ```
 
 <!-- 
@@ -395,51 +403,51 @@ simres::chisq.cont.test
 ```
 
 ```
-## function(x, distribution = "norm", nclass = floor(length(x)/5),
-##                             output = TRUE, nestpar = 0, ...) {
-##   # Función distribución
-##   q.distrib <- eval(parse(text = paste("q", distribution, sep = "")))
-##   # Puntos de corte
-##   q <- q.distrib((1:(nclass - 1))/nclass, ...)
-##   tol <- sqrt(.Machine$double.eps)
-##   xbreaks <- c(min(x) - tol, q, max(x) + tol)
-##   # Gráficos y frecuencias
-##   if (output) {
-##     xhist <- hist(x, breaks = xbreaks, freq = FALSE,
-##                   lty = 2, border = "grey50")
-##     # Función densidad
-##     d.distrib <- eval(parse(text = paste("d", distribution, sep = "")))
-##     curve(d.distrib(x, ...), add = TRUE)
-##   } else {
-##     xhist <- hist(x, breaks = xbreaks, plot = FALSE)
-##   }
-##   # Cálculo estadístico y p-valor
-##   O <- xhist$counts  # Equivalente a table(cut(x, xbreaks)) pero más eficiente
-##   E <- length(x)/nclass
-##   DNAME <- deparse(substitute(x))
-##   METHOD <- "Pearson's Chi-squared test"
-##   STATISTIC <- sum((O - E)^2/E)
-##   names(STATISTIC) <- "X-squared"
-##   PARAMETER <- nclass - nestpar - 1
-##   names(PARAMETER) <- "df"
-##   PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
-##   # Preparar resultados
-##   classes <- format(xbreaks)
-##   classes <- paste("(", classes[-(nclass + 1)], ",", classes[-1], "]",
-##                    sep = "")
-##   RESULTS <- list(classes = classes, observed = O, expected = E,
-##                   residuals = (O - E)/sqrt(E))
-##   if (output) {
-##     cat("\nPearson's Chi-squared test table\n")
-##     print(as.data.frame(RESULTS))
-##   }
-##   if (any(E < 5))
-##     warning("Chi-squared approximation may be incorrect")
-##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
-##                    method = METHOD, data.name = DNAME), RESULTS), class = "htest")
-## }
-## <bytecode: 0x000002d21fc25f40>
-## <environment: namespace:simres>
+ ## function(x, distribution = "norm", nclass = floor(length(x)/5),
+ ##                             output = TRUE, nestpar = 0, ...) {
+ ##   # Función distribución
+ ##   q.distrib <- eval(parse(text = paste("q", distribution, sep = "")))
+ ##   # Puntos de corte
+ ##   q <- q.distrib((1:(nclass - 1))/nclass, ...)
+ ##   tol <- sqrt(.Machine$double.eps)
+ ##   xbreaks <- c(min(x) - tol, q, max(x) + tol)
+ ##   # Gráficos y frecuencias
+ ##   if (output) {
+ ##     xhist <- hist(x, breaks = xbreaks, freq = FALSE,
+ ##                   lty = 2, border = "grey50")
+ ##     # Función densidad
+ ##     d.distrib <- eval(parse(text = paste("d", distribution, sep = "")))
+ ##     curve(d.distrib(x, ...), add = TRUE)
+ ##   } else {
+ ##     xhist <- hist(x, breaks = xbreaks, plot = FALSE)
+ ##   }
+ ##   # Cálculo estadístico y p-valor
+ ##   O <- xhist$counts  # Equivalente a table(cut(x, xbreaks)) pero más eficiente
+ ##   E <- length(x)/nclass
+ ##   DNAME <- deparse(substitute(x))
+ ##   METHOD <- "Pearson's Chi-squared test"
+ ##   STATISTIC <- sum((O - E)^2/E)
+ ##   names(STATISTIC) <- "X-squared"
+ ##   PARAMETER <- nclass - nestpar - 1
+ ##   names(PARAMETER) <- "df"
+ ##   PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
+ ##   # Preparar resultados
+ ##   classes <- format(xbreaks)
+ ##   classes <- paste("(", classes[-(nclass + 1)], ",", classes[-1], "]",
+ ##                    sep = "")
+ ##   RESULTS <- list(classes = classes, observed = O, expected = E,
+ ##                   residuals = (O - E)/sqrt(E))
+ ##   if (output) {
+ ##     cat("\nPearson's Chi-squared test table\n")
+ ##     print(as.data.frame(RESULTS))
+ ##   }
+ ##   if (any(E < 5))
+ ##     warning("Chi-squared approximation may be incorrect")
+ ##   structure(c(list(statistic = STATISTIC, parameter = PARAMETER, p.value = PVAL,
+ ##                    method = METHOD, data.name = DNAME), RESULTS), class = "htest")
+ ## }
+ ## <bytecode: 0x00000196e775ca38>
+ ## <environment: namespace:simres>
 ```
 
 ::: {.example #congru512b name="análisis de un generador congruencial continuación"}
@@ -464,34 +472,38 @@ chisq.cont.test(u, distribution = "unif",
                 nclass = 10, nestpar = 0, min = 0, max = 1)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-Generacion_numeros_aleatorios_files/figure-html/chisq-test-unif-1.png" alt="(ref:chisq-test-unif)" width="80%" />
-<p class="caption">(\#fig:chisq-test-unif)(ref:chisq-test-unif)</p>
-</div>
-
 ```
-## 
-## Pearson's Chi-squared test table
-##                      classes observed expected residuals
-## 1  (-1.4901e-08, 1.0000e-01]       51       50   0.14142
-## 2  ( 1.0000e-01, 2.0000e-01]       49       50  -0.14142
-## 3  ( 2.0000e-01, 3.0000e-01]       49       50  -0.14142
-## 4  ( 3.0000e-01, 4.0000e-01]       50       50   0.00000
-## 5  ( 4.0000e-01, 5.0000e-01]       51       50   0.14142
-## 6  ( 5.0000e-01, 6.0000e-01]       51       50   0.14142
-## 7  ( 6.0000e-01, 7.0000e-01]       49       50  -0.14142
-## 8  ( 7.0000e-01, 8.0000e-01]       50       50   0.00000
-## 9  ( 8.0000e-01, 9.0000e-01]       50       50   0.00000
-## 10 ( 9.0000e-01, 9.9805e-01]       50       50   0.00000
+ ## 
+ ## Pearson's Chi-squared test table
+ ##                      classes observed expected residuals
+ ## 1  (-1.4901e-08, 1.0000e-01]       51       50   0.14142
+ ## 2  ( 1.0000e-01, 2.0000e-01]       49       50  -0.14142
+ ## 3  ( 2.0000e-01, 3.0000e-01]       49       50  -0.14142
+ ## 4  ( 3.0000e-01, 4.0000e-01]       50       50   0.00000
+ ## 5  ( 4.0000e-01, 5.0000e-01]       51       50   0.14142
+ ## 6  ( 5.0000e-01, 6.0000e-01]       51       50   0.14142
+ ## 7  ( 6.0000e-01, 7.0000e-01]       49       50  -0.14142
+ ## 8  ( 7.0000e-01, 8.0000e-01]       50       50   0.00000
+ ## 9  ( 8.0000e-01, 9.0000e-01]       50       50   0.00000
+ ## 10 ( 9.0000e-01, 9.9805e-01]       50       50   0.00000
 ```
 
 ```
-## 
-## 	Pearson's Chi-squared test
-## 
-## data:  u
-## X-squared = 0.12, df = 9, p-value = 1
+ ## 
+ ## 	Pearson's Chi-squared test
+ ## 
+ ## data:  u
+ ## X-squared = 0.12, df = 9, p-value = 1
 ```
+
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/chisq-test-unif-1} 
+
+}
+
+\caption{(ref:chisq-test-unif)}(\#fig:chisq-test-unif)
+\end{figure}
 
 Alternativamente, por ejemplo si solo se pretende aplicar el contraste, se podría emplear  la función [`simres::freq.test()`](https://rubenfcasal.github.io/simres/reference/freq.test.html) (fichero [*test.R*](R/test.R))  para este caso particular (ver Sección \@ref(freq-test)).
 
@@ -507,10 +519,14 @@ curve(ecdf(u)(x), type = "s", lwd = 2)
 curve(punif(x, 0, 1), col = "blue", add = TRUE)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-Generacion_numeros_aleatorios_files/figure-html/empdistrunif-1.png" alt="Comparación de la distribución empírica de la secuencia generada con la función de distribución uniforme." width="80%" />
-<p class="caption">(\#fig:empdistrunif)Comparación de la distribución empírica de la secuencia generada con la función de distribución uniforme.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/empdistrunif-1} 
+
+}
+
+\caption{Comparación de la distribución empírica de la secuencia generada con la función de distribución uniforme.}(\#fig:empdistrunif)
+\end{figure}
 Podemos realizar el contraste con el siguiente código:
 
 ``` r
@@ -519,12 +535,12 @@ ks.test(u, "punif", 0, 1)
 ```
 
 ```
-## 
-## 	Asymptotic one-sample Kolmogorov-Smirnov test
-## 
-## data:  u
-## D = 0.00333, p-value = 1
-## alternative hypothesis: two-sided
+ ## 
+ ## 	Asymptotic one-sample Kolmogorov-Smirnov test
+ ## 
+ ## data:  u
+ ## D = 0.00333, p-value = 1
+ ## alternative hypothesis: two-sided
 ```
 
 La conclusión sería la misma que la del contraste chi-cuadrado, aparentemente este generador no reproduce adecuadamente la variabilidad de una distribución uniforme.
@@ -540,10 +556,14 @@ En este caso no se observa nada extraño en el gráfico secuencial:
 plot(as.ts(u))
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-Generacion_numeros_aleatorios_files/figure-html/plot-sec-1.png" alt="Gráfico secuencial de los valores generados." width="80%" />
-<p class="caption">(\#fig:plot-sec)Gráfico secuencial de los valores generados.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/plot-sec-1} 
+
+}
+
+\caption{Gráfico secuencial de los valores generados.}(\#fig:plot-sec)
+\end{figure}
 
 mientras que en el gráfico de dispersión retardado se observa un fuerte patrón reticular:
 
@@ -552,10 +572,14 @@ mientras que en el gráfico de dispersión retardado se observa un fuerte patró
 plot(u[-nsim], u[-1])
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-Generacion_numeros_aleatorios_files/figure-html/plot-ret-1.png" alt="Gráfico de dispersión retardado de los valores generados." width="80%" />
-<p class="caption">(\#fig:plot-ret)Gráfico de dispersión retardado de los valores generados.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/plot-ret-1} 
+
+}
+
+\caption{Gráfico de dispersión retardado de los valores generados.}(\#fig:plot-ret)
+\end{figure}
 
 Por tanto sospecharíamos que hay problemas con la aleatoriedad de este generador (en este caso también podríamos hablar de que no hay uniformidad en dos dimensiones).
 
@@ -566,10 +590,14 @@ También podemos analizar las autocorrelaciones (las correlaciones de $(u_{i},u_
 acf(u)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-Generacion_numeros_aleatorios_files/figure-html/plot-acf-1.png" alt="Autocorrelaciones de los valores generados." width="80%" />
-<p class="caption">(\#fig:plot-acf)Autocorrelaciones de los valores generados.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/plot-acf-1} 
+
+}
+
+\caption{Autocorrelaciones de los valores generados.}(\#fig:plot-acf)
+\end{figure}
 
 En este caso la autocorrelación de orden 1 es claramente significativa.
 Adicionalmente, podríamos emplear el test de Ljung-Box (ver Sección \@ref(ljungbox)) para contrastar si las diez primeras autocorrelaciones son nulas:
@@ -580,11 +608,11 @@ Box.test(u, lag = 10, type = "Ljung")
 ```
 
 ```
-## 
-## 	Box-Ljung test
-## 
-## data:  u
-## X-squared = 22.5, df = 10, p-value = 0.013
+ ## 
+ ## 	Box-Ljung test
+ ## 
+ ## data:  u
+ ## X-squared = 22.5, df = 10, p-value = 0.013
 ```
 
 A partir de estos resultados también sospecharíamos que hay problemas con la aleatoriedad de este generador.
@@ -650,9 +678,9 @@ cat("Proporción de rechazos al 10% =", mean(pvalor < 0.1), "\n")
 ```
 
 ```
-## Proporción de rechazos al 1% = 0.012 
-## Proporción de rechazos al 5% = 0.045 
-## Proporción de rechazos al 10% = 0.095
+ ## Proporción de rechazos al 1% = 0.012 
+ ## Proporción de rechazos al 5% = 0.045 
+ ## Proporción de rechazos al 10% = 0.095
 ```
 
 Las proporciones de rechazo obtenidas deberían comportarse como una aproximación por simulación de los niveles teóricos.
@@ -668,10 +696,14 @@ plot(ecdf(pvalor), do.points = FALSE, lwd = 2,
 abline(a = 0, b = 1, col = "blue")   # curve(punif(x, 0, 1), add = TRUE)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-Generacion_numeros_aleatorios_files/figure-html/rep-test-ecdf-1.png" alt="Proporción de rechazos con los distintos niveles de significación." width="80%" />
-<p class="caption">(\#fig:rep-test-ecdf)Proporción de rechazos con los distintos niveles de significación.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/rep-test-ecdf-1} 
+
+}
+
+\caption{Proporción de rechazos con los distintos niveles de significación.}(\#fig:rep-test-ecdf)
+\end{figure}
 
 También podemos estudiar la distribución del estadístico del contraste.
 En este caso, como la distribución bajo la hipótesis nula está implementada en R, podemos compararla fácilmente con la de los valores generados (debería ser una aproximación por simulación de la distribución teórica):
@@ -683,10 +715,14 @@ hist(estadistico, breaks = "FD", freq = FALSE, main = "")
 curve(dchisq(x, 49), col = "blue", add = TRUE)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-Generacion_numeros_aleatorios_files/figure-html/rep-test-est-1.png" alt="Distribución del estadístico del constraste." width="80%" />
-<p class="caption">(\#fig:rep-test-est)Distribución del estadístico del constraste.</p>
-</div>
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/rep-test-est-1} 
+
+}
+
+\caption{Distribución del estadístico del constraste.}(\#fig:rep-test-est)
+\end{figure}
 
 Además de la comparación gráfica, podríamos emplear un test de bondad de ajuste para contrastar si la distribución del estadístico es la teórica bajo la hipótesis nula:
 
@@ -699,12 +735,12 @@ ks.test(estadistico, "pchisq", df = 49)
 ```
 
 ```
-## 
-## 	Asymptotic one-sample Kolmogorov-Smirnov test
-## 
-## data:  estadistico
-## D = 0.0359, p-value = 0.15
-## alternative hypothesis: two-sided
+ ## 
+ ## 	Asymptotic one-sample Kolmogorov-Smirnov test
+ ## 
+ ## data:  estadistico
+ ## D = 0.0359, p-value = 0.15
+ ## alternative hypothesis: two-sided
 ```
 
 En este caso la distribución observada del estadístico es la que cabría esperar de una muestra de este tamaño de la distribución teórica, por tanto, según este criterio, aparentemente no habría problemas con la uniformidad de este generador (hay que recordar que estamos utilizando contrastes de hipótesis como herramienta para ver si hay algún problema con el generador, no tiene mucho sentido hablar de aceptar o rechazar una hipótesis).
@@ -717,14 +753,7 @@ Mientras que la distribución teórica del estadístico depende del contraste y 
 # Histograma
 hist(pvalor, freq = FALSE, main = "")
 abline(h = 1, col = "blue") # curve(dunif(x,0,1), add=TRUE)
-```
 
-<div class="figure" style="text-align: center">
-<img src="02-Generacion_numeros_aleatorios_files/figure-html/rep-test-pval-1.png" alt="Distribución del p-valor del constraste." width="80%" />
-<p class="caption">(\#fig:rep-test-pval)Distribución del p-valor del constraste.</p>
-</div>
-
-``` r
 # Test chi-cuadrado
 # chisq.cont.test(pvalor, distribution="unif", nclass=20, nestpar=0, min=0, max=1)
 # Test de Kolmogorov-Smirnov
@@ -732,13 +761,22 @@ ks.test(pvalor, "punif",  min = 0, max = 1)
 ```
 
 ```
-## 
-## 	Asymptotic one-sample Kolmogorov-Smirnov test
-## 
-## data:  pvalor
-## D = 0.0359, p-value = 0.15
-## alternative hypothesis: two-sided
+ ## 
+ ## 	Asymptotic one-sample Kolmogorov-Smirnov test
+ ## 
+ ## data:  pvalor
+ ## D = 0.0359, p-value = 0.15
+ ## alternative hypothesis: two-sided
 ```
+
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.75\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/rep-test-pval-1} 
+
+}
+
+\caption{Distribución del p-valor del constraste.}(\#fig:rep-test-pval)
+\end{figure}
 
 Como podemos observar, obtendríamos los mismos resultados que al analizar la distribución del estadístico. 
 
@@ -754,14 +792,14 @@ str(res)
 ```
 
 ```
-## List of 2
-##  $ statistics: num [1:1000] 5.2 6.8 12.4 0.8 5.6 7.6 6.4 9.6 5.2 3.2 ...
-##  $ p.values  : num [1:1000] 0.392 0.2359 0.0297 0.977 0.3471 ...
-##  - attr(*, "class")= chr "rhtest"
-##  - attr(*, "method")= chr "Chi-squared test for given probabilities"
-##  - attr(*, "names.stat")= chr "X-squared"
-##  - attr(*, "parameter")= Named num 5
-##   ..- attr(*, "names")= chr "df"
+ ## List of 2
+ ##  $ statistics: num [1:1000] 5.2 6.8 12.4 0.8 5.6 7.6 6.4 9.6 5.2 3.2 ...
+ ##  $ p.values  : num [1:1000] 0.392 0.2359 0.0297 0.977 0.3471 ...
+ ##  - attr(*, "class")= chr "rhtest"
+ ##  - attr(*, "method")= chr "Chi-squared test for given probabilities"
+ ##  - attr(*, "names.stat")= chr "X-squared"
+ ##  - attr(*, "parameter")= Named num 5
+ ##   ..- attr(*, "names")= chr "df"
 ```
 
 ``` r
@@ -769,24 +807,25 @@ summary(res)
 ```
 
 ```
-## Proportion of rejections:
-##    1%    5%   10%   25%   50% 
-## 0.013 0.054 0.096 0.255 0.544
+ ## Proportion of rejections:
+ ##    1%    5%   10%   25%   50% 
+ ## 0.013 0.054 0.096 0.255 0.544
 ```
 
 ``` r
 old.par <- par(mfrow = c(1, 2))
 plot(res, 2:3)
-```
-
-<div class="figure" style="text-align: center">
-<img src="02-Generacion_numeros_aleatorios_files/figure-html/rephtest-1.png" alt="Distribución de los p-valores y proporción de rechazos." width="90%" />
-<p class="caption">(\#fig:rephtest)Distribución de los p-valores y proporción de rechazos.</p>
-</div>
-
-``` r
 par(old.par)
 ```
+
+\begin{figure}[!htbp]
+
+{\centering \includegraphics[width=0.9\linewidth]{02-Generacion_numeros_aleatorios_files/figure-latex/rephtest-1} 
+
+}
+
+\caption{Distribución de los p-valores y proporción de rechazos.}(\#fig:rephtest)
+\end{figure}
 
 :::
   
@@ -863,27 +902,27 @@ simres::rvng
 ```
 
 ```
-## function(n, seed = as.numeric(Sys.time()), k = 4) {
-##   seed <- seed %% 10^k
-##   aux <- 10^(2*k-k/2)
-##   aux2 <- 10^(k/2)
-##   u <- numeric(n)
-##   for(i in 1:n) {
-##     z <- seed^2
-##     seed <- trunc((z - trunc(z/aux)*aux)/aux2)
-##     u[i] <- seed/10^k
-##   }
-##   # Almacenar semilla y parámetros
-##   assign(".rng", list(seed = seed, type = "vm", parameters = list(k = k)),
-##       envir = globalenv())
-##   # .rng <<- list(seed = seed, type = "vm", parameters = list(k = k))
-##   # Para continuar con semilla y parámetros:
-##   #   with(.rng, rvng(n, seed, parameters$k))
-##   # Devolver valores
-##   return(u)
-## }
-## <bytecode: 0x000002d216606298>
-## <environment: namespace:simres>
+ ## function(n, seed = as.numeric(Sys.time()), k = 4) {
+ ##   seed <- seed %% 10^k
+ ##   aux <- 10^(2*k-k/2)
+ ##   aux2 <- 10^(k/2)
+ ##   u <- numeric(n)
+ ##   for(i in 1:n) {
+ ##     z <- seed^2
+ ##     seed <- trunc((z - trunc(z/aux)*aux)/aux2)
+ ##     u[i] <- seed/10^k
+ ##   }
+ ##   # Almacenar semilla y parámetros
+ ##   assign(".rng", list(seed = seed, type = "vm", parameters = list(k = k)),
+ ##       envir = globalenv())
+ ##   # .rng <<- list(seed = seed, type = "vm", parameters = list(k = k))
+ ##   # Para continuar con semilla y parámetros:
+ ##   #   with(.rng, rvng(n, seed, parameters$k))
+ ##   # Devolver valores
+ ##   return(u)
+ ## }
+ ## <bytecode: 0x00000196e822eea0>
+ ## <environment: namespace:simres>
 ```
 
 
